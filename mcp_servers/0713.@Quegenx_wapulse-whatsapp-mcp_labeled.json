@@ -1,0 +1,1932 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"WaPulse Whatsapp MCP Server\" primarily facilitates interaction with WhatsApp Web through the WaPulse API, enabling sending messages, files, and media, managing chats and groups, and handling WhatsApp instances. It offers extensive automation and management capabilities for WhatsApp communication, focusing on messaging, group administration, and instance control. The core problem it solves is enabling seamless WhatsApp integration and automation for businesses and developers via MCP-compatible tools.",
+    "reasoning": "The primary label \"Communication Tools\" is chosen because the server's main functionality revolves around messaging, group management, and interface interactions with WhatsApp—a core communication platform. The secondary label \"API Integration\" applies due to its reliance on the WaPulse API for operations, requiring third-party API handling. The server’s group management tools (create, add/remove participants, etc.) also justify a \"Daily Productivity\" label for organizational use cases. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "API Integration",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 712,
+    "server_name": "WaPulse Whatsapp MCP Server",
+    "rank_by_usage": 713,
+    "usage_count": "11",
+    "original_file": "../crawler/smithery/@Quegenx_wapulse-whatsapp-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Quegenx/wapulse-whatsapp-mcp/mcp?config=eyJ3YXB1bHNlQmFzZVVybCI6ICJodHRwczovL3dhcHVsc2VzZXJ2ZXIuY29tOjMwMDMifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "send_whatsapp_message",
+          "description": "Send a WhatsApp message to a specific phone number or group using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "string",
+                "pattern": "^\\d{1,4}\\d{6,15}$"
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "group"
+                ],
+                "default": "user"
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "to",
+              "message"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Send WhatsApp Message",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "send_whatsapp_files",
+          "description": "Send files (images, documents, etc.) to a specific phone number or group using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "string",
+                "pattern": "^\\d{1,4}\\d{6,15}$"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string"
+                    },
+                    "filename": {
+                      "type": "string"
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "file",
+                    "filename"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1,
+                "maxItems": 10
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "to",
+              "files"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Send WhatsApp Files",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "send_whatsapp_audio",
+          "description": "Send audio messages (voice notes, music, etc.) to a specific phone number or group using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "string",
+                "pattern": "^\\d{1,4}\\d{6,15}$"
+              },
+              "audio": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string"
+                  },
+                  "filename": {
+                    "type": "string"
+                  },
+                  "caption": {
+                    "type": "string"
+                  },
+                  "isVoiceNote": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "file",
+                  "filename"
+                ],
+                "additionalProperties": false
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "to",
+              "audio"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Send WhatsApp Audio",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "load_chat_messages",
+          "description": "Retrieve all messages from a specific chat or conversation using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "group"
+                ]
+              },
+              "until": {
+                "type": "string"
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "type"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Load WhatsApp Chat Messages",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true,
+            "streamingHint": true
+          }
+        },
+        {
+          "name": "check_id_exists",
+          "description": "Check if a specific user or group ID exists in WhatsApp using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "group"
+                ]
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "type"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Check WhatsApp ID Exists",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "validate_phone_number",
+          "description": "Validate if a phone number is in the correct format for WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "phoneNumber": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "phoneNumber"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Validate Phone Number",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_all_chats",
+          "description": "Get all WhatsApp chats (individual and group conversations) for an instance using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get All WhatsApp Chats",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_wapulse_documentation",
+          "description": "Fetch and search WaPulse API documentation from the official website",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "section": {
+                "type": "string",
+                "enum": [
+                  "overview",
+                  "authentication",
+                  "messaging",
+                  "groups",
+                  "instances",
+                  "webhooks",
+                  "errors",
+                  "rate-limits",
+                  "examples"
+                ]
+              },
+              "search": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 100
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get WaPulse Documentation",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "create_whatsapp_group",
+          "description": "Create a new WhatsApp group with specified participants",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 256
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Create WhatsApp Group",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "add_group_participants",
+          "description": "Add new participants to an existing WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              }
+            },
+            "required": [
+              "id",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Add Group Participants",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "remove_group_participants",
+          "description": "Remove participants from an existing WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              }
+            },
+            "required": [
+              "id",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Remove Group Participants",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "promote_group_participants",
+          "description": "Promote participants to admin status in a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Promote Group Participants",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "demote_group_participants",
+          "description": "Demote participants from admin status in a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Demote Group Participants",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "leave_whatsapp_group",
+          "description": "Leave a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Leave WhatsApp Group",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_group_invite_link",
+          "description": "Get the invite link for a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get Group Invite Link",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "change_group_invite_code",
+          "description": "Change the invite code for a WhatsApp group, generating a new invite link",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Change Group Invite Code",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_group_requests",
+          "description": "Get pending join requests for a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "numbers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "numbers"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get Group Requests",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "reject_group_request",
+          "description": "Reject pending join requests for a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "numbers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "numbers"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Reject Group Request",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "approve_group_request",
+          "description": "Approve pending join requests for a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "numbers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "numbers"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Approve Group Request",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_all_groups",
+          "description": "Get all WhatsApp groups for an instance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get All Groups",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "create_instance",
+          "description": "Create a new WhatsApp instance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Create Instance",
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_qr_code",
+          "description": "Get QR code for WhatsApp Web connection",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceID": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token",
+              "instanceID"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get QR Code",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "start_instance",
+          "description": "Start a WhatsApp instance to begin receiving and sending messages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceID": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token",
+              "instanceID"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Start Instance",
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "stop_instance",
+          "description": "Stop a running WhatsApp instance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceID": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token",
+              "instanceID"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Stop Instance",
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "delete_instance",
+          "description": "Permanently delete a WhatsApp instance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceID": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token",
+              "instanceID"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Delete Instance",
+            "readOnlyHint": null,
+            "destructiveHint": true,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        }
+      ],
+      "tool_count": 25,
+      "tool_names": [
+        "send_whatsapp_message",
+        "send_whatsapp_files",
+        "send_whatsapp_audio",
+        "load_chat_messages",
+        "check_id_exists",
+        "validate_phone_number",
+        "get_all_chats",
+        "get_wapulse_documentation",
+        "create_whatsapp_group",
+        "add_group_participants",
+        "remove_group_participants",
+        "promote_group_participants",
+        "demote_group_participants",
+        "leave_whatsapp_group",
+        "get_group_invite_link",
+        "change_group_invite_code",
+        "get_group_requests",
+        "reject_group_request",
+        "approve_group_request",
+        "get_all_groups",
+        "create_instance",
+        "get_qr_code",
+        "start_instance",
+        "stop_instance",
+        "delete_instance"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 712,
+      "name": "WaPulse Whatsapp MCP Server",
+      "author": "@Quegenx/wapulse-whatsapp-mcp",
+      "overview": "Provide an MCP server interface for the WaPulse WhatsApp Web API, enabling integration and interaction with WhatsApp Web through the Model Context Protocol. Facilitate seamless communication and automation for clients using MCP-compatible tools and resources.",
+      "repository_url": "https://github.com/Quegenx/wapulse-whatsapp-mcp",
+      "homepage": "https://smithery.ai/server/@Quegenx/wapulse-whatsapp-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "11",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Quegenx_wapulse-whatsapp-mcp.json",
+      "tools_count": 25,
+      "tools": [
+        {
+          "name": "send_whatsapp_message",
+          "description": "Send a WhatsApp message to a specific phone number or group using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "string",
+                "pattern": "^\\d{1,4}\\d{6,15}$"
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "group"
+                ],
+                "default": "user"
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "to",
+              "message"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Send WhatsApp Message",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "send_whatsapp_files",
+          "description": "Send files (images, documents, etc.) to a specific phone number or group using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "string",
+                "pattern": "^\\d{1,4}\\d{6,15}$"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "file": {
+                      "type": "string"
+                    },
+                    "filename": {
+                      "type": "string"
+                    },
+                    "caption": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "file",
+                    "filename"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1,
+                "maxItems": 10
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "to",
+              "files"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Send WhatsApp Files",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "send_whatsapp_audio",
+          "description": "Send audio messages (voice notes, music, etc.) to a specific phone number or group using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "to": {
+                "type": "string",
+                "pattern": "^\\d{1,4}\\d{6,15}$"
+              },
+              "audio": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string"
+                  },
+                  "filename": {
+                    "type": "string"
+                  },
+                  "caption": {
+                    "type": "string"
+                  },
+                  "isVoiceNote": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "file",
+                  "filename"
+                ],
+                "additionalProperties": false
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "to",
+              "audio"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Send WhatsApp Audio",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "load_chat_messages",
+          "description": "Retrieve all messages from a specific chat or conversation using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "group"
+                ]
+              },
+              "until": {
+                "type": "string"
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "type"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Load WhatsApp Chat Messages",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true,
+            "streamingHint": true
+          }
+        },
+        {
+          "name": "check_id_exists",
+          "description": "Check if a specific user or group ID exists in WhatsApp using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "group"
+                ]
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "type"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Check WhatsApp ID Exists",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "validate_phone_number",
+          "description": "Validate if a phone number is in the correct format for WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "phoneNumber": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "phoneNumber"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Validate Phone Number",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_all_chats",
+          "description": "Get all WhatsApp chats (individual and group conversations) for an instance using WaPulse API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get All WhatsApp Chats",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_wapulse_documentation",
+          "description": "Fetch and search WaPulse API documentation from the official website",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "section": {
+                "type": "string",
+                "enum": [
+                  "overview",
+                  "authentication",
+                  "messaging",
+                  "groups",
+                  "instances",
+                  "webhooks",
+                  "errors",
+                  "rate-limits",
+                  "examples"
+                ]
+              },
+              "search": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 100
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get WaPulse Documentation",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "create_whatsapp_group",
+          "description": "Create a new WhatsApp group with specified participants",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 256
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Create WhatsApp Group",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "add_group_participants",
+          "description": "Add new participants to an existing WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              }
+            },
+            "required": [
+              "id",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Add Group Participants",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "remove_group_participants",
+          "description": "Remove participants from an existing WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 50
+              }
+            },
+            "required": [
+              "id",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Remove Group Participants",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "promote_group_participants",
+          "description": "Promote participants to admin status in a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Promote Group Participants",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "demote_group_participants",
+          "description": "Demote participants from admin status in a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "participants": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "participants"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Demote Group Participants",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "leave_whatsapp_group",
+          "description": "Leave a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Leave WhatsApp Group",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_group_invite_link",
+          "description": "Get the invite link for a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get Group Invite Link",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "change_group_invite_code",
+          "description": "Change the invite code for a WhatsApp group, generating a new invite link",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Change Group Invite Code",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_group_requests",
+          "description": "Get pending join requests for a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "numbers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "numbers"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get Group Requests",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "reject_group_request",
+          "description": "Reject pending join requests for a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "numbers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "numbers"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Reject Group Request",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "approve_group_request",
+          "description": "Approve pending join requests for a WhatsApp group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              },
+              "numbers": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^\\d{1,4}\\d{6,15}$"
+                },
+                "minItems": 1,
+                "maxItems": 20
+              }
+            },
+            "required": [
+              "id",
+              "numbers"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Approve Group Request",
+            "readOnlyHint": false,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_all_groups",
+          "description": "Get all WhatsApp groups for an instance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "customToken": {
+                "type": "string"
+              },
+              "customInstanceID": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get All Groups",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "create_instance",
+          "description": "Create a new WhatsApp instance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Create Instance",
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_qr_code",
+          "description": "Get QR code for WhatsApp Web connection",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceID": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token",
+              "instanceID"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get QR Code",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "start_instance",
+          "description": "Start a WhatsApp instance to begin receiving and sending messages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceID": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token",
+              "instanceID"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Start Instance",
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "stop_instance",
+          "description": "Stop a running WhatsApp instance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceID": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token",
+              "instanceID"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Stop Instance",
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "delete_instance",
+          "description": "Permanently delete a WhatsApp instance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "instanceID": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "token",
+              "instanceID"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Delete Instance",
+            "readOnlyHint": null,
+            "destructiveHint": true,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"wapulseBaseUrl\": \"https://wapulseserver.com:3003\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@Quegenx/wapulse-whatsapp-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"wapulseBaseUrl\": \"https://wapulseserver.com:3003\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@Quegenx/wapulse-whatsapp-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0713.@Quegenx_wapulse-whatsapp-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 696
+  }
+}

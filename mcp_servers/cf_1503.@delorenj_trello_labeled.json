@@ -1,0 +1,201 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is specifically designed to interact with Trello, a popular project management and organizational tool. It provides a set of tools to manage Trello boards, including retrieving cards and lists, updating card details, archiving items, and monitoring board activity. The core functionality revolves around project management, task organization, and collaboration. The server primarily aims to facilitate efficient management of tasks and boards within the Trello ecosystem.",
+    "reasoning": "The primary label is chosen as \"Daily Productivity\" because Trello is widely used for personal and professional task management, aligns with productivity tools, and helps users organize their work efficiently. The secondary label \"Project Management\" is chosen because Trello is fundamentally a project management tool, and these tools are tailored specifically for managing projects and tasks within Trello. Since the predefined categories do not include a specific \"Project Management\" label, a custom label is also appropriate for better clarity.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "Project Management"
+    ],
+    "custom_label": "Trello Board Management",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1502,
+    "server_name": "Trello Server",
+    "rank_by_usage": 1503,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@delorenj_trello.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@delorenj/trello/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "Connection timeout (20 seconds)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1502,
+      "name": "Trello Server",
+      "author": "@delorenj/trello",
+      "overview": "Interact with Trello boards and manage cards, lists, and activities.",
+      "repository_url": "https://github.com/delorenj/mcp-server-trello",
+      "homepage": "https://smithery.ai/server/@delorenj/trello",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@delorenj_trello.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "get_cards_by_list_id",
+          "description": "Deploy Server Trello Server @delorenj/trello Try in Playground get_cards_by_list_id",
+          "parameters": [
+            {
+              "name": "get_cards_by_list_id",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "listId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_lists",
+          "description": "Retrieve all lists from the specified board",
+          "parameters": [
+            {
+              "name": "get_lists",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_recent_activity",
+          "description": "Fetch recent activity on the Trello board",
+          "parameters": [
+            {
+              "name": "get_recent_activity",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "add_card_to_list",
+          "description": "Add a new card to a specified list",
+          "parameters": [
+            {
+              "name": "add_card_to_list",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "update_card_details",
+          "description": "Update an existing card's details",
+          "parameters": [
+            {
+              "name": "update_card_details",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "archive_card",
+          "description": "Send a card to the archive",
+          "parameters": [
+            {
+              "name": "archive_card",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "cardId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "add_list_to_board",
+          "description": "Add a new list to the board",
+          "parameters": [
+            {
+              "name": "add_list_to_board",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "archive_list",
+          "description": "Send a list to the archive",
+          "parameters": [
+            {
+              "name": "archive_list",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "listId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_my_cards",
+          "description": "Fetch all cards assigned to the current user",
+          "parameters": [
+            {
+              "name": "get_my_cards",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@delorenj/trello/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "trelloToken",
+          "required": true,
+          "description": "Your Trello token generated using your API key"
+        },
+        {
+          "name": "trelloApiKey",
+          "required": true,
+          "description": "Your Trello API key from https://trello.com/app-key"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@delorenj/trello/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1503.@delorenj_trello_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1386
+  }
+}

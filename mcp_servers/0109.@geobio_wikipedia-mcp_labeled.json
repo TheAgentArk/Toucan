@@ -1,0 +1,523 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide real-time access to Wikipedia's vast repository of knowledge. Its core functionality revolves around searching, retrieving, summarizing, and extracting information from Wikipedia articles, enabling AI assistants to ground their responses in accurate, up-to-date factual context. The tools offered facilitate efficient information retrieval, customizable summaries, and extraction of key details, making it valuable for enhancing AI-generated responses with reliable data.",
+    "reasoning": "The primary label is \"Web Search & Research\" because the server's main purpose is to enable efficient searching and retrieval of information from Wikipedia, a key research resource. The secondary label \"AI/ML Tools\" was chosen because the server's integration with AI assistants enhances their ability to provide grounded, fact-based responses. The custom label \"Wikipedia Integration\" was added to specifically describe the server's unique focus on leveraging Wikipedia as a knowledge base.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "AI/ML Tools"
+    ],
+    "custom_label": "Wikipedia Integration",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 108,
+    "server_name": "Wikipedia Integration Server",
+    "rank_by_usage": 109,
+    "usage_count": "649",
+    "original_file": "../crawler/smithery/@geobio_wikipedia-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@geobio/wikipedia-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_wikipedia",
+          "description": "Search Wikipedia for articles matching a query.",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_wikipediaArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_article",
+          "description": "Get the full content of a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_articleArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_summary",
+          "description": "Get a summary of a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_summaryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "summarize_article_for_query",
+          "description": "Get a summary of a Wikipedia article tailored to a specific query.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "max_length": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 250,
+                "title": "Max Length"
+              }
+            },
+            "required": [
+              "title",
+              "query"
+            ],
+            "title": "summarize_article_for_queryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "summarize_article_section",
+          "description": "Get a summary of a specific section of a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "section_title": {
+                "title": "Section Title",
+                "type": "string"
+              },
+              "max_length": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 150,
+                "title": "Max Length"
+              }
+            },
+            "required": [
+              "title",
+              "section_title"
+            ],
+            "title": "summarize_article_sectionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_key_facts",
+          "description": "Extract key facts from a Wikipedia article, optionally focused on a topic.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "topic_within_article": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Topic Within Article"
+              },
+              "count": {
+                "default": 5,
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "extract_key_factsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_related_topics",
+          "description": "Get topics related to a Wikipedia article based on links and categories.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_related_topicsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_sections",
+          "description": "Get the sections of a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_sectionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_links",
+          "description": "Get the links contained within a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_linksArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "search_wikipedia",
+        "get_article",
+        "get_summary",
+        "summarize_article_for_query",
+        "summarize_article_section",
+        "extract_key_facts",
+        "get_related_topics",
+        "get_sections",
+        "get_links"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 108,
+      "name": "Wikipedia Integration Server",
+      "author": "@geobio/wikipedia-mcp",
+      "overview": "Provide real-time access to Wikipedia information to enhance AI assistants with accurate and up-to-date factual context. Enable LLMs to search, retrieve, summarize, and extract detailed content from Wikipedia articles across multiple languages. Facilitate grounded and reliable AI responses by integrating Wikipedia data seamlessly.",
+      "repository_url": "https://github.com/geobio/wikipedia-mcp",
+      "homepage": "https://smithery.ai/server/@geobio/wikipedia-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "649",
+      "success_rate": "99.74%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@geobio_wikipedia-mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "search_wikipedia",
+          "description": "Search Wikipedia for articles matching a query.",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_wikipediaArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_article",
+          "description": "Get the full content of a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_articleArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_summary",
+          "description": "Get a summary of a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_summaryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "summarize_article_for_query",
+          "description": "Get a summary of a Wikipedia article tailored to a specific query.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "max_length": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 250,
+                "title": "Max Length"
+              }
+            },
+            "required": [
+              "title",
+              "query"
+            ],
+            "title": "summarize_article_for_queryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "summarize_article_section",
+          "description": "Get a summary of a specific section of a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "section_title": {
+                "title": "Section Title",
+                "type": "string"
+              },
+              "max_length": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 150,
+                "title": "Max Length"
+              }
+            },
+            "required": [
+              "title",
+              "section_title"
+            ],
+            "title": "summarize_article_sectionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_key_facts",
+          "description": "Extract key facts from a Wikipedia article, optionally focused on a topic.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "topic_within_article": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Topic Within Article"
+              },
+              "count": {
+                "default": 5,
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "extract_key_factsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_related_topics",
+          "description": "Get topics related to a Wikipedia article based on links and categories.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_related_topicsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_sections",
+          "description": "Get the sections of a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_sectionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_links",
+          "description": "Get the links contained within a Wikipedia article.",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "title": "get_linksArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@geobio/wikipedia-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@geobio/wikipedia-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0109.@geobio_wikipedia-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 106
+  }
+}

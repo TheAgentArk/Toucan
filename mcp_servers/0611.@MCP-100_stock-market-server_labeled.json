@@ -1,0 +1,212 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides tools for accessing and analyzing real-time stock market data through the Alpha Vantage API. Its core functionality revolves around retrieving financial information such as stock prices, market reports, financial statements, and company overviews. This makes it a specialized tool for financial analysis, trading insights, and investment decision-making.",
+    "reasoning": "The primary focus of this server is on financial data retrieval and analysis, which aligns well with the Financial Services category. The server's tools enable users to generate market reports and financial statements, which are also forms of data analysis, making Data Analysis & Processing a relevant secondary category. The server does not require a custom label as its functionality is well-covered by predefined categories.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 610,
+    "server_name": "Stock Market Server",
+    "rank_by_usage": 611,
+    "usage_count": "17",
+    "original_file": "../crawler/smithery/@MCP-100_stock-market-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@MCP-100/stock-market-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_ticker_price",
+          "description": "Get current price for a stock ticker",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Stock ticker symbol"
+              }
+            },
+            "required": [
+              "symbol"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_market_report",
+          "description": "Generate US market report/briefing",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_financial_statement",
+          "description": "Get financial statements for a company",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Stock ticker symbol"
+              },
+              "statement": {
+                "type": "string",
+                "enum": [
+                  "income",
+                  "balance",
+                  "cashflow"
+                ],
+                "description": "Type of financial statement"
+              }
+            },
+            "required": [
+              "symbol",
+              "statement"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_company_overview",
+          "description": "Get company overview and key metrics",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Stock ticker symbol"
+              }
+            },
+            "required": [
+              "symbol"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 4,
+      "tool_names": [
+        "get_ticker_price",
+        "get_market_report",
+        "get_financial_statement",
+        "get_company_overview"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 610,
+      "name": "Stock Market Server",
+      "author": "@MCP-100/stock-market-server",
+      "overview": "Access real-time stock market data and financial information effortlessly. Generate market reports, financial statements, and get ticker prices with ease using the Alpha Vantage API. Enhance your trading strategies with up-to-date insights and analytics.",
+      "repository_url": "https://github.com/MCP-100/stock-market-server",
+      "homepage": "https://smithery.ai/server/@MCP-100/stock-market-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "17",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@MCP-100_stock-market-server.json",
+      "tools_count": 4,
+      "tools": [
+        {
+          "name": "get_ticker_price",
+          "description": "Get current price for a stock ticker",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Stock ticker symbol"
+              }
+            },
+            "required": [
+              "symbol"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_market_report",
+          "description": "Generate US market report/briefing",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_financial_statement",
+          "description": "Get financial statements for a company",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Stock ticker symbol"
+              },
+              "statement": {
+                "type": "string",
+                "enum": [
+                  "income",
+                  "balance",
+                  "cashflow"
+                ],
+                "description": "Type of financial statement"
+              }
+            },
+            "required": [
+              "symbol",
+              "statement"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_company_overview",
+          "description": "Get company overview and key metrics",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Stock ticker symbol"
+              }
+            },
+            "required": [
+              "symbol"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@MCP-100/stock-market-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@MCP-100/stock-market-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0611.@MCP-100_stock-market-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 596
+  }
+}

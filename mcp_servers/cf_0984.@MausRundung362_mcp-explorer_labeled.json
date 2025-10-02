@@ -1,0 +1,153 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is primarily focused on project management and file operations within a controlled development environment. Its core functionality includes exploring project structures, managing files and directories, searching through code/files with advanced filtering, and checking for outdated dependencies. The tools provided enable secure file handling within allowed directories while enhancing developer productivity through intelligent project insights and dependency management.",
+    "reasoning": "The primary label \"Development Tools\" was chosen because the server's tools are directly aimed at assisting developers in project management, file operations, and dependency checking—core activities in software development. The secondary label \"File Management\" was selected due to the server's extensive capabilities for file searching, renaming, and deleting within allowed directories. The \"Database Operations\" label is included because advanced file searching with filtering resembles database querying operations. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "File Management",
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 983,
+    "server_name": "Project Explorer",
+    "rank_by_usage": 984,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@MausRundung362_mcp-explorer.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@MausRundung362/mcp-explorer/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 983,
+      "name": "Project Explorer",
+      "author": "@MausRundung362/mcp-explorer",
+      "overview": "Explore and analyze project files with advanced search and management capabilities. Navigate project structures, detect imports/exports, manage dependencies, and perform safe file operations within allowed directories. Enhance your development workflow with intelligent project insights and secure file handling.",
+      "repository_url": "https://github.com/MausRundung362/mcp-explorer",
+      "homepage": "https://smithery.ai/server/@MausRundung362/mcp-explorer",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@MausRundung362_mcp-explorer.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "explore_project",
+          "description": "Deploy Server Project Explorer @MausRundung362/mcp-explorer Try in Playground explore_project",
+          "parameters": [
+            {
+              "name": "explore_project",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_allowed_directories",
+          "description": "Returns the list of directories that this MCP server is allowed to access. This is useful for understanding which directories can be explored or searched before attempting to use other tools. The allowed directories are configured when the server starts and cannot be modified at runtime.",
+          "parameters": [
+            {
+              "name": "list_allowed_directories",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "search_files",
+          "description": "Advanced file and code search tool with comprehensive filtering and matching capabilities. Searches for patterns in files within allowed directories with support for regex patterns, file type filtering, size constraints, date filtering, and content preprocessing. When called without arguments, searches for common patterns in the current directory. Supports excluding comments and string literals for cleaner code searches. Results can be formatted as text, JSON, or structured output with configurable sorting and grouping options.",
+          "parameters": [
+            {
+              "name": "False",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "excludePatterns",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Add",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Item",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "excludeExtensions",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "rename_file",
+          "description": "Rename or move a file or directory. Can move files between directories and rename them in a single operation. If the destination exists, the operation will fail. Works across different directories and can be used for simple renaming within the same directory. Both source and destination must be within allowed directories.",
+          "parameters": [
+            {
+              "name": "rename_file",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "delete_file",
+          "description": "Delete a file or directory. Use with extreme caution as this operation cannot be undone. When deleting directories, all contents will be permanently removed. The recursive option must be explicitly set to true to delete non-empty directories. Only works within allowed directories.",
+          "parameters": [
+            {
+              "name": "delete_file",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "check_outdated",
+          "description": "Check for outdated npm packages in package.json using 'npm outdated'. Analyzes the current project's dependencies and shows which packages have newer versions available. Requires npm to be installed and accessible from the command line.",
+          "parameters": [
+            {
+              "name": "check_outdated",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@MausRundung362/mcp-explorer/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@MausRundung362/mcp-explorer/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0984.@MausRundung362_mcp-explorer_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 962
+  }
+}

@@ -1,0 +1,784 @@
+{
+  "labels": {
+    "analysis": "The Oraichain Multichain Server primarily focuses on interacting with the Oraichain blockchain network, providing tools for querying blockchain data, managing wallet operations, staking, and transaction broadcasting. Its core functionality revolves around blockchain interactions, validator management, and delegations, which are essential for users engaging with the Oraichain network.",
+    "reasoning": "The primary functionality of querying blockchain data and performing staking-related operations clearly aligns with cryptocurrency and blockchain activities. The tools include wallet balance checks, delegation, redelegation, undelegation, validator information retrieval, and transaction broadcasting, all of which are typical use cases in blockchain management. API Integration is also relevant due to the server's capability to query blockchain data and broadcast transactions, while Financial Services can be considered as a secondary label due to the staking and financial aspects of validator management.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "API Integration",
+      "Financial Services"
+    ],
+    "custom_label": "Validator Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1490,
+    "server_name": "Oraichain Multichain Server",
+    "rank_by_usage": 1491,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@oraichain_orai-multichain-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@oraichain/orai-multichain-mcp/mcp?config=eyJSUENfVVJMIjogImh0dHBzOi8vcnBjLm9yYWkuaW8ifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "oraichain_balance",
+          "description": "Get the balance of a Oraichain wallet.\n\n  If you want to get the balance of your first wallet, you don't need to provide the accountIndex.\n\n  Inputs ( input is an object ):\n  denom: string, eg: \"orai\",\n  address: string, eg: \"orai1...\",\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "denom": {
+                "type": "string",
+                "description": "The denomination of the coin"
+              },
+              "address": {
+                "type": "string",
+                "description": "The address of the wallet"
+              }
+            },
+            "required": [
+              "denom",
+              "address"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delegate",
+          "description": "Delegate tokens to a validator on Oraichain.\n\n  Inputs:\n  delegatorAddress: string - The address of the delegator.\n  validatorAddress: string - The address of the validator to delegate to.\n  amount: string - The amount to delegate to. If the denom is fully uppercase, multiply the input amount by 10^6. If the denom is fully lowercase, let it be.\n  denom: string - The denom of the amount to delegate to.\n  publicKey: string - The delegator's public key for signing.\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegatorAddress": {
+                "type": "string",
+                "description": "The address of the delegator"
+              },
+              "validatorAddress": {
+                "type": "string",
+                "description": "The address of the validator to delegate to"
+              },
+              "amount": {
+                "type": "string",
+                "description": "The amount to delegate to. If the denom is fully uppercase, multiply the input amount by 10^6. If the denom is fully lowercase, let it be."
+              },
+              "denom": {
+                "type": "string",
+                "description": "The denom of the amount to delegate to."
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The delegator's public key for signing"
+              }
+            },
+            "required": [
+              "delegatorAddress",
+              "validatorAddress",
+              "amount",
+              "denom",
+              "publicKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getDelegations",
+          "description": "Get all delegations for a delegator on Oraichain.\n\n  Inputs (input is an object):\n  delegatorAddress: string - The address of the delegator\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegatorAddress": {
+                "type": "string",
+                "description": "The address of the delegator"
+              }
+            },
+            "required": [
+              "delegatorAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_validator_info",
+          "description": "Get validator information including commission on Oraichain given a validator address.\n\n  Inputs (input is an object):\n  validatorAddress: string - The address of the validator\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "validatorAddress": {
+                "type": "string",
+                "description": "The address of the validator"
+              }
+            },
+            "required": [
+              "validatorAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_all_validators_info",
+          "description": "Get all validators information including commission on Oraichain. You don't need to provide any input. This tool is useful when you want to get all validators information.\n\n  It will return a list of validators with their information including moniker, operator address, commission rate, etc. You should use this tool when users want to ask you about a validator without knowing the validator address, but only know the moniker.\n\n  Inputs (input is empty)\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "redelegate",
+          "description": "Redelegate tokens from one validator to another on Oraichain.\n\n  Inputs (input is an object):\n  delegatorAddress: string - The address of the delegator\n  validatorSrcAddress: string - The address of the source validator\n  validatorDstAddress: string - The address of the destination validator\n  amount: string - The amount to redelegate in ORAI\n  publicKey: string - The delegator's public key for signing\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegatorAddress": {
+                "type": "string",
+                "description": "The address of the delegator"
+              },
+              "validatorSrcAddress": {
+                "type": "string",
+                "description": "The address of the source validator"
+              },
+              "validatorDstAddress": {
+                "type": "string",
+                "description": "The address of the destination validator"
+              },
+              "amount": {
+                "type": "string",
+                "description": "The amount to redelegate in ORAI"
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The delegator's public key for signing"
+              }
+            },
+            "required": [
+              "delegatorAddress",
+              "validatorSrcAddress",
+              "validatorDstAddress",
+              "amount",
+              "publicKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "undelegate",
+          "description": "Undelegate tokens from a validator on Oraichain.\n\n  Inputs (input is an object):\n  delegatorAddress: string - The address of the delegator\n  validatorAddress: string - The address of the validator to undelegate from\n  amount: string - The amount to undelegate in ORAI\n  publicKey: string - The delegator's public key for signing\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegatorAddress": {
+                "type": "string",
+                "description": "The address of the delegator"
+              },
+              "validatorAddress": {
+                "type": "string",
+                "description": "The address of the validator to undelegate from"
+              },
+              "amount": {
+                "type": "string",
+                "description": "The amount to undelegate in ORAI"
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The delegator's public key for signing"
+              }
+            },
+            "required": [
+              "delegatorAddress",
+              "validatorAddress",
+              "amount",
+              "publicKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "claimCommission",
+          "description": "Claim validator commission rewards on Oraichain.\n\n  Inputs (input is an object):\n  validatorAddress: string - The address of the validator\n  publicKey: string - The validator's public key for signing\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "validatorAddress": {
+                "type": "string",
+                "description": "The address of the validator"
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The validator's public key for signing"
+              }
+            },
+            "required": [
+              "validatorAddress",
+              "publicKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_token_transfer",
+          "description": "Generate a transfer message for a token with an amount to a recipient address.\n\n  Inputs (input is an object):\n  senderAddress: string - The sender address\n  recipient: string - The recipient address\n  publicKey: string - The public key of the sender\n  amount: {\n    amount: string - The amount of tokens to transfer\n    denom: string - The denom of the token to transfer\n  }\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "senderAddress": {
+                "type": "string",
+                "description": "The sender address"
+              },
+              "recipient": {
+                "type": "string",
+                "description": "The recipient address"
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The public key of the sender"
+              },
+              "amount": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "The amount of tokens to transfer"
+                  },
+                  "denom": {
+                    "type": "string",
+                    "description": "The denom of the token to transfer"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "denom"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "senderAddress",
+              "recipient",
+              "publicKey",
+              "amount"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_broadcast_tx",
+          "description": "Broadcast a signed transaction to the network.\n\n  Inputs (input is an object):\n  signedTx: string - The signed transaction in base64 format\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "signedTx": {
+                "type": "string",
+                "description": "The signed transaction in base64 format"
+              }
+            },
+            "required": [
+              "signedTx"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_broadcast_tx_from_bytes",
+          "description": "Broadcast a signed transaction to the network using signed body bytes, auth bytes and signature.\n\n  Inputs (input is an object):\n  signedBodyBytes: string - The signed transaction body in base64 format\n  signedAuthBytes: string - The signed transaction auth info in base64 format\n  signatures: string[] - The signatures for the transaction in base64 format\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "signedBodyBytes": {
+                "type": "string",
+                "description": "The signed transaction body in base64 format"
+              },
+              "signedAuthBytes": {
+                "type": "string",
+                "description": "The signed transaction auth info in base64 format"
+              },
+              "signatures": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "The signatures for the transaction in base64 format"
+                }
+              }
+            },
+            "required": [
+              "signedBodyBytes",
+              "signedAuthBytes",
+              "signatures"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_broadcast_sign_doc",
+          "description": "Broadcast a sign doc base64 to the network.\n\n  Inputs (input is an object):\n  signDocBase64: string - The sign doc base64\n  signature: string - The signature\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "signDocBase64": {
+                "type": "string",
+                "description": "The sign doc base64"
+              },
+              "signature": {
+                "type": "string",
+                "description": "The signature"
+              }
+            },
+            "required": [
+              "signDocBase64",
+              "signature"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_tx_hash_info",
+          "description": "Get the info of a transaction hash. You can use this tool to get the info of a transaction hash after broadcasting a transaction. It can be used to check the status of a transaction and get the transaction details. It is a proof that the transaction is successfully executed.\n\n  Note: code 0 means the transaction is successfully executed. non-zero code means the transaction is failed.\n\n  Inputs (input is an object):\n  txHash: string - The transaction hash in hex format.\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "txHash": {
+                "type": "string",
+                "description": "The transaction hash in hex format. You can get the transaction hash from the response of the broadcast transaction tools."
+              }
+            },
+            "required": [
+              "txHash"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 13,
+      "tool_names": [
+        "oraichain_balance",
+        "delegate",
+        "getDelegations",
+        "get_validator_info",
+        "get_all_validators_info",
+        "redelegate",
+        "undelegate",
+        "claimCommission",
+        "oraichain_token_transfer",
+        "oraichain_broadcast_tx",
+        "oraichain_broadcast_tx_from_bytes",
+        "oraichain_broadcast_sign_doc",
+        "oraichain_tx_hash_info"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1490,
+      "name": "Oraichain Multichain Server",
+      "author": "@oraichain/orai-multichain-mcp",
+      "overview": "Connect and interact with multichain data seamlessly. Leverage the power of Oraichain to query blockchain information and integrate with AI agents effortlessly.",
+      "repository_url": "https://github.com/oraichain/orai-mcp",
+      "homepage": "https://smithery.ai/server/@oraichain/orai-multichain-mcp",
+      "remote_or_local": "Remote",
+      "license": "GPL-3.0",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@oraichain_orai-multichain-mcp.json",
+      "tools_count": 13,
+      "tools": [
+        {
+          "name": "oraichain_balance",
+          "description": "Get the balance of a Oraichain wallet.\n\n  If you want to get the balance of your first wallet, you don't need to provide the accountIndex.\n\n  Inputs ( input is an object ):\n  denom: string, eg: \"orai\",\n  address: string, eg: \"orai1...\",\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "denom": {
+                "type": "string",
+                "description": "The denomination of the coin"
+              },
+              "address": {
+                "type": "string",
+                "description": "The address of the wallet"
+              }
+            },
+            "required": [
+              "denom",
+              "address"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delegate",
+          "description": "Delegate tokens to a validator on Oraichain.\n\n  Inputs:\n  delegatorAddress: string - The address of the delegator.\n  validatorAddress: string - The address of the validator to delegate to.\n  amount: string - The amount to delegate to. If the denom is fully uppercase, multiply the input amount by 10^6. If the denom is fully lowercase, let it be.\n  denom: string - The denom of the amount to delegate to.\n  publicKey: string - The delegator's public key for signing.\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegatorAddress": {
+                "type": "string",
+                "description": "The address of the delegator"
+              },
+              "validatorAddress": {
+                "type": "string",
+                "description": "The address of the validator to delegate to"
+              },
+              "amount": {
+                "type": "string",
+                "description": "The amount to delegate to. If the denom is fully uppercase, multiply the input amount by 10^6. If the denom is fully lowercase, let it be."
+              },
+              "denom": {
+                "type": "string",
+                "description": "The denom of the amount to delegate to."
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The delegator's public key for signing"
+              }
+            },
+            "required": [
+              "delegatorAddress",
+              "validatorAddress",
+              "amount",
+              "denom",
+              "publicKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getDelegations",
+          "description": "Get all delegations for a delegator on Oraichain.\n\n  Inputs (input is an object):\n  delegatorAddress: string - The address of the delegator\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegatorAddress": {
+                "type": "string",
+                "description": "The address of the delegator"
+              }
+            },
+            "required": [
+              "delegatorAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_validator_info",
+          "description": "Get validator information including commission on Oraichain given a validator address.\n\n  Inputs (input is an object):\n  validatorAddress: string - The address of the validator\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "validatorAddress": {
+                "type": "string",
+                "description": "The address of the validator"
+              }
+            },
+            "required": [
+              "validatorAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_all_validators_info",
+          "description": "Get all validators information including commission on Oraichain. You don't need to provide any input. This tool is useful when you want to get all validators information.\n\n  It will return a list of validators with their information including moniker, operator address, commission rate, etc. You should use this tool when users want to ask you about a validator without knowing the validator address, but only know the moniker.\n\n  Inputs (input is empty)\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "redelegate",
+          "description": "Redelegate tokens from one validator to another on Oraichain.\n\n  Inputs (input is an object):\n  delegatorAddress: string - The address of the delegator\n  validatorSrcAddress: string - The address of the source validator\n  validatorDstAddress: string - The address of the destination validator\n  amount: string - The amount to redelegate in ORAI\n  publicKey: string - The delegator's public key for signing\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegatorAddress": {
+                "type": "string",
+                "description": "The address of the delegator"
+              },
+              "validatorSrcAddress": {
+                "type": "string",
+                "description": "The address of the source validator"
+              },
+              "validatorDstAddress": {
+                "type": "string",
+                "description": "The address of the destination validator"
+              },
+              "amount": {
+                "type": "string",
+                "description": "The amount to redelegate in ORAI"
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The delegator's public key for signing"
+              }
+            },
+            "required": [
+              "delegatorAddress",
+              "validatorSrcAddress",
+              "validatorDstAddress",
+              "amount",
+              "publicKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "undelegate",
+          "description": "Undelegate tokens from a validator on Oraichain.\n\n  Inputs (input is an object):\n  delegatorAddress: string - The address of the delegator\n  validatorAddress: string - The address of the validator to undelegate from\n  amount: string - The amount to undelegate in ORAI\n  publicKey: string - The delegator's public key for signing\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegatorAddress": {
+                "type": "string",
+                "description": "The address of the delegator"
+              },
+              "validatorAddress": {
+                "type": "string",
+                "description": "The address of the validator to undelegate from"
+              },
+              "amount": {
+                "type": "string",
+                "description": "The amount to undelegate in ORAI"
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The delegator's public key for signing"
+              }
+            },
+            "required": [
+              "delegatorAddress",
+              "validatorAddress",
+              "amount",
+              "publicKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "claimCommission",
+          "description": "Claim validator commission rewards on Oraichain.\n\n  Inputs (input is an object):\n  validatorAddress: string - The address of the validator\n  publicKey: string - The validator's public key for signing\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "validatorAddress": {
+                "type": "string",
+                "description": "The address of the validator"
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The validator's public key for signing"
+              }
+            },
+            "required": [
+              "validatorAddress",
+              "publicKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_token_transfer",
+          "description": "Generate a transfer message for a token with an amount to a recipient address.\n\n  Inputs (input is an object):\n  senderAddress: string - The sender address\n  recipient: string - The recipient address\n  publicKey: string - The public key of the sender\n  amount: {\n    amount: string - The amount of tokens to transfer\n    denom: string - The denom of the token to transfer\n  }\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "senderAddress": {
+                "type": "string",
+                "description": "The sender address"
+              },
+              "recipient": {
+                "type": "string",
+                "description": "The recipient address"
+              },
+              "publicKey": {
+                "type": "string",
+                "description": "The public key of the sender"
+              },
+              "amount": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "The amount of tokens to transfer"
+                  },
+                  "denom": {
+                    "type": "string",
+                    "description": "The denom of the token to transfer"
+                  }
+                },
+                "required": [
+                  "amount",
+                  "denom"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "senderAddress",
+              "recipient",
+              "publicKey",
+              "amount"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_broadcast_tx",
+          "description": "Broadcast a signed transaction to the network.\n\n  Inputs (input is an object):\n  signedTx: string - The signed transaction in base64 format\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "signedTx": {
+                "type": "string",
+                "description": "The signed transaction in base64 format"
+              }
+            },
+            "required": [
+              "signedTx"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_broadcast_tx_from_bytes",
+          "description": "Broadcast a signed transaction to the network using signed body bytes, auth bytes and signature.\n\n  Inputs (input is an object):\n  signedBodyBytes: string - The signed transaction body in base64 format\n  signedAuthBytes: string - The signed transaction auth info in base64 format\n  signatures: string[] - The signatures for the transaction in base64 format\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "signedBodyBytes": {
+                "type": "string",
+                "description": "The signed transaction body in base64 format"
+              },
+              "signedAuthBytes": {
+                "type": "string",
+                "description": "The signed transaction auth info in base64 format"
+              },
+              "signatures": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "The signatures for the transaction in base64 format"
+                }
+              }
+            },
+            "required": [
+              "signedBodyBytes",
+              "signedAuthBytes",
+              "signatures"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_broadcast_sign_doc",
+          "description": "Broadcast a sign doc base64 to the network.\n\n  Inputs (input is an object):\n  signDocBase64: string - The sign doc base64\n  signature: string - The signature\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "signDocBase64": {
+                "type": "string",
+                "description": "The sign doc base64"
+              },
+              "signature": {
+                "type": "string",
+                "description": "The signature"
+              }
+            },
+            "required": [
+              "signDocBase64",
+              "signature"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "oraichain_tx_hash_info",
+          "description": "Get the info of a transaction hash. You can use this tool to get the info of a transaction hash after broadcasting a transaction. It can be used to check the status of a transaction and get the transaction details. It is a proof that the transaction is successfully executed.\n\n  Note: code 0 means the transaction is successfully executed. non-zero code means the transaction is failed.\n\n  Inputs (input is an object):\n  txHash: string - The transaction hash in hex format.\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "txHash": {
+                "type": "string",
+                "description": "The transaction hash in hex format. You can get the transaction hash from the response of the broadcast transaction tools."
+              }
+            },
+            "required": [
+              "txHash"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"RPC_URL\": \"https://rpc.orai.io\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@oraichain/orai-multichain-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"RPC_URL\": \"https://rpc.orai.io\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@oraichain/orai-multichain-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1491.@oraichain_orai-multichain-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1377
+  }
+}

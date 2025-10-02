@@ -1,0 +1,189 @@
+{
+  "labels": {
+    "analysis": "The MCP Server's core functionality revolves around AI-powered image generation from text prompts. It leverages advanced AI models like Flux Schnell to create high-quality images, variants, and SVGs based on user input. The tools allow for generating single images, multiple images, variants, and SVGs, as well as managing predictions through creation, retrieval, and listing. The server emphasizes seamless integration with AI assistants and local processing for security. The primary use case is enhancing the capabilities of AI systems with image generation, making it a specialized content creation tool with AI/ML capabilities.",
+    "reasoning": "The primary label \"Content Creation\" was chosen because the server's main functionality is generating images and SVGs from text, which directly supports creative content production. The secondary label \"AI/ML Tools\" was added because the server relies on advanced machine learning models for image generation. The tools provided are deeply integrated with AI capabilities, justifying this label. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "AI/ML Tools"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 303,
+    "server_name": "Replicate Flux MCP",
+    "rank_by_usage": 304,
+    "usage_count": "109",
+    "original_file": "../crawler/smithery/@awkoy_replicate-flux-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@awkoy/replicate-flux-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 303,
+      "name": "Replicate Flux MCP",
+      "author": "@awkoy/replicate-flux-mcp",
+      "overview": "Generate stunning images from text prompts using advanced AI models. Seamlessly integrate with your AI assistants to enhance their capabilities with high-quality image generation. Enjoy customizable parameters for tailored outputs, all processed securely and locally.",
+      "repository_url": "https://github.com/awkoy/replicate-flux-mcp",
+      "homepage": "https://smithery.ai/server/@awkoy/replicate-flux-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "109",
+      "success_rate": "98.19%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@awkoy_replicate-flux-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "generate_image",
+          "description": "Deploy Server Replicate Flux MCP @awkoy/replicate-flux-mcp Try in Playground generate_image",
+          "parameters": [
+            {
+              "name": "generate_image",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "generate_multiple_images",
+          "description": "Generate multiple images from an array of prompts using Flux Schnell model",
+          "parameters": [
+            {
+              "name": "generate_multiple_images",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "generate_image_variants",
+          "description": "Generate multiple variants of the same image from a single prompt",
+          "parameters": [
+            {
+              "name": "generate_image_variants",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "generate_svg",
+          "description": "Generate an SVG from a text prompt using Recraft model",
+          "parameters": [
+            {
+              "name": "size",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "style",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "prompt",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_prediction",
+          "description": "Get details of a specific prediction by ID",
+          "parameters": [
+            {
+              "name": "get_prediction",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "predictionId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create_prediction",
+          "description": "Generate an prediction from a text prompt using Flux Schnell model",
+          "parameters": [
+            {
+              "name": "output_quality",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "num_inference_steps",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "disable_safety_checker",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "True",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "False",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "prediction_list",
+          "description": "Get a list of recent predictions from Replicate",
+          "parameters": [
+            {
+              "name": "prediction_list",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@awkoy/replicate-flux-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "replicateApiToken",
+          "required": true,
+          "description": "The API key for the Replicate API."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@awkoy/replicate-flux-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0304.@awkoy_replicate-flux-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 300
+  }
+}

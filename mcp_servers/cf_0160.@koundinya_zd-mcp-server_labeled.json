@@ -1,0 +1,181 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on integrating with Zendesk, a popular customer support platform, enabling users to interact with Zendesk tickets and data through a standardized interface. The tools allow for retrieval, search, creation, updating of tickets, adding notes, and fetching linked incidents. This streamlines customer support workflows by allowing seamless integration with LLM-powered applications, enhancing automation and efficiency in handling customer queries and support tickets.",
+    "reasoning": "The primary label \"Customer Support\" is chosen because the server's core functionality revolves around managing Zendesk tickets, which is a fundamental aspect of customer support operations. The secondary labels \"API Integration\" and \"Daily Productivity\" are relevant because the server acts as an API interface to Zendesk, facilitating automation and productivity enhancements in customer support workflows.",
+    "primary_label": "E-commerce",
+    "secondary_labels": [
+      "API Integration",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 159,
+    "server_name": "Zendesk Integration Server",
+    "rank_by_usage": 160,
+    "usage_count": "334",
+    "original_file": "../crawler/smithery/@koundinya_zd-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@koundinya/zd-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 159,
+      "name": "Zendesk Integration Server",
+      "author": "@koundinya/zd-mcp-server",
+      "overview": "Enable seamless interaction with Zendesk tickets and data through a standardized MCP interface. Retrieve, search, create, and update tickets, as well as add notes and fetch linked incidents, all via simple tool calls. Streamline customer support workflows by integrating Zendesk capabilities directly into your LLM-powered applications.",
+      "repository_url": "https://github.com/koundinya/zd-mcp-server",
+      "homepage": "https://smithery.ai/server/@koundinya/zd-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "334",
+      "success_rate": "99.72%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@koundinya_zd-mcp-server.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "zendesk_get_ticket",
+          "description": "Deploy Server Zendesk Integration Server Claim Server @koundinya/zd-mcp-server Try in Playground zendesk_get_ticket",
+          "parameters": [
+            {
+              "name": "zendesk_get_ticket",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "ticket_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "zendesk_update_ticket",
+          "description": "Update a Zendesk ticket's properties",
+          "parameters": [
+            {
+              "name": "zendesk_update_ticket",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "zendesk_create_ticket",
+          "description": "Create a new Zendesk ticket",
+          "parameters": [
+            {
+              "name": "zendesk_create_ticket",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "zendesk_add_private_note",
+          "description": "Add a private internal note to a Zendesk ticket",
+          "parameters": [
+            {
+              "name": "note",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "ticket_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "zendesk_add_public_note",
+          "description": "Add a public comment to a Zendesk ticket",
+          "parameters": [
+            {
+              "name": "comment",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "ticket_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "zendesk_search",
+          "description": "Search for Zendesk tickets based on a query",
+          "parameters": [
+            {
+              "name": "zendesk_search",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "zendesk_get_ticket_details",
+          "description": "Get detailed information about a Zendesk ticket including comments",
+          "parameters": [
+            {
+              "name": "zendesk_get_ticket_details",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "zendesk_get_linked_incidents",
+          "description": "Fetch all incident tickets linked to a particular ticket",
+          "parameters": [
+            {
+              "name": "zendesk_get_linked_incidents",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@koundinya/zd-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "zendeskToken",
+          "required": true,
+          "description": "The Zendesk API token"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@koundinya/zd-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0160.@koundinya_zd-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 157
+  }
+}

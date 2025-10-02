@@ -1,0 +1,2006 @@
+{
+  "labels": {
+    "analysis": "The MCP Server primarily functions as a comprehensive interface for managing Meta (Facebook/Instagram) advertising campaigns. It provides tools for all aspects of ad management including account access, campaign creation/updates, ad set management, creative handling, performance insights, and authentication. The server's tools enable both procedural operations (like creating ads) and analytical functions (like performance insights), making it particularly valuable for digital marketing professionals and businesses running Meta-based ad campaigns.",
+    "reasoning": "The primary label is selected as \"Social Media\" because the server's core functionality revolves around Meta's advertising platforms (Facebook/Instagram). The secondary labels \"Data Analysis & Processing\" and \"API Integration\" are chosen because the server provides performance insights and interacts with Meta's API to enable programmatic ad management. A custom label is used to highlight the server's specialized focus on Meta's advertising ecosystem, as this is more specific than the general \"Social Media\" category.",
+    "primary_label": "Social Media",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "API Integration"
+    ],
+    "custom_label": "Meta Ads Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 252,
+    "server_name": "Meta Ads Interface",
+    "rank_by_usage": 253,
+    "usage_count": "154",
+    "original_file": "../crawler/smithery/@brnardo_meta-ads-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@brnardo/meta-ads-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_ad_accounts",
+          "description": "\n    Get ad accounts accessible by a user.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        user_id: Meta user ID or \"me\" for the current user\n        limit: Maximum number of accounts to return (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "user_id": {
+                "default": "me",
+                "title": "User Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "get_ad_accountsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_account_info",
+          "description": "\n    Get detailed information about a specific ad account.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              }
+            },
+            "title": "get_account_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_campaigns",
+          "description": "\n    Get campaigns for a Meta Ads account with optional filtering.\n    \n    Note: By default, the Meta API returns a subset of available fields. \n    Other fields like 'effective_status', 'special_ad_categories', \n    'lifetime_budget', 'spend_cap', 'budget_remaining', 'promoted_object', \n    'source_campaign_id', etc., might be available but require specifying them\n    in the API call (currently not exposed by this tool's parameters).\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        limit: Maximum number of campaigns to return (default: 10)\n        status_filter: Filter by effective status (e.g., 'ACTIVE', 'PAUSED', 'ARCHIVED').\n                       Maps to the 'effective_status' API parameter, which expects an array\n                       (this function handles the required JSON formatting). Leave empty for all statuses.\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "status_filter": {
+                "default": "",
+                "title": "Status Filter",
+                "type": "string"
+              }
+            },
+            "title": "get_campaignsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_campaign_details",
+          "description": "\n    Get detailed information about a specific campaign.\n\n    Note: This function requests a specific set of fields ('id,name,objective,status,...'). \n    The Meta API offers many other fields for campaigns (e.g., 'effective_status', 'source_campaign_id', etc.) \n    that could be added to the 'fields' parameter in the code if needed.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        campaign_id: Meta Ads campaign ID\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "campaign_id": {
+                "default": null,
+                "title": "Campaign Id",
+                "type": "string"
+              }
+            },
+            "title": "get_campaign_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_campaign",
+          "description": "\n    Create a new campaign in a Meta Ads account.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        name: Campaign name\n        objective: Campaign objective (AWARENESS, TRAFFIC, ENGAGEMENT, etc.)\n        status: Initial campaign status (default: PAUSED)\n        special_ad_categories: List of special ad categories if applicable\n        daily_budget: Daily budget in account currency (in cents) as a string\n        lifetime_budget: Lifetime budget in account currency (in cents) as a string\n        buying_type: Buying type (e.g., 'AUCTION')\n        bid_strategy: Bid strategy (e.g., 'LOWEST_COST', 'LOWEST_COST_WITH_BID_CAP', 'COST_CAP')\n        bid_cap: Bid cap in account currency (in cents) as a string\n        spend_cap: Spending limit for the campaign in account currency (in cents) as a string\n        campaign_budget_optimization: Whether to enable campaign budget optimization\n        ab_test_control_setups: Settings for A/B testing (e.g., [{\"name\":\"Creative A\", \"ad_format\":\"SINGLE_IMAGE\"}])\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "objective": {
+                "default": null,
+                "title": "Objective",
+                "type": "string"
+              },
+              "status": {
+                "default": "PAUSED",
+                "title": "Status",
+                "type": "string"
+              },
+              "special_ad_categories": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Special Ad Categories",
+                "type": "array"
+              },
+              "daily_budget": {
+                "default": null,
+                "title": "daily_budget",
+                "type": "string"
+              },
+              "lifetime_budget": {
+                "default": null,
+                "title": "lifetime_budget",
+                "type": "string"
+              },
+              "buying_type": {
+                "default": null,
+                "title": "Buying Type",
+                "type": "string"
+              },
+              "bid_strategy": {
+                "default": null,
+                "title": "Bid Strategy",
+                "type": "string"
+              },
+              "bid_cap": {
+                "default": null,
+                "title": "bid_cap",
+                "type": "string"
+              },
+              "spend_cap": {
+                "default": null,
+                "title": "spend_cap",
+                "type": "string"
+              },
+              "campaign_budget_optimization": {
+                "default": null,
+                "title": "Campaign Budget Optimization",
+                "type": "boolean"
+              },
+              "ab_test_control_setups": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Ab Test Control Setups"
+              }
+            },
+            "title": "create_campaignArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_campaign",
+          "description": "\n    Update an existing campaign in a Meta Ads account.\n\n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        campaign_id: Meta Ads campaign ID (required)\n        name: New campaign name\n        status: New campaign status (e.g., 'ACTIVE', 'PAUSED')\n        special_ad_categories: List of special ad categories if applicable\n        daily_budget: New daily budget in account currency (in cents) as a string\n        lifetime_budget: New lifetime budget in account currency (in cents) as a string\n        bid_strategy: New bid strategy\n        bid_cap: New bid cap in account currency (in cents) as a string\n        spend_cap: New spending limit for the campaign in account currency (in cents) as a string\n        campaign_budget_optimization: Enable/disable campaign budget optimization\n        objective: New campaign objective (Note: May not always be updatable)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "campaign_id": {
+                "default": null,
+                "title": "Campaign Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "status": {
+                "default": null,
+                "title": "Status",
+                "type": "string"
+              },
+              "special_ad_categories": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Special Ad Categories",
+                "type": "array"
+              },
+              "daily_budget": {
+                "default": null,
+                "title": "daily_budget",
+                "type": "string"
+              },
+              "lifetime_budget": {
+                "default": null,
+                "title": "lifetime_budget",
+                "type": "string"
+              },
+              "bid_strategy": {
+                "default": null,
+                "title": "Bid Strategy",
+                "type": "string"
+              },
+              "bid_cap": {
+                "default": null,
+                "title": "bid_cap",
+                "type": "string"
+              },
+              "spend_cap": {
+                "default": null,
+                "title": "spend_cap",
+                "type": "string"
+              },
+              "campaign_budget_optimization": {
+                "default": null,
+                "title": "Campaign Budget Optimization",
+                "type": "boolean"
+              },
+              "objective": {
+                "default": null,
+                "title": "Objective",
+                "type": "string"
+              }
+            },
+            "title": "update_campaignArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_adsets",
+          "description": "\n    Get ad sets for a Meta Ads account with optional filtering by campaign.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        limit: Maximum number of ad sets to return (default: 10)\n        campaign_id: Optional campaign ID to filter by\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "campaign_id": {
+                "default": "",
+                "title": "Campaign Id",
+                "type": "string"
+              }
+            },
+            "title": "get_adsetsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_adset_details",
+          "description": "\n    Get detailed information about a specific ad set.\n    \n    Args:\n        adset_id: Meta Ads ad set ID (required)\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    \n    Example:\n        To call this function through MCP, pass the adset_id as the first argument:\n        {\n            \"args\": \"YOUR_ADSET_ID\"\n        }\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "adset_id": {
+                "default": null,
+                "title": "Adset Id",
+                "type": "string"
+              }
+            },
+            "title": "get_adset_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_adset",
+          "description": "\n    Create a new ad set in a Meta Ads account.\n    \n    Args:\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        campaign_id: Meta Ads campaign ID this ad set belongs to\n        name: Ad set name\n        status: Initial ad set status (default: PAUSED)\n        daily_budget: Daily budget in account currency (in cents) as a string\n        lifetime_budget: Lifetime budget in account currency (in cents) as a string\n        targeting: Targeting specifications including age, location, interests, etc.\n                  Use targeting_automation.advantage_audience=1 for automatic audience finding\n        optimization_goal: Conversion optimization goal (e.g., 'LINK_CLICKS', 'REACH', 'CONVERSIONS')\n        billing_event: How you're charged (e.g., 'IMPRESSIONS', 'LINK_CLICKS')\n        bid_amount: Bid amount in account currency (in cents)\n        bid_strategy: Bid strategy (e.g., 'LOWEST_COST', 'LOWEST_COST_WITH_BID_CAP')\n        start_time: Start time in ISO 8601 format (e.g., '2023-12-01T12:00:00-0800')\n        end_time: End time in ISO 8601 format\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "campaign_id": {
+                "default": null,
+                "title": "Campaign Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "status": {
+                "default": "PAUSED",
+                "title": "Status",
+                "type": "string"
+              },
+              "daily_budget": {
+                "default": null,
+                "title": "daily_budget",
+                "type": "string"
+              },
+              "lifetime_budget": {
+                "default": null,
+                "title": "lifetime_budget",
+                "type": "string"
+              },
+              "targeting": {
+                "additionalProperties": true,
+                "default": null,
+                "title": "Targeting",
+                "type": "object"
+              },
+              "optimization_goal": {
+                "default": null,
+                "title": "Optimization Goal",
+                "type": "string"
+              },
+              "billing_event": {
+                "default": null,
+                "title": "Billing Event",
+                "type": "string"
+              },
+              "bid_amount": {
+                "default": null,
+                "title": "bid_amount",
+                "type": "string"
+              },
+              "bid_strategy": {
+                "default": null,
+                "title": "Bid Strategy",
+                "type": "string"
+              },
+              "start_time": {
+                "default": null,
+                "title": "Start Time",
+                "type": "string"
+              },
+              "end_time": {
+                "default": null,
+                "title": "End Time",
+                "type": "string"
+              },
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "title": "create_adsetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_adset",
+          "description": "\n    Update an ad set with new settings including frequency caps.\n    \n    Args:\n        adset_id: Meta Ads ad set ID\n        frequency_control_specs: List of frequency control specifications \n                                 (e.g. [{\"event\": \"IMPRESSIONS\", \"interval_days\": 7, \"max_frequency\": 3}])\n        bid_strategy: Bid strategy (e.g., 'LOWEST_COST_WITH_BID_CAP')\n        bid_amount: Bid amount in account currency (in cents for USD)\n        status: Update ad set status (ACTIVE, PAUSED, etc.)\n        targeting: Targeting specifications including targeting_automation\n                  (e.g. {\"targeting_automation\":{\"advantage_audience\":1}})\n        optimization_goal: Conversion optimization goal (e.g., 'LINK_CLICKS', 'CONVERSIONS', 'APP_INSTALLS', etc.)\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "adset_id": {
+                "title": "Adset Id",
+                "type": "string"
+              },
+              "frequency_control_specs": {
+                "default": null,
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "title": "Frequency Control Specs",
+                "type": "array"
+              },
+              "bid_strategy": {
+                "default": null,
+                "title": "Bid Strategy",
+                "type": "string"
+              },
+              "bid_amount": {
+                "default": null,
+                "title": "Bid Amount",
+                "type": "integer"
+              },
+              "status": {
+                "default": null,
+                "title": "Status",
+                "type": "string"
+              },
+              "targeting": {
+                "additionalProperties": true,
+                "default": null,
+                "title": "Targeting",
+                "type": "object"
+              },
+              "optimization_goal": {
+                "default": null,
+                "title": "Optimization Goal",
+                "type": "string"
+              },
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "required": [
+              "adset_id"
+            ],
+            "title": "update_adsetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ads",
+          "description": "\n    Get ads for a Meta Ads account with optional filtering.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        limit: Maximum number of ads to return (default: 10)\n        campaign_id: Optional campaign ID to filter by\n        adset_id: Optional ad set ID to filter by\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "campaign_id": {
+                "default": "",
+                "title": "Campaign Id",
+                "type": "string"
+              },
+              "adset_id": {
+                "default": "",
+                "title": "Adset Id",
+                "type": "string"
+              }
+            },
+            "title": "get_adsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ad_details",
+          "description": "\n    Get detailed information about a specific ad.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "get_ad_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_ad",
+          "description": "\n    Create a new ad with an existing creative.\n    \n    Args:\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        name: Ad name\n        adset_id: Ad set ID where this ad will be placed\n        creative_id: ID of an existing creative to use\n        status: Initial ad status (default: PAUSED)\n        bid_amount: Optional bid amount in account currency (in cents)\n        tracking_specs: Optional tracking specifications (e.g., for pixel events).\n                      Example: [{\"action.type\":\"offsite_conversion\",\"fb_pixel\":[\"YOUR_PIXEL_ID\"]}]\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "adset_id": {
+                "default": null,
+                "title": "Adset Id",
+                "type": "string"
+              },
+              "creative_id": {
+                "default": null,
+                "title": "Creative Id",
+                "type": "string"
+              },
+              "status": {
+                "default": "PAUSED",
+                "title": "Status",
+                "type": "string"
+              },
+              "bid_amount": {
+                "default": null,
+                "title": "bid_amount",
+                "type": "string"
+              },
+              "tracking_specs": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Tracking Specs"
+              },
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "title": "create_adArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ad_creatives",
+          "description": "\n    Get creative details for a specific ad. Best if combined with get_ad_image to get the full image.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "get_ad_creativesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ad_image",
+          "description": "\n    Get, download, and visualize a Meta ad image in one step. Useful to see the image in the LLM.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n    \n    Returns:\n        The ad image ready for direct visual analysis\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "get_ad_imageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "save_ad_image_locally",
+          "description": "\n    Get, download, and save a Meta ad image locally, returning the file path.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n        output_dir: Directory to save the image file (default: 'ad_images')\n    \n    Returns:\n        The file path to the saved image, or an error message string.\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              },
+              "output_dir": {
+                "default": "ad_images",
+                "title": "Output Dir",
+                "type": "string"
+              }
+            },
+            "title": "save_ad_image_locallyArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_ad",
+          "description": "\n    Update an ad with new settings.\n    \n    Args:\n        ad_id: Meta Ads ad ID\n        status: Update ad status (ACTIVE, PAUSED, etc.)\n        bid_amount: Bid amount in account currency (in cents for USD)\n        tracking_specs: Optional tracking specifications (e.g., for pixel events).\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "ad_id": {
+                "title": "Ad Id",
+                "type": "string"
+              },
+              "status": {
+                "default": null,
+                "title": "Status",
+                "type": "string"
+              },
+              "bid_amount": {
+                "default": null,
+                "title": "Bid Amount",
+                "type": "integer"
+              },
+              "tracking_specs": {
+                "default": null,
+                "title": "tracking_specs",
+                "type": "string"
+              },
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ad_id"
+            ],
+            "title": "update_adArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "upload_ad_image",
+          "description": "\n    Upload an image to use in Meta Ads creatives.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        image_path: Path to the image file to upload\n        name: Optional name for the image (default: filename)\n    \n    Returns:\n        JSON response with image details including hash for creative creation\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "image_path": {
+                "default": null,
+                "title": "Image Path",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "title": "upload_ad_imageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_ad_creative",
+          "description": "\n    Create a new ad creative using an uploaded image hash.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        name: Creative name\n        image_hash: Hash of the uploaded image\n        page_id: Facebook Page ID to be used for the ad\n        link_url: Destination URL for the ad\n        message: Ad copy/text\n        headline: Ad headline\n        description: Ad description\n        call_to_action_type: Call to action button type (e.g., 'LEARN_MORE', 'SIGN_UP', 'SHOP_NOW')\n        instagram_actor_id: Optional Instagram account ID for Instagram placements\n    \n    Returns:\n        JSON response with created creative details\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "image_hash": {
+                "default": null,
+                "title": "Image Hash",
+                "type": "string"
+              },
+              "page_id": {
+                "default": null,
+                "title": "Page Id",
+                "type": "string"
+              },
+              "link_url": {
+                "default": null,
+                "title": "Link Url",
+                "type": "string"
+              },
+              "message": {
+                "default": null,
+                "title": "Message",
+                "type": "string"
+              },
+              "headline": {
+                "default": null,
+                "title": "Headline",
+                "type": "string"
+              },
+              "description": {
+                "default": null,
+                "title": "Description",
+                "type": "string"
+              },
+              "call_to_action_type": {
+                "default": null,
+                "title": "Call To Action Type",
+                "type": "string"
+              },
+              "instagram_actor_id": {
+                "default": null,
+                "title": "Instagram Actor Id",
+                "type": "string"
+              }
+            },
+            "title": "create_ad_creativeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_account_pages",
+          "description": "\n    Get pages associated with a Meta Ads account.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n    \n    Returns:\n        JSON response with pages associated with the account\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              }
+            },
+            "title": "get_account_pagesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_insights",
+          "description": "\n    Get performance insights for a campaign, ad set, ad or account.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        object_id: ID of the campaign, ad set, ad or account\n        time_range: Either a preset time range string or a dictionary with \"since\" and \"until\" dates in YYYY-MM-DD format\n                   Preset options: today, yesterday, this_month, last_month, this_quarter, maximum, data_maximum, \n                   last_3d, last_7d, last_14d, last_28d, last_30d, last_90d, last_week_mon_sun, \n                   last_week_sun_sat, last_quarter, last_year, this_week_mon_today, this_week_sun_today, this_year\n                   Dictionary example: {\"since\":\"2023-01-01\",\"until\":\"2023-01-31\"}\n        breakdown: Optional breakdown dimension (e.g., age, gender, country)\n        level: Level of aggregation (ad, adset, campaign, account)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "object_id": {
+                "default": null,
+                "title": "Object Id",
+                "type": "string"
+              },
+              "time_range": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  }
+                ],
+                "default": "maximum",
+                "title": "Time Range"
+              },
+              "breakdown": {
+                "default": "",
+                "title": "Breakdown",
+                "type": "string"
+              },
+              "level": {
+                "default": "ad",
+                "title": "Level",
+                "type": "string"
+              }
+            },
+            "title": "get_insightsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "debug_image_download",
+          "description": "\n    Debug image download issues and report detailed diagnostics.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        url: Direct image URL to test (optional)\n        ad_id: Meta Ads ad ID (optional, used if url is not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "url": {
+                "default": "",
+                "title": "Url",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": "",
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "debug_image_downloadArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "save_ad_image_via_api",
+          "description": "\n    Try to save an ad image by using the Marketing API's attachment endpoints.\n    This is an alternative approach when direct image download fails.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "save_ad_image_via_apiArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_login_link",
+          "description": "\n    Get a clickable login link for Meta Ads authentication.\n    \n    NOTE: This method should only be used if you're using your own Facebook app.\n    If using Pipeboard authentication (recommended), set the PIPEBOARD_API_TOKEN\n    environment variable instead (token obtainable via https://pipeboard.co).\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    \n    Returns:\n        A clickable resource link for Meta authentication\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "title": "get_login_linkArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_ads_archive",
+          "description": "\n    Search the Facebook Ads Library archive.\n\n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided).\n        search_terms: The search query for ads.\n        ad_type: Type of ads to search for (e.g., POLITICAL_AND_ISSUE_ADS, HOUSING_ADS, ALL).\n        ad_reached_countries: List of country codes (e.g., [\"US\", \"GB\"]).\n        limit: Maximum number of ads to return.\n        fields: Comma-separated string of fields to retrieve for each ad.\n\n    Example Usage via curl equivalent:\n        curl -G \\\n        -d \"search_terms='california'\" \\\n        -d \"ad_type=POLITICAL_AND_ISSUE_ADS\" \\\n        -d \"ad_reached_countries=['US']\" \\\n        -d \"fields=ad_snapshot_url,spend\" \\\n        -d \"access_token=<ACCESS_TOKEN>\" \\\n        \"https://graph.facebook.com/<API_VERSION>/ads_archive\"\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "search_terms": {
+                "default": null,
+                "title": "Search Terms",
+                "type": "string"
+              },
+              "ad_type": {
+                "default": "ALL",
+                "title": "Ad Type",
+                "type": "string"
+              },
+              "ad_reached_countries": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Ad Reached Countries",
+                "type": "array"
+              },
+              "limit": {
+                "default": 25,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "fields": {
+                "default": "ad_creation_time,ad_creative_body,ad_creative_link_caption,ad_creative_link_description,ad_creative_link_title,ad_delivery_start_time,ad_delivery_stop_time,ad_snapshot_url,currency,demographic_distribution,funding_entity,impressions,page_id,page_name,publisher_platform,region_distribution,spend",
+                "title": "Fields",
+                "type": "string"
+              }
+            },
+            "title": "search_ads_archiveArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 25,
+      "tool_names": [
+        "get_ad_accounts",
+        "get_account_info",
+        "get_campaigns",
+        "get_campaign_details",
+        "create_campaign",
+        "update_campaign",
+        "get_adsets",
+        "get_adset_details",
+        "create_adset",
+        "update_adset",
+        "get_ads",
+        "get_ad_details",
+        "create_ad",
+        "get_ad_creatives",
+        "get_ad_image",
+        "save_ad_image_locally",
+        "update_ad",
+        "upload_ad_image",
+        "create_ad_creative",
+        "get_account_pages",
+        "get_insights",
+        "debug_image_download",
+        "save_ad_image_via_api",
+        "get_login_link",
+        "search_ads_archive"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 252,
+      "name": "Meta Ads Interface",
+      "author": "@brnardo/meta-ads-mcp",
+      "overview": "Enable AI models to access, analyze, and manage Meta advertising campaigns through a standardized interface. Get actionable insights, strategic recommendations, and automate monitoring across Facebook, Instagram, and other Meta platforms. Simplify campaign management and optimize ad performance with seamless integration into any MCP-compatible LLM client.",
+      "repository_url": "https://github.com/brnardo/meta-ads-mcp",
+      "homepage": "https://smithery.ai/server/@brnardo/meta-ads-mcp",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "154",
+      "success_rate": "99.60%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@brnardo_meta-ads-mcp.json",
+      "tools_count": 25,
+      "tools": [
+        {
+          "name": "get_ad_accounts",
+          "description": "\n    Get ad accounts accessible by a user.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        user_id: Meta user ID or \"me\" for the current user\n        limit: Maximum number of accounts to return (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "user_id": {
+                "default": "me",
+                "title": "User Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "get_ad_accountsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_account_info",
+          "description": "\n    Get detailed information about a specific ad account.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              }
+            },
+            "title": "get_account_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_campaigns",
+          "description": "\n    Get campaigns for a Meta Ads account with optional filtering.\n    \n    Note: By default, the Meta API returns a subset of available fields. \n    Other fields like 'effective_status', 'special_ad_categories', \n    'lifetime_budget', 'spend_cap', 'budget_remaining', 'promoted_object', \n    'source_campaign_id', etc., might be available but require specifying them\n    in the API call (currently not exposed by this tool's parameters).\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        limit: Maximum number of campaigns to return (default: 10)\n        status_filter: Filter by effective status (e.g., 'ACTIVE', 'PAUSED', 'ARCHIVED').\n                       Maps to the 'effective_status' API parameter, which expects an array\n                       (this function handles the required JSON formatting). Leave empty for all statuses.\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "status_filter": {
+                "default": "",
+                "title": "Status Filter",
+                "type": "string"
+              }
+            },
+            "title": "get_campaignsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_campaign_details",
+          "description": "\n    Get detailed information about a specific campaign.\n\n    Note: This function requests a specific set of fields ('id,name,objective,status,...'). \n    The Meta API offers many other fields for campaigns (e.g., 'effective_status', 'source_campaign_id', etc.) \n    that could be added to the 'fields' parameter in the code if needed.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        campaign_id: Meta Ads campaign ID\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "campaign_id": {
+                "default": null,
+                "title": "Campaign Id",
+                "type": "string"
+              }
+            },
+            "title": "get_campaign_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_campaign",
+          "description": "\n    Create a new campaign in a Meta Ads account.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        name: Campaign name\n        objective: Campaign objective (AWARENESS, TRAFFIC, ENGAGEMENT, etc.)\n        status: Initial campaign status (default: PAUSED)\n        special_ad_categories: List of special ad categories if applicable\n        daily_budget: Daily budget in account currency (in cents) as a string\n        lifetime_budget: Lifetime budget in account currency (in cents) as a string\n        buying_type: Buying type (e.g., 'AUCTION')\n        bid_strategy: Bid strategy (e.g., 'LOWEST_COST', 'LOWEST_COST_WITH_BID_CAP', 'COST_CAP')\n        bid_cap: Bid cap in account currency (in cents) as a string\n        spend_cap: Spending limit for the campaign in account currency (in cents) as a string\n        campaign_budget_optimization: Whether to enable campaign budget optimization\n        ab_test_control_setups: Settings for A/B testing (e.g., [{\"name\":\"Creative A\", \"ad_format\":\"SINGLE_IMAGE\"}])\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "objective": {
+                "default": null,
+                "title": "Objective",
+                "type": "string"
+              },
+              "status": {
+                "default": "PAUSED",
+                "title": "Status",
+                "type": "string"
+              },
+              "special_ad_categories": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Special Ad Categories",
+                "type": "array"
+              },
+              "daily_budget": {
+                "default": null,
+                "title": "daily_budget",
+                "type": "string"
+              },
+              "lifetime_budget": {
+                "default": null,
+                "title": "lifetime_budget",
+                "type": "string"
+              },
+              "buying_type": {
+                "default": null,
+                "title": "Buying Type",
+                "type": "string"
+              },
+              "bid_strategy": {
+                "default": null,
+                "title": "Bid Strategy",
+                "type": "string"
+              },
+              "bid_cap": {
+                "default": null,
+                "title": "bid_cap",
+                "type": "string"
+              },
+              "spend_cap": {
+                "default": null,
+                "title": "spend_cap",
+                "type": "string"
+              },
+              "campaign_budget_optimization": {
+                "default": null,
+                "title": "Campaign Budget Optimization",
+                "type": "boolean"
+              },
+              "ab_test_control_setups": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Ab Test Control Setups"
+              }
+            },
+            "title": "create_campaignArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_campaign",
+          "description": "\n    Update an existing campaign in a Meta Ads account.\n\n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        campaign_id: Meta Ads campaign ID (required)\n        name: New campaign name\n        status: New campaign status (e.g., 'ACTIVE', 'PAUSED')\n        special_ad_categories: List of special ad categories if applicable\n        daily_budget: New daily budget in account currency (in cents) as a string\n        lifetime_budget: New lifetime budget in account currency (in cents) as a string\n        bid_strategy: New bid strategy\n        bid_cap: New bid cap in account currency (in cents) as a string\n        spend_cap: New spending limit for the campaign in account currency (in cents) as a string\n        campaign_budget_optimization: Enable/disable campaign budget optimization\n        objective: New campaign objective (Note: May not always be updatable)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "campaign_id": {
+                "default": null,
+                "title": "Campaign Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "status": {
+                "default": null,
+                "title": "Status",
+                "type": "string"
+              },
+              "special_ad_categories": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Special Ad Categories",
+                "type": "array"
+              },
+              "daily_budget": {
+                "default": null,
+                "title": "daily_budget",
+                "type": "string"
+              },
+              "lifetime_budget": {
+                "default": null,
+                "title": "lifetime_budget",
+                "type": "string"
+              },
+              "bid_strategy": {
+                "default": null,
+                "title": "Bid Strategy",
+                "type": "string"
+              },
+              "bid_cap": {
+                "default": null,
+                "title": "bid_cap",
+                "type": "string"
+              },
+              "spend_cap": {
+                "default": null,
+                "title": "spend_cap",
+                "type": "string"
+              },
+              "campaign_budget_optimization": {
+                "default": null,
+                "title": "Campaign Budget Optimization",
+                "type": "boolean"
+              },
+              "objective": {
+                "default": null,
+                "title": "Objective",
+                "type": "string"
+              }
+            },
+            "title": "update_campaignArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_adsets",
+          "description": "\n    Get ad sets for a Meta Ads account with optional filtering by campaign.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        limit: Maximum number of ad sets to return (default: 10)\n        campaign_id: Optional campaign ID to filter by\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "campaign_id": {
+                "default": "",
+                "title": "Campaign Id",
+                "type": "string"
+              }
+            },
+            "title": "get_adsetsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_adset_details",
+          "description": "\n    Get detailed information about a specific ad set.\n    \n    Args:\n        adset_id: Meta Ads ad set ID (required)\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    \n    Example:\n        To call this function through MCP, pass the adset_id as the first argument:\n        {\n            \"args\": \"YOUR_ADSET_ID\"\n        }\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "adset_id": {
+                "default": null,
+                "title": "Adset Id",
+                "type": "string"
+              }
+            },
+            "title": "get_adset_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_adset",
+          "description": "\n    Create a new ad set in a Meta Ads account.\n    \n    Args:\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        campaign_id: Meta Ads campaign ID this ad set belongs to\n        name: Ad set name\n        status: Initial ad set status (default: PAUSED)\n        daily_budget: Daily budget in account currency (in cents) as a string\n        lifetime_budget: Lifetime budget in account currency (in cents) as a string\n        targeting: Targeting specifications including age, location, interests, etc.\n                  Use targeting_automation.advantage_audience=1 for automatic audience finding\n        optimization_goal: Conversion optimization goal (e.g., 'LINK_CLICKS', 'REACH', 'CONVERSIONS')\n        billing_event: How you're charged (e.g., 'IMPRESSIONS', 'LINK_CLICKS')\n        bid_amount: Bid amount in account currency (in cents)\n        bid_strategy: Bid strategy (e.g., 'LOWEST_COST', 'LOWEST_COST_WITH_BID_CAP')\n        start_time: Start time in ISO 8601 format (e.g., '2023-12-01T12:00:00-0800')\n        end_time: End time in ISO 8601 format\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "campaign_id": {
+                "default": null,
+                "title": "Campaign Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "status": {
+                "default": "PAUSED",
+                "title": "Status",
+                "type": "string"
+              },
+              "daily_budget": {
+                "default": null,
+                "title": "daily_budget",
+                "type": "string"
+              },
+              "lifetime_budget": {
+                "default": null,
+                "title": "lifetime_budget",
+                "type": "string"
+              },
+              "targeting": {
+                "additionalProperties": true,
+                "default": null,
+                "title": "Targeting",
+                "type": "object"
+              },
+              "optimization_goal": {
+                "default": null,
+                "title": "Optimization Goal",
+                "type": "string"
+              },
+              "billing_event": {
+                "default": null,
+                "title": "Billing Event",
+                "type": "string"
+              },
+              "bid_amount": {
+                "default": null,
+                "title": "bid_amount",
+                "type": "string"
+              },
+              "bid_strategy": {
+                "default": null,
+                "title": "Bid Strategy",
+                "type": "string"
+              },
+              "start_time": {
+                "default": null,
+                "title": "Start Time",
+                "type": "string"
+              },
+              "end_time": {
+                "default": null,
+                "title": "End Time",
+                "type": "string"
+              },
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "title": "create_adsetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_adset",
+          "description": "\n    Update an ad set with new settings including frequency caps.\n    \n    Args:\n        adset_id: Meta Ads ad set ID\n        frequency_control_specs: List of frequency control specifications \n                                 (e.g. [{\"event\": \"IMPRESSIONS\", \"interval_days\": 7, \"max_frequency\": 3}])\n        bid_strategy: Bid strategy (e.g., 'LOWEST_COST_WITH_BID_CAP')\n        bid_amount: Bid amount in account currency (in cents for USD)\n        status: Update ad set status (ACTIVE, PAUSED, etc.)\n        targeting: Targeting specifications including targeting_automation\n                  (e.g. {\"targeting_automation\":{\"advantage_audience\":1}})\n        optimization_goal: Conversion optimization goal (e.g., 'LINK_CLICKS', 'CONVERSIONS', 'APP_INSTALLS', etc.)\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "adset_id": {
+                "title": "Adset Id",
+                "type": "string"
+              },
+              "frequency_control_specs": {
+                "default": null,
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "title": "Frequency Control Specs",
+                "type": "array"
+              },
+              "bid_strategy": {
+                "default": null,
+                "title": "Bid Strategy",
+                "type": "string"
+              },
+              "bid_amount": {
+                "default": null,
+                "title": "Bid Amount",
+                "type": "integer"
+              },
+              "status": {
+                "default": null,
+                "title": "Status",
+                "type": "string"
+              },
+              "targeting": {
+                "additionalProperties": true,
+                "default": null,
+                "title": "Targeting",
+                "type": "object"
+              },
+              "optimization_goal": {
+                "default": null,
+                "title": "Optimization Goal",
+                "type": "string"
+              },
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "required": [
+              "adset_id"
+            ],
+            "title": "update_adsetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ads",
+          "description": "\n    Get ads for a Meta Ads account with optional filtering.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        limit: Maximum number of ads to return (default: 10)\n        campaign_id: Optional campaign ID to filter by\n        adset_id: Optional ad set ID to filter by\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "campaign_id": {
+                "default": "",
+                "title": "Campaign Id",
+                "type": "string"
+              },
+              "adset_id": {
+                "default": "",
+                "title": "Adset Id",
+                "type": "string"
+              }
+            },
+            "title": "get_adsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ad_details",
+          "description": "\n    Get detailed information about a specific ad.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "get_ad_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_ad",
+          "description": "\n    Create a new ad with an existing creative.\n    \n    Args:\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        name: Ad name\n        adset_id: Ad set ID where this ad will be placed\n        creative_id: ID of an existing creative to use\n        status: Initial ad status (default: PAUSED)\n        bid_amount: Optional bid amount in account currency (in cents)\n        tracking_specs: Optional tracking specifications (e.g., for pixel events).\n                      Example: [{\"action.type\":\"offsite_conversion\",\"fb_pixel\":[\"YOUR_PIXEL_ID\"]}]\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "adset_id": {
+                "default": null,
+                "title": "Adset Id",
+                "type": "string"
+              },
+              "creative_id": {
+                "default": null,
+                "title": "Creative Id",
+                "type": "string"
+              },
+              "status": {
+                "default": "PAUSED",
+                "title": "Status",
+                "type": "string"
+              },
+              "bid_amount": {
+                "default": null,
+                "title": "bid_amount",
+                "type": "string"
+              },
+              "tracking_specs": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Tracking Specs"
+              },
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "title": "create_adArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ad_creatives",
+          "description": "\n    Get creative details for a specific ad. Best if combined with get_ad_image to get the full image.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "get_ad_creativesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ad_image",
+          "description": "\n    Get, download, and visualize a Meta ad image in one step. Useful to see the image in the LLM.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n    \n    Returns:\n        The ad image ready for direct visual analysis\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "get_ad_imageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "save_ad_image_locally",
+          "description": "\n    Get, download, and save a Meta ad image locally, returning the file path.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n        output_dir: Directory to save the image file (default: 'ad_images')\n    \n    Returns:\n        The file path to the saved image, or an error message string.\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              },
+              "output_dir": {
+                "default": "ad_images",
+                "title": "Output Dir",
+                "type": "string"
+              }
+            },
+            "title": "save_ad_image_locallyArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_ad",
+          "description": "\n    Update an ad with new settings.\n    \n    Args:\n        ad_id: Meta Ads ad ID\n        status: Update ad status (ACTIVE, PAUSED, etc.)\n        bid_amount: Bid amount in account currency (in cents for USD)\n        tracking_specs: Optional tracking specifications (e.g., for pixel events).\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "ad_id": {
+                "title": "Ad Id",
+                "type": "string"
+              },
+              "status": {
+                "default": null,
+                "title": "Status",
+                "type": "string"
+              },
+              "bid_amount": {
+                "default": null,
+                "title": "Bid Amount",
+                "type": "integer"
+              },
+              "tracking_specs": {
+                "default": null,
+                "title": "tracking_specs",
+                "type": "string"
+              },
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ad_id"
+            ],
+            "title": "update_adArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "upload_ad_image",
+          "description": "\n    Upload an image to use in Meta Ads creatives.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        image_path: Path to the image file to upload\n        name: Optional name for the image (default: filename)\n    \n    Returns:\n        JSON response with image details including hash for creative creation\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "image_path": {
+                "default": null,
+                "title": "Image Path",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "title": "upload_ad_imageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_ad_creative",
+          "description": "\n    Create a new ad creative using an uploaded image hash.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n        name: Creative name\n        image_hash: Hash of the uploaded image\n        page_id: Facebook Page ID to be used for the ad\n        link_url: Destination URL for the ad\n        message: Ad copy/text\n        headline: Ad headline\n        description: Ad description\n        call_to_action_type: Call to action button type (e.g., 'LEARN_MORE', 'SIGN_UP', 'SHOP_NOW')\n        instagram_actor_id: Optional Instagram account ID for Instagram placements\n    \n    Returns:\n        JSON response with created creative details\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "image_hash": {
+                "default": null,
+                "title": "Image Hash",
+                "type": "string"
+              },
+              "page_id": {
+                "default": null,
+                "title": "Page Id",
+                "type": "string"
+              },
+              "link_url": {
+                "default": null,
+                "title": "Link Url",
+                "type": "string"
+              },
+              "message": {
+                "default": null,
+                "title": "Message",
+                "type": "string"
+              },
+              "headline": {
+                "default": null,
+                "title": "Headline",
+                "type": "string"
+              },
+              "description": {
+                "default": null,
+                "title": "Description",
+                "type": "string"
+              },
+              "call_to_action_type": {
+                "default": null,
+                "title": "Call To Action Type",
+                "type": "string"
+              },
+              "instagram_actor_id": {
+                "default": null,
+                "title": "Instagram Actor Id",
+                "type": "string"
+              }
+            },
+            "title": "create_ad_creativeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_account_pages",
+          "description": "\n    Get pages associated with a Meta Ads account.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        account_id: Meta Ads account ID (format: act_XXXXXXXXX)\n    \n    Returns:\n        JSON response with pages associated with the account\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "account_id": {
+                "default": null,
+                "title": "Account Id",
+                "type": "string"
+              }
+            },
+            "title": "get_account_pagesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_insights",
+          "description": "\n    Get performance insights for a campaign, ad set, ad or account.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        object_id: ID of the campaign, ad set, ad or account\n        time_range: Either a preset time range string or a dictionary with \"since\" and \"until\" dates in YYYY-MM-DD format\n                   Preset options: today, yesterday, this_month, last_month, this_quarter, maximum, data_maximum, \n                   last_3d, last_7d, last_14d, last_28d, last_30d, last_90d, last_week_mon_sun, \n                   last_week_sun_sat, last_quarter, last_year, this_week_mon_today, this_week_sun_today, this_year\n                   Dictionary example: {\"since\":\"2023-01-01\",\"until\":\"2023-01-31\"}\n        breakdown: Optional breakdown dimension (e.g., age, gender, country)\n        level: Level of aggregation (ad, adset, campaign, account)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "object_id": {
+                "default": null,
+                "title": "Object Id",
+                "type": "string"
+              },
+              "time_range": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "type": "object"
+                  }
+                ],
+                "default": "maximum",
+                "title": "Time Range"
+              },
+              "breakdown": {
+                "default": "",
+                "title": "Breakdown",
+                "type": "string"
+              },
+              "level": {
+                "default": "ad",
+                "title": "Level",
+                "type": "string"
+              }
+            },
+            "title": "get_insightsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "debug_image_download",
+          "description": "\n    Debug image download issues and report detailed diagnostics.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        url: Direct image URL to test (optional)\n        ad_id: Meta Ads ad ID (optional, used if url is not provided)\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "url": {
+                "default": "",
+                "title": "Url",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": "",
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "debug_image_downloadArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "save_ad_image_via_api",
+          "description": "\n    Try to save an ad image by using the Marketing API's attachment endpoints.\n    This is an alternative approach when direct image download fails.\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n        ad_id: Meta Ads ad ID\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "ad_id": {
+                "default": null,
+                "title": "Ad Id",
+                "type": "string"
+              }
+            },
+            "title": "save_ad_image_via_apiArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_login_link",
+          "description": "\n    Get a clickable login link for Meta Ads authentication.\n    \n    NOTE: This method should only be used if you're using your own Facebook app.\n    If using Pipeboard authentication (recommended), set the PIPEBOARD_API_TOKEN\n    environment variable instead (token obtainable via https://pipeboard.co).\n    \n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided)\n    \n    Returns:\n        A clickable resource link for Meta authentication\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              }
+            },
+            "title": "get_login_linkArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_ads_archive",
+          "description": "\n    Search the Facebook Ads Library archive.\n\n    Args:\n        access_token: Meta API access token (optional - will use cached token if not provided).\n        search_terms: The search query for ads.\n        ad_type: Type of ads to search for (e.g., POLITICAL_AND_ISSUE_ADS, HOUSING_ADS, ALL).\n        ad_reached_countries: List of country codes (e.g., [\"US\", \"GB\"]).\n        limit: Maximum number of ads to return.\n        fields: Comma-separated string of fields to retrieve for each ad.\n\n    Example Usage via curl equivalent:\n        curl -G \\\n        -d \"search_terms='california'\" \\\n        -d \"ad_type=POLITICAL_AND_ISSUE_ADS\" \\\n        -d \"ad_reached_countries=['US']\" \\\n        -d \"fields=ad_snapshot_url,spend\" \\\n        -d \"access_token=<ACCESS_TOKEN>\" \\\n        \"https://graph.facebook.com/<API_VERSION>/ads_archive\"\n    ",
+          "input_schema": {
+            "properties": {
+              "access_token": {
+                "default": null,
+                "title": "Access Token",
+                "type": "string"
+              },
+              "search_terms": {
+                "default": null,
+                "title": "Search Terms",
+                "type": "string"
+              },
+              "ad_type": {
+                "default": "ALL",
+                "title": "Ad Type",
+                "type": "string"
+              },
+              "ad_reached_countries": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Ad Reached Countries",
+                "type": "array"
+              },
+              "limit": {
+                "default": 25,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "fields": {
+                "default": "ad_creation_time,ad_creative_body,ad_creative_link_caption,ad_creative_link_description,ad_creative_link_title,ad_delivery_start_time,ad_delivery_stop_time,ad_snapshot_url,currency,demographic_distribution,funding_entity,impressions,page_id,page_name,publisher_platform,region_distribution,spend",
+                "title": "Fields",
+                "type": "string"
+              }
+            },
+            "title": "search_ads_archiveArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@brnardo/meta-ads-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@brnardo/meta-ads-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0253.@brnardo_meta-ads-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 249
+  }
+}

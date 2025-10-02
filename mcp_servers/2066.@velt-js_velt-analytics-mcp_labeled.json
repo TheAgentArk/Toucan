@@ -1,0 +1,830 @@
+{
+  "labels": {
+    "analysis": "The Velt Analytics Server provides detailed analytics about organizations, users, documents, features, attachments, and events within the Velt platform. It offers comprehensive insights into activity metrics, user engagement, document collaboration, feature usage, attachment storage, and event tracking through its API-based tools. The server enables data-driven decision-making by allowing flexible filtering, pagination, and easy integration with Velt's analytics data.",
+    "reasoning": "The primary function of this server is to provide analytics and reporting based on platform data, which aligns with the Data Analysis & Processing category. The ability to track user engagement, feature usage, and document collaboration suggests secondary relevance to User Engagement Tracking. No custom label is needed as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [],
+    "custom_label": "User Engagement Tracking",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2065,
+    "server_name": "Velt Analytics Server",
+    "rank_by_usage": 2066,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@velt-js_velt-analytics-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@velt-js/velt-analytics-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_events_analytics",
+          "description": "Get paginated events from Velt with comprehensive filtering and timezone support. \n        Supports three filtering modes:\n        1. Date range: Use startDate and endDate for a specific period\n        2. Single date: Use date for events from a specific day\n        3. Fallback: Use lastDaysCount for recent events (default: 30 days)\n        \n        Returns events with event_name, event_timestamp (ISO format), properties, and unique id.\n        Supports pagination with nextPageToken for retrieving subsequent pages.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "pageSize": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 50,
+                    "description": "Number of events to return per page"
+                  },
+                  "pageToken": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Token for pagination to get next page of results"
+                  },
+                  "filter": {
+                    "type": "object",
+                    "properties": {
+                      "lastDaysCount": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 365,
+                        "default": 7,
+                        "description": "Number of days to look back (fallback when no specific date is provided)"
+                      },
+                      "eventName": {
+                        "type": "string",
+                        "default": "",
+                        "description": "Filter by specific event name"
+                      },
+                      "date": {
+                        "type": "string",
+                        "description": "Filter by specific date (ISO format)"
+                      },
+                      "userId": {
+                        "type": "string",
+                        "description": "Filter by specific user ID"
+                      },
+                      "startDate": {
+                        "type": "string",
+                        "description": "Start date for date range filtering (ISO format)"
+                      },
+                      "endDate": {
+                        "type": "string",
+                        "description": "End date for date range filtering (ISO format)"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "default": {},
+                    "description": "Filter criteria for events - supports single date, date range (startDate/endDate), or fallback to lastDaysCount"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "default": "America/Los_Angeles",
+                    "description": "Timezone for date filtering and timestamp conversion"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_attachment_analytics_values",
+          "description": "Get attachment analytics from Velt showing total size by attachment type.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_organization_top_number_analytics",
+          "description": "Get organization analytics from Velt.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  },
+                  "asc": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Sort order - true for ascending, false for descending"
+                  },
+                  "topNumber": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 10,
+                    "description": "Number of top organizations to return"
+                  },
+                  "orderBy": {
+                    "type": "string",
+                    "enum": [
+                      "total_count",
+                      "comments_count",
+                      "huddles_count",
+                      "arrows_count",
+                      "notifications_count",
+                      "recordings_count"
+                    ],
+                    "default": "total_count",
+                    "description": "Field to order results by"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_top_number_analytics",
+          "description": "Get user analytics from Velt.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  },
+                  "asc": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Sort order - true for ascending, false for descending"
+                  },
+                  "topNumber": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 10,
+                    "description": "Number of top users to return"
+                  },
+                  "orderBy": {
+                    "type": "string",
+                    "enum": [
+                      "total_count",
+                      "comments_count",
+                      "huddles_count",
+                      "arrows_count",
+                      "notifications_count",
+                      "recordings_count"
+                    ],
+                    "default": "total_count",
+                    "description": "Field to order results by"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_feature_analytics_count",
+          "description": "Get comprehensive feature analytics data from Velt, showing CRUD operation counts for each feature.\n        \n        This tool retrieves detailed analytics about how different Velt features are being used by querying BigQuery data from transformed Mixpanel events. It provides granular insights into user interactions with various Velt features.\n        \n        **What it returns:**\n        - A breakdown of usage statistics for each Velt feature (comments, huddles, recordings, notifications, arrows)\n        - For each feature, you get counts of:\n          * create_count: Number of create operations performed\n          * read_count: Number of read operations performed  \n          * update_count: Number of update operations performed\n          * delete_count: Number of delete operations performed\n          * total_count: Total number of all operations combined\n        \n        **Use cases:**\n        - Understand which features are most actively used\n        - Analyze feature adoption patterns over time\n        - Identify user engagement trends for different features\n        - Monitor feature usage growth or decline\n        - Compare activity levels between different Velt features\n        - Track CRUD operation patterns to understand user behavior\n        \n        **Date filtering options:**\n        - Use 'date' for a specific day's analytics\n        - Use 'lastDaysCount' for a rolling window (e.g., last 7, 30, 90 days)\n        - Use 'startDate' and 'endDate' for a custom date range\n        \n        The data is sourced from BigQuery analytics tables and provides accurate, real-time insights into feature usage patterns.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_document_top_number_analytics",
+          "description": "Get document analytics from Velt.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  },
+                  "asc": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Sort order - true for ascending, false for descending"
+                  },
+                  "topNumber": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 10,
+                    "description": "Number of top documents to return"
+                  },
+                  "orderBy": {
+                    "type": "string",
+                    "enum": [
+                      "total_count",
+                      "comments_count",
+                      "huddles_count",
+                      "arrows_count",
+                      "notifications_count",
+                      "recordings_count"
+                    ],
+                    "default": "total_count",
+                    "description": "Field to order results by"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "get_events_analytics",
+        "get_attachment_analytics_values",
+        "get_organization_top_number_analytics",
+        "get_user_top_number_analytics",
+        "get_feature_analytics_count",
+        "get_document_top_number_analytics"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2065,
+      "name": "Velt Analytics Server",
+      "author": "@velt-js/velt-analytics-mcp",
+      "overview": "Provide AI assistants and MCP clients with detailed analytics data about organizations, users, documents, features, attachments, and events from the Velt platform. Enable comprehensive insights into activity metrics, user engagement, document collaboration, feature usage, attachment storage, and event tracking with flexible filtering and pagination. Empower data-driven decision making through easy integration with Velt's analytics API.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@velt-js/velt-analytics-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@velt-js_velt-analytics-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "get_events_analytics",
+          "description": "Get paginated events from Velt with comprehensive filtering and timezone support. \n        Supports three filtering modes:\n        1. Date range: Use startDate and endDate for a specific period\n        2. Single date: Use date for events from a specific day\n        3. Fallback: Use lastDaysCount for recent events (default: 30 days)\n        \n        Returns events with event_name, event_timestamp (ISO format), properties, and unique id.\n        Supports pagination with nextPageToken for retrieving subsequent pages.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "pageSize": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 50,
+                    "description": "Number of events to return per page"
+                  },
+                  "pageToken": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Token for pagination to get next page of results"
+                  },
+                  "filter": {
+                    "type": "object",
+                    "properties": {
+                      "lastDaysCount": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 365,
+                        "default": 7,
+                        "description": "Number of days to look back (fallback when no specific date is provided)"
+                      },
+                      "eventName": {
+                        "type": "string",
+                        "default": "",
+                        "description": "Filter by specific event name"
+                      },
+                      "date": {
+                        "type": "string",
+                        "description": "Filter by specific date (ISO format)"
+                      },
+                      "userId": {
+                        "type": "string",
+                        "description": "Filter by specific user ID"
+                      },
+                      "startDate": {
+                        "type": "string",
+                        "description": "Start date for date range filtering (ISO format)"
+                      },
+                      "endDate": {
+                        "type": "string",
+                        "description": "End date for date range filtering (ISO format)"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "default": {},
+                    "description": "Filter criteria for events - supports single date, date range (startDate/endDate), or fallback to lastDaysCount"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "default": "America/Los_Angeles",
+                    "description": "Timezone for date filtering and timestamp conversion"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_attachment_analytics_values",
+          "description": "Get attachment analytics from Velt showing total size by attachment type.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_organization_top_number_analytics",
+          "description": "Get organization analytics from Velt.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  },
+                  "asc": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Sort order - true for ascending, false for descending"
+                  },
+                  "topNumber": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 10,
+                    "description": "Number of top organizations to return"
+                  },
+                  "orderBy": {
+                    "type": "string",
+                    "enum": [
+                      "total_count",
+                      "comments_count",
+                      "huddles_count",
+                      "arrows_count",
+                      "notifications_count",
+                      "recordings_count"
+                    ],
+                    "default": "total_count",
+                    "description": "Field to order results by"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_top_number_analytics",
+          "description": "Get user analytics from Velt.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  },
+                  "asc": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Sort order - true for ascending, false for descending"
+                  },
+                  "topNumber": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 10,
+                    "description": "Number of top users to return"
+                  },
+                  "orderBy": {
+                    "type": "string",
+                    "enum": [
+                      "total_count",
+                      "comments_count",
+                      "huddles_count",
+                      "arrows_count",
+                      "notifications_count",
+                      "recordings_count"
+                    ],
+                    "default": "total_count",
+                    "description": "Field to order results by"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_feature_analytics_count",
+          "description": "Get comprehensive feature analytics data from Velt, showing CRUD operation counts for each feature.\n        \n        This tool retrieves detailed analytics about how different Velt features are being used by querying BigQuery data from transformed Mixpanel events. It provides granular insights into user interactions with various Velt features.\n        \n        **What it returns:**\n        - A breakdown of usage statistics for each Velt feature (comments, huddles, recordings, notifications, arrows)\n        - For each feature, you get counts of:\n          * create_count: Number of create operations performed\n          * read_count: Number of read operations performed  \n          * update_count: Number of update operations performed\n          * delete_count: Number of delete operations performed\n          * total_count: Total number of all operations combined\n        \n        **Use cases:**\n        - Understand which features are most actively used\n        - Analyze feature adoption patterns over time\n        - Identify user engagement trends for different features\n        - Monitor feature usage growth or decline\n        - Compare activity levels between different Velt features\n        - Track CRUD operation patterns to understand user behavior\n        \n        **Date filtering options:**\n        - Use 'date' for a specific day's analytics\n        - Use 'lastDaysCount' for a rolling window (e.g., last 7, 30, 90 days)\n        - Use 'startDate' and 'endDate' for a custom date range\n        \n        The data is sourced from BigQuery analytics tables and provides accurate, real-time insights into feature usage patterns.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_document_top_number_analytics",
+          "description": "Get document analytics from Velt.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "description": "Specific date for analytics (ISO format)"
+                  },
+                  "lastDaysCount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 365,
+                    "default": 7,
+                    "description": "Number of days to look back (1, 7, 30, 90, 180, or 365)"
+                  },
+                  "startDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Start date for date range (ISO format)"
+                  },
+                  "endDate": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "End date for date range (ISO format)"
+                  },
+                  "asc": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Sort order - true for ascending, false for descending"
+                  },
+                  "topNumber": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 10,
+                    "description": "Number of top documents to return"
+                  },
+                  "orderBy": {
+                    "type": "string",
+                    "enum": [
+                      "total_count",
+                      "comments_count",
+                      "huddles_count",
+                      "arrows_count",
+                      "notifications_count",
+                      "recordings_count"
+                    ],
+                    "default": "total_count",
+                    "description": "Field to order results by"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@velt-js/velt-analytics-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@velt-js/velt-analytics-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2066.@velt-js_velt-analytics-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1801
+  }
+}

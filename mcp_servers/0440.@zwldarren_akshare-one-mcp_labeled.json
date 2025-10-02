@@ -1,0 +1,694 @@
+{
+  "labels": {
+    "analysis": "The MCP Server AKShare One is primarily focused on providing access to Chinese stock market data, including historical prices, real-time data, news, and financial statements. It offers tools for retrieving comprehensive financial information, which cater to financial analysis and decision-making. The server is targeted towards users who need up-to-date market insights and financial data for stocks across various markets (A, B, H shares).",
+    "reasoning": "The primary label \"Financial Services\" was chosen because the server's core functionality revolves around providing financial data and insights, which aligns closely with this category. The secondary label \"Data Analysis & Processing\" was selected due to the tools available for retrieving and processing financial data, enabling financial analysis. There is no need for a custom label as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 439,
+    "server_name": "AKShare One MCP Server",
+    "rank_by_usage": 440,
+    "usage_count": "46",
+    "original_file": "../crawler/smithery/@zwldarren_akshare-one-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@zwldarren/akshare-one-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_hist_data",
+          "description": "Get historical stock market data. 'eastmoney_direct' support all A,B,H shares",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "interval": {
+                "default": "day",
+                "description": "Time interval",
+                "enum": [
+                  "minute",
+                  "hour",
+                  "day",
+                  "week",
+                  "month",
+                  "year"
+                ],
+                "title": "Interval",
+                "type": "string"
+              },
+              "interval_multiplier": {
+                "default": 1,
+                "description": "Interval multiplier",
+                "minimum": 1,
+                "title": "Interval Multiplier",
+                "type": "integer"
+              },
+              "start_date": {
+                "default": "1970-01-01",
+                "description": "Start date in YYYY-MM-DD format",
+                "title": "Start Date",
+                "type": "string"
+              },
+              "end_date": {
+                "default": "2030-12-31",
+                "description": "End date in YYYY-MM-DD format",
+                "title": "End Date",
+                "type": "string"
+              },
+              "adjust": {
+                "default": "none",
+                "description": "Adjustment type",
+                "enum": [
+                  "none",
+                  "qfq",
+                  "hfq"
+                ],
+                "title": "Adjust",
+                "type": "string"
+              },
+              "source": {
+                "default": "eastmoney",
+                "description": "Data source",
+                "enum": [
+                  "eastmoney",
+                  "eastmoney_direct",
+                  "sina"
+                ],
+                "title": "Source",
+                "type": "string"
+              },
+              "indicators_list": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "enum": [
+                        "SMA",
+                        "EMA",
+                        "RSI",
+                        "MACD",
+                        "BOLL",
+                        "STOCH",
+                        "ATR",
+                        "CCI",
+                        "ADX"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Technical indicators to add",
+                "title": "Indicators List"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 100,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_realtime_data",
+          "description": "Get real-time stock market data. 'eastmoney_direct' support all A,B,H shares",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol"
+              },
+              "source": {
+                "default": "xueqiu",
+                "description": "Data source",
+                "enum": [
+                  "xueqiu",
+                  "eastmoney",
+                  "eastmoney_direct"
+                ],
+                "title": "Source",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_news_data",
+          "description": "Get stock-related news data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_balance_sheet",
+          "description": "Get company balance sheet data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_income_statement",
+          "description": "Get company income statement data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_cash_flow",
+          "description": "Get company cash flow statement data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "source": {
+                "default": "sina",
+                "description": "Data source",
+                "title": "Source",
+                "type": "string"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_inner_trade_data",
+          "description": "Get company insider trading data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_time_info",
+          "description": "Get current time with ISO format, timestamp, and the last trading day.",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 8,
+      "tool_names": [
+        "get_hist_data",
+        "get_realtime_data",
+        "get_news_data",
+        "get_balance_sheet",
+        "get_income_statement",
+        "get_cash_flow",
+        "get_inner_trade_data",
+        "get_time_info"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 439,
+      "name": "AKShare One MCP Server",
+      "author": "@zwldarren/akshare-one-mcp",
+      "overview": "Provide access to Chinese stock market data including historical prices, real-time data, news, and financial statements. Retrieve comprehensive financial information for stocks with flexible parameters. Enhance your financial analysis and decision-making with up-to-date market insights.",
+      "repository_url": "https://github.com/zwldarren/akshare-one-mcp",
+      "homepage": "https://smithery.ai/server/@zwldarren/akshare-one-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "46",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@zwldarren_akshare-one-mcp.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "get_hist_data",
+          "description": "Get historical stock market data. 'eastmoney_direct' support all A,B,H shares",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "interval": {
+                "default": "day",
+                "description": "Time interval",
+                "enum": [
+                  "minute",
+                  "hour",
+                  "day",
+                  "week",
+                  "month",
+                  "year"
+                ],
+                "title": "Interval",
+                "type": "string"
+              },
+              "interval_multiplier": {
+                "default": 1,
+                "description": "Interval multiplier",
+                "minimum": 1,
+                "title": "Interval Multiplier",
+                "type": "integer"
+              },
+              "start_date": {
+                "default": "1970-01-01",
+                "description": "Start date in YYYY-MM-DD format",
+                "title": "Start Date",
+                "type": "string"
+              },
+              "end_date": {
+                "default": "2030-12-31",
+                "description": "End date in YYYY-MM-DD format",
+                "title": "End Date",
+                "type": "string"
+              },
+              "adjust": {
+                "default": "none",
+                "description": "Adjustment type",
+                "enum": [
+                  "none",
+                  "qfq",
+                  "hfq"
+                ],
+                "title": "Adjust",
+                "type": "string"
+              },
+              "source": {
+                "default": "eastmoney",
+                "description": "Data source",
+                "enum": [
+                  "eastmoney",
+                  "eastmoney_direct",
+                  "sina"
+                ],
+                "title": "Source",
+                "type": "string"
+              },
+              "indicators_list": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "enum": [
+                        "SMA",
+                        "EMA",
+                        "RSI",
+                        "MACD",
+                        "BOLL",
+                        "STOCH",
+                        "ATR",
+                        "CCI",
+                        "ADX"
+                      ],
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Technical indicators to add",
+                "title": "Indicators List"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 100,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_realtime_data",
+          "description": "Get real-time stock market data. 'eastmoney_direct' support all A,B,H shares",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol"
+              },
+              "source": {
+                "default": "xueqiu",
+                "description": "Data source",
+                "enum": [
+                  "xueqiu",
+                  "eastmoney",
+                  "eastmoney_direct"
+                ],
+                "title": "Source",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_news_data",
+          "description": "Get stock-related news data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_balance_sheet",
+          "description": "Get company balance sheet data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_income_statement",
+          "description": "Get company income statement data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_cash_flow",
+          "description": "Get company cash flow statement data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              },
+              "source": {
+                "default": "sina",
+                "description": "Data source",
+                "title": "Source",
+                "type": "string"
+              },
+              "recent_n": {
+                "anyOf": [
+                  {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "description": "Number of most recent records to return",
+                "title": "Recent N"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_inner_trade_data",
+          "description": "Get company insider trading data.",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "description": "Stock symbol/ticker (e.g. '000001')",
+                "title": "Symbol",
+                "type": "string"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_time_info",
+          "description": "Get current time with ISO format, timestamp, and the last trading day.",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@zwldarren/akshare-one-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@zwldarren/akshare-one-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0440.@zwldarren_akshare-one-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 433
+  }
+}

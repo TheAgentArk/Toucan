@@ -1,0 +1,1161 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in providing access to Old School RuneScape (OSRS) Wiki content and game data files. Its tools allow for searching and retrieving detailed information about various in-game elements such as items, NPCs, locations, and interfaces, as well as parsing wiki pages and querying game-related data files. The server is designed to enhance applications or interactions with rich OSRS context, making it particularly useful for developers, bots, or automated systems that interact with the game.",
+    "reasoning": "The primary label \"Gaming\" was chosen because the server is dedicated to OSRS, a popular game, and provides tools specifically designed for accessing and interacting with game data and wiki content. The secondary label \"Web Search & Research\" was selected because the server enables searching and retrieving detailed information from the OSRS Wiki, which is a form of structured data research. The custom label \"Game Data Management\" was added to emphasize the server's role in organizing and querying various types of game-related data files.",
+    "primary_label": "Gaming",
+    "secondary_labels": [
+      "Web Search & Research"
+    ],
+    "custom_label": "Game Data Management",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2442,
+    "server_name": "Old School RuneScape Wiki and Data Server",
+    "rank_by_usage": 2443,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@JayArrowz_mcp-osrs.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@JayArrowz/mcp-osrs/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "osrs_wiki_search",
+          "description": "Search the OSRS Wiki for pages matching a search term.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "search": {
+                "type": "string",
+                "description": "The term to search for on the OSRS Wiki"
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50,
+                "description": "Number of results to return (1-50)"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Offset for pagination (0-based)"
+              }
+            },
+            "required": [
+              "search"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "osrs_wiki_get_page_info",
+          "description": "Get information about specific pages on the OSRS Wiki.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "titles": {
+                "type": "string",
+                "description": "Comma-separated list of page titles to get info for (e.g., Dragon_scimitar,Abyssal_whip)"
+              }
+            },
+            "required": [
+              "titles"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "osrs_wiki_parse_page",
+          "description": "Get the parsed HTML content of a specific OSRS Wiki page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "string",
+                "description": "The exact title of the wiki page to parse (e.g., 'Dragon scimitar', 'Abyssal whip'). Case-sensitive."
+              }
+            },
+            "required": [
+              "page"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_varptypes",
+          "description": "Search the varptypes.txt file for player variables (varps) that store player state and progress.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_varbittypes",
+          "description": "Search the varbittypes.txt file for variable bits (varbits) that store individual bits from varps.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_iftypes",
+          "description": "Search the iftypes.txt file for interface definitions used in the game's UI.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_invtypes",
+          "description": "Search the invtypes.txt file for inventory type definitions in the game.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_loctypes",
+          "description": "Search the loctypes.txt file for location/object type definitions in the game world.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_npctypes",
+          "description": "Search the npctypes.txt file for NPC (non-player character) definitions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_objtypes",
+          "description": "Search the objtypes.txt file for object/item definitions in the game.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_rowtypes",
+          "description": "Search the rowtypes.txt file for row definitions used in various interfaces.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_seqtypes",
+          "description": "Search the seqtypes.txt file for animation sequence definitions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_soundtypes",
+          "description": "Search the soundtypes.txt file for sound effect definitions in the game.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_spottypes",
+          "description": "Search the spottypes.txt file for spot animation (graphical effect) definitions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_spritetypes",
+          "description": "Search the spritetypes.txt file for sprite image definitions used in the interface.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_tabletypes",
+          "description": "Search the tabletypes.txt file for interface tab definitions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_data_file",
+          "description": "Search any file in the data directory for matching entries.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filename": {
+                "type": "string",
+                "description": "The filename to search in the data directory (e.g., 'varptypes.txt')"
+              },
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "filename",
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_details",
+          "description": "Get details about a file in the data directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filename": {
+                "type": "string",
+                "description": "The filename to get details for in the data directory"
+              }
+            },
+            "required": [
+              "filename"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_data_files",
+          "description": "List available data files in the data directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileType": {
+                "type": "string",
+                "description": "Optional filter for file type (e.g., 'txt')"
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 19,
+      "tool_names": [
+        "osrs_wiki_search",
+        "osrs_wiki_get_page_info",
+        "osrs_wiki_parse_page",
+        "search_varptypes",
+        "search_varbittypes",
+        "search_iftypes",
+        "search_invtypes",
+        "search_loctypes",
+        "search_npctypes",
+        "search_objtypes",
+        "search_rowtypes",
+        "search_seqtypes",
+        "search_soundtypes",
+        "search_spottypes",
+        "search_spritetypes",
+        "search_tabletypes",
+        "search_data_file",
+        "get_file_details",
+        "list_data_files"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2442,
+      "name": "Old School RuneScape Wiki and Data Server",
+      "author": "@JayArrowz/mcp-osrs",
+      "overview": "Provide seamless access to Old School RuneScape Wiki content and game data through a standardized protocol. Search wiki pages, retrieve detailed page info, and query various game data files to enhance your applications with rich OSRS context. Easily integrate with LLMs to enrich interactions with game-related knowledge and definitions.",
+      "repository_url": "https://github.com/JayArrowz/mcp-osrs",
+      "homepage": "https://smithery.ai/server/@JayArrowz/mcp-osrs",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@JayArrowz_mcp-osrs.json",
+      "tools_count": 19,
+      "tools": [
+        {
+          "name": "osrs_wiki_search",
+          "description": "Search the OSRS Wiki for pages matching a search term.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "search": {
+                "type": "string",
+                "description": "The term to search for on the OSRS Wiki"
+              },
+              "limit": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 50,
+                "description": "Number of results to return (1-50)"
+              },
+              "offset": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Offset for pagination (0-based)"
+              }
+            },
+            "required": [
+              "search"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "osrs_wiki_get_page_info",
+          "description": "Get information about specific pages on the OSRS Wiki.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "titles": {
+                "type": "string",
+                "description": "Comma-separated list of page titles to get info for (e.g., Dragon_scimitar,Abyssal_whip)"
+              }
+            },
+            "required": [
+              "titles"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "osrs_wiki_parse_page",
+          "description": "Get the parsed HTML content of a specific OSRS Wiki page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "string",
+                "description": "The exact title of the wiki page to parse (e.g., 'Dragon scimitar', 'Abyssal whip'). Case-sensitive."
+              }
+            },
+            "required": [
+              "page"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_varptypes",
+          "description": "Search the varptypes.txt file for player variables (varps) that store player state and progress.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_varbittypes",
+          "description": "Search the varbittypes.txt file for variable bits (varbits) that store individual bits from varps.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_iftypes",
+          "description": "Search the iftypes.txt file for interface definitions used in the game's UI.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_invtypes",
+          "description": "Search the invtypes.txt file for inventory type definitions in the game.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_loctypes",
+          "description": "Search the loctypes.txt file for location/object type definitions in the game world.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_npctypes",
+          "description": "Search the npctypes.txt file for NPC (non-player character) definitions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_objtypes",
+          "description": "Search the objtypes.txt file for object/item definitions in the game.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_rowtypes",
+          "description": "Search the rowtypes.txt file for row definitions used in various interfaces.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_seqtypes",
+          "description": "Search the seqtypes.txt file for animation sequence definitions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_soundtypes",
+          "description": "Search the soundtypes.txt file for sound effect definitions in the game.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_spottypes",
+          "description": "Search the spottypes.txt file for spot animation (graphical effect) definitions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_spritetypes",
+          "description": "Search the spritetypes.txt file for sprite image definitions used in the interface.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_tabletypes",
+          "description": "Search the tabletypes.txt file for interface tab definitions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_data_file",
+          "description": "Search any file in the data directory for matching entries.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filename": {
+                "type": "string",
+                "description": "The filename to search in the data directory (e.g., 'varptypes.txt')"
+              },
+              "query": {
+                "type": "string",
+                "description": "The term to search for in the file"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number for pagination"
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of results per page"
+              }
+            },
+            "required": [
+              "filename",
+              "query"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_details",
+          "description": "Get details about a file in the data directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filename": {
+                "type": "string",
+                "description": "The filename to get details for in the data directory"
+              }
+            },
+            "required": [
+              "filename"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_data_files",
+          "description": "List available data files in the data directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileType": {
+                "type": "string",
+                "description": "Optional filter for file type (e.g., 'txt')"
+              }
+            },
+            "additionalProperties": false
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@JayArrowz/mcp-osrs/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@JayArrowz/mcp-osrs/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2443.@JayArrowz_mcp-osrs_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2083
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide real-time and historical cryptocurrency market data specifically from the OKX exchange. Its core functionality revolves around fetching price data and candlestick information, which are essential for traders and analysts to evaluate market trends, develop trading strategies, and make informed decisions. The available tools, get_price and get_candlesticks, facilitate quick access to this financial data without the need for complex API integrations.",
+    "reasoning": "The primary label \"Cryptocurrency & Blockchain\" is chosen because the server's main focus is on delivering real-time and historical cryptocurrency market data from an exchange, which is fundamental to trading and financial analysis in the crypto space. The secondary label \"Data Analysis & Processing\" is relevant because the server provides structured data (candlesticks) that can be used for analytical purposes like trend identification or strategy backtesting. The predefined labels accurately cover the main functionalities without the need for custom labels.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": true
+  },
+  "metadata": {
+    "server_id": 841,
+    "server_name": "OKX Server",
+    "rank_by_usage": 842,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@esshka_okx-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@esshka/okx-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_price",
+          "description": "Get latest price for an OKX instrument",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instrument": {
+                "type": "string",
+                "description": "Instrument ID (e.g. BTC-USDT)"
+              }
+            },
+            "required": [
+              "instrument"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_candlesticks",
+          "description": "Get candlestick data for an OKX instrument",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instrument": {
+                "type": "string",
+                "description": "Instrument ID (e.g. BTC-USDT)"
+              },
+              "bar": {
+                "type": "string",
+                "description": "Time interval (e.g. 1m, 5m, 1H, 1D)",
+                "default": "1m"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of candlesticks (max 100)",
+                "default": 100
+              }
+            },
+            "required": [
+              "instrument"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get_price",
+        "get_candlesticks"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 841,
+      "name": "OKX Server",
+      "author": "@esshka/okx-mcp",
+      "overview": "Fetch real-time cryptocurrency price data and historical candlestick information from the OKX exchange. Access market insights effortlessly through a simple tool interface, ensuring you stay updated with the latest trends. Enhance your trading strategies with reliable and timely data at your fingertips.",
+      "repository_url": "https://github.com/esshka/okx-mcp",
+      "homepage": "https://smithery.ai/server/@esshka/okx-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@esshka_okx-mcp.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get_price",
+          "description": "Get latest price for an OKX instrument",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instrument": {
+                "type": "string",
+                "description": "Instrument ID (e.g. BTC-USDT)"
+              }
+            },
+            "required": [
+              "instrument"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_candlesticks",
+          "description": "Get candlestick data for an OKX instrument",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instrument": {
+                "type": "string",
+                "description": "Instrument ID (e.g. BTC-USDT)"
+              },
+              "bar": {
+                "type": "string",
+                "description": "Time interval (e.g. 1m, 5m, 1H, 1D)",
+                "default": "1m"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of candlesticks (max 100)",
+                "default": 100
+              }
+            },
+            "required": [
+              "instrument"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@esshka/okx-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@esshka/okx-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0842.@esshka_okx-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 823
+  }
+}

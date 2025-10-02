@@ -1,0 +1,521 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to enhance game development workflows by providing programmatic control over Unreal Engine environments. It offers tools to manipulate scenes, objects, and materials through AI-driven commands, enabling automation and streamlined development processes. Key features include object creation/modification/deletion, material management, Python script execution within Unreal, and scene query capabilities.",
+    "reasoning": "The primary functionality centers around automation and manipulation of game development environments, which most closely aligns with Development Tools. Additional capabilities in material management and scripting support justify secondary labels for Content Creation and Development Tools (though this would be redundant, so we've selected others where appropriate). The server's unique niche in AI-assisted Unreal Engine programming merits a custom label.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Content Creation",
+      "AI/ML Tools"
+    ],
+    "custom_label": "Unreal Engine Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 465,
+    "server_name": "Unreal Engine Plugin",
+    "rank_by_usage": 466,
+    "usage_count": "39",
+    "original_file": "../crawler/smithery/@AlexKissiJr_unrealmcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@AlexKissiJr/unrealmcp/mcp?config=eyJtY3BQb3J0IjogMTMzNzcsICJ0aW1lb3V0IjogMTAsICJidWZmZXJTaXplIjogNjU1MzZ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_scene_info",
+          "description": "Get detailed information about the current Unreal scene.",
+          "input_schema": {
+            "properties": {},
+            "title": "get_scene_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_object",
+          "description": "Create a new object in the Unreal scene.\n        \n        Args:\n            type: The type of object to create (e.g., 'StaticMeshActor', 'PointLight', etc.)\n            location: Optional 3D location as [x, y, z]\n            label: Optional label for the object\n        ",
+          "input_schema": {
+            "properties": {
+              "type": {
+                "title": "Type",
+                "type": "string"
+              },
+              "location": {
+                "default": null,
+                "items": {},
+                "title": "Location",
+                "type": "array"
+              },
+              "label": {
+                "default": null,
+                "title": "Label",
+                "type": "string"
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "title": "create_objectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "modify_object",
+          "description": "Modify an existing object in the Unreal scene.\n        \n        Args:\n            name: The name of the object to modify\n            location: Optional 3D location as [x, y, z]\n            rotation: Optional rotation as [pitch, yaw, roll]\n            scale: Optional scale as [x, y, z]\n        ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "location": {
+                "default": null,
+                "items": {},
+                "title": "Location",
+                "type": "array"
+              },
+              "rotation": {
+                "default": null,
+                "items": {},
+                "title": "Rotation",
+                "type": "array"
+              },
+              "scale": {
+                "default": null,
+                "items": {},
+                "title": "Scale",
+                "type": "array"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "modify_objectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_object",
+          "description": "Delete an object from the Unreal scene.\n        \n        Args:\n            name: The name of the object to delete\n        ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "delete_objectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_material",
+          "description": "Create a new material in the Unreal project.\n        \n        Args:\n            package_path: The path where the material should be created (e.g., '/Game/Materials')\n            name: The name of the material\n            properties: Optional dictionary of material properties to set. Can include:\n                - shading_model: str (e.g., \"DefaultLit\", \"Unlit\", \"Subsurface\", etc.)\n                - blend_mode: str (e.g., \"Opaque\", \"Masked\", \"Translucent\", etc.)\n                - two_sided: bool\n                - dithered_lod_transition: bool\n                - cast_contact_shadow: bool\n                - base_color: list[float] (RGBA values 0-1)\n                - metallic: float (0-1)\n                - roughness: float (0-1)\n        ",
+          "input_schema": {
+            "properties": {
+              "package_path": {
+                "title": "Package Path",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": true,
+                "default": null,
+                "title": "Properties"
+              }
+            },
+            "required": [
+              "package_path",
+              "name"
+            ],
+            "title": "create_materialArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "modify_material",
+          "description": "Modify an existing material's properties.\n        \n        Args:\n            path: The full path to the material (e.g., '/Game/Materials/MyMaterial')\n            properties: Dictionary of material properties to set. Can include:\n                - shading_model: str (e.g., \"DefaultLit\", \"Unlit\", \"Subsurface\", etc.)\n                - blend_mode: str (e.g., \"Opaque\", \"Masked\", \"Translucent\", etc.)\n                - two_sided: bool\n                - dithered_lod_transition: bool\n                - cast_contact_shadow: bool\n                - base_color: list[float] (RGBA values 0-1)\n                - metallic: float (0-1)\n                - roughness: float (0-1)\n        ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Properties"
+              }
+            },
+            "required": [
+              "path",
+              "properties"
+            ],
+            "title": "modify_materialArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_material_info",
+          "description": "Get information about a material.\n        \n        Args:\n            path: The full path to the material (e.g., '/Game/Materials/MyMaterial')\n            \n        Returns:\n            Dictionary containing material information including:\n                - name: str\n                - path: str\n                - shading_model: str\n                - blend_mode: str\n                - two_sided: bool\n                - dithered_lod_transition: bool\n                - cast_contact_shadow: bool\n                - base_color: list[float]\n                - metallic: float\n                - roughness: float\n        ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "get_material_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_python",
+          "description": "Execute Python code or a Python script file in Unreal Engine.\n        \n        This function allows you to execute arbitrary Python code directly in the Unreal Engine\n        environment. You can either provide Python code as a string or specify a path to a Python\n        script file to execute.\n        \n        The Python code will have access to the full Unreal Engine Python API, including the 'unreal'\n        module, allowing you to interact with and manipulate the Unreal Engine editor and its assets.\n        \n        Args:\n            code: Python code to execute as a string. Can be multiple lines.\n            file: Path to a Python script file to execute.\n            \n        Note: \n            - You must provide either code or file, but not both.\n            - The output of the Python code will be visible in the Unreal Engine log.\n            - The Python code runs in the Unreal Engine process, so it has full access to the engine.\n            - Be careful with destructive operations as they can affect your project.\n            \n        Examples:\n            # Execute simple Python code\n            execute_python(code=\"print('Hello from Unreal Engine!')\")\n            \n            # Get information about the current level\n            execute_python(code='''\n            import unreal\n            level = unreal.EditorLevelLibrary.get_editor_world()\n            print(f\"Current level: {level.get_name()}\")\n            actors = unreal.EditorLevelLibrary.get_all_level_actors()\n            print(f\"Number of actors: {len(actors)}\")\n            ''')\n            \n            # Execute a Python script file\n            execute_python(file=\"D:/my_scripts/create_assets.py\")\n        ",
+          "input_schema": {
+            "properties": {
+              "code": {
+                "default": null,
+                "title": "Code",
+                "type": "string"
+              },
+              "file": {
+                "default": null,
+                "title": "File",
+                "type": "string"
+              }
+            },
+            "title": "execute_pythonArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "my_custom_tool",
+          "description": "",
+          "input_schema": {
+            "properties": {
+              "ctx": {
+                "title": "ctx",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ctx"
+            ],
+            "title": "my_custom_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_actor_count",
+          "description": "Get the number of actors in the current Unreal Engine scene.",
+          "input_schema": {
+            "properties": {
+              "ctx": {
+                "title": "ctx",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ctx"
+            ],
+            "title": "get_actor_countArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 10,
+      "tool_names": [
+        "get_scene_info",
+        "create_object",
+        "modify_object",
+        "delete_object",
+        "create_material",
+        "modify_material",
+        "get_material_info",
+        "execute_python",
+        "my_custom_tool",
+        "get_actor_count"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 465,
+      "name": "Unreal Engine Plugin",
+      "author": "@AlexKissiJr/unrealmcp",
+      "overview": "Control Unreal Engine with AI tools to enhance your game development workflow. Integrate external AI systems to manipulate the Unreal environment programmatically, enabling powerful scene manipulation and automation. Streamline your development process and unleash creativity with AI-driven commands.",
+      "repository_url": "https://github.com/AlexKissiJr/UnrealMCP",
+      "homepage": "https://smithery.ai/server/@AlexKissiJr/unrealmcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "39",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@AlexKissiJr_unrealmcp.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "get_scene_info",
+          "description": "Get detailed information about the current Unreal scene.",
+          "input_schema": {
+            "properties": {},
+            "title": "get_scene_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_object",
+          "description": "Create a new object in the Unreal scene.\n        \n        Args:\n            type: The type of object to create (e.g., 'StaticMeshActor', 'PointLight', etc.)\n            location: Optional 3D location as [x, y, z]\n            label: Optional label for the object\n        ",
+          "input_schema": {
+            "properties": {
+              "type": {
+                "title": "Type",
+                "type": "string"
+              },
+              "location": {
+                "default": null,
+                "items": {},
+                "title": "Location",
+                "type": "array"
+              },
+              "label": {
+                "default": null,
+                "title": "Label",
+                "type": "string"
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "title": "create_objectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "modify_object",
+          "description": "Modify an existing object in the Unreal scene.\n        \n        Args:\n            name: The name of the object to modify\n            location: Optional 3D location as [x, y, z]\n            rotation: Optional rotation as [pitch, yaw, roll]\n            scale: Optional scale as [x, y, z]\n        ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "location": {
+                "default": null,
+                "items": {},
+                "title": "Location",
+                "type": "array"
+              },
+              "rotation": {
+                "default": null,
+                "items": {},
+                "title": "Rotation",
+                "type": "array"
+              },
+              "scale": {
+                "default": null,
+                "items": {},
+                "title": "Scale",
+                "type": "array"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "modify_objectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_object",
+          "description": "Delete an object from the Unreal scene.\n        \n        Args:\n            name: The name of the object to delete\n        ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "delete_objectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_material",
+          "description": "Create a new material in the Unreal project.\n        \n        Args:\n            package_path: The path where the material should be created (e.g., '/Game/Materials')\n            name: The name of the material\n            properties: Optional dictionary of material properties to set. Can include:\n                - shading_model: str (e.g., \"DefaultLit\", \"Unlit\", \"Subsurface\", etc.)\n                - blend_mode: str (e.g., \"Opaque\", \"Masked\", \"Translucent\", etc.)\n                - two_sided: bool\n                - dithered_lod_transition: bool\n                - cast_contact_shadow: bool\n                - base_color: list[float] (RGBA values 0-1)\n                - metallic: float (0-1)\n                - roughness: float (0-1)\n        ",
+          "input_schema": {
+            "properties": {
+              "package_path": {
+                "title": "Package Path",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": true,
+                "default": null,
+                "title": "Properties"
+              }
+            },
+            "required": [
+              "package_path",
+              "name"
+            ],
+            "title": "create_materialArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "modify_material",
+          "description": "Modify an existing material's properties.\n        \n        Args:\n            path: The full path to the material (e.g., '/Game/Materials/MyMaterial')\n            properties: Dictionary of material properties to set. Can include:\n                - shading_model: str (e.g., \"DefaultLit\", \"Unlit\", \"Subsurface\", etc.)\n                - blend_mode: str (e.g., \"Opaque\", \"Masked\", \"Translucent\", etc.)\n                - two_sided: bool\n                - dithered_lod_transition: bool\n                - cast_contact_shadow: bool\n                - base_color: list[float] (RGBA values 0-1)\n                - metallic: float (0-1)\n                - roughness: float (0-1)\n        ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Properties"
+              }
+            },
+            "required": [
+              "path",
+              "properties"
+            ],
+            "title": "modify_materialArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_material_info",
+          "description": "Get information about a material.\n        \n        Args:\n            path: The full path to the material (e.g., '/Game/Materials/MyMaterial')\n            \n        Returns:\n            Dictionary containing material information including:\n                - name: str\n                - path: str\n                - shading_model: str\n                - blend_mode: str\n                - two_sided: bool\n                - dithered_lod_transition: bool\n                - cast_contact_shadow: bool\n                - base_color: list[float]\n                - metallic: float\n                - roughness: float\n        ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "get_material_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_python",
+          "description": "Execute Python code or a Python script file in Unreal Engine.\n        \n        This function allows you to execute arbitrary Python code directly in the Unreal Engine\n        environment. You can either provide Python code as a string or specify a path to a Python\n        script file to execute.\n        \n        The Python code will have access to the full Unreal Engine Python API, including the 'unreal'\n        module, allowing you to interact with and manipulate the Unreal Engine editor and its assets.\n        \n        Args:\n            code: Python code to execute as a string. Can be multiple lines.\n            file: Path to a Python script file to execute.\n            \n        Note: \n            - You must provide either code or file, but not both.\n            - The output of the Python code will be visible in the Unreal Engine log.\n            - The Python code runs in the Unreal Engine process, so it has full access to the engine.\n            - Be careful with destructive operations as they can affect your project.\n            \n        Examples:\n            # Execute simple Python code\n            execute_python(code=\"print('Hello from Unreal Engine!')\")\n            \n            # Get information about the current level\n            execute_python(code='''\n            import unreal\n            level = unreal.EditorLevelLibrary.get_editor_world()\n            print(f\"Current level: {level.get_name()}\")\n            actors = unreal.EditorLevelLibrary.get_all_level_actors()\n            print(f\"Number of actors: {len(actors)}\")\n            ''')\n            \n            # Execute a Python script file\n            execute_python(file=\"D:/my_scripts/create_assets.py\")\n        ",
+          "input_schema": {
+            "properties": {
+              "code": {
+                "default": null,
+                "title": "Code",
+                "type": "string"
+              },
+              "file": {
+                "default": null,
+                "title": "File",
+                "type": "string"
+              }
+            },
+            "title": "execute_pythonArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "my_custom_tool",
+          "description": "",
+          "input_schema": {
+            "properties": {
+              "ctx": {
+                "title": "ctx",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ctx"
+            ],
+            "title": "my_custom_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_actor_count",
+          "description": "Get the number of actors in the current Unreal Engine scene.",
+          "input_schema": {
+            "properties": {
+              "ctx": {
+                "title": "ctx",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ctx"
+            ],
+            "title": "get_actor_countArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"mcpPort\": 13377,\n  \"timeout\": 10,\n  \"bufferSize\": 65536\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@AlexKissiJr/unrealmcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"mcpPort\": 13377,\n  \"timeout\": 10,\n  \"bufferSize\": 65536\n}",
+      "python_sdk_url": "https://server.smithery.ai/@AlexKissiJr/unrealmcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0466.@AlexKissiJr_unrealmcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 457
+  }
+}

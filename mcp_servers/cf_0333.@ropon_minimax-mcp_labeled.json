@@ -1,0 +1,102 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described enables powerful multimedia generation capabilities, including text-to-speech, voice cloning, video generation (from text or images), and image generation. It provides tools for generating speech, cloning voices, creating videos with camera movement instructions, and producing images from text prompts. The server integrates with MiniMax APIs and is designed to enhance applications with advanced multimedia generation tools.",
+    "reasoning": "The primary label \"Content Creation\" is chosen because the server's core functionality revolves around generating multimedia content (speech, videos, and images) from various inputs. \"AI/ML Tools\" is selected as a secondary label due to the use of machine learning models for generating outputs. The \"Multimedia Generation\" custom label captures the server's unique ability to create diverse types of media content.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "AI/ML Tools"
+    ],
+    "custom_label": "Multimedia Generation",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 332,
+    "server_name": "MiniMax",
+    "rank_by_usage": 333,
+    "usage_count": "96",
+    "original_file": "../crawler/smithery/@ropon_minimax-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ropon/minimax-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 332,
+      "name": "MiniMax",
+      "author": "@ropon/minimax-mcp",
+      "overview": "Enable powerful text-to-speech, voice cloning, video, and image generation capabilities through a unified MCP server interface. Integrate with popular MCP clients to generate speech, clone voices, and create multimedia content seamlessly. Enhance your applications with advanced multimedia generation tools backed by MiniMax APIs.",
+      "repository_url": "https://github.com/ropon/MiniMax-MCP",
+      "homepage": "https://smithery.ai/server/@ropon/minimax-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "96",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ropon_minimax-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "text_to_audio",
+          "description": "Deploy Server @ropon/minimax-mcp Try in Playground text_to_audio",
+          "parameters": []
+        },
+        {
+          "name": "list_voices",
+          "description": "List all voices available. Only supports when api_host is https://api.minimax.chat Args: voice_type (str, optional): The type of voices to list. Values range [\"all\", \"system\", \"voice_cloning\"], with \"all\" being the default. Returns: Text content with the list of voices.",
+          "parameters": []
+        },
+        {
+          "name": "voice_clone",
+          "description": "Clone a voice using provided audio files. The new voice will be charged upon first use. COST WARNING: This tool makes an API call to Minimax which may incur costs. Only use when explicitly requested by the user. Args: voice_id (str): The id of the voice to use. file (str): The path to the audio file to clone or a URL to the audio file. text (str, optional): The text to use for the demo audio. is_url (bool, optional): Whether the file is a URL. Defaults to False. Returns: Text content with the voice id of the cloned voice.",
+          "parameters": []
+        },
+        {
+          "name": "play_audio",
+          "description": "Play an audio file. Supports WAV and MP3 formats. Not supports video. Args: input_file_path (str): The path to the audio file to play. is_url (bool, optional): Whether the audio file is a URL. Returns: Text content with the path to the audio file.",
+          "parameters": []
+        },
+        {
+          "name": "generate_video",
+          "description": "Generate a video from a prompt. COST WARNING: This tool makes an API call to Minimax which may incur costs. Only use when explicitly requested by the user. Args: model (str, optional): The model to use. Values range [\"T2V-01\", \"T2V-01-Director\", \"I2V-01\", \"I2V-01-Director\", \"I2V-01-live\"]. \"Director\" supports inserting instructions for camera movement control. \"I2V\" for image to video. \"T2V\" for text to video. prompt (str): The prompt to generate the video from. When use Director model, the prompt supports 15 Camera Movement Instructions (Enumerated Values) -Truck: [Truck left], [Truck right] -Pan: [Pan left], [Pan right] -Push: [Push in], [Pull out] -Pedestal: [Pedestal up], [Pedestal down] -Tilt: [Tilt up], [Tilt down] -Zoom: [Zoom in], [Zoom out] -Shake: [Shake] -Follow: [Tracking shot] -Static: [Static shot] first_frame_image (str): The first frame image. The model must be \"I2V\" Series. output_directory (str, optional): The directory to save the video to. Returns: Text content with the path to the output video file.",
+          "parameters": []
+        },
+        {
+          "name": "text_to_image",
+          "description": "Generate a image from a prompt. COST WARNING: This tool makes an API call to Minimax which may incur costs. Only use when explicitly requested by the user. Args: model (str, optional): The model to use. Values range [\"image-01\"], with \"image-01\" being the default. prompt (str): The prompt to generate the image from. aspect_ratio (str, optional): The aspect ratio of the image. Values range [\"1:1\", \"16:9\",\"4:3\", \"3:2\", \"2:3\", \"3:4\", \"9:16\", \"21:9\"], with \"1:1\" being the default. n (int, optional): The number of images to generate. Values range [1, 9], with 1 being the default. prompt_optimizer (bool, optional): Whether to optimize the prompt. Values range [True, False], with True being the default. output_directory (str, optional): The directory to save the image to. Returns: Text content with the path to the output image file.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ropon/minimax-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "minimaxApiKey",
+          "required": true,
+          "description": "Your MiniMax API key to authenticate with the MiniMax service."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ropon/minimax-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0333.@ropon_minimax-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 329
+  }
+}

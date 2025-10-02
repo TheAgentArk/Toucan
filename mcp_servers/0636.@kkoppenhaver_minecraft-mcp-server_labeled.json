@@ -1,0 +1,796 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to control a Minecraft character using natural language commands via large language models. It automates gameplay tasks, enables building assistance, and integrates with AI to create interactive Minecraft experiences. Available tools allow for precise control of movement, interaction with the game environment, inventory management, and communication within the game.",
+    "reasoning": "The primary functionality revolves around gameplay automation and interaction within Minecraft, which aligns well with the Gaming category. The ability to control a bot and perform tasks programmatically suggests automation and interaction capabilities, leading to Browser Automation as a secondary label given its similarity to automated scripting. The toolset also supports productivity within the game, hence Daily Productivity as another secondary label.",
+    "primary_label": "Gaming",
+    "secondary_labels": [
+      "Browser Automation",
+      "Daily Productivity"
+    ],
+    "custom_label": "Minecraft Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 635,
+    "server_name": "Minecraft Bot Server",
+    "rank_by_usage": 636,
+    "usage_count": "15",
+    "original_file": "../crawler/smithery/@kkoppenhaver_minecraft-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@kkoppenhaver/minecraft-mcp-server/mcp?config=eyJob3N0IjogImxvY2FsaG9zdCIsICJwb3J0IjogMjU1NjUsICJ1c2VybmFtZSI6ICJDbGF1ZGVCb3QifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-position",
+          "description": "Get the current position of the bot",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "move-to-position",
+          "description": "Move the bot to a specific position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              },
+              "range": {
+                "type": "number",
+                "description": "How close to get to the target (default: 1)"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "look-at",
+          "description": "Make the bot look at a specific position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "jump",
+          "description": "Make the bot jump",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "move-in-direction",
+          "description": "Move the bot in a specific direction for a duration",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "forward",
+                  "back",
+                  "left",
+                  "right"
+                ],
+                "description": "Direction to move"
+              },
+              "duration": {
+                "type": "number",
+                "description": "Duration in milliseconds (default: 1000)"
+              }
+            },
+            "required": [
+              "direction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-inventory",
+          "description": "List all items in the bot's inventory",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find-item",
+          "description": "Find a specific item in the bot's inventory",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "nameOrType": {
+                "type": "string",
+                "description": "Name or type of item to find"
+              }
+            },
+            "required": [
+              "nameOrType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "equip-item",
+          "description": "Equip a specific item",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "itemName": {
+                "type": "string",
+                "description": "Name of the item to equip"
+              },
+              "destination": {
+                "type": "string",
+                "description": "Where to equip the item (default: 'hand')"
+              }
+            },
+            "required": [
+              "itemName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "place-block",
+          "description": "Place a block at the specified position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              },
+              "faceDirection": {
+                "type": "string",
+                "enum": [
+                  "up",
+                  "down",
+                  "north",
+                  "south",
+                  "east",
+                  "west"
+                ],
+                "description": "Direction to place against (default: 'down')"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "dig-block",
+          "description": "Dig a block at the specified position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-block-info",
+          "description": "Get information about a block at the specified position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find-block",
+          "description": "Find the nearest block of a specific type",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "blockType": {
+                "type": "string",
+                "description": "Type of block to find"
+              },
+              "maxDistance": {
+                "type": "number",
+                "description": "Maximum search distance (default: 16)"
+              }
+            },
+            "required": [
+              "blockType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find-entity",
+          "description": "Find the nearest entity of a specific type",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of entity to find (empty for any entity)"
+              },
+              "maxDistance": {
+                "type": "number",
+                "description": "Maximum search distance (default: 16)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send-chat",
+          "description": "Send a chat message in-game",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Message to send in chat"
+              }
+            },
+            "required": [
+              "message"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "fly-to",
+          "description": "Make the bot fly to a specific position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 15,
+      "tool_names": [
+        "get-position",
+        "move-to-position",
+        "look-at",
+        "jump",
+        "move-in-direction",
+        "list-inventory",
+        "find-item",
+        "equip-item",
+        "place-block",
+        "dig-block",
+        "get-block-info",
+        "find-block",
+        "find-entity",
+        "send-chat",
+        "fly-to"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 635,
+      "name": "Minecraft Bot Server",
+      "author": "@kkoppenhaver/minecraft-mcp-server",
+      "overview": "Control a Minecraft character using natural language commands powered by large language models. Enable interactive gameplay automation and building assistance within your Minecraft world. Seamlessly integrate with Claude Desktop to bring AI-driven Minecraft experiences to life.",
+      "repository_url": "https://github.com/kkoppenhaver/minecraft-mcp-server",
+      "homepage": "https://smithery.ai/server/@kkoppenhaver/minecraft-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "15",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@kkoppenhaver_minecraft-mcp-server.json",
+      "tools_count": 15,
+      "tools": [
+        {
+          "name": "get-position",
+          "description": "Get the current position of the bot",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "move-to-position",
+          "description": "Move the bot to a specific position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              },
+              "range": {
+                "type": "number",
+                "description": "How close to get to the target (default: 1)"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "look-at",
+          "description": "Make the bot look at a specific position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "jump",
+          "description": "Make the bot jump",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "move-in-direction",
+          "description": "Move the bot in a specific direction for a duration",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "forward",
+                  "back",
+                  "left",
+                  "right"
+                ],
+                "description": "Direction to move"
+              },
+              "duration": {
+                "type": "number",
+                "description": "Duration in milliseconds (default: 1000)"
+              }
+            },
+            "required": [
+              "direction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-inventory",
+          "description": "List all items in the bot's inventory",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find-item",
+          "description": "Find a specific item in the bot's inventory",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "nameOrType": {
+                "type": "string",
+                "description": "Name or type of item to find"
+              }
+            },
+            "required": [
+              "nameOrType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "equip-item",
+          "description": "Equip a specific item",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "itemName": {
+                "type": "string",
+                "description": "Name of the item to equip"
+              },
+              "destination": {
+                "type": "string",
+                "description": "Where to equip the item (default: 'hand')"
+              }
+            },
+            "required": [
+              "itemName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "place-block",
+          "description": "Place a block at the specified position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              },
+              "faceDirection": {
+                "type": "string",
+                "enum": [
+                  "up",
+                  "down",
+                  "north",
+                  "south",
+                  "east",
+                  "west"
+                ],
+                "description": "Direction to place against (default: 'down')"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "dig-block",
+          "description": "Dig a block at the specified position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-block-info",
+          "description": "Get information about a block at the specified position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find-block",
+          "description": "Find the nearest block of a specific type",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "blockType": {
+                "type": "string",
+                "description": "Type of block to find"
+              },
+              "maxDistance": {
+                "type": "number",
+                "description": "Maximum search distance (default: 16)"
+              }
+            },
+            "required": [
+              "blockType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find-entity",
+          "description": "Find the nearest entity of a specific type",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of entity to find (empty for any entity)"
+              },
+              "maxDistance": {
+                "type": "number",
+                "description": "Maximum search distance (default: 16)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send-chat",
+          "description": "Send a chat message in-game",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Message to send in chat"
+              }
+            },
+            "required": [
+              "message"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "fly-to",
+          "description": "Make the bot fly to a specific position",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X coordinate"
+              },
+              "y": {
+                "type": "number",
+                "description": "Y coordinate"
+              },
+              "z": {
+                "type": "number",
+                "description": "Z coordinate"
+              }
+            },
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"host\": \"localhost\",\n  \"port\": 25565,\n  \"username\": \"ClaudeBot\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@kkoppenhaver/minecraft-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"host\": \"localhost\",\n  \"port\": 25565,\n  \"username\": \"ClaudeBot\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@kkoppenhaver/minecraft-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0636.@kkoppenhaver_minecraft-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 621
+  }
+}

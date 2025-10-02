@@ -1,0 +1,505 @@
+{
+  "labels": {
+    "analysis": "The FrankfurterMCP server is designed to interact with the Frankfurter API, which provides currency exchange rate data. Its core functionality revolves around retrieving, converting, and analyzing historical and latest exchange rates for various currencies. The tools available focus on financial data access, specifically in the realm of forex (foreign exchange) information. The server doesn't just store data but actively performs currency conversions and historical analyses, making it a specialized tool for financial data processing and currency-related operations.",
+    "reasoning": "The primary label of \"Financial Services\" was chosen because the server's core functionality is directly related to financial data - specifically currency exchange rates. This aligns with financial services focused on currency exchange and financial data processing. Database Operations was selected as a secondary label because the server performs data queries (historical data lookups) and filter operations on currency data. The custom label of \"Forex Data Analysis\" was added because while some aspects fit under Financial Services, the specific focus on historical exchange rates and conversions makes this a specialized financial tool.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "Database Operations"
+    ],
+    "custom_label": "Forex Data Analysis",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 977,
+    "server_name": "FrankfurterMCP",
+    "rank_by_usage": 978,
+    "usage_count": "3",
+    "original_file": "../crawler/smithery/@anirbanbasu_frankfurtermcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@anirbanbasu/frankfurtermcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_supported_currencies",
+          "description": "Returns a list of three-letter currency codes for the supported currencies.",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_latest_exchange_rates",
+          "description": "Returns the latest exchange rates for specific currencies. The\nsymbols can be used to filter the results to specific currencies.\nIf symbols is not provided, all supported currencies will be returned.",
+          "input_schema": {
+            "properties": {
+              "base_currency": {
+                "description": "A base currency code for which rates are to be requested.",
+                "title": "Base Currency",
+                "type": "string"
+              },
+              "symbols": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A list of target currency codes for which rates against the base currency will be provided. Do not provide it to request all supported currencies.",
+                "title": "Symbols"
+              }
+            },
+            "required": [
+              "base_currency"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "convert_currency_latest",
+          "description": "Converts an amount from one currency to another using the latest exchange rates.",
+          "input_schema": {
+            "properties": {
+              "amount": {
+                "description": "The amount in the source currency to convert.",
+                "title": "Amount",
+                "type": "number"
+              },
+              "from_currency": {
+                "description": "The source currency code.",
+                "title": "From Currency",
+                "type": "string"
+              },
+              "to_currency": {
+                "description": "The target currency code.",
+                "title": "To Currency",
+                "type": "string"
+              }
+            },
+            "required": [
+              "amount",
+              "from_currency",
+              "to_currency"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_historical_exchange_rates",
+          "description": "Returns historical exchange rates for a specific date or date range.\nIf the exchange rates for a specified date is not available, the rates available for\nthe closest date before the specified date will be provided.\nEither a specific date, a start date, or a date range must be provided.\nThe symbols can be used to filter the results to specific currencies.\nIf symbols are not provided, all supported currencies will be returned.",
+          "input_schema": {
+            "properties": {
+              "base_currency": {
+                "description": "A base currency code for which rates are to be requested.",
+                "title": "Base Currency",
+                "type": "string"
+              },
+              "symbols": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A list of target currency codes for which rates against the base currency will be provided. Do not provide it to request all supported currencies.",
+                "title": "Symbols"
+              },
+              "specific_date": {
+                "anyOf": [
+                  {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The specific date for which the historical rates are requested in the YYYY-MM-DD format.",
+                "title": "Specific Date"
+              },
+              "start_date": {
+                "anyOf": [
+                  {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The start date, of a date range, for which the historical rates are requested in the YYYY-MM-DD format.",
+                "title": "Start Date"
+              },
+              "end_date": {
+                "anyOf": [
+                  {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The end date, of a date range, for which the historical rates are requested in the YYYY-MM-DD format.",
+                "title": "End Date"
+              }
+            },
+            "required": [
+              "base_currency"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "convert_currency_specific_date",
+          "description": "Convert an amount from one currency to another using the exchange rates for a specific date.\nIf there is no exchange rate available for the specific date, the rate for the closest available date before\nthe specified date will be used.",
+          "input_schema": {
+            "properties": {
+              "amount": {
+                "description": "The amount in the source currency to convert.",
+                "title": "Amount",
+                "type": "number"
+              },
+              "from_currency": {
+                "description": "The source currency code.",
+                "title": "From Currency",
+                "type": "string"
+              },
+              "to_currency": {
+                "description": "The target currency code.",
+                "title": "To Currency",
+                "type": "string"
+              },
+              "specific_date": {
+                "description": "The specific date for which the conversion is requested in the YYYY-MM-DD format.",
+                "format": "date",
+                "title": "Specific Date",
+                "type": "string"
+              }
+            },
+            "required": [
+              "amount",
+              "from_currency",
+              "to_currency",
+              "specific_date"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "get_supported_currencies",
+        "get_latest_exchange_rates",
+        "convert_currency_latest",
+        "get_historical_exchange_rates",
+        "convert_currency_specific_date"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 977,
+      "name": "FrankfurterMCP",
+      "author": "@anirbanbasu/frankfurtermcp",
+      "overview": "A MCP server for the Frankfurter API for currency exchange rates.",
+      "repository_url": "https://github.com/anirbanbasu/frankfurtermcp",
+      "homepage": "https://smithery.ai/server/@anirbanbasu/frankfurtermcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "3",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@anirbanbasu_frankfurtermcp.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "get_supported_currencies",
+          "description": "Returns a list of three-letter currency codes for the supported currencies.",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_latest_exchange_rates",
+          "description": "Returns the latest exchange rates for specific currencies. The\nsymbols can be used to filter the results to specific currencies.\nIf symbols is not provided, all supported currencies will be returned.",
+          "input_schema": {
+            "properties": {
+              "base_currency": {
+                "description": "A base currency code for which rates are to be requested.",
+                "title": "Base Currency",
+                "type": "string"
+              },
+              "symbols": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A list of target currency codes for which rates against the base currency will be provided. Do not provide it to request all supported currencies.",
+                "title": "Symbols"
+              }
+            },
+            "required": [
+              "base_currency"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "convert_currency_latest",
+          "description": "Converts an amount from one currency to another using the latest exchange rates.",
+          "input_schema": {
+            "properties": {
+              "amount": {
+                "description": "The amount in the source currency to convert.",
+                "title": "Amount",
+                "type": "number"
+              },
+              "from_currency": {
+                "description": "The source currency code.",
+                "title": "From Currency",
+                "type": "string"
+              },
+              "to_currency": {
+                "description": "The target currency code.",
+                "title": "To Currency",
+                "type": "string"
+              }
+            },
+            "required": [
+              "amount",
+              "from_currency",
+              "to_currency"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "get_historical_exchange_rates",
+          "description": "Returns historical exchange rates for a specific date or date range.\nIf the exchange rates for a specified date is not available, the rates available for\nthe closest date before the specified date will be provided.\nEither a specific date, a start date, or a date range must be provided.\nThe symbols can be used to filter the results to specific currencies.\nIf symbols are not provided, all supported currencies will be returned.",
+          "input_schema": {
+            "properties": {
+              "base_currency": {
+                "description": "A base currency code for which rates are to be requested.",
+                "title": "Base Currency",
+                "type": "string"
+              },
+              "symbols": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "A list of target currency codes for which rates against the base currency will be provided. Do not provide it to request all supported currencies.",
+                "title": "Symbols"
+              },
+              "specific_date": {
+                "anyOf": [
+                  {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The specific date for which the historical rates are requested in the YYYY-MM-DD format.",
+                "title": "Specific Date"
+              },
+              "start_date": {
+                "anyOf": [
+                  {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The start date, of a date range, for which the historical rates are requested in the YYYY-MM-DD format.",
+                "title": "Start Date"
+              },
+              "end_date": {
+                "anyOf": [
+                  {
+                    "format": "date",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "The end date, of a date range, for which the historical rates are requested in the YYYY-MM-DD format.",
+                "title": "End Date"
+              }
+            },
+            "required": [
+              "base_currency"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "convert_currency_specific_date",
+          "description": "Convert an amount from one currency to another using the exchange rates for a specific date.\nIf there is no exchange rate available for the specific date, the rate for the closest available date before\nthe specified date will be used.",
+          "input_schema": {
+            "properties": {
+              "amount": {
+                "description": "The amount in the source currency to convert.",
+                "title": "Amount",
+                "type": "number"
+              },
+              "from_currency": {
+                "description": "The source currency code.",
+                "title": "From Currency",
+                "type": "string"
+              },
+              "to_currency": {
+                "description": "The target currency code.",
+                "title": "To Currency",
+                "type": "string"
+              },
+              "specific_date": {
+                "description": "The specific date for which the conversion is requested in the YYYY-MM-DD format.",
+                "format": "date",
+                "title": "Specific Date",
+                "type": "string"
+              }
+            },
+            "required": [
+              "amount",
+              "from_currency",
+              "to_currency",
+              "specific_date"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": true
+          }
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@anirbanbasu/frankfurtermcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@anirbanbasu/frankfurtermcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0978.@anirbanbasu_frankfurtermcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 956
+  }
+}

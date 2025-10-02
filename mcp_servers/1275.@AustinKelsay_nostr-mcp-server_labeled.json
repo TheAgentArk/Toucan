@@ -1,0 +1,655 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to interact with the Nostr network, a decentralized, open protocol that enables censorship-resistant, timestamped data exchanges. The server provides tools to fetch user profiles, notes, zaps (micro-payments), and search through Nostr Implementation Possibilities (NIPs). It also allows sending anonymous zaps, enhancing privacy. The core functionality revolves around retrieving and interacting with Nostr data, making it a bridge between LLMs and the Nostr ecosystem.",
+    "reasoning": "The primary label \"Communication Tools\" was chosen because the server primarily handles messaging and micropayments (zaps) within the Nostr network. The secondary label \"Cryptocurrency & Blockchain\" fits due to the zap functionality, which involves micropayments. The custom label \"Nostr Network Tools\" is added to specifically describe its unique role in the Nostr ecosystem.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "Cryptocurrency & Blockchain",
+      "Browser Automation"
+    ],
+    "custom_label": "Nostr Network Tools",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1274,
+    "server_name": "Nostr MCP Server",
+    "rank_by_usage": 1275,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@AustinKelsay_nostr-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@AustinKelsay/nostr-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "getProfile",
+          "description": "Get a Nostr profile by public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getKind1Notes",
+          "description": "Get text notes (kind 1) by public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of notes to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getReceivedZaps",
+          "description": "Get zaps received by a public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of zaps to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              },
+              "validateReceipts": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to validate zap receipts according to NIP-57"
+              },
+              "debug": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable verbose debug logging"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getSentZaps",
+          "description": "Get zaps sent by a public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of zaps to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              },
+              "validateReceipts": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to validate zap receipts according to NIP-57"
+              },
+              "debug": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable verbose debug logging"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAllZaps",
+          "description": "Get all zaps (sent and received) for a public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "description": "Maximum number of total zaps to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              },
+              "validateReceipts": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to validate zap receipts according to NIP-57"
+              },
+              "debug": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable verbose debug logging"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getLongFormNotes",
+          "description": "Get long-form notes (kind 30023) by public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of notes to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "searchNips",
+          "description": "Search through Nostr Implementation Possibilities (NIPs)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query to find relevant NIPs"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of results to return"
+              },
+              "includeContent": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to include the full content of each NIP in the results"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "sendAnonymousZap",
+          "description": "Prepare an anonymous zap to a profile or event",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "target": {
+                "type": "string",
+                "description": "Target to zap - can be a pubkey (hex or npub) or an event ID (nevent, note, naddr, or hex)"
+              },
+              "amountSats": {
+                "type": "number",
+                "minimum": 1,
+                "description": "Amount to zap in satoshis"
+              },
+              "comment": {
+                "type": "string",
+                "default": "",
+                "description": "Optional comment to include with the zap"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              }
+            },
+            "required": [
+              "target",
+              "amountSats"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 8,
+      "tool_names": [
+        "getProfile",
+        "getKind1Notes",
+        "getReceivedZaps",
+        "getSentZaps",
+        "getAllZaps",
+        "getLongFormNotes",
+        "searchNips",
+        "sendAnonymousZap"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1274,
+      "name": "Nostr MCP Server",
+      "author": "@AustinKelsay/nostr-mcp-server",
+      "overview": "Fetch and interact with Nostr network data seamlessly. Access user profiles, notes, and zaps with ease, enhancing your LLM's capabilities. Leverage advanced search features to explore Nostr Implementation Possibilities (NIPs) effectively.",
+      "repository_url": "https://github.com/AustinKelsay/nostr-mcp-server",
+      "homepage": "https://smithery.ai/server/@AustinKelsay/nostr-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@AustinKelsay_nostr-mcp-server.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "getProfile",
+          "description": "Get a Nostr profile by public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getKind1Notes",
+          "description": "Get text notes (kind 1) by public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of notes to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getReceivedZaps",
+          "description": "Get zaps received by a public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of zaps to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              },
+              "validateReceipts": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to validate zap receipts according to NIP-57"
+              },
+              "debug": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable verbose debug logging"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getSentZaps",
+          "description": "Get zaps sent by a public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of zaps to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              },
+              "validateReceipts": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to validate zap receipts according to NIP-57"
+              },
+              "debug": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable verbose debug logging"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAllZaps",
+          "description": "Get all zaps (sent and received) for a public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "description": "Maximum number of total zaps to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              },
+              "validateReceipts": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to validate zap receipts according to NIP-57"
+              },
+              "debug": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable verbose debug logging"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getLongFormNotes",
+          "description": "Get long-form notes (kind 30023) by public key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pubkey": {
+                "type": "string",
+                "description": "Public key of the Nostr user (hex format or npub format)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of notes to fetch"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              }
+            },
+            "required": [
+              "pubkey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "searchNips",
+          "description": "Search through Nostr Implementation Possibilities (NIPs)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query to find relevant NIPs"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of results to return"
+              },
+              "includeContent": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to include the full content of each NIP in the results"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "sendAnonymousZap",
+          "description": "Prepare an anonymous zap to a profile or event",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "target": {
+                "type": "string",
+                "description": "Target to zap - can be a pubkey (hex or npub) or an event ID (nevent, note, naddr, or hex)"
+              },
+              "amountSats": {
+                "type": "number",
+                "minimum": 1,
+                "description": "Amount to zap in satoshis"
+              },
+              "comment": {
+                "type": "string",
+                "default": "",
+                "description": "Optional comment to include with the zap"
+              },
+              "relays": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional list of relays to query"
+              }
+            },
+            "required": [
+              "target",
+              "amountSats"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@AustinKelsay/nostr-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@AustinKelsay/nostr-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1275.@AustinKelsay_nostr-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1215
+  }
+}

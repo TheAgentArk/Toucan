@@ -1,0 +1,155 @@
+{
+  "labels": {
+    "analysis": "The MCP Server for Shodan provides tools to query the Shodan API and database for network intelligence and cybersecurity information. It enables IP lookups, domain name resolution (DNS), reverse DNS lookups, and vulnerability assessments (CVE/CVEDB queries). The tools are primarily focused on cybersecurity research, threat intelligence gathering, and network inventory management.",
+    "reasoning": "The primary label is \"Security & Authentication\" because the server's tools focus on vulnerability assessment, network scanning, and threat intelligence, which are core cybersecurity activities. \"Data Analysis & Processing\" is a secondary label since the tools allow for statistical analysis of device data and vulnerabilities. \"Database Operations\" is also relevant due to the structured querying capabilities against Shodan's CVEDB and API.",
+    "primary_label": "Security & Authentication",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Database Operations"
+    ],
+    "custom_label": "Cybersecurity Intelligence",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 118,
+    "server_name": "Shodan Server",
+    "rank_by_usage": 119,
+    "usage_count": "559",
+    "original_file": "../crawler/smithery/@burtthecoder_mcp-shodan.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@burtthecoder/mcp-shodan/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 118,
+      "name": "Shodan Server",
+      "author": "@burtthecoder/mcp-shodan",
+      "overview": "A Model Context Protocol server for querying the Shodan API and Shodan CVEDB, providing access to network intelligence and security services.",
+      "repository_url": "https://github.com/BurtTheCoder/mcp-shodan",
+      "homepage": "https://smithery.ai/server/@burtthecoder/mcp-shodan",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "559",
+      "success_rate": "99.83%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@burtthecoder_mcp-shodan.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "ip_lookup",
+          "description": "Deploy Server Shodan Server Claim Server @burtthecoder/mcp-shodan Try in Playground",
+          "parameters": [
+            {
+              "name": "ip_lookup",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "shodan_search",
+          "description": "Search Shodan's database of internet-connected devices. Returns detailed information about matching devices including services, vulnerabilities, and geographic distribution. Supports advanced search filters and returns country-based statistics.",
+          "parameters": [
+            {
+              "name": "shodan_search",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "cve_lookup",
+          "description": "Query detailed vulnerability information from Shodan's CVEDB. Returns comprehensive CVE details including CVSS scores (v2/v3), EPSS probability and ranking, KEV status, proposed mitigations, ransomware associations, and affected products (CPEs).",
+          "parameters": [
+            {
+              "name": "cve_lookup",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "cve",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "dns_lookup",
+          "description": "Resolve domain names to IP addresses using Shodan's DNS service. Supports batch resolution of multiple hostnames in a single query. Returns IP addresses mapped to their corresponding hostnames.",
+          "parameters": [
+            {
+              "name": "dns_lookup",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "cpe_lookup",
+          "description": "Search for Common Platform Enumeration (CPE) entries by product name in Shodan's CVEDB. Supports pagination and can return either full CPE details or just the total count. Useful for identifying specific versions and configurations of software and hardware.",
+          "parameters": [
+            {
+              "name": "cpe_lookup",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "cves_by_product",
+          "description": "Search for vulnerabilities affecting specific products or CPEs. Supports filtering by KEV status, sorting by EPSS score, date ranges, and pagination. Can search by product name or CPE 2.3 identifier. Returns detailed vulnerability information including severity scores and impact assessments.",
+          "parameters": [
+            {
+              "name": "cves_by_product",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "reverse_dns_lookup",
+          "description": "Perform reverse DNS lookups to find hostnames associated with IP addresses. Supports batch lookups of multiple IP addresses in a single query. Returns all known hostnames for each IP address, with clear indication when no hostnames are found.",
+          "parameters": [
+            {
+              "name": "reverse_dns_lookup",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@burtthecoder/mcp-shodan/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "shodanApiKey",
+          "required": true,
+          "description": "The API key for the Shodan API."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@burtthecoder/mcp-shodan/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0119.@burtthecoder_mcp-shodan_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 116
+  }
+}

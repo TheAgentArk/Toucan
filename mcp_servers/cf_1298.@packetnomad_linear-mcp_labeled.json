@@ -1,0 +1,207 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on integrating with Linear, a project management tool, to streamline issue tracking and project management. The available tools allow for creating, updating, searching, and managing issues, projects, and teams within Linear. It emphasizes advanced search capabilities with powerful filtering options for issues, making it a specialized tool for project and task management within the Linear ecosystem. The tools support detailed querying, commenting, and project updates, enabling comprehensive workflow management.",
+    "reasoning": "The primary label reflects the server's core functionality as a project and task management tool within Linear. The secondary labels highlight its advanced search and filtering capabilities, which are critical to its use case. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Web Search & Research",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1297,
+    "server_name": "Linear Integration Server",
+    "rank_by_usage": 1298,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@packetnomad_linear-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@packetnomad/linear-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1297,
+      "name": "Linear Integration Server",
+      "author": "@packetnomad/linear-mcp",
+      "overview": "Streamline your issue tracking with seamless integration to Linear. Create, update, and manage issues effortlessly while leveraging advanced search capabilities to enhance your workflow.",
+      "repository_url": "https://github.com/packetnomad/linear-mcp",
+      "homepage": "https://smithery.ai/server/@packetnomad/linear-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@packetnomad_linear-mcp.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "create_issue",
+          "description": "Deploy Server Linear Integration Server @packetnomad/linear-mcp Try in Playground create_issue",
+          "parameters": [
+            {
+              "name": "create_issue",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "update_issue",
+          "description": "Update an existing Linear issue. Supports self-assignment using \"me\" as assigneeId and cycle assignment via cycleId. You can provide a cycle name (e.g., \"2\"), a relative cycle at the moment of updating (\"current\", \"next\", \"previous\"), or a cycle UUID directly.",
+          "parameters": [
+            {
+              "name": "update_issue",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_issue",
+          "description": "Get detailed information about a specific Linear issue including optional relationships and cleaned content",
+          "parameters": [
+            {
+              "name": "issueId",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "includeRelationships",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "True",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "False",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "search_issues",
+          "description": "Search for Linear issues using a query string and advanced filters. Supports Linear's powerful filtering capabilities. Examples: 1. Basic search: {query: \"bug\"} 2. High priority issues: {query: \"\", filter: {priority: {gte: 2}}} 3. Issues due soon: {query: \"\", filter: {dueDate: {lt: \"P2W\"}}} 4. Issues with specific labels: {query: \"\", filter: {labels: {name: {in: [\"Bug\", \"Critical\"]}}}} 5. Complex filters: {query: \"\", filter: {and: [{priority: {gte: 2}}, {state: {type: {eq: \"started\"}}}], or: [{assignee: {id: {eq: \"me\"}}}, {creator: {id: {eq: \"me\"}}}]}} 6. Issues in a project: {query: \"\", filter: {project: {id: {eq: \"project-id\"}}}} 7. Issues by state type: {query: \"\", filter: {state: {type: {eq: \"started\"}}}} 8. Issues in current cycle: {query: \"\", filter: {cycle: {type: \"current\", teamId: \"team-123\"}}} 9. Issues in next cycle: {query: \"\", filter: {cycle: {type: \"next\", teamId: \"team-123\"}}} 10. Issues in previous cycle: {query: \"\", filter: {cycle: {type: \"previous\", teamId: \"team-123\"}}} 11. Issues in specific cycle by UUID: {query: \"\", filter: {cycle: {type: \"specific\", id: \"cycle-456\"}}} or by cycle number: {query: \"\", filter: {cycle: {type: \"specific\", id: \"2\", teamId: \"team-123\"}}} (teamId is required when using cycle number) 12. High priority bugs in current cycle: {query: \"bug\", filter: {and: [{cycle: {type: \"current\", teamId: \"team-123\"}}, {priority: {gte: 2}}], assignee: {id: {eq: \"me\"}}}} Supported comparators: - String fields: eq, neq, in, nin, contains, startsWith, endsWith (plus case-insensitive variants) - Number fields: eq, neq, lt, lte, gt, gte, in, nin - Date fields: eq, neq, lt, lte, gt, gte (supports ISO 8601 durations like \"P2W\" for relative dates) Filterable fields: - Basic: title, description, priority, estimate, dueDate, createdAt, updatedAt, completedAt, startedAt, canceledAt - Relationships: * assignee: {id: {...}, name: {...}} * creator: {id: {...}, name: {...}} * team: {id: {...}, name: {...}, key: {...}} * state: {id: {...}, name: {...}, type: {...}} * labels: {name: {...}, every: {name: {...}}} * project: {id: {...}, name: {...}} * cycle: {type: \"current\"|\"next\"|\"previous\"|\"specific\", teamId: \"...\", id: \"...\"} Logical operators: - and: Array of filters that must all match - or: Array of filters where at least one must match Backward compatibility: - assignedTo: \"me\" or user ID (shorthand for assignee.id.eq) - createdBy: \"me\" or user ID (shorthand for creator.id.eq) - projectId: direct project ID (shorthand for project.id.eq) - projectName: project name lookup",
+          "parameters": []
+        },
+        {
+          "name": "get_teams",
+          "description": "Get a list of Linear teams with optional name/key filtering",
+          "parameters": [
+            {
+              "name": "get_teams",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "nameFilter",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create_comment",
+          "description": "Create a new comment on a Linear issue",
+          "parameters": [
+            {
+              "name": "body",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "issueId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "delete_issue",
+          "description": "Delete an existing Linear issue",
+          "parameters": [
+            {
+              "name": "delete_issue",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "issueId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_projects",
+          "description": "Get a list of Linear projects with optional name filtering and pagination",
+          "parameters": [
+            {
+              "name": "get_projects",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_project_updates",
+          "description": "Get project updates for a given project ID with optional filtering parameters",
+          "parameters": [
+            {
+              "name": "get_project_updates",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create_project_update",
+          "description": "Create a new update for a Linear project",
+          "parameters": [
+            {
+              "name": "create_project_update",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@packetnomad/linear-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "linearApiKey",
+          "required": true,
+          "description": "The API token for authenticating with Linear."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@packetnomad/linear-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1298.@packetnomad_linear-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1234
+  }
+}

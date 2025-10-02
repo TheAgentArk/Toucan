@@ -1,0 +1,150 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is primarily focused on providing real-time weather information and forecasts through the National Weather Service API. It offers tools to retrieve weather alerts for specific US states and forecasts for precise locations based on latitude and longitude coordinates. This server solves problems related to weather data access, such as providing up-to-date weather conditions, forecasts, and alerts for various applications.",
+    "reasoning": "The primary functionality of the server is centered around retrieving and providing weather data, which aligns with the \"Weather\" predefined category. The tools offered fit well within this category as they enable access to weather alerts and forecasts. Since the server's focus is specifically on weather-related data, no additional secondary labels are necessary. No unique functionality beyond the predefined categories is present, so a custom label is not required.",
+    "primary_label": "Weather",
+    "secondary_labels": [],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2352,
+    "server_name": "Weather MCP Server",
+    "rank_by_usage": 2353,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@JackKuo666_weather-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@JackKuo666/weather-mcp-server/mcp?config=eyJsb2dMZXZlbCI6ICJJTkZPIiwgImxvZ0Zvcm1hdCI6ICIlKGFzY3RpbWUpcyAtICUobGV2ZWxuYW1lKXMgLSAlKG1lc3NhZ2UpcyIsICJ1c2VyQWdlbnQiOiAiV2VhdGhlck1DUC8wLjEiLCAibndzQXBpQmFzZSI6ICJodHRwczovL2FwaS53ZWF0aGVyLmdvdiIsICJyZXF1ZXN0VGltZW91dCI6ICIxMCJ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_alerts",
+          "description": "Get weather alerts for a US state.\n\n    Args:\n        state: Two-letter US state code (e.g. CA, NY)\n    ",
+          "input_schema": {
+            "properties": {
+              "state": {
+                "title": "State",
+                "type": "string"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "title": "get_alertsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_forecast",
+          "description": "Get weather forecast for a location.\n\n    Args:\n        latitude: Latitude of the location\n        longitude: Longitude of the location\n    ",
+          "input_schema": {
+            "properties": {
+              "latitude": {
+                "title": "Latitude",
+                "type": "number"
+              },
+              "longitude": {
+                "title": "Longitude",
+                "type": "number"
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "title": "get_forecastArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get_alerts",
+        "get_forecast"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2352,
+      "name": "Weather MCP Server",
+      "author": "@JackKuo666/weather-mcp-server",
+      "overview": "Retrieve real-time weather information effortlessly. Get alerts and forecasts for specific locations using the National Weather Service API. Enhance your applications with accurate weather data at your fingertips.",
+      "repository_url": "https://github.com/JackKuo666/Weather-MCP-Server",
+      "homepage": "https://smithery.ai/server/@JackKuo666/weather-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@JackKuo666_weather-mcp-server.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get_alerts",
+          "description": "Get weather alerts for a US state.\n\n    Args:\n        state: Two-letter US state code (e.g. CA, NY)\n    ",
+          "input_schema": {
+            "properties": {
+              "state": {
+                "title": "State",
+                "type": "string"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "title": "get_alertsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_forecast",
+          "description": "Get weather forecast for a location.\n\n    Args:\n        latitude: Latitude of the location\n        longitude: Longitude of the location\n    ",
+          "input_schema": {
+            "properties": {
+              "latitude": {
+                "title": "Latitude",
+                "type": "number"
+              },
+              "longitude": {
+                "title": "Longitude",
+                "type": "number"
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "title": "get_forecastArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"logLevel\": \"INFO\",\n  \"logFormat\": \"%(asctime)s - %(levelname)s - %(message)s\",\n  \"userAgent\": \"WeatherMCP/0.1\",\n  \"nwsApiBase\": \"https://api.weather.gov\",\n  \"requestTimeout\": \"10\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@JackKuo666/weather-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"logLevel\": \"INFO\",\n  \"logFormat\": \"%(asctime)s - %(levelname)s - %(message)s\",\n  \"userAgent\": \"WeatherMCP/0.1\",\n  \"nwsApiBase\": \"https://api.weather.gov\",\n  \"requestTimeout\": \"10\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@JackKuo666/weather-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "2353.@JackKuo666_weather-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2021
+  }
+}

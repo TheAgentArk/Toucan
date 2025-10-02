@@ -1,0 +1,671 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is a Package Registry Server that focuses on aggregating and retrieving package information across multiple software package registries (NPM, crates.io, NuGet, PyPI, and Go modules). Its core functionality includes searching for packages, retrieving detailed metadata, accessing version histories, and providing package statistics. The available tools are specialized for interacting with these package registries, enabling AI assistants and agents to integrate up-to-date package information into their workflows.",
+    "reasoning": "The server's primary purpose is to provide access to package registries, which is closely aligned with the \"Package Management\" or \"Software Development\" domain. Among the predefined categories, \"Development Tools\" is the most fitting because it deals with retrieving and managing development dependencies. There isn't a predefined category for package registries specifically, but the functionality is development-centric. \"API Integration\" is also relevant as this server interfaces with external package registry APIs.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": "Package Registry Services",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 488,
+    "server_name": "Package Registry Server",
+    "rank_by_usage": 489,
+    "usage_count": "34",
+    "original_file": "../crawler/smithery/@ardyfeb_package-registry-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ardyfeb/package-registry-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-cargo-package-details",
+          "description": "Get detailed information about a specific Cargo package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-cargo-packages",
+          "description": "Search the Cargo registry for packages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10
+              },
+              "query": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-cargo-package-versions",
+          "description": "List all versions of a specific Cargo package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-golang-package-details",
+          "description": "Get detailed information about a specific Go module/package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "module"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-golang-package-versions",
+          "description": "List all versions of a specific Go module/package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "module"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-npm-package-details",
+          "description": "Get detailed information about a specific NPM package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-npm-packages",
+          "description": "Search the NPM registry for packages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10
+              },
+              "query": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-npm-package-versions",
+          "description": "List all versions of a specific NPM package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-nuget-package-details",
+          "description": "Get detailed information about a specific NuGet package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-nuget-packages",
+          "description": "Search the NuGet registry for packages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10
+              },
+              "query": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-nuget-package-versions",
+          "description": "List all versions of a specific NuGet package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-pypi-package-details",
+          "description": "Get detailed information about a specific PyPI package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-pypi-package-versions",
+          "description": "List all versions of a specific PyPI package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 13,
+      "tool_names": [
+        "get-cargo-package-details",
+        "search-cargo-packages",
+        "list-cargo-package-versions",
+        "get-golang-package-details",
+        "list-golang-package-versions",
+        "get-npm-package-details",
+        "search-npm-packages",
+        "list-npm-package-versions",
+        "get-nuget-package-details",
+        "search-nuget-packages",
+        "list-nuget-package-versions",
+        "get-pypi-package-details",
+        "list-pypi-package-versions"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 488,
+      "name": "Package Registry Server",
+      "author": "@ardyfeb/package-registry-mcp",
+      "overview": "Enable AI assistants and agents to search multiple package registries and retrieve up-to-date package information. Access detailed metadata, version history, and statistics for packages across NPM, crates.io, NuGet, PyPI, and Go modules. Enhance your AI workflows with real-time package data from popular ecosystems.",
+      "repository_url": "https://github.com/ardyfeb/package-registry-mcp",
+      "homepage": "https://smithery.ai/server/@ardyfeb/package-registry-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "34",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ardyfeb_package-registry-mcp.json",
+      "tools_count": 13,
+      "tools": [
+        {
+          "name": "get-cargo-package-details",
+          "description": "Get detailed information about a specific Cargo package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-cargo-packages",
+          "description": "Search the Cargo registry for packages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10
+              },
+              "query": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-cargo-package-versions",
+          "description": "List all versions of a specific Cargo package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-golang-package-details",
+          "description": "Get detailed information about a specific Go module/package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "module"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-golang-package-versions",
+          "description": "List all versions of a specific Go module/package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "module"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-npm-package-details",
+          "description": "Get detailed information about a specific NPM package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-npm-packages",
+          "description": "Search the NPM registry for packages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10
+              },
+              "query": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-npm-package-versions",
+          "description": "List all versions of a specific NPM package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-nuget-package-details",
+          "description": "Get detailed information about a specific NuGet package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-nuget-packages",
+          "description": "Search the NuGet registry for packages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10
+              },
+              "query": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-nuget-package-versions",
+          "description": "List all versions of a specific NuGet package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-pypi-package-details",
+          "description": "Get detailed information about a specific PyPI package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-pypi-package-versions",
+          "description": "List all versions of a specific PyPI package",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 100
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ardyfeb/package-registry-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ardyfeb/package-registry-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0489.@ardyfeb_package-registry-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 479
+  }
+}

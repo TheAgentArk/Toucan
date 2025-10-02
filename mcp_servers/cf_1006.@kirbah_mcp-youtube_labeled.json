@@ -1,0 +1,170 @@
+{
+  "labels": {
+    "analysis": "The MCP YouTube Data Server focuses on providing structured and token-optimized access to YouTube data, specifically designed to enhance LLM applications. Its core functionality revolves around video search, metadata retrieval, transcript generation, channel analysis, and trend discovery. The available tools enable efficient data access for applications that require video details, transcripts, channel statistics, top videos, trending videos, and video categories. This server reduces token consumption by delivering AI-tailored data formats, making it particularly useful for content-based AI applications.",
+    "reasoning": "The primary label \"Web Search & Research\" aligns with the server's capability to provide video search, metadata retrieval, and trend discovery, which are core functions of research and data gathering. The secondary label \"Content Creation\" is suitable because the server supports transcript generation and content analysis, which are useful for creators and analysts. The custom label \"YouTube Data Optimization\" reflects the server's unique focus on token-optimized, AI-tailored YouTube data retrieval.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Content Creation",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "YouTube Data Optimization",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1005,
+    "server_name": "YouTube Data Server",
+    "rank_by_usage": 1006,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@kirbah_mcp-youtube.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@kirbah/mcp-youtube/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1005,
+      "name": "YouTube Data Server",
+      "author": "@kirbah/mcp-youtube",
+      "overview": "Provide token-optimized, structured YouTube data to enhance your LLM applications. Access efficient tools for video search, detailed metadata retrieval, transcript fetching, channel analysis, and trend discovery. Reduce token consumption and improve performance with AI-tailored data formats.",
+      "repository_url": "https://github.com/kirbah/mcp-youtube",
+      "homepage": "https://smithery.ai/server/@kirbah/mcp-youtube",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@kirbah_mcp-youtube.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "getVideoDetails",
+          "description": "Deploy Server YouTube Data Server @kirbah/mcp-youtube Try in Playground getVideoDetails",
+          "parameters": [
+            {
+              "name": "getVideoDetails",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "searchVideos",
+          "description": "Searches for videos based on a query string. Returns a list of videos matching the search criteria, including titles, descriptions, and metadata. Use this when you need to find videos related to specific topics or keywords.",
+          "parameters": [
+            {
+              "name": "searchVideos",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getTranscripts",
+          "description": "Retrieves transcripts for multiple videos. Returns the text content of videos' captions, useful for accessibility and content analysis. Use this when you need the spoken content of multiple videos.",
+          "parameters": [
+            {
+              "name": "lang",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "videoIds",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "Add",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Item",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getChannelStatistics",
+          "description": "Retrieves statistics for multiple channels. Returns detailed metrics including subscriber count, view count, video count, and channel creation date for each channel. Use this when you need to analyze the performance and reach of multiple YouTube channels.",
+          "parameters": [
+            {
+              "name": "getChannelStatistics",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getChannelTopVideos",
+          "description": "Retrieves the top videos from a specific channel. Returns a list of the most viewed or popular videos from the channel, based on view count. Use this when you want to identify the most successful content from a channel.",
+          "parameters": [
+            {
+              "name": "getChannelTopVideos",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getTrendingVideos",
+          "description": "Retrieves trending videos based on region and category. Returns a list of videos that are currently popular in the specified region and category. Use this when you want to discover what's trending in specific areas or categories. To get available category IDs and their names, use the getVideoCategories tool first.",
+          "parameters": [
+            {
+              "name": "getTrendingVideos",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getVideoCategories",
+          "description": "Retrieves available video categories for a specific region. Returns a list of YouTube video categories with their IDs and titles that can be used for filtering trending videos or other category-specific operations. Different regions may have different available categories.",
+          "parameters": [
+            {
+              "name": "getVideoCategories",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "tool",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@kirbah/mcp-youtube/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "youtubeApiKey",
+          "required": true,
+          "description": "YouTube Data API key for accessing the YouTube API."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@kirbah/mcp-youtube/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1006.@kirbah_mcp-youtube_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 984
+  }
+}

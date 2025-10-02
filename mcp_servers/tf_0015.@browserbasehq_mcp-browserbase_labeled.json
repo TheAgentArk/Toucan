@@ -1,0 +1,659 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is Browserbase, which provides cloud-based browser automation capabilities. Its core functionality includes creating and managing browser sessions, navigating web pages, interacting with elements, extracting structured data, and taking screenshots. The tools are designed for web scraping, automated interactions, and multi-session workflows, enabling parallel data gathering, A/B testing, and concurrent automation tasks. The primary use case revolves around browser automation for tasks like data extraction, web interaction, and multi-browser workflow management.",
+    "reasoning": "The primary label \"**Browser Automation**\" was chosen because the server specializes in controlling browsers, navigating web pages, and interacting with elements, which are core aspects of browser automation. The secondary label \"**Web Search & Research**\" was added because the extraction and observation tools can be used for gathering information and data from web pages. The secondary label \"**Data Analysis & Processing**\" was included due to the server's ability to extract structured data from web content, which is useful for processing and analyzing information. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Browser Automation",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 14,
+    "server_name": "Browserbase",
+    "rank_by_usage": 15,
+    "usage_count": "8,128",
+    "original_file": "../crawler/smithery/@browserbasehq_mcp-browserbase.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@browserbasehq/mcp-browserbase/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "multi_browserbase_stagehand_session_create",
+          "description": "Create parallel browser session for multi-session workflows. Use this when you need multiple browser instances running simultaneously: parallel data scraping, concurrent automation, A/B testing, multiple user accounts, cross-site operations, batch processing, or any task requiring more than one browser. Creates an isolated browser session with independent cookies, authentication, and state. Always pair with session-specific tools (those ending with '_session'). Perfect for scaling automation tasks that require multiple browsers working in parallel.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Highly recommended: Descriptive name for tracking multiple sessions (e.g. 'amazon-scraper', 'user-login-flow', 'checkout-test-1'). Makes debugging and session management much easier!"
+              },
+              "browserbaseSessionID": {
+                "type": "string",
+                "description": "Resume an existing Browserbase session by providing its session ID. Use this to continue work in a previously created browser session that may have been paused or disconnected."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_session_list",
+          "description": "ONLY WORKS WITH MULTI-SESSION TOOLS! Track all parallel sessions: Critical tool for multi-session management! Shows all active browser sessions with their IDs, names, ages, and Browserbase session IDs. Use this frequently to monitor your parallel automation workflows, verify sessions are running, and get session IDs for session-specific tools. Essential for debugging and resource management in complex multi-browser scenarios.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_session_close",
+          "description": "Cleanup parallel session for multi-session workflows. Properly terminates a browser session, ends the Browserbase session, and frees cloud resources. Always use this when finished with a session to avoid resource waste and billing charges. Critical for responsible multi-session automation - each unclosed session continues consuming resources!",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "Exact session ID to close (get from 'multi_browserbase_stagehand_session_list'). Double-check this ID - once closed, the session cannot be recovered!"
+              }
+            },
+            "required": [
+              "sessionId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_navigate_session",
+          "description": "Navigate to a URL in the browser. Only use this tool with URLs you're confident will work and stay up to date. Otherwise, use https://google.com as the starting point (for a specific session)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "The session ID to use"
+              },
+              "url": {
+                "type": "string",
+                "description": "The URL to navigate to"
+              }
+            },
+            "required": [
+              "sessionId",
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_act_session",
+          "description": "Performs an action on a web page element. Act actions should be as atomic and specific as possible, i.e. \"Click the sign in button\" or \"Type 'hello' into the search input\". AVOID actions that are more than one step, i.e. \"Order me pizza\" or \"Send an email to Paul asking him to call me\". (for a specific session)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "The session ID to use"
+              },
+              "action": {
+                "type": "string",
+                "description": "The action to perform. Should be as atomic and specific as possible, i.e. 'Click the sign in button' or 'Type 'hello' into the search input'. AVOID actions that are more than one step, i.e. 'Order me pizza' or 'Send an email to Paul asking him to call me'. The instruction should be just as specific as possible, and have a strong correlation to the text on the page. If unsure, use observe before using act."
+              },
+              "variables": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false,
+                "description": "Variables used in the action template. ONLY use variables if you're dealing with sensitive data or dynamic content. For example, if you're logging in to a website, you can use a variable for the password. When using variables, you MUST have the variable key in the action template. For example: {\"action\": \"Fill in the password\", \"variables\": {\"password\": \"123456\"}}"
+              }
+            },
+            "required": [
+              "sessionId",
+              "action"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_extract_session",
+          "description": "Extracts structured information and text content from the current web page based on specific instructions and a defined schema. This tool is ideal for scraping data, gathering information, or pulling specific content from web pages. Use this tool when you need to get text content, data, or information from a page rather than interacting with elements. For interactive elements like buttons, forms, or clickable items, use the observe tool instead. The extraction works best when you provide clear, specific instructions about what to extract and a well-defined JSON schema for the expected output format. This ensures the extracted data is properly structured and usable. (for a specific session)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "The session ID to use"
+              },
+              "instruction": {
+                "type": "string",
+                "description": "The specific instruction for what information to extract from the current page. Be as detailed and specific as possible about what you want to extract. For example: 'Extract all product names and prices from the listing page' or 'Get the article title, author, and publication date from this blog post'. The more specific your instruction, the better the extraction results will be. Avoid vague instructions like 'get everything' or 'extract the data'. Instead, be explicit about the exact elements, text, or information you need."
+              }
+            },
+            "required": [
+              "sessionId",
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_observe_session",
+          "description": "Observes and identifies specific interactive elements on the current web page that can be used for subsequent actions. This tool is specifically designed for finding actionable (interactable) elements such as buttons, links, form fields, dropdowns, checkboxes, and other UI components that you can interact with. Use this tool when you need to locate elements before performing actions with the act tool. DO NOT use this tool for extracting text content or data - use the extract tool instead for that purpose. The observe tool returns detailed information about the identified elements including their properties, location, and interaction capabilities. This information can then be used to craft precise actions. The more specific your observation instruction, the more accurate the element identification will be. Think of this as your 'eyes' on the page to find exactly what you need to interact with. (for a specific session)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "The session ID to use"
+              },
+              "instruction": {
+                "type": "string",
+                "description": "Detailed instruction for what specific elements or components to observe on the web page. This instruction must be extremely specific and descriptive. For example: 'Find the red login button in the top right corner', 'Locate the search input field with placeholder text', or 'Identify all clickable product cards on the page'. The more specific and detailed your instruction, the better the observation results will be. Avoid generic instructions like 'find buttons' or 'see elements'. Instead, describe the visual characteristics, location, text content, or functionality of the elements you want to observe. This tool is designed to help you identify interactive elements that you can later use with the act tool for performing actions like clicking, typing, or form submission."
+              },
+              "returnAction": {
+                "type": "boolean",
+                "description": "Whether to return the action to perform on the element. If true, the action will be returned as a string. If false, the action will not be returned."
+              }
+            },
+            "required": [
+              "sessionId",
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_session_create",
+          "description": "Create or reuse a single cloud browser session using Browserbase with fully initialized Stagehand. WARNING: This tool is for SINGLE browser workflows only. If you need multiple browser sessions running simultaneously (parallel scraping, A/B testing, multiple accounts), use 'multi_browserbase_stagehand_session_create' instead. This creates one browser session with all configuration flags (proxies, stealth, viewport, cookies, etc.) and initializes Stagehand to work with that session. Updates the active session.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "Optional session ID to use/reuse. If not provided or invalid, a new session is created."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_session_close",
+          "description": "Closes the current Browserbase session by properly shutting down the Stagehand instance, which handles browser cleanup and terminates the session recording.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_stagehand_navigate",
+          "description": "Navigate to a URL in the browser. Only use this tool with URLs you're confident will work and stay up to date. Otherwise, use https://google.com as the starting point",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The URL to navigate to"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_stagehand_act",
+          "description": "Performs an action on a web page element. Act actions should be as atomic and specific as possible, i.e. \"Click the sign in button\" or \"Type 'hello' into the search input\". AVOID actions that are more than one step, i.e. \"Order me pizza\" or \"Send an email to Paul asking him to call me\".",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "The action to perform. Should be as atomic and specific as possible, i.e. 'Click the sign in button' or 'Type 'hello' into the search input'. AVOID actions that are more than one step, i.e. 'Order me pizza' or 'Send an email to Paul asking him to call me'. The instruction should be just as specific as possible, and have a strong correlation to the text on the page. If unsure, use observe before using act."
+              },
+              "variables": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false,
+                "description": "Variables used in the action template. ONLY use variables if you're dealing with sensitive data or dynamic content. For example, if you're logging in to a website, you can use a variable for the password. When using variables, you MUST have the variable key in the action template. For example: {\"action\": \"Fill in the password\", \"variables\": {\"password\": \"123456\"}}"
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_stagehand_extract",
+          "description": "Extracts structured information and text content from the current web page based on specific instructions and a defined schema. This tool is ideal for scraping data, gathering information, or pulling specific content from web pages. Use this tool when you need to get text content, data, or information from a page rather than interacting with elements. For interactive elements like buttons, forms, or clickable items, use the observe tool instead. The extraction works best when you provide clear, specific instructions about what to extract and a well-defined JSON schema for the expected output format. This ensures the extracted data is properly structured and usable.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instruction": {
+                "type": "string",
+                "description": "The specific instruction for what information to extract from the current page. Be as detailed and specific as possible about what you want to extract. For example: 'Extract all product names and prices from the listing page' or 'Get the article title, author, and publication date from this blog post'. The more specific your instruction, the better the extraction results will be. Avoid vague instructions like 'get everything' or 'extract the data'. Instead, be explicit about the exact elements, text, or information you need."
+              }
+            },
+            "required": [
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_stagehand_observe",
+          "description": "Observes and identifies specific interactive elements on the current web page that can be used for subsequent actions. This tool is specifically designed for finding actionable (interactable) elements such as buttons, links, form fields, dropdowns, checkboxes, and other UI components that you can interact with. Use this tool when you need to locate elements before performing actions with the act tool. DO NOT use this tool for extracting text content or data - use the extract tool instead for that purpose. The observe tool returns detailed information about the identified elements including their properties, location, and interaction capabilities. This information can then be used to craft precise actions. The more specific your observation instruction, the more accurate the element identification will be. Think of this as your 'eyes' on the page to find exactly what you need to interact with.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instruction": {
+                "type": "string",
+                "description": "Detailed instruction for what specific elements or components to observe on the web page. This instruction must be extremely specific and descriptive. For example: 'Find the red login button in the top right corner', 'Locate the search input field with placeholder text', or 'Identify all clickable product cards on the page'. The more specific and detailed your instruction, the better the observation results will be. Avoid generic instructions like 'find buttons' or 'see elements'. Instead, describe the visual characteristics, location, text content, or functionality of the elements you want to observe. This tool is designed to help you identify interactive elements that you can later use with the act tool for performing actions like clicking, typing, or form submission."
+              },
+              "returnAction": {
+                "type": "boolean",
+                "description": "Whether to return the action to perform on the element. If true, the action will be returned as a string. If false, the action will not be returned."
+              }
+            },
+            "required": [
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_screenshot",
+          "description": "Takes a screenshot of the current page. Use this tool to learn where you are on the page when controlling the browser with Stagehand. Only use this tool when the other tools are not sufficient to get the information you need.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the screenshot"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 14,
+      "tool_names": [
+        "multi_browserbase_stagehand_session_create",
+        "multi_browserbase_stagehand_session_list",
+        "multi_browserbase_stagehand_session_close",
+        "multi_browserbase_stagehand_navigate_session",
+        "multi_browserbase_stagehand_act_session",
+        "multi_browserbase_stagehand_extract_session",
+        "multi_browserbase_stagehand_observe_session",
+        "browserbase_session_create",
+        "browserbase_session_close",
+        "browserbase_stagehand_navigate",
+        "browserbase_stagehand_act",
+        "browserbase_stagehand_extract",
+        "browserbase_stagehand_observe",
+        "browserbase_screenshot"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 14,
+      "name": "Browserbase",
+      "author": "@browserbasehq/mcp-browserbase",
+      "overview": "Provides cloud browser automation capabilities using Browserbase, enabling LLMs to interact with web pages, take screenshots, and execute JavaScript in a cloud browser environment.",
+      "repository_url": "https://github.com/browserbase/mcp-server-browserbase",
+      "homepage": "https://smithery.ai/server/@browserbasehq/mcp-browserbase",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "8,128",
+      "success_rate": "97.67%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@browserbasehq_mcp-browserbase.json",
+      "tools_count": 14,
+      "tools": [
+        {
+          "name": "multi_browserbase_stagehand_session_create",
+          "description": "Create parallel browser session for multi-session workflows. Use this when you need multiple browser instances running simultaneously: parallel data scraping, concurrent automation, A/B testing, multiple user accounts, cross-site operations, batch processing, or any task requiring more than one browser. Creates an isolated browser session with independent cookies, authentication, and state. Always pair with session-specific tools (those ending with '_session'). Perfect for scaling automation tasks that require multiple browsers working in parallel.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Highly recommended: Descriptive name for tracking multiple sessions (e.g. 'amazon-scraper', 'user-login-flow', 'checkout-test-1'). Makes debugging and session management much easier!"
+              },
+              "browserbaseSessionID": {
+                "type": "string",
+                "description": "Resume an existing Browserbase session by providing its session ID. Use this to continue work in a previously created browser session that may have been paused or disconnected."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_session_list",
+          "description": "ONLY WORKS WITH MULTI-SESSION TOOLS! Track all parallel sessions: Critical tool for multi-session management! Shows all active browser sessions with their IDs, names, ages, and Browserbase session IDs. Use this frequently to monitor your parallel automation workflows, verify sessions are running, and get session IDs for session-specific tools. Essential for debugging and resource management in complex multi-browser scenarios.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_session_close",
+          "description": "Cleanup parallel session for multi-session workflows. Properly terminates a browser session, ends the Browserbase session, and frees cloud resources. Always use this when finished with a session to avoid resource waste and billing charges. Critical for responsible multi-session automation - each unclosed session continues consuming resources!",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "Exact session ID to close (get from 'multi_browserbase_stagehand_session_list'). Double-check this ID - once closed, the session cannot be recovered!"
+              }
+            },
+            "required": [
+              "sessionId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_navigate_session",
+          "description": "Navigate to a URL in the browser. Only use this tool with URLs you're confident will work and stay up to date. Otherwise, use https://google.com as the starting point (for a specific session)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "The session ID to use"
+              },
+              "url": {
+                "type": "string",
+                "description": "The URL to navigate to"
+              }
+            },
+            "required": [
+              "sessionId",
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_act_session",
+          "description": "Performs an action on a web page element. Act actions should be as atomic and specific as possible, i.e. \"Click the sign in button\" or \"Type 'hello' into the search input\". AVOID actions that are more than one step, i.e. \"Order me pizza\" or \"Send an email to Paul asking him to call me\". (for a specific session)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "The session ID to use"
+              },
+              "action": {
+                "type": "string",
+                "description": "The action to perform. Should be as atomic and specific as possible, i.e. 'Click the sign in button' or 'Type 'hello' into the search input'. AVOID actions that are more than one step, i.e. 'Order me pizza' or 'Send an email to Paul asking him to call me'. The instruction should be just as specific as possible, and have a strong correlation to the text on the page. If unsure, use observe before using act."
+              },
+              "variables": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false,
+                "description": "Variables used in the action template. ONLY use variables if you're dealing with sensitive data or dynamic content. For example, if you're logging in to a website, you can use a variable for the password. When using variables, you MUST have the variable key in the action template. For example: {\"action\": \"Fill in the password\", \"variables\": {\"password\": \"123456\"}}"
+              }
+            },
+            "required": [
+              "sessionId",
+              "action"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_extract_session",
+          "description": "Extracts structured information and text content from the current web page based on specific instructions and a defined schema. This tool is ideal for scraping data, gathering information, or pulling specific content from web pages. Use this tool when you need to get text content, data, or information from a page rather than interacting with elements. For interactive elements like buttons, forms, or clickable items, use the observe tool instead. The extraction works best when you provide clear, specific instructions about what to extract and a well-defined JSON schema for the expected output format. This ensures the extracted data is properly structured and usable. (for a specific session)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "The session ID to use"
+              },
+              "instruction": {
+                "type": "string",
+                "description": "The specific instruction for what information to extract from the current page. Be as detailed and specific as possible about what you want to extract. For example: 'Extract all product names and prices from the listing page' or 'Get the article title, author, and publication date from this blog post'. The more specific your instruction, the better the extraction results will be. Avoid vague instructions like 'get everything' or 'extract the data'. Instead, be explicit about the exact elements, text, or information you need."
+              }
+            },
+            "required": [
+              "sessionId",
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "multi_browserbase_stagehand_observe_session",
+          "description": "Observes and identifies specific interactive elements on the current web page that can be used for subsequent actions. This tool is specifically designed for finding actionable (interactable) elements such as buttons, links, form fields, dropdowns, checkboxes, and other UI components that you can interact with. Use this tool when you need to locate elements before performing actions with the act tool. DO NOT use this tool for extracting text content or data - use the extract tool instead for that purpose. The observe tool returns detailed information about the identified elements including their properties, location, and interaction capabilities. This information can then be used to craft precise actions. The more specific your observation instruction, the more accurate the element identification will be. Think of this as your 'eyes' on the page to find exactly what you need to interact with. (for a specific session)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "The session ID to use"
+              },
+              "instruction": {
+                "type": "string",
+                "description": "Detailed instruction for what specific elements or components to observe on the web page. This instruction must be extremely specific and descriptive. For example: 'Find the red login button in the top right corner', 'Locate the search input field with placeholder text', or 'Identify all clickable product cards on the page'. The more specific and detailed your instruction, the better the observation results will be. Avoid generic instructions like 'find buttons' or 'see elements'. Instead, describe the visual characteristics, location, text content, or functionality of the elements you want to observe. This tool is designed to help you identify interactive elements that you can later use with the act tool for performing actions like clicking, typing, or form submission."
+              },
+              "returnAction": {
+                "type": "boolean",
+                "description": "Whether to return the action to perform on the element. If true, the action will be returned as a string. If false, the action will not be returned."
+              }
+            },
+            "required": [
+              "sessionId",
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_session_create",
+          "description": "Create or reuse a single cloud browser session using Browserbase with fully initialized Stagehand. WARNING: This tool is for SINGLE browser workflows only. If you need multiple browser sessions running simultaneously (parallel scraping, A/B testing, multiple accounts), use 'multi_browserbase_stagehand_session_create' instead. This creates one browser session with all configuration flags (proxies, stealth, viewport, cookies, etc.) and initializes Stagehand to work with that session. Updates the active session.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "description": "Optional session ID to use/reuse. If not provided or invalid, a new session is created."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_session_close",
+          "description": "Closes the current Browserbase session by properly shutting down the Stagehand instance, which handles browser cleanup and terminates the session recording.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_stagehand_navigate",
+          "description": "Navigate to a URL in the browser. Only use this tool with URLs you're confident will work and stay up to date. Otherwise, use https://google.com as the starting point",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The URL to navigate to"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_stagehand_act",
+          "description": "Performs an action on a web page element. Act actions should be as atomic and specific as possible, i.e. \"Click the sign in button\" or \"Type 'hello' into the search input\". AVOID actions that are more than one step, i.e. \"Order me pizza\" or \"Send an email to Paul asking him to call me\".",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "The action to perform. Should be as atomic and specific as possible, i.e. 'Click the sign in button' or 'Type 'hello' into the search input'. AVOID actions that are more than one step, i.e. 'Order me pizza' or 'Send an email to Paul asking him to call me'. The instruction should be just as specific as possible, and have a strong correlation to the text on the page. If unsure, use observe before using act."
+              },
+              "variables": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false,
+                "description": "Variables used in the action template. ONLY use variables if you're dealing with sensitive data or dynamic content. For example, if you're logging in to a website, you can use a variable for the password. When using variables, you MUST have the variable key in the action template. For example: {\"action\": \"Fill in the password\", \"variables\": {\"password\": \"123456\"}}"
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_stagehand_extract",
+          "description": "Extracts structured information and text content from the current web page based on specific instructions and a defined schema. This tool is ideal for scraping data, gathering information, or pulling specific content from web pages. Use this tool when you need to get text content, data, or information from a page rather than interacting with elements. For interactive elements like buttons, forms, or clickable items, use the observe tool instead. The extraction works best when you provide clear, specific instructions about what to extract and a well-defined JSON schema for the expected output format. This ensures the extracted data is properly structured and usable.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instruction": {
+                "type": "string",
+                "description": "The specific instruction for what information to extract from the current page. Be as detailed and specific as possible about what you want to extract. For example: 'Extract all product names and prices from the listing page' or 'Get the article title, author, and publication date from this blog post'. The more specific your instruction, the better the extraction results will be. Avoid vague instructions like 'get everything' or 'extract the data'. Instead, be explicit about the exact elements, text, or information you need."
+              }
+            },
+            "required": [
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_stagehand_observe",
+          "description": "Observes and identifies specific interactive elements on the current web page that can be used for subsequent actions. This tool is specifically designed for finding actionable (interactable) elements such as buttons, links, form fields, dropdowns, checkboxes, and other UI components that you can interact with. Use this tool when you need to locate elements before performing actions with the act tool. DO NOT use this tool for extracting text content or data - use the extract tool instead for that purpose. The observe tool returns detailed information about the identified elements including their properties, location, and interaction capabilities. This information can then be used to craft precise actions. The more specific your observation instruction, the more accurate the element identification will be. Think of this as your 'eyes' on the page to find exactly what you need to interact with.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instruction": {
+                "type": "string",
+                "description": "Detailed instruction for what specific elements or components to observe on the web page. This instruction must be extremely specific and descriptive. For example: 'Find the red login button in the top right corner', 'Locate the search input field with placeholder text', or 'Identify all clickable product cards on the page'. The more specific and detailed your instruction, the better the observation results will be. Avoid generic instructions like 'find buttons' or 'see elements'. Instead, describe the visual characteristics, location, text content, or functionality of the elements you want to observe. This tool is designed to help you identify interactive elements that you can later use with the act tool for performing actions like clicking, typing, or form submission."
+              },
+              "returnAction": {
+                "type": "boolean",
+                "description": "Whether to return the action to perform on the element. If true, the action will be returned as a string. If false, the action will not be returned."
+              }
+            },
+            "required": [
+              "instruction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "browserbase_screenshot",
+          "description": "Takes a screenshot of the current page. Use this tool to learn where you are on the page when controlling the browser with Stagehand. Only use this tool when the other tools are not sufficient to get the information you need.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the screenshot"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@browserbasehq/mcp-browserbase/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "browserbaseApiKey",
+          "required": true,
+          "description": "The Browserbase API Key to use"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@browserbasehq/mcp-browserbase/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0015.@browserbasehq_mcp-browserbase_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 15
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "labels": {
+    "analysis": "The MCP Server named \"Marginalia\" provides access to the Marginalia Search API for non-commercial content search. Its core functionality centers around web-based search capabilities, specifically utilizing the Marginalia Search API. The single available tool, \"search-marginalia,\" allows users to perform web searches, which suggests it is primarily used for information retrieval and research purposes.",
+    "reasoning": "The primary label \"Web Search & Research\" was chosen because the server's main function is to enable web searches through the Marginalia Search API. This aligns with the predefined category for tools that facilitate information gathering and research. No secondary labels are necessary as the functionality is primarily focused on search. Given the non-commercial aspect, there is no need for a custom label as the predefined categories cover the server's primary use case adequately.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1706,
+    "server_name": "Marginalia",
+    "rank_by_usage": 1707,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/marginalia-mcp-server_marginalia.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/marginalia-mcp-server/mcp?config=eyJtYXJnaW5hbGlhQXBpS2V5IjogIiJ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search-marginalia",
+          "description": "Search the web using Marginalia Search",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query"
+              },
+              "index": {
+                "type": "number",
+                "description": "Search index (corresponds to dropdown in main GUI)",
+                "minimum": 0
+              },
+              "count": {
+                "type": "number",
+                "description": "Number of results to return",
+                "minimum": 1,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "search-marginalia"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1706,
+      "name": "Marginalia",
+      "author": "marginalia-mcp-server",
+      "overview": "Access the Marginalia Search API for non-commercial content search.",
+      "repository_url": "https://github.com/bmorphism/marginalia-mcp-server",
+      "homepage": "https://smithery.ai/server/marginalia-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/marginalia-mcp-server_marginalia.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "search-marginalia",
+          "description": "Search the web using Marginalia Search",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query"
+              },
+              "index": {
+                "type": "number",
+                "description": "Search index (corresponds to dropdown in main GUI)",
+                "minimum": 0
+              },
+              "count": {
+                "type": "number",
+                "description": "Number of results to return",
+                "minimum": 1,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"marginaliaApiKey\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/marginalia-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"marginaliaApiKey\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/marginalia-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1707.marginalia-mcp-server_marginalia_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1537
+  }
+}

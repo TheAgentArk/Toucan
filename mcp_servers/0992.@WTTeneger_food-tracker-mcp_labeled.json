@@ -1,0 +1,518 @@
+{
+  "labels": {
+    "analysis": "The MCP Server functions as a comprehensive food tracking and nutrition management system. Its core tools enable users to search for food products, manage dietary restrictions, analyze nutritional content, and log food consumption. The server supports personalized meal planning based on individual dietary needs, making it particularly useful for health-conscious users, those with allergies, or people following specific diets. The tools focus on retrieving product information, checking compatibility with dietary restrictions, and maintaining consumption logs.",
+    "reasoning": "The primary label is \"Daily Productivity\" because the server helps users manage their dietary habits, a key aspect of personal health and organization. \"Health & Fitness\" is a secondary label due to its focus on nutrition analysis and dietary restrictions, which are critical for health tracking. \"Database Operations\" is also relevant as the server relies on querying food product databases and managing user-specific restriction data. No custom label is needed as the server's functionality is well-covered by predefined categories.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "Health & Fitness",
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 991,
+    "server_name": "Food Tracker",
+    "rank_by_usage": 992,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@WTTeneger_food-tracker-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@WTTeneger/food-tracker-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_product_by_barcode",
+          "description": "\n    Get detailed information about a food product by barcode.\n    \n    Args:\n        barcode: The product barcode (EAN, UPC, etc.)\n    ",
+          "input_schema": {
+            "properties": {
+              "barcode": {
+                "title": "Barcode",
+                "type": "string"
+              }
+            },
+            "required": [
+              "barcode"
+            ],
+            "title": "get_product_by_barcodeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_products",
+          "description": "\n    Search for food products by name or description.\n    \n    Args:\n        query: The search query\n        page: Page number for pagination (default: 1)\n        page_size: Number of results per page (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "title": "Page",
+                "type": "integer"
+              },
+              "page_size": {
+                "default": 10,
+                "title": "Page Size",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_productsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_user_restrictions",
+          "description": "\n    Manage a user's dietary restrictions.\n    \n    Args:\n        user_id: The user's unique identifier\n        action: The action to perform (get, add, remove, update)\n        restriction_type: Type of restriction (allergen, diet, ingredient, medical, preference)\n        restriction_value: The specific restriction value (e.g., \"peanuts\", \"vegetarian\")\n        severity: How severe the restriction is (avoid, limit, fatal)\n        notes: Additional notes about the restriction\n    ",
+          "input_schema": {
+            "properties": {
+              "user_id": {
+                "title": "User Id",
+                "type": "string"
+              },
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "restriction_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Restriction Type"
+              },
+              "restriction_value": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Restriction Value"
+              },
+              "severity": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Severity"
+              },
+              "notes": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Notes"
+              }
+            },
+            "required": [
+              "user_id",
+              "action"
+            ],
+            "title": "manage_user_restrictionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_product_compatibility",
+          "description": "\n    Check if a product is compatible with a user's dietary restrictions.\n    \n    Args:\n        user_id: The user's unique identifier\n        barcode: The product barcode to check\n    ",
+          "input_schema": {
+            "properties": {
+              "user_id": {
+                "title": "User Id",
+                "type": "string"
+              },
+              "barcode": {
+                "title": "Barcode",
+                "type": "string"
+              }
+            },
+            "required": [
+              "user_id",
+              "barcode"
+            ],
+            "title": "check_product_compatibilityArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_nutrition",
+          "description": "\n    Analyze the nutritional content of a food product.\n    \n    Args:\n        barcode: The product barcode\n    ",
+          "input_schema": {
+            "properties": {
+              "barcode": {
+                "title": "Barcode",
+                "type": "string"
+              }
+            },
+            "required": [
+              "barcode"
+            ],
+            "title": "analyze_nutritionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "log_food_consumption",
+          "description": "\n    Log food consumption for a user.\n    \n    Args:\n        user_id: The user's unique identifier\n        barcode: The product barcode\n        quantity: Amount consumed (default: 1 serving)\n        meal_type: Type of meal (breakfast, lunch, dinner, snack)\n    ",
+          "input_schema": {
+            "properties": {
+              "user_id": {
+                "title": "User Id",
+                "type": "string"
+              },
+              "barcode": {
+                "title": "Barcode",
+                "type": "string"
+              },
+              "quantity": {
+                "default": 1,
+                "title": "Quantity",
+                "type": "number"
+              },
+              "meal_type": {
+                "default": "snack",
+                "title": "Meal Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "user_id",
+              "barcode"
+            ],
+            "title": "log_food_consumptionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_food_log",
+          "description": "\n    Get a user's food log for a specific date.\n    \n    Args:\n        user_id: The user's unique identifier\n        date: Date in YYYY-MM-DD format (defaults to today)\n    ",
+          "input_schema": {
+            "properties": {
+              "user_id": {
+                "title": "User Id",
+                "type": "string"
+              },
+              "date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Date"
+              }
+            },
+            "required": [
+              "user_id"
+            ],
+            "title": "get_user_food_logArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "get_product_by_barcode",
+        "search_products",
+        "manage_user_restrictions",
+        "check_product_compatibility",
+        "analyze_nutrition",
+        "log_food_consumption",
+        "get_user_food_log"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 991,
+      "name": "Food Tracker",
+      "author": "@WTTeneger/food-tracker-mcp",
+      "overview": "Track food consumption, analyze nutrition, and manage dietary restrictions seamlessly. Search products, log meals, and create personalized meal plans based on your dietary needs. Stay informed about product compatibility with your restrictions and view detailed nutrition summaries.",
+      "repository_url": "https://github.com/WTTeneger/food-tracker-mcp",
+      "homepage": "https://smithery.ai/server/@WTTeneger/food-tracker-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@WTTeneger_food-tracker-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "get_product_by_barcode",
+          "description": "\n    Get detailed information about a food product by barcode.\n    \n    Args:\n        barcode: The product barcode (EAN, UPC, etc.)\n    ",
+          "input_schema": {
+            "properties": {
+              "barcode": {
+                "title": "Barcode",
+                "type": "string"
+              }
+            },
+            "required": [
+              "barcode"
+            ],
+            "title": "get_product_by_barcodeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_products",
+          "description": "\n    Search for food products by name or description.\n    \n    Args:\n        query: The search query\n        page: Page number for pagination (default: 1)\n        page_size: Number of results per page (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "title": "Page",
+                "type": "integer"
+              },
+              "page_size": {
+                "default": 10,
+                "title": "Page Size",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_productsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_user_restrictions",
+          "description": "\n    Manage a user's dietary restrictions.\n    \n    Args:\n        user_id: The user's unique identifier\n        action: The action to perform (get, add, remove, update)\n        restriction_type: Type of restriction (allergen, diet, ingredient, medical, preference)\n        restriction_value: The specific restriction value (e.g., \"peanuts\", \"vegetarian\")\n        severity: How severe the restriction is (avoid, limit, fatal)\n        notes: Additional notes about the restriction\n    ",
+          "input_schema": {
+            "properties": {
+              "user_id": {
+                "title": "User Id",
+                "type": "string"
+              },
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "restriction_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Restriction Type"
+              },
+              "restriction_value": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Restriction Value"
+              },
+              "severity": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Severity"
+              },
+              "notes": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Notes"
+              }
+            },
+            "required": [
+              "user_id",
+              "action"
+            ],
+            "title": "manage_user_restrictionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_product_compatibility",
+          "description": "\n    Check if a product is compatible with a user's dietary restrictions.\n    \n    Args:\n        user_id: The user's unique identifier\n        barcode: The product barcode to check\n    ",
+          "input_schema": {
+            "properties": {
+              "user_id": {
+                "title": "User Id",
+                "type": "string"
+              },
+              "barcode": {
+                "title": "Barcode",
+                "type": "string"
+              }
+            },
+            "required": [
+              "user_id",
+              "barcode"
+            ],
+            "title": "check_product_compatibilityArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_nutrition",
+          "description": "\n    Analyze the nutritional content of a food product.\n    \n    Args:\n        barcode: The product barcode\n    ",
+          "input_schema": {
+            "properties": {
+              "barcode": {
+                "title": "Barcode",
+                "type": "string"
+              }
+            },
+            "required": [
+              "barcode"
+            ],
+            "title": "analyze_nutritionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "log_food_consumption",
+          "description": "\n    Log food consumption for a user.\n    \n    Args:\n        user_id: The user's unique identifier\n        barcode: The product barcode\n        quantity: Amount consumed (default: 1 serving)\n        meal_type: Type of meal (breakfast, lunch, dinner, snack)\n    ",
+          "input_schema": {
+            "properties": {
+              "user_id": {
+                "title": "User Id",
+                "type": "string"
+              },
+              "barcode": {
+                "title": "Barcode",
+                "type": "string"
+              },
+              "quantity": {
+                "default": 1,
+                "title": "Quantity",
+                "type": "number"
+              },
+              "meal_type": {
+                "default": "snack",
+                "title": "Meal Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "user_id",
+              "barcode"
+            ],
+            "title": "log_food_consumptionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_food_log",
+          "description": "\n    Get a user's food log for a specific date.\n    \n    Args:\n        user_id: The user's unique identifier\n        date: Date in YYYY-MM-DD format (defaults to today)\n    ",
+          "input_schema": {
+            "properties": {
+              "user_id": {
+                "title": "User Id",
+                "type": "string"
+              },
+              "date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Date"
+              }
+            },
+            "required": [
+              "user_id"
+            ],
+            "title": "get_user_food_logArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@WTTeneger/food-tracker-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@WTTeneger/food-tracker-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0992.@WTTeneger_food-tracker-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 970
+  }
+}

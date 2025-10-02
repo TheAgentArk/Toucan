@@ -1,0 +1,510 @@
+{
+  "labels": {
+    "analysis": "The XTQuantAI MCP Server is designed to integrate AI with quantitative trading platforms, providing tools for data retrieval, analysis, and visualization to support trading strategy development. Its core functionalities include fetching market data (historical and real-time), retrieving stock lists, generating detailed instrument information, and creating visualizations like charts and custom layouts with technical indicators. This aligns with financial services and data analysis, particularly in the context of trading and investment.",
+    "reasoning": "The primary label \"Financial Services\" was chosen because the server focuses on stock trading, market data retrieval, and strategy enhancement—the core components of quantitative trading and financial analysis. \"Data Analysis & Processing\" is included as a secondary label due to the server's capabilities in retrieving and visualizing large datasets. The primary functionality aligns well with financial tools, so no custom label is needed.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 855,
+    "server_name": "XTQuantAI",
+    "rank_by_usage": 856,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@dfkai_xtquantai.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@dfkai/xtquantai/mcp?config=eyJtb2RlIjogImRpcmVjdCIsICJwb3J0IjogODAwMH0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_trading_dates",
+          "description": "获取指定市场的交易日期列表",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "market": {
+                "type": "string",
+                "description": "市场代码，例如 SH 表示上海市场",
+                "default": "SH"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_stock_list",
+          "description": "获取指定板块的股票列表",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sector": {
+                "type": "string",
+                "description": "板块名称，例如 沪深A股",
+                "default": "沪深A股"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_instrument_detail",
+          "description": "获取指定股票的详细信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "股票代码，例如 000001.SZ"
+              },
+              "iscomplete": {
+                "type": "boolean",
+                "description": "是否获取全部字段，默认为False",
+                "default": false
+              }
+            },
+            "required": [
+              "code"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_history_market_data",
+          "description": "获取历史行情数据",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 \"000001.SZ,600519.SH\""
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 \"1d\", \"1m\", \"5m\" 等",
+                "default": "1d"
+              },
+              "start_date": {
+                "type": "string",
+                "description": "开始日期，格式为 \"YYYYMMDD\"",
+                "default": ""
+              },
+              "end_date": {
+                "type": "string",
+                "description": "结束日期，格式为 \"YYYYMMDD\"，为空表示当前日期",
+                "default": ""
+              },
+              "fields": {
+                "type": "string",
+                "description": "字段列表，用逗号分隔，为空表示所有字段",
+                "default": ""
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_latest_market_data",
+          "description": "获取最新行情数据",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 \"000001.SZ,600519.SH\""
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 \"1d\", \"1m\", \"5m\" 等",
+                "default": "1d"
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_full_market_data",
+          "description": "获取历史+最新行情数据",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 \"000001.SZ,600519.SH\""
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 \"1d\", \"1m\", \"5m\" 等",
+                "default": "1d"
+              },
+              "start_date": {
+                "type": "string",
+                "description": "开始日期，格式为 \"YYYYMMDD\"",
+                "default": ""
+              },
+              "end_date": {
+                "type": "string",
+                "description": "结束日期，格式为 \"YYYYMMDD\"，为空表示当前日期",
+                "default": ""
+              },
+              "fields": {
+                "type": "string",
+                "description": "字段列表，用逗号分隔，为空表示所有字段",
+                "default": ""
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_chart_panel",
+          "description": "创建图表面板，显示指定股票的技术指标",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 000001.SZ,600519.SH"
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 1d, 1m, 5m 等",
+                "default": "1d"
+              },
+              "indicators": {
+                "type": "string",
+                "description": "指标名称，例如 ma, macd, kdj 等",
+                "default": "ma"
+              },
+              "params": {
+                "type": "string",
+                "description": "指标参数，用逗号分隔，例如 5,10,20",
+                "default": "5,10,20"
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_custom_layout",
+          "description": "创建自定义布局，可以指定指标名称、参数名和参数值",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 000001.SZ,600519.SH"
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 1d, 1m, 5m 等",
+                "default": "1d"
+              },
+              "indicator_name": {
+                "type": "string",
+                "description": "指标名称，例如 ma, macd, kdj 等",
+                "default": "ma"
+              },
+              "param_names": {
+                "type": "string",
+                "description": "参数名称，用逗号分隔，例如 n1,n2,n3 或 short,long,mid",
+                "default": "n1,n2,n3"
+              },
+              "param_values": {
+                "type": "string",
+                "description": "参数值，用逗号分隔，例如 5,10,20",
+                "default": "5,10,20"
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 8,
+      "tool_names": [
+        "get_trading_dates",
+        "get_stock_list",
+        "get_instrument_detail",
+        "get_history_market_data",
+        "get_latest_market_data",
+        "get_full_market_data",
+        "create_chart_panel",
+        "create_custom_layout"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 855,
+      "name": "XTQuantAI",
+      "author": "@dfkai/xtquantai",
+      "overview": "Integrate AI with the XTQuant quantitative trading platform to access and manipulate trading data seamlessly. Leverage advanced data querying, market data retrieval, and visualization capabilities to enhance your trading strategies. Start making informed trading decisions with AI assistance today!",
+      "repository_url": "https://github.com/dfkai/xtquantai",
+      "homepage": "https://smithery.ai/server/@dfkai/xtquantai",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@dfkai_xtquantai.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "get_trading_dates",
+          "description": "获取指定市场的交易日期列表",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "market": {
+                "type": "string",
+                "description": "市场代码，例如 SH 表示上海市场",
+                "default": "SH"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_stock_list",
+          "description": "获取指定板块的股票列表",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sector": {
+                "type": "string",
+                "description": "板块名称，例如 沪深A股",
+                "default": "沪深A股"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_instrument_detail",
+          "description": "获取指定股票的详细信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "股票代码，例如 000001.SZ"
+              },
+              "iscomplete": {
+                "type": "boolean",
+                "description": "是否获取全部字段，默认为False",
+                "default": false
+              }
+            },
+            "required": [
+              "code"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_history_market_data",
+          "description": "获取历史行情数据",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 \"000001.SZ,600519.SH\""
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 \"1d\", \"1m\", \"5m\" 等",
+                "default": "1d"
+              },
+              "start_date": {
+                "type": "string",
+                "description": "开始日期，格式为 \"YYYYMMDD\"",
+                "default": ""
+              },
+              "end_date": {
+                "type": "string",
+                "description": "结束日期，格式为 \"YYYYMMDD\"，为空表示当前日期",
+                "default": ""
+              },
+              "fields": {
+                "type": "string",
+                "description": "字段列表，用逗号分隔，为空表示所有字段",
+                "default": ""
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_latest_market_data",
+          "description": "获取最新行情数据",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 \"000001.SZ,600519.SH\""
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 \"1d\", \"1m\", \"5m\" 等",
+                "default": "1d"
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_full_market_data",
+          "description": "获取历史+最新行情数据",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 \"000001.SZ,600519.SH\""
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 \"1d\", \"1m\", \"5m\" 等",
+                "default": "1d"
+              },
+              "start_date": {
+                "type": "string",
+                "description": "开始日期，格式为 \"YYYYMMDD\"",
+                "default": ""
+              },
+              "end_date": {
+                "type": "string",
+                "description": "结束日期，格式为 \"YYYYMMDD\"，为空表示当前日期",
+                "default": ""
+              },
+              "fields": {
+                "type": "string",
+                "description": "字段列表，用逗号分隔，为空表示所有字段",
+                "default": ""
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_chart_panel",
+          "description": "创建图表面板，显示指定股票的技术指标",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 000001.SZ,600519.SH"
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 1d, 1m, 5m 等",
+                "default": "1d"
+              },
+              "indicators": {
+                "type": "string",
+                "description": "指标名称，例如 ma, macd, kdj 等",
+                "default": "ma"
+              },
+              "params": {
+                "type": "string",
+                "description": "指标参数，用逗号分隔，例如 5,10,20",
+                "default": "5,10,20"
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_custom_layout",
+          "description": "创建自定义布局，可以指定指标名称、参数名和参数值",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "codes": {
+                "type": "string",
+                "description": "股票代码列表，用逗号分隔，例如 000001.SZ,600519.SH"
+              },
+              "period": {
+                "type": "string",
+                "description": "周期，例如 1d, 1m, 5m 等",
+                "default": "1d"
+              },
+              "indicator_name": {
+                "type": "string",
+                "description": "指标名称，例如 ma, macd, kdj 等",
+                "default": "ma"
+              },
+              "param_names": {
+                "type": "string",
+                "description": "参数名称，用逗号分隔，例如 n1,n2,n3 或 short,long,mid",
+                "default": "n1,n2,n3"
+              },
+              "param_values": {
+                "type": "string",
+                "description": "参数值，用逗号分隔，例如 5,10,20",
+                "default": "5,10,20"
+              }
+            },
+            "required": [
+              "codes"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"mode\": \"direct\",\n  \"port\": 8000\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@dfkai/xtquantai/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"mode\": \"direct\",\n  \"port\": 8000\n}",
+      "python_sdk_url": "https://server.smithery.ai/@dfkai/xtquantai/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0856.@dfkai_xtquantai_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 837
+  }
+}

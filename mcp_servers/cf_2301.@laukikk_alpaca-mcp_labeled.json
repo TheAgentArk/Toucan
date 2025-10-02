@@ -1,0 +1,118 @@
+{
+  "labels": {
+    "analysis": "The Alpaca Trading MCP Server is primarily designed for managing investment portfolios, including stock and cryptocurrency trades. The core functionality revolves around trading execution, portfolio monitoring, and real-time market data access. The available tools enable users to place various types of orders (market, limit, stop, and stop-limit), cancel orders, close positions, and retrieve portfolio summaries. This indicates the server's focus on financial transactions and portfolio management.",
+    "reasoning": "The primary label \"Financial Services\" was chosen because the server's primary functionality revolves around managing investment portfolios and executing trades, which are core aspects of financial services. The secondary label \"Cryptocurrency & Blockchain\" was added because the description mentions that it supports both stock and crypto portfolios. The secondary label \"Daily Productivity\" was included because portfolio monitoring can be part of a user's daily financial management routine. No custom label is needed as the functionality is well covered by the predefined categories.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "Cryptocurrency & Blockchain",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2300,
+    "server_name": "Alpaca Trading MCP Server",
+    "rank_by_usage": 2301,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@laukikk_alpaca-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@laukikk/alpaca-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 2300,
+      "name": "Alpaca Trading MCP Server",
+      "author": "@laukikk/alpaca-mcp",
+      "overview": "Manage your stock and crypto portfolio seamlessly. Place trades, access real-time market data, and monitor your account with ease using our intuitive interface.",
+      "repository_url": "https://github.com/laukikk/alpaca-mcp",
+      "homepage": "https://smithery.ai/server/@laukikk/alpaca-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@laukikk_alpaca-mcp.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "get_account_info_tool",
+          "description": "Deploy Server Alpaca Trading MCP Server @laukikk/alpaca-mcp Try in Playground get_account_info_tool",
+          "parameters": []
+        },
+        {
+          "name": "place_market_order",
+          "description": "Place a market order to buy or sell a stock. Args: symbol: Stock symbol (e.g., 'AAPL') quantity: Number of shares to buy or sell (can be fractional) side: Either 'buy' or 'sell' Returns: Order confirmation details",
+          "parameters": []
+        },
+        {
+          "name": "place_limit_order",
+          "description": "Place a limit order to buy or sell a stock at a specified price. Args: symbol: Stock symbol (e.g., 'AAPL') quantity: Number of shares to buy or sell (can be fractional) side: Either 'buy' or 'sell' limit_price: Maximum price for buy or minimum price for sell time_in_force: Order duration - 'day', 'gtc' (good till canceled), 'ioc' (immediate or cancel) Returns: Order confirmation details",
+          "parameters": []
+        },
+        {
+          "name": "place_stop_order",
+          "description": "Place a stop order to buy or sell a stock when it reaches a specified price. Args: symbol: Stock symbol (e.g., 'AAPL') quantity: Number of shares to buy or sell (can be fractional) side: Either 'buy' or 'sell' stop_price: Price that triggers the order time_in_force: Order duration - 'day', 'gtc' (good till canceled) Returns: Order confirmation details",
+          "parameters": []
+        },
+        {
+          "name": "place_stop_limit_order",
+          "description": "Place a stop-limit order combining stop and limit order features. Args: symbol: Stock symbol (e.g., 'AAPL') quantity: Number of shares to buy or sell (can be fractional) side: Either 'buy' or 'sell' stop_price: Price that triggers the order limit_price: Maximum/minimum price for the triggered order time_in_force: Order duration - 'day', 'gtc' (good till canceled) Returns: Order confirmation details",
+          "parameters": []
+        },
+        {
+          "name": "cancel_order",
+          "description": "Cancel an open order by its ID. Args: order_id: ID of the order to cancel Returns: Confirmation of cancellation",
+          "parameters": []
+        },
+        {
+          "name": "close_position",
+          "description": "Close an open position for a specific symbol. Args: symbol: Stock symbol to close position for Returns: Confirmation of position closure",
+          "parameters": []
+        },
+        {
+          "name": "get_portfolio_summary",
+          "description": "Get a comprehensive summary of the portfolio including account details and open positions. Returns: Portfolio summary with account and positions information",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@laukikk/alpaca-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "alpacaPaperApiKey",
+          "required": true,
+          "description": "Alpaca Paper Trading API Key"
+        },
+        {
+          "name": "alpacaPaperApiSecret",
+          "required": true,
+          "description": "Alpaca Paper Trading API Secret"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@laukikk/alpaca-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_2301.@laukikk_alpaca-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1978
+  }
+}

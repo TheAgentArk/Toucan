@@ -1,0 +1,465 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is focused on managing and analyzing mutation testing for Python projects. Mutation testing is a technique to evaluate the quality of test suites by introducing small changes (mutations) to the code and checking if tests fail as a result. The provided tools enable users to run mutation tests, analyze survivors, prioritize fixes, and clean up testing caches. This server solves problems related to test coverage quality assurance and supporting developers in creating more robust test suites.",
+    "reasoning": "The primary label \"Development Tools\" is chosen because the server is clearly designed for code quality improvement during the software development process, specifically through mutation testing. The secondary label \"Data Analysis & Processing\" is included because the tools analyze and prioritize mutation survivors, which involves data analysis. No custom label is needed as the functionality fits well within the predefined categories.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2490,
+    "server_name": "Mutation Testing Manager",
+    "rank_by_usage": 2491,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@wdm0006_mutmut-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@wdm0006/mutmut-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "run_mutmut",
+          "description": "\n    Run a full mutation testing session with mutmut on the specified target.\n    \n    This tool initiates mutation testing on the given module or package. You can provide \n    additional mutmut options as needed. The output includes a summary of mutations tested, \n    including counts of killed, survived, and timed-out mutations. If a virtual environment \n    path is provided, mutmut will be run using the binaries from that environment to ensure \n    compatibility with project-specific dependencies.\n    \n    Args:\n        target (str): The module or package to run mutation testing on. Defaults to 'pygeohash'.\n        test_command (str): Ignored for now. Kept for compatibility. Defaults to 'pytest'.\n        options (str): Additional command-line options for mutmut (e.g., '--use-coverage'). Defaults to empty.\n        venv_path (Optional[str]): Path to the project's virtual environment to use for running mutmut. Defaults to None.\n    \n    Returns:\n        str: Summary of the mutation testing run, or error message if the run fails.\n    ",
+          "input_schema": {
+            "properties": {
+              "target": {
+                "default": "pygeohash",
+                "title": "Target",
+                "type": "string"
+              },
+              "test_command": {
+                "default": "pytest",
+                "title": "Test Command",
+                "type": "string"
+              },
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              },
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "run_mutmutArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "show_results",
+          "description": "\n    Display overall results from the last mutmut run using the mutmut CLI.\n    Returns the plain text output.\n    ",
+          "input_schema": {
+            "properties": {
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "show_resultsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "show_survivors",
+          "description": "\n    List details of surviving mutations from the last mutmut run using the mutmut CLI.\n    Returns the plain text output.\n    ",
+          "input_schema": {
+            "properties": {
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "show_survivorsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rerun_mutmut_on_survivor",
+          "description": "\n    Rerun mutmut on specific surviving mutations or all survivors after test updates using the mutmut CLI.\n    Returns the plain text output.\n    ",
+          "input_schema": {
+            "properties": {
+              "mutation_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Mutation Id"
+              },
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "rerun_mutmut_on_survivorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clean_mutmut_cache",
+          "description": "\n    Clean mutmut cache using the mutmut CLI (if available), otherwise remove .mutmut-cache file.\n    Returns the plain text output or confirmation message.\n    ",
+          "input_schema": {
+            "properties": {
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "clean_mutmut_cacheArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "show_mutant",
+          "description": "\n    Show the code diff and details for a specific mutant using mutmut show.\n    Args:\n        mutation_id (str): The ID of the mutant to show.\n        venv_path (Optional[str]): Path to the virtual environment, if any.\n    Returns:\n        str: The output of 'mutmut show <mutation_id>'.\n    ",
+          "input_schema": {
+            "properties": {
+              "mutation_id": {
+                "title": "Mutation Id",
+                "type": "string"
+              },
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "required": [
+              "mutation_id"
+            ],
+            "title": "show_mutantArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "prioritize_survivors",
+          "description": "\n    Prioritize surviving mutants by likely materiality, filtering out log/debug-only changes and ranking by potential impact.\n    Returns a sorted list of survivors with reasons for prioritization.\n    ",
+          "input_schema": {
+            "properties": {
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "prioritize_survivorsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "run_mutmut",
+        "show_results",
+        "show_survivors",
+        "rerun_mutmut_on_survivor",
+        "clean_mutmut_cache",
+        "show_mutant",
+        "prioritize_survivors"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2490,
+      "name": "Mutation Testing Manager",
+      "author": "@wdm0006/mutmut-mcp",
+      "overview": "Run and manage mutation testing sessions on Python projects to improve test coverage. Analyze mutation testing results, identify surviving mutations, and receive suggestions for better test coverage. Automate and integrate mutation testing workflows seamlessly with other MCP tools.",
+      "repository_url": "https://github.com/wdm0006/mutmut-mcp",
+      "homepage": "https://smithery.ai/server/@wdm0006/mutmut-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@wdm0006_mutmut-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "run_mutmut",
+          "description": "\n    Run a full mutation testing session with mutmut on the specified target.\n    \n    This tool initiates mutation testing on the given module or package. You can provide \n    additional mutmut options as needed. The output includes a summary of mutations tested, \n    including counts of killed, survived, and timed-out mutations. If a virtual environment \n    path is provided, mutmut will be run using the binaries from that environment to ensure \n    compatibility with project-specific dependencies.\n    \n    Args:\n        target (str): The module or package to run mutation testing on. Defaults to 'pygeohash'.\n        test_command (str): Ignored for now. Kept for compatibility. Defaults to 'pytest'.\n        options (str): Additional command-line options for mutmut (e.g., '--use-coverage'). Defaults to empty.\n        venv_path (Optional[str]): Path to the project's virtual environment to use for running mutmut. Defaults to None.\n    \n    Returns:\n        str: Summary of the mutation testing run, or error message if the run fails.\n    ",
+          "input_schema": {
+            "properties": {
+              "target": {
+                "default": "pygeohash",
+                "title": "Target",
+                "type": "string"
+              },
+              "test_command": {
+                "default": "pytest",
+                "title": "Test Command",
+                "type": "string"
+              },
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              },
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "run_mutmutArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "show_results",
+          "description": "\n    Display overall results from the last mutmut run using the mutmut CLI.\n    Returns the plain text output.\n    ",
+          "input_schema": {
+            "properties": {
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "show_resultsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "show_survivors",
+          "description": "\n    List details of surviving mutations from the last mutmut run using the mutmut CLI.\n    Returns the plain text output.\n    ",
+          "input_schema": {
+            "properties": {
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "show_survivorsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rerun_mutmut_on_survivor",
+          "description": "\n    Rerun mutmut on specific surviving mutations or all survivors after test updates using the mutmut CLI.\n    Returns the plain text output.\n    ",
+          "input_schema": {
+            "properties": {
+              "mutation_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Mutation Id"
+              },
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "rerun_mutmut_on_survivorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clean_mutmut_cache",
+          "description": "\n    Clean mutmut cache using the mutmut CLI (if available), otherwise remove .mutmut-cache file.\n    Returns the plain text output or confirmation message.\n    ",
+          "input_schema": {
+            "properties": {
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "clean_mutmut_cacheArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "show_mutant",
+          "description": "\n    Show the code diff and details for a specific mutant using mutmut show.\n    Args:\n        mutation_id (str): The ID of the mutant to show.\n        venv_path (Optional[str]): Path to the virtual environment, if any.\n    Returns:\n        str: The output of 'mutmut show <mutation_id>'.\n    ",
+          "input_schema": {
+            "properties": {
+              "mutation_id": {
+                "title": "Mutation Id",
+                "type": "string"
+              },
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "required": [
+              "mutation_id"
+            ],
+            "title": "show_mutantArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "prioritize_survivors",
+          "description": "\n    Prioritize surviving mutants by likely materiality, filtering out log/debug-only changes and ranking by potential impact.\n    Returns a sorted list of survivors with reasons for prioritization.\n    ",
+          "input_schema": {
+            "properties": {
+              "venv_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Venv Path"
+              }
+            },
+            "title": "prioritize_survivorsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@wdm0006/mutmut-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@wdm0006/mutmut-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2491.@wdm0006_mutmut-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2119
+  }
+}

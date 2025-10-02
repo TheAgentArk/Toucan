@@ -1,0 +1,538 @@
+{
+  "labels": {
+    "analysis": "The MCP Server enables interaction with MediaWiki installations, allowing users to read, search, create, update, and manage wiki content programmatically. It provides tools for content retrieval, modification, and file management, with a focus on secure access via OAuth 2.0. The server essentially acts as a middleware layer between large language models and MediaWiki instances, facilitating automated wiki content operations.",
+    "reasoning": "The primary label \"Content Management\" was chosen because the server's core functionality revolves around managing and manipulating wiki content (creation, editing, searching). Secondary labels \"Web Search & Research\" and \"File Management\" were added because the server enables searching wiki content and retrieving file information. A custom label \"Wiki Automation\" was added to specifically describe the unique functionality of automating interactions with MediaWiki instances.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "Web Search & Research",
+      "File Management"
+    ],
+    "custom_label": "Wiki Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 267,
+    "server_name": "MediaWiki",
+    "rank_by_usage": 268,
+    "usage_count": "142",
+    "original_file": "../crawler/smithery/@ProfessionalWiki_mediawiki-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ProfessionalWiki/mediawiki-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-page",
+          "description": "Returns the standard page object for a wiki page, optionally including page source or rendered HTML, and including the license and information about the latest revision.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Wiki page title"
+              },
+              "content": {
+                "type": "string",
+                "enum": [
+                  "noContent",
+                  "withSource",
+                  "withHtml"
+                ],
+                "description": "Format of the page content to retrieve",
+                "default": "noContent"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get page",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get-page-history",
+          "description": "Returns information about the latest revisions to a wiki page, in segments of 20 revisions, starting with the latest revision. The response includes API routes for the next oldest, next newest, and latest revision segments.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Wiki page title"
+              },
+              "olderThan": {
+                "type": "number",
+                "description": "The ID of the oldest revision to return"
+              },
+              "newerThan": {
+                "type": "number",
+                "description": "The ID of the newest revision to return"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Filter that returns only revisions with certain tags. Only support one filter per request."
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get page history",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "search-page",
+          "description": "Search wiki page titles and contents for the provided search terms, and returns matching pages.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search terms"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of search results to return (1-100)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Search page",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "set-wiki",
+          "description": "Set the wiki to use for the current session.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "wikiUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "Any URL from the target wiki (e.g. https://en.wikipedia.org/wiki/Main_Page)."
+              }
+            },
+            "required": [
+              "wikiUrl"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Set wiki",
+            "readOnlyHint": null,
+            "destructiveHint": true,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "update-page",
+          "description": "Updates a wiki page. Replaces the existing content of a page with the provided content",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Wiki page title"
+              },
+              "source": {
+                "type": "string",
+                "description": "Page content in the same content model of the existing page"
+              },
+              "latestId": {
+                "type": "number",
+                "description": "Identifier for the revision used as the base for the new source"
+              },
+              "comment": {
+                "type": "string",
+                "description": "Summary of the edit"
+              }
+            },
+            "required": [
+              "title",
+              "source",
+              "latestId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Update page",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get-file",
+          "description": "Returns information about a file, including links to download the file in thumbnail, preview, and original formats.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "File title"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get file",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create-page",
+          "description": "Creates a wiki page with the provided content.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Page content in the format specified by the contentModel parameter"
+              },
+              "title": {
+                "type": "string",
+                "description": "Wiki page title"
+              },
+              "comment": {
+                "type": "string",
+                "description": "Reason for creating the page"
+              },
+              "contentModel": {
+                "type": "string",
+                "description": "Type of content on the page. Defaults to \"wikitext\""
+              }
+            },
+            "required": [
+              "source",
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Create page",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "get-page",
+        "get-page-history",
+        "search-page",
+        "set-wiki",
+        "update-page",
+        "get-file",
+        "create-page"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 267,
+      "name": "MediaWiki",
+      "author": "@ProfessionalWiki/mediawiki-mcp-server",
+      "overview": "Enable Large Language Model clients to interact seamlessly with any MediaWiki wiki. Perform actions such as creating, updating, and searching wiki pages, as well as retrieving file and page history information. Securely connect using OAuth 2.0 tokens to manage wiki content efficiently.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@ProfessionalWiki/mediawiki-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "GPL-2.0",
+      "usage_count": "142",
+      "success_rate": "99.35%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ProfessionalWiki_mediawiki-mcp-server.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "get-page",
+          "description": "Returns the standard page object for a wiki page, optionally including page source or rendered HTML, and including the license and information about the latest revision.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Wiki page title"
+              },
+              "content": {
+                "type": "string",
+                "enum": [
+                  "noContent",
+                  "withSource",
+                  "withHtml"
+                ],
+                "description": "Format of the page content to retrieve",
+                "default": "noContent"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get page",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get-page-history",
+          "description": "Returns information about the latest revisions to a wiki page, in segments of 20 revisions, starting with the latest revision. The response includes API routes for the next oldest, next newest, and latest revision segments.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Wiki page title"
+              },
+              "olderThan": {
+                "type": "number",
+                "description": "The ID of the oldest revision to return"
+              },
+              "newerThan": {
+                "type": "number",
+                "description": "The ID of the newest revision to return"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Filter that returns only revisions with certain tags. Only support one filter per request."
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get page history",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "search-page",
+          "description": "Search wiki page titles and contents for the provided search terms, and returns matching pages.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search terms"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of search results to return (1-100)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Search page",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "set-wiki",
+          "description": "Set the wiki to use for the current session.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "wikiUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "Any URL from the target wiki (e.g. https://en.wikipedia.org/wiki/Main_Page)."
+              }
+            },
+            "required": [
+              "wikiUrl"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Set wiki",
+            "readOnlyHint": null,
+            "destructiveHint": true,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "update-page",
+          "description": "Updates a wiki page. Replaces the existing content of a page with the provided content",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Wiki page title"
+              },
+              "source": {
+                "type": "string",
+                "description": "Page content in the same content model of the existing page"
+              },
+              "latestId": {
+                "type": "number",
+                "description": "Identifier for the revision used as the base for the new source"
+              },
+              "comment": {
+                "type": "string",
+                "description": "Summary of the edit"
+              }
+            },
+            "required": [
+              "title",
+              "source",
+              "latestId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Update page",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get-file",
+          "description": "Returns information about a file, including links to download the file in thumbnail, preview, and original formats.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "File title"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Get file",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create-page",
+          "description": "Creates a wiki page with the provided content.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Page content in the format specified by the contentModel parameter"
+              },
+              "title": {
+                "type": "string",
+                "description": "Wiki page title"
+              },
+              "comment": {
+                "type": "string",
+                "description": "Reason for creating the page"
+              },
+              "contentModel": {
+                "type": "string",
+                "description": "Type of content on the page. Defaults to \"wikitext\""
+              }
+            },
+            "required": [
+              "source",
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Create page",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ProfessionalWiki/mediawiki-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ProfessionalWiki/mediawiki-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0268.@ProfessionalWiki_mediawiki-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 264
+  }
+}

@@ -1,0 +1,564 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is focused on providing real-time cryptocurrency market data and analysis functionalities. Its core tools enable users to query current prices, market trends, detailed coin information, and sophisticated trading data such as contract positions, trading volumes, and K-line charts through Coinglass API. The server serves as a comprehensive gateway to cryptocurrency market insights, particularly aimed at traders and investors needing up-to-date and in-depth market intelligence.",
+    "reasoning": "The primary label of \"Cryptocurrency & Blockchain\" is chosen because the server's tools are specifically tailored for cryptocurrency market analysis, which falls under this broad category. The secondary label of \"Data Analysis & Processing\" is appropriate because it involves trending analysis, data aggregation, and visualization of trading metrics. The custom label \"Crypto Market Analytics\" further highlights its specialized focus on detailed cryptocurrency market insights beyond basic price checks.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Crypto Market Analytics",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1059,
+    "server_name": "虚拟币价格查询服务",
+    "rank_by_usage": 1060,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@telegramtool_crypto_mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@telegramtool/crypto_mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_coin_price",
+          "description": "获取指定虚拟币的当前价格\n\n    Args:\n        coin_id: 虚拟币的ID (例如 bitcoin, ethereum, dogecoin)\n        currency: 货币单位 (默认为人民币cny, 也可以是usd等)\n\n    Returns:\n        包含价格信息的字符串\n    ",
+          "input_schema": {
+            "properties": {
+              "coin_id": {
+                "title": "Coin Id",
+                "type": "string"
+              },
+              "currency": {
+                "default": "cny",
+                "title": "Currency",
+                "type": "string"
+              }
+            },
+            "required": [
+              "coin_id"
+            ],
+            "title": "get_coin_priceArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trending_coins",
+          "description": "获取当前热门虚拟币列表\n\n    Returns:\n        包含热门虚拟币信息的字符串\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_trending_coinsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_coin_detail",
+          "description": "获取虚拟币的详细信息\n\n    Args:\n        coin_id: 虚拟币的ID (例如 bitcoin, ethereum)\n\n    Returns:\n        包含详细信息的字符串\n    ",
+          "input_schema": {
+            "properties": {
+              "coin_id": {
+                "title": "Coin Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "coin_id"
+            ],
+            "title": "get_coin_detailArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_global_market_data",
+          "description": "获取全球加密货币市场数据\n\n    Returns:\n        包含市场数据的字符串\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_global_market_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_coins",
+          "description": "搜索虚拟币\n\n    Args:\n        query: 搜索关键词\n        limit: 返回结果数量上限, 默认10\n\n    Returns:\n        包含搜索结果的字符串\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_coinsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_common_coins_prices",
+          "description": "获取常见虚拟币的价格信息\n\n    Returns:\n        包含常见虚拟币价格的字符串\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_common_coins_pricesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_coin_info",
+          "description": "获取虚拟币的合约市场信息 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n\n    Returns:\n        包含币种在合约市场的详细信息\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_coin_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_kline_data",
+          "description": "获取虚拟币合约的K线数据 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n        granularity: K线粒度，默认1h (可选: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 24h, 1d, 1w等)\n        lookback_count: 需要获取的K线数量，默认100条\n\n    Returns:\n        包含K线数据的格式化信息\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              },
+              "granularity": {
+                "default": "1h",
+                "title": "Granularity",
+                "type": "string"
+              },
+              "lookback_count": {
+                "default": 100,
+                "title": "Lookback Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_kline_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_position_info",
+          "description": "获取虚拟币合约的持仓信息 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n        granularity: K线粒度，默认1h (可选: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 24h, 1d, 1w等)\n        lookback_count: 需要获取的K线数量，默认100条\n\n    Returns:\n        包含持仓信息的格式化数据\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              },
+              "granularity": {
+                "default": "1h",
+                "title": "Granularity",
+                "type": "string"
+              },
+              "lookback_count": {
+                "default": 100,
+                "title": "Lookback Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_position_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trade_volume",
+          "description": "获取虚拟币合约的成交量信息 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n        granularity: K线粒度，默认1h (可选: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 24h, 1d, 1w等)\n        lookback_count: 需要获取的K线数量，默认100条\n\n    Returns:\n        包含成交量信息的格式化数据\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              },
+              "granularity": {
+                "default": "1h",
+                "title": "Granularity",
+                "type": "string"
+              },
+              "lookback_count": {
+                "default": 100,
+                "title": "Lookback Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_trade_volumeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trade_amount",
+          "description": "获取虚拟币的成交额信息 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n        granularity: K线粒度，默认1h (可选: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 24h, 1d, 1w等)\n        lookback_count: 需要获取的K线数量，默认100条\n\n    Returns:\n        包含成交额信息的格式化数据\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              },
+              "granularity": {
+                "default": "1h",
+                "title": "Granularity",
+                "type": "string"
+              },
+              "lookback_count": {
+                "default": 100,
+                "title": "Lookback Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_trade_amountArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_exchange_position",
+          "description": "获取虚拟币在各交易所的持仓分布 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n\n    Returns:\n        包含各交易所持仓分布的格式化信息\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_exchange_positionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "get_coin_price",
+        "get_trending_coins",
+        "get_coin_detail",
+        "get_global_market_data",
+        "search_coins",
+        "get_common_coins_prices",
+        "get_coin_info",
+        "get_kline_data",
+        "get_position_info",
+        "get_trade_volume",
+        "get_trade_amount",
+        "get_exchange_position"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1059,
+      "name": "虚拟币价格查询服务",
+      "author": "@telegramtool/crypto_mcp",
+      "overview": "查询最新的虚拟币价格和市场数据，帮助用户获取实时的加密货币信息。无缝集成到支持MCP的AI助手中，提供多种查询和分析功能。",
+      "repository_url": "https://github.com/telegramtool/crypto_mcp",
+      "homepage": "https://smithery.ai/server/@telegramtool/crypto_mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@telegramtool_crypto_mcp.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "get_coin_price",
+          "description": "获取指定虚拟币的当前价格\n\n    Args:\n        coin_id: 虚拟币的ID (例如 bitcoin, ethereum, dogecoin)\n        currency: 货币单位 (默认为人民币cny, 也可以是usd等)\n\n    Returns:\n        包含价格信息的字符串\n    ",
+          "input_schema": {
+            "properties": {
+              "coin_id": {
+                "title": "Coin Id",
+                "type": "string"
+              },
+              "currency": {
+                "default": "cny",
+                "title": "Currency",
+                "type": "string"
+              }
+            },
+            "required": [
+              "coin_id"
+            ],
+            "title": "get_coin_priceArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trending_coins",
+          "description": "获取当前热门虚拟币列表\n\n    Returns:\n        包含热门虚拟币信息的字符串\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_trending_coinsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_coin_detail",
+          "description": "获取虚拟币的详细信息\n\n    Args:\n        coin_id: 虚拟币的ID (例如 bitcoin, ethereum)\n\n    Returns:\n        包含详细信息的字符串\n    ",
+          "input_schema": {
+            "properties": {
+              "coin_id": {
+                "title": "Coin Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "coin_id"
+            ],
+            "title": "get_coin_detailArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_global_market_data",
+          "description": "获取全球加密货币市场数据\n\n    Returns:\n        包含市场数据的字符串\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_global_market_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_coins",
+          "description": "搜索虚拟币\n\n    Args:\n        query: 搜索关键词\n        limit: 返回结果数量上限, 默认10\n\n    Returns:\n        包含搜索结果的字符串\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_coinsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_common_coins_prices",
+          "description": "获取常见虚拟币的价格信息\n\n    Returns:\n        包含常见虚拟币价格的字符串\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_common_coins_pricesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_coin_info",
+          "description": "获取虚拟币的合约市场信息 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n\n    Returns:\n        包含币种在合约市场的详细信息\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_coin_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_kline_data",
+          "description": "获取虚拟币合约的K线数据 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n        granularity: K线粒度，默认1h (可选: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 24h, 1d, 1w等)\n        lookback_count: 需要获取的K线数量，默认100条\n\n    Returns:\n        包含K线数据的格式化信息\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              },
+              "granularity": {
+                "default": "1h",
+                "title": "Granularity",
+                "type": "string"
+              },
+              "lookback_count": {
+                "default": 100,
+                "title": "Lookback Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_kline_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_position_info",
+          "description": "获取虚拟币合约的持仓信息 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n        granularity: K线粒度，默认1h (可选: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 24h, 1d, 1w等)\n        lookback_count: 需要获取的K线数量，默认100条\n\n    Returns:\n        包含持仓信息的格式化数据\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              },
+              "granularity": {
+                "default": "1h",
+                "title": "Granularity",
+                "type": "string"
+              },
+              "lookback_count": {
+                "default": 100,
+                "title": "Lookback Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_position_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trade_volume",
+          "description": "获取虚拟币合约的成交量信息 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n        granularity: K线粒度，默认1h (可选: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 24h, 1d, 1w等)\n        lookback_count: 需要获取的K线数量，默认100条\n\n    Returns:\n        包含成交量信息的格式化数据\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              },
+              "granularity": {
+                "default": "1h",
+                "title": "Granularity",
+                "type": "string"
+              },
+              "lookback_count": {
+                "default": 100,
+                "title": "Lookback Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_trade_volumeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trade_amount",
+          "description": "获取虚拟币的成交额信息 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n        granularity: K线粒度，默认1h (可选: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 24h, 1d, 1w等)\n        lookback_count: 需要获取的K线数量，默认100条\n\n    Returns:\n        包含成交额信息的格式化数据\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              },
+              "granularity": {
+                "default": "1h",
+                "title": "Granularity",
+                "type": "string"
+              },
+              "lookback_count": {
+                "default": 100,
+                "title": "Lookback Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_trade_amountArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_exchange_position",
+          "description": "获取虚拟币在各交易所的持仓分布 (Coinglass API)\n\n    Args:\n        symbol: 币种符号，例如BTC、ETH\n\n    Returns:\n        包含各交易所持仓分布的格式化信息\n    ",
+          "input_schema": {
+            "properties": {
+              "symbol": {
+                "title": "Symbol",
+                "type": "string"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "title": "get_exchange_positionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@telegramtool/crypto_mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@telegramtool/crypto_mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1060.@telegramtool_crypto_mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1038
+  }
+}

@@ -1,0 +1,1918 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"BioMCP\" is specifically designed to facilitate biomedical research by providing structured access to clinical trials, biomedical literature, and genomic variants. Its core functionality revolves around enabling natural language queries to specialized biomedical databases without requiring knowledge of their specific syntax. The available tools cover a broad spectrum of biomedical research needs, including article searches in PubMed, clinical trial searches and details, and genetic variant searches and details. This server is primarily aimed at researchers, healthcare professionals, and AI assistants that need to interact with biomedical data efficiently.",
+    "reasoning": "The server's primary label is aligned with its focus on biomedical research, specifically Web Search & Research, due to its tools that enable the discovery and retrieval of scientific and clinical information. The secondary labels of Data Analysis & Processing and Database Operations are chosen because the server processes and categorizes data from various biomedical databases. The custom label \"Biomedical Data Integration\" is used to capture the server's unique focus on integrating multiple biomedical data sources into a unified interface for streamlined research workflows.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Database Operations"
+    ],
+    "custom_label": "Biomedical Data Integration",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1491,
+    "server_name": "BioMCP",
+    "rank_by_usage": 1492,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@starfishdata_biomcp_test.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@starfishdata/biomcp_test/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "article_details",
+          "description": "\n    Retrieves details for a single PubMed article given its\n    PubMed ID (PMID).\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - pmid: A single PubMed ID (e.g., 34397683)\n\n    Process: Calls the PubTator3 API to fetch the article's\n             title, abstract, and full text (if available).\n    Output: A Markdown formatted string containing the\n            retrieved article content.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "pmid": {
+                "title": "pmid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "pmid"
+            ],
+            "title": "article_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "article_searcher",
+          "description": "\n    Searches PubMed articles using structured criteria.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - chemicals: List of chemicals for filtering results\n    - diseases: Diseases such as Hypertension, Lung Adenocarcinoma, etc.\n    - genes: List of genes for filtering results\n    - keywords: List of other keywords for filtering results\n    - variants: List of variants for filtering results\n\n    Notes:\n    - Use full terms (\"Non-small cell lung carcinoma\") over abbreviations (\"NSCLC\")\n    - Use keywords to specify terms that don't fit in disease, gene (\"EGFR\"),\n      chemical (\"Cisplatin\"), or variant (\"BRAF V600E\") categories\n    - Parameters can be provided as lists or comma-separated strings\n\n    Returns:\n    Markdown formatted list of matching articles (PMID, title, abstract, etc.)\n    Limited to max 40 results.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "chemicals": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Chemicals"
+              },
+              "diseases": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Diseases"
+              },
+              "genes": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Genes"
+              },
+              "keywords": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Keywords"
+              },
+              "variants": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Variants"
+              }
+            },
+            "required": [
+              "call_benefit"
+            ],
+            "title": "article_searcherArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_protocol",
+          "description": "\n    Retrieves core protocol information for a single clinical\n    trial identified by its NCT ID.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - nct_id: A single NCT ID (string, e.g., \"NCT04280705\")\n\n    Process: Fetches standard \"Protocol\" view modules (like ID,\n             Status, Sponsor, Design, Eligibility) from the\n             ClinicalTrials.gov v2 API.\n    Output: A Markdown formatted string detailing title, status,\n            sponsor, purpose, study design, phase, interventions,\n            eligibility criteria, etc. Returns error if invalid.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "nct_id": {
+                "title": "Nct Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "nct_id"
+            ],
+            "title": "trial_protocolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_locations",
+          "description": "\n    Retrieves contact and location details for a single\n    clinical trial identified by its NCT ID.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - nct_id: A single NCT ID (string, e.g., \"NCT04280705\")\n\n    Process: Fetches the `ContactsLocationsModule` from the\n             ClinicalTrials.gov v2 API for the given NCT ID.\n    Output: A Markdown formatted string detailing facility names,\n            addresses (city, state, country), and contact info.\n            Returns an error message if the NCT ID is invalid.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "nct_id": {
+                "title": "Nct Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "nct_id"
+            ],
+            "title": "trial_locationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_outcomes",
+          "description": "\n    Retrieves outcome measures, results (if available), and\n    adverse event data for a single clinical trial.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - nct_id: A single NCT ID (string, e.g., \"NCT04280705\")\n\n    Process: Fetches the `OutcomesModule` and `ResultsSection`\n             from the ClinicalTrials.gov v2 API for the NCT ID.\n    Output: A Markdown formatted string detailing primary/secondary\n            outcomes, participant flow, results tables (if posted),\n            and adverse event summaries. Returns an error if invalid.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "nct_id": {
+                "title": "Nct Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "nct_id"
+            ],
+            "title": "trial_outcomesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_references",
+          "description": "\n    Retrieves publications and other references associated with\n    a single clinical trial identified by its NCT ID.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - nct_id: A single NCT ID (string, e.g., \"NCT04280705\")\n\n    Process: Fetches the `ReferencesModule` from the\n             ClinicalTrials.gov v2 API for the NCT ID.\n    Output: A Markdown formatted string listing citations,\n            associated PubMed IDs (PMIDs), and reference types\n            (e.g., result publication). Returns error if invalid.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "nct_id": {
+                "title": "Nct Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "nct_id"
+            ],
+            "title": "trial_referencesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_searcher",
+          "description": "\n    Searches for clinical trials based on specified criteria.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - conditions: Condition terms (e.g., \"breast cancer\") - list or comma-separated string\n    - terms: General search terms - list or comma-separated string\n    - interventions: Intervention names (e.g., \"pembrolizumab\") - list or comma-separated string\n    - recruiting_status: Study recruitment status (OPEN, CLOSED, ANY)\n    - study_type: Type of study\n    - nct_ids: Clinical trial NCT IDs - list or comma-separated string\n    - lat: Latitude for location search\n    - long: Longitude for location search\n    - distance: Distance from lat/long in miles\n    - min_date: Minimum date for filtering (YYYY-MM-DD)\n    - max_date: Maximum date for filtering (YYYY-MM-DD)\n    - date_field: Date field to filter on\n    - phase: Trial phase filter\n    - age_group: Age group filter\n    - primary_purpose: Primary purpose of the trial\n    - intervention_type: Type of intervention\n    - sponsor_type: Type of sponsor\n    - study_design: Study design\n    - sort: Sort order for results\n    - next_page_hash: Token to retrieve the next page of results\n\n    Returns:\n    Markdown formatted list of clinical trials\n    ",
+          "input_schema": {
+            "$defs": {
+              "AgeGroup": {
+                "enum": [
+                  "CHILD",
+                  "ADULT",
+                  "SENIOR",
+                  "ALL"
+                ],
+                "title": "AgeGroup",
+                "type": "string"
+              },
+              "DateField": {
+                "enum": [
+                  "LAST_UPDATE",
+                  "STUDY_START",
+                  "PRIMARY_COMPLETION",
+                  "OUTCOME_POSTING",
+                  "COMPLETION",
+                  "FIRST_POSTING",
+                  "SUBMITTED_DATE"
+                ],
+                "title": "DateField",
+                "type": "string"
+              },
+              "InterventionType": {
+                "enum": [
+                  "DRUG",
+                  "DEVICE",
+                  "BIOLOGICAL",
+                  "PROCEDURE",
+                  "RADIATION",
+                  "BEHAVIORAL",
+                  "GENETIC",
+                  "DIETARY",
+                  "DIAGNOSTIC_TEST",
+                  "OTHER"
+                ],
+                "title": "InterventionType",
+                "type": "string"
+              },
+              "PrimaryPurpose": {
+                "enum": [
+                  "TREATMENT",
+                  "PREVENTION",
+                  "DIAGNOSTIC",
+                  "SUPPORTIVE_CARE",
+                  "SCREENING",
+                  "HEALTH_SERVICES",
+                  "BASIC_SCIENCE",
+                  "DEVICE_FEASIBILITY",
+                  "OTHER"
+                ],
+                "title": "PrimaryPurpose",
+                "type": "string"
+              },
+              "RecruitingStatus": {
+                "enum": [
+                  "OPEN",
+                  "CLOSED",
+                  "ANY"
+                ],
+                "title": "RecruitingStatus",
+                "type": "string"
+              },
+              "SortOrder": {
+                "enum": [
+                  "RELEVANCE",
+                  "LAST_UPDATE",
+                  "ENROLLMENT",
+                  "START_DATE",
+                  "COMPLETION_DATE",
+                  "SUBMITTED_DATE"
+                ],
+                "title": "SortOrder",
+                "type": "string"
+              },
+              "SponsorType": {
+                "enum": [
+                  "INDUSTRY",
+                  "GOVERNMENT",
+                  "ACADEMIC",
+                  "OTHER"
+                ],
+                "title": "SponsorType",
+                "type": "string"
+              },
+              "StudyDesign": {
+                "enum": [
+                  "RANDOMIZED",
+                  "NON_RANDOMIZED",
+                  "OBSERVATIONAL"
+                ],
+                "title": "StudyDesign",
+                "type": "string"
+              },
+              "StudyType": {
+                "enum": [
+                  "INTERVENTIONAL",
+                  "OBSERVATIONAL",
+                  "EXPANDED_ACCESS",
+                  "OTHER"
+                ],
+                "title": "StudyType",
+                "type": "string"
+              },
+              "TrialPhase": {
+                "enum": [
+                  "EARLY_PHASE1",
+                  "PHASE1",
+                  "PHASE2",
+                  "PHASE3",
+                  "PHASE4",
+                  "NOT_APPLICABLE"
+                ],
+                "title": "TrialPhase",
+                "type": "string"
+              }
+            },
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "conditions": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Conditions"
+              },
+              "terms": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Terms"
+              },
+              "interventions": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Interventions"
+              },
+              "recruiting_status": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/RecruitingStatus"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Recruiting Status"
+              },
+              "study_type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/StudyType"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Study Type"
+              },
+              "nct_ids": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Nct Ids"
+              },
+              "lat": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Lat"
+              },
+              "long": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Long"
+              },
+              "distance": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Distance"
+              },
+              "min_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Min Date"
+              },
+              "max_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Max Date"
+              },
+              "date_field": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/DateField"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Date Field"
+              },
+              "phase": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/TrialPhase"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Phase"
+              },
+              "age_group": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/AgeGroup"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Age Group"
+              },
+              "primary_purpose": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/PrimaryPurpose"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Primary Purpose"
+              },
+              "intervention_type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/InterventionType"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Intervention Type"
+              },
+              "sponsor_type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SponsorType"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sponsor Type"
+              },
+              "study_design": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/StudyDesign"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Study Design"
+              },
+              "sort": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SortOrder"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sort"
+              },
+              "next_page_hash": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Next Page Hash"
+              }
+            },
+            "required": [
+              "call_benefit"
+            ],
+            "title": "trial_searcherArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "variant_searcher",
+          "description": "\n    Searches for genetic variants based on specified criteria.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - gene: Gene symbol to search for (e.g. BRAF, TP53)\n    - hgvsp: Protein change notation (e.g., p.V600E, p.Arg557His)\n    - hgvsc: cDNA notation (e.g., c.1799T>A)\n    - rsid: dbSNP rsID (e.g., rs113488022)\n    - region: Genomic region as chr:start-end (e.g. chr1:12345-67890)\n    - significance: ClinVar clinical significance\n    - max_frequency: Maximum population allele frequency threshold\n    - min_frequency: Minimum population allele frequency threshold\n    - cadd: Minimum CADD phred score\n    - polyphen: PolyPhen-2 prediction\n    - sift: SIFT prediction\n    - sources: Include only specific data sources (list or comma-separated string)\n    - size: Number of results to return (default: 40)\n    - offset: Result offset for pagination (default: 0)\n\n    Returns:\n    Markdown formatted list of matching variants with key annotations\n    ",
+          "input_schema": {
+            "$defs": {
+              "ClinicalSignificance": {
+                "enum": [
+                  "pathogenic",
+                  "likely pathogenic",
+                  "uncertain significance",
+                  "likely benign",
+                  "benign"
+                ],
+                "title": "ClinicalSignificance",
+                "type": "string"
+              },
+              "PolyPhenPrediction": {
+                "enum": [
+                  "D",
+                  "P",
+                  "B"
+                ],
+                "title": "PolyPhenPrediction",
+                "type": "string"
+              },
+              "SiftPrediction": {
+                "enum": [
+                  "D",
+                  "T"
+                ],
+                "title": "SiftPrediction",
+                "type": "string"
+              },
+              "VariantSources": {
+                "enum": [
+                  "cadd",
+                  "cgi",
+                  "civic",
+                  "clinvar",
+                  "cosmic",
+                  "dbnsfp",
+                  "dbsnp",
+                  "docm",
+                  "evm",
+                  "exac",
+                  "gnomad_exome",
+                  "hg19",
+                  "mutdb",
+                  "snpeff",
+                  "vcf"
+                ],
+                "title": "VariantSources",
+                "type": "string"
+              }
+            },
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "gene": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Gene"
+              },
+              "hgvsp": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Hgvsp"
+              },
+              "hgvsc": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Hgvsc"
+              },
+              "rsid": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Rsid"
+              },
+              "region": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Region"
+              },
+              "significance": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ClinicalSignificance"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Significance"
+              },
+              "max_frequency": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Max Frequency"
+              },
+              "min_frequency": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Min Frequency"
+              },
+              "cadd": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Cadd"
+              },
+              "polyphen": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/PolyPhenPrediction"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Polyphen"
+              },
+              "sift": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SiftPrediction"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sift"
+              },
+              "sources": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "$ref": "#/$defs/VariantSources"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sources"
+              },
+              "size": {
+                "default": 40,
+                "title": "Size",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "call_benefit"
+            ],
+            "title": "variant_searcherArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "variant_details",
+          "description": "\n    Retrieves detailed information for a *single* genetic variant.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - variant_id: A variant identifier (\"chr7:g.140453136A>T\")\n\n    Process: Queries the MyVariant.info GET endpoint\n    Output: A Markdown formatted string containing comprehensive\n            variant annotations (genomic context, frequencies,\n            predictions, clinical data). Returns error if invalid.\n    Note: Use the variant_searcher to find the variant id first.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "variant_id": {
+                "title": "Variant Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "variant_id"
+            ],
+            "title": "variant_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "article_details",
+        "article_searcher",
+        "trial_protocol",
+        "trial_locations",
+        "trial_outcomes",
+        "trial_references",
+        "trial_searcher",
+        "variant_searcher",
+        "variant_details"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1491,
+      "name": "BioMCP",
+      "author": "@starfishdata/biomcp_test",
+      "overview": "Empower AI assistants with specialized biomedical knowledge by providing structured access to clinical trials, biomedical literature, and genomic variants. Enable natural language queries to specialized biomedical databases without requiring knowledge of their specific syntax. Support biomedical research workflows through a consistent and comprehensive interface.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@starfishdata/biomcp_test",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@starfishdata_biomcp_test.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "article_details",
+          "description": "\n    Retrieves details for a single PubMed article given its\n    PubMed ID (PMID).\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - pmid: A single PubMed ID (e.g., 34397683)\n\n    Process: Calls the PubTator3 API to fetch the article's\n             title, abstract, and full text (if available).\n    Output: A Markdown formatted string containing the\n            retrieved article content.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "pmid": {
+                "title": "pmid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "pmid"
+            ],
+            "title": "article_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "article_searcher",
+          "description": "\n    Searches PubMed articles using structured criteria.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - chemicals: List of chemicals for filtering results\n    - diseases: Diseases such as Hypertension, Lung Adenocarcinoma, etc.\n    - genes: List of genes for filtering results\n    - keywords: List of other keywords for filtering results\n    - variants: List of variants for filtering results\n\n    Notes:\n    - Use full terms (\"Non-small cell lung carcinoma\") over abbreviations (\"NSCLC\")\n    - Use keywords to specify terms that don't fit in disease, gene (\"EGFR\"),\n      chemical (\"Cisplatin\"), or variant (\"BRAF V600E\") categories\n    - Parameters can be provided as lists or comma-separated strings\n\n    Returns:\n    Markdown formatted list of matching articles (PMID, title, abstract, etc.)\n    Limited to max 40 results.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "chemicals": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Chemicals"
+              },
+              "diseases": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Diseases"
+              },
+              "genes": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Genes"
+              },
+              "keywords": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Keywords"
+              },
+              "variants": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Variants"
+              }
+            },
+            "required": [
+              "call_benefit"
+            ],
+            "title": "article_searcherArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_protocol",
+          "description": "\n    Retrieves core protocol information for a single clinical\n    trial identified by its NCT ID.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - nct_id: A single NCT ID (string, e.g., \"NCT04280705\")\n\n    Process: Fetches standard \"Protocol\" view modules (like ID,\n             Status, Sponsor, Design, Eligibility) from the\n             ClinicalTrials.gov v2 API.\n    Output: A Markdown formatted string detailing title, status,\n            sponsor, purpose, study design, phase, interventions,\n            eligibility criteria, etc. Returns error if invalid.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "nct_id": {
+                "title": "Nct Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "nct_id"
+            ],
+            "title": "trial_protocolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_locations",
+          "description": "\n    Retrieves contact and location details for a single\n    clinical trial identified by its NCT ID.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - nct_id: A single NCT ID (string, e.g., \"NCT04280705\")\n\n    Process: Fetches the `ContactsLocationsModule` from the\n             ClinicalTrials.gov v2 API for the given NCT ID.\n    Output: A Markdown formatted string detailing facility names,\n            addresses (city, state, country), and contact info.\n            Returns an error message if the NCT ID is invalid.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "nct_id": {
+                "title": "Nct Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "nct_id"
+            ],
+            "title": "trial_locationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_outcomes",
+          "description": "\n    Retrieves outcome measures, results (if available), and\n    adverse event data for a single clinical trial.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - nct_id: A single NCT ID (string, e.g., \"NCT04280705\")\n\n    Process: Fetches the `OutcomesModule` and `ResultsSection`\n             from the ClinicalTrials.gov v2 API for the NCT ID.\n    Output: A Markdown formatted string detailing primary/secondary\n            outcomes, participant flow, results tables (if posted),\n            and adverse event summaries. Returns an error if invalid.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "nct_id": {
+                "title": "Nct Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "nct_id"
+            ],
+            "title": "trial_outcomesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_references",
+          "description": "\n    Retrieves publications and other references associated with\n    a single clinical trial identified by its NCT ID.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - nct_id: A single NCT ID (string, e.g., \"NCT04280705\")\n\n    Process: Fetches the `ReferencesModule` from the\n             ClinicalTrials.gov v2 API for the NCT ID.\n    Output: A Markdown formatted string listing citations,\n            associated PubMed IDs (PMIDs), and reference types\n            (e.g., result publication). Returns error if invalid.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "nct_id": {
+                "title": "Nct Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "nct_id"
+            ],
+            "title": "trial_referencesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "trial_searcher",
+          "description": "\n    Searches for clinical trials based on specified criteria.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - conditions: Condition terms (e.g., \"breast cancer\") - list or comma-separated string\n    - terms: General search terms - list or comma-separated string\n    - interventions: Intervention names (e.g., \"pembrolizumab\") - list or comma-separated string\n    - recruiting_status: Study recruitment status (OPEN, CLOSED, ANY)\n    - study_type: Type of study\n    - nct_ids: Clinical trial NCT IDs - list or comma-separated string\n    - lat: Latitude for location search\n    - long: Longitude for location search\n    - distance: Distance from lat/long in miles\n    - min_date: Minimum date for filtering (YYYY-MM-DD)\n    - max_date: Maximum date for filtering (YYYY-MM-DD)\n    - date_field: Date field to filter on\n    - phase: Trial phase filter\n    - age_group: Age group filter\n    - primary_purpose: Primary purpose of the trial\n    - intervention_type: Type of intervention\n    - sponsor_type: Type of sponsor\n    - study_design: Study design\n    - sort: Sort order for results\n    - next_page_hash: Token to retrieve the next page of results\n\n    Returns:\n    Markdown formatted list of clinical trials\n    ",
+          "input_schema": {
+            "$defs": {
+              "AgeGroup": {
+                "enum": [
+                  "CHILD",
+                  "ADULT",
+                  "SENIOR",
+                  "ALL"
+                ],
+                "title": "AgeGroup",
+                "type": "string"
+              },
+              "DateField": {
+                "enum": [
+                  "LAST_UPDATE",
+                  "STUDY_START",
+                  "PRIMARY_COMPLETION",
+                  "OUTCOME_POSTING",
+                  "COMPLETION",
+                  "FIRST_POSTING",
+                  "SUBMITTED_DATE"
+                ],
+                "title": "DateField",
+                "type": "string"
+              },
+              "InterventionType": {
+                "enum": [
+                  "DRUG",
+                  "DEVICE",
+                  "BIOLOGICAL",
+                  "PROCEDURE",
+                  "RADIATION",
+                  "BEHAVIORAL",
+                  "GENETIC",
+                  "DIETARY",
+                  "DIAGNOSTIC_TEST",
+                  "OTHER"
+                ],
+                "title": "InterventionType",
+                "type": "string"
+              },
+              "PrimaryPurpose": {
+                "enum": [
+                  "TREATMENT",
+                  "PREVENTION",
+                  "DIAGNOSTIC",
+                  "SUPPORTIVE_CARE",
+                  "SCREENING",
+                  "HEALTH_SERVICES",
+                  "BASIC_SCIENCE",
+                  "DEVICE_FEASIBILITY",
+                  "OTHER"
+                ],
+                "title": "PrimaryPurpose",
+                "type": "string"
+              },
+              "RecruitingStatus": {
+                "enum": [
+                  "OPEN",
+                  "CLOSED",
+                  "ANY"
+                ],
+                "title": "RecruitingStatus",
+                "type": "string"
+              },
+              "SortOrder": {
+                "enum": [
+                  "RELEVANCE",
+                  "LAST_UPDATE",
+                  "ENROLLMENT",
+                  "START_DATE",
+                  "COMPLETION_DATE",
+                  "SUBMITTED_DATE"
+                ],
+                "title": "SortOrder",
+                "type": "string"
+              },
+              "SponsorType": {
+                "enum": [
+                  "INDUSTRY",
+                  "GOVERNMENT",
+                  "ACADEMIC",
+                  "OTHER"
+                ],
+                "title": "SponsorType",
+                "type": "string"
+              },
+              "StudyDesign": {
+                "enum": [
+                  "RANDOMIZED",
+                  "NON_RANDOMIZED",
+                  "OBSERVATIONAL"
+                ],
+                "title": "StudyDesign",
+                "type": "string"
+              },
+              "StudyType": {
+                "enum": [
+                  "INTERVENTIONAL",
+                  "OBSERVATIONAL",
+                  "EXPANDED_ACCESS",
+                  "OTHER"
+                ],
+                "title": "StudyType",
+                "type": "string"
+              },
+              "TrialPhase": {
+                "enum": [
+                  "EARLY_PHASE1",
+                  "PHASE1",
+                  "PHASE2",
+                  "PHASE3",
+                  "PHASE4",
+                  "NOT_APPLICABLE"
+                ],
+                "title": "TrialPhase",
+                "type": "string"
+              }
+            },
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "conditions": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Conditions"
+              },
+              "terms": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Terms"
+              },
+              "interventions": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Interventions"
+              },
+              "recruiting_status": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/RecruitingStatus"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Recruiting Status"
+              },
+              "study_type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/StudyType"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Study Type"
+              },
+              "nct_ids": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Nct Ids"
+              },
+              "lat": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Lat"
+              },
+              "long": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Long"
+              },
+              "distance": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Distance"
+              },
+              "min_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Min Date"
+              },
+              "max_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Max Date"
+              },
+              "date_field": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/DateField"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Date Field"
+              },
+              "phase": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/TrialPhase"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Phase"
+              },
+              "age_group": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/AgeGroup"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Age Group"
+              },
+              "primary_purpose": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/PrimaryPurpose"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Primary Purpose"
+              },
+              "intervention_type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/InterventionType"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Intervention Type"
+              },
+              "sponsor_type": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SponsorType"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sponsor Type"
+              },
+              "study_design": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/StudyDesign"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Study Design"
+              },
+              "sort": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SortOrder"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sort"
+              },
+              "next_page_hash": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Next Page Hash"
+              }
+            },
+            "required": [
+              "call_benefit"
+            ],
+            "title": "trial_searcherArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "variant_searcher",
+          "description": "\n    Searches for genetic variants based on specified criteria.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - gene: Gene symbol to search for (e.g. BRAF, TP53)\n    - hgvsp: Protein change notation (e.g., p.V600E, p.Arg557His)\n    - hgvsc: cDNA notation (e.g., c.1799T>A)\n    - rsid: dbSNP rsID (e.g., rs113488022)\n    - region: Genomic region as chr:start-end (e.g. chr1:12345-67890)\n    - significance: ClinVar clinical significance\n    - max_frequency: Maximum population allele frequency threshold\n    - min_frequency: Minimum population allele frequency threshold\n    - cadd: Minimum CADD phred score\n    - polyphen: PolyPhen-2 prediction\n    - sift: SIFT prediction\n    - sources: Include only specific data sources (list or comma-separated string)\n    - size: Number of results to return (default: 40)\n    - offset: Result offset for pagination (default: 0)\n\n    Returns:\n    Markdown formatted list of matching variants with key annotations\n    ",
+          "input_schema": {
+            "$defs": {
+              "ClinicalSignificance": {
+                "enum": [
+                  "pathogenic",
+                  "likely pathogenic",
+                  "uncertain significance",
+                  "likely benign",
+                  "benign"
+                ],
+                "title": "ClinicalSignificance",
+                "type": "string"
+              },
+              "PolyPhenPrediction": {
+                "enum": [
+                  "D",
+                  "P",
+                  "B"
+                ],
+                "title": "PolyPhenPrediction",
+                "type": "string"
+              },
+              "SiftPrediction": {
+                "enum": [
+                  "D",
+                  "T"
+                ],
+                "title": "SiftPrediction",
+                "type": "string"
+              },
+              "VariantSources": {
+                "enum": [
+                  "cadd",
+                  "cgi",
+                  "civic",
+                  "clinvar",
+                  "cosmic",
+                  "dbnsfp",
+                  "dbsnp",
+                  "docm",
+                  "evm",
+                  "exac",
+                  "gnomad_exome",
+                  "hg19",
+                  "mutdb",
+                  "snpeff",
+                  "vcf"
+                ],
+                "title": "VariantSources",
+                "type": "string"
+              }
+            },
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "gene": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Gene"
+              },
+              "hgvsp": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Hgvsp"
+              },
+              "hgvsc": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Hgvsc"
+              },
+              "rsid": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Rsid"
+              },
+              "region": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Region"
+              },
+              "significance": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ClinicalSignificance"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Significance"
+              },
+              "max_frequency": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Max Frequency"
+              },
+              "min_frequency": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Min Frequency"
+              },
+              "cadd": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Cadd"
+              },
+              "polyphen": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/PolyPhenPrediction"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Polyphen"
+              },
+              "sift": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/SiftPrediction"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sift"
+              },
+              "sources": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "$ref": "#/$defs/VariantSources"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sources"
+              },
+              "size": {
+                "default": 40,
+                "title": "Size",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "call_benefit"
+            ],
+            "title": "variant_searcherArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "variant_details",
+          "description": "\n    Retrieves detailed information for a *single* genetic variant.\n\n    Parameters:\n    - call_benefit: Define and summarize why this function is being called and the intended benefit\n    - variant_id: A variant identifier (\"chr7:g.140453136A>T\")\n\n    Process: Queries the MyVariant.info GET endpoint\n    Output: A Markdown formatted string containing comprehensive\n            variant annotations (genomic context, frequencies,\n            predictions, clinical data). Returns error if invalid.\n    Note: Use the variant_searcher to find the variant id first.\n    ",
+          "input_schema": {
+            "properties": {
+              "call_benefit": {
+                "title": "Call Benefit",
+                "type": "string"
+              },
+              "variant_id": {
+                "title": "Variant Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "call_benefit",
+              "variant_id"
+            ],
+            "title": "variant_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@starfishdata/biomcp_test/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@starfishdata/biomcp_test/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1492.@starfishdata_biomcp_test_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1378
+  }
+}

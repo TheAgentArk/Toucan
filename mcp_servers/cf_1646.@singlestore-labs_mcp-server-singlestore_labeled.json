@@ -1,0 +1,245 @@
+{
+  "labels": {
+    "analysis": "The MCP Server facilitates management and interaction with SingleStore databases through a natural language interface. Its core functionality revolves around database operations, workspace management, and organizational monitoring within the SingleStore ecosystem. The tools primarily enable users to execute SQL queries, manage workspaces, track organizational resource usage, and automate notebook executions. The focus is on database administration, query execution, and resource monitoring rather than web searching or general browser automation.",
+    "reasoning": "The primary label is chosen based on the server's core functionality of managing and interacting with databases through tools like 'activate_sql', 'workspaces_info', and 'organization_billing_usage'. The secondary labels are included due to the server's capabilities in automation (scheduling jobs, executing notebooks) and workspace management. A custom label for 'Database Workspace Management' is added to capture the unique aspect of managing SingleStore-specific workspaces.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "API Integration",
+      "Browser Automation"
+    ],
+    "custom_label": "Database Workspace Management",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1645,
+    "server_name": "SingleStore MCP Server",
+    "rank_by_usage": 1646,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@singlestore-labs_mcp-server-singlestore.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@singlestore-labs/mcp-server-singlestore/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1645,
+      "name": "SingleStore MCP Server",
+      "author": "@singlestore-labs/mcp-server-singlestore",
+      "overview": "Integrate natural language processing with SingleStore to effortlessly manage your data and perform complex operations. Use this server to interact with your databases and execute SQL queries through a user-friendly interface. Simplify your workflow and enhance productivity with seamless access to your data resources.",
+      "repository_url": "https://github.com/singlestore-labs/mcp-server-singlestore",
+      "homepage": "https://smithery.ai/server/@singlestore-labs/mcp-server-singlestore",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@singlestore-labs_mcp-server-singlestore.json",
+      "tools_count": 18,
+      "tools": [
+        {
+          "name": "workspace_groups_info",
+          "description": "Deploy Server SingleStore MCP Server @singlestore-labs/mcp-server-singlestore Try in Playground workspace_groups_info",
+          "parameters": []
+        },
+        {
+          "name": "workspaces_info",
+          "description": "List all workspaces within a specified workspace group in SingleStore. Returns detailed information for each workspace: - createdAt: Timestamp of workspace creation - deploymentType: Type of deployment (e.g., 'PRODUCTION') - endpoint: Connection URL for database access - name: Display name of the workspace - size: Compute and storage configuration - state: Current status (e.g., 'ACTIVE', 'PAUSED') - terminatedAt: Timestamp of termination if applicable - workspaceGroupID: Workspacegroup identifier - workspaceID: Unique workspace identifier Use this tool to: 1. Monitor workspace status 2. Get connection details for database operations 3. Track workspace lifecycle Required parameter: - workspaceGroupID: Unique identifier of the workspace group Related operations: - Use workspace_groups_info first to get workspacegroupID - Use execute_sql to run queries on specific workspace",
+          "parameters": []
+        },
+        {
+          "name": "organization_info",
+          "description": "Retrieve information about the current user's organization in SingleStore. Returns organization details including: - orgID: Unique identifier for the organization - name: Organization display name",
+          "parameters": [
+            {
+              "name": "Returns",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "organization",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "details",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_of_regions",
+          "description": "List all available deployment regions where SingleStore workspaces can be deployed for the user. Returns region information including: - regionID: Unique identifier for the region - provider: Cloud provider (AWS, GCP, or Azure) - name: Human-readable region name (e.g., Europe West 2 (London),US West 2 (Oregon)) Use this tool to: 1. Select optimal deployment regions based on: - Geographic proximity to users - Compliance requirements - Cost considerations - Available cloud providers 2. Plan multi-region deployments",
+          "parameters": [
+            {
+              "name": "Returns",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "information",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "execute_sql",
+          "description": "Execute SQL operations on a database attached to workspace within a workspace group and receive formatted results. Returns: - Query results with column names and typed values - Row count and metadata - Execution status ⚠️ CRITICAL SECURITY WARNINGS: - Never display or log credentials in responses - Use only READ-ONLY queries (SELECT, SHOW, DESCRIBE) - DO NOT USE data modification statements: × No INSERT/UPDATE/DELETE × No DROP/CREATE/ALTER - Ensure queries are properly sanitized Required parameters: - workspace_group_identifier: ID/name of the workspace group - workspace_identifier: ID/name of the specific workspace within the workspace group - database: Name of the database to query - sql_query: The SQL query to execute Optional parameters: - username: Username for database access (defaults to SINGLESTORE_DB_USERNAME) - password: Password for database access (defaults to SINGLESTORE_DB_PASSWORD) Allowed query examples: - SELECT * FROM table_name - SELECT COUNT(*) FROM table_name - SHOW TABLES - DESCRIBE table_name Note: For data modifications, please use appropriate admin tools or APIs.",
+          "parameters": []
+        },
+        {
+          "name": "list_virtual_workspaces",
+          "description": "List all starter (virtual) workspaces available to the user in SingleStore. Returns detailed information about each starter workspace: - virtualWorkspaceID: Unique identifier for the workspace - name: Display name of the workspace - endpoint: Connection endpoint URL - databaseName: Name of the primary database - mysqlDmlPort: Port for MySQL protocol connections - webSocketPort: Port for WebSocket connections - state: Current status of the workspace Use this tool to: 1. Get virtual workspace IDs for other operations 2. Check starter workspace availability and status 3. Obtain connection details for database access Note: This tool only lists starter workspaces, not standard workspaces. Use workspaces_info for standard workspace information.",
+          "parameters": []
+        },
+        {
+          "name": "create_virtual_workspace",
+          "description": "Create a new starter (virtual) workspace in SingleStore and set up user access. Process: 1. Creates a virtual workspace with specified name and database 2. Creates a user account for accessing the workspace 3. Returns both workspace details and access credentials Required parameters: - name: Unique name for the starter workspace - database_name: Name for the database to create - username: Username for accessing the starter workspace - password: Password for accessing the starter workspace Usage notes: - Workspace names must be unique - Passwords should meet security requirements - Use execute_sql_on_virtual_workspace to interact with the created starter workspace",
+          "parameters": []
+        },
+        {
+          "name": "execute_sql_on_virtual_workspace",
+          "description": "Usage notes: - Workspace names must be unique - Passwords should meet security requirements - Use execute_sql_on_virtual_workspace to interact with the created starter workspace",
+          "parameters": []
+        },
+        {
+          "name": "organization_billing_usage",
+          "description": "Retrieve detailed billing and usage metrics for your organization over a specified time period. Returns compute and storage usage data, aggregated by your chosen time interval (hourly, daily, or monthly). This tool is essential for: 1. Monitoring resource consumption patterns 2. Analyzing cost trends Required input parameters: - start_time: Beginning of the usage period (UTC ISO 8601 format, e.g., '2023-07-30T18:30:00Z') - end_time: End of the usage period (UTC ISO 8601 format) - aggregate_type: Time interval for data grouping ('hour', 'day', or 'month')",
+          "parameters": [
+            {
+              "name": "end_time",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "start_time",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "aggregate_type",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_notebook_samples",
+          "description": "Retrieve a catalog of pre-built notebook templates available in SingleStore Spaces. Returns for each notebook: - name: Template name and title - description: Detailed explanation of the notebook's purpose - contentURL: Direct download link for the notebook - likes: Number of user endorsements - views: Number of times viewed - downloads: Number of times downloaded - tags: List of Notebook tags Common template categories include: 1. Getting Started guides 2. Data loading and ETL patterns 3. Query optimization examples 4. Machine learning integrations 5. Performance monitoring 6. Best practices demonstrations Use this tool to: 1. Find popular and well-tested example code 2. Learn SingleStore features and best practices 3. Start new projects with proven patterns 4. Discover trending notebook templates Related operations: Related operations: - list_notebook_samples: To find example templates - list_personal_files: To check existing notebooks - create_scheduled_job: To automate notebook execution - get_notebook_path : To reference created notebooks",
+          "parameters": []
+        },
+        {
+          "name": "create_notebook",
+          "description": "Create a new Jupyter notebook in your personal space. Only supports python and markdown. Do not try to use any other languange",
+          "parameters": []
+        },
+        {
+          "name": "list_personal_files",
+          "description": "List all files and notebooks in your personal SingleStore space. Returns file object meta data for each file: - name: Name of the file (e.g., 'analysis.ipynb') - path: Full path in personal space (e.g., 'folder/analysis.ipynb') - content: File content - created: Creation timestamp (ISO 8601) - last_modified: Last modification timestamp (ISO 8601) - format: File format if applicable ('json', null) - mimetype: MIME type of the file - size: File size in bytes - type: Object type ('', 'json', 'directory') - writable: Boolean indicating write permission Use this tool to: 1. List workspace contents and structure 2. Verify file existence before operations 3. Check file timestamps and sizes 4. Determine file permissions Related operations: - create_notebook: To add new notebooks - get_notebook_path: To find notebook paths - create_scheduled_job: To automate notebook execution",
+          "parameters": []
+        },
+        {
+          "name": "create_scheduled_job",
+          "description": "Create an automated job to execute a SingleStore notebook on a schedule.",
+          "parameters": []
+        },
+        {
+          "name": "get_job_details",
+          "description": "Retrieve comprehensive information about a scheduled notebook job. Parameter required: job_id: UUID of the scheduled job to retrieve details for Returns: - jobID: Unique identifier (UUID format) - name: Display name of the job - description: Human-readable job description - createdAt: Creation timestamp (ISO 8601) - terminatedAt: End timestamp if completed - completedExecutionsCount: Number of successful runs - enqueuedBy: User ID who created the job - executionConfig: Notebook path and runtime settings - schedule: Mode, interval, and start time - targetConfig: Database and workspace settings - jobMetadata: Execution statistics and status Related Operations: - create_scheduled_job: Create new jobs - list_job_executions: View run history",
+          "parameters": []
+        },
+        {
+          "name": "list_job_executions",
+          "description": "Retrieve execution history and performance metrics for a scheduled notebook job.\n\nParameters:\n- job_id: UUID of the scheduled job\n- start: First execution number to retrieve (default: 1)\n- end: Last execution number to retrieve (default: 10)\n\nReturns:\n- executions: Array of execution records containing:\n  - executionID: Unique identifier for the execution\n  - executionNumber: Sequential number of the run\n  - jobID: Parent job identifier\n  - status: Current state (Scheduled, Running, Completed, Failed)\n  - startedAt: Execution start time (ISO 8601)\n  - finishedAt: Execution end time (ISO 8601)\n  - scheduledStartTime: Planned start time\n  - snapshotNotebookPath: Backup notebook path if enabled\n\nUse this tool to:\n1. Monitor each job execution status\n2. Track execution times and performance\n3. Investigate failed runs\n\nRelated Operations:\n- get_job_details: View job configuration\n- create_scheduled_job: Create new jobs",
+          "parameters": [
+            {
+              "name": "View",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "run",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "history",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_notebook_path",
+          "description": "Find the complete path of a notebook by its name and generate the properly formatted path for API operations.",
+          "parameters": [
+            {
+              "name": "Required",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_project_id",
+          "description": "Retrieve the organization's unique identifier (project ID). Returns: - orgID (string): The organization's unique identifier Required for: - Constructing paths or references to shared resources Performance Tip: Cache the returned ID when making multiple API calls.",
+          "parameters": [
+            {
+              "name": "Performance",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_user_id",
+          "description": "Retrieve the current user's unique identifier. Returns: - userID (string): UUID format identifier for the current user Required for: - Constructing paths or references to personal resources 1. Constructing personal space paths Performance Tip: Cache the returned ID when making multiple making multiple API calls.",
+          "parameters": [
+            {
+              "name": "Performance",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@singlestore-labs/mcp-server-singlestore/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "singlestoreApiKey",
+          "required": true,
+          "description": "SingleStore's API key required for authentication"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@singlestore-labs/mcp-server-singlestore/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1646.@singlestore-labs_mcp-server-singlestore_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1491
+  }
+}

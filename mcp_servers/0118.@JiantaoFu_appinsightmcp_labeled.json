@@ -1,0 +1,1527 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in mobile application market intelligence, providing tools to gather, analyze, and compare data from both the Apple App Store and Google Play Store. It enables users to search for apps, retrieve detailed app information (including reviews, ratings, version history, permissions, and privacy data), analyze developer portfolios, and identify market trends. The tools support comprehensive research for app developers, marketers, analysts, and investors looking to understand app performance, user sentiment, and competitive landscapes.",
+    "reasoning": "The primary label \"App Market Intelligence\" reflects the server's core functionality of providing data-driven insights for mobile applications. Secondary labels \"Data Analysis & Processing\" and \"Database Operations\" emphasize its abilities to process and query structured app market data. The custom label clarifies the distinct focus on mobile app ecosystems.",
+    "primary_label": "Others",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Database Operations"
+    ],
+    "custom_label": "Mobile App Market Data Analysis",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 117,
+    "server_name": "App Market Intelligence",
+    "rank_by_usage": 118,
+    "usage_count": "580",
+    "original_file": "../crawler/smithery/@JiantaoFu_appinsightmcp.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@JiantaoFu/appinsightmcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "app-store-search",
+          "description": "Search for apps on the App Store. Returns a list of apps with the following fields:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- icon: Icon image URL\n- url: App Store URL\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- description: App description\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerId: Developer's ID\n- genre: App category name\n- genreId: Category ID\n- released: Release date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "description": "Search term (required)"
+              },
+              "num": {
+                "type": "number",
+                "default": 50,
+                "description": "Number of results to retrieve (default: 50)"
+              },
+              "page": {
+                "type": "number",
+                "default": 1,
+                "description": "Page of results to retrieve (default: 1)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Two letter country code (default: us)"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en-us",
+                "description": "Language code for result text (default: en-us)"
+              },
+              "idsOnly": {
+                "type": "boolean",
+                "default": false,
+                "description": "Skip extra lookup request. Returns array of application IDs only (default: false)"
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-details",
+          "description": "Get detailed information about an App Store app. Returns an object with:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- url: App Store URL\n- description: Full app description\n- icon: Icon URL\n- genres: Array of category names\n- genreIds: Array of category IDs\n- primaryGenre: Main category name\n- primaryGenreId: Main category ID\n- contentRating: Content rating (e.g. '4+')\n- languages: Array of language codes\n- size: App size in bytes\n- requiredOsVersion: Minimum iOS version required\n- released: Initial release date (ISO string)\n- updated: Last update date (ISO string)\n- releaseNotes: Latest version changes\n- version: Current version string\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- developerId: Developer's ID\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerWebsite: Developer's website URL if available\n- score: Current rating (0-5)\n- reviews: Total number of ratings\n- currentVersionScore: Current version rating (0-5)\n- currentVersionReviews: Current version review count\n- screenshots: Array of screenshot URLs\n- ipadScreenshots: Array of iPad screenshot URLs\n- appletvScreenshots: Array of Apple TV screenshot URLs\n- supportedDevices: Array of supported device IDs\n- ratings: Total number of ratings (when ratings option enabled)\n- histogram: Rating distribution by star level (when ratings option enabled)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731). Either this or appId must be provided."
+              },
+              "appId": {
+                "type": "string",
+                "description": "Bundle ID (e.g., 'com.midasplayer.apps.candycrushsaga'). Either this or id must be provided."
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get app details from (default: us). Also affects data language."
+              },
+              "lang": {
+                "type": "string",
+                "description": "Language code for result text. If not provided, uses country-specific language."
+              },
+              "ratings": {
+                "type": "boolean",
+                "default": false,
+                "description": "Load additional ratings information like ratings count and histogram"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-reviews",
+          "description": "Get reviews for an App Store app. Returns an array of reviews with:\n- id: Review ID\n- userName: Reviewer's name\n- userUrl: Reviewer's profile URL\n- version: App version reviewed\n- score: Rating (1-5)\n- title: Review title\n- text: Review content\n- url: Review URL\n- updated: Review date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731). Either this or appId must be provided."
+              },
+              "appId": {
+                "type": "string",
+                "description": "Bundle ID (e.g., 'com.midasplayer.apps.candycrushsaga'). Either this or id must be provided."
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get reviews from (default: us)"
+              },
+              "page": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 10,
+                "default": 1,
+                "description": "Page number to retrieve (default: 1, max: 10)"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "recent",
+                  "helpful"
+                ],
+                "default": "recent",
+                "description": "Sort order (recent or helpful)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-similar",
+          "description": "Get similar apps ('customers also bought') from the App Store. Returns a list of apps with:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- icon: Icon image URL\n- url: App Store URL\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- description: App description\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerId: Developer's ID\n- genre: App category name\n- genreId: Category ID\n- released: Release date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731). Either this or appId must be provided."
+              },
+              "appId": {
+                "type": "string",
+                "description": "Bundle ID (e.g., 'com.midasplayer.apps.candycrushsaga'). Either this or id must be provided."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-developer",
+          "description": "Get apps by a developer on the App Store. Returns a list of apps with:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- icon: Icon image URL\n- url: App Store URL\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- description: App description\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerId: Developer's ID\n- genre: App category name\n- genreId: Category ID\n- released: Release date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "devId": {
+                "type": "string",
+                "description": "iTunes artist ID of the developer (e.g., 284882218 for Facebook)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get app details from (default: us). Also affects data language."
+              },
+              "lang": {
+                "type": "string",
+                "description": "Language code for result text. If not provided, uses country-specific language."
+              }
+            },
+            "required": [
+              "devId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-suggest",
+          "description": "Get search suggestions from the App Store. Returns an array of objects with:\n- term: Suggested search term\nEach suggestion has a priority from 0 (low traffic) to 10000 (most searched)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "description": "Search term to get suggestions for"
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-ratings",
+          "description": "Get ratings for an App Store app. Returns an object with:\n- ratings: Total number of ratings\n- histogram: Distribution of ratings by star level (1-5)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731). Either this or appId must be provided."
+              },
+              "appId": {
+                "type": "string",
+                "description": "Bundle ID (e.g., 'com.midasplayer.apps.candycrushsaga'). Either this or id must be provided."
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get ratings from (default: us)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-version-history",
+          "description": "Get version history for an App Store app. Returns an array of versions with:\n- versionDisplay: Version number string\n- releaseNotes: Update description\n- releaseDate: Release date (YYYY-MM-DD)\n- releaseTimestamp: Release date and time (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 444934666)"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-privacy",
+          "description": "Get privacy details for an App Store app. Returns an object with:\n- managePrivacyChoicesUrl: URL to manage privacy choices (if available)\n- privacyTypes: Array of privacy data types, each containing:\n  - privacyType: Name of the privacy category\n  - identifier: Unique identifier for the privacy type\n  - description: Detailed description of how data is used\n  - dataCategories: Array of data categories, each containing:\n    - dataCategory: Category name\n    - identifier: Category identifier\n    - dataTypes: Array of specific data types collected\n  - purposes: Array of purposes for data collection\nNote: Currently only available for US App Store.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731)"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-list",
+          "description": "Get apps from iTunes collections. Returns a list of apps with:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- icon: Icon image URL\n- url: App Store URL\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- description: App description\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerId: Developer's ID\n- genre: App category name\n- genreId: Category ID\n- released: Release date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collection": {
+                "type": "string",
+                "enum": [
+                  "newapplications",
+                  "newfreeapplications",
+                  "newpaidapplications",
+                  "topfreeapplications",
+                  "topfreeipadapplications",
+                  "topgrossingapplications",
+                  "topgrossingipadapplications",
+                  "toppaidapplications",
+                  "toppaidipadapplications"
+                ],
+                "description": "Collection to fetch from. Available collections:\n- newapplications: New iOS applications\n- newfreeapplications: New free iOS applications\n- newpaidapplications: New paid iOS applications\n- topfreeapplications: Top free iOS applications\n- topfreeipadapplications: Top free iPad applications\n- topgrossingapplications: Top grossing iOS applications\n- topgrossingipadapplications: Top grossing iPad applications\n- toppaidapplications: Top paid iOS applications\n- toppaidipadapplications: Top paid iPad applications"
+              },
+              "category": {
+                "type": "number",
+                "description": "Category ID to filter by. Available categories:\nMain Categories:\n- 6000: BUSINESS\n- 6001: WEATHER\n- 6002: UTILITIES\n- 6003: TRAVEL\n- 6004: SPORTS\n- 6005: SOCIAL_NETWORKING\n- 6006: REFERENCE\n- 6007: PRODUCTIVITY\n- 6008: PHOTO_AND_VIDEO\n- 6009: NEWS\n- 6010: NAVIGATION\n- 6011: MUSIC\n- 6012: LIFESTYLE\n- 6013: HEALTH_AND_FITNESS\n- 6014: GAMES\n- 6015: FINANCE\n- 6016: ENTERTAINMENT\n- 6017: EDUCATION\n- 6018: BOOKS\n- 6020: MEDICAL\n- 6021: MAGAZINES_AND_NEWSPAPERS\n- 6022: CATALOGS\n- 6023: FOOD_AND_DRINK\n- 6024: SHOPPING\n\nGames Subcategories:\n- 7001: ACTION\n- 7002: ADVENTURE\n- 7003: ARCADE\n- 7004: BOARD\n- 7005: CARD\n- 7006: CASINO\n- 7007: DICE\n- 7008: EDUCATIONAL\n- 7009: FAMILY\n- 7011: MUSIC\n- 7012: PUZZLE\n- 7013: RACING\n- 7014: ROLE_PLAYING\n- 7015: SIMULATION\n- 7016: SPORTS\n- 7017: STRATEGY\n- 7018: TRIVIA\n- 7019: WORD\n\nMagazine Subcategories:\n- 13001: POLITICS\n- 13002: FASHION\n- 13003: HOME\n- 13004: OUTDOORS\n- 13005: SPORTS\n- 13006: AUTOMOTIVE\n- 13007: ARTS\n- 13008: WEDDINGS\n- 13009: BUSINESS\n- 13010: CHILDREN\n- 13011: COMPUTER\n- 13012: FOOD\n- 13013: CRAFTS\n- 13014: ELECTRONICS\n- 13015: ENTERTAINMENT\n- 13017: HEALTH\n- 13018: HISTORY\n- 13019: LITERARY\n- 13020: MEN\n- 13021: MOVIES_AND_MUSIC\n- 13023: FAMILY\n- 13024: PETS\n- 13025: PROFESSIONAL\n- 13026: REGIONAL\n- 13027: SCIENCE\n- 13028: TEENS\n- 13029: TRAVEL\n- 13030: WOMEN"
+              },
+              "lang": {
+                "type": "string",
+                "description": "Language code for result text. If not provided, uses country-specific language."
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Get full app details including ratings, reviews etc (default: false)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code (default: us)"
+              },
+              "num": {
+                "type": "number",
+                "maximum": 200,
+                "default": 50,
+                "description": "Number of results (default: 50, max: 200)"
+              }
+            },
+            "required": [
+              "collection"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-search",
+          "description": "Search for apps on Google Play. Returns a list of apps with:\n- title: App name\n- appId: Package name (e.g. 'com.company.app')\n- url: Play Store URL\n- icon: Icon image URL\n- developer: Developer name\n- developerId: Developer ID\n- priceText: Price display text\n- free: Boolean indicating if app is free\n- summary: Short description\n- scoreText: Rating display text\n- score: Rating (0-5)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "description": "Search term to query apps"
+              },
+              "price": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "free",
+                  "paid"
+                ],
+                "default": "all",
+                "description": "Filter by price: all, free, or paid (default: all)"
+              },
+              "num": {
+                "type": "number",
+                "default": 20,
+                "description": "Number of results to retrieve (default: 20, max: 250)"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get results from (default: us)"
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include full app details in results (default: false)"
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-details",
+          "description": "Get detailed information about a Google Play app. Returns an object with:\n- title: App name\n- description: Full app description\n- descriptionHTML: Description with HTML formatting\n- summary: Short description\n- installs: Install count range\n- minInstalls: Minimum install count\n- maxInstalls: Maximum install count\n- score: Average rating (0-5)\n- scoreText: Rating display text\n- ratings: Total number of ratings\n- reviews: Total number of reviews\n- histogram: Rating distribution by star level\n- price: Price in local currency\n- free: Boolean indicating if app is free\n- currency: Price currency code\n- priceText: Formatted price string\n- offersIAP: Boolean indicating in-app purchases\n- IAPRange: Price range for in-app purchases\n- androidVersion: Minimum Android version required\n- androidVersionText: Formatted Android version text\n- developer: Developer name\n- developerId: Developer ID\n- developerEmail: Developer contact email\n- developerWebsite: Developer website URL\n- developerAddress: Developer physical address\n- genre: App category\n- genreId: Category ID\n- icon: Icon URL\n- headerImage: Feature graphic URL\n- screenshots: Array of screenshot URLs\n- contentRating: Content rating (e.g. 'Everyone')\n- contentRatingDescription: Content rating details\n- adSupported: Boolean indicating if app shows ads\n- released: Release date\n- updated: Last update date\n- version: Current version string\n- recentChanges: Latest version changes\n- preregister: Boolean indicating if app is in pre-registration\n- editorsChoice: Boolean indicating Editor's Choice status\n- features: Array of special features",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Google Play package name (e.g., 'com.google.android.apps.translate')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to check app availability (default: us)"
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-reviews",
+          "description": "Get reviews for a Google Play app. Returns an array of reviews with:\n- id: Review ID string\n- userName: Reviewer's name\n- userImage: Reviewer's profile image URL\n- date: Review date (ISO string)\n- score: Rating (1-5)\n- scoreText: Rating display text\n- title: Review title\n- text: Review content\n- url: Review URL\n- version: App version reviewed\n- thumbsUp: Number of thumbs up votes\n- replyDate: Developer reply date (if any)\n- replyText: Developer reply content (if any)\n- criterias: Array of rating criteria (if any)\n\nNote: Reviews are returned in the specified language. The total review count\nshown in Google Play refers to ratings, not written reviews.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Package name of the app (e.g., 'com.mojang.minecraftpe')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for reviews (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code (default: us)"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "newest",
+                  "rating",
+                  "helpfulness"
+                ],
+                "default": "newest",
+                "description": "Sort order: newest, rating, or helpfulness (default: newest)"
+              },
+              "num": {
+                "type": "number",
+                "default": 100,
+                "description": "Number of reviews to retrieve (default: 100). Ignored if paginate is true."
+              },
+              "paginate": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable pagination with 150 reviews per page"
+              },
+              "nextPaginationToken": {
+                "type": "string",
+                "description": "Token for fetching next page of reviews"
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-similar",
+          "description": "Get similar apps from Google Play. Returns a list of apps with:\n- url: Play Store URL\n- appId: Package name (e.g. 'com.company.app')\n- summary: Short description\n- developer: Developer name\n- developerId: Developer ID\n- icon: Icon image URL\n- score: Rating (0-5)\n- scoreText: Rating display text\n- priceText: Price display text\n- free: Boolean indicating if app is free\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Google Play package name (e.g., 'com.dxco.pandavszombies')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get results from (default: us)"
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include full app details in results (default: false), If fullDetail is true, includes all fields from app details endpoint."
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-developer",
+          "description": "Get apps by a developer on Google Play. Returns a list of apps with:\n- url: Play Store URL\n- appId: Package name (e.g. 'com.company.app')\n- title: App name\n- summary: Short app description\n- developer: Developer name\n- developerId: Developer ID\n- icon: Icon image URL\n- score: Rating (0-5)\n- scoreText: Rating display text\n- priceText: Price display text\n- free: Boolean indicating if app is free\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "devId": {
+                "type": "string",
+                "description": "Developer name (e.g., 'DxCo Games')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get results from (default: us)"
+              },
+              "num": {
+                "type": "number",
+                "default": 60,
+                "description": "Number of results to retrieve (default: 60)"
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include full app details in results (default: false), If fullDetail is true, includes all fields from app details endpoint."
+              }
+            },
+            "required": [
+              "devId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-suggest",
+          "description": "Get search suggestions from Google Play. Returns an array of suggested search terms (up to 5).\nSample response: ['panda pop', 'panda', 'panda games', 'panda run', 'panda pop for free']",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "description": "Search term to get suggestions for (e.g., 'panda')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for suggestions (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get suggestions from (default: us)"
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-permissions",
+          "description": "Get permissions required by a Google Play app. Returns a list of permissions with:\n- permission: Description of the permission (e.g., 'modify storage contents')\n- type: Permission category (e.g., 'Storage', 'Network')\n\nWhen short=true, returns just an array of permission strings.\nNote: Permissions are returned in the specified language.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Google Play package name (e.g., 'com.dxco.pandavszombies')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for permission text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to check app (default: us)"
+              },
+              "short": {
+                "type": "boolean",
+                "default": false,
+                "description": "Return only permission names without categories (default: false)"
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-datasafety",
+          "description": "Get data safety information for a Google Play app. Returns an object with:\n- dataShared: Array of shared data items, each containing:\n  - data: Name of the data being shared (e.g., 'User IDs')\n  - optional: Boolean indicating if sharing is optional\n  - purpose: Comma-separated list of purposes (e.g., 'Analytics, Marketing')\n  - type: Category of data (e.g., 'Personal info')\n- dataCollected: Array of collected data items with same structure as dataShared\n- securityPractices: Array of security practices, each containing:\n  - practice: Name of the security practice\n  - description: Detailed description of the practice\n- privacyPolicyUrl: URL to the app's privacy policy\n\nData types can include: Personal info, Financial info, Messages, Contacts,\nApp activity, App info and performance, Device or other IDs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Google Play package name (e.g., 'com.dxco.pandavszombies')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for data safety info (default: en)"
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-categories",
+          "description": "Get list of all Google Play categories. Returns an array of category identifiers like:\n- 'APPLICATION': All applications\n- 'GAME': All games\n- 'ANDROID_WEAR': Wear OS apps\n- 'SOCIAL': Social apps\n- 'PRODUCTIVITY': Productivity apps\netc.\n\nThese category IDs can be used with the google-play-list tool to filter apps by category.\nSample response: ['AUTO_AND_VEHICLES', 'LIBRARIES_AND_DEMO', 'LIFESTYLE', ...]",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-list",
+          "description": "Get apps from Google Play collections. Returns a list of apps with:\n- url: Play Store URL\n- appId: Package name (e.g., 'com.company.app')\n- title: App name\n- summary: Short description\n- developer: Developer name\n- developerId: Developer ID\n- icon: Icon URL\n- score: Rating (0-5)\n- scoreText: Rating display text\n- priceText: Price display text\n- free: Boolean indicating if app is free\n\nWhen fullDetail is true, includes all fields from app details endpoint.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collection": {
+                "type": "string",
+                "enum": [
+                  "TOP_FREE",
+                  "TOP_PAID",
+                  "GROSSING",
+                  "TOP_FREE_GAMES",
+                  "TOP_PAID_GAMES",
+                  "TOP_GROSSING_GAMES"
+                ],
+                "default": "TOP_FREE",
+                "description": "Collection to fetch apps from (default: TOP_FREE). Available collections:\n- TOP_FREE: Top free applications\n- TOP_PAID: Top paid applications\n- GROSSING: Top grossing applications"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "APPLICATION",
+                  "ANDROID_WEAR",
+                  "ART_AND_DESIGN",
+                  "AUTO_AND_VEHICLES",
+                  "BEAUTY",
+                  "BOOKS_AND_REFERENCE",
+                  "BUSINESS",
+                  "COMICS",
+                  "COMMUNICATION",
+                  "DATING",
+                  "EDUCATION",
+                  "ENTERTAINMENT",
+                  "EVENTS",
+                  "FINANCE",
+                  "FOOD_AND_DRINK",
+                  "HEALTH_AND_FITNESS",
+                  "HOUSE_AND_HOME",
+                  "LIBRARIES_AND_DEMO",
+                  "LIFESTYLE",
+                  "MAPS_AND_NAVIGATION",
+                  "MEDICAL",
+                  "MUSIC_AND_AUDIO",
+                  "NEWS_AND_MAGAZINES",
+                  "PARENTING",
+                  "PERSONALIZATION",
+                  "PHOTOGRAPHY",
+                  "PRODUCTIVITY",
+                  "SHOPPING",
+                  "SOCIAL",
+                  "SPORTS",
+                  "TOOLS",
+                  "TRAVEL_AND_LOCAL",
+                  "VIDEO_PLAYERS",
+                  "WATCH_FACE",
+                  "WEATHER",
+                  "GAME",
+                  "GAME_ACTION",
+                  "GAME_ADVENTURE",
+                  "GAME_ARCADE",
+                  "GAME_BOARD",
+                  "GAME_CARD",
+                  "GAME_CASINO",
+                  "GAME_CASUAL",
+                  "GAME_EDUCATIONAL",
+                  "GAME_MUSIC",
+                  "GAME_PUZZLE",
+                  "GAME_RACING",
+                  "GAME_ROLE_PLAYING",
+                  "GAME_SIMULATION",
+                  "GAME_SPORTS",
+                  "GAME_STRATEGY",
+                  "GAME_TRIVIA",
+                  "GAME_WORD",
+                  "FAMILY"
+                ],
+                "description": "Category to filter by. Available categories:\nMain Categories:\n- APPLICATION: All applications\n- ANDROID_WEAR: Wear OS apps\n- ART_AND_DESIGN: Art & Design\n- AUTO_AND_VEHICLES: Auto & Vehicles\n- BEAUTY: Beauty\n- BOOKS_AND_REFERENCE: Books & Reference\n- BUSINESS: Business\n- COMICS: Comics\n- COMMUNICATION: Communication\n- DATING: Dating\n- EDUCATION: Education\n- ENTERTAINMENT: Entertainment\n- EVENTS: Events\n- FINANCE: Finance\n- FOOD_AND_DRINK: Food & Drink\n- HEALTH_AND_FITNESS: Health & Fitness\n- HOUSE_AND_HOME: House & Home\n- LIFESTYLE: Lifestyle\n- MAPS_AND_NAVIGATION: Maps & Navigation\n- MEDICAL: Medical\n- MUSIC_AND_AUDIO: Music & Audio\n- NEWS_AND_MAGAZINES: News & Magazines\n- PARENTING: Parenting\n- PERSONALIZATION: Personalization\n- PHOTOGRAPHY: Photography\n- PRODUCTIVITY: Productivity\n- SHOPPING: Shopping\n- SOCIAL: Social\n- SPORTS: Sports\n- TOOLS: Tools\n- TRAVEL_AND_LOCAL: Travel & Local\n- VIDEO_PLAYERS: Video Players\n- WATCH_FACE: Watch Faces\n- WEATHER: Weather\n\nGame Categories:\n- GAME: All Games\n- GAME_ACTION: Action Games\n- GAME_ADVENTURE: Adventure Games\n- GAME_ARCADE: Arcade Games\n- GAME_BOARD: Board Games\n- GAME_CARD: Card Games\n- GAME_CASINO: Casino Games\n- GAME_CASUAL: Casual Games\n- GAME_EDUCATIONAL: Educational Games\n- GAME_MUSIC: Music Games\n- GAME_PUZZLE: Puzzle Games\n- GAME_RACING: Racing Games\n- GAME_ROLE_PLAYING: Role Playing Games\n- GAME_SIMULATION: Simulation Games\n- GAME_SPORTS: Sports Games\n- GAME_STRATEGY: Strategy Games\n- GAME_TRIVIA: Trivia Games\n- GAME_WORD: Word Games\n- FAMILY: Family Games"
+              },
+              "age": {
+                "type": "string",
+                "enum": [
+                  "FIVE_UNDER",
+                  "SIX_EIGHT",
+                  "NINE_UP"
+                ],
+                "description": "Age range filter (only for FAMILY category). Options: FIVE_UNDER, SIX_EIGHT, NINE_UP"
+              },
+              "num": {
+                "type": "number",
+                "default": 500,
+                "description": "Number of apps to retrieve (default: 500)"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get results from (default: us)"
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include full app details in results (default: false)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 20,
+      "tool_names": [
+        "app-store-search",
+        "app-store-details",
+        "app-store-reviews",
+        "app-store-similar",
+        "app-store-developer",
+        "app-store-suggest",
+        "app-store-ratings",
+        "app-store-version-history",
+        "app-store-privacy",
+        "app-store-list",
+        "google-play-search",
+        "google-play-details",
+        "google-play-reviews",
+        "google-play-similar",
+        "google-play-developer",
+        "google-play-suggest",
+        "google-play-permissions",
+        "google-play-datasafety",
+        "google-play-categories",
+        "google-play-list"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 117,
+      "name": "App Market Intelligence",
+      "author": "@JiantaoFu/appinsightmcp",
+      "overview": "Analyze data from the Apple App Store and Google Play Store to gain insights about apps, market trends, and user feedback. Make informed decisions with comprehensive market intelligence at your fingertips.",
+      "repository_url": "https://github.com/JiantaoFu/AppInsightMCP",
+      "homepage": "https://smithery.ai/server/@JiantaoFu/appinsightmcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "580",
+      "success_rate": "99.01%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@JiantaoFu_appinsightmcp.json",
+      "tools_count": 20,
+      "tools": [
+        {
+          "name": "app-store-search",
+          "description": "Search for apps on the App Store. Returns a list of apps with the following fields:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- icon: Icon image URL\n- url: App Store URL\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- description: App description\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerId: Developer's ID\n- genre: App category name\n- genreId: Category ID\n- released: Release date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "description": "Search term (required)"
+              },
+              "num": {
+                "type": "number",
+                "default": 50,
+                "description": "Number of results to retrieve (default: 50)"
+              },
+              "page": {
+                "type": "number",
+                "default": 1,
+                "description": "Page of results to retrieve (default: 1)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Two letter country code (default: us)"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en-us",
+                "description": "Language code for result text (default: en-us)"
+              },
+              "idsOnly": {
+                "type": "boolean",
+                "default": false,
+                "description": "Skip extra lookup request. Returns array of application IDs only (default: false)"
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-details",
+          "description": "Get detailed information about an App Store app. Returns an object with:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- url: App Store URL\n- description: Full app description\n- icon: Icon URL\n- genres: Array of category names\n- genreIds: Array of category IDs\n- primaryGenre: Main category name\n- primaryGenreId: Main category ID\n- contentRating: Content rating (e.g. '4+')\n- languages: Array of language codes\n- size: App size in bytes\n- requiredOsVersion: Minimum iOS version required\n- released: Initial release date (ISO string)\n- updated: Last update date (ISO string)\n- releaseNotes: Latest version changes\n- version: Current version string\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- developerId: Developer's ID\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerWebsite: Developer's website URL if available\n- score: Current rating (0-5)\n- reviews: Total number of ratings\n- currentVersionScore: Current version rating (0-5)\n- currentVersionReviews: Current version review count\n- screenshots: Array of screenshot URLs\n- ipadScreenshots: Array of iPad screenshot URLs\n- appletvScreenshots: Array of Apple TV screenshot URLs\n- supportedDevices: Array of supported device IDs\n- ratings: Total number of ratings (when ratings option enabled)\n- histogram: Rating distribution by star level (when ratings option enabled)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731). Either this or appId must be provided."
+              },
+              "appId": {
+                "type": "string",
+                "description": "Bundle ID (e.g., 'com.midasplayer.apps.candycrushsaga'). Either this or id must be provided."
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get app details from (default: us). Also affects data language."
+              },
+              "lang": {
+                "type": "string",
+                "description": "Language code for result text. If not provided, uses country-specific language."
+              },
+              "ratings": {
+                "type": "boolean",
+                "default": false,
+                "description": "Load additional ratings information like ratings count and histogram"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-reviews",
+          "description": "Get reviews for an App Store app. Returns an array of reviews with:\n- id: Review ID\n- userName: Reviewer's name\n- userUrl: Reviewer's profile URL\n- version: App version reviewed\n- score: Rating (1-5)\n- title: Review title\n- text: Review content\n- url: Review URL\n- updated: Review date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731). Either this or appId must be provided."
+              },
+              "appId": {
+                "type": "string",
+                "description": "Bundle ID (e.g., 'com.midasplayer.apps.candycrushsaga'). Either this or id must be provided."
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get reviews from (default: us)"
+              },
+              "page": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 10,
+                "default": 1,
+                "description": "Page number to retrieve (default: 1, max: 10)"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "recent",
+                  "helpful"
+                ],
+                "default": "recent",
+                "description": "Sort order (recent or helpful)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-similar",
+          "description": "Get similar apps ('customers also bought') from the App Store. Returns a list of apps with:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- icon: Icon image URL\n- url: App Store URL\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- description: App description\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerId: Developer's ID\n- genre: App category name\n- genreId: Category ID\n- released: Release date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731). Either this or appId must be provided."
+              },
+              "appId": {
+                "type": "string",
+                "description": "Bundle ID (e.g., 'com.midasplayer.apps.candycrushsaga'). Either this or id must be provided."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-developer",
+          "description": "Get apps by a developer on the App Store. Returns a list of apps with:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- icon: Icon image URL\n- url: App Store URL\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- description: App description\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerId: Developer's ID\n- genre: App category name\n- genreId: Category ID\n- released: Release date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "devId": {
+                "type": "string",
+                "description": "iTunes artist ID of the developer (e.g., 284882218 for Facebook)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get app details from (default: us). Also affects data language."
+              },
+              "lang": {
+                "type": "string",
+                "description": "Language code for result text. If not provided, uses country-specific language."
+              }
+            },
+            "required": [
+              "devId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-suggest",
+          "description": "Get search suggestions from the App Store. Returns an array of objects with:\n- term: Suggested search term\nEach suggestion has a priority from 0 (low traffic) to 10000 (most searched)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "description": "Search term to get suggestions for"
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-ratings",
+          "description": "Get ratings for an App Store app. Returns an object with:\n- ratings: Total number of ratings\n- histogram: Distribution of ratings by star level (1-5)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731). Either this or appId must be provided."
+              },
+              "appId": {
+                "type": "string",
+                "description": "Bundle ID (e.g., 'com.midasplayer.apps.candycrushsaga'). Either this or id must be provided."
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get ratings from (default: us)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-version-history",
+          "description": "Get version history for an App Store app. Returns an array of versions with:\n- versionDisplay: Version number string\n- releaseNotes: Update description\n- releaseDate: Release date (YYYY-MM-DD)\n- releaseTimestamp: Release date and time (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 444934666)"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-privacy",
+          "description": "Get privacy details for an App Store app. Returns an object with:\n- managePrivacyChoicesUrl: URL to manage privacy choices (if available)\n- privacyTypes: Array of privacy data types, each containing:\n  - privacyType: Name of the privacy category\n  - identifier: Unique identifier for the privacy type\n  - description: Detailed description of how data is used\n  - dataCategories: Array of data categories, each containing:\n    - dataCategory: Category name\n    - identifier: Category identifier\n    - dataTypes: Array of specific data types collected\n  - purposes: Array of purposes for data collection\nNote: Currently only available for US App Store.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Numeric App ID (e.g., 553834731)"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app-store-list",
+          "description": "Get apps from iTunes collections. Returns a list of apps with:\n- id: App Store ID number\n- appId: Bundle ID (e.g. 'com.company.app')\n- title: App name\n- icon: Icon image URL\n- url: App Store URL\n- price: Price in USD\n- currency: Price currency code\n- free: Boolean indicating if app is free\n- description: App description\n- developer: Developer name\n- developerUrl: Developer's App Store URL\n- developerId: Developer's ID\n- genre: App category name\n- genreId: Category ID\n- released: Release date (ISO string)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collection": {
+                "type": "string",
+                "enum": [
+                  "newapplications",
+                  "newfreeapplications",
+                  "newpaidapplications",
+                  "topfreeapplications",
+                  "topfreeipadapplications",
+                  "topgrossingapplications",
+                  "topgrossingipadapplications",
+                  "toppaidapplications",
+                  "toppaidipadapplications"
+                ],
+                "description": "Collection to fetch from. Available collections:\n- newapplications: New iOS applications\n- newfreeapplications: New free iOS applications\n- newpaidapplications: New paid iOS applications\n- topfreeapplications: Top free iOS applications\n- topfreeipadapplications: Top free iPad applications\n- topgrossingapplications: Top grossing iOS applications\n- topgrossingipadapplications: Top grossing iPad applications\n- toppaidapplications: Top paid iOS applications\n- toppaidipadapplications: Top paid iPad applications"
+              },
+              "category": {
+                "type": "number",
+                "description": "Category ID to filter by. Available categories:\nMain Categories:\n- 6000: BUSINESS\n- 6001: WEATHER\n- 6002: UTILITIES\n- 6003: TRAVEL\n- 6004: SPORTS\n- 6005: SOCIAL_NETWORKING\n- 6006: REFERENCE\n- 6007: PRODUCTIVITY\n- 6008: PHOTO_AND_VIDEO\n- 6009: NEWS\n- 6010: NAVIGATION\n- 6011: MUSIC\n- 6012: LIFESTYLE\n- 6013: HEALTH_AND_FITNESS\n- 6014: GAMES\n- 6015: FINANCE\n- 6016: ENTERTAINMENT\n- 6017: EDUCATION\n- 6018: BOOKS\n- 6020: MEDICAL\n- 6021: MAGAZINES_AND_NEWSPAPERS\n- 6022: CATALOGS\n- 6023: FOOD_AND_DRINK\n- 6024: SHOPPING\n\nGames Subcategories:\n- 7001: ACTION\n- 7002: ADVENTURE\n- 7003: ARCADE\n- 7004: BOARD\n- 7005: CARD\n- 7006: CASINO\n- 7007: DICE\n- 7008: EDUCATIONAL\n- 7009: FAMILY\n- 7011: MUSIC\n- 7012: PUZZLE\n- 7013: RACING\n- 7014: ROLE_PLAYING\n- 7015: SIMULATION\n- 7016: SPORTS\n- 7017: STRATEGY\n- 7018: TRIVIA\n- 7019: WORD\n\nMagazine Subcategories:\n- 13001: POLITICS\n- 13002: FASHION\n- 13003: HOME\n- 13004: OUTDOORS\n- 13005: SPORTS\n- 13006: AUTOMOTIVE\n- 13007: ARTS\n- 13008: WEDDINGS\n- 13009: BUSINESS\n- 13010: CHILDREN\n- 13011: COMPUTER\n- 13012: FOOD\n- 13013: CRAFTS\n- 13014: ELECTRONICS\n- 13015: ENTERTAINMENT\n- 13017: HEALTH\n- 13018: HISTORY\n- 13019: LITERARY\n- 13020: MEN\n- 13021: MOVIES_AND_MUSIC\n- 13023: FAMILY\n- 13024: PETS\n- 13025: PROFESSIONAL\n- 13026: REGIONAL\n- 13027: SCIENCE\n- 13028: TEENS\n- 13029: TRAVEL\n- 13030: WOMEN"
+              },
+              "lang": {
+                "type": "string",
+                "description": "Language code for result text. If not provided, uses country-specific language."
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Get full app details including ratings, reviews etc (default: false)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code (default: us)"
+              },
+              "num": {
+                "type": "number",
+                "maximum": 200,
+                "default": 50,
+                "description": "Number of results (default: 50, max: 200)"
+              }
+            },
+            "required": [
+              "collection"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-search",
+          "description": "Search for apps on Google Play. Returns a list of apps with:\n- title: App name\n- appId: Package name (e.g. 'com.company.app')\n- url: Play Store URL\n- icon: Icon image URL\n- developer: Developer name\n- developerId: Developer ID\n- priceText: Price display text\n- free: Boolean indicating if app is free\n- summary: Short description\n- scoreText: Rating display text\n- score: Rating (0-5)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "description": "Search term to query apps"
+              },
+              "price": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "free",
+                  "paid"
+                ],
+                "default": "all",
+                "description": "Filter by price: all, free, or paid (default: all)"
+              },
+              "num": {
+                "type": "number",
+                "default": 20,
+                "description": "Number of results to retrieve (default: 20, max: 250)"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get results from (default: us)"
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include full app details in results (default: false)"
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-details",
+          "description": "Get detailed information about a Google Play app. Returns an object with:\n- title: App name\n- description: Full app description\n- descriptionHTML: Description with HTML formatting\n- summary: Short description\n- installs: Install count range\n- minInstalls: Minimum install count\n- maxInstalls: Maximum install count\n- score: Average rating (0-5)\n- scoreText: Rating display text\n- ratings: Total number of ratings\n- reviews: Total number of reviews\n- histogram: Rating distribution by star level\n- price: Price in local currency\n- free: Boolean indicating if app is free\n- currency: Price currency code\n- priceText: Formatted price string\n- offersIAP: Boolean indicating in-app purchases\n- IAPRange: Price range for in-app purchases\n- androidVersion: Minimum Android version required\n- androidVersionText: Formatted Android version text\n- developer: Developer name\n- developerId: Developer ID\n- developerEmail: Developer contact email\n- developerWebsite: Developer website URL\n- developerAddress: Developer physical address\n- genre: App category\n- genreId: Category ID\n- icon: Icon URL\n- headerImage: Feature graphic URL\n- screenshots: Array of screenshot URLs\n- contentRating: Content rating (e.g. 'Everyone')\n- contentRatingDescription: Content rating details\n- adSupported: Boolean indicating if app shows ads\n- released: Release date\n- updated: Last update date\n- version: Current version string\n- recentChanges: Latest version changes\n- preregister: Boolean indicating if app is in pre-registration\n- editorsChoice: Boolean indicating Editor's Choice status\n- features: Array of special features",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Google Play package name (e.g., 'com.google.android.apps.translate')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to check app availability (default: us)"
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-reviews",
+          "description": "Get reviews for a Google Play app. Returns an array of reviews with:\n- id: Review ID string\n- userName: Reviewer's name\n- userImage: Reviewer's profile image URL\n- date: Review date (ISO string)\n- score: Rating (1-5)\n- scoreText: Rating display text\n- title: Review title\n- text: Review content\n- url: Review URL\n- version: App version reviewed\n- thumbsUp: Number of thumbs up votes\n- replyDate: Developer reply date (if any)\n- replyText: Developer reply content (if any)\n- criterias: Array of rating criteria (if any)\n\nNote: Reviews are returned in the specified language. The total review count\nshown in Google Play refers to ratings, not written reviews.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Package name of the app (e.g., 'com.mojang.minecraftpe')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for reviews (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code (default: us)"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "newest",
+                  "rating",
+                  "helpfulness"
+                ],
+                "default": "newest",
+                "description": "Sort order: newest, rating, or helpfulness (default: newest)"
+              },
+              "num": {
+                "type": "number",
+                "default": 100,
+                "description": "Number of reviews to retrieve (default: 100). Ignored if paginate is true."
+              },
+              "paginate": {
+                "type": "boolean",
+                "default": false,
+                "description": "Enable pagination with 150 reviews per page"
+              },
+              "nextPaginationToken": {
+                "type": "string",
+                "description": "Token for fetching next page of reviews"
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-similar",
+          "description": "Get similar apps from Google Play. Returns a list of apps with:\n- url: Play Store URL\n- appId: Package name (e.g. 'com.company.app')\n- summary: Short description\n- developer: Developer name\n- developerId: Developer ID\n- icon: Icon image URL\n- score: Rating (0-5)\n- scoreText: Rating display text\n- priceText: Price display text\n- free: Boolean indicating if app is free\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Google Play package name (e.g., 'com.dxco.pandavszombies')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get results from (default: us)"
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include full app details in results (default: false), If fullDetail is true, includes all fields from app details endpoint."
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-developer",
+          "description": "Get apps by a developer on Google Play. Returns a list of apps with:\n- url: Play Store URL\n- appId: Package name (e.g. 'com.company.app')\n- title: App name\n- summary: Short app description\n- developer: Developer name\n- developerId: Developer ID\n- icon: Icon image URL\n- score: Rating (0-5)\n- scoreText: Rating display text\n- priceText: Price display text\n- free: Boolean indicating if app is free\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "devId": {
+                "type": "string",
+                "description": "Developer name (e.g., 'DxCo Games')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get results from (default: us)"
+              },
+              "num": {
+                "type": "number",
+                "default": 60,
+                "description": "Number of results to retrieve (default: 60)"
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include full app details in results (default: false), If fullDetail is true, includes all fields from app details endpoint."
+              }
+            },
+            "required": [
+              "devId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-suggest",
+          "description": "Get search suggestions from Google Play. Returns an array of suggested search terms (up to 5).\nSample response: ['panda pop', 'panda', 'panda games', 'panda run', 'panda pop for free']",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "description": "Search term to get suggestions for (e.g., 'panda')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for suggestions (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get suggestions from (default: us)"
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-permissions",
+          "description": "Get permissions required by a Google Play app. Returns a list of permissions with:\n- permission: Description of the permission (e.g., 'modify storage contents')\n- type: Permission category (e.g., 'Storage', 'Network')\n\nWhen short=true, returns just an array of permission strings.\nNote: Permissions are returned in the specified language.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Google Play package name (e.g., 'com.dxco.pandavszombies')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for permission text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to check app (default: us)"
+              },
+              "short": {
+                "type": "boolean",
+                "default": false,
+                "description": "Return only permission names without categories (default: false)"
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-datasafety",
+          "description": "Get data safety information for a Google Play app. Returns an object with:\n- dataShared: Array of shared data items, each containing:\n  - data: Name of the data being shared (e.g., 'User IDs')\n  - optional: Boolean indicating if sharing is optional\n  - purpose: Comma-separated list of purposes (e.g., 'Analytics, Marketing')\n  - type: Category of data (e.g., 'Personal info')\n- dataCollected: Array of collected data items with same structure as dataShared\n- securityPractices: Array of security practices, each containing:\n  - practice: Name of the security practice\n  - description: Detailed description of the practice\n- privacyPolicyUrl: URL to the app's privacy policy\n\nData types can include: Personal info, Financial info, Messages, Contacts,\nApp activity, App info and performance, Device or other IDs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "appId": {
+                "type": "string",
+                "description": "Google Play package name (e.g., 'com.dxco.pandavszombies')"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for data safety info (default: en)"
+              }
+            },
+            "required": [
+              "appId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-categories",
+          "description": "Get list of all Google Play categories. Returns an array of category identifiers like:\n- 'APPLICATION': All applications\n- 'GAME': All games\n- 'ANDROID_WEAR': Wear OS apps\n- 'SOCIAL': Social apps\n- 'PRODUCTIVITY': Productivity apps\netc.\n\nThese category IDs can be used with the google-play-list tool to filter apps by category.\nSample response: ['AUTO_AND_VEHICLES', 'LIBRARIES_AND_DEMO', 'LIFESTYLE', ...]",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "google-play-list",
+          "description": "Get apps from Google Play collections. Returns a list of apps with:\n- url: Play Store URL\n- appId: Package name (e.g., 'com.company.app')\n- title: App name\n- summary: Short description\n- developer: Developer name\n- developerId: Developer ID\n- icon: Icon URL\n- score: Rating (0-5)\n- scoreText: Rating display text\n- priceText: Price display text\n- free: Boolean indicating if app is free\n\nWhen fullDetail is true, includes all fields from app details endpoint.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collection": {
+                "type": "string",
+                "enum": [
+                  "TOP_FREE",
+                  "TOP_PAID",
+                  "GROSSING",
+                  "TOP_FREE_GAMES",
+                  "TOP_PAID_GAMES",
+                  "TOP_GROSSING_GAMES"
+                ],
+                "default": "TOP_FREE",
+                "description": "Collection to fetch apps from (default: TOP_FREE). Available collections:\n- TOP_FREE: Top free applications\n- TOP_PAID: Top paid applications\n- GROSSING: Top grossing applications"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "APPLICATION",
+                  "ANDROID_WEAR",
+                  "ART_AND_DESIGN",
+                  "AUTO_AND_VEHICLES",
+                  "BEAUTY",
+                  "BOOKS_AND_REFERENCE",
+                  "BUSINESS",
+                  "COMICS",
+                  "COMMUNICATION",
+                  "DATING",
+                  "EDUCATION",
+                  "ENTERTAINMENT",
+                  "EVENTS",
+                  "FINANCE",
+                  "FOOD_AND_DRINK",
+                  "HEALTH_AND_FITNESS",
+                  "HOUSE_AND_HOME",
+                  "LIBRARIES_AND_DEMO",
+                  "LIFESTYLE",
+                  "MAPS_AND_NAVIGATION",
+                  "MEDICAL",
+                  "MUSIC_AND_AUDIO",
+                  "NEWS_AND_MAGAZINES",
+                  "PARENTING",
+                  "PERSONALIZATION",
+                  "PHOTOGRAPHY",
+                  "PRODUCTIVITY",
+                  "SHOPPING",
+                  "SOCIAL",
+                  "SPORTS",
+                  "TOOLS",
+                  "TRAVEL_AND_LOCAL",
+                  "VIDEO_PLAYERS",
+                  "WATCH_FACE",
+                  "WEATHER",
+                  "GAME",
+                  "GAME_ACTION",
+                  "GAME_ADVENTURE",
+                  "GAME_ARCADE",
+                  "GAME_BOARD",
+                  "GAME_CARD",
+                  "GAME_CASINO",
+                  "GAME_CASUAL",
+                  "GAME_EDUCATIONAL",
+                  "GAME_MUSIC",
+                  "GAME_PUZZLE",
+                  "GAME_RACING",
+                  "GAME_ROLE_PLAYING",
+                  "GAME_SIMULATION",
+                  "GAME_SPORTS",
+                  "GAME_STRATEGY",
+                  "GAME_TRIVIA",
+                  "GAME_WORD",
+                  "FAMILY"
+                ],
+                "description": "Category to filter by. Available categories:\nMain Categories:\n- APPLICATION: All applications\n- ANDROID_WEAR: Wear OS apps\n- ART_AND_DESIGN: Art & Design\n- AUTO_AND_VEHICLES: Auto & Vehicles\n- BEAUTY: Beauty\n- BOOKS_AND_REFERENCE: Books & Reference\n- BUSINESS: Business\n- COMICS: Comics\n- COMMUNICATION: Communication\n- DATING: Dating\n- EDUCATION: Education\n- ENTERTAINMENT: Entertainment\n- EVENTS: Events\n- FINANCE: Finance\n- FOOD_AND_DRINK: Food & Drink\n- HEALTH_AND_FITNESS: Health & Fitness\n- HOUSE_AND_HOME: House & Home\n- LIFESTYLE: Lifestyle\n- MAPS_AND_NAVIGATION: Maps & Navigation\n- MEDICAL: Medical\n- MUSIC_AND_AUDIO: Music & Audio\n- NEWS_AND_MAGAZINES: News & Magazines\n- PARENTING: Parenting\n- PERSONALIZATION: Personalization\n- PHOTOGRAPHY: Photography\n- PRODUCTIVITY: Productivity\n- SHOPPING: Shopping\n- SOCIAL: Social\n- SPORTS: Sports\n- TOOLS: Tools\n- TRAVEL_AND_LOCAL: Travel & Local\n- VIDEO_PLAYERS: Video Players\n- WATCH_FACE: Watch Faces\n- WEATHER: Weather\n\nGame Categories:\n- GAME: All Games\n- GAME_ACTION: Action Games\n- GAME_ADVENTURE: Adventure Games\n- GAME_ARCADE: Arcade Games\n- GAME_BOARD: Board Games\n- GAME_CARD: Card Games\n- GAME_CASINO: Casino Games\n- GAME_CASUAL: Casual Games\n- GAME_EDUCATIONAL: Educational Games\n- GAME_MUSIC: Music Games\n- GAME_PUZZLE: Puzzle Games\n- GAME_RACING: Racing Games\n- GAME_ROLE_PLAYING: Role Playing Games\n- GAME_SIMULATION: Simulation Games\n- GAME_SPORTS: Sports Games\n- GAME_STRATEGY: Strategy Games\n- GAME_TRIVIA: Trivia Games\n- GAME_WORD: Word Games\n- FAMILY: Family Games"
+              },
+              "age": {
+                "type": "string",
+                "enum": [
+                  "FIVE_UNDER",
+                  "SIX_EIGHT",
+                  "NINE_UP"
+                ],
+                "description": "Age range filter (only for FAMILY category). Options: FIVE_UNDER, SIX_EIGHT, NINE_UP"
+              },
+              "num": {
+                "type": "number",
+                "default": 500,
+                "description": "Number of apps to retrieve (default: 500)"
+              },
+              "lang": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for result text (default: en)"
+              },
+              "country": {
+                "type": "string",
+                "default": "us",
+                "description": "Country code to get results from (default: us)"
+              },
+              "fullDetail": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include full app details in results (default: false)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@JiantaoFu/appinsightmcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@JiantaoFu/appinsightmcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0118.@JiantaoFu_appinsightmcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 115
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is primarily focused on enabling AI-assisted image generation and modification using Midjourney's API capabilities. Its tools allow users to create, modify, and interact with images through various operations like upscaling, variations, blending, and prompt generation. The server also includes utilities for checking prompt compliance and retrieving job statuses, supporting a seamless workflow for creative projects involving visual content.",
+    "reasoning": "The primary label is \"Content Creation\" as the server's core functionality revolves around generating and modifying images, which are fundamental to creative content production. The secondary label \"AI/ML Tools\" is chosen because the server leverages AI models (specifically Midjourney's capabilities) to perform its core operations. No custom label is needed as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "AI/ML Tools"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1029,
+    "server_name": "Midjourney MCP Server",
+    "rank_by_usage": 1030,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@InstantMCP_midjourneyserver.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@InstantMCP/midjourneyserver/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1029,
+      "name": "Midjourney MCP Server",
+      "author": "@InstantMCP/midjourneyserver",
+      "overview": "Enable your AI assistant to generate stunning images and perform various actions using Midjourney's capabilities. Interact seamlessly with the MCP to create, modify, and check prompts for your creative projects.",
+      "repository_url": "https://github.com/InstantMCP/midjourneyServer",
+      "homepage": "https://smithery.ai/server/@InstantMCP/midjourneyserver",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@InstantMCP_midjourneyserver.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "midjourney_imagine",
+          "description": "Deploy Server Midjourney MCP Server @InstantMCP/midjourneyserver Try in Playground midjourney_imagine",
+          "parameters": [
+            {
+              "name": "midjourney_imagine",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "midjourney_action",
+          "description": "Perform operations like upsampling, variations, zoom out, etc. on Midjourney-generated images.",
+          "parameters": [
+            {
+              "name": "midjourney_action",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "midjourney_seed",
+          "description": "Get the seed value from a Midjourney-generated image, which can be used for reproducibility.",
+          "parameters": [
+            {
+              "name": "jobId",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "hookUrl",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "timeout",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "midjourney_blend",
+          "description": "Upload 2-5 images and combine them into a new image based on the concept and aesthetic of each image.",
+          "parameters": [
+            {
+              "name": "midjourney_blend",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "midjourney_describe",
+          "description": "Upload an image and generate four prompts based on the image.",
+          "parameters": [
+            {
+              "name": "base64",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "hookUrl",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "timeout",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "midjourney_inpaint",
+          "description": "Modify specific regions of an image using a mask and optional prompt.",
+          "parameters": [
+            {
+              "name": "midjourney_inpaint",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "midjourney_fetch_job",
+          "description": "Fetches the result status and details of a previously submitted Midjourney job using its Job ID.",
+          "parameters": [
+            {
+              "name": "midjourney_fetch_job",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "midjourney_prompt_check",
+          "description": "Checks if a given text prompt is compliant with Midjourney rules before potentially using it for generation. This is a free check.",
+          "parameters": [
+            {
+              "name": "midjourney_prompt_check",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@InstantMCP/midjourneyserver/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "apiKey",
+          "required": true,
+          "description": "Go to Instant Mcp com and create an account Then go to the API Keys page and create an API..."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@InstantMCP/midjourneyserver/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1030.@InstantMCP_midjourneyserver_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1008
+  }
+}

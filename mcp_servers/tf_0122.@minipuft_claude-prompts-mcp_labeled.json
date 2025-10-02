@@ -1,0 +1,524 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described specializes in managing and executing custom prompts in markdown format. Its primary functionality revolves around defining, storing, and utilizing template-based prompts to streamline complex interactions. The available tools focus on operations like processing commands that trigger these prompts, managing prompt templates, and updating or deleting them. This suggests the server is designed to enhance productivity and consistency in user interactions by providing structured, reusable prompt patterns with error handling and transport configurations.",
+    "reasoning": "The primary label \"Daily Productivity\" was chosen because the server's core function is to streamline and organize complex tasks into manageable, reusable prompts, which directly aids in personal or professional productivity. The secondary label \"Development Tools\" is included because the template-based system and command processing could be beneficial for developers aiming to standardize interactions or systematize repetitive tasks. The server's definition and execution of custom prompt templates is a specialized functionality that could be classified as a \"Custom Prompt Management\" system, which is unique enough to warrant a custom label.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": "Custom Prompt Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 121,
+    "server_name": "Claude Custom Prompts",
+    "rank_by_usage": 122,
+    "usage_count": "536",
+    "original_file": "../crawler/smithery/@minipuft_claude-prompts-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@minipuft/claude-prompts-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "process_slash_command",
+          "description": "Process commands that trigger prompt templates with optional arguments",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "The command to process, e.g., '>>content_analysis Hello world' or '/content_analysis Hello world'"
+              }
+            },
+            "required": [
+              "command"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "listprompts",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "Optional filter text to show only matching commands"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_prompt",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the prompt"
+              },
+              "name": {
+                "type": "string",
+                "description": "Display name for the prompt"
+              },
+              "category": {
+                "type": "string",
+                "description": "Category this prompt belongs to"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the prompt"
+              },
+              "systemMessage": {
+                "type": "string",
+                "description": "Optional system message for the prompt"
+              },
+              "userMessageTemplate": {
+                "type": "string",
+                "description": "Template for generating the user message"
+              },
+              "arguments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the argument"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Optional description of the argument"
+                    },
+                    "required": {
+                      "type": "boolean",
+                      "description": "Whether this argument is required"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "required"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Arguments accepted by this prompt"
+              },
+              "isChain": {
+                "type": "boolean",
+                "description": "Whether this prompt is a chain of prompts"
+              },
+              "chainSteps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "promptId": {
+                      "type": "string",
+                      "description": "ID of the prompt to execute in this step"
+                    },
+                    "stepName": {
+                      "type": "string",
+                      "description": "Name of this step"
+                    },
+                    "inputMapping": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Maps chain inputs to this step's inputs"
+                    },
+                    "outputMapping": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Maps this step's outputs to chain outputs"
+                    }
+                  },
+                  "required": [
+                    "promptId",
+                    "stepName"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Steps in the chain if this is a chain prompt"
+              },
+              "restartServer": {
+                "type": "boolean",
+                "description": "Whether to restart the server after updating the prompt"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "category",
+              "description",
+              "userMessageTemplate",
+              "arguments"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_prompt",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the prompt to delete"
+              },
+              "restartServer": {
+                "type": "boolean",
+                "description": "Whether to restart the server after deleting the prompt"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "modify_prompt_section",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier of the prompt to modify"
+              },
+              "section_name": {
+                "type": "string",
+                "description": "Name of the section to modify (valid values: 'title', 'description', 'System Message', 'User Message Template', or any custom section)"
+              },
+              "new_content": {
+                "type": "string",
+                "description": "New content for the specified section"
+              },
+              "restartServer": {
+                "type": "boolean",
+                "description": "Whether to restart the server after modifying the prompt section"
+              }
+            },
+            "required": [
+              "id",
+              "section_name",
+              "new_content"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "reload_prompts",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "restart": {
+                "type": "boolean",
+                "description": "Whether to restart the server after reloading prompts"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Optional reason for reloading/restarting"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "process_slash_command",
+        "listprompts",
+        "update_prompt",
+        "delete_prompt",
+        "modify_prompt_section",
+        "reload_prompts"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 121,
+      "name": "Claude Custom Prompts",
+      "author": "@minipuft/claude-prompts-mcp",
+      "overview": "Define and utilize custom prompts in markdown format to enhance your interactions with Claude. Streamline complex tasks into manageable steps with a flexible, template-based prompt system. Experience improved error handling and transport configurations for seamless operation.",
+      "repository_url": "https://github.com/minipuft/claude-prompts-mcp",
+      "homepage": "https://smithery.ai/server/@minipuft/claude-prompts-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "536",
+      "success_rate": "99.11%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@minipuft_claude-prompts-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "process_slash_command",
+          "description": "Process commands that trigger prompt templates with optional arguments",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "The command to process, e.g., '>>content_analysis Hello world' or '/content_analysis Hello world'"
+              }
+            },
+            "required": [
+              "command"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "listprompts",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "Optional filter text to show only matching commands"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_prompt",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the prompt"
+              },
+              "name": {
+                "type": "string",
+                "description": "Display name for the prompt"
+              },
+              "category": {
+                "type": "string",
+                "description": "Category this prompt belongs to"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the prompt"
+              },
+              "systemMessage": {
+                "type": "string",
+                "description": "Optional system message for the prompt"
+              },
+              "userMessageTemplate": {
+                "type": "string",
+                "description": "Template for generating the user message"
+              },
+              "arguments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the argument"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Optional description of the argument"
+                    },
+                    "required": {
+                      "type": "boolean",
+                      "description": "Whether this argument is required"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "required"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Arguments accepted by this prompt"
+              },
+              "isChain": {
+                "type": "boolean",
+                "description": "Whether this prompt is a chain of prompts"
+              },
+              "chainSteps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "promptId": {
+                      "type": "string",
+                      "description": "ID of the prompt to execute in this step"
+                    },
+                    "stepName": {
+                      "type": "string",
+                      "description": "Name of this step"
+                    },
+                    "inputMapping": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Maps chain inputs to this step's inputs"
+                    },
+                    "outputMapping": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "description": "Maps this step's outputs to chain outputs"
+                    }
+                  },
+                  "required": [
+                    "promptId",
+                    "stepName"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Steps in the chain if this is a chain prompt"
+              },
+              "restartServer": {
+                "type": "boolean",
+                "description": "Whether to restart the server after updating the prompt"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "category",
+              "description",
+              "userMessageTemplate",
+              "arguments"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_prompt",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the prompt to delete"
+              },
+              "restartServer": {
+                "type": "boolean",
+                "description": "Whether to restart the server after deleting the prompt"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "modify_prompt_section",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier of the prompt to modify"
+              },
+              "section_name": {
+                "type": "string",
+                "description": "Name of the section to modify (valid values: 'title', 'description', 'System Message', 'User Message Template', or any custom section)"
+              },
+              "new_content": {
+                "type": "string",
+                "description": "New content for the specified section"
+              },
+              "restartServer": {
+                "type": "boolean",
+                "description": "Whether to restart the server after modifying the prompt section"
+              }
+            },
+            "required": [
+              "id",
+              "section_name",
+              "new_content"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "reload_prompts",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "restart": {
+                "type": "boolean",
+                "description": "Whether to restart the server after reloading prompts"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Optional reason for reloading/restarting"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@minipuft/claude-prompts-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@minipuft/claude-prompts-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0122.@minipuft_claude-prompts-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 119
+  }
+}

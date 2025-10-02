@@ -1,0 +1,919 @@
+{
+  "labels": {
+    "analysis": "The LinkedIn Digital Intelligence Server primarily focuses on creating, managing, and analyzing LinkedIn reports to gain insights about LinkedIn members and audiences. It provides a suite of tools for creating audience definitions, estimating audience sizes, retrieving reports, and accessing typeahead suggestions for facets. The server helps users securely interact with LinkedIn's Digital Intelligence services, making it particularly useful for market research, audience analysis, and data-driven decision-making.",
+    "reasoning": "The primary functionality of the server revolves around creating and analyzing LinkedIn reports and data, which aligns closely with the Web Search & Research category. The server's tools are designed for gathering and processing LinkedIn user data, making it essential for research purposes. Data Analysis & Processing is also relevant due to the server's capabilities in analyzing demographic data and generating insights. The secondary labels reflect these core functionalities and the use cases they support.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "API Integration"
+    ],
+    "custom_label": "LinkedIn Data Analysis",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1520,
+    "server_name": "LinkedIn Digital Intelligence Server",
+    "rank_by_usage": 1521,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@AudienseCo_mcp-audiense-di-linkedin.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@AudienseCo/mcp-audiense-di-linkedin/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-linkedin-reports",
+          "description": "Get LinkedIn reports for the authorized user",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-report",
+          "description": "Get a specific LinkedIn report by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The report ID"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-linkedin-report",
+          "description": "Create a new LinkedIn report with audience definition.   IMPORTANT RULES:   1. Both audience definition and baseline definition are mandatory   2. BEFORE creating a report, ALWAYS use the estimate-linkedin-audience tool to validate the audience size   3. The estimated audience should typically be at least 1,000 members to get meaningful insights   4. Audience definition must follow this structure: {\"include\": {\"and\": [{\"or\": {\"FACET_URN\": [\"VALUE1\", \"VALUE2\"]}}]}, \"exclude\": {\"or\": {\"FACET_URN\": [\"VALUE1\", \"VALUE2\"]}}} (exclude is optional)   5. All complex boolean expressions must use the format above where each facet is an OR group, and multiple facets are combined with AND   6. Boolean expressions like (A AND B) OR C must be converted to (A OR C) AND (B OR C)   7. Use get-linkedin-typeahead tool to find valid values for facets   8. Use list-linkedin-facet-values tool to see predefined values for facets   9. Use list-linkedin-typeahead-facets tool to see available facets   Example: {\"audienceDefinition\": {\"include\": {\"and\": [{\"or\": {\"urn:li:adTargetingFacet:titles\": [\"Software Engineer\"]}}]}}}",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The report title"
+              },
+              "audienceDefinition": {
+                "type": "object",
+                "properties": {
+                  "include": {
+                    "type": "object",
+                    "properties": {
+                      "and": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "or": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "Object with facet URNs as keys and arrays of facet values as values"
+                            }
+                          },
+                          "required": [
+                            "or"
+                          ],
+                          "additionalProperties": false,
+                          "description": "OR clause for audience targeting"
+                        }
+                      }
+                    },
+                    "required": [
+                      "and"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "exclude": {
+                    "type": "object",
+                    "properties": {
+                      "or": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "Object with facet URNs as keys and arrays of facet values as values"
+                      }
+                    },
+                    "required": [
+                      "or"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Optional exclusion criteria"
+                  }
+                },
+                "required": [
+                  "include"
+                ],
+                "additionalProperties": false,
+                "description": "The audience definition with inclusion and optional exclusion criteria"
+              },
+              "baselineDefinition": {
+                "type": "object",
+                "properties": {
+                  "include": {
+                    "type": "object",
+                    "properties": {
+                      "and": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "or": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "Object with facet URNs as keys and arrays of facet values as values"
+                            }
+                          },
+                          "required": [
+                            "or"
+                          ],
+                          "additionalProperties": false,
+                          "description": "OR clause for baseline audience targeting"
+                        }
+                      }
+                    },
+                    "required": [
+                      "and"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "exclude": {
+                    "type": "object",
+                    "properties": {
+                      "or": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "Object with facet URNs as keys and arrays of facet values as values"
+                      }
+                    },
+                    "required": [
+                      "or"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Optional exclusion criteria for baseline"
+                  }
+                },
+                "required": [
+                  "include"
+                ],
+                "additionalProperties": false,
+                "description": "The baseline definition is mandatory"
+              }
+            },
+            "required": [
+              "title",
+              "audienceDefinition",
+              "baselineDefinition"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-insights",
+          "description": "Get LinkedIn insights for a specific report",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "reportId": {
+                "type": "string",
+                "description": "The report ID"
+              },
+              "facetUrns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Filter insights by facet URNs (optional)"
+              }
+            },
+            "required": [
+              "reportId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-categories",
+          "description": "Get LinkedIn categories for a specific report",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "reportId": {
+                "type": "string",
+                "description": "The report ID"
+              },
+              "urns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Filter categories by URNs (optional)"
+              }
+            },
+            "required": [
+              "reportId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-typeahead",
+          "description": "Get LinkedIn typeahead suggestions for a specific facet and query. Use the facet parameter to specify which type of suggestions you want to retrieve.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "facet": {
+                "type": "string",
+                "enum": [
+                  "urn:li:adTargetingFacet:locations",
+                  "urn:li:adTargetingFacet:profileLocations",
+                  "urn:li:adTargetingFacet:titles",
+                  "urn:li:adTargetingFacet:titlesPast",
+                  "urn:li:adTargetingFacet:employersPast",
+                  "urn:li:adTargetingFacet:followedCompanies",
+                  "urn:li:adTargetingFacet:interests",
+                  "urn:li:adTargetingFacet:skills",
+                  "urn:li:adTargetingFacet:employers",
+                  "urn:li:adTargetingFacet:degrees",
+                  "urn:li:adTargetingFacet:memberBehaviors",
+                  "urn:li:adTargetingFacet:schools",
+                  "urn:li:adTargetingFacet:companyCategory",
+                  "urn:li:adTargetingFacet:titlesAll",
+                  "urn:li:adTargetingFacet:industries",
+                  "urn:li:adTargetingFacet:groups",
+                  "urn:li:adTargetingFacet:firstDegreeConnectionCompanies",
+                  "urn:li:adTargetingFacet:employersAll",
+                  "urn:li:adTargetingFacet:fieldsOfStudy"
+                ],
+                "description": "The facet URN to search for suggestions. Available facets include: locations, profileLocations, titles, titlesPast, employersPast, followedCompanies, interests, skills, employers, degrees, memberBehaviors, schools, companyCategory, titlesAll, industries, groups, firstDegreeConnectionCompanies, employersAll, fieldsOfStudy. Use with prefix 'urn:li:adTargetingFacet:' (e.g., 'urn:li:adTargetingFacet:locations')."
+              },
+              "query": {
+                "type": "string",
+                "description": "The search query (optional). Use this to filter suggestions by keyword."
+              }
+            },
+            "required": [
+              "facet"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-account",
+          "description": "Get LinkedIn account details including LinkedIn token",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-linkedin-typeahead-facets",
+          "description": "List all available facets that can be used with the get-linkedin-typeahead tool",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-linkedin-facet-values",
+          "description": "List all LinkedIn facets with predefined values, or filter by a specific facet",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "facet": {
+                "type": "string",
+                "description": "Optional: The specific facet URN to get values for (e.g., urn:li:adTargetingFacet:genders)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "initiate-linkedin-device-auth",
+          "description": "Start the device authorization flow to get a device code for authentication",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "estimate-linkedin-audience",
+          "description": "Estimate the size of a LinkedIn audience based on the provided audience definition.   IMPORTANT RULES:   1. Audience definition must follow this structure: {\"include\": {\"and\": [{\"or\": {\"FACET_URN\": [\"VALUE1\", \"VALUE2\"]}}]}, \"exclude\": {\"or\": {\"FACET_URN\": [\"VALUE1\", \"VALUE2\"]}}} (exclude is optional)   2. All complex boolean expressions must use the format above where each facet is an OR group, and multiple facets are combined with AND   3. Boolean expressions like (A AND B) OR C must be converted to (A OR C) AND (B OR C)   4. Use get-linkedin-typeahead tool to find valid values for facets   5. Use list-linkedin-facet-values tool to see predefined values for facets   6. Use list-linkedin-typeahead-facets tool to see available facets   7. See get-linkedin-audience-definition-examples tool for complete examples of valid audience definitions   Example: {\"audienceDefinition\": {\"include\": {\"and\": [{\"or\": {\"urn:li:adTargetingFacet:titles\": [\"Software Engineer\"]}}]}}}  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "audienceDefinition": {
+                "type": "object",
+                "properties": {
+                  "include": {
+                    "type": "object",
+                    "properties": {
+                      "and": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "or": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "Object with facet URNs as keys and arrays of facet values as values"
+                            }
+                          },
+                          "required": [
+                            "or"
+                          ],
+                          "additionalProperties": false,
+                          "description": "OR clause for audience targeting"
+                        }
+                      }
+                    },
+                    "required": [
+                      "and"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "exclude": {
+                    "type": "object",
+                    "properties": {
+                      "or": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "Object with facet URNs as keys and arrays of facet values as values"
+                      }
+                    },
+                    "required": [
+                      "or"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Optional exclusion criteria"
+                  }
+                },
+                "required": [
+                  "include"
+                ],
+                "additionalProperties": false,
+                "description": "The audience definition with inclusion and optional exclusion criteria according to the rules above"
+              }
+            },
+            "required": [
+              "audienceDefinition"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-audience-definition-examples",
+          "description": "Get examples of audience definitions for creating LinkedIn reports",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "simple",
+                  "complex",
+                  "exclusion",
+                  "all"
+                ],
+                "description": "The type of examples to retrieve: simple, complex, exclusion, or all"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "get-linkedin-reports",
+        "get-linkedin-report",
+        "create-linkedin-report",
+        "get-linkedin-insights",
+        "get-linkedin-categories",
+        "get-linkedin-typeahead",
+        "get-linkedin-account",
+        "list-linkedin-typeahead-facets",
+        "list-linkedin-facet-values",
+        "initiate-linkedin-device-auth",
+        "estimate-linkedin-audience",
+        "get-linkedin-audience-definition-examples"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1520,
+      "name": "LinkedIn Digital Intelligence Server",
+      "author": "@AudienseCo/mcp-audiense-di-linkedin",
+      "overview": "Interact with LinkedIn's Digital Intelligence services to create and analyze reports, gain insights, and receive typeahead suggestions. Leverage this server to enhance your LinkedIn data analysis capabilities securely and efficiently.",
+      "repository_url": "https://github.com/AudienseCo/mcp-audiense-di-linkedin",
+      "homepage": "https://smithery.ai/server/@AudienseCo/mcp-audiense-di-linkedin",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@AudienseCo_mcp-audiense-di-linkedin.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "get-linkedin-reports",
+          "description": "Get LinkedIn reports for the authorized user",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-report",
+          "description": "Get a specific LinkedIn report by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The report ID"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-linkedin-report",
+          "description": "Create a new LinkedIn report with audience definition.   IMPORTANT RULES:   1. Both audience definition and baseline definition are mandatory   2. BEFORE creating a report, ALWAYS use the estimate-linkedin-audience tool to validate the audience size   3. The estimated audience should typically be at least 1,000 members to get meaningful insights   4. Audience definition must follow this structure: {\"include\": {\"and\": [{\"or\": {\"FACET_URN\": [\"VALUE1\", \"VALUE2\"]}}]}, \"exclude\": {\"or\": {\"FACET_URN\": [\"VALUE1\", \"VALUE2\"]}}} (exclude is optional)   5. All complex boolean expressions must use the format above where each facet is an OR group, and multiple facets are combined with AND   6. Boolean expressions like (A AND B) OR C must be converted to (A OR C) AND (B OR C)   7. Use get-linkedin-typeahead tool to find valid values for facets   8. Use list-linkedin-facet-values tool to see predefined values for facets   9. Use list-linkedin-typeahead-facets tool to see available facets   Example: {\"audienceDefinition\": {\"include\": {\"and\": [{\"or\": {\"urn:li:adTargetingFacet:titles\": [\"Software Engineer\"]}}]}}}",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The report title"
+              },
+              "audienceDefinition": {
+                "type": "object",
+                "properties": {
+                  "include": {
+                    "type": "object",
+                    "properties": {
+                      "and": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "or": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "Object with facet URNs as keys and arrays of facet values as values"
+                            }
+                          },
+                          "required": [
+                            "or"
+                          ],
+                          "additionalProperties": false,
+                          "description": "OR clause for audience targeting"
+                        }
+                      }
+                    },
+                    "required": [
+                      "and"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "exclude": {
+                    "type": "object",
+                    "properties": {
+                      "or": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "Object with facet URNs as keys and arrays of facet values as values"
+                      }
+                    },
+                    "required": [
+                      "or"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Optional exclusion criteria"
+                  }
+                },
+                "required": [
+                  "include"
+                ],
+                "additionalProperties": false,
+                "description": "The audience definition with inclusion and optional exclusion criteria"
+              },
+              "baselineDefinition": {
+                "type": "object",
+                "properties": {
+                  "include": {
+                    "type": "object",
+                    "properties": {
+                      "and": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "or": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "Object with facet URNs as keys and arrays of facet values as values"
+                            }
+                          },
+                          "required": [
+                            "or"
+                          ],
+                          "additionalProperties": false,
+                          "description": "OR clause for baseline audience targeting"
+                        }
+                      }
+                    },
+                    "required": [
+                      "and"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "exclude": {
+                    "type": "object",
+                    "properties": {
+                      "or": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "Object with facet URNs as keys and arrays of facet values as values"
+                      }
+                    },
+                    "required": [
+                      "or"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Optional exclusion criteria for baseline"
+                  }
+                },
+                "required": [
+                  "include"
+                ],
+                "additionalProperties": false,
+                "description": "The baseline definition is mandatory"
+              }
+            },
+            "required": [
+              "title",
+              "audienceDefinition",
+              "baselineDefinition"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-insights",
+          "description": "Get LinkedIn insights for a specific report",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "reportId": {
+                "type": "string",
+                "description": "The report ID"
+              },
+              "facetUrns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Filter insights by facet URNs (optional)"
+              }
+            },
+            "required": [
+              "reportId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-categories",
+          "description": "Get LinkedIn categories for a specific report",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "reportId": {
+                "type": "string",
+                "description": "The report ID"
+              },
+              "urns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Filter categories by URNs (optional)"
+              }
+            },
+            "required": [
+              "reportId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-typeahead",
+          "description": "Get LinkedIn typeahead suggestions for a specific facet and query. Use the facet parameter to specify which type of suggestions you want to retrieve.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "facet": {
+                "type": "string",
+                "enum": [
+                  "urn:li:adTargetingFacet:locations",
+                  "urn:li:adTargetingFacet:profileLocations",
+                  "urn:li:adTargetingFacet:titles",
+                  "urn:li:adTargetingFacet:titlesPast",
+                  "urn:li:adTargetingFacet:employersPast",
+                  "urn:li:adTargetingFacet:followedCompanies",
+                  "urn:li:adTargetingFacet:interests",
+                  "urn:li:adTargetingFacet:skills",
+                  "urn:li:adTargetingFacet:employers",
+                  "urn:li:adTargetingFacet:degrees",
+                  "urn:li:adTargetingFacet:memberBehaviors",
+                  "urn:li:adTargetingFacet:schools",
+                  "urn:li:adTargetingFacet:companyCategory",
+                  "urn:li:adTargetingFacet:titlesAll",
+                  "urn:li:adTargetingFacet:industries",
+                  "urn:li:adTargetingFacet:groups",
+                  "urn:li:adTargetingFacet:firstDegreeConnectionCompanies",
+                  "urn:li:adTargetingFacet:employersAll",
+                  "urn:li:adTargetingFacet:fieldsOfStudy"
+                ],
+                "description": "The facet URN to search for suggestions. Available facets include: locations, profileLocations, titles, titlesPast, employersPast, followedCompanies, interests, skills, employers, degrees, memberBehaviors, schools, companyCategory, titlesAll, industries, groups, firstDegreeConnectionCompanies, employersAll, fieldsOfStudy. Use with prefix 'urn:li:adTargetingFacet:' (e.g., 'urn:li:adTargetingFacet:locations')."
+              },
+              "query": {
+                "type": "string",
+                "description": "The search query (optional). Use this to filter suggestions by keyword."
+              }
+            },
+            "required": [
+              "facet"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-account",
+          "description": "Get LinkedIn account details including LinkedIn token",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-linkedin-typeahead-facets",
+          "description": "List all available facets that can be used with the get-linkedin-typeahead tool",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-linkedin-facet-values",
+          "description": "List all LinkedIn facets with predefined values, or filter by a specific facet",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "facet": {
+                "type": "string",
+                "description": "Optional: The specific facet URN to get values for (e.g., urn:li:adTargetingFacet:genders)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "initiate-linkedin-device-auth",
+          "description": "Start the device authorization flow to get a device code for authentication",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "estimate-linkedin-audience",
+          "description": "Estimate the size of a LinkedIn audience based on the provided audience definition.   IMPORTANT RULES:   1. Audience definition must follow this structure: {\"include\": {\"and\": [{\"or\": {\"FACET_URN\": [\"VALUE1\", \"VALUE2\"]}}]}, \"exclude\": {\"or\": {\"FACET_URN\": [\"VALUE1\", \"VALUE2\"]}}} (exclude is optional)   2. All complex boolean expressions must use the format above where each facet is an OR group, and multiple facets are combined with AND   3. Boolean expressions like (A AND B) OR C must be converted to (A OR C) AND (B OR C)   4. Use get-linkedin-typeahead tool to find valid values for facets   5. Use list-linkedin-facet-values tool to see predefined values for facets   6. Use list-linkedin-typeahead-facets tool to see available facets   7. See get-linkedin-audience-definition-examples tool for complete examples of valid audience definitions   Example: {\"audienceDefinition\": {\"include\": {\"and\": [{\"or\": {\"urn:li:adTargetingFacet:titles\": [\"Software Engineer\"]}}]}}}  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "audienceDefinition": {
+                "type": "object",
+                "properties": {
+                  "include": {
+                    "type": "object",
+                    "properties": {
+                      "and": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "or": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "description": "Object with facet URNs as keys and arrays of facet values as values"
+                            }
+                          },
+                          "required": [
+                            "or"
+                          ],
+                          "additionalProperties": false,
+                          "description": "OR clause for audience targeting"
+                        }
+                      }
+                    },
+                    "required": [
+                      "and"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "exclude": {
+                    "type": "object",
+                    "properties": {
+                      "or": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "description": "Object with facet URNs as keys and arrays of facet values as values"
+                      }
+                    },
+                    "required": [
+                      "or"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Optional exclusion criteria"
+                  }
+                },
+                "required": [
+                  "include"
+                ],
+                "additionalProperties": false,
+                "description": "The audience definition with inclusion and optional exclusion criteria according to the rules above"
+              }
+            },
+            "required": [
+              "audienceDefinition"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-linkedin-audience-definition-examples",
+          "description": "Get examples of audience definitions for creating LinkedIn reports",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "simple",
+                  "complex",
+                  "exclusion",
+                  "all"
+                ],
+                "description": "The type of examples to retrieve: simple, complex, exclusion, or all"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@AudienseCo/mcp-audiense-di-linkedin/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@AudienseCo/mcp-audiense-di-linkedin/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1521.@AudienseCo_mcp-audiense-di-linkedin_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1400
+  }
+}

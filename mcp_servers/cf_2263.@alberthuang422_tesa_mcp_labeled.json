@@ -1,0 +1,179 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Tesa MCP\" is designed to integrate applications with real-time data and tools related to cryptocurrency and blockchain operations. Its available tools focus on token trading, wallet management, and querying token-related information such as prices and ticker values. The primary functionality revolves around facilitating trading operations, managing user wallets, and retrieving financial data within the blockchain ecosystem.",
+    "reasoning": "The primary label \"Cryptocurrency & Blockchain\" is chosen because the server's tools are exclusively focused on blockchain-related operations such as trading, wallet creation, and token price tracking. The secondary label \"Financial Services\" is added due to the monetary and investment-related nature of the tools, while \"Data Analysis & Processing\" is considered for the query-based tools like price ticker retrieval. There is no need for custom labels as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "Financial Services",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2262,
+    "server_name": "Tesa MCP",
+    "rank_by_usage": 2263,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@alberthuang422_tesa_mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@alberthuang422/tesa_mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 2262,
+      "name": "Tesa MCP",
+      "author": "@alberthuang422/tesa_mcp",
+      "overview": "Integrate your applications with real-time data and tools seamlessly. Enhance your workflows by leveraging external resources and executing actions dynamically. Experience a standardized way to connect your LLMs with various data sources and functionalities.",
+      "repository_url": "https://github.com/alberthuang422/tesa_mcp",
+      "homepage": "https://smithery.ai/server/@alberthuang422/tesa_mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@alberthuang422_tesa_mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "get_token_info",
+          "description": "Deploy Server @alberthuang422/tesa_mcp Try in Playground get_token_info",
+          "parameters": [
+            {
+              "name": "get_token_info",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "trade_token",
+          "description": "当你需要进行代币的买卖操作时，使用这个工具",
+          "parameters": [
+            {
+              "name": "type",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "amount",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "network",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "contract_address",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "limit_order",
+          "description": "当你需要进行限价订单或者是期望在一个特定的价格再进行交易操作时，使用这个工具",
+          "parameters": [
+            {
+              "name": "limit_order",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "native_token",
+          "description": "get the price of the native token",
+          "parameters": [
+            {
+              "name": "native_token",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "network",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_token_value_ticker",
+          "description": "if user just get a ticker, you can use this tool to get the token value ticker",
+          "parameters": [
+            {
+              "name": "get_token_value_ticker",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create_wallet",
+          "description": "创建一个钱包,当用户需要创建一个钱包时,或者使用其他工具得到没有钱包地址的错误的时候,使用这个工具",
+          "parameters": [
+            {
+              "name": "create_wallet",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "network",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "user_info",
+          "description": "获取用户的钱包地址，代币持仓，代币余额，限价单列表",
+          "parameters": [
+            {
+              "name": "network",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "token_list_page_num",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "limit_order_list_page_num",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@alberthuang422/tesa_mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@alberthuang422/tesa_mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_2263.@alberthuang422_tesa_mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1947
+  }
+}

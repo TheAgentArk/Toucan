@@ -1,0 +1,713 @@
+{
+  "labels": {
+    "analysis": "The MCP Server primarily allows AI assistants to interact with the DefiLlama API, enabling real-time DeFi data retrieval. Its core functionality involves proxying requests to fetch protocol TVLs, chain TVLs, token prices, dex volumes, protocol fees, and other DeFi metrics. The server dynamically generates tools from DefiLlama's OpenAPI specification, making it easy to integrate with clients like Cursor and Claude Desktop. The available tools cover a wide range of DeFi insights, including historical and current data.",
+    "reasoning": "The primary label \"Cryptocurrency & Blockchain\" was chosen because the server's core functionality revolves around DeFi data (TVL, protocol fees, dex volumes, etc.), which is central to the cryptocurrency and blockchain domain. The secondary labels \"API Integration\" and \"Data Analysis & Processing\" were selected because the server acts as a proxy for API calls and processes financial data. A custom label is not necessary since the predefined categories adequately cover the functionality.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "API Integration",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 714,
+    "server_name": "DefiLlama API Server",
+    "rank_by_usage": 715,
+    "usage_count": "11",
+    "original_file": "../crawler/smithery/@nic0xflamel_defillama-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@nic0xflamel/defillama-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_protocols",
+          "description": "List all protocols on defillama along with their tvl",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_protocol__by_protocol",
+          "description": "Get historical TVL of a protocol and breakdowns by token and chain",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "protocol slug"
+              }
+            },
+            "required": [
+              "protocol"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_v2_historicalChainTvl",
+          "description": "Get historical TVL (excludes liquid staking and double counted tvl) of DeFi on all chains",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_v2_historicalChainTvl__by_chain",
+          "description": "Get historical TVL (excludes liquid staking and double counted tvl) of a chain",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "chain slug, you can get these from /chains or the chains property on /protocols"
+              }
+            },
+            "required": [
+              "chain"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_tvl__by_protocol",
+          "description": "Simplified endpoint to get current TVL of a protocol",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "protocol slug"
+              }
+            },
+            "required": [
+              "protocol"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_v2_chains",
+          "description": "Get current TVL of all chains",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_prices_current__by_coins",
+          "description": "Get current prices of tokens by contract address\nError Responses:\n502: Internal error",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "coins": {
+                "type": "string",
+                "description": "set of comma-separated tokens defined as {chain}:{address}"
+              },
+              "searchWidth": {
+                "type": "string",
+                "description": "time range on either side to find price data, defaults to 6 hours"
+              }
+            },
+            "required": [
+              "coins"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_stablecoincharts_all",
+          "description": "Get historical mcap sum of all stablecoins",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "stablecoin": {
+                "type": "integer",
+                "description": "stablecoin ID, you can get these from /stablecoins"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pools",
+          "description": "Retrieve the latest data for all pools, including enriched information such as predictions",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_chart__by_pool",
+          "description": "Get historical APY and TVL of a pool",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "pool": {
+                "type": "string",
+                "description": "pool id, can be retrieved from /pools (property is called pool)"
+              }
+            },
+            "required": [
+              "pool"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_overview_dexs",
+          "description": "List all dexs along with summaries of their volumes and dataType history data",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_overview_dexs__by_chain",
+          "description": "List all dexs along with summaries of their volumes and dataType history data filtering by chain",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "chain name, list of all supported chains can be found under allChains attribute in /overview/dexs response"
+              },
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              }
+            },
+            "required": [
+              "chain"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_summary_dexs__by_protocol",
+          "description": "Get summary of dex volume with historical data",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "protocol slug"
+              },
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              }
+            },
+            "required": [
+              "protocol"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_overview_fees",
+          "description": "List all protocols along with summaries of their fees and revenue and dataType history data",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              },
+              "dataType": {
+                "type": "string",
+                "enum": [
+                  "dailyFees",
+                  "dailyRevenue"
+                ],
+                "description": "Desired data type, dailyFees by default."
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_overview_fees__by_chain",
+          "description": "List all protocols along with summaries of their fees and revenue and dataType history data by chain",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "chain name, list of all supported chains can be found under allChains attribute in /overview/fees response"
+              },
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              },
+              "dataType": {
+                "type": "string",
+                "enum": [
+                  "dailyFees",
+                  "dailyRevenue"
+                ],
+                "description": "Desired data type, dailyFees by default."
+              }
+            },
+            "required": [
+              "chain"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_summary_fees__by_protocol",
+          "description": "Get summary of protocol fees and revenue with historical data",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "protocol slug"
+              },
+              "dataType": {
+                "type": "string",
+                "enum": [
+                  "dailyFees",
+                  "dailyRevenue"
+                ],
+                "description": "Desired data type, dailyFees by default."
+              }
+            },
+            "required": [
+              "protocol"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 16,
+      "tool_names": [
+        "get_protocols",
+        "get_protocol__by_protocol",
+        "get_v2_historicalChainTvl",
+        "get_v2_historicalChainTvl__by_chain",
+        "get_tvl__by_protocol",
+        "get_v2_chains",
+        "get_prices_current__by_coins",
+        "get_stablecoincharts_all",
+        "get_pools",
+        "get_chart__by_pool",
+        "get_overview_dexs",
+        "get_overview_dexs__by_chain",
+        "get_summary_dexs__by_protocol",
+        "get_overview_fees",
+        "get_overview_fees__by_chain",
+        "get_summary_fees__by_protocol"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 714,
+      "name": "DefiLlama API Server",
+      "author": "@nic0xflamel/defillama-mcp",
+      "overview": "Enable AI assistants to interact seamlessly with the DefiLlama API by proxying requests through a Model Context Protocol server. Dynamically generate tools from the DefiLlama OpenAPI specification to fetch real-time DeFi data. Simplify integration with popular clients like Cursor and Claude Desktop for enhanced DeFi insights.",
+      "repository_url": "https://github.com/nic0xflamel/defillama-mcp",
+      "homepage": "https://smithery.ai/server/@nic0xflamel/defillama-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "11",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@nic0xflamel_defillama-mcp.json",
+      "tools_count": 16,
+      "tools": [
+        {
+          "name": "get_protocols",
+          "description": "List all protocols on defillama along with their tvl",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_protocol__by_protocol",
+          "description": "Get historical TVL of a protocol and breakdowns by token and chain",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "protocol slug"
+              }
+            },
+            "required": [
+              "protocol"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_v2_historicalChainTvl",
+          "description": "Get historical TVL (excludes liquid staking and double counted tvl) of DeFi on all chains",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_v2_historicalChainTvl__by_chain",
+          "description": "Get historical TVL (excludes liquid staking and double counted tvl) of a chain",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "chain slug, you can get these from /chains or the chains property on /protocols"
+              }
+            },
+            "required": [
+              "chain"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_tvl__by_protocol",
+          "description": "Simplified endpoint to get current TVL of a protocol",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "protocol slug"
+              }
+            },
+            "required": [
+              "protocol"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_v2_chains",
+          "description": "Get current TVL of all chains",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_prices_current__by_coins",
+          "description": "Get current prices of tokens by contract address\nError Responses:\n502: Internal error",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "coins": {
+                "type": "string",
+                "description": "set of comma-separated tokens defined as {chain}:{address}"
+              },
+              "searchWidth": {
+                "type": "string",
+                "description": "time range on either side to find price data, defaults to 6 hours"
+              }
+            },
+            "required": [
+              "coins"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_stablecoincharts_all",
+          "description": "Get historical mcap sum of all stablecoins",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "stablecoin": {
+                "type": "integer",
+                "description": "stablecoin ID, you can get these from /stablecoins"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pools",
+          "description": "Retrieve the latest data for all pools, including enriched information such as predictions",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_chart__by_pool",
+          "description": "Get historical APY and TVL of a pool",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "pool": {
+                "type": "string",
+                "description": "pool id, can be retrieved from /pools (property is called pool)"
+              }
+            },
+            "required": [
+              "pool"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_overview_dexs",
+          "description": "List all dexs along with summaries of their volumes and dataType history data",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_overview_dexs__by_chain",
+          "description": "List all dexs along with summaries of their volumes and dataType history data filtering by chain",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "chain name, list of all supported chains can be found under allChains attribute in /overview/dexs response"
+              },
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              }
+            },
+            "required": [
+              "chain"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_summary_dexs__by_protocol",
+          "description": "Get summary of dex volume with historical data",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "protocol slug"
+              },
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              }
+            },
+            "required": [
+              "protocol"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_overview_fees",
+          "description": "List all protocols along with summaries of their fees and revenue and dataType history data",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              },
+              "dataType": {
+                "type": "string",
+                "enum": [
+                  "dailyFees",
+                  "dailyRevenue"
+                ],
+                "description": "Desired data type, dailyFees by default."
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_overview_fees__by_chain",
+          "description": "List all protocols along with summaries of their fees and revenue and dataType history data by chain",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "chain name, list of all supported chains can be found under allChains attribute in /overview/fees response"
+              },
+              "excludeTotalDataChart": {
+                "type": "boolean",
+                "description": "true to exclude aggregated chart from response"
+              },
+              "excludeTotalDataChartBreakdown": {
+                "type": "boolean",
+                "description": "true to exclude broken down chart from response"
+              },
+              "dataType": {
+                "type": "string",
+                "enum": [
+                  "dailyFees",
+                  "dailyRevenue"
+                ],
+                "description": "Desired data type, dailyFees by default."
+              }
+            },
+            "required": [
+              "chain"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_summary_fees__by_protocol",
+          "description": "Get summary of protocol fees and revenue with historical data",
+          "input_schema": {
+            "$defs": {},
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "protocol slug"
+              },
+              "dataType": {
+                "type": "string",
+                "enum": [
+                  "dailyFees",
+                  "dailyRevenue"
+                ],
+                "description": "Desired data type, dailyFees by default."
+              }
+            },
+            "required": [
+              "protocol"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@nic0xflamel/defillama-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@nic0xflamel/defillama-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0715.@nic0xflamel_defillama-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 698
+  }
+}

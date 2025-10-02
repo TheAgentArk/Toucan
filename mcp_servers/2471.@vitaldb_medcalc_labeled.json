@@ -1,0 +1,1634 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is primarily focused on medical calculations and assessments, providing tools to perform various clinical computations used in healthcare. The tools cover a wide range of medical domains including renal function assessment (eGFR, Creatinine Clearance), cardiovascular risk scoring (CHA₂DS₂-VASc, Framingham Risk Score), liver disease evaluation (Child-Pugh, MELD), obstetrics (Pregnancy Due Dates), pain management (MME Calculation), and other commonly needed calculations in clinical practice. These tools are likely used by healthcare professionals to aid in diagnosis, treatment planning, and risk assessment.",
+    "reasoning": "The primary functionality of this server revolves around medical calculations and clinical decision support, making \"Health & Medical Calculations\" the most appropriate label. Secondary labels for \"Data Analysis & Processing\" and \"Clinical Decision Support\" were selected because the tools perform complex calculations that support evidence-based medical decision making. While some tools relate to specific medical domains (like cardiology or nephrology), the unifying theme is medical computation.",
+    "primary_label": "Health & Fitness",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Medical Risk Assessment",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2470,
+    "server_name": "Medical Calculation Server",
+    "rank_by_usage": 2471,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@vitaldb_medcalc.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@vitaldb/medcalc/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "egfr_epi_cr_cys",
+          "description": "\n    Estimated Glomerular Filtration Rate (eGFR) using the 2021 CKD-EPI Creatinine-Cystatin C equation\n    Reference: N Engl J Med. 2021 Nov 4;385(19):1737-1749\n    \n    Parameters:\n    -----------\n    scr : float\n        Serum creatinine level in mg/dL\n    scys : float\n        Serum cystatin C level in mg/L\n    age : int\n        Age in years\n    male : bool\n        True if patient is male, False if female\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing eGFR result and calculation parameters\n    ",
+          "input_schema": {
+            "properties": {
+              "scr": {
+                "title": "Scr",
+                "type": "number"
+              },
+              "scys": {
+                "title": "Scys",
+                "type": "number"
+              },
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "male": {
+                "title": "Male",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "scr",
+              "scys",
+              "age",
+              "male"
+            ],
+            "title": "egfr_epi_cr_cysArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "egfr_epi",
+          "description": "\n    Estimated Glomerular Filtration Rate (eGFR) using the EPI formula (version 2021)\n    Reference: N Engl J Med. 2021 Nov 4;385(19):1737-1749\n    \n    Parameters:\n    -----------\n    scr : float\n        serum creatinine level in mg/dL\n    age : int\n        Age in years\n    male : bool\n        true if Male\n    \n    Returns:\n    --------\n    float\n        Estimated GFR in mL/min/1.73m^2\n    ",
+          "input_schema": {
+            "properties": {
+              "scr": {
+                "title": "Scr",
+                "type": "number"
+              },
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "male": {
+                "title": "Male",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "scr",
+              "age",
+              "male"
+            ],
+            "title": "egfr_epiArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bp_children",
+          "description": "\n    혈압 센타일(percentile)을 계산하는 함수\n    \n    Parameters:\n    -----------\n    years : int\n        나이(년)\n    months : int\n        나이(월)\n    height : int\n        키(cm)\n    sex : str\n        성별 ('male' 또는 'female')\n    systolic : int\n        수축기 혈압(mmHg)\n    diastolic : int\n        이완기 혈압(mmHg)\n    \n    Returns:\n    --------\n    dict\n        수축기 및 이완기 혈압 센타일 결과를 포함하는 딕셔너리\n    ",
+          "input_schema": {
+            "properties": {
+              "years": {
+                "title": "Years",
+                "type": "integer"
+              },
+              "months": {
+                "title": "Months",
+                "type": "integer"
+              },
+              "height": {
+                "title": "Height",
+                "type": "integer"
+              },
+              "sex": {
+                "title": "Sex",
+                "type": "string"
+              },
+              "systolic": {
+                "title": "Systolic",
+                "type": "integer"
+              },
+              "diastolic": {
+                "title": "Diastolic",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "years",
+              "months",
+              "height",
+              "sex",
+              "systolic",
+              "diastolic"
+            ],
+            "title": "bp_childrenArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bmi_bsa_calculator",
+          "description": "\n    Calculates Body Mass Index (BMI) and Body Surface Area (BSA)\n    \n    Parameters:\n    -----------\n    weight : float\n        Weight in kilograms\n    height : float\n        Height in centimeters (default) or meters\n    height_unit : str\n        Unit of height measurement ('cm' or 'm', default is 'cm')\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing BMI, BSA, and classification\n    ",
+          "input_schema": {
+            "properties": {
+              "weight": {
+                "title": "Weight",
+                "type": "number"
+              },
+              "height": {
+                "title": "Height",
+                "type": "number"
+              },
+              "height_unit": {
+                "default": "cm",
+                "title": "Height Unit",
+                "type": "string"
+              }
+            },
+            "required": [
+              "weight",
+              "height"
+            ],
+            "title": "bmi_bsa_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "crcl_cockcroft_gault",
+          "description": "\n    Calculate Creatinine Clearance using the Cockcroft-Gault formula\n    \n    Parameters:\n    -----------\n    age : int\n        Age in years\n    weight : float\n        Actual body weight in kg\n    height : float\n        Height in inches\n    scr : float\n        Serum creatinine in mg/dL\n    sex : str\n        Gender ('male' or 'female')\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing creatinine clearance result and weight calculations\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "weight": {
+                "title": "Weight",
+                "type": "number"
+              },
+              "height": {
+                "title": "Height",
+                "type": "number"
+              },
+              "scr": {
+                "title": "Scr",
+                "type": "number"
+              },
+              "sex": {
+                "title": "Sex",
+                "type": "string"
+              }
+            },
+            "required": [
+              "age",
+              "weight",
+              "height",
+              "scr",
+              "sex"
+            ],
+            "title": "crcl_cockcroft_gaultArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "map_calculator",
+          "description": "\n    Calculate Mean Arterial Pressure (MAP)\n    \n    Parameters:\n    -----------\n    sbp : int\n        Systolic Blood Pressure in mmHg\n    dbp : int\n        Diastolic Blood Pressure in mmHg\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing MAP result and input values\n    ",
+          "input_schema": {
+            "properties": {
+              "sbp": {
+                "title": "Sbp",
+                "type": "integer"
+              },
+              "dbp": {
+                "title": "Dbp",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "sbp",
+              "dbp"
+            ],
+            "title": "map_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "chads2_vasc_score",
+          "description": "\n    Calculate CHA₂DS₂-VASc Score for Atrial Fibrillation Stroke Risk\n    \n    Parameters:\n    -----------\n    age : int\n        Age in years\n    female : bool\n        True if patient is female, False if male\n    chf : bool\n        True if patient has history of congestive heart failure\n    hypertension : bool\n        True if patient has history of hypertension\n    stroke_history : bool\n        True if patient has history of stroke, TIA, or thromboembolism\n    vascular_disease : bool\n        True if patient has history of vascular disease (prior MI, peripheral artery disease, or aortic plaque)\n    diabetes : bool\n        True if patient has history of diabetes mellitus\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing CHA₂DS₂-VASc score and risk factors\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "female": {
+                "title": "Female",
+                "type": "boolean"
+              },
+              "chf": {
+                "title": "Chf",
+                "type": "boolean"
+              },
+              "hypertension": {
+                "title": "Hypertension",
+                "type": "boolean"
+              },
+              "stroke_history": {
+                "title": "Stroke History",
+                "type": "boolean"
+              },
+              "vascular_disease": {
+                "title": "Vascular Disease",
+                "type": "boolean"
+              },
+              "diabetes": {
+                "title": "Diabetes",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "age",
+              "female",
+              "chf",
+              "hypertension",
+              "stroke_history",
+              "vascular_disease",
+              "diabetes"
+            ],
+            "title": "chads2_vasc_scoreArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "prevent_cvd_risk",
+          "description": "\n    Predicting Risk of Cardiovascular Disease EVENTs (PREVENT)\n    Predicts 10-year risk of CVD in patients aged 30-79 without known CVD.\n    \n    Parameters:\n    -----------\n    age : int\n        Age in years (30-79)\n    female : bool\n        True if patient is female, False if male\n    tc : float\n        Total cholesterol in mmol/L\n    hdl : float\n        HDL cholesterol in mmol/L\n    sbp : int\n        Systolic blood pressure in mmHg\n    diabetes : bool\n        True if patient has diabetes\n    current_smoker : bool\n        True if patient is a current smoker\n    egfr : float\n        Estimated glomerular filtration rate in mL/min/1.73m²\n    using_antihtn : bool\n        True if patient is using antihypertensive drugs\n    using_statins : bool\n        True if patient is using statins\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing 10-year CVD risk and calculation details\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "female": {
+                "title": "Female",
+                "type": "boolean"
+              },
+              "tc": {
+                "title": "Tc",
+                "type": "number"
+              },
+              "hdl": {
+                "title": "Hdl",
+                "type": "number"
+              },
+              "sbp": {
+                "title": "Sbp",
+                "type": "integer"
+              },
+              "diabetes": {
+                "title": "Diabetes",
+                "type": "boolean"
+              },
+              "current_smoker": {
+                "title": "Current Smoker",
+                "type": "boolean"
+              },
+              "egfr": {
+                "title": "Egfr",
+                "type": "number"
+              },
+              "using_antihtn": {
+                "title": "Using Antihtn",
+                "type": "boolean"
+              },
+              "using_statins": {
+                "title": "Using Statins",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "age",
+              "female",
+              "tc",
+              "hdl",
+              "sbp",
+              "diabetes",
+              "current_smoker",
+              "egfr",
+              "using_antihtn",
+              "using_statins"
+            ],
+            "title": "prevent_cvd_riskArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "corrected_calcium",
+          "description": "\n    Calcium Correction for Hypoalbuminemia and Hyperalbuminemia\n    Calculates a corrected calcium level for patients with abnormal albumin levels.\n    \n    Parameters:\n    -----------\n    serum_calcium : float\n        Patient's measured serum calcium level in mg/dL\n    patient_albumin : float\n        Patient's serum albumin level in g/dL\n    normal_albumin : float, optional\n        Normal/reference albumin level in g/dL, default is 4.0 g/dL\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing corrected calcium value, interpretation, and calculation details\n        \n    Formula:\n    --------\n    Corrected Calcium = (0.8 * (Normal Albumin - Patient's Albumin)) + Serum Calcium\n    \n    References:\n    -----------\n    Payne RB, et al. Br Med J. 1973;4(5893):643-646.\n    ",
+          "input_schema": {
+            "properties": {
+              "serum_calcium": {
+                "title": "Serum Calcium",
+                "type": "number"
+              },
+              "patient_albumin": {
+                "title": "Patient Albumin",
+                "type": "number"
+              },
+              "normal_albumin": {
+                "default": 4,
+                "title": "Normal Albumin",
+                "type": "number"
+              }
+            },
+            "required": [
+              "serum_calcium",
+              "patient_albumin"
+            ],
+            "title": "corrected_calciumArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "qtc_calculator",
+          "description": "\n    Corrected QT Interval (QTc) Calculator\n    Corrects the QT interval for heart rate extremes using various formulas.\n    \n    Parameters:\n    -----------\n    qt_interval : float\n        Measured QT interval in milliseconds (ms)\n    heart_rate : float\n        Heart rate in beats per minute (bpm)\n    formula : str, optional\n        Formula to use for correction (default: \"bazett\")\n        Options: \"bazett\", \"fridericia\", \"framingham\", \"hodges\", \"rautaharju\"\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing QTc value, interpretation, and calculation details\n        \n    Formulas:\n    ---------\n    RR interval = 60 / heart_rate (in seconds)\n    Bazett: QTc = QT / √(RR)\n    Fridericia: QTc = QT / (RR)^(1/3)\n    Framingham: QTc = QT + 154 × (1 - RR)\n    Hodges: QTc = QT + 1.75 × (heart_rate - 60)\n    Rautaharju: QTc = QT × (120 + heart_rate) / 180\n    \n    References:\n    -----------\n    Bazett HC. Heart. 1920;7:353-370\n    Fridericia LS. Acta Med Scand. 1920;53:469-486\n    Sagie A, et al. Am J Cardiol. 1992;70(7):797-801 (Framingham)\n    Hodges M, et al. J Electrocardiol. 1983;16(1):17-24\n    Rautaharju PM, et al. J Am Coll Cardiol. 2004;44(3):594-600\n    ",
+          "input_schema": {
+            "properties": {
+              "qt_interval": {
+                "title": "Qt Interval",
+                "type": "number"
+              },
+              "heart_rate": {
+                "title": "Heart Rate",
+                "type": "number"
+              },
+              "formula": {
+                "default": "bazett",
+                "title": "Formula",
+                "type": "string"
+              }
+            },
+            "required": [
+              "qt_interval",
+              "heart_rate"
+            ],
+            "title": "qtc_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "wells_pe_criteria",
+          "description": "\n    Wells' Criteria for Pulmonary Embolism\n    Objectifies risk of pulmonary embolism based on clinical criteria.\n    Reference: Wells PS, et al. Thromb Haemost. 2000;83(3):416-20.\n    \n    Parameters:\n    -----------\n    clinical_signs_dvt: bool\n        Clinical signs and symptoms of DVT (leg swelling, pain with palpation)\n    alternative_diagnosis_less_likely: bool\n        Alternative diagnosis less likely than PE\n    heart_rate_over_100: bool\n        Heart rate > 100 beats per minute\n    immobilization_or_surgery: bool\n        Immobilization or surgery in the previous four weeks\n    previous_dvt_or_pe: bool\n        Previous DVT/PE\n    hemoptysis: bool\n        Hemoptysis\n    malignancy: bool\n        Malignancy (treatment ongoing, treated in last 6 months, or palliative)\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing the score, risk category for both three-tier and \n        two-tier models, and recommendations\n    ",
+          "input_schema": {
+            "properties": {
+              "clinical_signs_dvt": {
+                "default": false,
+                "title": "Clinical Signs Dvt",
+                "type": "boolean"
+              },
+              "alternative_diagnosis_less_likely": {
+                "default": false,
+                "title": "Alternative Diagnosis Less Likely",
+                "type": "boolean"
+              },
+              "heart_rate_over_100": {
+                "default": false,
+                "title": "Heart Rate Over 100",
+                "type": "boolean"
+              },
+              "immobilization_or_surgery": {
+                "default": false,
+                "title": "Immobilization Or Surgery",
+                "type": "boolean"
+              },
+              "previous_dvt_or_pe": {
+                "default": false,
+                "title": "Previous Dvt Or Pe",
+                "type": "boolean"
+              },
+              "hemoptysis": {
+                "default": false,
+                "title": "Hemoptysis",
+                "type": "boolean"
+              },
+              "malignancy": {
+                "default": false,
+                "title": "Malignancy",
+                "type": "boolean"
+              }
+            },
+            "title": "wells_pe_criteriaArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ibw_abw_calculator",
+          "description": "\n    Ideal Body Weight and Adjusted Body Weight Calculator\n    Calculates ideal body weight (Devine formula) and adjusted body weight.\n    \n    Parameters:\n    -----------\n    weight_kg : float\n        Actual body weight in kilograms\n    height_inches : float\n        Height in inches\n    male : bool\n        True if patient is male, False if female\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing ideal body weight, adjusted body weight, and calculation details\n        \n    Formulas:\n    ---------\n    Ideal Body Weight (IBW) (Devine formula):\n    - Men: IBW = 50 kg + 2.3 kg × (height in inches - 60)\n    - Women: IBW = 45.5 kg + 2.3 kg × (height in inches - 60)\n    \n    Adjusted Body Weight (ABW):\n    - ABW = IBW + 0.4 × (actual weight - IBW)\n    \n    References:\n    -----------\n    Devine BJ. Gentamicin therapy. Drug Intell Clin Pharm. 1974;8:650-655.\n    Pai MP. Drug Dosing Based on Weight and Body Surface Area: Mathematical Assumptions and Limitations in Obese Adults. Pharmacotherapy. 2012;32(9):856-868.\n    ",
+          "input_schema": {
+            "properties": {
+              "weight_kg": {
+                "title": "Weight Kg",
+                "type": "number"
+              },
+              "height_inches": {
+                "title": "Height Inches",
+                "type": "number"
+              },
+              "male": {
+                "title": "Male",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "weight_kg",
+              "height_inches",
+              "male"
+            ],
+            "title": "ibw_abw_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pregnancy_calculator",
+          "description": "\n    Pregnancy Due Dates Calculator\n    Calculates pregnancy dates from last period, gestational age, or date of conception.\n    \n    Parameters:\n    -----------\n    calculation_method : str\n        Method used for calculation: \"lmp\" (last menstrual period), \"conception\", or \"ultrasound\"\n    date_value : str\n        Date in format 'YYYY-MM-DD' (date of LMP, conception, or ultrasound)\n    cycle_length : int, optional\n        Length of menstrual cycle in days (default: 28)\n    gestational_age_weeks : int, optional\n        Weeks of gestational age at ultrasound (required if calculation_method is \"ultrasound\")\n    gestational_age_days : int, optional\n        Days of gestational age at ultrasound (required if calculation_method is \"ultrasound\")\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing calculated pregnancy dates and information\n        \n    Formulas:\n    ---------\n    - EGA (Estimated Gestational Age) = time since 1st day of LMP\n    - EDC (Estimated Date of Conception) = LMP + 2 weeks (adjusted for cycle length)\n    - EDD (Estimated Due Date) = LMP + 40 weeks (adjusted for cycle length)\n    \n    For non-28 day cycles:\n    - Adjustment = (cycle_length - 28) days\n    - EDD = LMP + 40 weeks + Adjustment\n    ",
+          "input_schema": {
+            "properties": {
+              "calculation_method": {
+                "title": "Calculation Method",
+                "type": "string"
+              },
+              "date_value": {
+                "title": "Date Value",
+                "type": "string"
+              },
+              "cycle_length": {
+                "default": 28,
+                "title": "Cycle Length",
+                "type": "integer"
+              },
+              "gestational_age_weeks": {
+                "default": null,
+                "title": "Gestational Age Weeks",
+                "type": "integer"
+              },
+              "gestational_age_days": {
+                "default": null,
+                "title": "Gestational Age Days",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "calculation_method",
+              "date_value"
+            ],
+            "title": "pregnancy_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "revised_cardiac_risk_index",
+          "description": "\n    Revised Cardiac Risk Index for Pre-Operative Risk\n    Estimates risk of cardiac complications after noncardiac surgery.\n    \n    Parameters:\n    -----------\n    high_risk_surgery : bool\n        Intraperitoneal, intrathoracic, or suprainguinal vascular surgery\n    ischemic_heart_disease : bool\n        History of MI, positive exercise test, current chest pain considered due to myocardial \n        ischemia, use of nitrate therapy, or ECG with pathological Q waves\n    congestive_heart_failure : bool\n        Pulmonary edema, bilateral rales, S3 gallop, paroxysmal nocturnal dyspnea, or \n        CXR showing pulmonary vascular redistribution\n    cerebrovascular_disease : bool\n        Prior transient ischemic attack (TIA) or stroke\n    insulin_treatment : bool\n        Pre-operative treatment with insulin\n    creatinine_over_2mg : bool\n        Pre-operative creatinine >2 mg/dL (176.8 µmol/L)\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing RCRI score and risk interpretation\n        \n    References:\n    -----------\n    Lee TH, et al. Circulation. 1999;100(10):1043-1049.\n    Canadian Cardiovascular Society (CCS) Guidelines, 2017.\n    European Society of Cardiology (ESC) Guidelines, 2022.\n    ",
+          "input_schema": {
+            "properties": {
+              "high_risk_surgery": {
+                "default": false,
+                "title": "High Risk Surgery",
+                "type": "boolean"
+              },
+              "ischemic_heart_disease": {
+                "default": false,
+                "title": "Ischemic Heart Disease",
+                "type": "boolean"
+              },
+              "congestive_heart_failure": {
+                "default": false,
+                "title": "Congestive Heart Failure",
+                "type": "boolean"
+              },
+              "cerebrovascular_disease": {
+                "default": false,
+                "title": "Cerebrovascular Disease",
+                "type": "boolean"
+              },
+              "insulin_treatment": {
+                "default": false,
+                "title": "Insulin Treatment",
+                "type": "boolean"
+              },
+              "creatinine_over_2mg": {
+                "default": false,
+                "title": "Creatinine Over 2Mg",
+                "type": "boolean"
+              }
+            },
+            "title": "revised_cardiac_risk_indexArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "child_pugh_score",
+          "description": "\n    Calculates the Child-Pugh Score for cirrhosis mortality assessment.\n\n    Parameters:\n    -----------\n    bilirubin : float\n        Total bilirubin in mg/dL.\n    albumin : float\n        Albumin in g/dL.\n    inr : float\n        International Normalized Ratio (INR) for prothrombin time.\n    ascites : str\n        One of: \"absent\", \"slight\", \"moderate\".\n    encephalopathy_grade : int\n        Hepatic encephalopathy grade: 0 (none), 1-2 (mild), 3-4 (severe).\n\n    Returns:\n    --------\n    int\n        Total Child-Pugh score (5–15).\n    ",
+          "input_schema": {
+            "properties": {
+              "bilirubin": {
+                "title": "Bilirubin",
+                "type": "number"
+              },
+              "albumin": {
+                "title": "Albumin",
+                "type": "number"
+              },
+              "inr": {
+                "title": "Inr",
+                "type": "number"
+              },
+              "ascites": {
+                "title": "Ascites",
+                "type": "string"
+              },
+              "encephalopathy_grade": {
+                "title": "Encephalopathy Grade",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "bilirubin",
+              "albumin",
+              "inr",
+              "ascites",
+              "encephalopathy_grade"
+            ],
+            "title": "child_pugh_scoreArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "steroid_conversion",
+          "description": "\n    Converts corticosteroid dosages using standard equivalencies.\n\n    Parameters:\n    -----------\n    from_steroid : str\n        Name of the original steroid (e.g., 'prednisone', 'dexamethasone').\n    from_dose_mg : float\n        Dose of the original steroid in mg.\n    to_steroid : str\n        Name of the steroid to convert to.\n\n    Returns:\n    --------\n    float\n        Equivalent dose in mg of the target steroid.\n    ",
+          "input_schema": {
+            "properties": {
+              "from_steroid": {
+                "title": "From Steroid",
+                "type": "string"
+              },
+              "from_dose_mg": {
+                "title": "From Dose Mg",
+                "type": "number"
+              },
+              "to_steroid": {
+                "title": "To Steroid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "from_steroid",
+              "from_dose_mg",
+              "to_steroid"
+            ],
+            "title": "steroid_conversionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "calculate_mme",
+          "description": "\n    Calculates total daily Morphine Milligram Equivalents (MME).\n\n    Parameters:\n    -----------\n    opioid : str\n        Name of the opioid (e.g., 'oxycodone', 'fentanyl_patch').\n    dose_per_administration : float\n        Amount of opioid per dose (mg for most, mcg/hr for fentanyl patch).\n    doses_per_day : int\n        Number of times the dose is taken per day.\n\n    Returns:\n    --------\n    float\n        Total MME/day.\n    ",
+          "input_schema": {
+            "properties": {
+              "opioid": {
+                "title": "Opioid",
+                "type": "string"
+              },
+              "dose_per_administration": {
+                "title": "Dose Per Administration",
+                "type": "number"
+              },
+              "doses_per_day": {
+                "title": "Doses Per Day",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "opioid",
+              "dose_per_administration",
+              "doses_per_day"
+            ],
+            "title": "calculate_mmeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "maintenance_fluids",
+          "description": "\n    Calculates maintenance IV fluid rate (mL/hr) using the 4-2-1 Rule.\n\n    Parameters:\n    -----------\n    weight_kg : float\n        Patient's weight in kilograms.\n\n    Returns:\n    --------\n    float\n        Maintenance fluid rate in mL/hr.\n    ",
+          "input_schema": {
+            "properties": {
+              "weight_kg": {
+                "title": "Weight Kg",
+                "type": "number"
+              }
+            },
+            "required": [
+              "weight_kg"
+            ],
+            "title": "maintenance_fluidsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "corrected_sodium",
+          "description": "\n    Calculates corrected sodium level in the setting of hyperglycemia\n    using Katz and Hillier correction formulas.\n\n    Parameters:\n    -----------\n    measured_sodium : float\n        Measured serum sodium in mEq/L.\n    serum_glucose : float\n        Serum glucose in mg/dL.\n\n    Returns:\n    --------\n    dict\n        Dictionary with corrected sodium values using Katz and Hillier formulas.\n    ",
+          "input_schema": {
+            "properties": {
+              "measured_sodium": {
+                "title": "Measured Sodium",
+                "type": "number"
+              },
+              "serum_glucose": {
+                "title": "Serum Glucose",
+                "type": "number"
+              }
+            },
+            "required": [
+              "measured_sodium",
+              "serum_glucose"
+            ],
+            "title": "corrected_sodiumArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "meld_3",
+          "description": "\n    Calculates MELD 3.0 Score for liver disease transplant planning.\n\n    Parameters:\n    -----------\n    age : int\n        Patient age in years.\n    female : bool\n        True if patient is female.\n    bilirubin : float\n        Serum bilirubin in mg/dL.\n    inr : float\n        INR (International Normalized Ratio).\n    creatinine : float\n        Serum creatinine in mg/dL.\n    albumin : float\n        Serum albumin in g/dL.\n    sodium : float\n        Serum sodium in mEq/L.\n    dialysis : bool\n        True if patient had ≥2 dialysis sessions or 24h CVVHD in last 7 days.\n\n    Returns:\n    --------\n    int\n        MELD 3.0 score, rounded to the nearest whole number.\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "female": {
+                "title": "Female",
+                "type": "boolean"
+              },
+              "bilirubin": {
+                "title": "Bilirubin",
+                "type": "number"
+              },
+              "inr": {
+                "title": "Inr",
+                "type": "number"
+              },
+              "creatinine": {
+                "title": "Creatinine",
+                "type": "number"
+              },
+              "albumin": {
+                "title": "Albumin",
+                "type": "number"
+              },
+              "sodium": {
+                "title": "Sodium",
+                "type": "number"
+              },
+              "dialysis": {
+                "title": "Dialysis",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "age",
+              "female",
+              "bilirubin",
+              "inr",
+              "creatinine",
+              "albumin",
+              "sodium",
+              "dialysis"
+            ],
+            "title": "meld_3Arguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "framingham_risk_score",
+          "description": "\n    Calculates the Framingham Risk Score for 10-year risk of heart attack (CHD)\n    based on the Framingham Heart Study equation (men and women).\n\n    Parameters:\n    -----------\n    age : int\n        Age of the patient (30-79 years).\n    total_cholesterol : float\n        Total cholesterol in mg/dL.\n    hdl_cholesterol : float\n        HDL cholesterol in mg/dL.\n    systolic_bp : float\n        Systolic blood pressure in mmHg.\n    treated_for_bp : bool\n        Whether the patient is treated for high blood pressure (1 if yes, 0 if no).\n    smoker : bool\n        Whether the patient is a smoker (1 if yes, 0 if no).\n    gender : str\n        Gender of the patient (\"male\" or \"female\").\n\n    Returns:\n    --------\n    float\n        10-year risk of heart attack as a percentage.\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "total_cholesterol": {
+                "title": "Total Cholesterol",
+                "type": "number"
+              },
+              "hdl_cholesterol": {
+                "title": "Hdl Cholesterol",
+                "type": "number"
+              },
+              "systolic_bp": {
+                "title": "Systolic Bp",
+                "type": "number"
+              },
+              "treated_for_bp": {
+                "title": "Treated For Bp",
+                "type": "boolean"
+              },
+              "smoker": {
+                "title": "Smoker",
+                "type": "boolean"
+              },
+              "gender": {
+                "title": "Gender",
+                "type": "string"
+              }
+            },
+            "required": [
+              "age",
+              "total_cholesterol",
+              "hdl_cholesterol",
+              "systolic_bp",
+              "treated_for_bp",
+              "smoker",
+              "gender"
+            ],
+            "title": "framingham_risk_scoreArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "homa_ir",
+          "description": "\n    Calculates the HOMA-IR score for insulin resistance.\n\n    Formula:\n    Score = (Fasting insulin (uIU/mL) * Fasting glucose (mg/dL)) / 405\n\n    Parameters:\n    -----------\n    fasting_insulin : float\n        Fasting insulin level in micro-units per milliliter (uIU/mL).\n    fasting_glucose : float\n        Fasting glucose level in milligrams per deciliter (mg/dL).\n\n    Returns:\n    --------\n    float\n        HOMA-IR score.\n    ",
+          "input_schema": {
+            "properties": {
+              "fasting_insulin": {
+                "title": "Fasting Insulin",
+                "type": "number"
+              },
+              "fasting_glucose": {
+                "title": "Fasting Glucose",
+                "type": "number"
+              }
+            },
+            "required": [
+              "fasting_insulin",
+              "fasting_glucose"
+            ],
+            "title": "homa_irArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 22,
+      "tool_names": [
+        "egfr_epi_cr_cys",
+        "egfr_epi",
+        "bp_children",
+        "bmi_bsa_calculator",
+        "crcl_cockcroft_gault",
+        "map_calculator",
+        "chads2_vasc_score",
+        "prevent_cvd_risk",
+        "corrected_calcium",
+        "qtc_calculator",
+        "wells_pe_criteria",
+        "ibw_abw_calculator",
+        "pregnancy_calculator",
+        "revised_cardiac_risk_index",
+        "child_pugh_score",
+        "steroid_conversion",
+        "calculate_mme",
+        "maintenance_fluids",
+        "corrected_sodium",
+        "meld_3",
+        "framingham_risk_score",
+        "homa_ir"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2470,
+      "name": "Medical Calculation Server",
+      "author": "@vitaldb/medcalc",
+      "overview": "Perform medical calculations efficiently with this server. Enable your applications to access a variety of medical computation tools seamlessly. Improve healthcare data processing by integrating reliable calculation capabilities.",
+      "repository_url": "https://github.com/vitaldb/medcalc",
+      "homepage": "https://smithery.ai/server/@vitaldb/medcalc",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@vitaldb_medcalc.json",
+      "tools_count": 22,
+      "tools": [
+        {
+          "name": "egfr_epi_cr_cys",
+          "description": "\n    Estimated Glomerular Filtration Rate (eGFR) using the 2021 CKD-EPI Creatinine-Cystatin C equation\n    Reference: N Engl J Med. 2021 Nov 4;385(19):1737-1749\n    \n    Parameters:\n    -----------\n    scr : float\n        Serum creatinine level in mg/dL\n    scys : float\n        Serum cystatin C level in mg/L\n    age : int\n        Age in years\n    male : bool\n        True if patient is male, False if female\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing eGFR result and calculation parameters\n    ",
+          "input_schema": {
+            "properties": {
+              "scr": {
+                "title": "Scr",
+                "type": "number"
+              },
+              "scys": {
+                "title": "Scys",
+                "type": "number"
+              },
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "male": {
+                "title": "Male",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "scr",
+              "scys",
+              "age",
+              "male"
+            ],
+            "title": "egfr_epi_cr_cysArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "egfr_epi",
+          "description": "\n    Estimated Glomerular Filtration Rate (eGFR) using the EPI formula (version 2021)\n    Reference: N Engl J Med. 2021 Nov 4;385(19):1737-1749\n    \n    Parameters:\n    -----------\n    scr : float\n        serum creatinine level in mg/dL\n    age : int\n        Age in years\n    male : bool\n        true if Male\n    \n    Returns:\n    --------\n    float\n        Estimated GFR in mL/min/1.73m^2\n    ",
+          "input_schema": {
+            "properties": {
+              "scr": {
+                "title": "Scr",
+                "type": "number"
+              },
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "male": {
+                "title": "Male",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "scr",
+              "age",
+              "male"
+            ],
+            "title": "egfr_epiArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bp_children",
+          "description": "\n    혈압 센타일(percentile)을 계산하는 함수\n    \n    Parameters:\n    -----------\n    years : int\n        나이(년)\n    months : int\n        나이(월)\n    height : int\n        키(cm)\n    sex : str\n        성별 ('male' 또는 'female')\n    systolic : int\n        수축기 혈압(mmHg)\n    diastolic : int\n        이완기 혈압(mmHg)\n    \n    Returns:\n    --------\n    dict\n        수축기 및 이완기 혈압 센타일 결과를 포함하는 딕셔너리\n    ",
+          "input_schema": {
+            "properties": {
+              "years": {
+                "title": "Years",
+                "type": "integer"
+              },
+              "months": {
+                "title": "Months",
+                "type": "integer"
+              },
+              "height": {
+                "title": "Height",
+                "type": "integer"
+              },
+              "sex": {
+                "title": "Sex",
+                "type": "string"
+              },
+              "systolic": {
+                "title": "Systolic",
+                "type": "integer"
+              },
+              "diastolic": {
+                "title": "Diastolic",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "years",
+              "months",
+              "height",
+              "sex",
+              "systolic",
+              "diastolic"
+            ],
+            "title": "bp_childrenArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bmi_bsa_calculator",
+          "description": "\n    Calculates Body Mass Index (BMI) and Body Surface Area (BSA)\n    \n    Parameters:\n    -----------\n    weight : float\n        Weight in kilograms\n    height : float\n        Height in centimeters (default) or meters\n    height_unit : str\n        Unit of height measurement ('cm' or 'm', default is 'cm')\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing BMI, BSA, and classification\n    ",
+          "input_schema": {
+            "properties": {
+              "weight": {
+                "title": "Weight",
+                "type": "number"
+              },
+              "height": {
+                "title": "Height",
+                "type": "number"
+              },
+              "height_unit": {
+                "default": "cm",
+                "title": "Height Unit",
+                "type": "string"
+              }
+            },
+            "required": [
+              "weight",
+              "height"
+            ],
+            "title": "bmi_bsa_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "crcl_cockcroft_gault",
+          "description": "\n    Calculate Creatinine Clearance using the Cockcroft-Gault formula\n    \n    Parameters:\n    -----------\n    age : int\n        Age in years\n    weight : float\n        Actual body weight in kg\n    height : float\n        Height in inches\n    scr : float\n        Serum creatinine in mg/dL\n    sex : str\n        Gender ('male' or 'female')\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing creatinine clearance result and weight calculations\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "weight": {
+                "title": "Weight",
+                "type": "number"
+              },
+              "height": {
+                "title": "Height",
+                "type": "number"
+              },
+              "scr": {
+                "title": "Scr",
+                "type": "number"
+              },
+              "sex": {
+                "title": "Sex",
+                "type": "string"
+              }
+            },
+            "required": [
+              "age",
+              "weight",
+              "height",
+              "scr",
+              "sex"
+            ],
+            "title": "crcl_cockcroft_gaultArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "map_calculator",
+          "description": "\n    Calculate Mean Arterial Pressure (MAP)\n    \n    Parameters:\n    -----------\n    sbp : int\n        Systolic Blood Pressure in mmHg\n    dbp : int\n        Diastolic Blood Pressure in mmHg\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing MAP result and input values\n    ",
+          "input_schema": {
+            "properties": {
+              "sbp": {
+                "title": "Sbp",
+                "type": "integer"
+              },
+              "dbp": {
+                "title": "Dbp",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "sbp",
+              "dbp"
+            ],
+            "title": "map_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "chads2_vasc_score",
+          "description": "\n    Calculate CHA₂DS₂-VASc Score for Atrial Fibrillation Stroke Risk\n    \n    Parameters:\n    -----------\n    age : int\n        Age in years\n    female : bool\n        True if patient is female, False if male\n    chf : bool\n        True if patient has history of congestive heart failure\n    hypertension : bool\n        True if patient has history of hypertension\n    stroke_history : bool\n        True if patient has history of stroke, TIA, or thromboembolism\n    vascular_disease : bool\n        True if patient has history of vascular disease (prior MI, peripheral artery disease, or aortic plaque)\n    diabetes : bool\n        True if patient has history of diabetes mellitus\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing CHA₂DS₂-VASc score and risk factors\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "female": {
+                "title": "Female",
+                "type": "boolean"
+              },
+              "chf": {
+                "title": "Chf",
+                "type": "boolean"
+              },
+              "hypertension": {
+                "title": "Hypertension",
+                "type": "boolean"
+              },
+              "stroke_history": {
+                "title": "Stroke History",
+                "type": "boolean"
+              },
+              "vascular_disease": {
+                "title": "Vascular Disease",
+                "type": "boolean"
+              },
+              "diabetes": {
+                "title": "Diabetes",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "age",
+              "female",
+              "chf",
+              "hypertension",
+              "stroke_history",
+              "vascular_disease",
+              "diabetes"
+            ],
+            "title": "chads2_vasc_scoreArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "prevent_cvd_risk",
+          "description": "\n    Predicting Risk of Cardiovascular Disease EVENTs (PREVENT)\n    Predicts 10-year risk of CVD in patients aged 30-79 without known CVD.\n    \n    Parameters:\n    -----------\n    age : int\n        Age in years (30-79)\n    female : bool\n        True if patient is female, False if male\n    tc : float\n        Total cholesterol in mmol/L\n    hdl : float\n        HDL cholesterol in mmol/L\n    sbp : int\n        Systolic blood pressure in mmHg\n    diabetes : bool\n        True if patient has diabetes\n    current_smoker : bool\n        True if patient is a current smoker\n    egfr : float\n        Estimated glomerular filtration rate in mL/min/1.73m²\n    using_antihtn : bool\n        True if patient is using antihypertensive drugs\n    using_statins : bool\n        True if patient is using statins\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing 10-year CVD risk and calculation details\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "female": {
+                "title": "Female",
+                "type": "boolean"
+              },
+              "tc": {
+                "title": "Tc",
+                "type": "number"
+              },
+              "hdl": {
+                "title": "Hdl",
+                "type": "number"
+              },
+              "sbp": {
+                "title": "Sbp",
+                "type": "integer"
+              },
+              "diabetes": {
+                "title": "Diabetes",
+                "type": "boolean"
+              },
+              "current_smoker": {
+                "title": "Current Smoker",
+                "type": "boolean"
+              },
+              "egfr": {
+                "title": "Egfr",
+                "type": "number"
+              },
+              "using_antihtn": {
+                "title": "Using Antihtn",
+                "type": "boolean"
+              },
+              "using_statins": {
+                "title": "Using Statins",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "age",
+              "female",
+              "tc",
+              "hdl",
+              "sbp",
+              "diabetes",
+              "current_smoker",
+              "egfr",
+              "using_antihtn",
+              "using_statins"
+            ],
+            "title": "prevent_cvd_riskArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "corrected_calcium",
+          "description": "\n    Calcium Correction for Hypoalbuminemia and Hyperalbuminemia\n    Calculates a corrected calcium level for patients with abnormal albumin levels.\n    \n    Parameters:\n    -----------\n    serum_calcium : float\n        Patient's measured serum calcium level in mg/dL\n    patient_albumin : float\n        Patient's serum albumin level in g/dL\n    normal_albumin : float, optional\n        Normal/reference albumin level in g/dL, default is 4.0 g/dL\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing corrected calcium value, interpretation, and calculation details\n        \n    Formula:\n    --------\n    Corrected Calcium = (0.8 * (Normal Albumin - Patient's Albumin)) + Serum Calcium\n    \n    References:\n    -----------\n    Payne RB, et al. Br Med J. 1973;4(5893):643-646.\n    ",
+          "input_schema": {
+            "properties": {
+              "serum_calcium": {
+                "title": "Serum Calcium",
+                "type": "number"
+              },
+              "patient_albumin": {
+                "title": "Patient Albumin",
+                "type": "number"
+              },
+              "normal_albumin": {
+                "default": 4,
+                "title": "Normal Albumin",
+                "type": "number"
+              }
+            },
+            "required": [
+              "serum_calcium",
+              "patient_albumin"
+            ],
+            "title": "corrected_calciumArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "qtc_calculator",
+          "description": "\n    Corrected QT Interval (QTc) Calculator\n    Corrects the QT interval for heart rate extremes using various formulas.\n    \n    Parameters:\n    -----------\n    qt_interval : float\n        Measured QT interval in milliseconds (ms)\n    heart_rate : float\n        Heart rate in beats per minute (bpm)\n    formula : str, optional\n        Formula to use for correction (default: \"bazett\")\n        Options: \"bazett\", \"fridericia\", \"framingham\", \"hodges\", \"rautaharju\"\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing QTc value, interpretation, and calculation details\n        \n    Formulas:\n    ---------\n    RR interval = 60 / heart_rate (in seconds)\n    Bazett: QTc = QT / √(RR)\n    Fridericia: QTc = QT / (RR)^(1/3)\n    Framingham: QTc = QT + 154 × (1 - RR)\n    Hodges: QTc = QT + 1.75 × (heart_rate - 60)\n    Rautaharju: QTc = QT × (120 + heart_rate) / 180\n    \n    References:\n    -----------\n    Bazett HC. Heart. 1920;7:353-370\n    Fridericia LS. Acta Med Scand. 1920;53:469-486\n    Sagie A, et al. Am J Cardiol. 1992;70(7):797-801 (Framingham)\n    Hodges M, et al. J Electrocardiol. 1983;16(1):17-24\n    Rautaharju PM, et al. J Am Coll Cardiol. 2004;44(3):594-600\n    ",
+          "input_schema": {
+            "properties": {
+              "qt_interval": {
+                "title": "Qt Interval",
+                "type": "number"
+              },
+              "heart_rate": {
+                "title": "Heart Rate",
+                "type": "number"
+              },
+              "formula": {
+                "default": "bazett",
+                "title": "Formula",
+                "type": "string"
+              }
+            },
+            "required": [
+              "qt_interval",
+              "heart_rate"
+            ],
+            "title": "qtc_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "wells_pe_criteria",
+          "description": "\n    Wells' Criteria for Pulmonary Embolism\n    Objectifies risk of pulmonary embolism based on clinical criteria.\n    Reference: Wells PS, et al. Thromb Haemost. 2000;83(3):416-20.\n    \n    Parameters:\n    -----------\n    clinical_signs_dvt: bool\n        Clinical signs and symptoms of DVT (leg swelling, pain with palpation)\n    alternative_diagnosis_less_likely: bool\n        Alternative diagnosis less likely than PE\n    heart_rate_over_100: bool\n        Heart rate > 100 beats per minute\n    immobilization_or_surgery: bool\n        Immobilization or surgery in the previous four weeks\n    previous_dvt_or_pe: bool\n        Previous DVT/PE\n    hemoptysis: bool\n        Hemoptysis\n    malignancy: bool\n        Malignancy (treatment ongoing, treated in last 6 months, or palliative)\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing the score, risk category for both three-tier and \n        two-tier models, and recommendations\n    ",
+          "input_schema": {
+            "properties": {
+              "clinical_signs_dvt": {
+                "default": false,
+                "title": "Clinical Signs Dvt",
+                "type": "boolean"
+              },
+              "alternative_diagnosis_less_likely": {
+                "default": false,
+                "title": "Alternative Diagnosis Less Likely",
+                "type": "boolean"
+              },
+              "heart_rate_over_100": {
+                "default": false,
+                "title": "Heart Rate Over 100",
+                "type": "boolean"
+              },
+              "immobilization_or_surgery": {
+                "default": false,
+                "title": "Immobilization Or Surgery",
+                "type": "boolean"
+              },
+              "previous_dvt_or_pe": {
+                "default": false,
+                "title": "Previous Dvt Or Pe",
+                "type": "boolean"
+              },
+              "hemoptysis": {
+                "default": false,
+                "title": "Hemoptysis",
+                "type": "boolean"
+              },
+              "malignancy": {
+                "default": false,
+                "title": "Malignancy",
+                "type": "boolean"
+              }
+            },
+            "title": "wells_pe_criteriaArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ibw_abw_calculator",
+          "description": "\n    Ideal Body Weight and Adjusted Body Weight Calculator\n    Calculates ideal body weight (Devine formula) and adjusted body weight.\n    \n    Parameters:\n    -----------\n    weight_kg : float\n        Actual body weight in kilograms\n    height_inches : float\n        Height in inches\n    male : bool\n        True if patient is male, False if female\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing ideal body weight, adjusted body weight, and calculation details\n        \n    Formulas:\n    ---------\n    Ideal Body Weight (IBW) (Devine formula):\n    - Men: IBW = 50 kg + 2.3 kg × (height in inches - 60)\n    - Women: IBW = 45.5 kg + 2.3 kg × (height in inches - 60)\n    \n    Adjusted Body Weight (ABW):\n    - ABW = IBW + 0.4 × (actual weight - IBW)\n    \n    References:\n    -----------\n    Devine BJ. Gentamicin therapy. Drug Intell Clin Pharm. 1974;8:650-655.\n    Pai MP. Drug Dosing Based on Weight and Body Surface Area: Mathematical Assumptions and Limitations in Obese Adults. Pharmacotherapy. 2012;32(9):856-868.\n    ",
+          "input_schema": {
+            "properties": {
+              "weight_kg": {
+                "title": "Weight Kg",
+                "type": "number"
+              },
+              "height_inches": {
+                "title": "Height Inches",
+                "type": "number"
+              },
+              "male": {
+                "title": "Male",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "weight_kg",
+              "height_inches",
+              "male"
+            ],
+            "title": "ibw_abw_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pregnancy_calculator",
+          "description": "\n    Pregnancy Due Dates Calculator\n    Calculates pregnancy dates from last period, gestational age, or date of conception.\n    \n    Parameters:\n    -----------\n    calculation_method : str\n        Method used for calculation: \"lmp\" (last menstrual period), \"conception\", or \"ultrasound\"\n    date_value : str\n        Date in format 'YYYY-MM-DD' (date of LMP, conception, or ultrasound)\n    cycle_length : int, optional\n        Length of menstrual cycle in days (default: 28)\n    gestational_age_weeks : int, optional\n        Weeks of gestational age at ultrasound (required if calculation_method is \"ultrasound\")\n    gestational_age_days : int, optional\n        Days of gestational age at ultrasound (required if calculation_method is \"ultrasound\")\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing calculated pregnancy dates and information\n        \n    Formulas:\n    ---------\n    - EGA (Estimated Gestational Age) = time since 1st day of LMP\n    - EDC (Estimated Date of Conception) = LMP + 2 weeks (adjusted for cycle length)\n    - EDD (Estimated Due Date) = LMP + 40 weeks (adjusted for cycle length)\n    \n    For non-28 day cycles:\n    - Adjustment = (cycle_length - 28) days\n    - EDD = LMP + 40 weeks + Adjustment\n    ",
+          "input_schema": {
+            "properties": {
+              "calculation_method": {
+                "title": "Calculation Method",
+                "type": "string"
+              },
+              "date_value": {
+                "title": "Date Value",
+                "type": "string"
+              },
+              "cycle_length": {
+                "default": 28,
+                "title": "Cycle Length",
+                "type": "integer"
+              },
+              "gestational_age_weeks": {
+                "default": null,
+                "title": "Gestational Age Weeks",
+                "type": "integer"
+              },
+              "gestational_age_days": {
+                "default": null,
+                "title": "Gestational Age Days",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "calculation_method",
+              "date_value"
+            ],
+            "title": "pregnancy_calculatorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "revised_cardiac_risk_index",
+          "description": "\n    Revised Cardiac Risk Index for Pre-Operative Risk\n    Estimates risk of cardiac complications after noncardiac surgery.\n    \n    Parameters:\n    -----------\n    high_risk_surgery : bool\n        Intraperitoneal, intrathoracic, or suprainguinal vascular surgery\n    ischemic_heart_disease : bool\n        History of MI, positive exercise test, current chest pain considered due to myocardial \n        ischemia, use of nitrate therapy, or ECG with pathological Q waves\n    congestive_heart_failure : bool\n        Pulmonary edema, bilateral rales, S3 gallop, paroxysmal nocturnal dyspnea, or \n        CXR showing pulmonary vascular redistribution\n    cerebrovascular_disease : bool\n        Prior transient ischemic attack (TIA) or stroke\n    insulin_treatment : bool\n        Pre-operative treatment with insulin\n    creatinine_over_2mg : bool\n        Pre-operative creatinine >2 mg/dL (176.8 µmol/L)\n    \n    Returns:\n    --------\n    dict\n        Dictionary containing RCRI score and risk interpretation\n        \n    References:\n    -----------\n    Lee TH, et al. Circulation. 1999;100(10):1043-1049.\n    Canadian Cardiovascular Society (CCS) Guidelines, 2017.\n    European Society of Cardiology (ESC) Guidelines, 2022.\n    ",
+          "input_schema": {
+            "properties": {
+              "high_risk_surgery": {
+                "default": false,
+                "title": "High Risk Surgery",
+                "type": "boolean"
+              },
+              "ischemic_heart_disease": {
+                "default": false,
+                "title": "Ischemic Heart Disease",
+                "type": "boolean"
+              },
+              "congestive_heart_failure": {
+                "default": false,
+                "title": "Congestive Heart Failure",
+                "type": "boolean"
+              },
+              "cerebrovascular_disease": {
+                "default": false,
+                "title": "Cerebrovascular Disease",
+                "type": "boolean"
+              },
+              "insulin_treatment": {
+                "default": false,
+                "title": "Insulin Treatment",
+                "type": "boolean"
+              },
+              "creatinine_over_2mg": {
+                "default": false,
+                "title": "Creatinine Over 2Mg",
+                "type": "boolean"
+              }
+            },
+            "title": "revised_cardiac_risk_indexArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "child_pugh_score",
+          "description": "\n    Calculates the Child-Pugh Score for cirrhosis mortality assessment.\n\n    Parameters:\n    -----------\n    bilirubin : float\n        Total bilirubin in mg/dL.\n    albumin : float\n        Albumin in g/dL.\n    inr : float\n        International Normalized Ratio (INR) for prothrombin time.\n    ascites : str\n        One of: \"absent\", \"slight\", \"moderate\".\n    encephalopathy_grade : int\n        Hepatic encephalopathy grade: 0 (none), 1-2 (mild), 3-4 (severe).\n\n    Returns:\n    --------\n    int\n        Total Child-Pugh score (5–15).\n    ",
+          "input_schema": {
+            "properties": {
+              "bilirubin": {
+                "title": "Bilirubin",
+                "type": "number"
+              },
+              "albumin": {
+                "title": "Albumin",
+                "type": "number"
+              },
+              "inr": {
+                "title": "Inr",
+                "type": "number"
+              },
+              "ascites": {
+                "title": "Ascites",
+                "type": "string"
+              },
+              "encephalopathy_grade": {
+                "title": "Encephalopathy Grade",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "bilirubin",
+              "albumin",
+              "inr",
+              "ascites",
+              "encephalopathy_grade"
+            ],
+            "title": "child_pugh_scoreArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "steroid_conversion",
+          "description": "\n    Converts corticosteroid dosages using standard equivalencies.\n\n    Parameters:\n    -----------\n    from_steroid : str\n        Name of the original steroid (e.g., 'prednisone', 'dexamethasone').\n    from_dose_mg : float\n        Dose of the original steroid in mg.\n    to_steroid : str\n        Name of the steroid to convert to.\n\n    Returns:\n    --------\n    float\n        Equivalent dose in mg of the target steroid.\n    ",
+          "input_schema": {
+            "properties": {
+              "from_steroid": {
+                "title": "From Steroid",
+                "type": "string"
+              },
+              "from_dose_mg": {
+                "title": "From Dose Mg",
+                "type": "number"
+              },
+              "to_steroid": {
+                "title": "To Steroid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "from_steroid",
+              "from_dose_mg",
+              "to_steroid"
+            ],
+            "title": "steroid_conversionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "calculate_mme",
+          "description": "\n    Calculates total daily Morphine Milligram Equivalents (MME).\n\n    Parameters:\n    -----------\n    opioid : str\n        Name of the opioid (e.g., 'oxycodone', 'fentanyl_patch').\n    dose_per_administration : float\n        Amount of opioid per dose (mg for most, mcg/hr for fentanyl patch).\n    doses_per_day : int\n        Number of times the dose is taken per day.\n\n    Returns:\n    --------\n    float\n        Total MME/day.\n    ",
+          "input_schema": {
+            "properties": {
+              "opioid": {
+                "title": "Opioid",
+                "type": "string"
+              },
+              "dose_per_administration": {
+                "title": "Dose Per Administration",
+                "type": "number"
+              },
+              "doses_per_day": {
+                "title": "Doses Per Day",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "opioid",
+              "dose_per_administration",
+              "doses_per_day"
+            ],
+            "title": "calculate_mmeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "maintenance_fluids",
+          "description": "\n    Calculates maintenance IV fluid rate (mL/hr) using the 4-2-1 Rule.\n\n    Parameters:\n    -----------\n    weight_kg : float\n        Patient's weight in kilograms.\n\n    Returns:\n    --------\n    float\n        Maintenance fluid rate in mL/hr.\n    ",
+          "input_schema": {
+            "properties": {
+              "weight_kg": {
+                "title": "Weight Kg",
+                "type": "number"
+              }
+            },
+            "required": [
+              "weight_kg"
+            ],
+            "title": "maintenance_fluidsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "corrected_sodium",
+          "description": "\n    Calculates corrected sodium level in the setting of hyperglycemia\n    using Katz and Hillier correction formulas.\n\n    Parameters:\n    -----------\n    measured_sodium : float\n        Measured serum sodium in mEq/L.\n    serum_glucose : float\n        Serum glucose in mg/dL.\n\n    Returns:\n    --------\n    dict\n        Dictionary with corrected sodium values using Katz and Hillier formulas.\n    ",
+          "input_schema": {
+            "properties": {
+              "measured_sodium": {
+                "title": "Measured Sodium",
+                "type": "number"
+              },
+              "serum_glucose": {
+                "title": "Serum Glucose",
+                "type": "number"
+              }
+            },
+            "required": [
+              "measured_sodium",
+              "serum_glucose"
+            ],
+            "title": "corrected_sodiumArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "meld_3",
+          "description": "\n    Calculates MELD 3.0 Score for liver disease transplant planning.\n\n    Parameters:\n    -----------\n    age : int\n        Patient age in years.\n    female : bool\n        True if patient is female.\n    bilirubin : float\n        Serum bilirubin in mg/dL.\n    inr : float\n        INR (International Normalized Ratio).\n    creatinine : float\n        Serum creatinine in mg/dL.\n    albumin : float\n        Serum albumin in g/dL.\n    sodium : float\n        Serum sodium in mEq/L.\n    dialysis : bool\n        True if patient had ≥2 dialysis sessions or 24h CVVHD in last 7 days.\n\n    Returns:\n    --------\n    int\n        MELD 3.0 score, rounded to the nearest whole number.\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "female": {
+                "title": "Female",
+                "type": "boolean"
+              },
+              "bilirubin": {
+                "title": "Bilirubin",
+                "type": "number"
+              },
+              "inr": {
+                "title": "Inr",
+                "type": "number"
+              },
+              "creatinine": {
+                "title": "Creatinine",
+                "type": "number"
+              },
+              "albumin": {
+                "title": "Albumin",
+                "type": "number"
+              },
+              "sodium": {
+                "title": "Sodium",
+                "type": "number"
+              },
+              "dialysis": {
+                "title": "Dialysis",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "age",
+              "female",
+              "bilirubin",
+              "inr",
+              "creatinine",
+              "albumin",
+              "sodium",
+              "dialysis"
+            ],
+            "title": "meld_3Arguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "framingham_risk_score",
+          "description": "\n    Calculates the Framingham Risk Score for 10-year risk of heart attack (CHD)\n    based on the Framingham Heart Study equation (men and women).\n\n    Parameters:\n    -----------\n    age : int\n        Age of the patient (30-79 years).\n    total_cholesterol : float\n        Total cholesterol in mg/dL.\n    hdl_cholesterol : float\n        HDL cholesterol in mg/dL.\n    systolic_bp : float\n        Systolic blood pressure in mmHg.\n    treated_for_bp : bool\n        Whether the patient is treated for high blood pressure (1 if yes, 0 if no).\n    smoker : bool\n        Whether the patient is a smoker (1 if yes, 0 if no).\n    gender : str\n        Gender of the patient (\"male\" or \"female\").\n\n    Returns:\n    --------\n    float\n        10-year risk of heart attack as a percentage.\n    ",
+          "input_schema": {
+            "properties": {
+              "age": {
+                "title": "Age",
+                "type": "integer"
+              },
+              "total_cholesterol": {
+                "title": "Total Cholesterol",
+                "type": "number"
+              },
+              "hdl_cholesterol": {
+                "title": "Hdl Cholesterol",
+                "type": "number"
+              },
+              "systolic_bp": {
+                "title": "Systolic Bp",
+                "type": "number"
+              },
+              "treated_for_bp": {
+                "title": "Treated For Bp",
+                "type": "boolean"
+              },
+              "smoker": {
+                "title": "Smoker",
+                "type": "boolean"
+              },
+              "gender": {
+                "title": "Gender",
+                "type": "string"
+              }
+            },
+            "required": [
+              "age",
+              "total_cholesterol",
+              "hdl_cholesterol",
+              "systolic_bp",
+              "treated_for_bp",
+              "smoker",
+              "gender"
+            ],
+            "title": "framingham_risk_scoreArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "homa_ir",
+          "description": "\n    Calculates the HOMA-IR score for insulin resistance.\n\n    Formula:\n    Score = (Fasting insulin (uIU/mL) * Fasting glucose (mg/dL)) / 405\n\n    Parameters:\n    -----------\n    fasting_insulin : float\n        Fasting insulin level in micro-units per milliliter (uIU/mL).\n    fasting_glucose : float\n        Fasting glucose level in milligrams per deciliter (mg/dL).\n\n    Returns:\n    --------\n    float\n        HOMA-IR score.\n    ",
+          "input_schema": {
+            "properties": {
+              "fasting_insulin": {
+                "title": "Fasting Insulin",
+                "type": "number"
+              },
+              "fasting_glucose": {
+                "title": "Fasting Glucose",
+                "type": "number"
+              }
+            },
+            "required": [
+              "fasting_insulin",
+              "fasting_glucose"
+            ],
+            "title": "homa_irArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@vitaldb/medcalc/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@vitaldb/medcalc/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2471.@vitaldb_medcalc_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2108
+  }
+}

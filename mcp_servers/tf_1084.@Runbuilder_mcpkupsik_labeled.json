@@ -1,0 +1,126 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is a specialized tool designed to provide access to Korean school meal information, including meal menus, nutritional data, and ingredient origins. It leverages the NEIS Open API to deliver real-time data, addressing the need for meal planning and dietary awareness within educational institutions across Korea. The core functionality revolves around aggregating, displaying, and simplifying access to meal-related data for schools.",
+    "reasoning": "The Primary Label \"Education\" was chosen as the server primarily serves educational institutions and students by providing meal information relevant to school environments. The Secondary Label \"Daily Productivity\" was added because the tool aids in meal planning and scheduling, which are aspects of personal organization. The Secondary Label \"API Integration\" is included since the server relies on the NEIS Open API for data retrieval. No custom label is needed, as the predefined labels adequately cover the server's functionality.",
+    "primary_label": "Education",
+    "secondary_labels": [
+      "Daily Productivity",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1083,
+    "server_name": "Korean School Meal Server",
+    "rank_by_usage": 1084,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@Runbuilder_mcpkupsik.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Runbuilder/mcpkupsik/mcp?config=eyJ0cmFuc3BvcnQiOiAid3MifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-meal-info",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "atptCode": {
+                "type": "string",
+                "description": "시도교육청코드"
+              },
+              "schulCode": {
+                "type": "string",
+                "description": "학교행정표준코드"
+              },
+              "date": {
+                "type": "string",
+                "description": "조회할 날짜 (YYYYMMDD 형식)"
+              }
+            },
+            "required": [
+              "atptCode",
+              "schulCode"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "get-meal-info"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1083,
+      "name": "Korean School Meal Server",
+      "author": "@Runbuilder/mcpkupsik",
+      "overview": "Access Korean school meal information effortlessly. Retrieve detailed meal menus, nutritional data, and ingredient origins for any school in Korea. Simplify your meal planning with real-time data from the NEIS Open API.",
+      "repository_url": "https://github.com/Runbuilder/mcpkupsik",
+      "homepage": "https://smithery.ai/server/@Runbuilder/mcpkupsik",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Runbuilder_mcpkupsik.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "get-meal-info",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "atptCode": {
+                "type": "string",
+                "description": "시도교육청코드"
+              },
+              "schulCode": {
+                "type": "string",
+                "description": "학교행정표준코드"
+              },
+              "date": {
+                "type": "string",
+                "description": "조회할 날짜 (YYYYMMDD 형식)"
+              }
+            },
+            "required": [
+              "atptCode",
+              "schulCode"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"transport\": \"ws\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@Runbuilder/mcpkupsik/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"transport\": \"ws\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@Runbuilder/mcpkupsik/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1084.@Runbuilder_mcpkupsik_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1061
+  }
+}

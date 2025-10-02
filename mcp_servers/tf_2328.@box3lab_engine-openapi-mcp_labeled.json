@@ -1,0 +1,645 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"box3-engine-openapi-mcp\" provides a set of OpenAPI tools for the Shennzhengheng (God Island) Engine, enabling AI to efficiently call engine interfaces. Its primary functionality revolves around script management and storage operations within the engine system. The available tools allow for saving/updating, renaming, and querying scripts, as well as performing key-value operations in a storage space, including retrieval, updating, deletion, and pagination.",
+    "reasoning": "The primary functionality of script management and storage operations aligns closely with database operations and data processing. The storage operations (get/set/remove/page) are particularly indicative of database functionality, while script management suggests more general data processing capabilities. Custom labeling captures the unique nature of the engine-specific tools.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Memory Management"
+    ],
+    "custom_label": "Shennzhengheng Engine API Tools",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2327,
+    "server_name": "box3-engine-openapi-mcp",
+    "rank_by_usage": 2328,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@box3lab_engine-openapi-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@box3lab/engine-openapi-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "script.saveOrUpdate",
+          "description": "保存或更新神岛引擎脚本",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "description": "地图ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "脚本名称（.js后缀必传）"
+              },
+              "type": {
+                "type": "string",
+                "description": "脚本类型：0-服务器脚本、1-客户端脚本"
+              },
+              "file": {
+                "type": "string",
+                "description": "脚本内容"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "mapId",
+              "name",
+              "type",
+              "file",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "script.rename",
+          "description": "重命名神岛引擎脚本",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "description": "地图ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "脚本名称（.js后缀必传）"
+              },
+              "newName": {
+                "type": "string",
+                "description": "新脚本名称（.js后缀必传）"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "mapId",
+              "name",
+              "newName",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "storage.get",
+          "description": "存储空间单key值查询",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "存储空间key，key(length<=1000)"
+              },
+              "mapId": {
+                "type": "string",
+                "description": "地图id(扩展地图为主图id)"
+              },
+              "storageName": {
+                "type": "string",
+                "description": "操作空间名(length<=50 && ^[a-zA-Z0-9_]+$)"
+              },
+              "isGroup": {
+                "type": "boolean",
+                "description": "是否为扩展地图组（缺省：false）"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "key",
+              "mapId",
+              "storageName",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "storage.set",
+          "description": "存储空间单key值写入/更新",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "存储空间key，key(length<=1000)"
+              },
+              "mapId": {
+                "type": "string",
+                "description": "地图id(扩展地图为主图id)"
+              },
+              "storageName": {
+                "type": "string",
+                "description": "操作空间名(length<=50 && ^[a-zA-Z0-9_]+$)"
+              },
+              "isGroup": {
+                "type": "boolean",
+                "description": "是否为扩展地图组（缺省：false）"
+              },
+              "value": {
+                "type": "string",
+                "description": "json字符串值(json, size<=2MB)，格式必须是{\"content\": value}，value为用户输入的内容"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "key",
+              "mapId",
+              "storageName",
+              "value",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "storage.remove",
+          "description": "存储空间单key值删除",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "存储空间key，key(length<=1000)"
+              },
+              "mapId": {
+                "type": "string",
+                "description": "地图id(扩展地图为主图id)"
+              },
+              "storageName": {
+                "type": "string",
+                "description": "操作空间名(length<=50 && ^[a-zA-Z0-9_]+$)"
+              },
+              "isGroup": {
+                "type": "boolean",
+                "description": "是否为扩展地图组（缺省：false）"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "key",
+              "mapId",
+              "storageName",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "storage.page",
+          "description": "存储空间分页查询",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "description": "地图id(扩展地图为主图id)"
+              },
+              "constraint": {
+                "type": "object",
+                "properties": {
+                  "ascending": {
+                    "type": "boolean",
+                    "description": "是否升序，true：升序，false：降序, 缺省：不排序"
+                  },
+                  "max": {
+                    "type": "number",
+                    "description": "限定查询最大值(<=)，缺省：不限制"
+                  },
+                  "min": {
+                    "type": "number",
+                    "description": "限定查询最小值(>=)，缺省：不限制"
+                  },
+                  "target": {
+                    "type": "string",
+                    "description": "约束目标值的路径(a.b.c)，当值是JSON格式时，指定用作排序的值的路径。例如传入 score时，会取值上score属性的值作为排序、最大最小值的限制目标"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "storageName": {
+                "type": "string",
+                "description": "操作空间名(length<=50 && ^[a-zA-Z0-9_]+$)"
+              },
+              "isGroup": {
+                "type": "boolean",
+                "description": "是否为扩展地图组（缺省：false）"
+              },
+              "limit": {
+                "type": "number",
+                "description": "查询数量(缺省：10，最大：100)"
+              },
+              "offset": {
+                "type": "number",
+                "description": "偏移量(缺省：0)"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "mapId",
+              "storageName",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "script.saveOrUpdate",
+        "script.rename",
+        "storage.get",
+        "storage.set",
+        "storage.remove",
+        "storage.page"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2327,
+      "name": "box3-engine-openapi-mcp",
+      "author": "@box3lab/engine-openapi-mcp",
+      "overview": "提供了一系列用于神岛引擎的 OpenAPI 工具，帮助 AI 更高效地调用引擎接口。",
+      "repository_url": "https://github.com/box3lab/engine-openapi-mcp",
+      "homepage": "https://smithery.ai/server/@box3lab/engine-openapi-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@box3lab_engine-openapi-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "script.saveOrUpdate",
+          "description": "保存或更新神岛引擎脚本",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "description": "地图ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "脚本名称（.js后缀必传）"
+              },
+              "type": {
+                "type": "string",
+                "description": "脚本类型：0-服务器脚本、1-客户端脚本"
+              },
+              "file": {
+                "type": "string",
+                "description": "脚本内容"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "mapId",
+              "name",
+              "type",
+              "file",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "script.rename",
+          "description": "重命名神岛引擎脚本",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "description": "地图ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "脚本名称（.js后缀必传）"
+              },
+              "newName": {
+                "type": "string",
+                "description": "新脚本名称（.js后缀必传）"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "mapId",
+              "name",
+              "newName",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "storage.get",
+          "description": "存储空间单key值查询",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "存储空间key，key(length<=1000)"
+              },
+              "mapId": {
+                "type": "string",
+                "description": "地图id(扩展地图为主图id)"
+              },
+              "storageName": {
+                "type": "string",
+                "description": "操作空间名(length<=50 && ^[a-zA-Z0-9_]+$)"
+              },
+              "isGroup": {
+                "type": "boolean",
+                "description": "是否为扩展地图组（缺省：false）"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "key",
+              "mapId",
+              "storageName",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "storage.set",
+          "description": "存储空间单key值写入/更新",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "存储空间key，key(length<=1000)"
+              },
+              "mapId": {
+                "type": "string",
+                "description": "地图id(扩展地图为主图id)"
+              },
+              "storageName": {
+                "type": "string",
+                "description": "操作空间名(length<=50 && ^[a-zA-Z0-9_]+$)"
+              },
+              "isGroup": {
+                "type": "boolean",
+                "description": "是否为扩展地图组（缺省：false）"
+              },
+              "value": {
+                "type": "string",
+                "description": "json字符串值(json, size<=2MB)，格式必须是{\"content\": value}，value为用户输入的内容"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "key",
+              "mapId",
+              "storageName",
+              "value",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "storage.remove",
+          "description": "存储空间单key值删除",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "存储空间key，key(length<=1000)"
+              },
+              "mapId": {
+                "type": "string",
+                "description": "地图id(扩展地图为主图id)"
+              },
+              "storageName": {
+                "type": "string",
+                "description": "操作空间名(length<=50 && ^[a-zA-Z0-9_]+$)"
+              },
+              "isGroup": {
+                "type": "boolean",
+                "description": "是否为扩展地图组（缺省：false）"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "key",
+              "mapId",
+              "storageName",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "storage.page",
+          "description": "存储空间分页查询",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "mapId": {
+                "type": "string",
+                "description": "地图id(扩展地图为主图id)"
+              },
+              "constraint": {
+                "type": "object",
+                "properties": {
+                  "ascending": {
+                    "type": "boolean",
+                    "description": "是否升序，true：升序，false：降序, 缺省：不排序"
+                  },
+                  "max": {
+                    "type": "number",
+                    "description": "限定查询最大值(<=)，缺省：不限制"
+                  },
+                  "min": {
+                    "type": "number",
+                    "description": "限定查询最小值(>=)，缺省：不限制"
+                  },
+                  "target": {
+                    "type": "string",
+                    "description": "约束目标值的路径(a.b.c)，当值是JSON格式时，指定用作排序的值的路径。例如传入 score时，会取值上score属性的值作为排序、最大最小值的限制目标"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "storageName": {
+                "type": "string",
+                "description": "操作空间名(length<=50 && ^[a-zA-Z0-9_]+$)"
+              },
+              "isGroup": {
+                "type": "boolean",
+                "description": "是否为扩展地图组（缺省：false）"
+              },
+              "limit": {
+                "type": "number",
+                "description": "查询数量(缺省：10，最大：100)"
+              },
+              "offset": {
+                "type": "number",
+                "description": "偏移量(缺省：0)"
+              },
+              "token": {
+                "type": "string",
+                "description": "认证Token"
+              },
+              "userAgent": {
+                "type": "string",
+                "description": "用户请求头"
+              }
+            },
+            "required": [
+              "mapId",
+              "storageName",
+              "token",
+              "userAgent"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@box3lab/engine-openapi-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@box3lab/engine-openapi-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2328.@box3lab_engine-openapi-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2003
+  }
+}

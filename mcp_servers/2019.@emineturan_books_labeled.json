@@ -1,0 +1,180 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in providing book-related data and word-related services through APIs. Its core functionality revolves around accessing, managing, and serving linguistic information such as word definitions, pronunciations, synonyms, and examples. The tools suggest a focus on linguistic analysis and educational content.",
+    "reasoning": "The primary label is chosen to reflect the server's core purpose of managing and delivering linguistic information, which fits within educational and research tools. Secondary labels are selected to highlight its connections to content creation and data analysis based on the types of word data it processes. No custom label is needed as the predefined categories adequately cover its functionality.",
+    "primary_label": "Education",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2018,
+    "server_name": "Books Server",
+    "rank_by_usage": 2019,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@emineturan_books.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@emineturan/books/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_definitions",
+          "description": "\n    Get definitions for a word using Dictionary API.\n    \n    Args:\n        word: The word to get definitions for\n    \n    Returns:\n        Definitions of the word or error message\n    ",
+          "input_schema": {
+            "properties": {
+              "word": {
+                "title": "Word",
+                "type": "string"
+              }
+            },
+            "required": [
+              "word"
+            ],
+            "title": "get_definitionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_word_details",
+          "description": "\n    Get detailed word information including pronunciation, synonyms, and examples.\n    \n    Args:\n        word: The word to get detailed information for\n    \n    Returns:\n        Detailed word information or error message\n    ",
+          "input_schema": {
+            "properties": {
+              "word": {
+                "title": "Word",
+                "type": "string"
+              }
+            },
+            "required": [
+              "word"
+            ],
+            "title": "get_word_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_word",
+          "description": "\n    Search for a word and provide basic information.\n    \n    Args:\n        query: The word or phrase to search for\n    \n    Returns:\n        Search results or suggestions\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_wordArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "get_definitions",
+        "get_word_details",
+        "search_word"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2018,
+      "name": "Books Server",
+      "author": "@emineturan/books",
+      "overview": "Serve and manage book-related data and resources efficiently. Enable clients to access and interact with book content through a standardized protocol. Facilitate seamless integration of book data into applications.",
+      "repository_url": "https://github.com/emineturan/books",
+      "homepage": "https://smithery.ai/server/@emineturan/books",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@emineturan_books.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "get_definitions",
+          "description": "\n    Get definitions for a word using Dictionary API.\n    \n    Args:\n        word: The word to get definitions for\n    \n    Returns:\n        Definitions of the word or error message\n    ",
+          "input_schema": {
+            "properties": {
+              "word": {
+                "title": "Word",
+                "type": "string"
+              }
+            },
+            "required": [
+              "word"
+            ],
+            "title": "get_definitionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_word_details",
+          "description": "\n    Get detailed word information including pronunciation, synonyms, and examples.\n    \n    Args:\n        word: The word to get detailed information for\n    \n    Returns:\n        Detailed word information or error message\n    ",
+          "input_schema": {
+            "properties": {
+              "word": {
+                "title": "Word",
+                "type": "string"
+              }
+            },
+            "required": [
+              "word"
+            ],
+            "title": "get_word_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_word",
+          "description": "\n    Search for a word and provide basic information.\n    \n    Args:\n        query: The word or phrase to search for\n    \n    Returns:\n        Search results or suggestions\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_wordArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@emineturan/books/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@emineturan/books/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2019.@emineturan_books_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1762
+  }
+}

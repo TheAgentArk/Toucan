@@ -1,0 +1,454 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed as a persistent memory system that manages entities and their relationships with high-performance vector search and semantic search capabilities. Its main functionality revolves around creating, searching, and deleting entities and their relations within a graph structure. The server leverages token-based authentication for secure remote database access and is powered by libSQL for efficient knowledge storage. The available tools indicate a focus on knowledge management, graph-based data operations, and search functionality.",
+    "reasoning": "The primary label \"Database Operations\" is chosen because the server's core functionality involves creating, searching, and managing entities and their relations in a persistent graph-based database. The secondary label \"Data Analysis & Processing\" is included due to the advanced semantic and vector search capabilities, which are often used for analyzing relationships and patterns in data. No custom label is needed as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 923,
+    "server_name": "Persistent Memory System",
+    "rank_by_usage": 924,
+    "usage_count": "4",
+    "original_file": "../crawler/smithery/@joleyline_mcp-memory-libsql.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@joleyline/mcp-memory-libsql/mcp?config=eyJzc2VDb3JzIjogdHJ1ZSwgInNzZUhvc3QiOiAibG9jYWxob3N0IiwgInNzZVBvcnQiOiAzMDAwLCAibG9nTGV2ZWwiOiAiaW5mbyIsICJkYXRhYmFzZVVybCI6ICJmaWxlOi9tZW1vcnktdG9vbC5kYiIsICJsb2dUaW1lc3RhbXBzIjogdHJ1ZSwgInRyYW5zcG9ydFR5cGUiOiAic3RkaW8iLCAiZW1iZWRkaW5nTW9kZWwiOiAiWGVub3ZhL2JnZS1zbWFsbC1lbi12MS41IiwgIm1vZGVsQ2FjaGVQYXRoIjogIi4vbW9kZWxzIiwgImVtYmVkZGluZ0RpbWVuc2lvbiI6IDM4NH0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "create_entities",
+          "description": "Create new entities with observations and optional embeddings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "entities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "entityType": {
+                      "type": "string"
+                    },
+                    "observations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "embedding": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "description": "Optional vector embedding for similarity search"
+                    },
+                    "relations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "target": {
+                            "type": "string"
+                          },
+                          "relationType": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "target",
+                          "relationType"
+                        ]
+                      },
+                      "description": "Optional relations to create with this entity"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "entityType",
+                    "observations"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "entities"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_nodes",
+          "description": "Search for entities and their relations using text or vector similarity",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "description": "Text search query"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "description": "Vector for similarity search"
+                  }
+                ]
+              },
+              "includeEmbeddings": {
+                "type": "boolean",
+                "description": "Whether to include embeddings in the returned entities (default: false)"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_graph",
+          "description": "Get recent entities and their relations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "includeEmbeddings": {
+                "type": "boolean",
+                "description": "Whether to include embeddings in the returned entities (default: false)"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_relations",
+          "description": "Create relations between entities",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "source",
+                    "target",
+                    "type"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "relations"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_entity",
+          "description": "Delete an entity and all its associated data (observations and relations)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the entity to delete"
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_relation",
+          "description": "Delete a specific relation between entities",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Source entity name"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target entity name"
+              },
+              "type": {
+                "type": "string",
+                "description": "Type of relation"
+              }
+            },
+            "required": [
+              "source",
+              "target",
+              "type"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "create_entities",
+        "search_nodes",
+        "read_graph",
+        "create_relations",
+        "delete_entity",
+        "delete_relation"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 923,
+      "name": "Persistent Memory System",
+      "author": "@joleyline/mcp-memory-libsql",
+      "overview": "Leverage high-performance vector search and efficient knowledge storage to enhance your applications. Manage entities and relations seamlessly with secure token-based authentication for remote databases. Experience advanced semantic search capabilities powered by libSQL.",
+      "repository_url": "https://github.com/joleyline/mcp-memory-libsql",
+      "homepage": "https://smithery.ai/server/@joleyline/mcp-memory-libsql",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "4",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@joleyline_mcp-memory-libsql.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "create_entities",
+          "description": "Create new entities with observations and optional embeddings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "entities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "entityType": {
+                      "type": "string"
+                    },
+                    "observations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "embedding": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "description": "Optional vector embedding for similarity search"
+                    },
+                    "relations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "target": {
+                            "type": "string"
+                          },
+                          "relationType": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "target",
+                          "relationType"
+                        ]
+                      },
+                      "description": "Optional relations to create with this entity"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "entityType",
+                    "observations"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "entities"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_nodes",
+          "description": "Search for entities and their relations using text or vector similarity",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "description": "Text search query"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "description": "Vector for similarity search"
+                  }
+                ]
+              },
+              "includeEmbeddings": {
+                "type": "boolean",
+                "description": "Whether to include embeddings in the returned entities (default: false)"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_graph",
+          "description": "Get recent entities and their relations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "includeEmbeddings": {
+                "type": "boolean",
+                "description": "Whether to include embeddings in the returned entities (default: false)"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_relations",
+          "description": "Create relations between entities",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "source": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "source",
+                    "target",
+                    "type"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "relations"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_entity",
+          "description": "Delete an entity and all its associated data (observations and relations)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the entity to delete"
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_relation",
+          "description": "Delete a specific relation between entities",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "description": "Source entity name"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target entity name"
+              },
+              "type": {
+                "type": "string",
+                "description": "Type of relation"
+              }
+            },
+            "required": [
+              "source",
+              "target",
+              "type"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"sseCors\": true,\n  \"sseHost\": \"localhost\",\n  \"ssePort\": 3000,\n  \"logLevel\": \"info\",\n  \"databaseUrl\": \"file:/memory-tool.db\",\n  \"logTimestamps\": true,\n  \"transportType\": \"stdio\",\n  \"embeddingModel\": \"Xenova/bge-small-en-v1.5\",\n  \"modelCachePath\": \"./models\",\n  \"embeddingDimension\": 384\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@joleyline/mcp-memory-libsql/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"sseCors\": true,\n  \"sseHost\": \"localhost\",\n  \"ssePort\": 3000,\n  \"logLevel\": \"info\",\n  \"databaseUrl\": \"file:/memory-tool.db\",\n  \"logTimestamps\": true,\n  \"transportType\": \"stdio\",\n  \"embeddingModel\": \"Xenova/bge-small-en-v1.5\",\n  \"modelCachePath\": \"./models\",\n  \"embeddingDimension\": 384\n}",
+      "python_sdk_url": "https://server.smithery.ai/@joleyline/mcp-memory-libsql/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0924.@joleyline_mcp-memory-libsql_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 903
+  }
+}

@@ -1,0 +1,2315 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is focused on integrating with and controlling Apache Superset, a popular open-source data visualization platform. It provides a comprehensive suite of tools to programmatically interact with Superset's core functionalities including dashboard management, chart creation and modification, database operations (listing, creating, updating, deleting), SQL query execution and management, data exploration configuration, authentication handling, and user management. The server enables AI agents to handle these operations via natural language requests, streamlining data exploration and visualization workflows.",
+    "reasoning": "The primary functionality is focused on data visualization and management through Superset integration. The secondary categories reflect the server's additional capabilities in database operations and SQL query processing. The custom label highlights the unique aspect of enabling AI agents to control Superset programmatically.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [
+      "Database Operations",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "AI-Powered Superset Integration",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 166,
+    "server_name": "Superset Integration",
+    "rank_by_usage": 167,
+    "usage_count": "295",
+    "original_file": "../crawler/smithery/@aptro_superset-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@aptro/superset-mcp/mcp?config=eyJzdXBlcnNldEJhc2VVcmwiOiAiaHR0cDovL2xvY2FsaG9zdDo4MDg4In0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "superset_auth_check_token_validity",
+          "description": "\n    Check if the current access token is still valid\n\n    Makes a request to the /api/v1/me/ endpoint to test if the current token is valid.\n    Use this to verify authentication status before making other API calls.\n\n    Returns:\n        A dictionary with token validity status and any error information\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_auth_check_token_validityArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_auth_refresh_token",
+          "description": "\n    Refresh the access token using the refresh endpoint\n\n    Makes a request to the /api/v1/security/refresh endpoint to get a new access token\n    without requiring re-authentication with username/password.\n\n    Returns:\n        A dictionary with the new access token or error information\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_auth_refresh_tokenArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_auth_authenticate_user",
+          "description": "\n    Authenticate with Superset and get access token\n\n    Makes a request to the /api/v1/security/login endpoint to authenticate and obtain an access token.\n    If there's an existing token, will first try to check its validity.\n    If invalid, will attempt to refresh token before falling back to re-authentication.\n\n    Args:\n        username: Superset username (falls back to environment variable if not provided)\n        password: Superset password (falls back to environment variable if not provided)\n        refresh: Whether to refresh the token if invalid (defaults to True)\n\n    Returns:\n        A dictionary with authentication status and access token or error information\n    ",
+          "input_schema": {
+            "properties": {
+              "username": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Username"
+              },
+              "password": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Password"
+              },
+              "refresh": {
+                "default": true,
+                "title": "Refresh",
+                "type": "boolean"
+              }
+            },
+            "title": "superset_auth_authenticate_userArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_list",
+          "description": "\n    Get a list of dashboards from Superset\n\n    Makes a request to the /api/v1/dashboard/ endpoint to retrieve all dashboards\n    the current user has access to view. Results are paginated.\n\n    Returns:\n        A dictionary containing dashboard data including id, title, url, and metadata\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_dashboard_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_get_by_id",
+          "description": "\n    Get details for a specific dashboard\n\n    Makes a request to the /api/v1/dashboard/{id} endpoint to retrieve detailed\n    information about a specific dashboard.\n\n    Args:\n        dashboard_id: ID of the dashboard to retrieve\n\n    Returns:\n        A dictionary with complete dashboard information including components and layout\n    ",
+          "input_schema": {
+            "properties": {
+              "dashboard_id": {
+                "title": "Dashboard Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "dashboard_id"
+            ],
+            "title": "superset_dashboard_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_create",
+          "description": "\n    Create a new dashboard in Superset\n\n    Makes a request to the /api/v1/dashboard/ POST endpoint to create a new dashboard.\n\n    Args:\n        dashboard_title: Title of the dashboard\n        json_metadata: Optional JSON metadata for dashboard configuration,\n                       can include layout, color scheme, and filter configuration\n\n    Returns:\n        A dictionary with the created dashboard information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "dashboard_title": {
+                "title": "Dashboard Title",
+                "type": "string"
+              },
+              "json_metadata": {
+                "additionalProperties": true,
+                "default": null,
+                "title": "Json Metadata",
+                "type": "object"
+              }
+            },
+            "required": [
+              "dashboard_title"
+            ],
+            "title": "superset_dashboard_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_update",
+          "description": "\n    Update an existing dashboard\n\n    Makes a request to the /api/v1/dashboard/{id} PUT endpoint to update\n    dashboard properties.\n\n    Args:\n        dashboard_id: ID of the dashboard to update\n        data: Data to update, can include dashboard_title, slug, owners, position, and metadata\n\n    Returns:\n        A dictionary with the updated dashboard information\n    ",
+          "input_schema": {
+            "properties": {
+              "dashboard_id": {
+                "title": "Dashboard Id",
+                "type": "integer"
+              },
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "dashboard_id",
+              "data"
+            ],
+            "title": "superset_dashboard_updateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_delete",
+          "description": "\n    Delete a dashboard\n\n    Makes a request to the /api/v1/dashboard/{id} DELETE endpoint to remove a dashboard.\n    This operation is permanent and cannot be undone.\n\n    Args:\n        dashboard_id: ID of the dashboard to delete\n\n    Returns:\n        A dictionary with deletion confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "dashboard_id": {
+                "title": "Dashboard Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "dashboard_id"
+            ],
+            "title": "superset_dashboard_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_list",
+          "description": "\n    Get a list of charts from Superset\n\n    Makes a request to the /api/v1/chart/ endpoint to retrieve all charts\n    the current user has access to view. Results are paginated.\n\n    Returns:\n        A dictionary containing chart data including id, slice_name, viz_type, and datasource info\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_chart_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_get_by_id",
+          "description": "\n    Get details for a specific chart\n\n    Makes a request to the /api/v1/chart/{id} endpoint to retrieve detailed\n    information about a specific chart/slice.\n\n    Args:\n        chart_id: ID of the chart to retrieve\n\n    Returns:\n        A dictionary with complete chart information including visualization configuration\n    ",
+          "input_schema": {
+            "properties": {
+              "chart_id": {
+                "title": "Chart Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "chart_id"
+            ],
+            "title": "superset_chart_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_create",
+          "description": "\n    Create a new chart in Superset\n\n    Makes a request to the /api/v1/chart/ POST endpoint to create a new visualization.\n\n    Args:\n        slice_name: Name/title of the chart\n        datasource_id: ID of the dataset or SQL table\n        datasource_type: Type of datasource ('table' for datasets, 'query' for SQL)\n        viz_type: Visualization type (e.g., 'bar', 'line', 'pie', 'big_number', etc.)\n        params: Visualization parameters including metrics, groupby, time_range, etc.\n\n    Returns:\n        A dictionary with the created chart information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "slice_name": {
+                "title": "Slice Name",
+                "type": "string"
+              },
+              "datasource_id": {
+                "title": "Datasource Id",
+                "type": "integer"
+              },
+              "datasource_type": {
+                "title": "Datasource Type",
+                "type": "string"
+              },
+              "viz_type": {
+                "title": "Viz Type",
+                "type": "string"
+              },
+              "params": {
+                "additionalProperties": true,
+                "title": "Params",
+                "type": "object"
+              }
+            },
+            "required": [
+              "slice_name",
+              "datasource_id",
+              "datasource_type",
+              "viz_type",
+              "params"
+            ],
+            "title": "superset_chart_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_update",
+          "description": "\n    Update an existing chart\n\n    Makes a request to the /api/v1/chart/{id} PUT endpoint to update\n    chart properties and visualization settings.\n\n    Args:\n        chart_id: ID of the chart to update\n        data: Data to update, can include slice_name, description, viz_type, params, etc.\n\n    Returns:\n        A dictionary with the updated chart information\n    ",
+          "input_schema": {
+            "properties": {
+              "chart_id": {
+                "title": "Chart Id",
+                "type": "integer"
+              },
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "chart_id",
+              "data"
+            ],
+            "title": "superset_chart_updateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_delete",
+          "description": "\n    Delete a chart\n\n    Makes a request to the /api/v1/chart/{id} DELETE endpoint to remove a chart.\n    This operation is permanent and cannot be undone.\n\n    Args:\n        chart_id: ID of the chart to delete\n\n    Returns:\n        A dictionary with deletion confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "chart_id": {
+                "title": "Chart Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "chart_id"
+            ],
+            "title": "superset_chart_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_list",
+          "description": "\n    Get a list of databases from Superset\n\n    Makes a request to the /api/v1/database/ endpoint to retrieve all database\n    connections the current user has access to. Results are paginated.\n\n    Returns:\n        A dictionary containing database connection information including id, name, and configuration\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_database_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_by_id",
+          "description": "\n    Get details for a specific database\n\n    Makes a request to the /api/v1/database/{id} endpoint to retrieve detailed\n    information about a specific database connection.\n\n    Args:\n        database_id: ID of the database to retrieve\n\n    Returns:\n        A dictionary with complete database configuration information\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_create",
+          "description": "\n    Create a new database connection in Superset\n\n    IMPORTANT: Don't call this tool, unless user have given connection details. This function will only create database connections with explicit user consent and input.\n    No default values or assumptions will be made without user confirmation. All connection parameters,\n    including sensitive credentials, must be explicitly provided by the user.\n\n    Makes a POST request to /api/v1/database/ to create a new database connection in Superset.\n    The endpoint requires a valid SQLAlchemy URI and database configuration parameters.\n    The engine parameter will be automatically determined from the SQLAlchemy URI prefix if not specified:\n    - 'postgresql://' -> engine='postgresql'\n    - 'mysql://' -> engine='mysql'\n    - 'mssql://' -> engine='mssql'\n    - 'oracle://' -> engine='oracle'\n    - 'sqlite://' -> engine='sqlite'\n\n    The SQLAlchemy URI must follow the format: dialect+driver://username:password@host:port/database\n    If the URI is not provided, the function will prompt for individual connection parameters to construct it.\n\n    All required parameters must be provided and validated before creating the connection.\n    The configuration_method parameter should typically be set to 'sqlalchemy_form'.\n\n    Args:\n        engine: Database engine (e.g., 'postgresql', 'mysql', etc.)\n        configuration_method: Method used for configuration (typically 'sqlalchemy_form')\n        database_name: Name for the database connection\n        sqlalchemy_uri: SQLAlchemy URI for the connection (e.g., 'postgresql://user:pass@host/db')\n\n    Returns:\n        A dictionary with the created database connection information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "engine": {
+                "title": "Engine",
+                "type": "string"
+              },
+              "configuration_method": {
+                "title": "Configuration Method",
+                "type": "string"
+              },
+              "database_name": {
+                "title": "Database Name",
+                "type": "string"
+              },
+              "sqlalchemy_uri": {
+                "title": "Sqlalchemy Uri",
+                "type": "string"
+              }
+            },
+            "required": [
+              "engine",
+              "configuration_method",
+              "database_name",
+              "sqlalchemy_uri"
+            ],
+            "title": "superset_database_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_tables",
+          "description": "\n    Get a list of tables for a given database\n\n    Makes a request to the /api/v1/database/{id}/tables/ endpoint to retrieve\n    all tables available in the database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with list of tables including schema and table name information\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_tablesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_schemas",
+          "description": "\n    Get schemas for a specific database\n\n    Makes a request to the /api/v1/database/{id}/schemas/ endpoint to retrieve\n    all schemas available in the database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with list of schema names\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_schemasArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_test_connection",
+          "description": "\n    Test a database connection\n\n    Makes a request to the /api/v1/database/test_connection endpoint to verify if\n    the provided connection details can successfully connect to the database.\n\n    Args:\n        database_data: Database connection details including sqlalchemy_uri and other parameters\n\n    Returns:\n        A dictionary with connection test results\n    ",
+          "input_schema": {
+            "properties": {
+              "database_data": {
+                "additionalProperties": true,
+                "title": "Database Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "database_data"
+            ],
+            "title": "superset_database_test_connectionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_update",
+          "description": "\n    Update an existing database connection\n\n    Makes a request to the /api/v1/database/{id} PUT endpoint to update\n    database connection properties.\n\n    Args:\n        database_id: ID of the database to update\n        data: Data to update, can include database_name, sqlalchemy_uri, password, and extra configs\n\n    Returns:\n        A dictionary with the updated database information\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "database_id",
+              "data"
+            ],
+            "title": "superset_database_updateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_delete",
+          "description": "\n    Delete a database connection\n\n    Makes a request to the /api/v1/database/{id} DELETE endpoint to remove a database connection.\n    This operation is permanent and cannot be undone. This will also remove associated datasets.\n\n    Args:\n        database_id: ID of the database to delete\n\n    Returns:\n        A dictionary with deletion confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_catalogs",
+          "description": "\n    Get all catalogs from a database\n\n    Makes a request to the /api/v1/database/{id}/catalogs/ endpoint to retrieve\n    all catalogs available in the database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with list of catalog names for databases that support catalogs\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_catalogsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_connection",
+          "description": "\n    Get database connection information\n\n    Makes a request to the /api/v1/database/{id}/connection endpoint to retrieve\n    connection details for a specific database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with detailed connection information\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_connectionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_function_names",
+          "description": "\n    Get function names supported by a database\n\n    Makes a request to the /api/v1/database/{id}/function_names/ endpoint to retrieve\n    all SQL functions supported by the database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with list of supported function names\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_function_namesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_related_objects",
+          "description": "\n    Get charts and dashboards associated with a database\n\n    Makes a request to the /api/v1/database/{id}/related_objects/ endpoint to retrieve\n    counts and references of charts and dashboards that depend on this database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with counts and lists of related charts and dashboards\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_related_objectsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_validate_sql",
+          "description": "\n    Validate arbitrary SQL against a database\n\n    Makes a request to the /api/v1/database/{id}/validate_sql/ endpoint to check\n    if the provided SQL is valid for the specified database.\n\n    Args:\n        database_id: ID of the database\n        sql: SQL query to validate\n\n    Returns:\n        A dictionary with validation results\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "sql": {
+                "title": "Sql",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database_id",
+              "sql"
+            ],
+            "title": "superset_database_validate_sqlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_validate_parameters",
+          "description": "\n    Validate database connection parameters\n\n    Makes a request to the /api/v1/database/validate_parameters/ endpoint to verify\n    if the provided connection parameters are valid without creating a connection.\n\n    Args:\n        parameters: Connection parameters to validate\n\n    Returns:\n        A dictionary with validation results\n    ",
+          "input_schema": {
+            "properties": {
+              "parameters": {
+                "additionalProperties": true,
+                "title": "Parameters",
+                "type": "object"
+              }
+            },
+            "required": [
+              "parameters"
+            ],
+            "title": "superset_database_validate_parametersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dataset_list",
+          "description": "\n    Get a list of datasets from Superset\n\n    Makes a request to the /api/v1/dataset/ endpoint to retrieve all datasets\n    the current user has access to view. Results are paginated.\n\n    Returns:\n        A dictionary containing dataset information including id, table_name, and database\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_dataset_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dataset_get_by_id",
+          "description": "\n    Get details for a specific dataset\n\n    Makes a request to the /api/v1/dataset/{id} endpoint to retrieve detailed\n    information about a specific dataset including columns and metrics.\n\n    Args:\n        dataset_id: ID of the dataset to retrieve\n\n    Returns:\n        A dictionary with complete dataset information\n    ",
+          "input_schema": {
+            "properties": {
+              "dataset_id": {
+                "title": "Dataset Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "dataset_id"
+            ],
+            "title": "superset_dataset_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dataset_create",
+          "description": "\n    Create a new dataset in Superset\n\n    Makes a request to the /api/v1/dataset/ POST endpoint to create a new dataset\n    from an existing database table or view.\n\n    Args:\n        table_name: Name of the physical table in the database\n        database_id: ID of the database where the table exists\n        schema: Optional database schema name where the table is located\n        owners: Optional list of user IDs who should own this dataset\n\n    Returns:\n        A dictionary with the created dataset information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "table_name": {
+                "title": "Table Name",
+                "type": "string"
+              },
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "schema": {
+                "default": null,
+                "title": "Schema",
+                "type": "string"
+              },
+              "owners": {
+                "default": null,
+                "items": {
+                  "type": "integer"
+                },
+                "title": "Owners",
+                "type": "array"
+              }
+            },
+            "required": [
+              "table_name",
+              "database_id"
+            ],
+            "title": "superset_dataset_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_execute_query",
+          "description": "\n    Execute a SQL query in SQL Lab\n\n    Makes a request to the /api/v1/sqllab/execute/ endpoint to run a SQL query\n    against the specified database.\n\n    Args:\n        database_id: ID of the database to query\n        sql: SQL query to execute\n\n    Returns:\n        A dictionary with query results or execution status for async queries\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "sql": {
+                "title": "Sql",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database_id",
+              "sql"
+            ],
+            "title": "superset_sqllab_execute_queryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_get_saved_queries",
+          "description": "\n    Get a list of saved queries from SQL Lab\n\n    Makes a request to the /api/v1/saved_query/ endpoint to retrieve all saved queries\n    the current user has access to. Results are paginated.\n\n    Returns:\n        A dictionary containing saved query information including id, label, and database\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_sqllab_get_saved_queriesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_format_sql",
+          "description": "\n    Format a SQL query for better readability\n\n    Makes a request to the /api/v1/sqllab/format_sql endpoint to apply standard\n    formatting rules to the provided SQL query.\n\n    Args:\n        sql: SQL query to format\n\n    Returns:\n        A dictionary with the formatted SQL\n    ",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "title": "Sql",
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "title": "superset_sqllab_format_sqlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_get_results",
+          "description": "\n    Get results of a previously executed SQL query\n\n    Makes a request to the /api/v1/sqllab/results/ endpoint to retrieve results\n    for an asynchronous query using its result key.\n\n    Args:\n        key: Result key to retrieve\n\n    Returns:\n        A dictionary with query results including column information and data rows\n    ",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "superset_sqllab_get_resultsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_estimate_query_cost",
+          "description": "\n    Estimate the cost of executing a SQL query\n\n    Makes a request to the /api/v1/sqllab/estimate endpoint to get approximate cost\n    information for a query before executing it.\n\n    Args:\n        database_id: ID of the database\n        sql: SQL query to estimate\n        schema: Optional schema name\n\n    Returns:\n        A dictionary with estimated query cost metrics\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "sql": {
+                "title": "Sql",
+                "type": "string"
+              },
+              "schema": {
+                "default": null,
+                "title": "Schema",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database_id",
+              "sql"
+            ],
+            "title": "superset_sqllab_estimate_query_costArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_export_query_results",
+          "description": "\n    Export the results of a SQL query to CSV\n\n    Makes a request to the /api/v1/sqllab/export/{client_id} endpoint to download\n    query results in CSV format.\n\n    Args:\n        client_id: Client ID of the query\n\n    Returns:\n        A dictionary with the exported data or error information\n    ",
+          "input_schema": {
+            "properties": {
+              "client_id": {
+                "title": "Client Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id"
+            ],
+            "title": "superset_sqllab_export_query_resultsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_get_bootstrap_data",
+          "description": "\n    Get the bootstrap data for SQL Lab\n\n    Makes a request to the /api/v1/sqllab/ endpoint to retrieve configuration data\n    needed for the SQL Lab interface.\n\n    Returns:\n        A dictionary with SQL Lab configuration including allowed databases and settings\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_sqllab_get_bootstrap_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_saved_query_get_by_id",
+          "description": "\n    Get details for a specific saved query\n\n    Makes a request to the /api/v1/saved_query/{id} endpoint to retrieve information\n    about a saved SQL query.\n\n    Args:\n        query_id: ID of the saved query to retrieve\n\n    Returns:\n        A dictionary with the saved query details including SQL text and database\n    ",
+          "input_schema": {
+            "properties": {
+              "query_id": {
+                "title": "Query Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query_id"
+            ],
+            "title": "superset_saved_query_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_saved_query_create",
+          "description": "\n    Create a new saved query\n\n    Makes a request to the /api/v1/saved_query/ POST endpoint to save a SQL query\n    for later reuse.\n\n    Args:\n        query_data: Dictionary containing the query information including:\n                   - db_id: Database ID\n                   - schema: Schema name (optional)\n                   - sql: SQL query text\n                   - label: Display name for the saved query\n                   - description: Optional description of the query\n\n    Returns:\n        A dictionary with the created saved query information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "query_data": {
+                "additionalProperties": true,
+                "title": "Query Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "query_data"
+            ],
+            "title": "superset_saved_query_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_query_stop",
+          "description": "\n    Stop a running query\n\n    Makes a request to the /api/v1/query/stop endpoint to terminate a query that\n    is currently running.\n\n    Args:\n        client_id: Client ID of the query to stop\n\n    Returns:\n        A dictionary with confirmation of query termination\n    ",
+          "input_schema": {
+            "properties": {
+              "client_id": {
+                "title": "Client Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id"
+            ],
+            "title": "superset_query_stopArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_query_list",
+          "description": "\n    Get a list of queries from Superset\n\n    Makes a request to the /api/v1/query/ endpoint to retrieve query history.\n    Results are paginated and include both finished and running queries.\n\n    Returns:\n        A dictionary containing query information including status, duration, and SQL\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_query_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_query_get_by_id",
+          "description": "\n    Get details for a specific query\n\n    Makes a request to the /api/v1/query/{id} endpoint to retrieve detailed\n    information about a specific query execution.\n\n    Args:\n        query_id: ID of the query to retrieve\n\n    Returns:\n        A dictionary with complete query execution information\n    ",
+          "input_schema": {
+            "properties": {
+              "query_id": {
+                "title": "Query Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query_id"
+            ],
+            "title": "superset_query_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_activity_get_recent",
+          "description": "\n    Get recent activity data for the current user\n\n    Makes a request to the /api/v1/log/recent_activity/ endpoint to retrieve\n    a history of actions performed by the current user.\n\n    Returns:\n        A dictionary with recent user activities including viewed charts and dashboards\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_activity_get_recentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_user_get_current",
+          "description": "\n    Get information about the currently authenticated user\n\n    Makes a request to the /api/v1/me/ endpoint to retrieve the user's profile\n    information including permissions and preferences.\n\n    Returns:\n        A dictionary with user profile data\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_user_get_currentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_user_get_roles",
+          "description": "\n    Get roles for the current user\n\n    Makes a request to the /api/v1/me/roles/ endpoint to retrieve all roles\n    assigned to the current user.\n\n    Returns:\n        A dictionary with user role information\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_user_get_rolesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_list",
+          "description": "\n    Get a list of tags from Superset\n\n    Makes a request to the /api/v1/tag/ endpoint to retrieve all tags\n    defined in the Superset instance.\n\n    Returns:\n        A dictionary containing tag information including id and name\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_tag_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_create",
+          "description": "\n    Create a new tag in Superset\n\n    Makes a request to the /api/v1/tag/ POST endpoint to create a new tag\n    that can be applied to objects like charts and dashboards.\n\n    Args:\n        name: Name for the tag\n\n    Returns:\n        A dictionary with the created tag information\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "superset_tag_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_get_by_id",
+          "description": "\n    Get details for a specific tag\n\n    Makes a request to the /api/v1/tag/{id} endpoint to retrieve information\n    about a specific tag.\n\n    Args:\n        tag_id: ID of the tag to retrieve\n\n    Returns:\n        A dictionary with tag details\n    ",
+          "input_schema": {
+            "properties": {
+              "tag_id": {
+                "title": "Tag Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "tag_id"
+            ],
+            "title": "superset_tag_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_objects",
+          "description": "\n    Get objects associated with tags\n\n    Makes a request to the /api/v1/tag/get_objects/ endpoint to retrieve\n    all objects that have tags assigned to them.\n\n    Returns:\n        A dictionary with tagged objects grouped by tag\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_tag_objectsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_delete",
+          "description": "\n    Delete a tag\n\n    Makes a request to the /api/v1/tag/{id} DELETE endpoint to remove a tag.\n    This operation is permanent and cannot be undone.\n\n    Args:\n        tag_id: ID of the tag to delete\n\n    Returns:\n        A dictionary with deletion confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "tag_id": {
+                "title": "Tag Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "tag_id"
+            ],
+            "title": "superset_tag_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_object_add",
+          "description": "\n    Add a tag to an object\n\n    Makes a request to tag an object with a specific tag. This creates an association\n    between the tag and the specified object (chart, dashboard, etc.)\n\n    Args:\n        object_type: Type of the object ('chart', 'dashboard', etc.)\n        object_id: ID of the object to tag\n        tag_name: Name of the tag to apply\n\n    Returns:\n        A dictionary with the tagging confirmation\n    ",
+          "input_schema": {
+            "properties": {
+              "object_type": {
+                "title": "Object Type",
+                "type": "string"
+              },
+              "object_id": {
+                "title": "Object Id",
+                "type": "integer"
+              },
+              "tag_name": {
+                "title": "Tag Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "object_type",
+              "object_id",
+              "tag_name"
+            ],
+            "title": "superset_tag_object_addArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_object_remove",
+          "description": "\n    Remove a tag from an object\n\n    Makes a request to remove a tag association from a specific object.\n\n    Args:\n        object_type: Type of the object ('chart', 'dashboard', etc.)\n        object_id: ID of the object to untag\n        tag_name: Name of the tag to remove\n\n    Returns:\n        A dictionary with the untagging confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "object_type": {
+                "title": "Object Type",
+                "type": "string"
+              },
+              "object_id": {
+                "title": "Object Id",
+                "type": "integer"
+              },
+              "tag_name": {
+                "title": "Tag Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "object_type",
+              "object_id",
+              "tag_name"
+            ],
+            "title": "superset_tag_object_removeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_explore_form_data_create",
+          "description": "\n    Create form data for chart exploration\n\n    Makes a request to the /api/v1/explore/form_data POST endpoint to store\n    chart configuration data temporarily.\n\n    Args:\n        form_data: Chart configuration including datasource, metrics, and visualization settings\n\n    Returns:\n        A dictionary with a key that can be used to retrieve the form data\n    ",
+          "input_schema": {
+            "properties": {
+              "form_data": {
+                "additionalProperties": true,
+                "title": "Form Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "form_data"
+            ],
+            "title": "superset_explore_form_data_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_explore_form_data_get",
+          "description": "\n    Get form data for chart exploration\n\n    Makes a request to the /api/v1/explore/form_data/{key} endpoint to retrieve\n    previously stored chart configuration.\n\n    Args:\n        key: Key of the form data to retrieve\n\n    Returns:\n        A dictionary with the stored chart configuration\n    ",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "superset_explore_form_data_getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_explore_permalink_create",
+          "description": "\n    Create a permalink for chart exploration\n\n    Makes a request to the /api/v1/explore/permalink POST endpoint to generate\n    a shareable link to a specific chart exploration state.\n\n    Args:\n        state: State data for the permalink including form_data\n\n    Returns:\n        A dictionary with a key that can be used to access the permalink\n    ",
+          "input_schema": {
+            "properties": {
+              "state": {
+                "additionalProperties": true,
+                "title": "State",
+                "type": "object"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "title": "superset_explore_permalink_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_explore_permalink_get",
+          "description": "\n    Get a permalink for chart exploration\n\n    Makes a request to the /api/v1/explore/permalink/{key} endpoint to retrieve\n    a previously saved exploration state.\n\n    Args:\n        key: Key of the permalink to retrieve\n\n    Returns:\n        A dictionary with the stored exploration state\n    ",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "superset_explore_permalink_getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_menu_get",
+          "description": "\n    Get the Superset menu data\n\n    Makes a request to the /api/v1/menu/ endpoint to retrieve the navigation\n    menu structure based on user permissions.\n\n    Returns:\n        A dictionary with menu items and their configurations\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_menu_getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_config_get_base_url",
+          "description": "\n    Get the base URL of the Superset instance\n\n    Returns the configured Superset base URL that this MCP server is connecting to.\n    This can be useful for constructing full URLs to Superset resources or for\n    displaying information about the connected instance.\n\n    This tool does not require authentication as it only returns configuration information.\n\n    Returns:\n        A dictionary with the Superset base URL\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_config_get_base_urlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_advanced_data_type_convert",
+          "description": "\n    Convert a value to an advanced data type\n\n    Makes a request to the /api/v1/advanced_data_type/convert endpoint to transform\n    a value into the specified advanced data type format.\n\n    Args:\n        type_name: Name of the advanced data type\n        value: Value to convert\n\n    Returns:\n        A dictionary with the converted value\n    ",
+          "input_schema": {
+            "properties": {
+              "type_name": {
+                "title": "Type Name",
+                "type": "string"
+              },
+              "value": {
+                "title": "Value"
+              }
+            },
+            "required": [
+              "type_name",
+              "value"
+            ],
+            "title": "superset_advanced_data_type_convertArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_advanced_data_type_list",
+          "description": "\n    Get list of available advanced data types\n\n    Makes a request to the /api/v1/advanced_data_type/types endpoint to retrieve\n    all advanced data types supported by this Superset instance.\n\n    Returns:\n        A dictionary with available advanced data types and their configurations\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_advanced_data_type_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 60,
+      "tool_names": [
+        "superset_auth_check_token_validity",
+        "superset_auth_refresh_token",
+        "superset_auth_authenticate_user",
+        "superset_dashboard_list",
+        "superset_dashboard_get_by_id",
+        "superset_dashboard_create",
+        "superset_dashboard_update",
+        "superset_dashboard_delete",
+        "superset_chart_list",
+        "superset_chart_get_by_id",
+        "superset_chart_create",
+        "superset_chart_update",
+        "superset_chart_delete",
+        "superset_database_list",
+        "superset_database_get_by_id",
+        "superset_database_create",
+        "superset_database_get_tables",
+        "superset_database_schemas",
+        "superset_database_test_connection",
+        "superset_database_update",
+        "superset_database_delete",
+        "superset_database_get_catalogs",
+        "superset_database_get_connection",
+        "superset_database_get_function_names",
+        "superset_database_get_related_objects",
+        "superset_database_validate_sql",
+        "superset_database_validate_parameters",
+        "superset_dataset_list",
+        "superset_dataset_get_by_id",
+        "superset_dataset_create",
+        "superset_sqllab_execute_query",
+        "superset_sqllab_get_saved_queries",
+        "superset_sqllab_format_sql",
+        "superset_sqllab_get_results",
+        "superset_sqllab_estimate_query_cost",
+        "superset_sqllab_export_query_results",
+        "superset_sqllab_get_bootstrap_data",
+        "superset_saved_query_get_by_id",
+        "superset_saved_query_create",
+        "superset_query_stop",
+        "superset_query_list",
+        "superset_query_get_by_id",
+        "superset_activity_get_recent",
+        "superset_user_get_current",
+        "superset_user_get_roles",
+        "superset_tag_list",
+        "superset_tag_create",
+        "superset_tag_get_by_id",
+        "superset_tag_objects",
+        "superset_tag_delete",
+        "superset_tag_object_add",
+        "superset_tag_object_remove",
+        "superset_explore_form_data_create",
+        "superset_explore_form_data_get",
+        "superset_explore_permalink_create",
+        "superset_explore_permalink_get",
+        "superset_menu_get",
+        "superset_config_get_base_url",
+        "superset_advanced_data_type_convert",
+        "superset_advanced_data_type_list"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 166,
+      "name": "Superset Integration",
+      "author": "@aptro/superset-mcp",
+      "overview": "Connect and control your Apache Superset instance programmatically with ease. Enable AI agents to manage dashboards, charts, and databases using natural language requests. Streamline your data exploration and visualization tasks effortlessly.",
+      "repository_url": "https://github.com/aptro/superset-mcp",
+      "homepage": "https://smithery.ai/server/@aptro/superset-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "295",
+      "success_rate": "99.85%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@aptro_superset-mcp.json",
+      "tools_count": 60,
+      "tools": [
+        {
+          "name": "superset_auth_check_token_validity",
+          "description": "\n    Check if the current access token is still valid\n\n    Makes a request to the /api/v1/me/ endpoint to test if the current token is valid.\n    Use this to verify authentication status before making other API calls.\n\n    Returns:\n        A dictionary with token validity status and any error information\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_auth_check_token_validityArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_auth_refresh_token",
+          "description": "\n    Refresh the access token using the refresh endpoint\n\n    Makes a request to the /api/v1/security/refresh endpoint to get a new access token\n    without requiring re-authentication with username/password.\n\n    Returns:\n        A dictionary with the new access token or error information\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_auth_refresh_tokenArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_auth_authenticate_user",
+          "description": "\n    Authenticate with Superset and get access token\n\n    Makes a request to the /api/v1/security/login endpoint to authenticate and obtain an access token.\n    If there's an existing token, will first try to check its validity.\n    If invalid, will attempt to refresh token before falling back to re-authentication.\n\n    Args:\n        username: Superset username (falls back to environment variable if not provided)\n        password: Superset password (falls back to environment variable if not provided)\n        refresh: Whether to refresh the token if invalid (defaults to True)\n\n    Returns:\n        A dictionary with authentication status and access token or error information\n    ",
+          "input_schema": {
+            "properties": {
+              "username": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Username"
+              },
+              "password": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Password"
+              },
+              "refresh": {
+                "default": true,
+                "title": "Refresh",
+                "type": "boolean"
+              }
+            },
+            "title": "superset_auth_authenticate_userArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_list",
+          "description": "\n    Get a list of dashboards from Superset\n\n    Makes a request to the /api/v1/dashboard/ endpoint to retrieve all dashboards\n    the current user has access to view. Results are paginated.\n\n    Returns:\n        A dictionary containing dashboard data including id, title, url, and metadata\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_dashboard_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_get_by_id",
+          "description": "\n    Get details for a specific dashboard\n\n    Makes a request to the /api/v1/dashboard/{id} endpoint to retrieve detailed\n    information about a specific dashboard.\n\n    Args:\n        dashboard_id: ID of the dashboard to retrieve\n\n    Returns:\n        A dictionary with complete dashboard information including components and layout\n    ",
+          "input_schema": {
+            "properties": {
+              "dashboard_id": {
+                "title": "Dashboard Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "dashboard_id"
+            ],
+            "title": "superset_dashboard_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_create",
+          "description": "\n    Create a new dashboard in Superset\n\n    Makes a request to the /api/v1/dashboard/ POST endpoint to create a new dashboard.\n\n    Args:\n        dashboard_title: Title of the dashboard\n        json_metadata: Optional JSON metadata for dashboard configuration,\n                       can include layout, color scheme, and filter configuration\n\n    Returns:\n        A dictionary with the created dashboard information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "dashboard_title": {
+                "title": "Dashboard Title",
+                "type": "string"
+              },
+              "json_metadata": {
+                "additionalProperties": true,
+                "default": null,
+                "title": "Json Metadata",
+                "type": "object"
+              }
+            },
+            "required": [
+              "dashboard_title"
+            ],
+            "title": "superset_dashboard_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_update",
+          "description": "\n    Update an existing dashboard\n\n    Makes a request to the /api/v1/dashboard/{id} PUT endpoint to update\n    dashboard properties.\n\n    Args:\n        dashboard_id: ID of the dashboard to update\n        data: Data to update, can include dashboard_title, slug, owners, position, and metadata\n\n    Returns:\n        A dictionary with the updated dashboard information\n    ",
+          "input_schema": {
+            "properties": {
+              "dashboard_id": {
+                "title": "Dashboard Id",
+                "type": "integer"
+              },
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "dashboard_id",
+              "data"
+            ],
+            "title": "superset_dashboard_updateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dashboard_delete",
+          "description": "\n    Delete a dashboard\n\n    Makes a request to the /api/v1/dashboard/{id} DELETE endpoint to remove a dashboard.\n    This operation is permanent and cannot be undone.\n\n    Args:\n        dashboard_id: ID of the dashboard to delete\n\n    Returns:\n        A dictionary with deletion confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "dashboard_id": {
+                "title": "Dashboard Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "dashboard_id"
+            ],
+            "title": "superset_dashboard_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_list",
+          "description": "\n    Get a list of charts from Superset\n\n    Makes a request to the /api/v1/chart/ endpoint to retrieve all charts\n    the current user has access to view. Results are paginated.\n\n    Returns:\n        A dictionary containing chart data including id, slice_name, viz_type, and datasource info\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_chart_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_get_by_id",
+          "description": "\n    Get details for a specific chart\n\n    Makes a request to the /api/v1/chart/{id} endpoint to retrieve detailed\n    information about a specific chart/slice.\n\n    Args:\n        chart_id: ID of the chart to retrieve\n\n    Returns:\n        A dictionary with complete chart information including visualization configuration\n    ",
+          "input_schema": {
+            "properties": {
+              "chart_id": {
+                "title": "Chart Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "chart_id"
+            ],
+            "title": "superset_chart_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_create",
+          "description": "\n    Create a new chart in Superset\n\n    Makes a request to the /api/v1/chart/ POST endpoint to create a new visualization.\n\n    Args:\n        slice_name: Name/title of the chart\n        datasource_id: ID of the dataset or SQL table\n        datasource_type: Type of datasource ('table' for datasets, 'query' for SQL)\n        viz_type: Visualization type (e.g., 'bar', 'line', 'pie', 'big_number', etc.)\n        params: Visualization parameters including metrics, groupby, time_range, etc.\n\n    Returns:\n        A dictionary with the created chart information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "slice_name": {
+                "title": "Slice Name",
+                "type": "string"
+              },
+              "datasource_id": {
+                "title": "Datasource Id",
+                "type": "integer"
+              },
+              "datasource_type": {
+                "title": "Datasource Type",
+                "type": "string"
+              },
+              "viz_type": {
+                "title": "Viz Type",
+                "type": "string"
+              },
+              "params": {
+                "additionalProperties": true,
+                "title": "Params",
+                "type": "object"
+              }
+            },
+            "required": [
+              "slice_name",
+              "datasource_id",
+              "datasource_type",
+              "viz_type",
+              "params"
+            ],
+            "title": "superset_chart_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_update",
+          "description": "\n    Update an existing chart\n\n    Makes a request to the /api/v1/chart/{id} PUT endpoint to update\n    chart properties and visualization settings.\n\n    Args:\n        chart_id: ID of the chart to update\n        data: Data to update, can include slice_name, description, viz_type, params, etc.\n\n    Returns:\n        A dictionary with the updated chart information\n    ",
+          "input_schema": {
+            "properties": {
+              "chart_id": {
+                "title": "Chart Id",
+                "type": "integer"
+              },
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "chart_id",
+              "data"
+            ],
+            "title": "superset_chart_updateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_chart_delete",
+          "description": "\n    Delete a chart\n\n    Makes a request to the /api/v1/chart/{id} DELETE endpoint to remove a chart.\n    This operation is permanent and cannot be undone.\n\n    Args:\n        chart_id: ID of the chart to delete\n\n    Returns:\n        A dictionary with deletion confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "chart_id": {
+                "title": "Chart Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "chart_id"
+            ],
+            "title": "superset_chart_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_list",
+          "description": "\n    Get a list of databases from Superset\n\n    Makes a request to the /api/v1/database/ endpoint to retrieve all database\n    connections the current user has access to. Results are paginated.\n\n    Returns:\n        A dictionary containing database connection information including id, name, and configuration\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_database_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_by_id",
+          "description": "\n    Get details for a specific database\n\n    Makes a request to the /api/v1/database/{id} endpoint to retrieve detailed\n    information about a specific database connection.\n\n    Args:\n        database_id: ID of the database to retrieve\n\n    Returns:\n        A dictionary with complete database configuration information\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_create",
+          "description": "\n    Create a new database connection in Superset\n\n    IMPORTANT: Don't call this tool, unless user have given connection details. This function will only create database connections with explicit user consent and input.\n    No default values or assumptions will be made without user confirmation. All connection parameters,\n    including sensitive credentials, must be explicitly provided by the user.\n\n    Makes a POST request to /api/v1/database/ to create a new database connection in Superset.\n    The endpoint requires a valid SQLAlchemy URI and database configuration parameters.\n    The engine parameter will be automatically determined from the SQLAlchemy URI prefix if not specified:\n    - 'postgresql://' -> engine='postgresql'\n    - 'mysql://' -> engine='mysql'\n    - 'mssql://' -> engine='mssql'\n    - 'oracle://' -> engine='oracle'\n    - 'sqlite://' -> engine='sqlite'\n\n    The SQLAlchemy URI must follow the format: dialect+driver://username:password@host:port/database\n    If the URI is not provided, the function will prompt for individual connection parameters to construct it.\n\n    All required parameters must be provided and validated before creating the connection.\n    The configuration_method parameter should typically be set to 'sqlalchemy_form'.\n\n    Args:\n        engine: Database engine (e.g., 'postgresql', 'mysql', etc.)\n        configuration_method: Method used for configuration (typically 'sqlalchemy_form')\n        database_name: Name for the database connection\n        sqlalchemy_uri: SQLAlchemy URI for the connection (e.g., 'postgresql://user:pass@host/db')\n\n    Returns:\n        A dictionary with the created database connection information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "engine": {
+                "title": "Engine",
+                "type": "string"
+              },
+              "configuration_method": {
+                "title": "Configuration Method",
+                "type": "string"
+              },
+              "database_name": {
+                "title": "Database Name",
+                "type": "string"
+              },
+              "sqlalchemy_uri": {
+                "title": "Sqlalchemy Uri",
+                "type": "string"
+              }
+            },
+            "required": [
+              "engine",
+              "configuration_method",
+              "database_name",
+              "sqlalchemy_uri"
+            ],
+            "title": "superset_database_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_tables",
+          "description": "\n    Get a list of tables for a given database\n\n    Makes a request to the /api/v1/database/{id}/tables/ endpoint to retrieve\n    all tables available in the database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with list of tables including schema and table name information\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_tablesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_schemas",
+          "description": "\n    Get schemas for a specific database\n\n    Makes a request to the /api/v1/database/{id}/schemas/ endpoint to retrieve\n    all schemas available in the database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with list of schema names\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_schemasArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_test_connection",
+          "description": "\n    Test a database connection\n\n    Makes a request to the /api/v1/database/test_connection endpoint to verify if\n    the provided connection details can successfully connect to the database.\n\n    Args:\n        database_data: Database connection details including sqlalchemy_uri and other parameters\n\n    Returns:\n        A dictionary with connection test results\n    ",
+          "input_schema": {
+            "properties": {
+              "database_data": {
+                "additionalProperties": true,
+                "title": "Database Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "database_data"
+            ],
+            "title": "superset_database_test_connectionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_update",
+          "description": "\n    Update an existing database connection\n\n    Makes a request to the /api/v1/database/{id} PUT endpoint to update\n    database connection properties.\n\n    Args:\n        database_id: ID of the database to update\n        data: Data to update, can include database_name, sqlalchemy_uri, password, and extra configs\n\n    Returns:\n        A dictionary with the updated database information\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "database_id",
+              "data"
+            ],
+            "title": "superset_database_updateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_delete",
+          "description": "\n    Delete a database connection\n\n    Makes a request to the /api/v1/database/{id} DELETE endpoint to remove a database connection.\n    This operation is permanent and cannot be undone. This will also remove associated datasets.\n\n    Args:\n        database_id: ID of the database to delete\n\n    Returns:\n        A dictionary with deletion confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_catalogs",
+          "description": "\n    Get all catalogs from a database\n\n    Makes a request to the /api/v1/database/{id}/catalogs/ endpoint to retrieve\n    all catalogs available in the database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with list of catalog names for databases that support catalogs\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_catalogsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_connection",
+          "description": "\n    Get database connection information\n\n    Makes a request to the /api/v1/database/{id}/connection endpoint to retrieve\n    connection details for a specific database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with detailed connection information\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_connectionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_function_names",
+          "description": "\n    Get function names supported by a database\n\n    Makes a request to the /api/v1/database/{id}/function_names/ endpoint to retrieve\n    all SQL functions supported by the database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with list of supported function names\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_function_namesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_get_related_objects",
+          "description": "\n    Get charts and dashboards associated with a database\n\n    Makes a request to the /api/v1/database/{id}/related_objects/ endpoint to retrieve\n    counts and references of charts and dashboards that depend on this database.\n\n    Args:\n        database_id: ID of the database\n\n    Returns:\n        A dictionary with counts and lists of related charts and dashboards\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "database_id"
+            ],
+            "title": "superset_database_get_related_objectsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_validate_sql",
+          "description": "\n    Validate arbitrary SQL against a database\n\n    Makes a request to the /api/v1/database/{id}/validate_sql/ endpoint to check\n    if the provided SQL is valid for the specified database.\n\n    Args:\n        database_id: ID of the database\n        sql: SQL query to validate\n\n    Returns:\n        A dictionary with validation results\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "sql": {
+                "title": "Sql",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database_id",
+              "sql"
+            ],
+            "title": "superset_database_validate_sqlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_database_validate_parameters",
+          "description": "\n    Validate database connection parameters\n\n    Makes a request to the /api/v1/database/validate_parameters/ endpoint to verify\n    if the provided connection parameters are valid without creating a connection.\n\n    Args:\n        parameters: Connection parameters to validate\n\n    Returns:\n        A dictionary with validation results\n    ",
+          "input_schema": {
+            "properties": {
+              "parameters": {
+                "additionalProperties": true,
+                "title": "Parameters",
+                "type": "object"
+              }
+            },
+            "required": [
+              "parameters"
+            ],
+            "title": "superset_database_validate_parametersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dataset_list",
+          "description": "\n    Get a list of datasets from Superset\n\n    Makes a request to the /api/v1/dataset/ endpoint to retrieve all datasets\n    the current user has access to view. Results are paginated.\n\n    Returns:\n        A dictionary containing dataset information including id, table_name, and database\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_dataset_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dataset_get_by_id",
+          "description": "\n    Get details for a specific dataset\n\n    Makes a request to the /api/v1/dataset/{id} endpoint to retrieve detailed\n    information about a specific dataset including columns and metrics.\n\n    Args:\n        dataset_id: ID of the dataset to retrieve\n\n    Returns:\n        A dictionary with complete dataset information\n    ",
+          "input_schema": {
+            "properties": {
+              "dataset_id": {
+                "title": "Dataset Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "dataset_id"
+            ],
+            "title": "superset_dataset_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_dataset_create",
+          "description": "\n    Create a new dataset in Superset\n\n    Makes a request to the /api/v1/dataset/ POST endpoint to create a new dataset\n    from an existing database table or view.\n\n    Args:\n        table_name: Name of the physical table in the database\n        database_id: ID of the database where the table exists\n        schema: Optional database schema name where the table is located\n        owners: Optional list of user IDs who should own this dataset\n\n    Returns:\n        A dictionary with the created dataset information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "table_name": {
+                "title": "Table Name",
+                "type": "string"
+              },
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "schema": {
+                "default": null,
+                "title": "Schema",
+                "type": "string"
+              },
+              "owners": {
+                "default": null,
+                "items": {
+                  "type": "integer"
+                },
+                "title": "Owners",
+                "type": "array"
+              }
+            },
+            "required": [
+              "table_name",
+              "database_id"
+            ],
+            "title": "superset_dataset_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_execute_query",
+          "description": "\n    Execute a SQL query in SQL Lab\n\n    Makes a request to the /api/v1/sqllab/execute/ endpoint to run a SQL query\n    against the specified database.\n\n    Args:\n        database_id: ID of the database to query\n        sql: SQL query to execute\n\n    Returns:\n        A dictionary with query results or execution status for async queries\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "sql": {
+                "title": "Sql",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database_id",
+              "sql"
+            ],
+            "title": "superset_sqllab_execute_queryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_get_saved_queries",
+          "description": "\n    Get a list of saved queries from SQL Lab\n\n    Makes a request to the /api/v1/saved_query/ endpoint to retrieve all saved queries\n    the current user has access to. Results are paginated.\n\n    Returns:\n        A dictionary containing saved query information including id, label, and database\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_sqllab_get_saved_queriesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_format_sql",
+          "description": "\n    Format a SQL query for better readability\n\n    Makes a request to the /api/v1/sqllab/format_sql endpoint to apply standard\n    formatting rules to the provided SQL query.\n\n    Args:\n        sql: SQL query to format\n\n    Returns:\n        A dictionary with the formatted SQL\n    ",
+          "input_schema": {
+            "properties": {
+              "sql": {
+                "title": "Sql",
+                "type": "string"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "title": "superset_sqllab_format_sqlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_get_results",
+          "description": "\n    Get results of a previously executed SQL query\n\n    Makes a request to the /api/v1/sqllab/results/ endpoint to retrieve results\n    for an asynchronous query using its result key.\n\n    Args:\n        key: Result key to retrieve\n\n    Returns:\n        A dictionary with query results including column information and data rows\n    ",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "superset_sqllab_get_resultsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_estimate_query_cost",
+          "description": "\n    Estimate the cost of executing a SQL query\n\n    Makes a request to the /api/v1/sqllab/estimate endpoint to get approximate cost\n    information for a query before executing it.\n\n    Args:\n        database_id: ID of the database\n        sql: SQL query to estimate\n        schema: Optional schema name\n\n    Returns:\n        A dictionary with estimated query cost metrics\n    ",
+          "input_schema": {
+            "properties": {
+              "database_id": {
+                "title": "Database Id",
+                "type": "integer"
+              },
+              "sql": {
+                "title": "Sql",
+                "type": "string"
+              },
+              "schema": {
+                "default": null,
+                "title": "Schema",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database_id",
+              "sql"
+            ],
+            "title": "superset_sqllab_estimate_query_costArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_export_query_results",
+          "description": "\n    Export the results of a SQL query to CSV\n\n    Makes a request to the /api/v1/sqllab/export/{client_id} endpoint to download\n    query results in CSV format.\n\n    Args:\n        client_id: Client ID of the query\n\n    Returns:\n        A dictionary with the exported data or error information\n    ",
+          "input_schema": {
+            "properties": {
+              "client_id": {
+                "title": "Client Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id"
+            ],
+            "title": "superset_sqllab_export_query_resultsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_sqllab_get_bootstrap_data",
+          "description": "\n    Get the bootstrap data for SQL Lab\n\n    Makes a request to the /api/v1/sqllab/ endpoint to retrieve configuration data\n    needed for the SQL Lab interface.\n\n    Returns:\n        A dictionary with SQL Lab configuration including allowed databases and settings\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_sqllab_get_bootstrap_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_saved_query_get_by_id",
+          "description": "\n    Get details for a specific saved query\n\n    Makes a request to the /api/v1/saved_query/{id} endpoint to retrieve information\n    about a saved SQL query.\n\n    Args:\n        query_id: ID of the saved query to retrieve\n\n    Returns:\n        A dictionary with the saved query details including SQL text and database\n    ",
+          "input_schema": {
+            "properties": {
+              "query_id": {
+                "title": "Query Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query_id"
+            ],
+            "title": "superset_saved_query_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_saved_query_create",
+          "description": "\n    Create a new saved query\n\n    Makes a request to the /api/v1/saved_query/ POST endpoint to save a SQL query\n    for later reuse.\n\n    Args:\n        query_data: Dictionary containing the query information including:\n                   - db_id: Database ID\n                   - schema: Schema name (optional)\n                   - sql: SQL query text\n                   - label: Display name for the saved query\n                   - description: Optional description of the query\n\n    Returns:\n        A dictionary with the created saved query information including its ID\n    ",
+          "input_schema": {
+            "properties": {
+              "query_data": {
+                "additionalProperties": true,
+                "title": "Query Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "query_data"
+            ],
+            "title": "superset_saved_query_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_query_stop",
+          "description": "\n    Stop a running query\n\n    Makes a request to the /api/v1/query/stop endpoint to terminate a query that\n    is currently running.\n\n    Args:\n        client_id: Client ID of the query to stop\n\n    Returns:\n        A dictionary with confirmation of query termination\n    ",
+          "input_schema": {
+            "properties": {
+              "client_id": {
+                "title": "Client Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "client_id"
+            ],
+            "title": "superset_query_stopArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_query_list",
+          "description": "\n    Get a list of queries from Superset\n\n    Makes a request to the /api/v1/query/ endpoint to retrieve query history.\n    Results are paginated and include both finished and running queries.\n\n    Returns:\n        A dictionary containing query information including status, duration, and SQL\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_query_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_query_get_by_id",
+          "description": "\n    Get details for a specific query\n\n    Makes a request to the /api/v1/query/{id} endpoint to retrieve detailed\n    information about a specific query execution.\n\n    Args:\n        query_id: ID of the query to retrieve\n\n    Returns:\n        A dictionary with complete query execution information\n    ",
+          "input_schema": {
+            "properties": {
+              "query_id": {
+                "title": "Query Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query_id"
+            ],
+            "title": "superset_query_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_activity_get_recent",
+          "description": "\n    Get recent activity data for the current user\n\n    Makes a request to the /api/v1/log/recent_activity/ endpoint to retrieve\n    a history of actions performed by the current user.\n\n    Returns:\n        A dictionary with recent user activities including viewed charts and dashboards\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_activity_get_recentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_user_get_current",
+          "description": "\n    Get information about the currently authenticated user\n\n    Makes a request to the /api/v1/me/ endpoint to retrieve the user's profile\n    information including permissions and preferences.\n\n    Returns:\n        A dictionary with user profile data\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_user_get_currentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_user_get_roles",
+          "description": "\n    Get roles for the current user\n\n    Makes a request to the /api/v1/me/roles/ endpoint to retrieve all roles\n    assigned to the current user.\n\n    Returns:\n        A dictionary with user role information\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_user_get_rolesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_list",
+          "description": "\n    Get a list of tags from Superset\n\n    Makes a request to the /api/v1/tag/ endpoint to retrieve all tags\n    defined in the Superset instance.\n\n    Returns:\n        A dictionary containing tag information including id and name\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_tag_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_create",
+          "description": "\n    Create a new tag in Superset\n\n    Makes a request to the /api/v1/tag/ POST endpoint to create a new tag\n    that can be applied to objects like charts and dashboards.\n\n    Args:\n        name: Name for the tag\n\n    Returns:\n        A dictionary with the created tag information\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "superset_tag_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_get_by_id",
+          "description": "\n    Get details for a specific tag\n\n    Makes a request to the /api/v1/tag/{id} endpoint to retrieve information\n    about a specific tag.\n\n    Args:\n        tag_id: ID of the tag to retrieve\n\n    Returns:\n        A dictionary with tag details\n    ",
+          "input_schema": {
+            "properties": {
+              "tag_id": {
+                "title": "Tag Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "tag_id"
+            ],
+            "title": "superset_tag_get_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_objects",
+          "description": "\n    Get objects associated with tags\n\n    Makes a request to the /api/v1/tag/get_objects/ endpoint to retrieve\n    all objects that have tags assigned to them.\n\n    Returns:\n        A dictionary with tagged objects grouped by tag\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_tag_objectsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_delete",
+          "description": "\n    Delete a tag\n\n    Makes a request to the /api/v1/tag/{id} DELETE endpoint to remove a tag.\n    This operation is permanent and cannot be undone.\n\n    Args:\n        tag_id: ID of the tag to delete\n\n    Returns:\n        A dictionary with deletion confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "tag_id": {
+                "title": "Tag Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "tag_id"
+            ],
+            "title": "superset_tag_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_object_add",
+          "description": "\n    Add a tag to an object\n\n    Makes a request to tag an object with a specific tag. This creates an association\n    between the tag and the specified object (chart, dashboard, etc.)\n\n    Args:\n        object_type: Type of the object ('chart', 'dashboard', etc.)\n        object_id: ID of the object to tag\n        tag_name: Name of the tag to apply\n\n    Returns:\n        A dictionary with the tagging confirmation\n    ",
+          "input_schema": {
+            "properties": {
+              "object_type": {
+                "title": "Object Type",
+                "type": "string"
+              },
+              "object_id": {
+                "title": "Object Id",
+                "type": "integer"
+              },
+              "tag_name": {
+                "title": "Tag Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "object_type",
+              "object_id",
+              "tag_name"
+            ],
+            "title": "superset_tag_object_addArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_tag_object_remove",
+          "description": "\n    Remove a tag from an object\n\n    Makes a request to remove a tag association from a specific object.\n\n    Args:\n        object_type: Type of the object ('chart', 'dashboard', etc.)\n        object_id: ID of the object to untag\n        tag_name: Name of the tag to remove\n\n    Returns:\n        A dictionary with the untagging confirmation message\n    ",
+          "input_schema": {
+            "properties": {
+              "object_type": {
+                "title": "Object Type",
+                "type": "string"
+              },
+              "object_id": {
+                "title": "Object Id",
+                "type": "integer"
+              },
+              "tag_name": {
+                "title": "Tag Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "object_type",
+              "object_id",
+              "tag_name"
+            ],
+            "title": "superset_tag_object_removeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_explore_form_data_create",
+          "description": "\n    Create form data for chart exploration\n\n    Makes a request to the /api/v1/explore/form_data POST endpoint to store\n    chart configuration data temporarily.\n\n    Args:\n        form_data: Chart configuration including datasource, metrics, and visualization settings\n\n    Returns:\n        A dictionary with a key that can be used to retrieve the form data\n    ",
+          "input_schema": {
+            "properties": {
+              "form_data": {
+                "additionalProperties": true,
+                "title": "Form Data",
+                "type": "object"
+              }
+            },
+            "required": [
+              "form_data"
+            ],
+            "title": "superset_explore_form_data_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_explore_form_data_get",
+          "description": "\n    Get form data for chart exploration\n\n    Makes a request to the /api/v1/explore/form_data/{key} endpoint to retrieve\n    previously stored chart configuration.\n\n    Args:\n        key: Key of the form data to retrieve\n\n    Returns:\n        A dictionary with the stored chart configuration\n    ",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "superset_explore_form_data_getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_explore_permalink_create",
+          "description": "\n    Create a permalink for chart exploration\n\n    Makes a request to the /api/v1/explore/permalink POST endpoint to generate\n    a shareable link to a specific chart exploration state.\n\n    Args:\n        state: State data for the permalink including form_data\n\n    Returns:\n        A dictionary with a key that can be used to access the permalink\n    ",
+          "input_schema": {
+            "properties": {
+              "state": {
+                "additionalProperties": true,
+                "title": "State",
+                "type": "object"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "title": "superset_explore_permalink_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_explore_permalink_get",
+          "description": "\n    Get a permalink for chart exploration\n\n    Makes a request to the /api/v1/explore/permalink/{key} endpoint to retrieve\n    a previously saved exploration state.\n\n    Args:\n        key: Key of the permalink to retrieve\n\n    Returns:\n        A dictionary with the stored exploration state\n    ",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "superset_explore_permalink_getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_menu_get",
+          "description": "\n    Get the Superset menu data\n\n    Makes a request to the /api/v1/menu/ endpoint to retrieve the navigation\n    menu structure based on user permissions.\n\n    Returns:\n        A dictionary with menu items and their configurations\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_menu_getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_config_get_base_url",
+          "description": "\n    Get the base URL of the Superset instance\n\n    Returns the configured Superset base URL that this MCP server is connecting to.\n    This can be useful for constructing full URLs to Superset resources or for\n    displaying information about the connected instance.\n\n    This tool does not require authentication as it only returns configuration information.\n\n    Returns:\n        A dictionary with the Superset base URL\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_config_get_base_urlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_advanced_data_type_convert",
+          "description": "\n    Convert a value to an advanced data type\n\n    Makes a request to the /api/v1/advanced_data_type/convert endpoint to transform\n    a value into the specified advanced data type format.\n\n    Args:\n        type_name: Name of the advanced data type\n        value: Value to convert\n\n    Returns:\n        A dictionary with the converted value\n    ",
+          "input_schema": {
+            "properties": {
+              "type_name": {
+                "title": "Type Name",
+                "type": "string"
+              },
+              "value": {
+                "title": "Value"
+              }
+            },
+            "required": [
+              "type_name",
+              "value"
+            ],
+            "title": "superset_advanced_data_type_convertArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "superset_advanced_data_type_list",
+          "description": "\n    Get list of available advanced data types\n\n    Makes a request to the /api/v1/advanced_data_type/types endpoint to retrieve\n    all advanced data types supported by this Superset instance.\n\n    Returns:\n        A dictionary with available advanced data types and their configurations\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "superset_advanced_data_type_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"supersetBaseUrl\": \"http://localhost:8088\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@aptro/superset-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"supersetBaseUrl\": \"http://localhost:8088\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@aptro/superset-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0167.@aptro_superset-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 164
+  }
+}

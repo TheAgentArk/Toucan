@@ -1,0 +1,460 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides tools for integrating with Hacker News, a popular online community focused on technology and startups. Its core functionality includes searching, retrieving, and interacting with various types of content (stories, comments, user profiles) on Hacker News. The tools enable access to real-time data and facilitate building applications that leverage Hacker News content, such as news aggregation, user analysis, or community engagement features.",
+    "reasoning": "The primary label \"News & Media\" was chosen because the server's main functionality revolves around accessing and retrieving news stories, comments, and user profiles from Hacker News, which is a news and discussion platform. Secondary labels \"Web Search & Research\" and \"API Integration\" were selected because the tools allow for searching, retrieving, and programmatically accessing Hacker News data via API-like methods.",
+    "primary_label": "News & Media",
+    "secondary_labels": [
+      "Web Search & Research",
+      "API Integration"
+    ],
+    "custom_label": "Hacker News API",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 486,
+    "server_name": "Hacker News Integration",
+    "rank_by_usage": 487,
+    "usage_count": "35",
+    "original_file": "../crawler/smithery/@devabdultech_hn-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@devabdultech/hn-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search",
+          "description": "Search for stories and comments on Hacker News",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The search query"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "story",
+                  "comment"
+                ],
+                "description": "The type of content to search for",
+                "default": "all"
+              },
+              "page": {
+                "type": "number",
+                "description": "The page number",
+                "default": 0
+              },
+              "hitsPerPage": {
+                "type": "number",
+                "description": "The number of results per page",
+                "default": 20
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStory",
+          "description": "Get a single story by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "The ID of the story"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStoryWithComments",
+          "description": "Get a story with its comments",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "The ID of the story"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStories",
+          "description": "Get multiple stories by type (top, new, best, ask, show, job)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "top",
+                  "new",
+                  "best",
+                  "ask",
+                  "show",
+                  "job"
+                ],
+                "description": "The type of stories to fetch"
+              },
+              "limit": {
+                "type": "number",
+                "description": "The maximum number of stories to fetch",
+                "default": 30
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getComment",
+          "description": "Get a single comment by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "The ID of the comment"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getComments",
+          "description": "Get comments for a story",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "storyId": {
+                "type": "number",
+                "description": "The ID of the story"
+              },
+              "limit": {
+                "type": "number",
+                "description": "The maximum number of comments to fetch",
+                "default": 30
+              }
+            },
+            "required": [
+              "storyId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCommentTree",
+          "description": "Get a comment tree for a story",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "storyId": {
+                "type": "number",
+                "description": "The ID of the story"
+              }
+            },
+            "required": [
+              "storyId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getUser",
+          "description": "Get a user profile by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the user"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getUserSubmissions",
+          "description": "Get a user's submissions",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the user"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "search",
+        "getStory",
+        "getStoryWithComments",
+        "getStories",
+        "getComment",
+        "getComments",
+        "getCommentTree",
+        "getUser",
+        "getUserSubmissions"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 486,
+      "name": "Hacker News Integration",
+      "author": "@devabdultech/hn-mcp",
+      "overview": "Access real-time stories, comments, and user profiles from Hacker News. Search and retrieve data effortlessly through a powerful integration with the Model Context Protocol. Enhance your LLM applications with comprehensive Hacker News functionality.",
+      "repository_url": "https://github.com/devabdultech/hn-mcp",
+      "homepage": "https://smithery.ai/server/@devabdultech/hn-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "35",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@devabdultech_hn-mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "search",
+          "description": "Search for stories and comments on Hacker News",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The search query"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "story",
+                  "comment"
+                ],
+                "description": "The type of content to search for",
+                "default": "all"
+              },
+              "page": {
+                "type": "number",
+                "description": "The page number",
+                "default": 0
+              },
+              "hitsPerPage": {
+                "type": "number",
+                "description": "The number of results per page",
+                "default": 20
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStory",
+          "description": "Get a single story by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "The ID of the story"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStoryWithComments",
+          "description": "Get a story with its comments",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "The ID of the story"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStories",
+          "description": "Get multiple stories by type (top, new, best, ask, show, job)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "top",
+                  "new",
+                  "best",
+                  "ask",
+                  "show",
+                  "job"
+                ],
+                "description": "The type of stories to fetch"
+              },
+              "limit": {
+                "type": "number",
+                "description": "The maximum number of stories to fetch",
+                "default": 30
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getComment",
+          "description": "Get a single comment by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "The ID of the comment"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getComments",
+          "description": "Get comments for a story",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "storyId": {
+                "type": "number",
+                "description": "The ID of the story"
+              },
+              "limit": {
+                "type": "number",
+                "description": "The maximum number of comments to fetch",
+                "default": 30
+              }
+            },
+            "required": [
+              "storyId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCommentTree",
+          "description": "Get a comment tree for a story",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "storyId": {
+                "type": "number",
+                "description": "The ID of the story"
+              }
+            },
+            "required": [
+              "storyId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getUser",
+          "description": "Get a user profile by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the user"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getUserSubmissions",
+          "description": "Get a user's submissions",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the user"
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@devabdultech/hn-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@devabdultech/hn-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0487.@devabdultech_hn-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 477
+  }
+}

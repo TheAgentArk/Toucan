@@ -1,0 +1,169 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide weather-related data and analytics. Its core functionality revolves around fetching real-time weather information such as alerts and forecasts for specific locations. The available tools focus on location-specific weather data retrieval, making it valuable for applications needing accurate and up-to-date weather data. The server simplifies the integration of weather data into applications, enhancing user experiences with real-time forecasts and alerts.",
+    "reasoning": "The primary label \"Weather\" was chosen because the server's core functionality centers on providing weather data, which aligns perfectly with the predefined \"Weather\" category. The secondary label \"Data Analysis & Processing\" was added because the server processes and returns weather data, which can be used for analytics. \"API Integration\" is also relevant as the server provides tools that can be integrated into other applications via APIs. No custom label is necessary as the predefined categories cover the server's functionality adequately.",
+    "primary_label": "Weather",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 555,
+    "server_name": "Weather MCP Server",
+    "rank_by_usage": 556,
+    "usage_count": "22",
+    "original_file": "../crawler/smithery/@kentstudy0922_weather-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@kentstudy0922/weather-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-alerts",
+          "description": "Get weather alerts for a state",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "description": "Two-letter state code (e.g. CA, NY)"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-forecast",
+          "description": "Get weather forecast for a location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90,
+                "description": "Latitude of the location"
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180,
+                "description": "Longitude of the location"
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get-alerts",
+        "get-forecast"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 555,
+      "name": "Weather MCP Server",
+      "author": "@kentstudy0922/weather-mcp",
+      "overview": "Fetch real-time weather data effortlessly. Integrate weather information into your applications and enhance user experience with accurate forecasts. Simplify your development process with a dedicated weather data service.",
+      "repository_url": "https://github.com/kentstudy0922/weather-mcp",
+      "homepage": "https://smithery.ai/server/@kentstudy0922/weather-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "22",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@kentstudy0922_weather-mcp.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get-alerts",
+          "description": "Get weather alerts for a state",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "description": "Two-letter state code (e.g. CA, NY)"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-forecast",
+          "description": "Get weather forecast for a location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90,
+                "description": "Latitude of the location"
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180,
+                "description": "Longitude of the location"
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@kentstudy0922/weather-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@kentstudy0922/weather-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0556.@kentstudy0922_weather-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 544
+  }
+}

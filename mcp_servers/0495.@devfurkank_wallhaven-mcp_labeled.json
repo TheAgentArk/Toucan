@@ -1,0 +1,406 @@
+{
+  "labels": {
+    "analysis": "The MCP Server primarily enables search and retrieval of wallpapers from Wallhaven with rich filtering capabilities. It provides tools to fetch detailed wallpaper information, perform advanced searches with numerous filtering options (categories, resolution, aspect ratios, etc.), manage user collections, and access user settings. The server acts as an intermediary between users and the Wallhaven database, offering a programmatic way to access and organize wallpaper media.",
+    "reasoning": "The primary functionality revolves around searching, filtering, and retrieving wallpaper content, which aligns most closely with the \"Web Search & Research\" category. Additional secondary functions include accessing user-specific collections and settings, which could be considered \"File Management\" (for collection management) and potentially \"User Authentication\" (for personalized settings). No custom label is needed as the predefined categories adequately cover the server's features.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "File Management"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 494,
+    "server_name": "Wallhaven Wallpaper Search Server",
+    "rank_by_usage": 495,
+    "usage_count": "33",
+    "original_file": "../crawler/smithery/@devfurkank_wallhaven-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@devfurkank/wallhaven-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_wallpaper",
+          "description": "Get detailed information about a specific wallpaper by ID\n    \n    Args:\n        wallpaper_id: The ID of the wallpaper (e.g., \"94x38z\")\n    ",
+          "input_schema": {
+            "properties": {
+              "wallpaper_id": {
+                "title": "Wallpaper Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "wallpaper_id"
+            ],
+            "title": "get_wallpaperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_wallpapers",
+          "description": "Search for wallpapers on Wallhaven\n    \n    Args:\n        query: Search query (tags, keywords, etc.)\n        categories: Categories to include (e.g., \"100\" for general only, \"110\" for general+anime)\n        purity: Purity filter (e.g., \"100\" for SFW only, \"110\" for SFW+sketchy)\n        sorting: How to sort results (date_added, relevance, random, views, favorites, toplist)\n        order: Sort order (desc, asc)\n        top_range: Time range for toplist (1d, 3d, 1w, 1M, 3M, 6M, 1y)\n        atleast: Minimum resolution (e.g., \"1920x1080\")\n        resolutions: Exact resolutions (e.g., \"1920x1080,2560x1440\")\n        ratios: Aspect ratios (e.g., \"16x9,16x10\")\n        colors: Color hex code (e.g., \"0066cc\")\n        page: Page number\n        seed: Seed for random results\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "default": null,
+                "title": "Query",
+                "type": "string"
+              },
+              "categories": {
+                "default": null,
+                "title": "Categories",
+                "type": "string"
+              },
+              "purity": {
+                "default": null,
+                "title": "Purity",
+                "type": "string"
+              },
+              "sorting": {
+                "default": "date_added",
+                "title": "Sorting",
+                "type": "string"
+              },
+              "order": {
+                "default": "desc",
+                "title": "Order",
+                "type": "string"
+              },
+              "top_range": {
+                "default": null,
+                "title": "Top Range",
+                "type": "string"
+              },
+              "atleast": {
+                "default": null,
+                "title": "Atleast",
+                "type": "string"
+              },
+              "resolutions": {
+                "default": null,
+                "title": "Resolutions",
+                "type": "string"
+              },
+              "ratios": {
+                "default": null,
+                "title": "Ratios",
+                "type": "string"
+              },
+              "colors": {
+                "default": null,
+                "title": "Colors",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "title": "Page",
+                "type": "integer"
+              },
+              "seed": {
+                "default": null,
+                "title": "Seed",
+                "type": "string"
+              }
+            },
+            "title": "search_wallpapersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_tag_info",
+          "description": "Get information about a specific tag by ID\n    \n    Args:\n        tag_id: The ID of the tag\n    ",
+          "input_schema": {
+            "properties": {
+              "tag_id": {
+                "title": "Tag Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "tag_id"
+            ],
+            "title": "get_tag_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_settings",
+          "description": "Get authenticated user settings (requires API key)",
+          "input_schema": {
+            "properties": {},
+            "title": "get_user_settingsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_collections",
+          "description": "Get user collections\n    \n    Args:\n        username: Username to get collections for. If None, gets authenticated user's collections (requires API key)\n    ",
+          "input_schema": {
+            "properties": {
+              "username": {
+                "default": null,
+                "title": "Username",
+                "type": "string"
+              }
+            },
+            "title": "get_collectionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_collection_wallpapers",
+          "description": "Get wallpapers from a specific collection\n    \n    Args:\n        username: Username who owns the collection\n        collection_id: ID of the collection\n        purity: Purity filter (e.g., \"100\" for SFW only)\n        page: Page number\n    ",
+          "input_schema": {
+            "properties": {
+              "username": {
+                "title": "Username",
+                "type": "string"
+              },
+              "collection_id": {
+                "title": "Collection Id",
+                "type": "integer"
+              },
+              "purity": {
+                "default": null,
+                "title": "Purity",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "title": "Page",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "username",
+              "collection_id"
+            ],
+            "title": "get_collection_wallpapersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "get_wallpaper",
+        "search_wallpapers",
+        "get_tag_info",
+        "get_user_settings",
+        "get_collections",
+        "get_collection_wallpapers"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 494,
+      "name": "Wallhaven Wallpaper Search Server",
+      "author": "@devfurkank/wallhaven-mcp",
+      "overview": "Enable AI assistants to search, retrieve, and explore wallpapers from Wallhaven with rich filtering options and user-specific data access. Seamlessly integrate wallpaper search, tag info, collections, and user settings into your workflows. Simplify wallpaper discovery and management through a dedicated MCP server.",
+      "repository_url": "https://github.com/devfurkank/Wallhaven-mcp",
+      "homepage": "https://smithery.ai/server/@devfurkank/wallhaven-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "33",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@devfurkank_wallhaven-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "get_wallpaper",
+          "description": "Get detailed information about a specific wallpaper by ID\n    \n    Args:\n        wallpaper_id: The ID of the wallpaper (e.g., \"94x38z\")\n    ",
+          "input_schema": {
+            "properties": {
+              "wallpaper_id": {
+                "title": "Wallpaper Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "wallpaper_id"
+            ],
+            "title": "get_wallpaperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_wallpapers",
+          "description": "Search for wallpapers on Wallhaven\n    \n    Args:\n        query: Search query (tags, keywords, etc.)\n        categories: Categories to include (e.g., \"100\" for general only, \"110\" for general+anime)\n        purity: Purity filter (e.g., \"100\" for SFW only, \"110\" for SFW+sketchy)\n        sorting: How to sort results (date_added, relevance, random, views, favorites, toplist)\n        order: Sort order (desc, asc)\n        top_range: Time range for toplist (1d, 3d, 1w, 1M, 3M, 6M, 1y)\n        atleast: Minimum resolution (e.g., \"1920x1080\")\n        resolutions: Exact resolutions (e.g., \"1920x1080,2560x1440\")\n        ratios: Aspect ratios (e.g., \"16x9,16x10\")\n        colors: Color hex code (e.g., \"0066cc\")\n        page: Page number\n        seed: Seed for random results\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "default": null,
+                "title": "Query",
+                "type": "string"
+              },
+              "categories": {
+                "default": null,
+                "title": "Categories",
+                "type": "string"
+              },
+              "purity": {
+                "default": null,
+                "title": "Purity",
+                "type": "string"
+              },
+              "sorting": {
+                "default": "date_added",
+                "title": "Sorting",
+                "type": "string"
+              },
+              "order": {
+                "default": "desc",
+                "title": "Order",
+                "type": "string"
+              },
+              "top_range": {
+                "default": null,
+                "title": "Top Range",
+                "type": "string"
+              },
+              "atleast": {
+                "default": null,
+                "title": "Atleast",
+                "type": "string"
+              },
+              "resolutions": {
+                "default": null,
+                "title": "Resolutions",
+                "type": "string"
+              },
+              "ratios": {
+                "default": null,
+                "title": "Ratios",
+                "type": "string"
+              },
+              "colors": {
+                "default": null,
+                "title": "Colors",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "title": "Page",
+                "type": "integer"
+              },
+              "seed": {
+                "default": null,
+                "title": "Seed",
+                "type": "string"
+              }
+            },
+            "title": "search_wallpapersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_tag_info",
+          "description": "Get information about a specific tag by ID\n    \n    Args:\n        tag_id: The ID of the tag\n    ",
+          "input_schema": {
+            "properties": {
+              "tag_id": {
+                "title": "Tag Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "tag_id"
+            ],
+            "title": "get_tag_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_settings",
+          "description": "Get authenticated user settings (requires API key)",
+          "input_schema": {
+            "properties": {},
+            "title": "get_user_settingsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_collections",
+          "description": "Get user collections\n    \n    Args:\n        username: Username to get collections for. If None, gets authenticated user's collections (requires API key)\n    ",
+          "input_schema": {
+            "properties": {
+              "username": {
+                "default": null,
+                "title": "Username",
+                "type": "string"
+              }
+            },
+            "title": "get_collectionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_collection_wallpapers",
+          "description": "Get wallpapers from a specific collection\n    \n    Args:\n        username: Username who owns the collection\n        collection_id: ID of the collection\n        purity: Purity filter (e.g., \"100\" for SFW only)\n        page: Page number\n    ",
+          "input_schema": {
+            "properties": {
+              "username": {
+                "title": "Username",
+                "type": "string"
+              },
+              "collection_id": {
+                "title": "Collection Id",
+                "type": "integer"
+              },
+              "purity": {
+                "default": null,
+                "title": "Purity",
+                "type": "string"
+              },
+              "page": {
+                "default": 1,
+                "title": "Page",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "username",
+              "collection_id"
+            ],
+            "title": "get_collection_wallpapersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@devfurkank/wallhaven-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@devfurkank/wallhaven-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0495.@devfurkank_wallhaven-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 485
+  }
+}

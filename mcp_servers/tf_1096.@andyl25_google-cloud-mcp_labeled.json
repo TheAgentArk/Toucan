@@ -1,0 +1,1001 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is a Google Cloud Services Connector that primarily focuses on interacting with Google Cloud services, particularly for querying logs, executing database queries (using Spanner), and retrieving monitoring metrics. The available tools enable operations such as querying logs over specific time ranges, executing and counting Spanner queries, querying monitoring metrics, managing Spanner instances and databases, and tracing logs. The server simplifies access to these Google Cloud services through a unified protocol.",
+    "reasoning": "The primary functionality revolves around database operations and monitoring/metrics querying within Google Cloud, which aligns with the Database Operations category. Additionally, the server provides tools for log management, which fits under Data Analysis & Processing. The custom label \"Google Cloud Management\" captures the server's unique focus on Google Cloud services integration.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Google Cloud Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1095,
+    "server_name": "Google Cloud Services Connector",
+    "rank_by_usage": 1096,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@andyl25_google-cloud-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@andyl25/google-cloud-mcp/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAibGF6eUF1dGgiOiB0cnVlfQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "query-logs",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string",
+                "description": "The filter to apply to logs"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 50,
+                "description": "Maximum number of log entries to return"
+              }
+            },
+            "required": [
+              "filter"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "logs-time-range",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "startTime": {
+                "type": "string",
+                "description": "Start time in ISO format or relative time (e.g., \"1h\", \"2d\")"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time in ISO format (defaults to now)"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Additional filter criteria"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 50,
+                "description": "Maximum number of log entries to return"
+              }
+            },
+            "required": [
+              "startTime"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute-spanner-query",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sql": {
+                "type": "string",
+                "description": "The SQL query to execute"
+              },
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID (defaults to SPANNER_INSTANCE env var)"
+              },
+              "databaseId": {
+                "type": "string",
+                "description": "Spanner database ID (defaults to SPANNER_DATABASE env var)"
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Query parameters"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-spanner-tables",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID (defaults to SPANNER_INSTANCE env var)"
+              },
+              "databaseId": {
+                "type": "string",
+                "description": "Spanner database ID (defaults to SPANNER_DATABASE env var)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-spanner-instances",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "_dummy": {
+                "type": "string",
+                "description": "Not used, just to ensure parameter compatibility"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-spanner-databases",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID"
+              }
+            },
+            "required": [
+              "instanceId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "natural-language-spanner-query",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Natural language description of the query you want to execute"
+              },
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID (defaults to SPANNER_INSTANCE env var)"
+              },
+              "databaseId": {
+                "type": "string",
+                "description": "Spanner database ID (defaults to SPANNER_DATABASE env var)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "spanner-query-count",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID (optional, if not provided will show all instances)"
+              },
+              "databaseId": {
+                "type": "string",
+                "description": "Spanner database ID (optional, if not provided will show all databases)"
+              },
+              "queryType": {
+                "type": "string",
+                "enum": [
+                  "ALL",
+                  "READ",
+                  "QUERY"
+                ],
+                "default": "ALL",
+                "description": "Type of queries to count (ALL, READ, QUERY)"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "ALL",
+                  "OK",
+                  "ERROR"
+                ],
+                "default": "ALL",
+                "description": "Status of queries to count (ALL, OK, ERROR)"
+              },
+              "startTime": {
+                "type": "string",
+                "default": "1h",
+                "description": "Start time for the query (e.g., \"1h\", \"2d\", \"30m\")"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time for the query (defaults to now)"
+              },
+              "alignmentPeriod": {
+                "type": "string",
+                "default": "60s",
+                "description": "Alignment period for aggregating data points (e.g., \"60s\", \"5m\", \"1h\")"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "query-metrics",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string",
+                "description": "The filter to apply to metrics"
+              },
+              "startTime": {
+                "type": "string",
+                "description": "Start time in ISO format or relative time (e.g., \"1h\", \"2d\")"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time in ISO format (defaults to now)"
+              },
+              "alignmentPeriod": {
+                "type": "string",
+                "description": "Alignment period (e.g., \"60s\", \"300s\")"
+              }
+            },
+            "required": [
+              "filter",
+              "startTime"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-metric-types",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string",
+                "description": "Simple search term (e.g., \"spanner\") or full filter expression (e.g., \"metric.type = starts_with(\\\"spanner\\\")\")"
+              },
+              "pageSize": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "description": "Maximum number of metric types to return"
+              },
+              "timeout": {
+                "type": "number",
+                "minimum": 5,
+                "maximum": 60,
+                "default": 30,
+                "description": "Timeout in seconds for the request"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "natural-language-metrics-query",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Natural language description of the query you want to execute"
+              },
+              "startTime": {
+                "type": "string",
+                "description": "Start time in ISO format or relative time (e.g., \"1h\", \"2d\")"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time in ISO format (defaults to now)"
+              },
+              "alignmentPeriod": {
+                "type": "string",
+                "description": "Alignment period (e.g., \"60s\", \"300s\")"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-trace",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "traceId": {
+                "type": "string",
+                "description": "The trace ID to retrieve"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "Optional Google Cloud project ID"
+              }
+            },
+            "required": [
+              "traceId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-traces",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Optional Google Cloud project ID"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Optional filter for traces (e.g., \"status.code != 0\" for errors)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of traces to return"
+              },
+              "startTime": {
+                "type": "string",
+                "description": "Start time in RFC3339 format (e.g., \"2023-01-01T00:00:00Z\") or relative time (e.g., \"1h\", \"2d\")"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find-traces-from-logs",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Optional Google Cloud project ID"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Filter for logs (e.g., \"severity>=ERROR AND timestamp>\"-1d\"\")"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of logs to check"
+              }
+            },
+            "required": [
+              "filter"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "natural-language-trace-query",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Natural language query about traces (e.g., \"Show me failed traces from the last hour\")"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "Optional Google Cloud project ID"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-project-id",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The Google Cloud project ID to set as default"
+              }
+            },
+            "required": [
+              "projectId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-project-id",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 17,
+      "tool_names": [
+        "query-logs",
+        "logs-time-range",
+        "execute-spanner-query",
+        "list-spanner-tables",
+        "list-spanner-instances",
+        "list-spanner-databases",
+        "natural-language-spanner-query",
+        "spanner-query-count",
+        "query-metrics",
+        "list-metric-types",
+        "natural-language-metrics-query",
+        "get-trace",
+        "list-traces",
+        "find-traces-from-logs",
+        "natural-language-trace-query",
+        "set-project-id",
+        "get-project-id"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1095,
+      "name": "Google Cloud Services Connector",
+      "author": "@andyl25/google-cloud-mcp",
+      "overview": "Connect to Google Cloud services to query logs, execute database queries, and retrieve monitoring metrics. Interact seamlessly with Google Cloud Logging, Spanner, and Monitoring to gain insights and manage your cloud resources efficiently. Simplify access to your Google Cloud data and tools through a unified protocol server.",
+      "repository_url": "https://github.com/andyl25/google-cloud-mcp",
+      "homepage": "https://smithery.ai/server/@andyl25/google-cloud-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@andyl25_google-cloud-mcp.json",
+      "tools_count": 17,
+      "tools": [
+        {
+          "name": "query-logs",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string",
+                "description": "The filter to apply to logs"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 50,
+                "description": "Maximum number of log entries to return"
+              }
+            },
+            "required": [
+              "filter"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "logs-time-range",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "startTime": {
+                "type": "string",
+                "description": "Start time in ISO format or relative time (e.g., \"1h\", \"2d\")"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time in ISO format (defaults to now)"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Additional filter criteria"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 1000,
+                "default": 50,
+                "description": "Maximum number of log entries to return"
+              }
+            },
+            "required": [
+              "startTime"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute-spanner-query",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sql": {
+                "type": "string",
+                "description": "The SQL query to execute"
+              },
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID (defaults to SPANNER_INSTANCE env var)"
+              },
+              "databaseId": {
+                "type": "string",
+                "description": "Spanner database ID (defaults to SPANNER_DATABASE env var)"
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Query parameters"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-spanner-tables",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID (defaults to SPANNER_INSTANCE env var)"
+              },
+              "databaseId": {
+                "type": "string",
+                "description": "Spanner database ID (defaults to SPANNER_DATABASE env var)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-spanner-instances",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "_dummy": {
+                "type": "string",
+                "description": "Not used, just to ensure parameter compatibility"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-spanner-databases",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID"
+              }
+            },
+            "required": [
+              "instanceId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "natural-language-spanner-query",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Natural language description of the query you want to execute"
+              },
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID (defaults to SPANNER_INSTANCE env var)"
+              },
+              "databaseId": {
+                "type": "string",
+                "description": "Spanner database ID (defaults to SPANNER_DATABASE env var)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "spanner-query-count",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instanceId": {
+                "type": "string",
+                "description": "Spanner instance ID (optional, if not provided will show all instances)"
+              },
+              "databaseId": {
+                "type": "string",
+                "description": "Spanner database ID (optional, if not provided will show all databases)"
+              },
+              "queryType": {
+                "type": "string",
+                "enum": [
+                  "ALL",
+                  "READ",
+                  "QUERY"
+                ],
+                "default": "ALL",
+                "description": "Type of queries to count (ALL, READ, QUERY)"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "ALL",
+                  "OK",
+                  "ERROR"
+                ],
+                "default": "ALL",
+                "description": "Status of queries to count (ALL, OK, ERROR)"
+              },
+              "startTime": {
+                "type": "string",
+                "default": "1h",
+                "description": "Start time for the query (e.g., \"1h\", \"2d\", \"30m\")"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time for the query (defaults to now)"
+              },
+              "alignmentPeriod": {
+                "type": "string",
+                "default": "60s",
+                "description": "Alignment period for aggregating data points (e.g., \"60s\", \"5m\", \"1h\")"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "query-metrics",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string",
+                "description": "The filter to apply to metrics"
+              },
+              "startTime": {
+                "type": "string",
+                "description": "Start time in ISO format or relative time (e.g., \"1h\", \"2d\")"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time in ISO format (defaults to now)"
+              },
+              "alignmentPeriod": {
+                "type": "string",
+                "description": "Alignment period (e.g., \"60s\", \"300s\")"
+              }
+            },
+            "required": [
+              "filter",
+              "startTime"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-metric-types",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string",
+                "description": "Simple search term (e.g., \"spanner\") or full filter expression (e.g., \"metric.type = starts_with(\\\"spanner\\\")\")"
+              },
+              "pageSize": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "description": "Maximum number of metric types to return"
+              },
+              "timeout": {
+                "type": "number",
+                "minimum": 5,
+                "maximum": 60,
+                "default": 30,
+                "description": "Timeout in seconds for the request"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "natural-language-metrics-query",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Natural language description of the query you want to execute"
+              },
+              "startTime": {
+                "type": "string",
+                "description": "Start time in ISO format or relative time (e.g., \"1h\", \"2d\")"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time in ISO format (defaults to now)"
+              },
+              "alignmentPeriod": {
+                "type": "string",
+                "description": "Alignment period (e.g., \"60s\", \"300s\")"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-trace",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "traceId": {
+                "type": "string",
+                "description": "The trace ID to retrieve"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "Optional Google Cloud project ID"
+              }
+            },
+            "required": [
+              "traceId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-traces",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Optional Google Cloud project ID"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Optional filter for traces (e.g., \"status.code != 0\" for errors)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of traces to return"
+              },
+              "startTime": {
+                "type": "string",
+                "description": "Start time in RFC3339 format (e.g., \"2023-01-01T00:00:00Z\") or relative time (e.g., \"1h\", \"2d\")"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find-traces-from-logs",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Optional Google Cloud project ID"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Filter for logs (e.g., \"severity>=ERROR AND timestamp>\"-1d\"\")"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Maximum number of logs to check"
+              }
+            },
+            "required": [
+              "filter"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "natural-language-trace-query",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Natural language query about traces (e.g., \"Show me failed traces from the last hour\")"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "Optional Google Cloud project ID"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-project-id",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The Google Cloud project ID to set as default"
+              }
+            },
+            "required": [
+              "projectId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-project-id",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"lazyAuth\": true\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@andyl25/google-cloud-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"lazyAuth\": true\n}",
+      "python_sdk_url": "https://server.smithery.ai/@andyl25/google-cloud-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1096.@andyl25_google-cloud-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1073
+  }
+}

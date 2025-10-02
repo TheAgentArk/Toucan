@@ -1,0 +1,454 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in aggregating and analyzing news content from Google News and Google Trends. It allows users to search news by keywords, locations, or predefined topics, as well as retrieve trending terms. The server leverages NLP and LLM sampling to summarize articles and extract keywords, providing concise insights. Its core functionality revolves around news aggregation, trend analysis, and content summarization.",
+    "reasoning": "The **primary_label** \"News & Media\" is chosen because the server's main purpose is to aggregate and analyze news content from Google News. The **secondary_labels** \"Web Search & Research\" and \"Data Analysis & Processing\" are selected because the server allows for keyword-based searches and provides summarized insights, which aligns with research and data analysis. No custom label is needed as the predefined categories cover the server's functionality adequately.",
+    "primary_label": "News & Media",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 949,
+    "server_name": "Google News and Trends",
+    "rank_by_usage": 950,
+    "usage_count": "3",
+    "original_file": "../crawler/smithery/@jmanek_google-news-trends-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jmanek/google-news-trends-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_news_by_keyword",
+          "description": "\n    Find articles by keyword using Google News.\n    ",
+          "input_schema": {
+            "properties": {
+              "keyword": {
+                "description": "Search term to find articles.",
+                "title": "Keyword",
+                "type": "string"
+              },
+              "period": {
+                "default": 7,
+                "description": "Number of days to look back for articles.",
+                "minimum": 1,
+                "title": "Period",
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "description": "Maximum number of results to return.",
+                "minimum": 1,
+                "title": "Max Results",
+                "type": "integer"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each article. If False a summary should be created by setting the summarize flag",
+                "title": "Full Data",
+                "type": "boolean"
+              },
+              "summarize": {
+                "default": true,
+                "description": "Generate a summary of the article, will first try LLM Sampling but if unavailable will use nlp",
+                "title": "Summarize",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "keyword"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_news_by_location",
+          "description": "Find articles by location using Google News.",
+          "input_schema": {
+            "properties": {
+              "location": {
+                "description": "Name of city/state/country.",
+                "title": "Location",
+                "type": "string"
+              },
+              "period": {
+                "default": 7,
+                "description": "Number of days to look back for articles.",
+                "minimum": 1,
+                "title": "Period",
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "description": "Maximum number of results to return.",
+                "minimum": 1,
+                "title": "Max Results",
+                "type": "integer"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each article. If False a summary should be created by setting the summarize flag",
+                "title": "Full Data",
+                "type": "boolean"
+              },
+              "summarize": {
+                "default": true,
+                "description": "Generate a summary of the article, will first try LLM Sampling but if unavailable will use nlp",
+                "title": "Summarize",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_news_by_topic",
+          "description": "Find articles by topic using Google News.\n    topic is one of\n    WORLD, NATION, BUSINESS, TECHNOLOGY, ENTERTAINMENT, SPORTS, SCIENCE, HEALTH,\n    POLITICS, CELEBRITIES, TV, MUSIC, MOVIES, THEATER, SOCCER, CYCLING, MOTOR SPORTS,\n    TENNIS, COMBAT SPORTS, BASKETBALL, BASEBALL, FOOTBALL, SPORTS BETTING, WATER SPORTS,\n    HOCKEY, GOLF, CRICKET, RUGBY, ECONOMY, PERSONAL FINANCE, FINANCE, DIGITAL CURRENCIES,\n    MOBILE, ENERGY, GAMING, INTERNET SECURITY, GADGETS, VIRTUAL REALITY, ROBOTICS, NUTRITION,\n    PUBLIC HEALTH, MENTAL HEALTH, MEDICINE, SPACE, WILDLIFE, ENVIRONMENT, NEUROSCIENCE, PHYSICS,\n    GEOLOGY, PALEONTOLOGY, SOCIAL SCIENCES, EDUCATION, JOBS, ONLINE EDUCATION, HIGHER EDUCATION,\n    VEHICLES, ARTS-DESIGN, BEAUTY, FOOD, TRAVEL, SHOPPING, HOME, OUTDOORS, FASHION.\n    ",
+          "input_schema": {
+            "properties": {
+              "topic": {
+                "description": "Topic to search for articles.",
+                "title": "Topic",
+                "type": "string"
+              },
+              "period": {
+                "default": 7,
+                "description": "Number of days to look back for articles.",
+                "minimum": 1,
+                "title": "Period",
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "description": "Maximum number of results to return.",
+                "minimum": 1,
+                "title": "Max Results",
+                "type": "integer"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each article. If False a summary should be created by setting the summarize flag",
+                "title": "Full Data",
+                "type": "boolean"
+              },
+              "summarize": {
+                "default": true,
+                "description": "Generate a summary of the article, will first try LLM Sampling but if unavailable will use nlp",
+                "title": "Summarize",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "topic"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_top_news",
+          "description": "\n    Get top news stories from Google News.\n    ",
+          "input_schema": {
+            "properties": {
+              "period": {
+                "default": 3,
+                "description": "Number of days to look back for top articles.",
+                "minimum": 1,
+                "title": "Period",
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "description": "Maximum number of results to return.",
+                "minimum": 1,
+                "title": "Max Results",
+                "type": "integer"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each article. If False a summary should be created by setting the summarize flag",
+                "title": "Full Data",
+                "type": "boolean"
+              },
+              "summarize": {
+                "default": true,
+                "description": "Generate a summary of the article, will first try LLM Sampling but if unavailable will use nlp",
+                "title": "Summarize",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trending_terms",
+          "description": "\n    Returns google trends for a specific geo location.\n    ",
+          "input_schema": {
+            "properties": {
+              "geo": {
+                "default": "US",
+                "description": "Country code, e.g. 'US', 'GB', 'IN', etc.",
+                "title": "Geo",
+                "type": "string"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each trend. Should be False for most use cases.",
+                "title": "Full Data",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "get_news_by_keyword",
+        "get_news_by_location",
+        "get_news_by_topic",
+        "get_top_news",
+        "get_trending_terms"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 949,
+      "name": "Google News and Trends",
+      "author": "@jmanek/google-news-trends-mcp",
+      "overview": "Search and retrieve RSS feeds from Google News and Google Trends. Summarize articles and extract keywords using optional NLP and LLM Sampling to get concise insights. Access top news stories, keyword-based news, location-specific news, and trending topics easily through a standardized interface.",
+      "repository_url": "https://github.com/jmanek/google-news-trends-mcp",
+      "homepage": "https://smithery.ai/server/@jmanek/google-news-trends-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "3",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jmanek_google-news-trends-mcp.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "get_news_by_keyword",
+          "description": "\n    Find articles by keyword using Google News.\n    ",
+          "input_schema": {
+            "properties": {
+              "keyword": {
+                "description": "Search term to find articles.",
+                "title": "Keyword",
+                "type": "string"
+              },
+              "period": {
+                "default": 7,
+                "description": "Number of days to look back for articles.",
+                "minimum": 1,
+                "title": "Period",
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "description": "Maximum number of results to return.",
+                "minimum": 1,
+                "title": "Max Results",
+                "type": "integer"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each article. If False a summary should be created by setting the summarize flag",
+                "title": "Full Data",
+                "type": "boolean"
+              },
+              "summarize": {
+                "default": true,
+                "description": "Generate a summary of the article, will first try LLM Sampling but if unavailable will use nlp",
+                "title": "Summarize",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "keyword"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_news_by_location",
+          "description": "Find articles by location using Google News.",
+          "input_schema": {
+            "properties": {
+              "location": {
+                "description": "Name of city/state/country.",
+                "title": "Location",
+                "type": "string"
+              },
+              "period": {
+                "default": 7,
+                "description": "Number of days to look back for articles.",
+                "minimum": 1,
+                "title": "Period",
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "description": "Maximum number of results to return.",
+                "minimum": 1,
+                "title": "Max Results",
+                "type": "integer"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each article. If False a summary should be created by setting the summarize flag",
+                "title": "Full Data",
+                "type": "boolean"
+              },
+              "summarize": {
+                "default": true,
+                "description": "Generate a summary of the article, will first try LLM Sampling but if unavailable will use nlp",
+                "title": "Summarize",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_news_by_topic",
+          "description": "Find articles by topic using Google News.\n    topic is one of\n    WORLD, NATION, BUSINESS, TECHNOLOGY, ENTERTAINMENT, SPORTS, SCIENCE, HEALTH,\n    POLITICS, CELEBRITIES, TV, MUSIC, MOVIES, THEATER, SOCCER, CYCLING, MOTOR SPORTS,\n    TENNIS, COMBAT SPORTS, BASKETBALL, BASEBALL, FOOTBALL, SPORTS BETTING, WATER SPORTS,\n    HOCKEY, GOLF, CRICKET, RUGBY, ECONOMY, PERSONAL FINANCE, FINANCE, DIGITAL CURRENCIES,\n    MOBILE, ENERGY, GAMING, INTERNET SECURITY, GADGETS, VIRTUAL REALITY, ROBOTICS, NUTRITION,\n    PUBLIC HEALTH, MENTAL HEALTH, MEDICINE, SPACE, WILDLIFE, ENVIRONMENT, NEUROSCIENCE, PHYSICS,\n    GEOLOGY, PALEONTOLOGY, SOCIAL SCIENCES, EDUCATION, JOBS, ONLINE EDUCATION, HIGHER EDUCATION,\n    VEHICLES, ARTS-DESIGN, BEAUTY, FOOD, TRAVEL, SHOPPING, HOME, OUTDOORS, FASHION.\n    ",
+          "input_schema": {
+            "properties": {
+              "topic": {
+                "description": "Topic to search for articles.",
+                "title": "Topic",
+                "type": "string"
+              },
+              "period": {
+                "default": 7,
+                "description": "Number of days to look back for articles.",
+                "minimum": 1,
+                "title": "Period",
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "description": "Maximum number of results to return.",
+                "minimum": 1,
+                "title": "Max Results",
+                "type": "integer"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each article. If False a summary should be created by setting the summarize flag",
+                "title": "Full Data",
+                "type": "boolean"
+              },
+              "summarize": {
+                "default": true,
+                "description": "Generate a summary of the article, will first try LLM Sampling but if unavailable will use nlp",
+                "title": "Summarize",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "topic"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_top_news",
+          "description": "\n    Get top news stories from Google News.\n    ",
+          "input_schema": {
+            "properties": {
+              "period": {
+                "default": 3,
+                "description": "Number of days to look back for top articles.",
+                "minimum": 1,
+                "title": "Period",
+                "type": "integer"
+              },
+              "max_results": {
+                "default": 10,
+                "description": "Maximum number of results to return.",
+                "minimum": 1,
+                "title": "Max Results",
+                "type": "integer"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each article. If False a summary should be created by setting the summarize flag",
+                "title": "Full Data",
+                "type": "boolean"
+              },
+              "summarize": {
+                "default": true,
+                "description": "Generate a summary of the article, will first try LLM Sampling but if unavailable will use nlp",
+                "title": "Summarize",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trending_terms",
+          "description": "\n    Returns google trends for a specific geo location.\n    ",
+          "input_schema": {
+            "properties": {
+              "geo": {
+                "default": "US",
+                "description": "Country code, e.g. 'US', 'GB', 'IN', etc.",
+                "title": "Geo",
+                "type": "string"
+              },
+              "full_data": {
+                "default": false,
+                "description": "Return full data for each trend. Should be False for most use cases.",
+                "title": "Full Data",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jmanek/google-news-trends-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jmanek/google-news-trends-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0950.@jmanek_google-news-trends-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 928
+  }
+}

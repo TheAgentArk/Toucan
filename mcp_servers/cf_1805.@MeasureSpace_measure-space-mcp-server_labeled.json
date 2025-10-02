@@ -1,0 +1,205 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides a comprehensive set of tools focused on weather, climate, and air quality data retrieval. Its core functionality revolves around offering forecasts, geocoding services, and location-based environmental insights. The tools enable access to hourly and daily weather forecasts, climate outlooks, air quality forecasts, and astronomy data, which are essential for context-aware applications. Additionally, it includes geocoding and reverse geocoding tools to enhance location-based queries with timezone data. The server is designed to reduce costs and provide customized tool options through separated API keys.",
+    "reasoning": "The primary label \"Weather\" is chosen because the server's main focus is on providing detailed weather forecasts and related environmental data. The secondary labels \"Travel & Maps\" and \"Environmental Monitoring\" are relevant because the geocoding tools and location-based services enhance applications in these areas. A custom label \"Environmental Forecasting\" is added to highlight the server's unique specialization in weather and air quality analytics beyond typical weather-focused services.",
+    "primary_label": "Weather",
+    "secondary_labels": [
+      "Travel & Maps",
+      "Weather"
+    ],
+    "custom_label": "Environmental Forecasting",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1804,
+    "server_name": "Weather, Climate and Air Quality Forecast Server by Measure Space",
+    "rank_by_usage": 1805,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@MeasureSpace_measure-space-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@MeasureSpace/measure-space-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1804,
+      "name": "Weather, Climate and Air Quality Forecast Server by Measure Space",
+      "author": "@MeasureSpace/measure-space-mcp-server",
+      "overview": "Provide AI assistants with access to detailed weather, climate, air quality forecasts, and geocoding services. Retrieve hourly and daily weather forecasts, climate outlooks, air quality forecast, and astronomy information to enhance context-aware applications. Enable location-based queries with geocoding and timezone data for improved environmental insights. Separated API keys to reduce cost and provide customized tool options. More details can be found at measurespace.io.",
+      "repository_url": "https://github.com/MeasureSpace/measure-space-mcp-server",
+      "homepage": "https://smithery.ai/server/@MeasureSpace/measure-space-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@MeasureSpace_measure-space-mcp-server.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "daily_weather_forecast",
+          "description": "Deploy Server Weather, Climate and Air Quality Forecast Server by Measure Space @MeasureSpace/measure-space-mcp-server Try in Playground daily_weather_forecast",
+          "parameters": [
+            {
+              "name": "unit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "latitude",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "longitude",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "hourly_weather_forecast",
+          "description": "Get hourly weather forecast for next 5 days.",
+          "parameters": [
+            {
+              "name": "unit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "latitude",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "longitude",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "daily_climate_forecast",
+          "description": "Get daily climate forecast for next 9 months.",
+          "parameters": [
+            {
+              "name": "unit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "latitude",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "longitude",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "hourly_air_quality_forecast",
+          "description": "Get hourly air quality forecast for next 4 days.",
+          "parameters": [
+            {
+              "name": "hourly_air_quality_forecast",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "daily_air_quality_forecast",
+          "description": "Get daily air quality forecast for next 4 days.",
+          "parameters": [
+            {
+              "name": "latitude",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "longitude",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "convert_city_to_latitude_longitude",
+          "description": "Find the latitude and longitude for a given city name.",
+          "parameters": [
+            {
+              "name": "convert_city_to_latitude_longitude",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "find_nearest_city_from_latitude_longitude",
+          "description": "Find the nearest city for given latitude and longitude.",
+          "parameters": [
+            {
+              "name": "find_nearest_city_from_latitude_longitude",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@MeasureSpace/measure-space-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "geocodingApiKey",
+          "required": true,
+          "description": "geocoding API key for authentication"
+        },
+        {
+          "name": "airQualityApiKey",
+          "required": true,
+          "description": "air quality API key for authentication"
+        },
+        {
+          "name": "dailyClimateApiKey",
+          "required": true,
+          "description": "daily climate API key for authentication"
+        },
+        {
+          "name": "dailyWeatherApiKey",
+          "required": true,
+          "description": "daily weather API key for authentication"
+        },
+        {
+          "name": "hourlyWeatherApiKey",
+          "required": true,
+          "description": "hourly weather API key for authentication"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@MeasureSpace/measure-space-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1805.@MeasureSpace_measure-space-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1605
+  }
+}

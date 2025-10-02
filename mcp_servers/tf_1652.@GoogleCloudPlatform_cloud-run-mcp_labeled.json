@@ -1,0 +1,474 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is primarily focused on deploying and managing applications on Google Cloud Run. It facilitates seamless integration between AI agents/systems and cloud infrastructure by providing tools for project creation, service deployment, and resource management. The server enables deployment of both local files/folders and in-context file content, with secure IAM authentication for cloud resource management. The core use case is cloud-based application deployment and management through AI-driven workflows.",
+    "reasoning": "The primary label \"Cloud Services\" was chosen because the server's core functionality revolves around deploying and managing services on Google Cloud Run - a key aspect of cloud infrastructure management. Secondary \"Development Tools\" is included because it supports application deployment workflows which are central to development processes. Secondary \"API Integration\" is relevant due to the server's role as an intermediary between AI agents and cloud services. No custom label is needed as the predefined categories sufficiently cover the functionality.",
+    "primary_label": "Cloud Services",
+    "secondary_labels": [
+      "Development Tools",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1651,
+    "server_name": "Cloud Run Deployment Server",
+    "rank_by_usage": 1652,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@GoogleCloudPlatform_cloud-run-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@GoogleCloudPlatform/cloud-run-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list_projects",
+          "description": "Lists available GCP projects",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_project",
+          "description": "Creates a new GCP project and attempts to attach it to the first available billing account. A project ID can be optionally specified; otherwise it will be automatically generated.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Optional. The desired ID for the new GCP project. If not provided, an ID will be auto-generated."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_services",
+          "description": "Lists Cloud Run services in a given project and region.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID"
+              },
+              "region": {
+                "type": "string",
+                "description": "Region where the services are located",
+                "default": "europe-west1"
+              }
+            },
+            "required": [
+              "project"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_service",
+          "description": "Gets details for a specific Cloud Run service.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID containing the service"
+              },
+              "region": {
+                "type": "string",
+                "description": "Region where the service is located",
+                "default": "europe-west1"
+              },
+              "service": {
+                "type": "string",
+                "description": "Name of the Cloud Run service"
+              }
+            },
+            "required": [
+              "project",
+              "service"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "deploy_local_files",
+          "description": "Deploy local files to Cloud Run. Takes an array of absolute file paths from the local filesystem that will be deployed. Use this tool if the files exists on the user local filesystem.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID. Do not select it yourself, make sure the user provides or confirms the project ID."
+              },
+              "region": {
+                "type": "string",
+                "default": "europe-west1",
+                "description": "Region to deploy the service to"
+              },
+              "service": {
+                "type": "string",
+                "default": "app",
+                "description": "Name of the Cloud Run service to deploy to"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of absolute file paths to deploy (e.g. [\"/home/user/project/src/index.js\", \"/home/user/project/package.json\"])"
+              }
+            },
+            "required": [
+              "project",
+              "files"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "deploy_local_folder",
+          "description": "Deploy a local folder to Cloud Run. Takes an absolute folder path from the local filesystem that will be deployed. Use this tool if the entire folder content needs to be deployed.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID. Do not select it yourself, make sure the user provides or confirms the project ID."
+              },
+              "region": {
+                "type": "string",
+                "default": "europe-west1",
+                "description": "Region to deploy the service to"
+              },
+              "service": {
+                "type": "string",
+                "default": "app",
+                "description": "Name of the Cloud Run service to deploy to"
+              },
+              "folderPath": {
+                "type": "string",
+                "description": "Absolute path to the folder to deploy (e.g. \"/home/user/project/src\")"
+              }
+            },
+            "required": [
+              "project",
+              "folderPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "deploy_file_contents",
+          "description": "Deploy files to Cloud Run by providing their contents directly. Takes an array of file objects containing filename and content. Use this tool if the files only exist in the current chat context.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID. Leave unset for the app to be deployed in a new project. If provided, make sure the user confirms the project ID they want to deploy to."
+              },
+              "region": {
+                "type": "string",
+                "default": "europe-west1",
+                "description": "Region to deploy the service to"
+              },
+              "service": {
+                "type": "string",
+                "default": "app",
+                "description": "Name of the Cloud Run service to deploy to"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "filename": {
+                      "type": "string",
+                      "description": "Name and path of the file (e.g. \"src/index.js\" or \"data/config.json\")"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Text content of the file"
+                    }
+                  },
+                  "required": [
+                    "filename"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of file objects containing filename and content"
+              }
+            },
+            "required": [
+              "project",
+              "files"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "list_projects",
+        "create_project",
+        "list_services",
+        "get_service",
+        "deploy_local_files",
+        "deploy_local_folder",
+        "deploy_file_contents"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1651,
+      "name": "Cloud Run Deployment Server",
+      "author": "@GoogleCloudPlatform/cloud-run-mcp",
+      "overview": "Enable AI agents to deploy applications and manage services on Google Cloud Run seamlessly. List, create, and deploy projects and services directly from AI-powered IDEs or assistant apps. Securely connect to remote Cloud Run instances with IAM authentication for safe cloud resource management.",
+      "repository_url": "https://github.com/GoogleCloudPlatform/cloud-run-mcp",
+      "homepage": "https://smithery.ai/server/@GoogleCloudPlatform/cloud-run-mcp",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@GoogleCloudPlatform_cloud-run-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "list_projects",
+          "description": "Lists available GCP projects",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_project",
+          "description": "Creates a new GCP project and attempts to attach it to the first available billing account. A project ID can be optionally specified; otherwise it will be automatically generated.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Optional. The desired ID for the new GCP project. If not provided, an ID will be auto-generated."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_services",
+          "description": "Lists Cloud Run services in a given project and region.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID"
+              },
+              "region": {
+                "type": "string",
+                "description": "Region where the services are located",
+                "default": "europe-west1"
+              }
+            },
+            "required": [
+              "project"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_service",
+          "description": "Gets details for a specific Cloud Run service.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID containing the service"
+              },
+              "region": {
+                "type": "string",
+                "description": "Region where the service is located",
+                "default": "europe-west1"
+              },
+              "service": {
+                "type": "string",
+                "description": "Name of the Cloud Run service"
+              }
+            },
+            "required": [
+              "project",
+              "service"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "deploy_local_files",
+          "description": "Deploy local files to Cloud Run. Takes an array of absolute file paths from the local filesystem that will be deployed. Use this tool if the files exists on the user local filesystem.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID. Do not select it yourself, make sure the user provides or confirms the project ID."
+              },
+              "region": {
+                "type": "string",
+                "default": "europe-west1",
+                "description": "Region to deploy the service to"
+              },
+              "service": {
+                "type": "string",
+                "default": "app",
+                "description": "Name of the Cloud Run service to deploy to"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of absolute file paths to deploy (e.g. [\"/home/user/project/src/index.js\", \"/home/user/project/package.json\"])"
+              }
+            },
+            "required": [
+              "project",
+              "files"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "deploy_local_folder",
+          "description": "Deploy a local folder to Cloud Run. Takes an absolute folder path from the local filesystem that will be deployed. Use this tool if the entire folder content needs to be deployed.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID. Do not select it yourself, make sure the user provides or confirms the project ID."
+              },
+              "region": {
+                "type": "string",
+                "default": "europe-west1",
+                "description": "Region to deploy the service to"
+              },
+              "service": {
+                "type": "string",
+                "default": "app",
+                "description": "Name of the Cloud Run service to deploy to"
+              },
+              "folderPath": {
+                "type": "string",
+                "description": "Absolute path to the folder to deploy (e.g. \"/home/user/project/src\")"
+              }
+            },
+            "required": [
+              "project",
+              "folderPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "deploy_file_contents",
+          "description": "Deploy files to Cloud Run by providing their contents directly. Takes an array of file objects containing filename and content. Use this tool if the files only exist in the current chat context.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project": {
+                "type": "string",
+                "description": "Google Cloud project ID. Leave unset for the app to be deployed in a new project. If provided, make sure the user confirms the project ID they want to deploy to."
+              },
+              "region": {
+                "type": "string",
+                "default": "europe-west1",
+                "description": "Region to deploy the service to"
+              },
+              "service": {
+                "type": "string",
+                "default": "app",
+                "description": "Name of the Cloud Run service to deploy to"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "filename": {
+                      "type": "string",
+                      "description": "Name and path of the file (e.g. \"src/index.js\" or \"data/config.json\")"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "Text content of the file"
+                    }
+                  },
+                  "required": [
+                    "filename"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of file objects containing filename and content"
+              }
+            },
+            "required": [
+              "project",
+              "files"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@GoogleCloudPlatform/cloud-run-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@GoogleCloudPlatform/cloud-run-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1652.@GoogleCloudPlatform_cloud-run-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1497
+  }
+}

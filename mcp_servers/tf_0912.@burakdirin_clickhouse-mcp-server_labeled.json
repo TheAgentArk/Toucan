@@ -1,0 +1,140 @@
+{
+  "labels": {
+    "analysis": "The Clickhouse MCP Server enables secure interaction with ClickHouse databases, allowing for database connections and query execution. Its core functionality is centered around database operations with specific features for ClickHouse databases, including secure connections, query execution, and read-only mode support. The available tools are focused solely on database connectivity and query operations.",
+    "reasoning": "The primary label \"Database Operations\" is chosen because the server's main purpose is to facilitate database connectivity and query execution. There are no discernible secondary functions that would warrant additional labels, and no unique functionality not covered by existing categories.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 911,
+    "server_name": "Clickhouse MCP Server",
+    "rank_by_usage": 912,
+    "usage_count": "4",
+    "original_file": "../crawler/smithery/@burakdirin_clickhouse-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@burakdirin/clickhouse-mcp-server/mcp?config=eyJDTElDS0hPVVNFX0hPU1QiOiAibG9jYWxob3N0IiwgIkNMSUNLSE9VU0VfVVNFUiI6ICJyb290IiwgIkNMSUNLSE9VU0VfREFUQUJBU0UiOiAiIiwgIkNMSUNLSE9VU0VfUEFTU1dPUkQiOiAiIiwgIkNMSUNLSE9VU0VfUkVBRE9OTFkiOiBmYWxzZX0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "connect_database",
+          "description": "Connect to a specific ClickHouse database",
+          "input_schema": {
+            "properties": {
+              "database": {
+                "title": "Database",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database"
+            ],
+            "title": "connect_databaseArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_query",
+          "description": "Execute ClickHouse queries",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "execute_queryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "connect_database",
+        "execute_query"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 911,
+      "name": "Clickhouse MCP Server",
+      "author": "@burakdirin/clickhouse-mcp-server",
+      "overview": "An MCP server implementation that enables Claude AI to interact with Clickhouse databases. Features include secure database connections, query execution, read-only mode support, and multi-query capabilities.",
+      "repository_url": "https://github.com/burakdirin/clickhouse-mcp-server",
+      "homepage": "https://smithery.ai/server/@burakdirin/clickhouse-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "4",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@burakdirin_clickhouse-mcp-server.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "connect_database",
+          "description": "Connect to a specific ClickHouse database",
+          "input_schema": {
+            "properties": {
+              "database": {
+                "title": "Database",
+                "type": "string"
+              }
+            },
+            "required": [
+              "database"
+            ],
+            "title": "connect_databaseArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_query",
+          "description": "Execute ClickHouse queries",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "execute_queryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"CLICKHOUSE_HOST\": \"localhost\",\n  \"CLICKHOUSE_USER\": \"root\",\n  \"CLICKHOUSE_DATABASE\": \"\",\n  \"CLICKHOUSE_PASSWORD\": \"\",\n  \"CLICKHOUSE_READONLY\": false\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@burakdirin/clickhouse-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"CLICKHOUSE_HOST\": \"localhost\",\n  \"CLICKHOUSE_USER\": \"root\",\n  \"CLICKHOUSE_DATABASE\": \"\",\n  \"CLICKHOUSE_PASSWORD\": \"\",\n  \"CLICKHOUSE_READONLY\": false\n}",
+      "python_sdk_url": "https://server.smithery.ai/@burakdirin/clickhouse-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0912.@burakdirin_clickhouse-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 892
+  }
+}

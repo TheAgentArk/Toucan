@@ -1,0 +1,98 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"EvoAPI WhatsApp Integration Server\" is designed to enable AI agents to interact programmatically with WhatsApp through the Evolution API. It provides tools for managing WhatsApp groups, sending messages to both groups and individuals, and retrieving message history within specified date ranges. The server prioritizes secure credential handling through environment variables, ensuring safe operation for automated WhatsApp interactions.",
+    "reasoning": "The primary functionality aligns strongly with messaging and communication, making \"Communication Tools\" the most fitting label. Secondary functions include \"Security & Authentication\" due to the credential handling and the server's support for message archival, which could relate to \"Database Operations\" for data retrieval.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "Security & Authentication",
+      "Database Operations"
+    ],
+    "custom_label": "WhatsApp Automation",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1763,
+    "server_name": "EvoAPI WhatsApp Integration Server",
+    "rank_by_usage": 1764,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@fellipesaraiva88_evoapi-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@fellipesaraiva88/evoapi-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "Connection timeout (20 seconds)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1763,
+      "name": "EvoAPI WhatsApp Integration Server",
+      "author": "@fellipesaraiva88/evoapi-mcp",
+      "overview": "Enable AI agents to programmatically interact with WhatsApp via Evolution API. Manage WhatsApp groups, send messages to groups or individuals, and retrieve message history seamlessly. Securely handle credentials through environment variables for safe operation.",
+      "repository_url": "https://github.com/fellipesaraiva88/evoapi-mcp",
+      "homepage": "https://smithery.ai/server/@fellipesaraiva88/evoapi-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@fellipesaraiva88_evoapi-mcp.json",
+      "tools_count": 4,
+      "tools": [
+        {
+          "name": "get_groups",
+          "description": "Deploy Server EvoAPI WhatsApp Integration Server @fellipesaraiva88/evoapi-mcp Try in Playground",
+          "parameters": []
+        },
+        {
+          "name": "get_group_messages",
+          "description": "Recupera as mensagens enviadas em um grupo do WhatsApp dentro de um intervalo de datas especificado. Esta ferramenta permite ao agente acessar o histórico de conversas de um grupo, retornando as mensagens publicadas entre `start_date` e `end_date`, com detalhes como remetente, horário, tipo da mensagem e conteúdo textual. Args: group_id (str): Identificador único do grupo do WhatsApp. start_date (str): Data e hora de início no formato 'YYYY-MM-DD HH:MM:SS'. end_date (str): Data e hora de término no formato 'YYYY-MM-DD HH:MM:SS'. Returns: str: Lista de mensagens formatadas, com os campos: - Usuário - Data e hora - Tipo da mensagem - Texto Cada mensagem é separada por um delimitador visual.",
+          "parameters": []
+        },
+        {
+          "name": "send_message_to_group",
+          "description": "Envia uma mensagem de texto para um grupo específico do WhatsApp. Esta ferramenta permite ao agente enviar mensagens para grupos do WhatsApp utilizando a API do WhatsApp. A mensagem será entregue ao grupo identificado pelo group_id fornecido. Args: group_id (str): Identificador único do grupo do WhatsApp no formato 'XXXXXXXXXXXXXXXXX@g.us'. Este ID pode ser obtido através da ferramenta get_groups(). message (str): Conteúdo da mensagem a ser enviada. Pode conter texto formatado, emojis e quebras de linha. Returns: str: Mensagem indicando o resultado da operação: - \"Mensagem enviada com sucesso\" em caso de êxito - \"Erro ao enviar mensagem: <descrição>\" em caso de falha Raises: Exception: Possíveis erros durante o envio da mensagem, como: - Grupo não encontrado - Problemas de conexão - Falha na autenticação - Formato inválido de mensagem",
+          "parameters": []
+        },
+        {
+          "name": "send_message_to_phone",
+          "description": "Envia uma mensagem de texto para um número de telefone específico via WhatsApp. Somente use para enviar mensagens para números de telefone explicitamente. Caso contrario use a função send_message_to_group. Esta ferramenta permite ao agente enviar mensagens diretamente para números de telefone individuais utilizando a API do WhatsApp. A mensagem será entregue ao destinatário somente se o número estiver registrado no WhatsApp. Args: cellphone (str): Número do telefone no formato internacional, incluindo código do país e DDD, sem caracteres especiais. se por acaso falta o 55, coloque 55 coloque o 55 na frente do numero. Mas o usuário tem que informa o DDD obrigatoriamente. Exemplo: '5511999999999' para um número de São Paulo, Brasil. message (str): Conteúdo da mensagem a ser enviada. Pode conter texto formatado, emojis e quebras de linha. Returns: str: Mensagem indicando o resultado da operação: - \"Mensagem enviada com sucesso\" em caso de êxito - \"Erro ao enviar mensagem: <descrição>\" em caso de falha Raises: Exception: Possíveis erros durante o envio da mensagem, como: - Número inválido ou mal formatado - Número não registrado no WhatsApp - Problemas de conexão - Falha na autenticação - Formato inválido de mensagem",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@fellipesaraiva88/evoapi-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "evoApiToken",
+          "required": true,
+          "description": "EVO_API_TOKEN"
+        },
+        {
+          "name": "evoInstanceToken",
+          "required": true,
+          "description": "EVO_INSTANCE_TOKEN"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@fellipesaraiva88/evoapi-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1764.@fellipesaraiva88_evoapi-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1580
+  }
+}

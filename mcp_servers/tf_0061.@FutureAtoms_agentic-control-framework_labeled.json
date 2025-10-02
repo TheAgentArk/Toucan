@@ -1,0 +1,712 @@
+{
+  "labels": {
+    "analysis": "The MCP Server functions primarily as a task and project management system enhanced with AI capabilities. It allows users to break down complex projects into manageable tasks and subtasks, track progress, and adapt to changes. Integration with Gemini API for task generation and revision, as well as Cursor IDE, suggests a focus on developer productivity. The CLI interface and file-based task organization cater to structured project management needs.",
+    "reasoning": "The primary label \"Development Tools\" was chosen because the server is specifically designed to enhance developer productivity through task management, project organization, and integration with IDEs. Secondary labels \"Daily Productivity\" and \"Content Creation\" were selected because of its utility in task tracking (similar to productivity tools) and Markdown file generation (a content creation aspect). No custom label was deemed necessary as the server's core functionality aligns well with existing categories.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Daily Productivity",
+      "Content Creation"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 60,
+    "server_name": "Agentic Control Framework",
+    "rank_by_usage": 61,
+    "usage_count": "1,461",
+    "original_file": "../crawler/smithery/@FutureAtoms_agentic-control-framework.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@FutureAtoms/agentic-control-framework/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "setWorkspace",
+          "description": "Sets the workspace directory for the task manager.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspacePath": {
+                "type": "string",
+                "description": "The path to the workspace directory."
+              }
+            },
+            "required": [
+              "workspacePath"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "initProject",
+          "description": "Initializes the task manager project.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectName": {
+                "type": "string",
+                "description": "Optional name for the project."
+              },
+              "projectDescription": {
+                "type": "string",
+                "description": "Optional goal or description for the project."
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "addTask",
+          "description": "Adds a new task to the task list.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The title of the task."
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description for the task."
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "description": "Optional priority (low, medium, high). Defaults to medium."
+              },
+              "dependsOn": {
+                "type": "string",
+                "description": "Optional comma-separated string of task IDs it depends on."
+              },
+              "relatedFiles": {
+                "type": "string",
+                "description": "Optional comma-separated string of relevant file paths."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "addSubtask",
+          "description": "Adds a subtask to a specified parent task.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "parentId": {
+                "type": "number",
+                "description": "The ID of the parent task."
+              },
+              "title": {
+                "type": "string",
+                "description": "The title of the subtask."
+              }
+            },
+            "required": [
+              "parentId",
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "listTasks",
+          "description": "Lists tasks, optionally filtered by status.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "todo",
+                  "inprogress",
+                  "done",
+                  "blocked",
+                  "error"
+                ],
+                "description": "Optional status to filter by."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "table",
+                  "human"
+                ],
+                "description": "Optional output format. \"human\" provides a readable format with checkboxes."
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "updateStatus",
+          "description": "Updates the status of a task or subtask.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the task or subtask (e.g., 1 or 1.1)."
+              },
+              "newStatus": {
+                "type": "string",
+                "enum": [
+                  "todo",
+                  "inprogress",
+                  "done",
+                  "blocked",
+                  "error"
+                ],
+                "description": "The new status."
+              },
+              "message": {
+                "type": "string",
+                "description": "Optional message to add to the activity log."
+              }
+            },
+            "required": [
+              "id",
+              "newStatus"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNextTask",
+          "description": "Gets the next actionable task based on status, dependencies, and priority.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "updateTask",
+          "description": "Updates the details of a task or subtask.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the task or subtask."
+              },
+              "title": {
+                "type": "string",
+                "description": "Optional new title."
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional new description (applies to main tasks)."
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "description": "Optional new priority (applies to main tasks)."
+              },
+              "relatedFiles": {
+                "type": "string",
+                "description": "Optional comma-separated string of relevant file paths (replaces existing)."
+              },
+              "message": {
+                "type": "string",
+                "description": "Optional message to add to the activity log."
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "removeTask",
+          "description": "Removes a task or subtask by its ID.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the task or subtask to remove."
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getContext",
+          "description": "Retrieves detailed context for a specific task or subtask.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the task or subtask (e.g., 1 or 1.1)."
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "generateTaskFiles",
+          "description": "Generates individual Markdown files for each task in the tasks/ directory.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "parsePrd",
+          "description": "Parses a Product Requirements Document (PRD) file using the Gemini API to generate tasks.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filePath": {
+                "type": "string",
+                "description": "Path to the PRD file to parse."
+              }
+            },
+            "required": [
+              "filePath"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "expandTask",
+          "description": "Uses the Gemini API to break down a task into subtasks (overwrites existing subtasks).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to expand."
+              }
+            },
+            "required": [
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "reviseTasks",
+          "description": "Uses the Gemini API to revise future tasks based on a prompt/change, starting from a specific task ID.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fromTaskId": {
+                "type": "string",
+                "description": "Task ID from which revision should start."
+              },
+              "prompt": {
+                "type": "string",
+                "description": "User prompt describing the change."
+              }
+            },
+            "required": [
+              "fromTaskId",
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "generateTaskTable",
+          "description": "Generates a human-readable Markdown file with task statuses and checkboxes.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 15,
+      "tool_names": [
+        "setWorkspace",
+        "initProject",
+        "addTask",
+        "addSubtask",
+        "listTasks",
+        "updateStatus",
+        "getNextTask",
+        "updateTask",
+        "removeTask",
+        "getContext",
+        "generateTaskFiles",
+        "parsePrd",
+        "expandTask",
+        "reviseTasks",
+        "generateTaskTable"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 60,
+      "name": "Agentic Control Framework",
+      "author": "@FutureAtoms/agentic-control-framework",
+      "overview": "Manage and organize your development tasks efficiently using a powerful CLI and AI-enhanced workflows. Break down complex projects into subtasks, track progress, and adapt to changing requirements seamlessly. Integrate smoothly with Cursor IDE via MCP for enhanced productivity.",
+      "repository_url": "https://github.com/FutureAtoms/agentic-control-framework",
+      "homepage": "https://smithery.ai/server/@FutureAtoms/agentic-control-framework",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1,461",
+      "success_rate": "99.89%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@FutureAtoms_agentic-control-framework.json",
+      "tools_count": 15,
+      "tools": [
+        {
+          "name": "setWorkspace",
+          "description": "Sets the workspace directory for the task manager.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspacePath": {
+                "type": "string",
+                "description": "The path to the workspace directory."
+              }
+            },
+            "required": [
+              "workspacePath"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "initProject",
+          "description": "Initializes the task manager project.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectName": {
+                "type": "string",
+                "description": "Optional name for the project."
+              },
+              "projectDescription": {
+                "type": "string",
+                "description": "Optional goal or description for the project."
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "addTask",
+          "description": "Adds a new task to the task list.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The title of the task."
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description for the task."
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "description": "Optional priority (low, medium, high). Defaults to medium."
+              },
+              "dependsOn": {
+                "type": "string",
+                "description": "Optional comma-separated string of task IDs it depends on."
+              },
+              "relatedFiles": {
+                "type": "string",
+                "description": "Optional comma-separated string of relevant file paths."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "addSubtask",
+          "description": "Adds a subtask to a specified parent task.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "parentId": {
+                "type": "number",
+                "description": "The ID of the parent task."
+              },
+              "title": {
+                "type": "string",
+                "description": "The title of the subtask."
+              }
+            },
+            "required": [
+              "parentId",
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "listTasks",
+          "description": "Lists tasks, optionally filtered by status.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "todo",
+                  "inprogress",
+                  "done",
+                  "blocked",
+                  "error"
+                ],
+                "description": "Optional status to filter by."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "table",
+                  "human"
+                ],
+                "description": "Optional output format. \"human\" provides a readable format with checkboxes."
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "updateStatus",
+          "description": "Updates the status of a task or subtask.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the task or subtask (e.g., 1 or 1.1)."
+              },
+              "newStatus": {
+                "type": "string",
+                "enum": [
+                  "todo",
+                  "inprogress",
+                  "done",
+                  "blocked",
+                  "error"
+                ],
+                "description": "The new status."
+              },
+              "message": {
+                "type": "string",
+                "description": "Optional message to add to the activity log."
+              }
+            },
+            "required": [
+              "id",
+              "newStatus"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNextTask",
+          "description": "Gets the next actionable task based on status, dependencies, and priority.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "updateTask",
+          "description": "Updates the details of a task or subtask.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the task or subtask."
+              },
+              "title": {
+                "type": "string",
+                "description": "Optional new title."
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional new description (applies to main tasks)."
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "description": "Optional new priority (applies to main tasks)."
+              },
+              "relatedFiles": {
+                "type": "string",
+                "description": "Optional comma-separated string of relevant file paths (replaces existing)."
+              },
+              "message": {
+                "type": "string",
+                "description": "Optional message to add to the activity log."
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "removeTask",
+          "description": "Removes a task or subtask by its ID.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the task or subtask to remove."
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getContext",
+          "description": "Retrieves detailed context for a specific task or subtask.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the task or subtask (e.g., 1 or 1.1)."
+              }
+            },
+            "required": [
+              "id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "generateTaskFiles",
+          "description": "Generates individual Markdown files for each task in the tasks/ directory.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "parsePrd",
+          "description": "Parses a Product Requirements Document (PRD) file using the Gemini API to generate tasks.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filePath": {
+                "type": "string",
+                "description": "Path to the PRD file to parse."
+              }
+            },
+            "required": [
+              "filePath"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "expandTask",
+          "description": "Uses the Gemini API to break down a task into subtasks (overwrites existing subtasks).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to expand."
+              }
+            },
+            "required": [
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "reviseTasks",
+          "description": "Uses the Gemini API to revise future tasks based on a prompt/change, starting from a specific task ID.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fromTaskId": {
+                "type": "string",
+                "description": "Task ID from which revision should start."
+              },
+              "prompt": {
+                "type": "string",
+                "description": "User prompt describing the change."
+              }
+            },
+            "required": [
+              "fromTaskId",
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "generateTaskTable",
+          "description": "Generates a human-readable Markdown file with task statuses and checkboxes.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@FutureAtoms/agentic-control-framework/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@FutureAtoms/agentic-control-framework/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0061.@FutureAtoms_agentic-control-framework_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 60
+  }
+}

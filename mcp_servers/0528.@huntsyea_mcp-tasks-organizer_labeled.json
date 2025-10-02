@@ -1,0 +1,436 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is a task management and organization tool that converts AI-generated plans into structured markdown task lists. It provides functionality to create, update, and track tasks in a repository, with features like adding tasks, marking tasks complete, and listing all task files. The core functionality revolves around productivity enhancement by streamlining task management, especially for developers or users working with AI-generated task lists.",
+    "reasoning": "The primary label \"Daily Productivity\" is chosen because the server's main purpose is to help users organize and manage tasks efficiently, which aligns with productivity tools. The secondary label \"File Management\" is included because it involves creating and managing task lists as files within a repository. No custom label is necessary as the predefined labels adequately cover the server's functionality.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "File Management"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 527,
+    "server_name": "Tasks Organizer",
+    "rank_by_usage": 528,
+    "usage_count": "27",
+    "original_file": "../crawler/smithery/@huntsyea_mcp-tasks-organizer.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@huntsyea/mcp-tasks-organizer/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "create_task_list",
+          "description": "Create a new task list and save it to the .tasks folder.\n    \n    Args:\n        title: Title for the task list\n        description: Short 2-3 word description for the filename (e.g., \"refactor-authentication\")\n        repo_path: Path to the repository root (defaults to current directory)\n        include_metadata: Whether to include creation date/time\n    \n    Returns:\n        Path to the created task list file\n    ",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "include_metadata": {
+                "default": true,
+                "title": "Include Metadata",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "title",
+              "description"
+            ],
+            "title": "create_task_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "convert_plan_to_tasks",
+          "description": "Convert a Cursor agent's plan text into a formatted Markdown task list and save it.\n    \n    Args:\n        plan_text: The plan text from the Cursor agent\n        title: Title for the task list\n        description: Short 2-3 word description for the filename (e.g., \"refactor-authentication\")\n        repo_path: Path to the repository root (defaults to current directory)\n        include_metadata: Whether to include metadata like date and time\n        \n    Returns:\n        Path to the created task list file\n    ",
+          "input_schema": {
+            "properties": {
+              "plan_text": {
+                "title": "Plan Text",
+                "type": "string"
+              },
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "include_metadata": {
+                "default": true,
+                "title": "Include Metadata",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "plan_text",
+              "title",
+              "description"
+            ],
+            "title": "convert_plan_to_tasksArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_task",
+          "description": "Add a new task to an existing task list.\n    \n    Args:\n        description: The description identifier of the task list file\n        task_text: Text for the new task\n        repo_path: Path to the repository root (defaults to current directory)\n        section: Which section to add the task to (defaults to \"Tasks\")\n    \n    Returns:\n        Updated markdown task list\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "task_text": {
+                "title": "Task Text",
+                "type": "string"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "section": {
+                "default": "Tasks",
+                "title": "Section",
+                "type": "string"
+              }
+            },
+            "required": [
+              "description",
+              "task_text"
+            ],
+            "title": "add_taskArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "mark_task_complete",
+          "description": "Mark a specific task as completed.\n    \n    Args:\n        description: The description identifier of the task list file\n        task_number: The number of the task to mark as complete\n        repo_path: Path to the repository root (defaults to current directory)\n        section: Which section the task is in (defaults to \"Tasks\")\n    \n    Returns:\n        Updated markdown task list\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "task_number": {
+                "title": "Task Number",
+                "type": "integer"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "section": {
+                "default": "Tasks",
+                "title": "Section",
+                "type": "string"
+              }
+            },
+            "required": [
+              "description",
+              "task_number"
+            ],
+            "title": "mark_task_completeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_all_tasks_complete",
+          "description": "Check if all tasks are complete and mark the task list as completed.\n    \n    Args:\n        description: The description identifier of the task list file\n        repo_path: Path to the repository root (defaults to current directory)\n        \n    Returns:\n        Message indicating if the task list was marked as completed\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "description"
+            ],
+            "title": "check_all_tasks_completeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_task_files",
+          "description": "List all task files in the .tasks directory.\n    \n    Args:\n        repo_path: Path to the repository root (defaults to current directory)\n        include_completed: Whether to include completed task lists\n        \n    Returns:\n        List of task files with their completion status\n    ",
+          "input_schema": {
+            "properties": {
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "include_completed": {
+                "default": true,
+                "title": "Include Completed",
+                "type": "boolean"
+              }
+            },
+            "title": "list_task_filesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "create_task_list",
+        "convert_plan_to_tasks",
+        "add_task",
+        "mark_task_complete",
+        "check_all_tasks_complete",
+        "list_task_files"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 527,
+      "name": "Tasks Organizer",
+      "author": "@huntsyea/mcp-tasks-organizer",
+      "overview": "Convert AI-generated plans into structured markdown task lists and manage them efficiently in your repository. Automatically track and organize tasks with descriptive filenames and completion indicators. Enhance your productivity by integrating with Claude for Desktop and streamline your task management process.",
+      "repository_url": "https://github.com/huntsyea/mcp-tasks-organizer",
+      "homepage": "https://smithery.ai/server/@huntsyea/mcp-tasks-organizer",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "27",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@huntsyea_mcp-tasks-organizer.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "create_task_list",
+          "description": "Create a new task list and save it to the .tasks folder.\n    \n    Args:\n        title: Title for the task list\n        description: Short 2-3 word description for the filename (e.g., \"refactor-authentication\")\n        repo_path: Path to the repository root (defaults to current directory)\n        include_metadata: Whether to include creation date/time\n    \n    Returns:\n        Path to the created task list file\n    ",
+          "input_schema": {
+            "properties": {
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "include_metadata": {
+                "default": true,
+                "title": "Include Metadata",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "title",
+              "description"
+            ],
+            "title": "create_task_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "convert_plan_to_tasks",
+          "description": "Convert a Cursor agent's plan text into a formatted Markdown task list and save it.\n    \n    Args:\n        plan_text: The plan text from the Cursor agent\n        title: Title for the task list\n        description: Short 2-3 word description for the filename (e.g., \"refactor-authentication\")\n        repo_path: Path to the repository root (defaults to current directory)\n        include_metadata: Whether to include metadata like date and time\n        \n    Returns:\n        Path to the created task list file\n    ",
+          "input_schema": {
+            "properties": {
+              "plan_text": {
+                "title": "Plan Text",
+                "type": "string"
+              },
+              "title": {
+                "title": "Title",
+                "type": "string"
+              },
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "include_metadata": {
+                "default": true,
+                "title": "Include Metadata",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "plan_text",
+              "title",
+              "description"
+            ],
+            "title": "convert_plan_to_tasksArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_task",
+          "description": "Add a new task to an existing task list.\n    \n    Args:\n        description: The description identifier of the task list file\n        task_text: Text for the new task\n        repo_path: Path to the repository root (defaults to current directory)\n        section: Which section to add the task to (defaults to \"Tasks\")\n    \n    Returns:\n        Updated markdown task list\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "task_text": {
+                "title": "Task Text",
+                "type": "string"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "section": {
+                "default": "Tasks",
+                "title": "Section",
+                "type": "string"
+              }
+            },
+            "required": [
+              "description",
+              "task_text"
+            ],
+            "title": "add_taskArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "mark_task_complete",
+          "description": "Mark a specific task as completed.\n    \n    Args:\n        description: The description identifier of the task list file\n        task_number: The number of the task to mark as complete\n        repo_path: Path to the repository root (defaults to current directory)\n        section: Which section the task is in (defaults to \"Tasks\")\n    \n    Returns:\n        Updated markdown task list\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "task_number": {
+                "title": "Task Number",
+                "type": "integer"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "section": {
+                "default": "Tasks",
+                "title": "Section",
+                "type": "string"
+              }
+            },
+            "required": [
+              "description",
+              "task_number"
+            ],
+            "title": "mark_task_completeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_all_tasks_complete",
+          "description": "Check if all tasks are complete and mark the task list as completed.\n    \n    Args:\n        description: The description identifier of the task list file\n        repo_path: Path to the repository root (defaults to current directory)\n        \n    Returns:\n        Message indicating if the task list was marked as completed\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "description"
+            ],
+            "title": "check_all_tasks_completeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_task_files",
+          "description": "List all task files in the .tasks directory.\n    \n    Args:\n        repo_path: Path to the repository root (defaults to current directory)\n        include_completed: Whether to include completed task lists\n        \n    Returns:\n        List of task files with their completion status\n    ",
+          "input_schema": {
+            "properties": {
+              "repo_path": {
+                "default": ".",
+                "title": "Repo Path",
+                "type": "string"
+              },
+              "include_completed": {
+                "default": true,
+                "title": "Include Completed",
+                "type": "boolean"
+              }
+            },
+            "title": "list_task_filesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@huntsyea/mcp-tasks-organizer/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@huntsyea/mcp-tasks-organizer/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0528.@huntsyea_mcp-tasks-organizer_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 517
+  }
+}

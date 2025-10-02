@@ -1,0 +1,153 @@
+{
+  "labels": {
+    "analysis": "The Geekbot MCP Server primarily facilitates integration between Claude AI and Geekbot's productivity tools, specifically for managing standups, polls, and surveys. It provides tools to list members, retrieve and post standup reports, list and analyze poll results, and manage the configuration of these collaborative features. The core functionality revolves around enhancing team productivity and collaboration by automating and organizing standup meetings, polls, and surveys within a conversational interface.",
+    "reasoning": "The primary label \"Collaboration Tools\" is chosen because the server's primary function is to support team collaboration through standup reports, polls, and surveys. \"Daily Productivity\" is a secondary label as it directly impacts workflow efficiency and task tracking. \"Team Management\" is a custom label to emphasize its unique role in organizing and streamlining team communication processes.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "Daily Productivity"
+    ],
+    "custom_label": "Team Management",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 858,
+    "server_name": "Geekbot MCP",
+    "rank_by_usage": 859,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@geekbot-com_geekbot-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@geekbot-com/geekbot-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 858,
+      "name": "Geekbot MCP",
+      "author": "@geekbot-com/geekbot-mcp",
+      "overview": "Connect your Claude AI with Geekbot's standup, polls, and survey management tools. Effortlessly access and manage your Geekbot data within conversations, enhancing your team's productivity and collaboration.",
+      "repository_url": "https://github.com/geekbot-com/geekbot-mcp",
+      "homepage": "https://smithery.ai/server/@geekbot-com/geekbot-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@geekbot-com_geekbot-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "list_members",
+          "description": "Deploy Server Geekbot MCP @geekbot-com/geekbot-mcp Try in Playground list_members",
+          "parameters": [
+            {
+              "name": "list_members",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_standups",
+          "description": "Retrieves and displays all Geekbot standups a user has access to, including their complete configuration details such as name, channel, questions, participants, and schedule information. Use this tool to understand the structure of the team and the processes they use track progress and sync.",
+          "parameters": [
+            {
+              "name": "list_standups",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "fetch_reports",
+          "description": "Retrieves Geekbot standup reports. Use this tool to analyze team updates or updates from specific colleagues, track progress, or compile summaries of standup activities. This tool is usually used after the `list_standups` tool.",
+          "parameters": [
+            {
+              "name": "after",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "before",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "user_id",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "standup_id",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "post_report",
+          "description": "Posts a report to Geekbot. Use this tool to post a report to Geekbot using the context of the conversation. This tool is usually used after the `list_standups` tool to get the standup id and the question ids. If the context of the conversation lacks sufficient information to answer the questions of the standup, the assistant will ask for the missing information. The report should be beautifully formatted. ALWAYS type formatted reporte in the conversation for preview purposes before calling this tool.",
+          "parameters": [
+            {
+              "name": "post_report",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_polls",
+          "description": "Retrieves and displays all Geekbot polls a user has access to, including their complete configuration details such as name, time, timezone, questions, participants, recurrence, anonymous, and creator.",
+          "parameters": [
+            {
+              "name": "list_polls",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "fetch_poll_results",
+          "description": "Retrieves Geekbot poll results. Use this tool to analyze poll results or track progress of polls. This tool is usually used after the `list_polls` tool to get the poll id.",
+          "parameters": [
+            {
+              "name": "fetch_poll_results",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@geekbot-com/geekbot-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "gbApiKey",
+          "required": true,
+          "description": "Your Geekbot API Key to access Geekbot services."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@geekbot-com/geekbot-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0859.@geekbot-com_geekbot-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 840
+  }
+}

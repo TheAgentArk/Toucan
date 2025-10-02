@@ -1,0 +1,368 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"WireMCP\" is designed to analyze real-time network traffic and PCAP files to enhance security threat detection and diagnostics. It captures live traffic, extracts relevant data, and contextualizes it for security audits, anomaly detection, and credential extraction. The tools focus on networking, security analysis, and threat intelligence, particularly leveraging IP blacklists and packet inspection.",
+    "reasoning": "The primary label \"Security & Authentication\" is chosen because the server's core functionality revolves around threat detection, IP blacklisting, and credential extraction, all of which are critical for network security. Additional labels \"Network Analysis\" (custom) and \"Data Analysis & Processing\" are included because the server processes network data to provide statistical and contextual insights, which aligns with these categories. The custom label is necessary because \"Network Analysis\" is a specific focus not fully covered by predefined labels.",
+    "primary_label": "Security & Authentication",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Network Analysis",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 658,
+    "server_name": "WireMCP",
+    "rank_by_usage": 659,
+    "usage_count": "14",
+    "original_file": "../crawler/smithery/@0xKoda_WireMCP.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@0xKoda/WireMCP/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "capture_packets",
+          "description": "Capture live traffic and provide raw packet data as JSON for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interface": {
+                "type": "string",
+                "default": "en0",
+                "description": "Network interface to capture from (e.g., eth0, en0)"
+              },
+              "duration": {
+                "type": "number",
+                "default": 5,
+                "description": "Capture duration in seconds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_summary_stats",
+          "description": "Capture live traffic and provide protocol hierarchy statistics for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interface": {
+                "type": "string",
+                "default": "en0",
+                "description": "Network interface to capture from (e.g., eth0, en0)"
+              },
+              "duration": {
+                "type": "number",
+                "default": 5,
+                "description": "Capture duration in seconds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_conversations",
+          "description": "Capture live traffic and provide TCP/UDP conversation statistics for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interface": {
+                "type": "string",
+                "default": "en0",
+                "description": "Network interface to capture from (e.g., eth0, en0)"
+              },
+              "duration": {
+                "type": "number",
+                "default": 5,
+                "description": "Capture duration in seconds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_threats",
+          "description": "Capture live traffic and check IPs against URLhaus blacklist",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interface": {
+                "type": "string",
+                "default": "en0",
+                "description": "Network interface to capture from (e.g., eth0, en0)"
+              },
+              "duration": {
+                "type": "number",
+                "default": 5,
+                "description": "Capture duration in seconds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_ip_threats",
+          "description": "Check a given IP address against URLhaus blacklist for IOCs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ip": {
+                "type": "string",
+                "pattern": "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",
+                "description": "IP address to check (e.g., 192.168.1.1)"
+              }
+            },
+            "required": [
+              "ip"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_pcap",
+          "description": "Analyze a PCAP file and provide general packet data as JSON for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pcapPath": {
+                "type": "string",
+                "description": "Path to the PCAP file to analyze (e.g., ./demo.pcap)"
+              }
+            },
+            "required": [
+              "pcapPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_credentials",
+          "description": "Extract potential credentials (HTTP Basic Auth, FTP, Telnet) from a PCAP file for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pcapPath": {
+                "type": "string",
+                "description": "Path to the PCAP file to analyze (e.g., ./demo.pcap)"
+              }
+            },
+            "required": [
+              "pcapPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "capture_packets",
+        "get_summary_stats",
+        "get_conversations",
+        "check_threats",
+        "check_ip_threats",
+        "analyze_pcap",
+        "extract_credentials"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 658,
+      "name": "WireMCP",
+      "author": "@0xKoda/WireMCP",
+      "overview": "Empower your LLMs with real-time network traffic analysis. Capture, analyze, and contextualize live network data to enhance threat detection and diagnostics. Transform complex packet captures into accessible insights for security audits and anomaly detection.",
+      "repository_url": "https://github.com/0xKoda/WireMCP",
+      "homepage": "https://smithery.ai/server/@0xKoda/WireMCP",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "14",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@0xKoda_WireMCP.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "capture_packets",
+          "description": "Capture live traffic and provide raw packet data as JSON for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interface": {
+                "type": "string",
+                "default": "en0",
+                "description": "Network interface to capture from (e.g., eth0, en0)"
+              },
+              "duration": {
+                "type": "number",
+                "default": 5,
+                "description": "Capture duration in seconds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_summary_stats",
+          "description": "Capture live traffic and provide protocol hierarchy statistics for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interface": {
+                "type": "string",
+                "default": "en0",
+                "description": "Network interface to capture from (e.g., eth0, en0)"
+              },
+              "duration": {
+                "type": "number",
+                "default": 5,
+                "description": "Capture duration in seconds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_conversations",
+          "description": "Capture live traffic and provide TCP/UDP conversation statistics for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interface": {
+                "type": "string",
+                "default": "en0",
+                "description": "Network interface to capture from (e.g., eth0, en0)"
+              },
+              "duration": {
+                "type": "number",
+                "default": 5,
+                "description": "Capture duration in seconds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_threats",
+          "description": "Capture live traffic and check IPs against URLhaus blacklist",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interface": {
+                "type": "string",
+                "default": "en0",
+                "description": "Network interface to capture from (e.g., eth0, en0)"
+              },
+              "duration": {
+                "type": "number",
+                "default": 5,
+                "description": "Capture duration in seconds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_ip_threats",
+          "description": "Check a given IP address against URLhaus blacklist for IOCs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ip": {
+                "type": "string",
+                "pattern": "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b",
+                "description": "IP address to check (e.g., 192.168.1.1)"
+              }
+            },
+            "required": [
+              "ip"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_pcap",
+          "description": "Analyze a PCAP file and provide general packet data as JSON for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pcapPath": {
+                "type": "string",
+                "description": "Path to the PCAP file to analyze (e.g., ./demo.pcap)"
+              }
+            },
+            "required": [
+              "pcapPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_credentials",
+          "description": "Extract potential credentials (HTTP Basic Auth, FTP, Telnet) from a PCAP file for LLM analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pcapPath": {
+                "type": "string",
+                "description": "Path to the PCAP file to analyze (e.g., ./demo.pcap)"
+              }
+            },
+            "required": [
+              "pcapPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@0xKoda/WireMCP/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@0xKoda/WireMCP/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0659.@0xKoda_WireMCP_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 644
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "labels": {
+    "analysis": "The MCP Time Server is designed to provide accurate time information and handle timezone conversions. Its core functionality revolves around retrieving the current time in specific timezones and converting times between different timezone standards using IANA timezone names. This makes it particularly useful for applications that require precise time tracking across different regions.",
+    "reasoning": "The primary functionality of timezone and time conversion clearly falls under the **Time & Calendar** category. While it has some overlaps with **Operating System** due to system timezone detection, this is not its primary focus. There are no unique features that require a custom label.",
+    "primary_label": "Time & Calendar",
+    "secondary_labels": [],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2350,
+    "server_name": "Time Server",
+    "rank_by_usage": 2351,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@fisher1006_time-mcp-4.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@fisher1006/time-mcp-4/mcp?config=eyJsb2NhbFRpbWV6b25lIjogIiJ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_current_time",
+          "description": "Get current time in a specific timezones",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "timezone": {
+                "type": "string",
+                "description": "IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Use 'UTC' as local timezone if no timezone provided by the user."
+              }
+            },
+            "required": [
+              "timezone"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "convert_time",
+          "description": "Convert time between timezones",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source_timezone": {
+                "type": "string",
+                "description": "Source IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Use 'UTC' as local timezone if no source timezone provided by the user."
+              },
+              "time": {
+                "type": "string",
+                "description": "Time to convert in 24-hour format (HH:MM)"
+              },
+              "target_timezone": {
+                "type": "string",
+                "description": "Target IANA timezone name (e.g., 'Asia/Tokyo', 'America/San_Francisco'). Use 'UTC' as local timezone if no target timezone provided by the user."
+              }
+            },
+            "required": [
+              "source_timezone",
+              "time",
+              "target_timezone"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get_current_time",
+        "convert_time"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2350,
+      "name": "Time Server",
+      "author": "@fisher1006/time-mcp-4",
+      "overview": "Get current time information and perform timezone conversions effortlessly. Leverage IANA timezone names for accurate time queries and automatic system timezone detection to enhance your applications.",
+      "repository_url": "https://github.com/fisher1006/time-mcp",
+      "homepage": "https://smithery.ai/server/@fisher1006/time-mcp-4",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@fisher1006_time-mcp-4.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get_current_time",
+          "description": "Get current time in a specific timezones",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "timezone": {
+                "type": "string",
+                "description": "IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Use 'UTC' as local timezone if no timezone provided by the user."
+              }
+            },
+            "required": [
+              "timezone"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "convert_time",
+          "description": "Convert time between timezones",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source_timezone": {
+                "type": "string",
+                "description": "Source IANA timezone name (e.g., 'America/New_York', 'Europe/London'). Use 'UTC' as local timezone if no source timezone provided by the user."
+              },
+              "time": {
+                "type": "string",
+                "description": "Time to convert in 24-hour format (HH:MM)"
+              },
+              "target_timezone": {
+                "type": "string",
+                "description": "Target IANA timezone name (e.g., 'Asia/Tokyo', 'America/San_Francisco'). Use 'UTC' as local timezone if no target timezone provided by the user."
+              }
+            },
+            "required": [
+              "source_timezone",
+              "time",
+              "target_timezone"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"localTimezone\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@fisher1006/time-mcp-4/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"localTimezone\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@fisher1006/time-mcp-4/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "2351.@fisher1006_time-mcp-4_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2019
+  }
+}

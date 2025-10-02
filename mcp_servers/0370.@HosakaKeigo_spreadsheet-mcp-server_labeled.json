@@ -1,0 +1,157 @@
+{
+  "labels": {
+    "analysis": "The MCP Server's core functionality revolves around accessing and retrieving data from Google Spreadsheets. It provides tools to fetch spreadsheet metadata (like sheet names) and specific sheet data, presenting it in an easily digestible markdown format. This enables real-time data integration, making it particularly useful for scenarios where live spreadsheet data needs to be processed or displayed programmatically.",
+    "reasoning": "The primary label \"Database Operations\" was chosen because the server primarily interacts with spreadsheet data (which can be considered a database in this context). The tools focus on querying and retrieving data, similar to traditional database operations. The secondary label \"Web Search & Research\" is included because the markdown-formatted data retrieval can be leveraged for research purposes. The secondary label \"Data Analysis & Processing\" is also relevant as the data can be used for analysis tasks. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 369,
+    "server_name": "Spreadsheet MCP Server",
+    "rank_by_usage": 370,
+    "usage_count": "75",
+    "original_file": "../crawler/smithery/@HosakaKeigo_spreadsheet-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@HosakaKeigo/spreadsheet-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "getSpreadsheet",
+          "description": "スプレッドシートの基本情報と含まれるシート一覧を取得",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "スプレッドシートのURL"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getSheetData",
+          "description": "スプレッドシートの特定シートのデータを取得",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "スプレッドシートのURL"
+              },
+              "sheetName": {
+                "type": "string",
+                "description": "取得するシート名"
+              }
+            },
+            "required": [
+              "url",
+              "sheetName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "getSpreadsheet",
+        "getSheetData"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 369,
+      "name": "Spreadsheet MCP Server",
+      "author": "@HosakaKeigo/spreadsheet-mcp-server",
+      "overview": "Access Google Spreadsheet data seamlessly. Retrieve spreadsheet information and specific sheet data in a user-friendly markdown format, enhancing your LLM's capabilities with real-time data integration.",
+      "repository_url": "https://github.com/HosakaKeigo/spreadsheet-mcp-server",
+      "homepage": "https://smithery.ai/server/@HosakaKeigo/spreadsheet-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "75",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@HosakaKeigo_spreadsheet-mcp-server.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "getSpreadsheet",
+          "description": "スプレッドシートの基本情報と含まれるシート一覧を取得",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "スプレッドシートのURL"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getSheetData",
+          "description": "スプレッドシートの特定シートのデータを取得",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "スプレッドシートのURL"
+              },
+              "sheetName": {
+                "type": "string",
+                "description": "取得するシート名"
+              }
+            },
+            "required": [
+              "url",
+              "sheetName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@HosakaKeigo/spreadsheet-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@HosakaKeigo/spreadsheet-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0370.@HosakaKeigo_spreadsheet-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 366
+  }
+}

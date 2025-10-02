@@ -1,0 +1,93 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is specifically designed to interact with SNCF's train network API, providing tools for journey planning, schedule management, station details, and disruption monitoring. Its core functionality revolves around travel planning and real-time transportation information for France's train system.",
+    "reasoning": "The primary label \"Travel & Maps\" is chosen because the server's tools are primarily focused on train journey planning, station information, and service disruptions—all key aspects of travel planning. The secondary label \"Web Search & Research\" is included because users can search for real-time travel data, and \"API Integration\" is relevant due to the server's direct interaction with SNCF's API. No custom label is needed as the predefined categories cover the server's functionality well.",
+    "primary_label": "Travel & Maps",
+    "secondary_labels": [
+      "Web Search & Research",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1500,
+    "server_name": "SNCF API Server",
+    "rank_by_usage": 1501,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@Kryzo_mcp-sncf.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Kryzo/mcp-sncf/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1500,
+      "name": "SNCF API Server",
+      "author": "@Kryzo/mcp-sncf",
+      "overview": "Plan your train journeys across France effortlessly. Access real-time train schedules, station details, and monitor service disruptions with ease. Enhance your travel experience with intelligent journey planning and comprehensive transport information.",
+      "repository_url": "https://github.com/Kryzo/mcp-sncf",
+      "homepage": "https://smithery.ai/server/@Kryzo/mcp-sncf",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Kryzo_mcp-sncf.json",
+      "tools_count": 4,
+      "tools": [
+        {
+          "name": "plan_journey_by_city_names",
+          "description": "Deploy Server SNCF API Server Claim Server @Kryzo/mcp-sncf Try in Playground plan_journey_by_city_names",
+          "parameters": []
+        },
+        {
+          "name": "check_disruptions",
+          "description": "Check for current disruptions in the SNCF transport network. Args: coverage: The coverage area to use for the request. count: The maximum number of disruptions to return. station_id: Filter disruptions affecting a specific station. line_id: Filter disruptions affecting a specific line. since: Only disruptions valid after this date (format YYYYMMDDTHHMMSS). until: Only disruptions valid before this date (format YYYYMMDDTHHMMSS). fetch_train_details: Whether to fetch additional details about affected trains. debug: Whether to include debug information in the response. Returns: A dictionary containing information about the disruptions.",
+          "parameters": []
+        },
+        {
+          "name": "get_station_schedule",
+          "description": "Get both departures and arrivals schedule for a station. This tool finds stations in the specified city and returns schedule information. If multiple stations exist in the city and no specific station is provided, it will return information about all available stations. If a station_id is provided, it will directly use that instead of searching by city/name. You can search for stations by providing either: 1. A city name (e.g., \"Paris\") 2. A station name (e.g., \"Montparnasse\") 3. Both city and station name (e.g., city=\"Paris\", station=\"Montparnasse\") 4. A direct station ID if you know it Args: city_name: Name of the city to search for stations station_name: Optional name of a specific station to filter by station_id: Optional direct station ID (if you know the exact ID) count: Number of departures/arrivals to return datetime: Optional datetime to start from (ISO format) duration: Optional duration in seconds data_freshness: Data freshness level (realtime or base_schedule) Returns: Dictionary with station information and schedules",
+          "parameters": []
+        },
+        {
+          "name": "get_station_details",
+          "description": "Get comprehensive details about stations in a city or a specific station. This tool provides detailed information about stations, including: 1. Basic station information (name, ID, coordinates) 2. Available transport types at each station (buses, trains, rapid transit, etc.) 3. Nearby places and stop points You can search for stations by providing either: 1. A city name (e.g., \"Grenoble\") 2. A station name (e.g., \"Gare de Grenoble\") 3. Both city and station name (e.g., city=\"Grenoble\", station=\"Gare de Grenoble\") 4. A direct station ID if you know it Args: city_name: Name of the city to search for stations station_name: Optional name of a specific station to filter by station_id: Optional direct station ID (if you know the exact ID) include_transport_types: Whether to include transport type analysis include_nearby_places: Whether to include nearby places information nearby_distance: Search radius in meters for nearby places nearby_count: Maximum number of nearby places to return debug: Whether to include debug information in the response Returns: Dictionary with comprehensive station information",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Kryzo/mcp-sncf/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "apiKey",
+          "required": true,
+          "description": "SNCF API key"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Kryzo/mcp-sncf/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1501.@Kryzo_mcp-sncf_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1385
+  }
+}

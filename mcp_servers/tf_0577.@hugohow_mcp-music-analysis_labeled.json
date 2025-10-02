@@ -1,0 +1,515 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed for comprehensive audio analysis, particularly focused on music. It provides tools to extract various audio features such as tempo (BPM), chroma CQT, MFCCs, and beat tracking. These features are essential for music information retrieval, audio processing, and music-related applications. The server also includes utilities for loading, downloading audio files (including from YouTube), and analyzing specific segments of audio. The core functionality revolves around transforming raw audio data into structured analytical features, enabling developers to build music analysis applications.",
+    "reasoning": "The primary label \"Music Analysis\" was chosen because the server's tools are specifically tailored to extract and process features from audio files with a focus on music. Secondary labels \"Data Analysis & Processing\" and \"Content Creation\" were selected because the server processes audio data into actionable insights, which is relevant for analytical tasks and creative projects involving audio. No custom label is needed as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Content Creation"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 576,
+    "server_name": "Music Analysis",
+    "rank_by_usage": 577,
+    "usage_count": "20",
+    "original_file": "../crawler/smithery/@hugohow_mcp-music-analysis.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@hugohow/mcp-music-analysis/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "load",
+          "description": "\n    Loads an audio file and returns the path to the audio time series\n    Offset and duration are optional, in seconds.\n    Be careful, you will never know the name of the song.\n    ",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "number"
+              },
+              "duration": {
+                "default": null,
+                "title": "Duration",
+                "type": "number"
+              }
+            },
+            "required": [
+              "file_path"
+            ],
+            "title": "loadArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_duration",
+          "description": "\n    Returns the total duration (in seconds) of the given audio time series.\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "get_durationArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "tempo",
+          "description": "\n    Estimates the tempo (in BPM) of the given audio time series using librosa.\n    Offset and duration are optional, in seconds.\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              },
+              "hop_length": {
+                "default": 512,
+                "title": "Hop Length",
+                "type": "integer"
+              },
+              "start_bpm": {
+                "default": 120,
+                "title": "Start Bpm",
+                "type": "number"
+              },
+              "std_bpm": {
+                "default": 1,
+                "title": "Std Bpm",
+                "type": "number"
+              },
+              "ac_size": {
+                "default": 8,
+                "title": "Ac Size",
+                "type": "number"
+              },
+              "max_tempo": {
+                "default": 320,
+                "title": "Max Tempo",
+                "type": "number"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "tempoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "chroma_cqt",
+          "description": "\n    Computes the chroma CQT of the given audio time series using librosa.\n    The chroma CQT is a representation of the audio signal in terms of its\n    chromatic content, which is useful for music analysis.\n    The chroma CQT is computed using the following parameters:\n    - path_audio_time_series_y: The path to the audio time series (CSV file).\n        It's sometimes better to take harmonics only\n    - hop_length: The number of samples between frames.\n    - fmin: The minimum frequency of the chroma feature.\n    - n_chroma: The number of chroma bins (default is 12).\n    - n_octaves: The number of octaves to include in the chroma feature.\n    The chroma CQT is saved to a CSV file with the following columns:\n    - note: The note name (C, C#, D, etc.).\n    - time: The time position of the note in seconds.\n    - amplitude: The amplitude of the note at that time.\n    The path to the CSV file is returned.\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              },
+              "hop_length": {
+                "default": 512,
+                "title": "Hop Length",
+                "type": "integer"
+              },
+              "fmin": {
+                "default": null,
+                "title": "Fmin",
+                "type": "number"
+              },
+              "n_chroma": {
+                "default": 12,
+                "title": "N Chroma",
+                "type": "integer"
+              },
+              "n_octaves": {
+                "default": 7,
+                "title": "N Octaves",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "chroma_cqtArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "mfcc",
+          "description": "\n    Computes the MFCC of the given audio time series using librosa.\n    The MFCC is a representation of the audio signal in terms of its\n    spectral content, which is useful for music analysis.\n    The MFCC is computed using the following parameters:\n    - path_audio_time_series_y: The path to the audio time series (CSV file).\n        It's sometimes better to take harmonics only\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "mfccArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "beat_track",
+          "description": "\n    Computes the beat track of the given audio time series using librosa.\n    The beat track is a representation of the audio signal in terms of its\n    rhythmic content, which is useful for music analysis.\n    The beat track is computed using the following parameters:\n    - hop_length: The number of samples between frames.\n    - start_bpm: The initial estimate of the tempo (in BPM).\n    - tightness: The tightness of the beat tracking (default is 100).\n    - units: The units of the beat track (default is \"frames\"). It can be frames, samples, time.\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              },
+              "hop_length": {
+                "default": 512,
+                "title": "Hop Length",
+                "type": "integer"
+              },
+              "start_bpm": {
+                "default": 120,
+                "title": "Start Bpm",
+                "type": "number"
+              },
+              "tightness": {
+                "default": 100,
+                "title": "Tightness",
+                "type": "integer"
+              },
+              "units": {
+                "default": "frames",
+                "title": "Units",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "beat_trackArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "download_from_url",
+          "description": "\n    Downloads a file from a given URL and returns the path to the downloaded file.\n    Be careful, you will never know the name of the song.\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "download_from_urlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "download_from_youtube",
+          "description": "\n    Downloads a file from a given youtube URL and returns the path to the downloaded file.\n    Be careful, you will never know the name of the song.\n    ",
+          "input_schema": {
+            "properties": {
+              "youtube_url": {
+                "title": "Youtube Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "youtube_url"
+            ],
+            "title": "download_from_youtubeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 8,
+      "tool_names": [
+        "load",
+        "get_duration",
+        "tempo",
+        "chroma_cqt",
+        "mfcc",
+        "beat_track",
+        "download_from_url",
+        "download_from_youtube"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 576,
+      "name": "Music Analysis",
+      "author": "@hugohow/mcp-music-analysis",
+      "overview": "Analyze audio files to extract features like beat, duration, and MFCCs. Enhance your projects with powerful audio analysis capabilities using this easy-to-install MCP. Transform your audio data into actionable insights effortlessly.",
+      "repository_url": "https://github.com/hugohow/mcp-music-analysis",
+      "homepage": "https://smithery.ai/server/@hugohow/mcp-music-analysis",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "20",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@hugohow_mcp-music-analysis.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "load",
+          "description": "\n    Loads an audio file and returns the path to the audio time series\n    Offset and duration are optional, in seconds.\n    Be careful, you will never know the name of the song.\n    ",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "number"
+              },
+              "duration": {
+                "default": null,
+                "title": "Duration",
+                "type": "number"
+              }
+            },
+            "required": [
+              "file_path"
+            ],
+            "title": "loadArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_duration",
+          "description": "\n    Returns the total duration (in seconds) of the given audio time series.\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "get_durationArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "tempo",
+          "description": "\n    Estimates the tempo (in BPM) of the given audio time series using librosa.\n    Offset and duration are optional, in seconds.\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              },
+              "hop_length": {
+                "default": 512,
+                "title": "Hop Length",
+                "type": "integer"
+              },
+              "start_bpm": {
+                "default": 120,
+                "title": "Start Bpm",
+                "type": "number"
+              },
+              "std_bpm": {
+                "default": 1,
+                "title": "Std Bpm",
+                "type": "number"
+              },
+              "ac_size": {
+                "default": 8,
+                "title": "Ac Size",
+                "type": "number"
+              },
+              "max_tempo": {
+                "default": 320,
+                "title": "Max Tempo",
+                "type": "number"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "tempoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "chroma_cqt",
+          "description": "\n    Computes the chroma CQT of the given audio time series using librosa.\n    The chroma CQT is a representation of the audio signal in terms of its\n    chromatic content, which is useful for music analysis.\n    The chroma CQT is computed using the following parameters:\n    - path_audio_time_series_y: The path to the audio time series (CSV file).\n        It's sometimes better to take harmonics only\n    - hop_length: The number of samples between frames.\n    - fmin: The minimum frequency of the chroma feature.\n    - n_chroma: The number of chroma bins (default is 12).\n    - n_octaves: The number of octaves to include in the chroma feature.\n    The chroma CQT is saved to a CSV file with the following columns:\n    - note: The note name (C, C#, D, etc.).\n    - time: The time position of the note in seconds.\n    - amplitude: The amplitude of the note at that time.\n    The path to the CSV file is returned.\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              },
+              "hop_length": {
+                "default": 512,
+                "title": "Hop Length",
+                "type": "integer"
+              },
+              "fmin": {
+                "default": null,
+                "title": "Fmin",
+                "type": "number"
+              },
+              "n_chroma": {
+                "default": 12,
+                "title": "N Chroma",
+                "type": "integer"
+              },
+              "n_octaves": {
+                "default": 7,
+                "title": "N Octaves",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "chroma_cqtArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "mfcc",
+          "description": "\n    Computes the MFCC of the given audio time series using librosa.\n    The MFCC is a representation of the audio signal in terms of its\n    spectral content, which is useful for music analysis.\n    The MFCC is computed using the following parameters:\n    - path_audio_time_series_y: The path to the audio time series (CSV file).\n        It's sometimes better to take harmonics only\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "mfccArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "beat_track",
+          "description": "\n    Computes the beat track of the given audio time series using librosa.\n    The beat track is a representation of the audio signal in terms of its\n    rhythmic content, which is useful for music analysis.\n    The beat track is computed using the following parameters:\n    - hop_length: The number of samples between frames.\n    - start_bpm: The initial estimate of the tempo (in BPM).\n    - tightness: The tightness of the beat tracking (default is 100).\n    - units: The units of the beat track (default is \"frames\"). It can be frames, samples, time.\n    ",
+          "input_schema": {
+            "properties": {
+              "path_audio_time_series_y": {
+                "title": "Path Audio Time Series Y",
+                "type": "string"
+              },
+              "hop_length": {
+                "default": 512,
+                "title": "Hop Length",
+                "type": "integer"
+              },
+              "start_bpm": {
+                "default": 120,
+                "title": "Start Bpm",
+                "type": "number"
+              },
+              "tightness": {
+                "default": 100,
+                "title": "Tightness",
+                "type": "integer"
+              },
+              "units": {
+                "default": "frames",
+                "title": "Units",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_audio_time_series_y"
+            ],
+            "title": "beat_trackArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "download_from_url",
+          "description": "\n    Downloads a file from a given URL and returns the path to the downloaded file.\n    Be careful, you will never know the name of the song.\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "download_from_urlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "download_from_youtube",
+          "description": "\n    Downloads a file from a given youtube URL and returns the path to the downloaded file.\n    Be careful, you will never know the name of the song.\n    ",
+          "input_schema": {
+            "properties": {
+              "youtube_url": {
+                "title": "Youtube Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "youtube_url"
+            ],
+            "title": "download_from_youtubeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@hugohow/mcp-music-analysis/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@hugohow/mcp-music-analysis/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0577.@hugohow_mcp-music-analysis_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 564
+  }
+}

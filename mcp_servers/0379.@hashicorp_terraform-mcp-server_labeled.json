@@ -1,0 +1,321 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to interface with the Terraform Registry APIs, providing tools to automate the discovery, documentation retrieval, and interaction with Terraform providers and modules. It primarily serves Infrastructure as Code (IaC) workflows by enabling users to fetch detailed documentation and metadata about Terraform resources, data sources, and modules, which simplifies module exploration and analysis. The server's core functionality revolves around enhancing the efficiency and usability of Terraform-based IaC development by standardizing the process of querying and utilizing Terraform registry data.",
+    "reasoning": "The primary label is chosen as \"Development Tools\" because the server's primary use case revolves around aiding developers in IaC workflows, specifically with Terraform resources and modules. The secondary labels \"API Integration\" and \"Infrastructure as Code (IaC)\" are selected because the server interacts heavily with the Terraform Registry APIs and serves as a tool to enhance IaC workflows. The custom label \"Infrastructure as Code (IaC)\" is added to emphasize the specific domain of Infrastructure as Code that the server serves.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "API Integration",
+      "Development Tools"
+    ],
+    "custom_label": "Infrastructure as Code (IaC)",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 378,
+    "server_name": "Terraform MCP Server",
+    "rank_by_usage": 379,
+    "usage_count": "68",
+    "original_file": "../crawler/smithery/@hashicorp_terraform-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@hashicorp/terraform-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "getProviderDocs",
+          "description": "Fetches up-to-date documentation for a specific service from a Terraform provider. You must call 'resolveProviderDocID' first to obtain the exact tfprovider-compatible providerDocID required to use this tool.",
+          "input_schema": {
+            "properties": {
+              "providerDocID": {
+                "description": "Exact tfprovider-compatible providerDocID, (e.g., '8894603', '8906901') retrieved from 'resolveProviderDocID'",
+                "type": "string"
+              }
+            },
+            "required": [
+              "providerDocID"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": "Fetch detailed Terraform provider documentation using a document ID",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "moduleDetails",
+          "description": "Fetches up-to-date documentation on how to use a Terraform module. You must call 'searchModules' first to obtain the exact valid and compatible moduleID required to use this tool.",
+          "input_schema": {
+            "properties": {
+              "moduleID": {
+                "description": "Exact valid and compatible moduleID retrieved from searchModules (e.g., 'squareops/terraform-kubernetes-mongodb/mongodb/2.1.1', 'GoogleCloudPlatform/vertex-ai/google/0.2.0')",
+                "type": "string"
+              }
+            },
+            "required": [
+              "moduleID"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": "Retrieve documentation for a specific Terraform module",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "resolveProviderDocID",
+          "description": "This tool retrieves a list of potential documents based on the serviceSlug and providerDataType provided. You MUST call this function before 'getProviderDocs' to obtain a valid tfprovider-compatible providerDocID. \n\t\t\tUse the most relevant single word as the search query for serviceSlug, if unsure about the serviceSlug, use the providerName for its value.\n\t\t\tWhen selecting the best match, consider: - Title similarity to the query - Category relevance Return the selected providerDocID and explain your choice.  \n\t\t\tIf there are multiple good matches, mention this but proceed with the most relevant one.",
+          "input_schema": {
+            "properties": {
+              "providerDataType": {
+                "default": "resources",
+                "description": "The type of the document to retrieve, for general information use 'guides', for deploying resources use 'resources', for reading pre-deployed resources use 'data-sources', for functions use 'functions', and for overview of the provider use 'overview'",
+                "enum": [
+                  "resources",
+                  "data-sources",
+                  "functions",
+                  "guides",
+                  "overview"
+                ],
+                "type": "string"
+              },
+              "providerName": {
+                "description": "The name of the Terraform provider to perform the read or deployment operation",
+                "type": "string"
+              },
+              "providerNamespace": {
+                "description": "The publisher of the Terraform provider, typically the name of the company, or their GitHub organization name that created the provider",
+                "type": "string"
+              },
+              "providerVersion": {
+                "description": "The version of the Terraform provider to retrieve in the format 'x.y.z', or 'latest' to get the latest version",
+                "type": "string"
+              },
+              "serviceSlug": {
+                "description": "The slug of the service you want to deploy or read using the Terraform provider, prefer using a single word, use underscores for multiple words and if unsure about the serviceSlug, use the providerName for its value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "providerName",
+              "providerNamespace",
+              "serviceSlug"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": "Identify the most relevant provider document ID for a Terraform service",
+            "readOnlyHint": true,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "searchModules",
+          "description": "Resolves a Terraform module name to obtain a compatible moduleID for the moduleDetails tool and returns a list of matching Terraform modules. You MUST call this function before 'moduleDetails' to obtain a valid and compatible moduleID. When selecting the best match, consider: - Name similarity to the query - Description relevance - Verification status (verified) - Download counts (popularity) Return the selected moduleID and explain your choice. If there are multiple good matches, mention this but proceed with the most relevant one. If no modules were found, reattempt the search with a new moduleName query.",
+          "input_schema": {
+            "properties": {
+              "currentOffset": {
+                "default": 0,
+                "description": "Current offset for pagination",
+                "minimum": 0,
+                "type": "number"
+              },
+              "moduleQuery": {
+                "description": "The query to search for Terraform modules.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "moduleQuery"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": "Search and match Terraform modules based on name and relevance",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        }
+      ],
+      "tool_count": 4,
+      "tool_names": [
+        "getProviderDocs",
+        "moduleDetails",
+        "resolveProviderDocID",
+        "searchModules"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 378,
+      "name": "Terraform MCP Server",
+      "author": "@hashicorp/terraform-mcp-server",
+      "overview": "Integrate Terraform Registry APIs seamlessly to automate provider and module discovery, extract detailed documentation, and enhance Infrastructure as Code workflows. Enable advanced interaction with Terraform resources, data sources, and modules for efficient IaC development. Simplify Terraform module exploration and analysis through a standardized MCP interface.",
+      "repository_url": "https://github.com/hashicorp/terraform-mcp-server",
+      "homepage": "https://smithery.ai/server/@hashicorp/terraform-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "68",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@hashicorp_terraform-mcp-server.json",
+      "tools_count": 4,
+      "tools": [
+        {
+          "name": "getProviderDocs",
+          "description": "Fetches up-to-date documentation for a specific service from a Terraform provider. You must call 'resolveProviderDocID' first to obtain the exact tfprovider-compatible providerDocID required to use this tool.",
+          "input_schema": {
+            "properties": {
+              "providerDocID": {
+                "description": "Exact tfprovider-compatible providerDocID, (e.g., '8894603', '8906901') retrieved from 'resolveProviderDocID'",
+                "type": "string"
+              }
+            },
+            "required": [
+              "providerDocID"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": "Fetch detailed Terraform provider documentation using a document ID",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "moduleDetails",
+          "description": "Fetches up-to-date documentation on how to use a Terraform module. You must call 'searchModules' first to obtain the exact valid and compatible moduleID required to use this tool.",
+          "input_schema": {
+            "properties": {
+              "moduleID": {
+                "description": "Exact valid and compatible moduleID retrieved from searchModules (e.g., 'squareops/terraform-kubernetes-mongodb/mongodb/2.1.1', 'GoogleCloudPlatform/vertex-ai/google/0.2.0')",
+                "type": "string"
+              }
+            },
+            "required": [
+              "moduleID"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": "Retrieve documentation for a specific Terraform module",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "resolveProviderDocID",
+          "description": "This tool retrieves a list of potential documents based on the serviceSlug and providerDataType provided. You MUST call this function before 'getProviderDocs' to obtain a valid tfprovider-compatible providerDocID. \n\t\t\tUse the most relevant single word as the search query for serviceSlug, if unsure about the serviceSlug, use the providerName for its value.\n\t\t\tWhen selecting the best match, consider: - Title similarity to the query - Category relevance Return the selected providerDocID and explain your choice.  \n\t\t\tIf there are multiple good matches, mention this but proceed with the most relevant one.",
+          "input_schema": {
+            "properties": {
+              "providerDataType": {
+                "default": "resources",
+                "description": "The type of the document to retrieve, for general information use 'guides', for deploying resources use 'resources', for reading pre-deployed resources use 'data-sources', for functions use 'functions', and for overview of the provider use 'overview'",
+                "enum": [
+                  "resources",
+                  "data-sources",
+                  "functions",
+                  "guides",
+                  "overview"
+                ],
+                "type": "string"
+              },
+              "providerName": {
+                "description": "The name of the Terraform provider to perform the read or deployment operation",
+                "type": "string"
+              },
+              "providerNamespace": {
+                "description": "The publisher of the Terraform provider, typically the name of the company, or their GitHub organization name that created the provider",
+                "type": "string"
+              },
+              "providerVersion": {
+                "description": "The version of the Terraform provider to retrieve in the format 'x.y.z', or 'latest' to get the latest version",
+                "type": "string"
+              },
+              "serviceSlug": {
+                "description": "The slug of the service you want to deploy or read using the Terraform provider, prefer using a single word, use underscores for multiple words and if unsure about the serviceSlug, use the providerName for its value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "providerName",
+              "providerNamespace",
+              "serviceSlug"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": "Identify the most relevant provider document ID for a Terraform service",
+            "readOnlyHint": true,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "searchModules",
+          "description": "Resolves a Terraform module name to obtain a compatible moduleID for the moduleDetails tool and returns a list of matching Terraform modules. You MUST call this function before 'moduleDetails' to obtain a valid and compatible moduleID. When selecting the best match, consider: - Name similarity to the query - Description relevance - Verification status (verified) - Download counts (popularity) Return the selected moduleID and explain your choice. If there are multiple good matches, mention this but proceed with the most relevant one. If no modules were found, reattempt the search with a new moduleName query.",
+          "input_schema": {
+            "properties": {
+              "currentOffset": {
+                "default": 0,
+                "description": "Current offset for pagination",
+                "minimum": 0,
+                "type": "number"
+              },
+              "moduleQuery": {
+                "description": "The query to search for Terraform modules.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "moduleQuery"
+            ],
+            "type": "object"
+          },
+          "annotations": {
+            "title": "Search and match Terraform modules based on name and relevance",
+            "readOnlyHint": false,
+            "destructiveHint": true,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@hashicorp/terraform-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@hashicorp/terraform-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0379.@hashicorp_terraform-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 373
+  }
+}

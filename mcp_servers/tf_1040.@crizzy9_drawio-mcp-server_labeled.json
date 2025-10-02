@@ -1,0 +1,478 @@
+{
+  "labels": {
+    "analysis": "The MCP Server enables programmatic creation, modification, and analysis of diagrams using Draw.io. It allows AI agents to interact with diagrams for creating technical documentation, process mapping, and visual modeling. The available tools focus on retrieving, adding, and manipulating diagram elements (cells, edges, shapes), making this server ideal for workflow automation that involves diagram creation and management.",
+    "reasoning": "The primary label \"Content Creation\" was chosen because the server focuses on creating and manipulating diagrams, which is a form of visual content creation. The secondary label \"Development Tools\" was selected because the server's programmatic tools are useful for developers and automation workflows. The custom label \"Diagram Automation\" was added to explicitly highlight the server's unique ability to programmatically automate diagram-related tasks.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": "Diagram Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1039,
+    "server_name": "Draw.io Diagramming Server",
+    "rank_by_usage": 1040,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@crizzy9_drawio-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@crizzy9/drawio-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-selected-cell",
+          "description": "This tool allows you to retrieve selected cell (whether vertex or edge) on the current page of a Draw.io diagram. The response is a JSON containing attributes of the cell.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add-rectangle",
+          "description": "This tool allows you to add new Rectangle vertex cell (object) on the current page of a Draw.io diagram. It accepts multiple optional input parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X-axis position of the Rectangle vertex cell",
+                "default": 100
+              },
+              "y": {
+                "type": "number",
+                "description": "Y-axis position of the Rectangle vertex cell",
+                "default": 100
+              },
+              "width": {
+                "type": "number",
+                "description": "Width of the Rectangle vertex cell",
+                "default": 200
+              },
+              "height": {
+                "type": "number",
+                "description": "Height of the Rectangle vertex cell",
+                "default": 100
+              },
+              "text": {
+                "type": "string",
+                "description": "Text content placed inside of the Rectangle vertex cell",
+                "default": "New Cell"
+              },
+              "style": {
+                "type": "string",
+                "description": "Semi-colon separated list of Draw.io visual styles, in the form of `key=value`. Example: `whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;`",
+                "default": "whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add-edge",
+          "description": "This tool creates an edge, sometimes called also a relation, between two vertexes (cells).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "description": "Source ID of a cell. It is represented by `id` attribute."
+              },
+              "target_id": {
+                "type": "string",
+                "description": "Target ID of a cell. It is represented by `id` attribute."
+              },
+              "text": {
+                "type": "string",
+                "description": "Text content placed over the edge cell"
+              },
+              "style": {
+                "type": "string",
+                "description": "Semi-colon separated list of Draw.io visual styles, in the form of `key=value`. Example: `edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;`",
+                "default": "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+              }
+            },
+            "required": [
+              "source_id",
+              "target_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete-cell-by-id",
+          "description": "Deletes a cell, whether it is a vertex or edge.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cell_id": {
+                "type": "string",
+                "description": "The ID of a cell to delete. The cell can be either vertex or edge. The ID is located in `id` attribute."
+              }
+            },
+            "required": [
+              "cell_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-shape-categories",
+          "description": "Retrieves available shape categories from the diagram's library. Library is split into multiple categories.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-shapes-in-category",
+          "description": "Retrieve all shapes in the provided category from the diagram's library. A shape primarily contains `style` based on which you can create new vertex cells.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category_id": {
+                "type": "string",
+                "description": "Identifier (ID / key) of the category from which all the shapes should be retrieved."
+              }
+            },
+            "required": [
+              "category_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-shape-by-name",
+          "description": "Retrieve a specific shape by its name from all available shapes in the diagram's library. It returns the shape and also the category it belongs.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "shape_name": {
+                "type": "string",
+                "description": "Name of the shape to retrieve from the shape library of the current diagram."
+              }
+            },
+            "required": [
+              "shape_name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add-cell-of-shape",
+          "description": "This tool allows you to add new vertex cell (object) on the current page of a Draw.io diagram by its shape name. It accepts multiple optional input parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "shape_name": {
+                "type": "string",
+                "description": "Name of the shape to retrieved from the shape library of the current diagram."
+              },
+              "x": {
+                "type": "number",
+                "description": "X-axis position of the vertex cell of the shape",
+                "default": 100
+              },
+              "y": {
+                "type": "number",
+                "description": "Y-axis position of the vertex cell of the shape",
+                "default": 100
+              },
+              "width": {
+                "type": "number",
+                "description": "Width of the vertex cell of the shape",
+                "default": 200
+              },
+              "height": {
+                "type": "number",
+                "description": "Height of the vertex cell of the shape",
+                "default": 100
+              },
+              "text": {
+                "type": "string",
+                "description": "Text content placed inside of the vertex cell of the shape"
+              },
+              "style": {
+                "type": "string",
+                "description": "Semi-colon separated list of Draw.io visual styles, in the form of `key=value`. Example: `whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;`"
+              }
+            },
+            "required": [
+              "shape_name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 8,
+      "tool_names": [
+        "get-selected-cell",
+        "add-rectangle",
+        "add-edge",
+        "delete-cell-by-id",
+        "get-shape-categories",
+        "get-shapes-in-category",
+        "get-shape-by-name",
+        "add-cell-of-shape"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1039,
+      "name": "Draw.io Diagramming Server",
+      "author": "@crizzy9/drawio-mcp-server",
+      "overview": "Enable programmatic creation, modification, and analysis of diagrams using Draw.io within your AI workflows. Seamlessly integrate rich diagramming capabilities into MCP-powered applications to visualize complex relationships and automate visual modeling. Empower AI agents to interact with and manipulate diagrams for enhanced technical documentation and process mapping.",
+      "repository_url": "https://github.com/crizzy9/drawio-mcp-server",
+      "homepage": "https://smithery.ai/server/@crizzy9/drawio-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@crizzy9_drawio-mcp-server.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "get-selected-cell",
+          "description": "This tool allows you to retrieve selected cell (whether vertex or edge) on the current page of a Draw.io diagram. The response is a JSON containing attributes of the cell.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add-rectangle",
+          "description": "This tool allows you to add new Rectangle vertex cell (object) on the current page of a Draw.io diagram. It accepts multiple optional input parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "description": "X-axis position of the Rectangle vertex cell",
+                "default": 100
+              },
+              "y": {
+                "type": "number",
+                "description": "Y-axis position of the Rectangle vertex cell",
+                "default": 100
+              },
+              "width": {
+                "type": "number",
+                "description": "Width of the Rectangle vertex cell",
+                "default": 200
+              },
+              "height": {
+                "type": "number",
+                "description": "Height of the Rectangle vertex cell",
+                "default": 100
+              },
+              "text": {
+                "type": "string",
+                "description": "Text content placed inside of the Rectangle vertex cell",
+                "default": "New Cell"
+              },
+              "style": {
+                "type": "string",
+                "description": "Semi-colon separated list of Draw.io visual styles, in the form of `key=value`. Example: `whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;`",
+                "default": "whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add-edge",
+          "description": "This tool creates an edge, sometimes called also a relation, between two vertexes (cells).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "description": "Source ID of a cell. It is represented by `id` attribute."
+              },
+              "target_id": {
+                "type": "string",
+                "description": "Target ID of a cell. It is represented by `id` attribute."
+              },
+              "text": {
+                "type": "string",
+                "description": "Text content placed over the edge cell"
+              },
+              "style": {
+                "type": "string",
+                "description": "Semi-colon separated list of Draw.io visual styles, in the form of `key=value`. Example: `edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;`",
+                "default": "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;"
+              }
+            },
+            "required": [
+              "source_id",
+              "target_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete-cell-by-id",
+          "description": "Deletes a cell, whether it is a vertex or edge.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cell_id": {
+                "type": "string",
+                "description": "The ID of a cell to delete. The cell can be either vertex or edge. The ID is located in `id` attribute."
+              }
+            },
+            "required": [
+              "cell_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-shape-categories",
+          "description": "Retrieves available shape categories from the diagram's library. Library is split into multiple categories.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-shapes-in-category",
+          "description": "Retrieve all shapes in the provided category from the diagram's library. A shape primarily contains `style` based on which you can create new vertex cells.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category_id": {
+                "type": "string",
+                "description": "Identifier (ID / key) of the category from which all the shapes should be retrieved."
+              }
+            },
+            "required": [
+              "category_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-shape-by-name",
+          "description": "Retrieve a specific shape by its name from all available shapes in the diagram's library. It returns the shape and also the category it belongs.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "shape_name": {
+                "type": "string",
+                "description": "Name of the shape to retrieve from the shape library of the current diagram."
+              }
+            },
+            "required": [
+              "shape_name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add-cell-of-shape",
+          "description": "This tool allows you to add new vertex cell (object) on the current page of a Draw.io diagram by its shape name. It accepts multiple optional input parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "shape_name": {
+                "type": "string",
+                "description": "Name of the shape to retrieved from the shape library of the current diagram."
+              },
+              "x": {
+                "type": "number",
+                "description": "X-axis position of the vertex cell of the shape",
+                "default": 100
+              },
+              "y": {
+                "type": "number",
+                "description": "Y-axis position of the vertex cell of the shape",
+                "default": 100
+              },
+              "width": {
+                "type": "number",
+                "description": "Width of the vertex cell of the shape",
+                "default": 200
+              },
+              "height": {
+                "type": "number",
+                "description": "Height of the vertex cell of the shape",
+                "default": 100
+              },
+              "text": {
+                "type": "string",
+                "description": "Text content placed inside of the vertex cell of the shape"
+              },
+              "style": {
+                "type": "string",
+                "description": "Semi-colon separated list of Draw.io visual styles, in the form of `key=value`. Example: `whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;`"
+              }
+            },
+            "required": [
+              "shape_name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@crizzy9/drawio-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@crizzy9/drawio-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1040.@crizzy9_drawio-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1018
+  }
+}

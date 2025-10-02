@@ -1,0 +1,411 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described integrates with Atlassian Confluence, a widely used knowledge management platform. The primary functionality revolves around retrieving, searching, and managing Confluence content programmatically. The available tools allow for listing spaces, fetching detailed space information, listing pages, retrieving full page content (converted to Markdown), and performing advanced searches using CQL. This enables AI systems to access and work with organizational knowledge resources seamlessly, supporting tasks like research, content analysis, and knowledge base interactions.",
+    "reasoning": "The functional focus on accessing organizational knowledge within Confluence aligns most closely with the **Memory Management** category, as the tools primarily deal with retrieving, storing, and managing knowledge assets. The advanced search capabilities suggest secondary relevance to **Web Search & Research**, given the ability to query and retrieve specific content. There's also an aspect of **Documentation & Knowledge Base Operations**, though this isn't a predefined category. No custom label is needed as the functionality is well-covered by existing categories.",
+    "primary_label": "Memory Management",
+    "secondary_labels": [
+      "Web Search & Research"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1526,
+    "server_name": "Atlassian Confluence Integration",
+    "rank_by_usage": 1527,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@aashari_mcp-server-atlassian-confluence.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@aashari/mcp-server-atlassian-confluence/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAiYXRsYXNzaWFuQXBpVG9rZW4iOiAiIiwgImF0bGFzc2lhblNpdGVOYW1lIjogIiIsICJhdGxhc3NpYW5Vc2VyRW1haWwiOiAiIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list_spaces",
+          "description": "List available Confluence spaces with filtering options and pagination support.\n\n        PURPOSE: Discovers accessible Confluence spaces, providing metadata about each space including ID, key, name, description, and status. This tool is essential for finding spaces before working with their content.\n\n        WHEN TO USE:\n        - When you need to discover what spaces exist in the Confluence instance.\n        - When you need to find a space's ID or key to use with other tools.\n        - When you need to filter spaces by type ('global', 'personal', 'archived').\n        - When you need to locate a space by partial name matching.\n        - When you need to browse available content sources.\n        - As a first step before using 'list_pages' or content search tools.\n\n        WHEN NOT TO USE:\n        - When you already know the specific space ID/key (use 'get_space' instead).\n        - When you need to search for page content (use 'search' instead).\n        - When you need to list pages within a known space (use 'list_pages' instead).\n        - When you need detailed information about a specific space (use 'get_space' instead).\n\n        RETURNS: Formatted list of spaces including:\n        - Numeric ID (used for most API operations)\n        - Space key (short identifier, e.g., 'DEV', 'HR', etc.)\n        - Display name and description\n        - Type (global, personal) and status (current, archived)\n        - Creation information and URL\n        \n        Results can be paginated using the 'limit' and 'cursor' parameters.\n        \n        SORTING: By default, spaces are sorted by name in descending order.\n\n        EXAMPLES:\n        - List all spaces: {}\n        - Filter by type: { type: [\"global\"] }\n        - Filter by status: { status: [\"current\"] }\n        - Search by name: { query: \"Engineering\" }\n        - With pagination: { limit: 20, cursor: \"some-cursor-value\" }\n\n        ERRORS:\n        - Authentication failures: Check Confluence credentials.\n        - Permission issues: Ensure you have access to view spaces.\n        - Invalid filter values: Verify type/status values match allowed options.\n        - No spaces found: May indicate permission issues or overly restrictive filters.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "global",
+                  "personal",
+                  "archived"
+                ],
+                "description": "Filter spaces by type. Options include: \"global\" (team spaces), \"personal\" (user spaces), or \"archived\" (archived spaces). If omitted, returns all types."
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "current",
+                  "archived"
+                ],
+                "description": "Filter spaces by status. Options include: \"current\" (active spaces) or \"archived\" (archived spaces). If omitted, returns spaces with all statuses."
+              },
+              "query": {
+                "type": "string",
+                "description": "Search filter to find spaces matching specific text in their name, key, or description (text search)."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results. The Confluence API caps results at 100 items per request."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_space",
+          "description": "Retrieve comprehensive details about a specific Confluence space by ID.\n\n        PURPOSE: Fetches complete metadata and configuration information for a space, identified by its numeric ID. Provides all available details about a space, including permissions, themes, and homepage.\n\n        WHEN TO USE:\n        - When you need detailed information about a specific space's configuration.\n        - When you need the numeric ID of a space's homepage to use with 'get_page'.\n        - When you need to verify permissions, status, or theme settings.\n        - When you need to analyze space metadata before working with its content.\n        - After finding a space through 'list_spaces' and needing more details.\n        - When you need to determine if a space is active, archived, or has specific restrictions.\n\n        WHEN NOT TO USE:\n        - When you need to discover spaces (use 'list_spaces' instead).\n        - When you need to list pages in a space (use 'list_pages' instead).\n        - When you need to search for content (use 'search' instead).\n        - When you only have a space key and need the ID (use 'list_spaces' first).\n\n        RETURNS: Comprehensive space details formatted in Markdown, including:\n        - Full name, key, and ID information\n        - Description and homepage details\n        - Type, status, and theme configuration\n        - Permissions and restrictions\n        - Creation and modification metadata\n        - URLs for accessing the space directly\n        \n        All available metadata is fetched by default to provide complete information.\n\n        EXAMPLES:\n        - Get space with ID 123456: { spaceId: \"123456\" }\n\n        ERRORS:\n        - Space not found (404): Verify the numeric space ID exists and is accessible.\n        - Permission denied (403): Check if you have access to the space.\n        - Authentication failure: Verify Confluence credentials.\n        - Invalid ID format: Ensure the spaceId is a valid numeric identifier.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "spaceKey": {
+                "type": "string",
+                "description": "The key of the Confluence space to retrieve (e.g., \"DEV\" or \"MARKETING\"). The space key is a unique identifier for a space, typically a short uppercase code."
+              }
+            },
+            "required": [
+              "spaceKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_pages",
+          "description": "List Confluence pages, optionally filtering by space ID(s), status, or title/content/label query, with pagination.\n\n        PURPOSE: Discover pages within specific spaces or across the instance based on status or simple text matching. Provides page metadata and IDs needed for the 'get_page' tool.\n\n        WHEN TO USE:\n        - To list pages within one or more specific spaces (using 'spaceId').\n        - To find pages based on their status ('current', 'archived', etc.).\n        - To perform simple text searches on page titles or labels ('query').\n        - To get an overview of recent pages in a space before getting full content.\n        - To obtain 'pageId' values for use with 'get_page'.\n\n        WHEN NOT TO USE:\n        - When you need to search the *full content* of pages with complex logic (use 'search' with CQL).\n        - When you already know the 'pageId' and need details (use 'get_page').\n        - When you need space information (use space tools).\n        - If you only have the space *key* (use 'list-spaces' or 'get-space' to find the numeric 'spaceId' first).\n\n        RETURNS: Formatted list of pages including ID, title, space ID, status, author, creation date, version, and URL. Includes pagination details if applicable (Confluence uses cursor-based pagination).\n        \n        SORTING: By default, pages are sorted by modified date in descending order (most recently modified first). You can change this by specifying a different value in the 'sort' parameter (e.g., \"title\" for alphabetical sorting).\n\n        EXAMPLES:\n        - List pages in space 123456: { spaceId: [\"123456\"] }\n        - List archived pages in space 123456: { spaceId: [\"123456\"], status: [\"archived\"] }\n        - Find pages with \"Project Plan\" in title/label in space 123456: { spaceId: [\"123456\"], query: \"Project Plan\" }\n        - Paginate results: { limit: 10, cursor: \"some-cursor-value\" }\n        - Sort pages by title: { spaceId: [\"123456\"], sort: \"title\" }\n\n        ERRORS:\n        - Space ID not found: Verify the numeric 'spaceId' is correct.\n        - Invalid status: Ensure 'status' is one of the allowed values.\n        - Authentication failures: Check Confluence credentials.\n        - No pages found: Filters might be too restrictive, or the space is empty/inaccessible.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "spaceId": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Filter pages by space IDs. Provide an array of space IDs (e.g., [\"123456\", \"789012\"]) to only show pages from specific spaces. Useful when you want to focus on content from particular projects or teams."
+              },
+              "query": {
+                "type": "string",
+                "description": "Filter pages by title, content, or labels (text search). Use this to narrow down results to specific topics or content."
+              },
+              "status": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "current",
+                    "trashed",
+                    "deleted",
+                    "draft",
+                    "archived",
+                    "historical"
+                  ]
+                },
+                "description": "Filter pages by status. Options include: \"current\" (published pages), \"trashed\" (pages in trash), \"deleted\" (permanently deleted), \"draft\" (unpublished drafts), \"archived\" (archived pages), or \"historical\" (previous versions). Defaults to \"current\" if not specified. Provide as an array to include multiple statuses."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 250,
+                "description": "Maximum number of items to return (1-250). Use this to control the response size. Useful for pagination or when you only need a few results. The Confluence API caps results at 250 items per request."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "id",
+                  "-id",
+                  "created-date",
+                  "-created-date",
+                  "modified-date",
+                  "-modified-date",
+                  "title",
+                  "-title"
+                ],
+                "description": "Property to sort pages by. Default is \"-modified-date\" which displays the most recently modified pages first. The \"-\" prefix indicates descending order. Valid values: \"id\", \"-id\", \"created-date\", \"-created-date\", \"modified-date\", \"-modified-date\", \"title\", \"-title\"."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_page",
+          "description": "Retrieve a Confluence page's full content and metadata by its numeric ID.\n\n        PURPOSE: Fetches the complete content (converted to Markdown) and comprehensive metadata for a specific Confluence page, identified by its numeric ID. The page content is properly formatted with headings, tables, lists, and other Markdown elements.\n\n        WHEN TO USE:\n        - When you need to read, analyze, or summarize the full content of a specific page.\n        - When you need detailed page metadata (author, version, status, etc.).\n        - After finding a page ID through 'list_pages' or 'search' and need its complete content.\n        - When you need the actual content of a page rather than just its metadata.\n\n        WHEN NOT TO USE:\n        - When you only have a space ID or space key (use 'list_pages' first).\n        - When you need to find pages based on criteria (use 'list_pages' or 'search').\n        - When you want to discover spaces rather than specific pages (use space tools).\n        - When you need to search across multiple pages (use 'search').\n\n        RETURNS: Comprehensive page details formatted in Markdown, including:\n        - Full title, space information, and creation metadata\n        - Complete page content (converted from Atlassian Document Format to Markdown)\n        - Version information, permissions status, and URL\n        - Metadata including labels, restrictions, and ancestors\n        \n        The page content is fetched using the Confluence Content REST API, with the body transformed from ADF (Atlassian Document Format) to readable Markdown.\n\n        EXAMPLES:\n        - Get page with ID 123456: { pageId: \"123456\" }\n\n        ERRORS:\n        - Page not found (404): Verify the numeric page ID exists and is accessible.\n        - Permission denied (403): Check if the page has view restrictions.\n        - Authentication failure: Verify API credentials.\n        - Content conversion failures: Some complex content elements may not convert perfectly to Markdown.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pageId": {
+                "type": "string",
+                "description": "The numeric ID of the Confluence page to retrieve (e.g., \"456789\"). This is required and must be a valid page ID from your Confluence instance. The page content will be returned in Markdown format for easy reading."
+              }
+            },
+            "required": [
+              "pageId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search Confluence content using CQL (Confluence Query Language) for precise results.\n\n        PURPOSE: Performs advanced content searches across Confluence using CQL queries, allowing for complex search patterns, content filtering, and targeted results. This is the most powerful search tool for Confluence, supporting complex filtering and sorting.\n\n        WHEN TO USE:\n        - When you need to search for specific text or patterns within page content (not just titles).\n        - When you need to combine multiple search criteria (e.g., text + space + date + type).\n        - When you need to search using complex logical operators (AND, OR, NOT).\n        - When simple title/label searches via 'list_pages' are insufficient.\n        - When you need to search across all content types (pages, blog posts, attachments, etc.).\n        - When you need fine-grained sorting control over search results.\n\n        WHEN NOT TO USE:\n        - When you already know the page ID (use 'get_page' instead).\n        - When you only need to list pages in a space by title (use 'list_pages' with optional query).\n        - When you need to explore or browse spaces (use space-related tools).\n        - When you're not searching for actual content (e.g., for space metadata).\n\n        RETURNS: Formatted search results including:\n        - Result type (page, blog, attachment, etc.)\n        - Title and content excerpt with highlighted match terms\n        - Space information, creation metadata, and URL\n        - Content ID for use with other tools like 'get_page'\n        \n        Results can be paginated using the 'limit' and 'cursor' parameters.\n\n        CQL EXAMPLES:\n        - Basic text search: { cql: \"text ~ 'project plan'\" }\n        - Combined criteria: { cql: \"text ~ 'quarterly report' AND space = DEV AND type = 'page'\" }\n        - Date filtering: { cql: \"created >= '2023-01-01' AND created <= '2023-12-31'\" }\n        - Content by specific user: { cql: \"creator = 'jsmith'\" }\n        - Exact phrase with label: { cql: \"text = 'API Documentation' AND label = 'public'\" }\n        \n        Common CQL fields:\n        - text: Full-text content search\n        - title: Title search\n        - space: Space key\n        - type: Content type (page, blogpost, attachment)\n        - created/modified: Date criteria\n        - label: Content labels\n        - creator/contributor: User references\n\n        ERRORS:\n        - Invalid CQL syntax: Check query format against CQL documentation.\n        - No results: Try broadening search criteria.\n        - Authentication/permission failures: Ensure proper credentials.\n        - Rate limiting: For large result sets, use pagination and caching.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cql": {
+                "type": "string",
+                "description": "Search query using Confluence Query Language (CQL). Use this to search for content using standard CQL syntax (e.g., \"text ~ 'project plan' AND space = DEV\"). If omitted, returns recent content sorted by last modified date."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results. The Confluence search API caps results at 100 items per request."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "list_spaces",
+        "get_space",
+        "list_pages",
+        "get_page",
+        "search"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1526,
+      "name": "Atlassian Confluence Integration",
+      "author": "@aashari/mcp-server-atlassian-confluence",
+      "overview": "Connect your AI systems to Atlassian Confluence for seamless access to your organization's knowledge base. Retrieve, search, and manage Confluence content effortlessly, enhancing your AI's capabilities with real-time data. Simplify your workflow by integrating powerful Confluence tools directly into your AI applications.",
+      "repository_url": "https://github.com/aashari/mcp-server-atlassian-confluence",
+      "homepage": "https://smithery.ai/server/@aashari/mcp-server-atlassian-confluence",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@aashari_mcp-server-atlassian-confluence.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "list_spaces",
+          "description": "List available Confluence spaces with filtering options and pagination support.\n\n        PURPOSE: Discovers accessible Confluence spaces, providing metadata about each space including ID, key, name, description, and status. This tool is essential for finding spaces before working with their content.\n\n        WHEN TO USE:\n        - When you need to discover what spaces exist in the Confluence instance.\n        - When you need to find a space's ID or key to use with other tools.\n        - When you need to filter spaces by type ('global', 'personal', 'archived').\n        - When you need to locate a space by partial name matching.\n        - When you need to browse available content sources.\n        - As a first step before using 'list_pages' or content search tools.\n\n        WHEN NOT TO USE:\n        - When you already know the specific space ID/key (use 'get_space' instead).\n        - When you need to search for page content (use 'search' instead).\n        - When you need to list pages within a known space (use 'list_pages' instead).\n        - When you need detailed information about a specific space (use 'get_space' instead).\n\n        RETURNS: Formatted list of spaces including:\n        - Numeric ID (used for most API operations)\n        - Space key (short identifier, e.g., 'DEV', 'HR', etc.)\n        - Display name and description\n        - Type (global, personal) and status (current, archived)\n        - Creation information and URL\n        \n        Results can be paginated using the 'limit' and 'cursor' parameters.\n        \n        SORTING: By default, spaces are sorted by name in descending order.\n\n        EXAMPLES:\n        - List all spaces: {}\n        - Filter by type: { type: [\"global\"] }\n        - Filter by status: { status: [\"current\"] }\n        - Search by name: { query: \"Engineering\" }\n        - With pagination: { limit: 20, cursor: \"some-cursor-value\" }\n\n        ERRORS:\n        - Authentication failures: Check Confluence credentials.\n        - Permission issues: Ensure you have access to view spaces.\n        - Invalid filter values: Verify type/status values match allowed options.\n        - No spaces found: May indicate permission issues or overly restrictive filters.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "global",
+                  "personal",
+                  "archived"
+                ],
+                "description": "Filter spaces by type. Options include: \"global\" (team spaces), \"personal\" (user spaces), or \"archived\" (archived spaces). If omitted, returns all types."
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "current",
+                  "archived"
+                ],
+                "description": "Filter spaces by status. Options include: \"current\" (active spaces) or \"archived\" (archived spaces). If omitted, returns spaces with all statuses."
+              },
+              "query": {
+                "type": "string",
+                "description": "Search filter to find spaces matching specific text in their name, key, or description (text search)."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results. The Confluence API caps results at 100 items per request."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_space",
+          "description": "Retrieve comprehensive details about a specific Confluence space by ID.\n\n        PURPOSE: Fetches complete metadata and configuration information for a space, identified by its numeric ID. Provides all available details about a space, including permissions, themes, and homepage.\n\n        WHEN TO USE:\n        - When you need detailed information about a specific space's configuration.\n        - When you need the numeric ID of a space's homepage to use with 'get_page'.\n        - When you need to verify permissions, status, or theme settings.\n        - When you need to analyze space metadata before working with its content.\n        - After finding a space through 'list_spaces' and needing more details.\n        - When you need to determine if a space is active, archived, or has specific restrictions.\n\n        WHEN NOT TO USE:\n        - When you need to discover spaces (use 'list_spaces' instead).\n        - When you need to list pages in a space (use 'list_pages' instead).\n        - When you need to search for content (use 'search' instead).\n        - When you only have a space key and need the ID (use 'list_spaces' first).\n\n        RETURNS: Comprehensive space details formatted in Markdown, including:\n        - Full name, key, and ID information\n        - Description and homepage details\n        - Type, status, and theme configuration\n        - Permissions and restrictions\n        - Creation and modification metadata\n        - URLs for accessing the space directly\n        \n        All available metadata is fetched by default to provide complete information.\n\n        EXAMPLES:\n        - Get space with ID 123456: { spaceId: \"123456\" }\n\n        ERRORS:\n        - Space not found (404): Verify the numeric space ID exists and is accessible.\n        - Permission denied (403): Check if you have access to the space.\n        - Authentication failure: Verify Confluence credentials.\n        - Invalid ID format: Ensure the spaceId is a valid numeric identifier.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "spaceKey": {
+                "type": "string",
+                "description": "The key of the Confluence space to retrieve (e.g., \"DEV\" or \"MARKETING\"). The space key is a unique identifier for a space, typically a short uppercase code."
+              }
+            },
+            "required": [
+              "spaceKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_pages",
+          "description": "List Confluence pages, optionally filtering by space ID(s), status, or title/content/label query, with pagination.\n\n        PURPOSE: Discover pages within specific spaces or across the instance based on status or simple text matching. Provides page metadata and IDs needed for the 'get_page' tool.\n\n        WHEN TO USE:\n        - To list pages within one or more specific spaces (using 'spaceId').\n        - To find pages based on their status ('current', 'archived', etc.).\n        - To perform simple text searches on page titles or labels ('query').\n        - To get an overview of recent pages in a space before getting full content.\n        - To obtain 'pageId' values for use with 'get_page'.\n\n        WHEN NOT TO USE:\n        - When you need to search the *full content* of pages with complex logic (use 'search' with CQL).\n        - When you already know the 'pageId' and need details (use 'get_page').\n        - When you need space information (use space tools).\n        - If you only have the space *key* (use 'list-spaces' or 'get-space' to find the numeric 'spaceId' first).\n\n        RETURNS: Formatted list of pages including ID, title, space ID, status, author, creation date, version, and URL. Includes pagination details if applicable (Confluence uses cursor-based pagination).\n        \n        SORTING: By default, pages are sorted by modified date in descending order (most recently modified first). You can change this by specifying a different value in the 'sort' parameter (e.g., \"title\" for alphabetical sorting).\n\n        EXAMPLES:\n        - List pages in space 123456: { spaceId: [\"123456\"] }\n        - List archived pages in space 123456: { spaceId: [\"123456\"], status: [\"archived\"] }\n        - Find pages with \"Project Plan\" in title/label in space 123456: { spaceId: [\"123456\"], query: \"Project Plan\" }\n        - Paginate results: { limit: 10, cursor: \"some-cursor-value\" }\n        - Sort pages by title: { spaceId: [\"123456\"], sort: \"title\" }\n\n        ERRORS:\n        - Space ID not found: Verify the numeric 'spaceId' is correct.\n        - Invalid status: Ensure 'status' is one of the allowed values.\n        - Authentication failures: Check Confluence credentials.\n        - No pages found: Filters might be too restrictive, or the space is empty/inaccessible.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "spaceId": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Filter pages by space IDs. Provide an array of space IDs (e.g., [\"123456\", \"789012\"]) to only show pages from specific spaces. Useful when you want to focus on content from particular projects or teams."
+              },
+              "query": {
+                "type": "string",
+                "description": "Filter pages by title, content, or labels (text search). Use this to narrow down results to specific topics or content."
+              },
+              "status": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "current",
+                    "trashed",
+                    "deleted",
+                    "draft",
+                    "archived",
+                    "historical"
+                  ]
+                },
+                "description": "Filter pages by status. Options include: \"current\" (published pages), \"trashed\" (pages in trash), \"deleted\" (permanently deleted), \"draft\" (unpublished drafts), \"archived\" (archived pages), or \"historical\" (previous versions). Defaults to \"current\" if not specified. Provide as an array to include multiple statuses."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 250,
+                "description": "Maximum number of items to return (1-250). Use this to control the response size. Useful for pagination or when you only need a few results. The Confluence API caps results at 250 items per request."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "id",
+                  "-id",
+                  "created-date",
+                  "-created-date",
+                  "modified-date",
+                  "-modified-date",
+                  "title",
+                  "-title"
+                ],
+                "description": "Property to sort pages by. Default is \"-modified-date\" which displays the most recently modified pages first. The \"-\" prefix indicates descending order. Valid values: \"id\", \"-id\", \"created-date\", \"-created-date\", \"modified-date\", \"-modified-date\", \"title\", \"-title\"."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_page",
+          "description": "Retrieve a Confluence page's full content and metadata by its numeric ID.\n\n        PURPOSE: Fetches the complete content (converted to Markdown) and comprehensive metadata for a specific Confluence page, identified by its numeric ID. The page content is properly formatted with headings, tables, lists, and other Markdown elements.\n\n        WHEN TO USE:\n        - When you need to read, analyze, or summarize the full content of a specific page.\n        - When you need detailed page metadata (author, version, status, etc.).\n        - After finding a page ID through 'list_pages' or 'search' and need its complete content.\n        - When you need the actual content of a page rather than just its metadata.\n\n        WHEN NOT TO USE:\n        - When you only have a space ID or space key (use 'list_pages' first).\n        - When you need to find pages based on criteria (use 'list_pages' or 'search').\n        - When you want to discover spaces rather than specific pages (use space tools).\n        - When you need to search across multiple pages (use 'search').\n\n        RETURNS: Comprehensive page details formatted in Markdown, including:\n        - Full title, space information, and creation metadata\n        - Complete page content (converted from Atlassian Document Format to Markdown)\n        - Version information, permissions status, and URL\n        - Metadata including labels, restrictions, and ancestors\n        \n        The page content is fetched using the Confluence Content REST API, with the body transformed from ADF (Atlassian Document Format) to readable Markdown.\n\n        EXAMPLES:\n        - Get page with ID 123456: { pageId: \"123456\" }\n\n        ERRORS:\n        - Page not found (404): Verify the numeric page ID exists and is accessible.\n        - Permission denied (403): Check if the page has view restrictions.\n        - Authentication failure: Verify API credentials.\n        - Content conversion failures: Some complex content elements may not convert perfectly to Markdown.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pageId": {
+                "type": "string",
+                "description": "The numeric ID of the Confluence page to retrieve (e.g., \"456789\"). This is required and must be a valid page ID from your Confluence instance. The page content will be returned in Markdown format for easy reading."
+              }
+            },
+            "required": [
+              "pageId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search Confluence content using CQL (Confluence Query Language) for precise results.\n\n        PURPOSE: Performs advanced content searches across Confluence using CQL queries, allowing for complex search patterns, content filtering, and targeted results. This is the most powerful search tool for Confluence, supporting complex filtering and sorting.\n\n        WHEN TO USE:\n        - When you need to search for specific text or patterns within page content (not just titles).\n        - When you need to combine multiple search criteria (e.g., text + space + date + type).\n        - When you need to search using complex logical operators (AND, OR, NOT).\n        - When simple title/label searches via 'list_pages' are insufficient.\n        - When you need to search across all content types (pages, blog posts, attachments, etc.).\n        - When you need fine-grained sorting control over search results.\n\n        WHEN NOT TO USE:\n        - When you already know the page ID (use 'get_page' instead).\n        - When you only need to list pages in a space by title (use 'list_pages' with optional query).\n        - When you need to explore or browse spaces (use space-related tools).\n        - When you're not searching for actual content (e.g., for space metadata).\n\n        RETURNS: Formatted search results including:\n        - Result type (page, blog, attachment, etc.)\n        - Title and content excerpt with highlighted match terms\n        - Space information, creation metadata, and URL\n        - Content ID for use with other tools like 'get_page'\n        \n        Results can be paginated using the 'limit' and 'cursor' parameters.\n\n        CQL EXAMPLES:\n        - Basic text search: { cql: \"text ~ 'project plan'\" }\n        - Combined criteria: { cql: \"text ~ 'quarterly report' AND space = DEV AND type = 'page'\" }\n        - Date filtering: { cql: \"created >= '2023-01-01' AND created <= '2023-12-31'\" }\n        - Content by specific user: { cql: \"creator = 'jsmith'\" }\n        - Exact phrase with label: { cql: \"text = 'API Documentation' AND label = 'public'\" }\n        \n        Common CQL fields:\n        - text: Full-text content search\n        - title: Title search\n        - space: Space key\n        - type: Content type (page, blogpost, attachment)\n        - created/modified: Date criteria\n        - label: Content labels\n        - creator/contributor: User references\n\n        ERRORS:\n        - Invalid CQL syntax: Check query format against CQL documentation.\n        - No results: Try broadening search criteria.\n        - Authentication/permission failures: Ensure proper credentials.\n        - Rate limiting: For large result sets, use pagination and caching.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cql": {
+                "type": "string",
+                "description": "Search query using Confluence Query Language (CQL). Use this to search for content using standard CQL syntax (e.g., \"text ~ 'project plan' AND space = DEV\"). If omitted, returns recent content sorted by last modified date."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results. The Confluence search API caps results at 100 items per request."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"atlassianApiToken\": \"\",\n  \"atlassianSiteName\": \"\",\n  \"atlassianUserEmail\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@aashari/mcp-server-atlassian-confluence/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"atlassianApiToken\": \"\",\n  \"atlassianSiteName\": \"\",\n  \"atlassianUserEmail\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@aashari/mcp-server-atlassian-confluence/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1527.@aashari_mcp-server-atlassian-confluence_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1403
+  }
+}

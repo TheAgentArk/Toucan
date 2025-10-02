@@ -1,0 +1,173 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Domain Radar\" is focused on domain name intelligence, providing tools to check domain availability, search for expiring or expired domains, and analyze domain trends. Its primary functionality revolves around domain monitoring, registration, and trend analysis, with a particular emphasis on Actionable Insights for Domain Investing and Strategy. The server integrates seamlessly with other tools like Claude and MCP clients to enhance domain-related operations.",
+    "reasoning": "The primary label \"Domain Intelligence\" is chosen because it directly describes the server's main purpose of providing domain-related insights and monitoring. The secondary label \"Web Search & Research\" is included because the server helps users discover and analyze domain-related trends and availability, which falls under research and information gathering. The custom label \"Domain Monitoring & Strategy\" reflects the server's unique focus on tracking expiring/expired domains and enabling strategic domain planning.",
+    "primary_label": "AI/ML Tools",
+    "secondary_labels": [
+      "Web Search & Research"
+    ],
+    "custom_label": "Domain Monitoring & Strategy",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 862,
+    "server_name": "Domain Radar",
+    "rank_by_usage": 863,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@devlimelabs_domain-radar-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@devlimelabs/domain-radar-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "check-domain-availability",
+          "description": "Check if a domain name is available for registration",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domain": {
+                "type": "string",
+                "description": "Domain name to check (with or without extension)"
+              }
+            },
+            "required": [
+              "domain"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-expiring-domains",
+          "description": "Search for domains expiring within 24 hours",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Optional keyword to filter domains"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-expired-domains",
+          "description": "Search for recently expired domains",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Optional keyword to filter domains"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "check-domain-availability",
+        "search-expiring-domains",
+        "search-expired-domains"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 862,
+      "name": "Domain Radar",
+      "author": "@devlimelabs/domain-radar-mcp",
+      "overview": "Provide domain name intelligence by checking domain availability, discovering expiring and expired domains, and analyzing domain trends. Enable users to find valuable domain names and monitor domain status efficiently. Integrate seamlessly with Claude and other MCP clients for enhanced domain-related insights.",
+      "repository_url": "https://github.com/devlimelabs/domain-radar-mcp",
+      "homepage": "https://smithery.ai/server/@devlimelabs/domain-radar-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@devlimelabs_domain-radar-mcp.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "check-domain-availability",
+          "description": "Check if a domain name is available for registration",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domain": {
+                "type": "string",
+                "description": "Domain name to check (with or without extension)"
+              }
+            },
+            "required": [
+              "domain"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-expiring-domains",
+          "description": "Search for domains expiring within 24 hours",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Optional keyword to filter domains"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-expired-domains",
+          "description": "Search for recently expired domains",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Optional keyword to filter domains"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@devlimelabs/domain-radar-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@devlimelabs/domain-radar-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0863.@devlimelabs_domain-radar-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 844
+  }
+}

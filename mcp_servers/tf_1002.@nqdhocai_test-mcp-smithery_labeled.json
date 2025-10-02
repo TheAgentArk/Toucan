@@ -1,0 +1,195 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Smithery\" focuses on enhancing applications through dynamic context integration, specifically by connecting LLMs (Large Language Models) to external data and tools for richer interactions and real-time data manipulation. The available tools include calculating BMI and fetching weather data, indicating an emphasis on real-time information retrieval and data processing.",
+    "reasoning": "The primary label \"API Integration\" was chosen because the server's core functionality revolves around connecting LLMs to external data sources, which is a classical use case for API integration. The secondary label \"Web Search & Research\" was selected due to the tools like fetching weather data, which aligns with gathering real-time information. A custom label \"Dynamic Context Enhancement\" is proposed to capture the unique aspect of contextualizing and enriching application interactions.",
+    "primary_label": "API Integration",
+    "secondary_labels": [
+      "Web Search & Research"
+    ],
+    "custom_label": "Dynamic Context Enhancement",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1001,
+    "server_name": "Smithery",
+    "rank_by_usage": 1002,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@nqdhocai_test-mcp-smithery.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@nqdhocai/test-mcp-smithery/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "add",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "a": {
+                "type": "number"
+              },
+              "b": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "calculate-bmi",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "weightKg": {
+                "type": "number"
+              },
+              "heightM": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "weightKg",
+              "heightM"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "fetch-weather",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "city"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "add",
+        "calculate-bmi",
+        "fetch-weather"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1001,
+      "name": "Smithery",
+      "author": "@nqdhocai/test-mcp-smithery",
+      "overview": "Enhance your applications with dynamic context integration. Seamlessly connect your LLMs to external data and tools for enriched interactions and real-time data manipulation.",
+      "repository_url": "https://github.com/nqdhocai/test-mcp-smithery",
+      "homepage": "https://smithery.ai/server/@nqdhocai/test-mcp-smithery",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@nqdhocai_test-mcp-smithery.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "add",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "a": {
+                "type": "number"
+              },
+              "b": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "a",
+              "b"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "calculate-bmi",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "weightKg": {
+                "type": "number"
+              },
+              "heightM": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "weightKg",
+              "heightM"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "fetch-weather",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "city"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@nqdhocai/test-mcp-smithery/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@nqdhocai/test-mcp-smithery/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1002.@nqdhocai_test-mcp-smithery_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 980
+  }
+}

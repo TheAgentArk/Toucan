@@ -1,0 +1,1443 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in executing and managing PowerShell commands securely within controlled environments. Its primary functionality revolves around systems administration, automation, and compliance management, particularly for Windows environments. The tools provided allow for command execution, system information retrieval, service and process management, event log monitoring, and scripting generation - both custom scripts and specialized ones for enterprise endpoint management solutions like Microsoft Intune and IBM BigFix. There's strong emphasis on security, validation, and structured outputs for automation workflows.",
+    "reasoning": "The primary label of \"Operating System\" is chosen as most tools directly interact with the Windows OS for management and automation tasks. The secondary label \"Development Tools\" reflects the scripting and automation capabilities, while \"Security & Authentication\" is appropriate given the emphasis on safe command execution and compliance scripting. A custom label of \"Endpoint Management\" is used to highlight the specialized tools for enterprise endpoint solutions like Intune and BigFix that are unique to this server's offering.",
+    "primary_label": "Operating System",
+    "secondary_labels": [
+      "Development Tools",
+      "Security & Authentication"
+    ],
+    "custom_label": "Endpoint Management",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 377,
+    "server_name": "PowerShell Exec Server",
+    "rank_by_usage": 378,
+    "usage_count": "69",
+    "original_file": "../crawler/smithery/@DynamicEndpoints_powershell-exec-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@DynamicEndpoints/powershell-exec-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "run_powershell",
+          "description": "Execute PowerShell commands securely.\n    \n    Args:\n        code: PowerShell code to execute\n        timeout: Command timeout in seconds (1-300, default 60)\n        ctx: MCP context for logging and progress reporting\n    \n    Returns:\n        Command output as string\n    ",
+          "input_schema": {
+            "$defs": {
+              "Context": {
+                "description": "Context object providing access to MCP capabilities.\n\nThis provides a cleaner interface to MCP's RequestContext functionality.\nIt gets injected into tool and resource functions that request it via type hints.\n\nTo use context in a tool function, add a parameter with the Context type annotation:\n\n```python\n@server.tool()\ndef my_tool(x: int, ctx: Context) -> str:\n    # Log messages to the client\n    ctx.info(f\"Processing {x}\")\n    ctx.debug(\"Debug info\")\n    ctx.warning(\"Warning message\")\n    ctx.error(\"Error message\")\n\n    # Report progress\n    ctx.report_progress(50, 100)\n\n    # Access resources\n    data = ctx.read_resource(\"resource://data\")\n\n    # Get request info\n    request_id = ctx.request_id\n    client_id = ctx.client_id\n\n    return str(x)\n```\n\nThe context parameter name can be anything as long as it's annotated with Context.\nThe context is optional - tools that don't need it can omit the parameter.",
+                "properties": {},
+                "title": "Context",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "code": {
+                "title": "Code",
+                "type": "string"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              },
+              "ctx": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Context"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "title": "run_powershellArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_system_info",
+          "description": "Get system information.\n    \n    Args:\n        properties: List of ComputerInfo properties to retrieve (optional)\n        timeout: Command timeout in seconds (1-300, default 60)\n    ",
+          "input_schema": {
+            "properties": {
+              "properties": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Properties"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "title": "get_system_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_running_services",
+          "description": "Get information about running services.\n    \n    Args:\n        name: Filter services by name (supports wildcards)\n        status: Filter by status (Running, Stopped, etc.)\n        timeout: Command timeout in seconds (1-300, default 60)\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "status": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Status"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "title": "get_running_servicesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_processes",
+          "description": "Get information about running processes.\n    \n    Args:\n        name: Filter processes by name (supports wildcards)\n        top: Limit to top N processes\n        sort_by: Property to sort by (e.g., CPU, WorkingSet)\n        timeout: Command timeout in seconds (1-300, default 60)\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "top": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Top"
+              },
+              "sort_by": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sort By"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "title": "get_processesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_event_logs",
+          "description": "Get Windows event logs.\n    \n    Args:\n        logname: Name of the event log (System, Application, Security, etc.)\n        newest: Number of most recent events to retrieve (default 10)\n        level: Filter by event level (1: Critical, 2: Error, 3: Warning, 4: Information)\n        timeout: Command timeout in seconds (1-300, default 60)\n    ",
+          "input_schema": {
+            "properties": {
+              "logname": {
+                "title": "Logname",
+                "type": "string"
+              },
+              "newest": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "title": "Newest"
+              },
+              "level": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Level"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "logname"
+            ],
+            "title": "get_event_logsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_script_from_template",
+          "description": "Generate a PowerShell script from a template.\n    \n    Args:\n        template_name: Name of the template to use (without .ps1 extension)\n        parameters: Dictionary of parameters to replace in the template\n        output_path: Where to save the generated script (optional)\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n    ",
+          "input_schema": {
+            "properties": {
+              "template_name": {
+                "title": "Template Name",
+                "type": "string"
+              },
+              "parameters": {
+                "additionalProperties": true,
+                "title": "Parameters",
+                "type": "object"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "template_name",
+              "parameters"
+            ],
+            "title": "generate_script_from_templateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_custom_script",
+          "description": "Generate a custom PowerShell script based on description.\n    \n    Args:\n        description: Natural language description of what the script should do\n        script_type: Type of script to generate (file_ops, service_mgmt, etc.)\n        parameters: List of parameters the script should accept\n        include_logging: Whether to include logging functions\n        include_error_handling: Whether to include error handling\n        output_path: Where to save the generated script (optional)\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "script_type": {
+                "title": "Script Type",
+                "type": "string"
+              },
+              "parameters": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Parameters"
+              },
+              "include_logging": {
+                "default": true,
+                "title": "Include Logging",
+                "type": "boolean"
+              },
+              "include_error_handling": {
+                "default": true,
+                "title": "Include Error Handling",
+                "type": "boolean"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "script_type"
+            ],
+            "title": "generate_custom_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ensure_directory",
+          "description": "Ensure directory exists and return absolute path.",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "ensure_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_intune_remediation_script",
+          "description": "Generate a Microsoft Intune remediation script with enterprise-grade features.\n    \n    Creates a PowerShell remediation script that follows Microsoft Intune best practices:\n    - Proper exit codes (0=success, 1=failure, 2=error)\n    - Event log integration for monitoring and troubleshooting\n    - System restore point creation before making changes\n    - Comprehensive error handling and logging\n    - No user interaction (required for Intune deployment)\n    \n    ⚠️  IMPORTANT: For complete Intune compliance, you need BOTH detection and remediation scripts.\n    Consider using 'generate_intune_script_pair' instead to create both scripts together.\n    \n    Microsoft References:\n    - Intune Remediation Scripts: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations\n    - Best Practices: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations-script-samples\n    - PowerShell Script Requirements: https://docs.microsoft.com/en-us/mem/intune/apps/intune-management-extension\n    - Exit Code Standards: https://docs.microsoft.com/en-us/mem/intune/apps/troubleshoot-mam-app-installation#exit-codes\n    \n    Args:\n        description: Clear description of what the script should remediate (e.g., 'Install Chrome browser', 'Configure Windows firewall')\n        remediation_logic: PowerShell code that performs the remediation. Use 'Complete-Remediation -Success $true -Message \"description\"' to indicate completion\n        output_path: Optional file path where the script will be saved. If not provided, returns script content\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n        \n    Example:\n        Generate a script to install Chrome:\n        ```\n        result = await generate_intune_remediation_script(\n            description=\"Install Chrome browser to latest version\",\n            remediation_logic='''\n            $installer = \"$env:TEMP\\ChromeSetup.exe\"\n            Invoke-WebRequest -Uri \"https://dl.google.com/chrome/install/latest/chrome_installer.exe\" -OutFile $installer\n            Start-Process -FilePath $installer -Args \"/silent /install\" -Wait\n            Remove-Item $installer -Force\n            Complete-Remediation -Success $true -Message \"Chrome installation completed successfully\"\n            ''',\n            output_path=\"remediate_chrome.ps1\"\n        )\n        ```\n        \n    Tips:\n        - Always use Complete-Remediation function to set proper exit codes\n        - Test your remediation_logic in a safe environment first\n        - Consider creating a system restore point for major changes\n        - Use Write-IntuneLog for detailed logging and troubleshooting\n        - Ensure no user interaction is required (scripts run silently)\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "remediation_logic": {
+                "title": "Remediation Logic",
+                "type": "string"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "remediation_logic"
+            ],
+            "title": "generate_intune_remediation_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_intune_script_pair",
+          "description": "Generate a complete pair of Microsoft Intune detection and remediation scripts.\n    \n    This is the RECOMMENDED tool for Intune compliance as it creates both required scripts:\n    - Detection script: Checks current system state and determines compliance\n    - Remediation script: Fixes non-compliant conditions with proper safeguards\n    \n    Both scripts follow Microsoft Intune best practices:\n    - Proper exit codes (Detection: 0=compliant, 1=non-compliant, 2=error; Remediation: 0=success, 1=failure, 2=error)\n    - Event log integration for centralized monitoring\n    - System restore points before changes (remediation only)\n    - Comprehensive error handling and logging\n    - No user interaction (silent execution required)\n    \n    Microsoft References:\n    - Intune Remediation Scripts Overview: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations\n    - Script Deployment Best Practices: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations-script-samples\n    - PowerShell Requirements: https://docs.microsoft.com/en-us/mem/intune/apps/intune-management-extension\n    - Exit Code Standards: https://docs.microsoft.com/en-us/mem/intune/apps/troubleshoot-mam-app-deployment\n    - Monitoring and Reporting: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations-monitor\n    \n    Args:\n        description: Clear description of what the scripts should detect and remediate (e.g., 'Ensure Chrome browser is installed with latest version')\n        detection_logic: PowerShell code that performs the compliance check. Use 'Complete-Detection -Compliant $true/$false -Message \"status\"' to indicate result\n        remediation_logic: PowerShell code that fixes non-compliant conditions. Use 'Complete-Remediation -Success $true/$false -Message \"result\"' to indicate completion\n        output_dir: Optional directory to save both scripts. If not provided, returns script content in response\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Dictionary containing both scripts: {\"detection_script\": \"content/path\", \"remediation_script\": \"content/path\"}\n        \n    Example:\n        Generate scripts to manage Chrome browser installation:\n        ```\n        result = await generate_intune_script_pair(\n            description=\"Ensure Chrome browser is installed with version 100.0.0.0 or higher\",\n            detection_logic='''\n            try {\n                $app = Get-ItemProperty \"HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe\" -ErrorAction Stop\n                $version = (Get-Item $app.'(Default)').VersionInfo.FileVersion\n                $compliant = [version]$version -ge [version]\"100.0.0.0\"\n                Complete-Detection -Compliant $compliant -Message \"Chrome version: $version (Required: 100.0.0.0+)\"\n            } catch {\n                Complete-Detection -Compliant $false -Message \"Chrome not found or inaccessible\"\n            }\n            ''',\n            remediation_logic='''\n            try {\n                $installer = \"$env:TEMP\\ChromeSetup.exe\"\n                Write-IntuneLog \"Downloading Chrome installer...\"\n                Invoke-WebRequest -Uri \"https://dl.google.com/chrome/install/latest/chrome_installer.exe\" -OutFile $installer -UseBasicParsing\n                Write-IntuneLog \"Installing Chrome silently...\"\n                Start-Process -FilePath $installer -Args \"/silent /install\" -Wait\n                Remove-Item $installer -Force\n                Complete-Remediation -Success $true -Message \"Chrome installation completed successfully\"\n            } catch {\n                Complete-Remediation -Success $false -Message \"Chrome installation failed: $($_.Exception.Message)\"\n            }\n            ''',\n            output_dir=\"chrome_intune_scripts\"\n        )\n        ```\n        \n    Tips:\n        - Always test both scripts in a controlled environment first\n        - Use descriptive logging messages for easier troubleshooting\n        - Consider the impact of remediation actions (e.g., system restarts, user disruption)\n        - Use Write-IntuneLog for detailed progress tracking\n        - Ensure detection logic is fast and efficient (runs frequently)\n        - Make remediation logic idempotent (safe to run multiple times)\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "detection_logic": {
+                "title": "Detection Logic",
+                "type": "string"
+              },
+              "remediation_logic": {
+                "title": "Remediation Logic",
+                "type": "string"
+              },
+              "output_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Dir"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "detection_logic",
+              "remediation_logic"
+            ],
+            "title": "generate_intune_script_pairArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_bigfix_relevance_script",
+          "description": "Generate a BigFix relevance script to determine if computers need action.\n    \n    Creates a PowerShell relevance script that follows IBM BigFix best practices:\n    - Proper output format (TRUE/FALSE for BigFix consumption)\n    - BigFix client log integration for monitoring\n    - Event log integration for troubleshooting\n    - Comprehensive error handling and logging\n    - Fast execution optimized for frequent evaluations\n    \n    💡 TIP: For complete BigFix deployments, you need BOTH relevance and action scripts.\n    Consider using 'generate_bigfix_script_pair' to create both scripts together with matching logic.\n    \n    IBM BigFix References:\n    - Relevance Language Guide: https://help.hcltechsw.com/bigfix/11.0/relevance/Relevance/c_relevance_language.html\n    - Action Scripts: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_creating_action_scripts.html\n    - Best Practices: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_best_practices_for_creating_fixlets.html\n    - Client Logging: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Installation/c_bes_client_logging.html\n    \n    Args:\n        description: Clear description of what the script should check (e.g., 'Check if Chrome needs updating', 'Verify Windows patches are current')\n        relevance_logic: PowerShell code that determines relevance. Use 'Complete-Relevance -Relevant $true/$false -Message \"status\"' to indicate result\n        output_path: Optional file path where the script will be saved. If not provided, returns script content\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n        \n    Example:\n        Generate a script to check if Chrome needs updating:\n        ```\n        result = await generate_bigfix_relevance_script(\n            description=\"Check if Chrome browser needs updating to version 100.0.0.0 or higher\",\n            relevance_logic=''',\n            try {\n                $app = Get-ItemProperty \"HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe\" -ErrorAction Stop\n                $version = (Get-Item $app.'(Default)').VersionInfo.FileVersion\n                $needsUpdate = [version]$version -lt [version]\"100.0.0.0\"\n                Complete-Relevance -Relevant $needsUpdate -Message \"Chrome version: $version (Target: 100.0.0.0+)\"\n            } catch {\n                Complete-Relevance -Relevant $true -Message \"Chrome not found or inaccessible - installation needed\"\n            }\n            ''',\n            output_path=\"chrome_relevance.ps1\"\n        )\n        ```\n        \n    Tips:\n        - Keep relevance logic fast and efficient (evaluated frequently)\n        - Return TRUE when action is needed, FALSE when compliant\n        - Always use Complete-Relevance function for proper BigFix output format\n        - Use try-catch blocks for robust error handling\n        - Test relevance logic thoroughly across different environments\n        - Use Write-BigFixLog for detailed progress tracking\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "relevance_logic": {
+                "title": "Relevance Logic",
+                "type": "string"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "relevance_logic"
+            ],
+            "title": "generate_bigfix_relevance_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_bigfix_action_script",
+          "description": "Generate a BigFix action script to perform remediation or configuration changes.\n    \n    Creates a PowerShell action script that follows IBM BigFix best practices:\n    - Proper exit codes (0=success, 1=retryable failure, 2=non-retryable failure)\n    - BigFix client log integration for monitoring\n    - System restore point creation before changes\n    - Comprehensive error handling and logging\n    - Event log integration for troubleshooting\n    \n    ⚠️ IMPORTANT: For complete BigFix deployments, you need BOTH relevance and action scripts.\n    Consider using 'generate_bigfix_script_pair' instead to create both scripts together.\n    \n    IBM BigFix References:\n    - Action Scripts: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_creating_action_scripts.html\n    - Exit Codes: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_action_script_exit_codes.html\n    - Best Practices: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_best_practices_for_creating_fixlets.html\n    - Client Logging: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Installation/c_bes_client_logging.html\n    \n    Args:\n        description: Clear description of what the script should accomplish (e.g., 'Install Chrome browser', 'Configure Windows firewall')\n        action_logic: PowerShell code that performs the action. Use 'Complete-Action -Result \"Success/RetryableFailure/NonRetryableFailure\" -Message \"details\"' to indicate completion\n        output_path: Optional file path where the script will be saved. If not provided, returns script content\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n        \n    Example:\n        Generate a script to install Chrome:\n        ```\n        result = await generate_bigfix_action_script(\n            description=\"Install Chrome browser to latest version\",\n            action_logic='''\n            try {\n                $installer = \"$env:TEMP\\ChromeSetup.exe\"\n                Write-BigFixLog \"Downloading Chrome installer...\"\n                Invoke-WebRequest -Uri \"https://dl.google.com/chrome/install/latest/chrome_installer.exe\" -OutFile $installer -UseBasicParsing\n                Write-BigFixLog \"Installing Chrome silently...\"\n                Start-Process -FilePath $installer -Args \"/silent /install\" -Wait\n                Remove-Item $installer -Force\n                Complete-Action -Result \"Success\" -Message \"Chrome installation completed successfully\"\n            } catch {\n                Complete-Action -Result \"RetryableFailure\" -Message \"Chrome installation failed: $($_.Exception.Message)\"\n            }\n            ''',\n            output_path=\"chrome_action.ps1\"\n        )\n        ```\n        \n    Tips:\n        - Always use Complete-Action function to set proper exit codes\n        - Use \"Success\" for completed actions\n        - Use \"RetryableFailure\" for temporary issues (network, locks, etc.)\n        - Use \"NonRetryableFailure\" for permanent issues (unsupported OS, etc.)\n        - Test action logic in safe environments first\n        - Consider creating system restore points for major changes\n        - Use Write-BigFixLog for detailed logging and troubleshooting\n        - Make actions idempotent (safe to run multiple times)\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "action_logic": {
+                "title": "Action Logic",
+                "type": "string"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "action_logic"
+            ],
+            "title": "generate_bigfix_action_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_bigfix_script_pair",
+          "description": "Generate a complete pair of BigFix relevance and action scripts for deployment.\n    \n    This is the RECOMMENDED tool for BigFix fixlet creation as it creates both required scripts:\n    - Relevance script: Determines which computers need the action (TRUE/FALSE output)\n    - Action script: Performs the necessary changes with proper error handling\n    \n    Both scripts follow IBM BigFix best practices:\n    - Proper BigFix output formats and exit codes\n    - BigFix client log integration for centralized monitoring\n    - System restore points before changes (action only)\n    - Comprehensive error handling and logging\n    - Event log integration for troubleshooting\n    - No user interaction (silent execution required)\n    \n    IBM BigFix References:\n    - Fixlet Development: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_creating_fixlets.html\n    - Relevance Language: https://help.hcltechsw.com/bigfix/11.0/relevance/Relevance/c_relevance_language.html\n    - Action Scripts: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_creating_action_scripts.html\n    - Best Practices: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_best_practices_for_creating_fixlets.html\n    - Testing Guidelines: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_testing_fixlets.html\n    \n    Args:\n        description: Clear description of what the scripts should accomplish (e.g., 'Manage Chrome browser installation and updates')\n        relevance_logic: PowerShell code that determines if action is needed. Use 'Complete-Relevance -Relevant $true/$false -Message \"status\"' to indicate result\n        action_logic: PowerShell code that performs the remediation. Use 'Complete-Action -Result \"Success/RetryableFailure/NonRetryableFailure\" -Message \"details\"' to indicate completion\n        output_dir: Optional directory to save both scripts. If not provided, returns script content in response\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Dictionary containing both scripts: {\"relevance_script\": \"content/path\", \"action_script\": \"content/path\"}\n        \n    Example:\n        Generate scripts to manage Chrome browser installation:\n        ```\n        result = await generate_bigfix_script_pair(\n            description=\"Manage Chrome browser installation with version 100.0.0.0 or higher\",\n            relevance_logic=''',\n            try {\n                $app = Get-ItemProperty \"HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe\" -ErrorAction Stop\n                $version = (Get-Item $app.'(Default)').VersionInfo.FileVersion\n                $needsAction = [version]$version -lt [version]\"100.0.0.0\"\n                Complete-Relevance -Relevant $needsAction -Message \"Chrome version: $version (Target: 100.0.0.0+)\"\n            } catch {\n                Complete-Relevance -Relevant $true -Message \"Chrome not found - installation needed\"\n            }\n            ''',\n            action_logic=''',\n            try {\n                $installer = \"$env:TEMP\\ChromeSetup.exe\"\n                Write-BigFixLog \"Downloading Chrome installer...\"\n                Invoke-WebRequest -Uri \"https://dl.google.com/chrome/install/latest/chrome_installer.exe\" -OutFile $installer -UseBasicParsing\n                Write-BigFixLog \"Installing Chrome silently...\"\n                Start-Process -FilePath $installer -Args \"/silent /install\" -Wait\n                Remove-Item $installer -Force\n                Complete-Action -Result \"Success\" -Message \"Chrome installation completed successfully\"\n            } catch {\n                Complete-Action -Result \"RetryableFailure\" -Message \"Chrome installation failed: $($_.Exception.Message)\"\n            }\n            ''',\n            output_dir=\"chrome_bigfix_scripts\"\n        )\n        ```\n        \n    Tips:\n        - Always test both scripts in a controlled environment first\n        - Ensure relevance logic matches the conditions that action script addresses\n        - Use descriptive logging messages for easier troubleshooting\n        - Consider the scope and impact of actions (test groups first)\n        - Make sure relevance logic is efficient (evaluated frequently)\n        - Ensure action logic is idempotent (safe to run multiple times)\n        - Use Write-BigFixLog for detailed progress tracking\n        - Test across different OS versions and configurations\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "relevance_logic": {
+                "title": "Relevance Logic",
+                "type": "string"
+              },
+              "action_logic": {
+                "title": "Action Logic",
+                "type": "string"
+              },
+              "output_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Dir"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "relevance_logic",
+              "action_logic"
+            ],
+            "title": "generate_bigfix_script_pairArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_powershell_with_progress",
+          "description": "Execute PowerShell commands with detailed progress reporting.\n    \n    Args:\n        code: PowerShell code to execute\n        timeout: Command timeout in seconds (1-300, default 60)\n        ctx: MCP context for logging and progress reporting\n    \n    Returns:\n        Command output as string with execution details\n    ",
+          "input_schema": {
+            "$defs": {
+              "Context": {
+                "description": "Context object providing access to MCP capabilities.\n\nThis provides a cleaner interface to MCP's RequestContext functionality.\nIt gets injected into tool and resource functions that request it via type hints.\n\nTo use context in a tool function, add a parameter with the Context type annotation:\n\n```python\n@server.tool()\ndef my_tool(x: int, ctx: Context) -> str:\n    # Log messages to the client\n    ctx.info(f\"Processing {x}\")\n    ctx.debug(\"Debug info\")\n    ctx.warning(\"Warning message\")\n    ctx.error(\"Error message\")\n\n    # Report progress\n    ctx.report_progress(50, 100)\n\n    # Access resources\n    data = ctx.read_resource(\"resource://data\")\n\n    # Get request info\n    request_id = ctx.request_id\n    client_id = ctx.client_id\n\n    return str(x)\n```\n\nThe context parameter name can be anything as long as it's annotated with Context.\nThe context is optional - tools that don't need it can omit the parameter.",
+                "properties": {},
+                "title": "Context",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "code": {
+                "title": "Code",
+                "type": "string"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              },
+              "ctx": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Context"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "title": "run_powershell_with_progressArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 14,
+      "tool_names": [
+        "run_powershell",
+        "get_system_info",
+        "get_running_services",
+        "get_processes",
+        "get_event_logs",
+        "generate_script_from_template",
+        "generate_custom_script",
+        "ensure_directory",
+        "generate_intune_remediation_script",
+        "generate_intune_script_pair",
+        "generate_bigfix_relevance_script",
+        "generate_bigfix_action_script",
+        "generate_bigfix_script_pair",
+        "run_powershell_with_progress"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 377,
+      "name": "PowerShell Exec Server",
+      "author": "@DynamicEndpoints/powershell-exec-mcp-server",
+      "overview": "Execute PowerShell commands securely with controlled timeouts and input validation. Retrieve system information, manage services, monitor processes, and generate scripts dynamically using templates. Benefit from built-in security features that block dangerous commands and ensure consistent JSON-formatted outputs for automation workflows.",
+      "repository_url": "https://github.com/DynamicEndpoints/PowerShell-Exec-MCP-Server",
+      "homepage": "https://smithery.ai/server/@DynamicEndpoints/powershell-exec-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "69",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@DynamicEndpoints_powershell-exec-mcp-server.json",
+      "tools_count": 14,
+      "tools": [
+        {
+          "name": "run_powershell",
+          "description": "Execute PowerShell commands securely.\n    \n    Args:\n        code: PowerShell code to execute\n        timeout: Command timeout in seconds (1-300, default 60)\n        ctx: MCP context for logging and progress reporting\n    \n    Returns:\n        Command output as string\n    ",
+          "input_schema": {
+            "$defs": {
+              "Context": {
+                "description": "Context object providing access to MCP capabilities.\n\nThis provides a cleaner interface to MCP's RequestContext functionality.\nIt gets injected into tool and resource functions that request it via type hints.\n\nTo use context in a tool function, add a parameter with the Context type annotation:\n\n```python\n@server.tool()\ndef my_tool(x: int, ctx: Context) -> str:\n    # Log messages to the client\n    ctx.info(f\"Processing {x}\")\n    ctx.debug(\"Debug info\")\n    ctx.warning(\"Warning message\")\n    ctx.error(\"Error message\")\n\n    # Report progress\n    ctx.report_progress(50, 100)\n\n    # Access resources\n    data = ctx.read_resource(\"resource://data\")\n\n    # Get request info\n    request_id = ctx.request_id\n    client_id = ctx.client_id\n\n    return str(x)\n```\n\nThe context parameter name can be anything as long as it's annotated with Context.\nThe context is optional - tools that don't need it can omit the parameter.",
+                "properties": {},
+                "title": "Context",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "code": {
+                "title": "Code",
+                "type": "string"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              },
+              "ctx": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Context"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "title": "run_powershellArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_system_info",
+          "description": "Get system information.\n    \n    Args:\n        properties: List of ComputerInfo properties to retrieve (optional)\n        timeout: Command timeout in seconds (1-300, default 60)\n    ",
+          "input_schema": {
+            "properties": {
+              "properties": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Properties"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "title": "get_system_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_running_services",
+          "description": "Get information about running services.\n    \n    Args:\n        name: Filter services by name (supports wildcards)\n        status: Filter by status (Running, Stopped, etc.)\n        timeout: Command timeout in seconds (1-300, default 60)\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "status": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Status"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "title": "get_running_servicesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_processes",
+          "description": "Get information about running processes.\n    \n    Args:\n        name: Filter processes by name (supports wildcards)\n        top: Limit to top N processes\n        sort_by: Property to sort by (e.g., CPU, WorkingSet)\n        timeout: Command timeout in seconds (1-300, default 60)\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "top": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Top"
+              },
+              "sort_by": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sort By"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "title": "get_processesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_event_logs",
+          "description": "Get Windows event logs.\n    \n    Args:\n        logname: Name of the event log (System, Application, Security, etc.)\n        newest: Number of most recent events to retrieve (default 10)\n        level: Filter by event level (1: Critical, 2: Error, 3: Warning, 4: Information)\n        timeout: Command timeout in seconds (1-300, default 60)\n    ",
+          "input_schema": {
+            "properties": {
+              "logname": {
+                "title": "Logname",
+                "type": "string"
+              },
+              "newest": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 10,
+                "title": "Newest"
+              },
+              "level": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Level"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "logname"
+            ],
+            "title": "get_event_logsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_script_from_template",
+          "description": "Generate a PowerShell script from a template.\n    \n    Args:\n        template_name: Name of the template to use (without .ps1 extension)\n        parameters: Dictionary of parameters to replace in the template\n        output_path: Where to save the generated script (optional)\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n    ",
+          "input_schema": {
+            "properties": {
+              "template_name": {
+                "title": "Template Name",
+                "type": "string"
+              },
+              "parameters": {
+                "additionalProperties": true,
+                "title": "Parameters",
+                "type": "object"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "template_name",
+              "parameters"
+            ],
+            "title": "generate_script_from_templateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_custom_script",
+          "description": "Generate a custom PowerShell script based on description.\n    \n    Args:\n        description: Natural language description of what the script should do\n        script_type: Type of script to generate (file_ops, service_mgmt, etc.)\n        parameters: List of parameters the script should accept\n        include_logging: Whether to include logging functions\n        include_error_handling: Whether to include error handling\n        output_path: Where to save the generated script (optional)\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "script_type": {
+                "title": "Script Type",
+                "type": "string"
+              },
+              "parameters": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "additionalProperties": true,
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Parameters"
+              },
+              "include_logging": {
+                "default": true,
+                "title": "Include Logging",
+                "type": "boolean"
+              },
+              "include_error_handling": {
+                "default": true,
+                "title": "Include Error Handling",
+                "type": "boolean"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "script_type"
+            ],
+            "title": "generate_custom_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ensure_directory",
+          "description": "Ensure directory exists and return absolute path.",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "ensure_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_intune_remediation_script",
+          "description": "Generate a Microsoft Intune remediation script with enterprise-grade features.\n    \n    Creates a PowerShell remediation script that follows Microsoft Intune best practices:\n    - Proper exit codes (0=success, 1=failure, 2=error)\n    - Event log integration for monitoring and troubleshooting\n    - System restore point creation before making changes\n    - Comprehensive error handling and logging\n    - No user interaction (required for Intune deployment)\n    \n    ⚠️  IMPORTANT: For complete Intune compliance, you need BOTH detection and remediation scripts.\n    Consider using 'generate_intune_script_pair' instead to create both scripts together.\n    \n    Microsoft References:\n    - Intune Remediation Scripts: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations\n    - Best Practices: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations-script-samples\n    - PowerShell Script Requirements: https://docs.microsoft.com/en-us/mem/intune/apps/intune-management-extension\n    - Exit Code Standards: https://docs.microsoft.com/en-us/mem/intune/apps/troubleshoot-mam-app-installation#exit-codes\n    \n    Args:\n        description: Clear description of what the script should remediate (e.g., 'Install Chrome browser', 'Configure Windows firewall')\n        remediation_logic: PowerShell code that performs the remediation. Use 'Complete-Remediation -Success $true -Message \"description\"' to indicate completion\n        output_path: Optional file path where the script will be saved. If not provided, returns script content\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n        \n    Example:\n        Generate a script to install Chrome:\n        ```\n        result = await generate_intune_remediation_script(\n            description=\"Install Chrome browser to latest version\",\n            remediation_logic='''\n            $installer = \"$env:TEMP\\ChromeSetup.exe\"\n            Invoke-WebRequest -Uri \"https://dl.google.com/chrome/install/latest/chrome_installer.exe\" -OutFile $installer\n            Start-Process -FilePath $installer -Args \"/silent /install\" -Wait\n            Remove-Item $installer -Force\n            Complete-Remediation -Success $true -Message \"Chrome installation completed successfully\"\n            ''',\n            output_path=\"remediate_chrome.ps1\"\n        )\n        ```\n        \n    Tips:\n        - Always use Complete-Remediation function to set proper exit codes\n        - Test your remediation_logic in a safe environment first\n        - Consider creating a system restore point for major changes\n        - Use Write-IntuneLog for detailed logging and troubleshooting\n        - Ensure no user interaction is required (scripts run silently)\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "remediation_logic": {
+                "title": "Remediation Logic",
+                "type": "string"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "remediation_logic"
+            ],
+            "title": "generate_intune_remediation_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_intune_script_pair",
+          "description": "Generate a complete pair of Microsoft Intune detection and remediation scripts.\n    \n    This is the RECOMMENDED tool for Intune compliance as it creates both required scripts:\n    - Detection script: Checks current system state and determines compliance\n    - Remediation script: Fixes non-compliant conditions with proper safeguards\n    \n    Both scripts follow Microsoft Intune best practices:\n    - Proper exit codes (Detection: 0=compliant, 1=non-compliant, 2=error; Remediation: 0=success, 1=failure, 2=error)\n    - Event log integration for centralized monitoring\n    - System restore points before changes (remediation only)\n    - Comprehensive error handling and logging\n    - No user interaction (silent execution required)\n    \n    Microsoft References:\n    - Intune Remediation Scripts Overview: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations\n    - Script Deployment Best Practices: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations-script-samples\n    - PowerShell Requirements: https://docs.microsoft.com/en-us/mem/intune/apps/intune-management-extension\n    - Exit Code Standards: https://docs.microsoft.com/en-us/mem/intune/apps/troubleshoot-mam-app-deployment\n    - Monitoring and Reporting: https://docs.microsoft.com/en-us/mem/intune/fundamentals/remediations-monitor\n    \n    Args:\n        description: Clear description of what the scripts should detect and remediate (e.g., 'Ensure Chrome browser is installed with latest version')\n        detection_logic: PowerShell code that performs the compliance check. Use 'Complete-Detection -Compliant $true/$false -Message \"status\"' to indicate result\n        remediation_logic: PowerShell code that fixes non-compliant conditions. Use 'Complete-Remediation -Success $true/$false -Message \"result\"' to indicate completion\n        output_dir: Optional directory to save both scripts. If not provided, returns script content in response\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Dictionary containing both scripts: {\"detection_script\": \"content/path\", \"remediation_script\": \"content/path\"}\n        \n    Example:\n        Generate scripts to manage Chrome browser installation:\n        ```\n        result = await generate_intune_script_pair(\n            description=\"Ensure Chrome browser is installed with version 100.0.0.0 or higher\",\n            detection_logic='''\n            try {\n                $app = Get-ItemProperty \"HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe\" -ErrorAction Stop\n                $version = (Get-Item $app.'(Default)').VersionInfo.FileVersion\n                $compliant = [version]$version -ge [version]\"100.0.0.0\"\n                Complete-Detection -Compliant $compliant -Message \"Chrome version: $version (Required: 100.0.0.0+)\"\n            } catch {\n                Complete-Detection -Compliant $false -Message \"Chrome not found or inaccessible\"\n            }\n            ''',\n            remediation_logic='''\n            try {\n                $installer = \"$env:TEMP\\ChromeSetup.exe\"\n                Write-IntuneLog \"Downloading Chrome installer...\"\n                Invoke-WebRequest -Uri \"https://dl.google.com/chrome/install/latest/chrome_installer.exe\" -OutFile $installer -UseBasicParsing\n                Write-IntuneLog \"Installing Chrome silently...\"\n                Start-Process -FilePath $installer -Args \"/silent /install\" -Wait\n                Remove-Item $installer -Force\n                Complete-Remediation -Success $true -Message \"Chrome installation completed successfully\"\n            } catch {\n                Complete-Remediation -Success $false -Message \"Chrome installation failed: $($_.Exception.Message)\"\n            }\n            ''',\n            output_dir=\"chrome_intune_scripts\"\n        )\n        ```\n        \n    Tips:\n        - Always test both scripts in a controlled environment first\n        - Use descriptive logging messages for easier troubleshooting\n        - Consider the impact of remediation actions (e.g., system restarts, user disruption)\n        - Use Write-IntuneLog for detailed progress tracking\n        - Ensure detection logic is fast and efficient (runs frequently)\n        - Make remediation logic idempotent (safe to run multiple times)\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "detection_logic": {
+                "title": "Detection Logic",
+                "type": "string"
+              },
+              "remediation_logic": {
+                "title": "Remediation Logic",
+                "type": "string"
+              },
+              "output_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Dir"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "detection_logic",
+              "remediation_logic"
+            ],
+            "title": "generate_intune_script_pairArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_bigfix_relevance_script",
+          "description": "Generate a BigFix relevance script to determine if computers need action.\n    \n    Creates a PowerShell relevance script that follows IBM BigFix best practices:\n    - Proper output format (TRUE/FALSE for BigFix consumption)\n    - BigFix client log integration for monitoring\n    - Event log integration for troubleshooting\n    - Comprehensive error handling and logging\n    - Fast execution optimized for frequent evaluations\n    \n    💡 TIP: For complete BigFix deployments, you need BOTH relevance and action scripts.\n    Consider using 'generate_bigfix_script_pair' to create both scripts together with matching logic.\n    \n    IBM BigFix References:\n    - Relevance Language Guide: https://help.hcltechsw.com/bigfix/11.0/relevance/Relevance/c_relevance_language.html\n    - Action Scripts: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_creating_action_scripts.html\n    - Best Practices: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_best_practices_for_creating_fixlets.html\n    - Client Logging: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Installation/c_bes_client_logging.html\n    \n    Args:\n        description: Clear description of what the script should check (e.g., 'Check if Chrome needs updating', 'Verify Windows patches are current')\n        relevance_logic: PowerShell code that determines relevance. Use 'Complete-Relevance -Relevant $true/$false -Message \"status\"' to indicate result\n        output_path: Optional file path where the script will be saved. If not provided, returns script content\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n        \n    Example:\n        Generate a script to check if Chrome needs updating:\n        ```\n        result = await generate_bigfix_relevance_script(\n            description=\"Check if Chrome browser needs updating to version 100.0.0.0 or higher\",\n            relevance_logic=''',\n            try {\n                $app = Get-ItemProperty \"HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe\" -ErrorAction Stop\n                $version = (Get-Item $app.'(Default)').VersionInfo.FileVersion\n                $needsUpdate = [version]$version -lt [version]\"100.0.0.0\"\n                Complete-Relevance -Relevant $needsUpdate -Message \"Chrome version: $version (Target: 100.0.0.0+)\"\n            } catch {\n                Complete-Relevance -Relevant $true -Message \"Chrome not found or inaccessible - installation needed\"\n            }\n            ''',\n            output_path=\"chrome_relevance.ps1\"\n        )\n        ```\n        \n    Tips:\n        - Keep relevance logic fast and efficient (evaluated frequently)\n        - Return TRUE when action is needed, FALSE when compliant\n        - Always use Complete-Relevance function for proper BigFix output format\n        - Use try-catch blocks for robust error handling\n        - Test relevance logic thoroughly across different environments\n        - Use Write-BigFixLog for detailed progress tracking\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "relevance_logic": {
+                "title": "Relevance Logic",
+                "type": "string"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "relevance_logic"
+            ],
+            "title": "generate_bigfix_relevance_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_bigfix_action_script",
+          "description": "Generate a BigFix action script to perform remediation or configuration changes.\n    \n    Creates a PowerShell action script that follows IBM BigFix best practices:\n    - Proper exit codes (0=success, 1=retryable failure, 2=non-retryable failure)\n    - BigFix client log integration for monitoring\n    - System restore point creation before changes\n    - Comprehensive error handling and logging\n    - Event log integration for troubleshooting\n    \n    ⚠️ IMPORTANT: For complete BigFix deployments, you need BOTH relevance and action scripts.\n    Consider using 'generate_bigfix_script_pair' instead to create both scripts together.\n    \n    IBM BigFix References:\n    - Action Scripts: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_creating_action_scripts.html\n    - Exit Codes: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_action_script_exit_codes.html\n    - Best Practices: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_best_practices_for_creating_fixlets.html\n    - Client Logging: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Installation/c_bes_client_logging.html\n    \n    Args:\n        description: Clear description of what the script should accomplish (e.g., 'Install Chrome browser', 'Configure Windows firewall')\n        action_logic: PowerShell code that performs the action. Use 'Complete-Action -Result \"Success/RetryableFailure/NonRetryableFailure\" -Message \"details\"' to indicate completion\n        output_path: Optional file path where the script will be saved. If not provided, returns script content\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Generated script content or path where script was saved\n        \n    Example:\n        Generate a script to install Chrome:\n        ```\n        result = await generate_bigfix_action_script(\n            description=\"Install Chrome browser to latest version\",\n            action_logic='''\n            try {\n                $installer = \"$env:TEMP\\ChromeSetup.exe\"\n                Write-BigFixLog \"Downloading Chrome installer...\"\n                Invoke-WebRequest -Uri \"https://dl.google.com/chrome/install/latest/chrome_installer.exe\" -OutFile $installer -UseBasicParsing\n                Write-BigFixLog \"Installing Chrome silently...\"\n                Start-Process -FilePath $installer -Args \"/silent /install\" -Wait\n                Remove-Item $installer -Force\n                Complete-Action -Result \"Success\" -Message \"Chrome installation completed successfully\"\n            } catch {\n                Complete-Action -Result \"RetryableFailure\" -Message \"Chrome installation failed: $($_.Exception.Message)\"\n            }\n            ''',\n            output_path=\"chrome_action.ps1\"\n        )\n        ```\n        \n    Tips:\n        - Always use Complete-Action function to set proper exit codes\n        - Use \"Success\" for completed actions\n        - Use \"RetryableFailure\" for temporary issues (network, locks, etc.)\n        - Use \"NonRetryableFailure\" for permanent issues (unsupported OS, etc.)\n        - Test action logic in safe environments first\n        - Consider creating system restore points for major changes\n        - Use Write-BigFixLog for detailed logging and troubleshooting\n        - Make actions idempotent (safe to run multiple times)\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "action_logic": {
+                "title": "Action Logic",
+                "type": "string"
+              },
+              "output_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Path"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "action_logic"
+            ],
+            "title": "generate_bigfix_action_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_bigfix_script_pair",
+          "description": "Generate a complete pair of BigFix relevance and action scripts for deployment.\n    \n    This is the RECOMMENDED tool for BigFix fixlet creation as it creates both required scripts:\n    - Relevance script: Determines which computers need the action (TRUE/FALSE output)\n    - Action script: Performs the necessary changes with proper error handling\n    \n    Both scripts follow IBM BigFix best practices:\n    - Proper BigFix output formats and exit codes\n    - BigFix client log integration for centralized monitoring\n    - System restore points before changes (action only)\n    - Comprehensive error handling and logging\n    - Event log integration for troubleshooting\n    - No user interaction (silent execution required)\n    \n    IBM BigFix References:\n    - Fixlet Development: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_creating_fixlets.html\n    - Relevance Language: https://help.hcltechsw.com/bigfix/11.0/relevance/Relevance/c_relevance_language.html\n    - Action Scripts: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_creating_action_scripts.html\n    - Best Practices: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_best_practices_for_creating_fixlets.html\n    - Testing Guidelines: https://help.hcltechsw.com/bigfix/11.0/platform/Platform/Console/c_testing_fixlets.html\n    \n    Args:\n        description: Clear description of what the scripts should accomplish (e.g., 'Manage Chrome browser installation and updates')\n        relevance_logic: PowerShell code that determines if action is needed. Use 'Complete-Relevance -Relevant $true/$false -Message \"status\"' to indicate result\n        action_logic: PowerShell code that performs the remediation. Use 'Complete-Action -Result \"Success/RetryableFailure/NonRetryableFailure\" -Message \"details\"' to indicate completion\n        output_dir: Optional directory to save both scripts. If not provided, returns script content in response\n        timeout: Command timeout in seconds (1-300, default 60)\n        \n    Returns:\n        Dictionary containing both scripts: {\"relevance_script\": \"content/path\", \"action_script\": \"content/path\"}\n        \n    Example:\n        Generate scripts to manage Chrome browser installation:\n        ```\n        result = await generate_bigfix_script_pair(\n            description=\"Manage Chrome browser installation with version 100.0.0.0 or higher\",\n            relevance_logic=''',\n            try {\n                $app = Get-ItemProperty \"HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe\" -ErrorAction Stop\n                $version = (Get-Item $app.'(Default)').VersionInfo.FileVersion\n                $needsAction = [version]$version -lt [version]\"100.0.0.0\"\n                Complete-Relevance -Relevant $needsAction -Message \"Chrome version: $version (Target: 100.0.0.0+)\"\n            } catch {\n                Complete-Relevance -Relevant $true -Message \"Chrome not found - installation needed\"\n            }\n            ''',\n            action_logic=''',\n            try {\n                $installer = \"$env:TEMP\\ChromeSetup.exe\"\n                Write-BigFixLog \"Downloading Chrome installer...\"\n                Invoke-WebRequest -Uri \"https://dl.google.com/chrome/install/latest/chrome_installer.exe\" -OutFile $installer -UseBasicParsing\n                Write-BigFixLog \"Installing Chrome silently...\"\n                Start-Process -FilePath $installer -Args \"/silent /install\" -Wait\n                Remove-Item $installer -Force\n                Complete-Action -Result \"Success\" -Message \"Chrome installation completed successfully\"\n            } catch {\n                Complete-Action -Result \"RetryableFailure\" -Message \"Chrome installation failed: $($_.Exception.Message)\"\n            }\n            ''',\n            output_dir=\"chrome_bigfix_scripts\"\n        )\n        ```\n        \n    Tips:\n        - Always test both scripts in a controlled environment first\n        - Ensure relevance logic matches the conditions that action script addresses\n        - Use descriptive logging messages for easier troubleshooting\n        - Consider the scope and impact of actions (test groups first)\n        - Make sure relevance logic is efficient (evaluated frequently)\n        - Ensure action logic is idempotent (safe to run multiple times)\n        - Use Write-BigFixLog for detailed progress tracking\n        - Test across different OS versions and configurations\n    ",
+          "input_schema": {
+            "properties": {
+              "description": {
+                "title": "Description",
+                "type": "string"
+              },
+              "relevance_logic": {
+                "title": "Relevance Logic",
+                "type": "string"
+              },
+              "action_logic": {
+                "title": "Action Logic",
+                "type": "string"
+              },
+              "output_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Output Dir"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              }
+            },
+            "required": [
+              "description",
+              "relevance_logic",
+              "action_logic"
+            ],
+            "title": "generate_bigfix_script_pairArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_powershell_with_progress",
+          "description": "Execute PowerShell commands with detailed progress reporting.\n    \n    Args:\n        code: PowerShell code to execute\n        timeout: Command timeout in seconds (1-300, default 60)\n        ctx: MCP context for logging and progress reporting\n    \n    Returns:\n        Command output as string with execution details\n    ",
+          "input_schema": {
+            "$defs": {
+              "Context": {
+                "description": "Context object providing access to MCP capabilities.\n\nThis provides a cleaner interface to MCP's RequestContext functionality.\nIt gets injected into tool and resource functions that request it via type hints.\n\nTo use context in a tool function, add a parameter with the Context type annotation:\n\n```python\n@server.tool()\ndef my_tool(x: int, ctx: Context) -> str:\n    # Log messages to the client\n    ctx.info(f\"Processing {x}\")\n    ctx.debug(\"Debug info\")\n    ctx.warning(\"Warning message\")\n    ctx.error(\"Error message\")\n\n    # Report progress\n    ctx.report_progress(50, 100)\n\n    # Access resources\n    data = ctx.read_resource(\"resource://data\")\n\n    # Get request info\n    request_id = ctx.request_id\n    client_id = ctx.client_id\n\n    return str(x)\n```\n\nThe context parameter name can be anything as long as it's annotated with Context.\nThe context is optional - tools that don't need it can omit the parameter.",
+                "properties": {},
+                "title": "Context",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "code": {
+                "title": "Code",
+                "type": "string"
+              },
+              "timeout": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 60,
+                "title": "Timeout"
+              },
+              "ctx": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/Context"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "title": "run_powershell_with_progressArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@DynamicEndpoints/powershell-exec-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@DynamicEndpoints/powershell-exec-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0378.@DynamicEndpoints_powershell-exec-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 372
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "labels": {
+    "analysis": "The SkySQL MCP Server is primarily focused on managing and interacting with SkySQL (MySQL/MariaDB) database instances. Its core functionality revolves around launching, monitoring, and executing SQL queries on serverless database instances, as well as managing credentials and IP allowlists. Additionally, it provides tools to interact with AI-powered database agents, indicating a fusion of database operations with AI capabilities.",
+    "reasoning": "The primary label \"Database Operations\" is chosen because the server's core functionality revolves around managing and querying databases. The secondary label \"AI/ML Tools\" is selected due to the integration with AI-powered database agents, and \"API Integration\" is included since the server acts as an interface for managing database services programmatically. No custom label is necessary as the server's functionality is well-covered by the predefined categories.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "AI/ML Tools",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 766,
+    "server_name": "SkySQL MCP Server",
+    "rank_by_usage": 767,
+    "usage_count": "8",
+    "original_file": "../crawler/smithery/@skysqlinc_skysql-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@skysqlinc/skysql-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 766,
+      "name": "SkySQL MCP Server",
+      "author": "@skysqlinc/skysql-mcp",
+      "overview": "Set up the SkySQL MCP server, which provides a powerful interface for managing SkySQL (MySQL/MariaDB) database instances and interacting with SkyAI Agents.\n\nFeatures\nLaunch and manage serverless MariaDB database instances\nInteract with AI-powered database agents\nExecute SQL queries directly on SkySQL (MySQL/MariaDB) instances\nManage database credentials and IP allowlists\nList and monitor database services",
+      "repository_url": "https://github.com/skysqlinc/skysql-mcp",
+      "homepage": "https://smithery.ai/server/@skysqlinc/skysql-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "8",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@skysqlinc_skysql-mcp.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "list_agents",
+          "description": "Deploy Server SkySQL MCP Server @skysqlinc/skysql-mcp Try in Playground list_agents",
+          "parameters": [
+            {
+              "name": "list_agents",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "launch_serverless_db",
+          "description": "Launch a new Serverless DB instance in SkySQL",
+          "parameters": [
+            {
+              "name": "name",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "provider",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "delete_db",
+          "description": "Delete a DB instance from SkySQL",
+          "parameters": [
+            {
+              "name": "delete_db",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "service_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "ask_agent",
+          "description": "Ask a question to a specific DB agent",
+          "parameters": [
+            {
+              "name": "agent_id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "question",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_db_credentials",
+          "description": "Get the credentials for a SkySQL database instance",
+          "parameters": [
+            {
+              "name": "get_db_credentials",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "service_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "update_ip_allowlist",
+          "description": "Update the IP allowlist for a SkySQL database instance with the current IP",
+          "parameters": [
+            {
+              "name": "update_ip_allowlist",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_services",
+          "description": "List all available SkySQL database services",
+          "parameters": [
+            {
+              "name": "list_services",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "execute_sql",
+          "description": "Execute SQL query on a SkySQL database instance and return the results",
+          "parameters": [
+            {
+              "name": "execute_sql",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@skysqlinc/skysql-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "skysqlApiKey",
+          "required": true,
+          "description": "Your SkySQL API key for accessing SkySQL services"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@skysqlinc/skysql-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0767.@skysqlinc_skysql-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 749
+  }
+}

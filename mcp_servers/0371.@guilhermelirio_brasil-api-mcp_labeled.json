@@ -1,0 +1,470 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Brasil API\" specializes in providing access to Brazilian public data services. Its primary functionality revolves around querying and retrieving information about postal codes, company registrations, financial institutions, geographic locations, and other official data pertaining to Brazil. The tools available enable users to interact with government and commercial databases, facilitating tasks such as address verification, company research, banking information retrieval, and domain checking. This server is particularly useful for businesses, researchers, and developers needing accurate and official data from Brazilian authorities.",
+    "reasoning": "The primary label \"Government & Public Data\" was chosen because the server's core functionality is centered around providing access to official Brazilian public data. The secondary labels \"API Integration\" and \"Database Operations\" were selected because the server acts as an intermediary for querying databases and integrating government data into applications. No custom label is necessary as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "API Integration",
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 370,
+    "server_name": "Brasil API",
+    "rank_by_usage": 371,
+    "usage_count": "75",
+    "original_file": "../crawler/smithery/@guilhermelirio_brasil-api-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@guilhermelirio/brasil-api-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "cep-search",
+          "description": "Query address information from a Brazilian postal code (CEP)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cep": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 8,
+                "pattern": "^\\d+$",
+                "description": "Postal code to be queried (only numbers, 8 digits)"
+              }
+            },
+            "required": [
+              "cep"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cnpj-search",
+          "description": "Query information about a Brazilian company by its CNPJ (National Registry of Legal Entities)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cnpj": {
+                "type": "string",
+                "pattern": "^\\d{14}$",
+                "description": "CNPJ to be queried (only numbers, 14 digits)"
+              }
+            },
+            "required": [
+              "cnpj"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bank-search",
+          "description": "Find information about a Brazilian bank by its code",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Bank code to search for"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bank-list",
+          "description": "List all Brazilian banks",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ddd-info",
+          "description": "Get information about a Brazilian area code (DDD) including state and cities",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ddd": {
+                "type": "string",
+                "pattern": "^\\d{2}$",
+                "description": "Area code (DDD) to be queried (only numbers, 2 digits)"
+              }
+            },
+            "required": [
+              "ddd"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ibge-states-list",
+          "description": "List all Brazilian states with their information",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ibge-state-search",
+          "description": "Find information about a Brazilian state by its code or abbreviation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "State code or abbreviation (e.g., SP, RJ, 35)"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ibge-municipalities-list",
+          "description": "List all municipalities of a Brazilian state by its abbreviation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "uf": {
+                "type": "string",
+                "description": "State abbreviation (e.g., SP, RJ)"
+              }
+            },
+            "required": [
+              "uf"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cambio-currencies-list",
+          "description": "List all available currencies for exchange rates",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cambio-rate",
+          "description": "Get exchange rates for a specific currency on a specific date",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "currency": {
+                "type": "string",
+                "description": "Currency symbol (e.g., USD, EUR, GBP)"
+              },
+              "date": {
+                "type": "string",
+                "description": "Date in YYYY-MM-DD format. For weekends and holidays, the returned date will be the last available business day."
+              }
+            },
+            "required": [
+              "currency",
+              "date"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "registrobr-domain-check",
+          "description": "Check the status and availability of a .br domain name",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domain": {
+                "type": "string",
+                "description": "Domain name to check (with or without .br extension)"
+              }
+            },
+            "required": [
+              "domain"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 11,
+      "tool_names": [
+        "cep-search",
+        "cnpj-search",
+        "bank-search",
+        "bank-list",
+        "ddd-info",
+        "ibge-states-list",
+        "ibge-state-search",
+        "ibge-municipalities-list",
+        "cambio-currencies-list",
+        "cambio-rate",
+        "registrobr-domain-check"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 370,
+      "name": "Brasil API",
+      "author": "@guilhermelirio/brasil-api-mcp",
+      "overview": "Connect AI assistants to Brazilian public data services. Access vital information like postal codes, company registrations, and currency exchange rates seamlessly.",
+      "repository_url": "https://github.com/guilhermelirio/brasil-api-mcp",
+      "homepage": "https://smithery.ai/server/@guilhermelirio/brasil-api-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "75",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@guilhermelirio_brasil-api-mcp.json",
+      "tools_count": 11,
+      "tools": [
+        {
+          "name": "cep-search",
+          "description": "Query address information from a Brazilian postal code (CEP)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cep": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 8,
+                "pattern": "^\\d+$",
+                "description": "Postal code to be queried (only numbers, 8 digits)"
+              }
+            },
+            "required": [
+              "cep"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cnpj-search",
+          "description": "Query information about a Brazilian company by its CNPJ (National Registry of Legal Entities)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cnpj": {
+                "type": "string",
+                "pattern": "^\\d{14}$",
+                "description": "CNPJ to be queried (only numbers, 14 digits)"
+              }
+            },
+            "required": [
+              "cnpj"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bank-search",
+          "description": "Find information about a Brazilian bank by its code",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Bank code to search for"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bank-list",
+          "description": "List all Brazilian banks",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ddd-info",
+          "description": "Get information about a Brazilian area code (DDD) including state and cities",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ddd": {
+                "type": "string",
+                "pattern": "^\\d{2}$",
+                "description": "Area code (DDD) to be queried (only numbers, 2 digits)"
+              }
+            },
+            "required": [
+              "ddd"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ibge-states-list",
+          "description": "List all Brazilian states with their information",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ibge-state-search",
+          "description": "Find information about a Brazilian state by its code or abbreviation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "State code or abbreviation (e.g., SP, RJ, 35)"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ibge-municipalities-list",
+          "description": "List all municipalities of a Brazilian state by its abbreviation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "uf": {
+                "type": "string",
+                "description": "State abbreviation (e.g., SP, RJ)"
+              }
+            },
+            "required": [
+              "uf"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cambio-currencies-list",
+          "description": "List all available currencies for exchange rates",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cambio-rate",
+          "description": "Get exchange rates for a specific currency on a specific date",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "currency": {
+                "type": "string",
+                "description": "Currency symbol (e.g., USD, EUR, GBP)"
+              },
+              "date": {
+                "type": "string",
+                "description": "Date in YYYY-MM-DD format. For weekends and holidays, the returned date will be the last available business day."
+              }
+            },
+            "required": [
+              "currency",
+              "date"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "registrobr-domain-check",
+          "description": "Check the status and availability of a .br domain name",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domain": {
+                "type": "string",
+                "description": "Domain name to check (with or without .br extension)"
+              }
+            },
+            "required": [
+              "domain"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@guilhermelirio/brasil-api-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@guilhermelirio/brasil-api-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0371.@guilhermelirio_brasil-api-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 367
+  }
+}

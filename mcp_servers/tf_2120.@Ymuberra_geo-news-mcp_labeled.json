@@ -1,0 +1,172 @@
+{
+  "labels": {
+    "analysis": "The Geo News MCP Server specializes in providing localized news content based on geographic data. Its core functionality allows agents to retrieve news tailored to specific countries or locations, enhancing context-aware information retrieval for regional updates. The available tools focus on fetching country-specific news and searching for articles by keywords, indicating a strong emphasis on geospatial news aggregation and filtering.",
+    "reasoning": "The primary functionality of the server revolves around news retrieval and localization, which aligns well with the \"News & Media\" category. The tools available support geographic filtering, making \"Web Search & Research\" a relevant secondary label due to the search and news aggregation capabilities. The custom label \"Geospatial News Aggregation\" was chosen to highlight the unique aspect of location-based news filtering not explicitly covered by predefined labels.",
+    "primary_label": "News & Media",
+    "secondary_labels": [
+      "Web Search & Research"
+    ],
+    "custom_label": "Geospatial News Aggregation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2119,
+    "server_name": "Geo News MCP Server",
+    "rank_by_usage": 2120,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@Ymuberra_geo-news-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Ymuberra/geo-news-mcp/mcp?config=eyJuZXdzQXBpS2V5IjogImY2ZjQ0MzgzZTJmMjQ2NTBhY2YwMDVhMDRiYmE3Y2YxIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_news_by_country",
+          "description": "Get latest news from a specific country",
+          "input_schema": {
+            "properties": {
+              "category": {
+                "description": "News category",
+                "enum": [
+                  "business",
+                  "entertainment",
+                  "general",
+                  "health",
+                  "science",
+                  "sports",
+                  "technology"
+                ],
+                "type": "string"
+              },
+              "country": {
+                "description": "Country code (e.g., 'us', 'tr', 'gb')",
+                "type": "string"
+              }
+            },
+            "required": [
+              "country"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_news",
+          "description": "Search for news articles by keyword",
+          "input_schema": {
+            "properties": {
+              "language": {
+                "description": "Language code (e.g., 'en', 'tr')",
+                "type": "string"
+              },
+              "query": {
+                "description": "Search query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get_news_by_country",
+        "search_news"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2119,
+      "name": "Geo News MCP Server",
+      "author": "@Ymuberra/geo-news-mcp",
+      "overview": "Provide localized news content dynamically based on geographic data. Enable agents to access and retrieve news resources tailored to specific locations. Enhance context-aware information retrieval for applications requiring up-to-date regional news.",
+      "repository_url": "https://github.com/Ymuberra/geo-news-mcp",
+      "homepage": "https://smithery.ai/server/@Ymuberra/geo-news-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Ymuberra_geo-news-mcp.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get_news_by_country",
+          "description": "Get latest news from a specific country",
+          "input_schema": {
+            "properties": {
+              "category": {
+                "description": "News category",
+                "enum": [
+                  "business",
+                  "entertainment",
+                  "general",
+                  "health",
+                  "science",
+                  "sports",
+                  "technology"
+                ],
+                "type": "string"
+              },
+              "country": {
+                "description": "Country code (e.g., 'us', 'tr', 'gb')",
+                "type": "string"
+              }
+            },
+            "required": [
+              "country"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_news",
+          "description": "Search for news articles by keyword",
+          "input_schema": {
+            "properties": {
+              "language": {
+                "description": "Language code (e.g., 'en', 'tr')",
+                "type": "string"
+              },
+              "query": {
+                "description": "Search query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"newsApiKey\": \"f6f44383e2f24650acf005a04bba7cf1\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@Ymuberra/geo-news-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"newsApiKey\": \"f6f44383e2f24650acf005a04bba7cf1\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@Ymuberra/geo-news-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "2120.@Ymuberra_geo-news-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1841
+  }
+}

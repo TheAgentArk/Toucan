@@ -1,0 +1,106 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to facilitate e-commerce product searches by integrating with an API to fetch product listings. It processes search queries, formats them into markdown-friendly responses, and returns clickable product links with prices. This enhances the interaction for users who want to browse or compare products without leaving the LLM interface.",
+    "reasoning": "The primary label \"E-commerce\" was chosen because the server's core functionality revolves around product search and discovery, which is central to e-commerce activities. Secondary label \"API Integration\" was selected because the server relies on API calls to fetch product data. The custom label \"Product Listing Automation\" captures the unique aspect of the tool in automatically formatting product listings for Markdown presentation.",
+    "primary_label": "E-commerce",
+    "secondary_labels": [
+      "API Integration",
+      "Web Search & Research"
+    ],
+    "custom_label": "Product Listing Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1183,
+    "server_name": "Ecomm MCP Server",
+    "rank_by_usage": 1184,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@Redtri-git_ecomm-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Redtri-git/ecomm-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_products",
+          "description": "\n    Automatically triggers when the user asks about buying, browsing, comparing, or finding any type of product,\n    such as electronics, clothing, books, appliances, etc.\n\n    Sends a POST request to the /api/mcp endpoint with a product search query.\n    Returns a structured JSON response including product listings formatted for Markdown.\n\n    The expected format for LLM presentation is a Markdown list of the top results:\n    - Each item must always include the product title as a clickable Markdown link.\n    - The link must always point to a valid product URL.\n    - Each product listing should include the price after the link.\n    - Only the most relevant results (e.g., top 25) should be shown.\n\n    Example output:\n    Here are some results:\n\n    - [Product Title 1](https://example.com/product1) - $19.99\n    - [Product Title 2](https://example.com/product2) - $24.99\n\n    Args:\n        query (str): The product search term (e.g., \"soccer balls\").\n\n    Returns:\n        dict: Response from the MCP server containing product listings or error info.\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_productsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "search_products"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1183,
+      "name": "Ecomm MCP Server",
+      "author": "@Redtri-git/ecomm-mcp",
+      "overview": "Enable product search capabilities for language models by querying an API for product listings. Receive markdown-formatted responses with clickable product links and prices to enhance user interaction. Easily integrate and test with Claude desktop app for seamless tool usage.",
+      "repository_url": "https://github.com/Redtri-git/Ecomm-MCP",
+      "homepage": "https://smithery.ai/server/@Redtri-git/ecomm-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Redtri-git_ecomm-mcp.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "search_products",
+          "description": "\n    Automatically triggers when the user asks about buying, browsing, comparing, or finding any type of product,\n    such as electronics, clothing, books, appliances, etc.\n\n    Sends a POST request to the /api/mcp endpoint with a product search query.\n    Returns a structured JSON response including product listings formatted for Markdown.\n\n    The expected format for LLM presentation is a Markdown list of the top results:\n    - Each item must always include the product title as a clickable Markdown link.\n    - The link must always point to a valid product URL.\n    - Each product listing should include the price after the link.\n    - Only the most relevant results (e.g., top 25) should be shown.\n\n    Example output:\n    Here are some results:\n\n    - [Product Title 1](https://example.com/product1) - $19.99\n    - [Product Title 2](https://example.com/product2) - $24.99\n\n    Args:\n        query (str): The product search term (e.g., \"soccer balls\").\n\n    Returns:\n        dict: Response from the MCP server containing product listings or error info.\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_productsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Redtri-git/ecomm-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Redtri-git/ecomm-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1184.@Redtri-git_ecomm-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1150
+  }
+}

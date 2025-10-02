@@ -1,0 +1,1042 @@
+{
+  "labels": {
+    "analysis": "The Immolog MCP SSE Server is designed to provide real-time data integration and action handling for business tools using Server-Sent Events (SSE). It connects with LibreChat and other clients, enabling seamless and immediate data flow. The server is customizable to fit specific business needs. The available tools seem to be specialized in geocoding, location-based data, and real-time dashboards, suggesting a focus on geographic or spatial data management and analysis.",
+    "reasoning": "The primary label \"API Integration\" was chosen because the server facilitates real-time data exchange and integration with other tools, acting as an intermediary for data handling. \"Data Analysis & Processing\" is a secondary label due to the presence of tools that deal with spatial data and indicators, which likely involve analysis. \"Real-time Data Integration\" is a custom label to highlight the server's core functionality using SSE for live updates.",
+    "primary_label": "API Integration",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Real-time Data Integration",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 531,
+    "server_name": "Immolog MCP SSE Server",
+    "rank_by_usage": 532,
+    "usage_count": "27",
+    "original_file": "../crawler/smithery/@momo590_mcp-sse-immolog.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@momo590/mcp-sse-immolog/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "cartofriches",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "site_id": {
+                "type": "string",
+                "description": "Identifiant unique d'une friche (Cartofriches). Si ce paramètre est renseigné, il prend le dessus sur tous les autres paramètres et permet d'accéder directement à la fiche détaillée via /cartofriches/friches/{site_id}/."
+              },
+              "code_insee": {
+                "type": "string",
+                "description": "Code INSEE communal ou d'arrondissement municipal. Peut contenir plusieurs codes séparés par des virgules (10 max, même département). Ex: '75056' ou '75056,75057'. Obligatoire si site_id, coddep et in_bbox absents. Ignoré si site_id est fourni."
+              },
+              "coddep": {
+                "type": "string",
+                "description": "Code INSEE du département (2 ou 3 chiffres, ex: '75'). Obligatoire si site_id, code_insee et in_bbox absents. Ignoré si site_id est fourni."
+              },
+              "in_bbox": {
+                "type": "string",
+                "description": "Emprise rectangulaire géographique (format: 'lonmin,latmin,lonmax,latmax'). Max 1° x 1°. Obligatoire si site_id, code_insee et coddep absents. Ignoré si site_id est fourni."
+              },
+              "contains_geom": {
+                "type": "string",
+                "description": "Filtre géométrique : retourne uniquement les entités dont la géométrie contient celle fournie (format GeoJSON, WKT, HEXEWKB ou WKB). Ex: contains_geom={'type':'Point','coordinates':[2.17,46.75]}. Ignoré si site_id est fourni."
+              },
+              "fields": {
+                "type": "string",
+                "description": "Champs à retourner. 'all' pour tous les champs, sinon une sélection par défaut. Ignoré si site_id est fourni."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Champ utilisé pour trier les résultats (ex: 'surface_max', '-surface_min'). Ignoré si site_id est fourni."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1). Ignoré si site_id est fourni."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100). Ignoré si site_id est fourni."
+              },
+              "surface_max": {
+                "type": "number",
+                "description": "Surface maximale de l'unité foncière (en m² ou ha selon le jeu de données). Ignoré si site_id est fourni."
+              },
+              "surface_min": {
+                "type": "number",
+                "description": "Surface minimale de l'unité foncière (en m² ou ha selon le jeu de données). Ignoré si site_id est fourni."
+              },
+              "urba_zone_type": {
+                "type": "string",
+                "description": "Type de zone d'urbanisme (filtre métier, ex: 'AU', 'A', 'N', etc.). Ignoré si site_id est fourni."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "geojson"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'geojson' pour données brutes géographiques. Si site_id est fourni, ce paramètre est ignoré."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "dvf_opendata",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "idmutation": {
+                "type": "string",
+                "description": "Identifiant unique d'une mutation DVF+ (entier). Si ce paramètre est renseigné, il prend le dessus sur tous les autres et permet d'accéder directement à la fiche mutation via /dvf_opendata/mutations/{idmutation}/. Les autres paramètres sont ignorés."
+              },
+              "code_insee": {
+                "type": "string",
+                "description": "Code INSEE communal ou d'arrondissement municipal. Plusieurs codes possibles (10 max, même département), séparés par des virgules. Obligatoire si idmutation absent. Ignoré si idmutation est fourni."
+              },
+              "in_bbox": {
+                "type": "string",
+                "description": "Emprise rectangulaire géographique (format: 'lonmin,latmin,lonmax,latmax'). Max 0.02° x 0.02°. Obligatoire si idmutation absent et code_insee absent. Ignoré si idmutation est fourni."
+              },
+              "anneemut": {
+                "type": "string",
+                "description": "Année de la mutation (>= 2010). Ex: '2022'. Filtre inclusif. Ignoré si idmutation est fourni."
+              },
+              "anneemut_min": {
+                "type": "string",
+                "description": "Année minimale de mutation (>= 2010). Ex: '2015'. Filtre inclusif. Ignoré si idmutation est fourni."
+              },
+              "anneemut_max": {
+                "type": "string",
+                "description": "Année maximale de mutation (>= 2010). Ex: '2023'. Filtre inclusif. Ignoré si idmutation est fourni."
+              },
+              "codtypbien": {
+                "type": "string",
+                "description": "Code(s) typologie de bien, séparés par virgule (ex: '11,121'). Voir documentation DVF+. Ignoré si idmutation est fourni."
+              },
+              "contains_geom": {
+                "type": "string",
+                "description": "Filtre géométrique (GeoJSON, WKT, HEXEWKB ou WKB). Ex: contains_geom={'type':'Point','coordinates':[2.17,46.75]}. Ignoré si idmutation est fourni."
+              },
+              "fields": {
+                "type": "string",
+                "description": "'all' pour tous les champs, sinon sélection par défaut. Ignoré si idmutation est fourni."
+              },
+              "idnatmut": {
+                "type": "string",
+                "description": "Code(s) nature de mutation, séparés par virgule (ex: '1,2'). Voir documentation DVF+. Ignoré si idmutation est fourni."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1). Ignoré si idmutation est fourni."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100). Ignoré si idmutation est fourni."
+              },
+              "sbati_max": {
+                "type": "number",
+                "description": "Surface bâtie maximale vendue (m²). Ignoré si idmutation est fourni."
+              },
+              "sbati_min": {
+                "type": "number",
+                "description": "Surface bâtie minimale vendue (m²). Ignoré si idmutation est fourni."
+              },
+              "sterr_max": {
+                "type": "number",
+                "description": "Surface de terrain maximale vendue (m²). Ignoré si idmutation est fourni."
+              },
+              "sterr_min": {
+                "type": "number",
+                "description": "Surface de terrain minimale vendue (m²). Ignoré si idmutation est fourni."
+              },
+              "valeurfonc_max": {
+                "type": "number",
+                "description": "Valeur foncière maximale (€). Ignoré si idmutation est fourni."
+              },
+              "valeurfonc_min": {
+                "type": "number",
+                "description": "Valeur foncière minimale (€). Ignoré si idmutation est fourni."
+              },
+              "vefa": {
+                "type": "string",
+                "description": "Vente en l'état futur d'achèvement (VEFA). Ignoré si idmutation est fourni."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "geojson",
+                  "json",
+                  "xlsx"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'geojson' pour données brutes géographiques, 'json' ou 'xlsx' pour l'export d'une fiche mutation. Si idmutation est fourni, ce paramètre est pris en compte uniquement pour le format de la fiche."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "indicateurs_conso_espace_commune",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code_insee": {
+                "type": "string",
+                "description": "Code INSEE de la commune (obligatoire, 5 chiffres, ex: '75056' pour Paris)."
+              },
+              "annee_min": {
+                "type": "number",
+                "description": "Année minimale pour filtrer les indicateurs (inclusif, ex: 2010)."
+              },
+              "annee_max": {
+                "type": "number",
+                "description": "Année maximale pour filtrer les indicateurs (inclusif, ex: 2023)."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Tri des résultats (ex: '-annee' pour décroissant, 'annee' pour croissant)."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1)."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100)."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'json' pour données brutes."
+              }
+            },
+            "required": [
+              "code_insee"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "indicateurs_conso_espace_departement",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "coddep": {
+                "type": "string",
+                "description": "Code du département (obligatoire, 2 ou 3 chiffres, ex: '75' pour Paris)."
+              },
+              "annee_min": {
+                "type": "number",
+                "description": "Année minimale pour filtrer les indicateurs (inclusif, ex: 2010)."
+              },
+              "annee_max": {
+                "type": "number",
+                "description": "Année maximale pour filtrer les indicateurs (inclusif, ex: 2023)."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Tri des résultats (ex: '-annee' pour décroissant, 'annee' pour croissant)."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1)."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100)."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'json' pour données brutes."
+              }
+            },
+            "required": [
+              "coddep"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "indicateurs_prix_commune_annuel",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code_insee": {
+                "type": "string",
+                "description": "Code INSEE de la commune (obligatoire, 5 chiffres, ex: '75056' pour Paris)."
+              },
+              "annee": {
+                "type": "string",
+                "description": "Année concernée (ex: '2023')."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Tri des résultats (ex: '-annee' pour décroissant, 'annee' pour croissant)."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1)."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100)."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'json' pour données brutes."
+              }
+            },
+            "required": [
+              "code_insee"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "indicateurs_marche_accessibilite",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Code INSEE (commune) ou code AAV (Aire d'Attraction des Villes), obligatoire. Ex: '75056' ou 'AAV123'."
+              },
+              "annee": {
+                "type": "string",
+                "description": "Année concernée (ex: '2023')."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Tri des résultats (ex: '-annee' pour décroissant, 'annee' pour croissant)."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1)."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100)."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'json' pour données brutes."
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "geocode_commune",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "nom": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "string"
+              },
+              "limit": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "geocode_epci",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "nom": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "string"
+              },
+              "limit": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "geocode_commune_detail",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "geocode_epci_detail",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "urbs_geocoder_search",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "Adresse textuelle à rechercher (ex: 10 rue de Paris, Lyon)"
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "urbs_dashboard",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ids": {
+                "type": "string",
+                "description": "Un ou plusieurs id IMOPE séparés par des virgules (obtenus via urbs_geocoder_search)"
+              },
+              "attributes": {
+                "type": "string",
+                "description": "Liste des attributs à récupérer, séparés par des virgules (optionnel, par défaut tous les attributs disponibles)"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie (texte ou JSON)"
+              }
+            },
+            "required": [
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "cartofriches",
+        "dvf_opendata",
+        "indicateurs_conso_espace_commune",
+        "indicateurs_conso_espace_departement",
+        "indicateurs_prix_commune_annuel",
+        "indicateurs_marche_accessibilite",
+        "geocode_commune",
+        "geocode_epci",
+        "geocode_commune_detail",
+        "geocode_epci_detail",
+        "urbs_geocoder_search",
+        "urbs_dashboard"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 531,
+      "name": "Immolog MCP SSE Server",
+      "author": "@momo590/mcp-sse-immolog",
+      "overview": "Provide a specialized MCP server using Server-Sent Events (SSE) to integrate Immolog's business tools and prompts. Enable seamless connection with LibreChat and other clients for real-time data and action handling. Customize and extend the server to fit specific business needs with ease.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@momo590/mcp-sse-immolog",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "27",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@momo590_mcp-sse-immolog.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "cartofriches",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "site_id": {
+                "type": "string",
+                "description": "Identifiant unique d'une friche (Cartofriches). Si ce paramètre est renseigné, il prend le dessus sur tous les autres paramètres et permet d'accéder directement à la fiche détaillée via /cartofriches/friches/{site_id}/."
+              },
+              "code_insee": {
+                "type": "string",
+                "description": "Code INSEE communal ou d'arrondissement municipal. Peut contenir plusieurs codes séparés par des virgules (10 max, même département). Ex: '75056' ou '75056,75057'. Obligatoire si site_id, coddep et in_bbox absents. Ignoré si site_id est fourni."
+              },
+              "coddep": {
+                "type": "string",
+                "description": "Code INSEE du département (2 ou 3 chiffres, ex: '75'). Obligatoire si site_id, code_insee et in_bbox absents. Ignoré si site_id est fourni."
+              },
+              "in_bbox": {
+                "type": "string",
+                "description": "Emprise rectangulaire géographique (format: 'lonmin,latmin,lonmax,latmax'). Max 1° x 1°. Obligatoire si site_id, code_insee et coddep absents. Ignoré si site_id est fourni."
+              },
+              "contains_geom": {
+                "type": "string",
+                "description": "Filtre géométrique : retourne uniquement les entités dont la géométrie contient celle fournie (format GeoJSON, WKT, HEXEWKB ou WKB). Ex: contains_geom={'type':'Point','coordinates':[2.17,46.75]}. Ignoré si site_id est fourni."
+              },
+              "fields": {
+                "type": "string",
+                "description": "Champs à retourner. 'all' pour tous les champs, sinon une sélection par défaut. Ignoré si site_id est fourni."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Champ utilisé pour trier les résultats (ex: 'surface_max', '-surface_min'). Ignoré si site_id est fourni."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1). Ignoré si site_id est fourni."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100). Ignoré si site_id est fourni."
+              },
+              "surface_max": {
+                "type": "number",
+                "description": "Surface maximale de l'unité foncière (en m² ou ha selon le jeu de données). Ignoré si site_id est fourni."
+              },
+              "surface_min": {
+                "type": "number",
+                "description": "Surface minimale de l'unité foncière (en m² ou ha selon le jeu de données). Ignoré si site_id est fourni."
+              },
+              "urba_zone_type": {
+                "type": "string",
+                "description": "Type de zone d'urbanisme (filtre métier, ex: 'AU', 'A', 'N', etc.). Ignoré si site_id est fourni."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "geojson"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'geojson' pour données brutes géographiques. Si site_id est fourni, ce paramètre est ignoré."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "dvf_opendata",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "idmutation": {
+                "type": "string",
+                "description": "Identifiant unique d'une mutation DVF+ (entier). Si ce paramètre est renseigné, il prend le dessus sur tous les autres et permet d'accéder directement à la fiche mutation via /dvf_opendata/mutations/{idmutation}/. Les autres paramètres sont ignorés."
+              },
+              "code_insee": {
+                "type": "string",
+                "description": "Code INSEE communal ou d'arrondissement municipal. Plusieurs codes possibles (10 max, même département), séparés par des virgules. Obligatoire si idmutation absent. Ignoré si idmutation est fourni."
+              },
+              "in_bbox": {
+                "type": "string",
+                "description": "Emprise rectangulaire géographique (format: 'lonmin,latmin,lonmax,latmax'). Max 0.02° x 0.02°. Obligatoire si idmutation absent et code_insee absent. Ignoré si idmutation est fourni."
+              },
+              "anneemut": {
+                "type": "string",
+                "description": "Année de la mutation (>= 2010). Ex: '2022'. Filtre inclusif. Ignoré si idmutation est fourni."
+              },
+              "anneemut_min": {
+                "type": "string",
+                "description": "Année minimale de mutation (>= 2010). Ex: '2015'. Filtre inclusif. Ignoré si idmutation est fourni."
+              },
+              "anneemut_max": {
+                "type": "string",
+                "description": "Année maximale de mutation (>= 2010). Ex: '2023'. Filtre inclusif. Ignoré si idmutation est fourni."
+              },
+              "codtypbien": {
+                "type": "string",
+                "description": "Code(s) typologie de bien, séparés par virgule (ex: '11,121'). Voir documentation DVF+. Ignoré si idmutation est fourni."
+              },
+              "contains_geom": {
+                "type": "string",
+                "description": "Filtre géométrique (GeoJSON, WKT, HEXEWKB ou WKB). Ex: contains_geom={'type':'Point','coordinates':[2.17,46.75]}. Ignoré si idmutation est fourni."
+              },
+              "fields": {
+                "type": "string",
+                "description": "'all' pour tous les champs, sinon sélection par défaut. Ignoré si idmutation est fourni."
+              },
+              "idnatmut": {
+                "type": "string",
+                "description": "Code(s) nature de mutation, séparés par virgule (ex: '1,2'). Voir documentation DVF+. Ignoré si idmutation est fourni."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1). Ignoré si idmutation est fourni."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100). Ignoré si idmutation est fourni."
+              },
+              "sbati_max": {
+                "type": "number",
+                "description": "Surface bâtie maximale vendue (m²). Ignoré si idmutation est fourni."
+              },
+              "sbati_min": {
+                "type": "number",
+                "description": "Surface bâtie minimale vendue (m²). Ignoré si idmutation est fourni."
+              },
+              "sterr_max": {
+                "type": "number",
+                "description": "Surface de terrain maximale vendue (m²). Ignoré si idmutation est fourni."
+              },
+              "sterr_min": {
+                "type": "number",
+                "description": "Surface de terrain minimale vendue (m²). Ignoré si idmutation est fourni."
+              },
+              "valeurfonc_max": {
+                "type": "number",
+                "description": "Valeur foncière maximale (€). Ignoré si idmutation est fourni."
+              },
+              "valeurfonc_min": {
+                "type": "number",
+                "description": "Valeur foncière minimale (€). Ignoré si idmutation est fourni."
+              },
+              "vefa": {
+                "type": "string",
+                "description": "Vente en l'état futur d'achèvement (VEFA). Ignoré si idmutation est fourni."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "geojson",
+                  "json",
+                  "xlsx"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'geojson' pour données brutes géographiques, 'json' ou 'xlsx' pour l'export d'une fiche mutation. Si idmutation est fourni, ce paramètre est pris en compte uniquement pour le format de la fiche."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "indicateurs_conso_espace_commune",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code_insee": {
+                "type": "string",
+                "description": "Code INSEE de la commune (obligatoire, 5 chiffres, ex: '75056' pour Paris)."
+              },
+              "annee_min": {
+                "type": "number",
+                "description": "Année minimale pour filtrer les indicateurs (inclusif, ex: 2010)."
+              },
+              "annee_max": {
+                "type": "number",
+                "description": "Année maximale pour filtrer les indicateurs (inclusif, ex: 2023)."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Tri des résultats (ex: '-annee' pour décroissant, 'annee' pour croissant)."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1)."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100)."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'json' pour données brutes."
+              }
+            },
+            "required": [
+              "code_insee"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "indicateurs_conso_espace_departement",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "coddep": {
+                "type": "string",
+                "description": "Code du département (obligatoire, 2 ou 3 chiffres, ex: '75' pour Paris)."
+              },
+              "annee_min": {
+                "type": "number",
+                "description": "Année minimale pour filtrer les indicateurs (inclusif, ex: 2010)."
+              },
+              "annee_max": {
+                "type": "number",
+                "description": "Année maximale pour filtrer les indicateurs (inclusif, ex: 2023)."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Tri des résultats (ex: '-annee' pour décroissant, 'annee' pour croissant)."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1)."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100)."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'json' pour données brutes."
+              }
+            },
+            "required": [
+              "coddep"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "indicateurs_prix_commune_annuel",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code_insee": {
+                "type": "string",
+                "description": "Code INSEE de la commune (obligatoire, 5 chiffres, ex: '75056' pour Paris)."
+              },
+              "annee": {
+                "type": "string",
+                "description": "Année concernée (ex: '2023')."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Tri des résultats (ex: '-annee' pour décroissant, 'annee' pour croissant)."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1)."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100)."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'json' pour données brutes."
+              }
+            },
+            "required": [
+              "code_insee"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "indicateurs_marche_accessibilite",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Code INSEE (commune) ou code AAV (Aire d'Attraction des Villes), obligatoire. Ex: '75056' ou 'AAV123'."
+              },
+              "annee": {
+                "type": "string",
+                "description": "Année concernée (ex: '2023')."
+              },
+              "ordering": {
+                "type": "string",
+                "description": "Tri des résultats (ex: '-annee' pour décroissant, 'annee' pour croissant)."
+              },
+              "page": {
+                "type": "number",
+                "description": "Numéro de page pour la pagination (par défaut 1)."
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Nombre de résultats par page (par défaut 10, max 100)."
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie : 'text' pour résumé lisible, 'json' pour données brutes."
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "geocode_commune",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "nom": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "string"
+              },
+              "limit": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "geocode_epci",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "nom": {
+                "type": "string"
+              },
+              "fields": {
+                "type": "string"
+              },
+              "limit": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "geocode_commune_detail",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "geocode_epci_detail",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "code"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "urbs_geocoder_search",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "Adresse textuelle à rechercher (ex: 10 rue de Paris, Lyon)"
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "urbs_dashboard",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ids": {
+                "type": "string",
+                "description": "Un ou plusieurs id IMOPE séparés par des virgules (obtenus via urbs_geocoder_search)"
+              },
+              "attributes": {
+                "type": "string",
+                "description": "Liste des attributs à récupérer, séparés par des virgules (optionnel, par défaut tous les attributs disponibles)"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "default": "text",
+                "description": "Format de sortie (texte ou JSON)"
+              }
+            },
+            "required": [
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@momo590/mcp-sse-immolog/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@momo590/mcp-sse-immolog/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0532.@momo590_mcp-sse-immolog_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 520
+  }
+}

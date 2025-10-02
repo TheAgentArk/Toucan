@@ -1,0 +1,169 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is a specialized tool for interacting with Contentful's GraphQL API, focusing on content retrieval and schema exploration. It provides tools to list content types, inspect their schemas, generate example queries, and perform smart searches. The primary use case is enabling developers and users to efficiently retrieve and query content from Contentful with a structured approach.",
+    "reasoning": "The primary label \"Database Operations\" was chosen because the server facilitates querying and retrieving structured content (similar to database operations). The secondary label \"API Integration\" was added since it specifically interacts with Contentful's GraphQL API. \"Content Creation\" is also relevant as it enables the retrieval of content for applications. No custom label is needed as the predefined labels adequately cover the functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "API Integration",
+      "Content Creation"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1468,
+    "server_name": "Contentful GraphQL Server",
+    "rank_by_usage": 1469,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@ivo-toby_contentful-mcp-graphql.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ivo-toby/contentful-mcp-graphql/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1468,
+      "name": "Contentful GraphQL Server",
+      "author": "@ivo-toby/contentful-mcp-graphql",
+      "overview": "Enable efficient and flexible content retrieval from Contentful using GraphQL queries. Explore your content model schema, generate example queries, and execute custom queries with smart pagination and secure read-only access. Simplify content delivery and schema exploration for your applications.",
+      "repository_url": "https://github.com/ivo-toby/contentful-mcp-graphql",
+      "homepage": "https://smithery.ai/server/@ivo-toby/contentful-mcp-graphql",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ivo-toby_contentful-mcp-graphql.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "graphql_query",
+          "description": "Deploy Server Contentful GraphQL Server @ivo-toby/contentful-mcp-graphql Try in Playground graphql_query",
+          "parameters": [
+            {
+              "name": "graphql_query",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "graphql_list_content_types",
+          "description": "IMPORTANT: Use this tool FIRST before attempting to write any GraphQL queries. This tool lists all available content types in the Contentful space's GraphQL schema. You should always use this tool to understand what content types are available before formulating GraphQL queries. The space ID and CDA token are automatically retrieved from environment variables.",
+          "parameters": [
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "spaceId",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "variables",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "environmentId",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "graphql_get_content_type_schema",
+          "description": "IMPORTANT: Use this tool AFTER using graphql_list_content_types to get a detailed schema for a specific content type. This tool provides all fields, their types, and relationships for a content type. You should ALWAYS use this tool to understand the structure of a content type before creating a query for it. The space ID and CDA token are automatically retrieved from environment variables.",
+          "parameters": [
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "spaceId",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "variables",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "environmentId",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "graphql_get_example",
+          "description": "IMPORTANT: Use this tool AFTER using graphql_get_content_type_schema to see example GraphQL queries for a specific content type. Learning from these examples will help you construct valid queries. The space ID and CDA token are automatically retrieved from environment variables.",
+          "parameters": [
+            {
+              "name": "graphql_get_example",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "smart_search",
+          "description": "Perform intelligent search across multiple content types using cached metadata. This tool automatically searches all text fields in your content types for the given query term. Much faster and easier than manually chaining multiple GraphQL calls.",
+          "parameters": [
+            {
+              "name": "smart_search",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "build_search_query",
+          "description": "Generate a GraphQL search query for a specific content type based on cached schema information. Returns the query string and variables needed to search text fields in the content type.",
+          "parameters": [
+            {
+              "name": "build_search_query",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ivo-toby/contentful-mcp-graphql/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "contentfulDeliveryAccessToken",
+          "required": true,
+          "description": "Your Delivery API token from Contentful"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ivo-toby/contentful-mcp-graphql/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1469.@ivo-toby_contentful-mcp-graphql_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1358
+  }
+}

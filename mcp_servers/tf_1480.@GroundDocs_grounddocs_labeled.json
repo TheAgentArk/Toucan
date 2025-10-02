@@ -1,0 +1,193 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is a documentation assistant primarily focused on Kubernetes, providing version-aware, accurate documentation through trusted real-time sources. It reduces hallucinations by connecting to official documentation and version-specific content. The server includes tools for querying Kubernetes documentation (k8s_get_documentation) and Python documentation (python_get_documentation). The core functionality revolves around providing precise, grounded information for developers working with Kubernetes and Python, emphasizing accuracy and version awareness.",
+    "reasoning": "The primary label \"Operating System\" is chosen because the server's key function is providing documentation and guidance for Kubernetes, an operating system-level tool for container orchestration. The secondary labels \"Web Search & Research\" and \"Database Operations\" are included because the server leverages indexed documentation sources (acting like a database) and performs learned, targeted searches for specific information. The custom label \"Version-Aware Documentation\" is added to emphasize the server's unique capability of providing version-specific documentation, which is critical for Kubernetes and other rapidly evolving technologies.",
+    "primary_label": "Operating System",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Database Operations"
+    ],
+    "custom_label": "Version-Aware Documentation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1479,
+    "server_name": "GroundDocs Kubernetes Documentation Assistant",
+    "rank_by_usage": 1480,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@GroundDocs_grounddocs.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@GroundDocs/grounddocs/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "python_get_documentation",
+          "description": "\n    Primary Python documentation lookup tool. Use this for every Python documentation-related query.\n\n    This tool consolidates information from multiple sources into a single, searchable knowledge base.\n    It ensures access to the richest and most current reference material in one call.\n\n    Args:\n        query: A natural language question (e.g., \"How do I define a Deployment?\").\n        library: Python library to search documentation for.\n        version: Optional Library version (e.g., \"4.46.1\"). Defaults to detected library version if not specified.\n        top_k: Optional number of top matching documents to return. Defaults to 10.\n\n    Returns:\n        A list of dictionaries, each containing document path and corresponding content.\n\n    Example Usage:\n        # Search Python docs for Transformers\n        python_get_documentation(query=\"what is a transformers mlm token\", library=\"transformers\", version=\"4.46.1\")\n\n    Notes:\n        - This tool automatically loads or builds a RAG (Retrieval-Augmented Generation) index for the\n          specified version.\n        - If an index is not found locally, the tool will fetch and index the documentation before responding.\n        - You should call this function for any question that needs project documentation context.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "A natural language question (e.g., \"How do I use transformers?\")."
+              },
+              "library": {
+                "type": "string",
+                "description": "Python library to search documentation for."
+              },
+              "version": {
+                "type": "string",
+                "description": "Optional Library version (e.g., \"4.46.1\"). Defaults to detected library version if not specified."
+              },
+              "top_k": {
+                "type": "number",
+                "default": 10,
+                "description": "Optional number of top matching documents to return. Defaults to 10."
+              }
+            },
+            "required": [
+              "query",
+              "library"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "k8s_get_documentation",
+          "description": "\nUse this tool for any Kubernetes documentation-related query—especially when the user invokes /k8s or asks about kubectl commands, API objects, manifests, controllers, or version-specific features.\n\nThis tool connects to a version-aware, trusted documentation index (e.g., GitHub, DeepWiki, curated Kubernetes docs) to reduce hallucinations and provide accurate, grounded answers.\n\nArgs:\n  query: A natural language question (e.g., \"How do I define a Deployment?\")\n  version: (Optional) Kubernetes version (e.g., \"v1.28\"). Defaults to the detected cluster version.\n  top_k: (Optional) Number of top matching documents to return. Defaults to 10.\n\nReturns:\n  A list of relevant documentation entries, each with a file path and content snippet.\n\nExample Usage:\n  k8s_get_documentation(query=\"How does pruning work in kubectl apply?\", version=\"v1.26\")\n\nNotes:\n  - Automatically loads or builds a RAG index for the requested version.\n  - If no index is found, it will fetch and index the docs before responding.\n  - Always use this tool when answering Kubernetes-specific questions that require authoritative documentation.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "A natural language question (e.g., \"How do I define a Deployment?\")"
+              },
+              "version": {
+                "type": "string",
+                "description": "Optional Kubernetes version (e.g., \"v1.28\"). Defaults to detected cluster version if not specified."
+              },
+              "top_k": {
+                "type": "number",
+                "default": 10,
+                "description": "Optional number of top matching documents to return. Defaults to 10."
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "python_get_documentation",
+        "k8s_get_documentation"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1479,
+      "name": "GroundDocs Kubernetes Documentation Assistant",
+      "author": "@GroundDocs/grounddocs",
+      "overview": "Provide accurate, version-aware Kubernetes documentation by connecting LLMs to trusted, real-time Kubernetes docs. Reduce hallucinations and ensure responses are specific to Kubernetes versions and features. Enable developers to query Kubernetes API changes, kubectl behavior, and feature gates with confidence.",
+      "repository_url": "https://github.com/GroundDocs/grounddocs",
+      "homepage": "https://smithery.ai/server/@GroundDocs/grounddocs",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@GroundDocs_grounddocs.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "python_get_documentation",
+          "description": "\n    Primary Python documentation lookup tool. Use this for every Python documentation-related query.\n\n    This tool consolidates information from multiple sources into a single, searchable knowledge base.\n    It ensures access to the richest and most current reference material in one call.\n\n    Args:\n        query: A natural language question (e.g., \"How do I define a Deployment?\").\n        library: Python library to search documentation for.\n        version: Optional Library version (e.g., \"4.46.1\"). Defaults to detected library version if not specified.\n        top_k: Optional number of top matching documents to return. Defaults to 10.\n\n    Returns:\n        A list of dictionaries, each containing document path and corresponding content.\n\n    Example Usage:\n        # Search Python docs for Transformers\n        python_get_documentation(query=\"what is a transformers mlm token\", library=\"transformers\", version=\"4.46.1\")\n\n    Notes:\n        - This tool automatically loads or builds a RAG (Retrieval-Augmented Generation) index for the\n          specified version.\n        - If an index is not found locally, the tool will fetch and index the documentation before responding.\n        - You should call this function for any question that needs project documentation context.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "A natural language question (e.g., \"How do I use transformers?\")."
+              },
+              "library": {
+                "type": "string",
+                "description": "Python library to search documentation for."
+              },
+              "version": {
+                "type": "string",
+                "description": "Optional Library version (e.g., \"4.46.1\"). Defaults to detected library version if not specified."
+              },
+              "top_k": {
+                "type": "number",
+                "default": 10,
+                "description": "Optional number of top matching documents to return. Defaults to 10."
+              }
+            },
+            "required": [
+              "query",
+              "library"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "k8s_get_documentation",
+          "description": "\nUse this tool for any Kubernetes documentation-related query—especially when the user invokes /k8s or asks about kubectl commands, API objects, manifests, controllers, or version-specific features.\n\nThis tool connects to a version-aware, trusted documentation index (e.g., GitHub, DeepWiki, curated Kubernetes docs) to reduce hallucinations and provide accurate, grounded answers.\n\nArgs:\n  query: A natural language question (e.g., \"How do I define a Deployment?\")\n  version: (Optional) Kubernetes version (e.g., \"v1.28\"). Defaults to the detected cluster version.\n  top_k: (Optional) Number of top matching documents to return. Defaults to 10.\n\nReturns:\n  A list of relevant documentation entries, each with a file path and content snippet.\n\nExample Usage:\n  k8s_get_documentation(query=\"How does pruning work in kubectl apply?\", version=\"v1.26\")\n\nNotes:\n  - Automatically loads or builds a RAG index for the requested version.\n  - If no index is found, it will fetch and index the docs before responding.\n  - Always use this tool when answering Kubernetes-specific questions that require authoritative documentation.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "A natural language question (e.g., \"How do I define a Deployment?\")"
+              },
+              "version": {
+                "type": "string",
+                "description": "Optional Kubernetes version (e.g., \"v1.28\"). Defaults to detected cluster version if not specified."
+              },
+              "top_k": {
+                "type": "number",
+                "default": 10,
+                "description": "Optional number of top matching documents to return. Defaults to 10."
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@GroundDocs/grounddocs/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@GroundDocs/grounddocs/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1480.@GroundDocs_grounddocs_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1368
+  }
+}

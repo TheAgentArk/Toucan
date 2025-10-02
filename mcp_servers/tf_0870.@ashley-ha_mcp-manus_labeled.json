@@ -1,0 +1,127 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is primarily designed for browser automation, allowing users to automate web interactions with advanced state management. It provides tools to get the current browser state and planning context (get_planner_state) and execute predefined actions (execute_actions). The focus is on ensuring seamless automation by tracking state changes and adapting actions accordingly. This makes it particularly useful for repetitive web tasks, data extraction, and interactive web processes.",
+    "reasoning": "The primary label \"Browser Automation\" is chosen because the server's core functionality revolves around automating browser interactions, with tools specifically designed for executing and managing these actions. The secondary label \"Memory Management\" is included because the server maintains state and context information, which is crucial for automating complex workflows. The \"Web Search & Research\" label is relevant due to the potential use cases in automating web research or data collection processes.",
+    "primary_label": "Browser Automation",
+    "secondary_labels": [
+      "Memory Management",
+      "Web Search & Research"
+    ],
+    "custom_label": "Stateful Web Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 869,
+    "server_name": "Browser Automation Agent",
+    "rank_by_usage": 870,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@ashley-ha_mcp-manus.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ashley-ha/mcp-manus/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_planner_state",
+          "description": "Get the current browser state and planning context.\n    This tool must be executed before execute_actions tool.\n    \n    Must return a JSON string in the format:\n    {\n        \"current_state\": {\n            \"evaluation_previous_goal\": \"Success|Failed|Unknown - Analysis of previous actions\",\n            \"memory\": \"Description of what has been done and what to remember\",\n            \"next_goal\": \"What needs to be done with the next immediate action\"\n        },\n        \"action\": [\n            {\"action_name\": {\"param1\": \"value1\", ...}},\n            ...\n        ]\n    }\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_planner_stateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_actions",
+          "description": "Execute actions from the planner state.\n    \n    Args:\n        actions: A dictionary containing the planner state and actions in format:\n                {\n                    \"current_state\": {\n                        \"evaluation_previous_goal\": str,\n                        \"memory\": str,\n                        \"next_goal\": str\n                    },\n                    \"action\": [\n                        {\"action_name\": {\"param1\": \"value1\"}},\n                        ...\n                    ]\n                }\n                \n    Note: If the page state changes (new elements appear) during action execution,\n    the sequence will be interrupted and you'll need to get a new planner state.\n    ",
+          "input_schema": {
+            "properties": {
+              "actions": {
+                "title": "Actions",
+                "type": "object"
+              }
+            },
+            "required": [
+              "actions"
+            ],
+            "title": "execute_actionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get_planner_state",
+        "execute_actions"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 869,
+      "name": "Browser Automation Agent",
+      "author": "@ashley-ha/mcp-manus",
+      "overview": "Automate browser interactions seamlessly with our agent. Leverage the power of the Model Context Protocol to enhance your web automation tasks. Experience state management, interactive element manipulation, and more for efficient browser automation.",
+      "repository_url": "https://github.com/ashley-ha/mcp-manus",
+      "homepage": "https://smithery.ai/server/@ashley-ha/mcp-manus",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ashley-ha_mcp-manus.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get_planner_state",
+          "description": "Get the current browser state and planning context.\n    This tool must be executed before execute_actions tool.\n    \n    Must return a JSON string in the format:\n    {\n        \"current_state\": {\n            \"evaluation_previous_goal\": \"Success|Failed|Unknown - Analysis of previous actions\",\n            \"memory\": \"Description of what has been done and what to remember\",\n            \"next_goal\": \"What needs to be done with the next immediate action\"\n        },\n        \"action\": [\n            {\"action_name\": {\"param1\": \"value1\", ...}},\n            ...\n        ]\n    }\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_planner_stateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_actions",
+          "description": "Execute actions from the planner state.\n    \n    Args:\n        actions: A dictionary containing the planner state and actions in format:\n                {\n                    \"current_state\": {\n                        \"evaluation_previous_goal\": str,\n                        \"memory\": str,\n                        \"next_goal\": str\n                    },\n                    \"action\": [\n                        {\"action_name\": {\"param1\": \"value1\"}},\n                        ...\n                    ]\n                }\n                \n    Note: If the page state changes (new elements appear) during action execution,\n    the sequence will be interrupted and you'll need to get a new planner state.\n    ",
+          "input_schema": {
+            "properties": {
+              "actions": {
+                "title": "Actions",
+                "type": "object"
+              }
+            },
+            "required": [
+              "actions"
+            ],
+            "title": "execute_actionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ashley-ha/mcp-manus/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ashley-ha/mcp-manus/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0870.@ashley-ha_mcp-manus_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 851
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "labels": {
+    "analysis": "The MCP Server primarily functions as a content management system (CMS) integration for the DevHub platform. It allows users to manage blog posts, media content, and location information (e.g., hours of operation) through a set of API-like tools. The tools enable creating, updating, and retrieving blog posts, uploading images, and managing location details. This aligns closely with content management and media handling, but also touches on file management for images and operational data handling for business hours.",
+    "reasoning": "The primary label \"Content Management\" is chosen because the server's core functionality revolves around creating, updating, and retrieving content (blog posts and media). The secondary labels \"File Management\" and \"Daily Productivity\" are selected because the server handles file uploads (images) and operational data (hours of operation), which support organizational and productivity tasks. No custom label is needed as the server's functionality is well-covered by the predefined categories.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "File Management",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1998,
+    "server_name": "DevHub CMS Integration",
+    "rank_by_usage": 1999,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@devhub_devhub-cms-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@devhub/devhub-cms-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1998,
+      "name": "DevHub CMS Integration",
+      "author": "@devhub/devhub-cms-mcp",
+      "overview": "Manage your content seamlessly within the DevHub CMS system. Utilize powerful tools to create, update, and retrieve blog posts and media, all through a simple interface. Enhance your content management experience with the capabilities of Large Language Models without direct API integration.",
+      "repository_url": "https://github.com/devhub/devhub-cms-mcp",
+      "homepage": "https://smithery.ai/server/@devhub/devhub-cms-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@devhub_devhub-cms-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "get_hours_of_operation",
+          "description": "Deploy Server DevHub CMS Integration @devhub/devhub-cms-mcp Try in Playground get_hours_of_operation",
+          "parameters": [
+            {
+              "name": "DevHub",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Location",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "ID",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "update_hours",
+          "description": "Update the hours of operation for a DevHub location Send a list of items representing days of the week Except for the special case formatting, this object is a list of 7 items which represent each day. Each day can can have one-four time ranges. For example, two time ranges denotes a \"lunch-break\". No time ranges denotes closed. Examples: 9am-5pm [[\"09:00:00\", \"17:00:00\"]] 9am-12pm and 1pm-5pm [[\"09:00:00\", \"12:00:00\"], [\"13:00:00\", \"17:00:00\"]] Closed - an empty list [] Args: location_id: DevHub Location ID new_hours: Structured format of the new hours hours_type: Defaults to 'primary' unless the user specifies a different type",
+          "parameters": []
+        },
+        {
+          "name": "upload_image",
+          "description": "Upload an image to the DevHub media gallery Supports webp, jpeg and png images Args: base64_image_content: Base 64 encoded content of the image file filename: Filename including the extension",
+          "parameters": []
+        },
+        {
+          "name": "get_blog_post",
+          "description": "Get a single blog post\n\n    Args:\n        post_id: Blog post id",
+          "parameters": [
+            {
+              "name": "Blog",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "post",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "post_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create_blog_post",
+          "description": "Create a new blog post Args: site_id: Website ID where the post will be published. Prompt the user for this ID. title: Blog post title content: HTML content of blog post. Should not include a <h1> tag, only h2+",
+          "parameters": []
+        },
+        {
+          "name": "update_blog_post",
+          "description": "Update a single blog post Args: post_id: Blog post ID title: Blog post title content: HTML content of blog post. Should not include a <h1> tag, only h2+",
+          "parameters": []
+        },
+        {
+          "name": "get_nearest_location",
+          "description": "Get the nearest DevHub location Args: business_id: DevHub Business ID associated with the location. Prompt the user for this ID latitude: Latitude of the location longitude: Longitude of the location",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@devhub/devhub-cms-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "devhubApiKey",
+          "required": true,
+          "description": "DevHub API Key for authentication."
+        },
+        {
+          "name": "devhubApiSecret",
+          "required": true,
+          "description": "DevHub API Secret for authentication."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@devhub/devhub-cms-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1999.@devhub_devhub-cms-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1744
+  }
+}

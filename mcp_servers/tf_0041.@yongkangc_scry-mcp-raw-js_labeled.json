@@ -1,0 +1,2012 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in providing real-time and historical cryptocurrency and DeFi data through multiple trusted sources like CoinGecko, DeFiLlama, and others. Its tools allow for comprehensive market analysis, protocol tracking, historical data aggregation, and price comparison. The server also includes caching mechanisms to optimize performance and ensure efficient data retrieval. The primary use cases revolve around crypto and DeFi market intelligence, investment analysis, and protocol monitoring.",
+    "reasoning": "The primary label \"Cryptocurrency & Blockchain\" is chosen because the server's core functionality revolves around crypto and DeFi data. Secondary labels \"Data Analysis & Processing\" and \"API Integration\" are selected because the server provides tools for thorough data analysis and integrates with multiple external APIs to aggregate and process information. The custom label \"DeFi Data Aggregation\" is used to highlight the server's specialized role in efficiently gathering and processing DeFi-specific metrics.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "API Integration"
+    ],
+    "custom_label": "DeFi Data Aggregation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 40,
+    "server_name": "Scry MCP Server",
+    "rank_by_usage": 41,
+    "usage_count": "2,869",
+    "original_file": "../crawler/smithery/@yongkangc_scry-mcp-raw-js.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@yongkangc/scry-mcp-raw-js/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "coingecko_get_coin_price_detailed",
+          "description": "🔧 ADVANCED: Get detailed cryptocurrency prices directly from CoinGecko API with all CoinGecko-specific features. For general price data, use 'get_current_price' instead. Use this when you specifically need CoinGecko's unique data fields or API behavior.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "coin_id": {
+                "type": "string",
+                "description": "CoinGecko coin ID ('bitcoin', 'ethereum', 'cardano'). Use search_assets to find exact IDs for any cryptocurrency"
+              },
+              "vs_currencies": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ],
+                "default": "usd",
+                "description": "Target currencies for price data (usd, eur, btc, eth). Multiple currencies supported as array"
+              },
+              "include_market_cap": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include market cap data for valuation analysis"
+              },
+              "include_24hr_vol": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include 24h volume for liquidity assessment"
+              },
+              "include_24hr_change": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include 24h price change for momentum analysis"
+              },
+              "include_last_updated_at": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include data freshness timestamp"
+              }
+            },
+            "required": [
+              "coin_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "coingecko_get_market_chart_detailed",
+          "description": "🔧 ADVANCED: Get detailed historical data directly from CoinGecko API with all CoinGecko-specific features. For general historical data, use 'get_historical_price' instead. Use this when you specifically need CoinGecko's unique data structure or API behavior.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "coin_id": {
+                "type": "string",
+                "description": "CoinGecko coin ID ('bitcoin', 'ethereum', 'cardano'). Use search_assets to find exact IDs"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency for price data (usd, eur, btc). USD recommended for cross-asset comparisons"
+              },
+              "days": {
+                "type": [
+                  "number",
+                  "string"
+                ],
+                "default": 1,
+                "description": "Number of days of data (1, 7, 14, 30, 90, 180, 365, max). Use shorter periods for intraday analysis, longer for trend assessment"
+              },
+              "interval": {
+                "type": "string",
+                "description": "Data interval (daily, hourly). Hourly for detailed analysis, daily for long-term trends. Auto-selected if not specified"
+              }
+            },
+            "required": [
+              "coin_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "coingecko_get_trending_coins",
+          "description": "Discover trending cryptocurrencies based on real-time search activity from CoinGecko users. Use for identifying market attention, viral projects, and emerging opportunities. Updated every few hours with search volume rankings. This is unique CoinGecko data not available elsewhere.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "random_string": {
+                "type": "string",
+                "default": "dummy",
+                "description": "Dummy parameter for no-parameter tools"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_top_protocols",
+          "description": "Get top DeFi protocols ranked by TVL with filtering by category and blockchain. Recommended over get_protocols for manageable result sets that won't overwhelm responses. Returns formatted TVL values, 24h changes, and chain distribution data for quick protocol discovery.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of top protocols to return (1-100, default: 10). Use smaller values for quick insights, larger for comprehensive market overview"
+              },
+              "category": {
+                "type": "string",
+                "description": "Filter by category ('Dexes', 'Lending', 'Yield', 'CDP'). Use exact category names for precise filtering"
+              },
+              "chain": {
+                "type": "string",
+                "description": "Filter by blockchain ('Ethereum', 'BSC', 'Polygon', 'Arbitrum'). Use exact chain names for accurate results"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_protocols_paginated",
+          "description": "Browse DeFi protocols with pagination and sorting for comprehensive market analysis. Use for large datasets when get_top_protocols isn't sufficient. Returns structured data with pagination controls and flexible sorting options.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number (starting from 1). Use for iterating through large protocol datasets"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "description": "Number of protocols per page (1-100, default: 20). Larger values for fewer API calls, smaller for faster responses"
+              },
+              "sort_by": {
+                "type": "string",
+                "enum": [
+                  "tvl",
+                  "name",
+                  "change_1d",
+                  "change_7d"
+                ],
+                "default": "tvl",
+                "description": "Sort protocols by field (tvl for market cap ranking, change_1d/7d for performance analysis)"
+              },
+              "sort_order": {
+                "type": "string",
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "default": "desc",
+                "description": "Sort order (desc for top performers, asc for reverse ranking)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_protocols",
+          "description": "⚠️ DEPRECATED: Use defillama_get_top_protocols or defillama_get_protocols_paginated instead. Gets DeFi protocols (limited to prevent overwhelming responses).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of protocols to return (1-50, default: 10)"
+              },
+              "include_warning": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include deprecation warning in response"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_search_protocols",
+          "description": "Search for DeFi protocols by name, symbol, category, or description. Returns matching protocols sorted by TVL.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query (protocol name, symbol, category, or keyword)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of results to return (1-50, default: 10)"
+              },
+              "category_filter": {
+                "type": "string",
+                "description": "Additional filter by category"
+              },
+              "chain_filter": {
+                "type": "string",
+                "description": "Additional filter by blockchain"
+              },
+              "min_tvl": {
+                "type": "number",
+                "description": "Minimum TVL in USD (e.g., 1000000 for $1M+)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_historical_tvl",
+          "description": "Get comprehensive historical TVL data for any protocol with intelligent multi-source aggregation, analytics, and cross-validation. This unified tool abstracts away data sources and provides the best available data with quality scoring.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Protocol name or identifier (e.g., 'Uniswap', 'AAVE', 'Compound', 'uni', 'maker'). Automatically resolves across data sources."
+              },
+              "start_date": {
+                "type": "string",
+                "description": "Start date in YYYY-MM-DD format (e.g., '2024-01-01')"
+              },
+              "end_date": {
+                "type": "string",
+                "description": "End date in YYYY-MM-DD format (e.g., '2024-12-31')"
+              },
+              "granularity": {
+                "type": "string",
+                "enum": [
+                  "hourly",
+                  "daily",
+                  "weekly"
+                ],
+                "default": "daily",
+                "description": "Data granularity"
+              },
+              "max_data_points": {
+                "type": "number",
+                "minimum": 10,
+                "maximum": 2000,
+                "default": 500,
+                "description": "Maximum number of data points to return (10-2000, default: 500). Lower values = faster responses. Use 100-200 for quick analysis, 500+ for detailed analysis."
+              },
+              "days_limit": {
+                "type": "number",
+                "minimum": 7,
+                "maximum": 1095,
+                "description": "Maximum number of days to fetch (7-1095). Only applies if start_date/end_date not specified. Use 30-90 for recent analysis, 365+ for long-term trends."
+              },
+              "sample_strategy": {
+                "type": "string",
+                "enum": [
+                  "even",
+                  "recent",
+                  "weekly"
+                ],
+                "default": "even",
+                "description": "How to sample data when truncating: 'even' = evenly spaced, 'recent' = prioritize recent data, 'weekly' = weekly intervals"
+              },
+              "include_analytics": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include growth metrics, volatility analysis, and insights"
+              },
+              "include_predictions": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include trend predictions (experimental)"
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_supported_protocols",
+          "description": "List all pre-configured protocols supported by the unified historical TVL aggregation system, organized by category.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "description": "Filter by category (e.g., 'dex', 'lending', 'yield', 'liquid-staking')"
+              },
+              "chain": {
+                "type": "string",
+                "description": "Filter by blockchain (e.g., 'ethereum', 'polygon', 'arbitrum')"
+              },
+              "show_details": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include detailed protocol information"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "resolve_protocol_name",
+          "description": "Test protocol name resolution to see how a protocol query will be interpreted by the unified system. Useful for finding the correct protocol name before making data requests.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Protocol name, symbol, or alias to resolve (e.g., 'uni', 'maker', 'pancake')"
+              },
+              "show_alternatives": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show alternative matches if exact match not found"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_chain_historical_tvl",
+          "description": "Get historical TVL data for blockchain ecosystems to track capital flows and identify mercenary capital patterns across chains.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "Chain name (e.g., 'Ethereum', 'Arbitrum', 'Optimism', 'Polygon')"
+              },
+              "start_timestamp": {
+                "type": "number",
+                "description": "Start timestamp (Unix seconds)"
+              },
+              "end_timestamp": {
+                "type": "number",
+                "description": "End timestamp (Unix seconds)"
+              }
+            },
+            "required": [
+              "chain"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_protocol_fees_history",
+          "description": "Get historical fees and revenue data to analyze protocol sustainability and real value generation beyond TVL incentives.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Protocol slug for fees data"
+              },
+              "data_type": {
+                "type": "string",
+                "enum": [
+                  "dailyFees",
+                  "dailyRevenue"
+                ],
+                "default": "dailyFees",
+                "description": "Data type to retrieve: 'dailyFees' for fees paid by users, 'dailyRevenue' for protocol revenue"
+              },
+              "start_timestamp": {
+                "type": "number",
+                "description": "Start timestamp (Unix seconds)"
+              },
+              "end_timestamp": {
+                "type": "number",
+                "description": "End timestamp (Unix seconds)"
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_yields_historical",
+          "description": "Get historical yield/APY data for liquidity pools to analyze incentive effectiveness and reward sustainability patterns.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pool_id": {
+                "type": "string",
+                "description": "Pool ID from yields API (use yields search first to find pool IDs)"
+              },
+              "days": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 365,
+                "default": 30,
+                "description": "Number of days of historical data"
+              }
+            },
+            "required": [
+              "pool_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_stablecoin_historical",
+          "description": "Get historical stablecoin circulation data to track capital flows and identify mercenary capital patterns through stablecoin movement.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "stablecoin": {
+                "type": "string",
+                "description": "Stablecoin identifier (e.g., 'USDC', 'USDT', 'DAI')"
+              },
+              "chain": {
+                "type": "string",
+                "description": "Specific chain to analyze (e.g., 'Ethereum', 'Arbitrum')"
+              },
+              "start_timestamp": {
+                "type": "number",
+                "description": "Start timestamp (Unix seconds)"
+              },
+              "end_timestamp": {
+                "type": "number",
+                "description": "End timestamp (Unix seconds)"
+              }
+            },
+            "required": [
+              "stablecoin"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_compare_protocols_historical",
+          "description": "Compare historical TVL data across multiple protocols to identify relative performance and capital flow patterns.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 5,
+                "description": "Array of protocol slugs to compare (2-5 protocols)"
+              },
+              "start_timestamp": {
+                "type": "number",
+                "description": "Start timestamp (Unix seconds)"
+              },
+              "end_timestamp": {
+                "type": "number",
+                "description": "End timestamp (Unix seconds)"
+              },
+              "normalize_to_start": {
+                "type": "boolean",
+                "default": false,
+                "description": "Normalize all protocols to 100 at start date for relative comparison"
+              }
+            },
+            "required": [
+              "protocols"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_dex_volume",
+          "description": "Get comprehensive trading volume data for both spot and perpetuals trading. Automatically searches both DEX and derivatives APIs to provide complete volume analysis. Supports major protocols like Uniswap, Curve (spot) and GMX, Hyperliquid, dYdX (perpetuals). Returns separate data for spot and perpetuals when both are available.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Protocol name or slug (e.g., 'hyperliquid', 'gmx', 'uniswap', 'curve'). Will search both spot and perpetuals data automatically"
+              },
+              "include_historical": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include historical volume data for trend analysis"
+              },
+              "include_breakdown": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include chain-level volume breakdown for multi-chain protocols"
+              },
+              "days_limit": {
+                "type": "number",
+                "minimum": 7,
+                "maximum": 365,
+                "default": 90,
+                "description": "Number of days of historical data to include (7-365, default: 90)"
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_derivatives_overview",
+          "description": "Get comprehensive derivatives/perpetuals trading volume data for all protocols. Essential for perpetual DEX competitive analysis. Includes GMX, dYdX, Hyperliquid, Jupiter Perps, and other major perpetual trading platforms.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "Filter by specific chain (e.g., 'Arbitrum', 'Solana', 'Hyperliquid L1')"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "description": "Number of top protocols to return (1-100, default: 20)"
+              },
+              "include_breakdown": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include chain-level volume breakdown for multi-chain protocols"
+              },
+              "min_volume_24h": {
+                "type": "number",
+                "description": "Minimum 24h volume in USD to filter protocols"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_derivatives_volume",
+          "description": "Get detailed volume data for a specific derivatives/perpetuals protocol with historical analysis. Use for in-depth analysis of individual perpetual DEX protocols like GMX, dYdX, Hyperliquid, etc.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Derivatives protocol name or slug (e.g., 'hyperliquid', 'gmx', 'dydx', 'jupiter-perps')"
+              },
+              "include_historical": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include historical volume trends"
+              },
+              "days_limit": {
+                "type": "number",
+                "minimum": 7,
+                "maximum": 365,
+                "default": 90,
+                "description": "Number of days of historical data to include (7-365, default: 90)"
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_cache_status",
+          "description": "Get detailed cache status, statistics, and performance metrics for DeFiLlama API calls. Useful for monitoring cache efficiency and debugging performance issues.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "include_details": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include detailed cache statistics and performance metrics"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_refresh_cache",
+          "description": "Manually refresh the DeFiLlama protocol cache to get the latest protocol data. Useful when new protocols are added or when troubleshooting cache issues.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cache_type": {
+                "type": "string",
+                "enum": [
+                  "protocols",
+                  "all"
+                ],
+                "default": "protocols",
+                "description": "Type of cache to refresh: 'protocols' for protocol list only, 'all' to clear all caches"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_search_cached_protocols",
+          "description": "Search through cached protocol data for debugging and protocol discovery. This uses the local cache for fast searches and doesn't make API calls.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query to find protocols (name, symbol, category, etc.)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of results to return"
+              },
+              "show_details": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include detailed protocol information"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_analyze_cache_performance",
+          "description": "Analyze cache performance and provide optimization recommendations for DeFiLlama API usage patterns.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "show_recommendations": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include detailed optimization recommendations"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_price",
+          "description": "Get current cryptocurrency prices with automatic source selection and intelligent fallbacks. Use for price discovery when you don't know which data source to use. Supports symbols (BTC, ETH), names (Bitcoin, Ethereum), or contract addresses across CoinGecko, CoinMarketCap, and DeFiLlama.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "asset": {
+                "type": "string",
+                "description": "Cryptocurrency symbol (BTC, ETH), name (Bitcoin, Ethereum), or contract address. Automatically resolves across all supported data sources"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency (usd, eur, btc, etc.). USD recommended for cross-protocol comparisons"
+              },
+              "include_market_data": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include market cap, volume, and 24h change data for comprehensive analysis"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Specific data sources to use (coingecko, cmc, defillama). Automatic selection if not specified"
+              }
+            },
+            "required": [
+              "asset"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "compare_prices",
+          "description": "Compare current prices of multiple cryptocurrencies side by side with sorting and ranking. Use for market analysis, portfolio tracking, and relative performance assessment. Maximum 20 assets per request for optimal performance.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "assets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of cryptocurrency symbols, names, or addresses to compare (2-20 items). Mix different asset types for comprehensive analysis"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency for comparison (usd, eur, btc). USD recommended for relative valuation"
+              },
+              "sort_by": {
+                "type": "string",
+                "enum": [
+                  "price",
+                  "market_cap",
+                  "volume",
+                  "change_24h"
+                ],
+                "default": "market_cap",
+                "description": "Sort results by metric (market_cap for size ranking, change_24h for performance ranking)"
+              }
+            },
+            "required": [
+              "assets"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_historical_price",
+          "description": "Get historical price data with intelligent multi-source aggregation for comprehensive trend analysis. Use for volatility assessment, pattern recognition, and performance tracking over custom timeframes. Automatically combines data from multiple sources for optimal coverage.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "asset": {
+                "type": "string",
+                "description": "Cryptocurrency symbol (BTC, ETH), name (Bitcoin, Ethereum), or contract address. Automatically resolves across all data sources"
+              },
+              "start_date": {
+                "type": "string",
+                "description": "Start date in YYYY-MM-DD format (default: 30 days ago). Use recent dates for short-term analysis, older dates for long-term trends"
+              },
+              "end_date": {
+                "type": "string",
+                "description": "End date in YYYY-MM-DD format (default: today). Typically current date for up-to-date analysis"
+              },
+              "granularity": {
+                "type": "string",
+                "enum": [
+                  "hourly",
+                  "daily",
+                  "weekly",
+                  "monthly"
+                ],
+                "default": "daily",
+                "description": "Data granularity (hourly for intraday analysis, daily for standard trends, weekly/monthly for long-term patterns)"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency (usd, eur, btc). USD recommended for cross-asset comparisons"
+              },
+              "include_volume": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include trading volume for liquidity analysis and trend confirmation"
+              },
+              "include_market_cap": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include market cap data for valuation analysis and size comparison"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Specific data sources to use (coingecko, cmc, defillama). Automatic selection for best coverage if not specified"
+              }
+            },
+            "required": [
+              "asset"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_price_analytics",
+          "description": "Generate comprehensive price analytics including volatility metrics, trend analysis, support/resistance levels, and technical indicators. Use for investment analysis, risk assessment, and trading insights with professional-grade calculations.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "asset": {
+                "type": "string",
+                "description": "Cryptocurrency symbol, name, or contract address. Supports all major cryptocurrencies"
+              },
+              "period": {
+                "type": "string",
+                "enum": [
+                  "7d",
+                  "30d",
+                  "90d",
+                  "1y"
+                ],
+                "default": "30d",
+                "description": "Analysis period (7d for short-term momentum, 30d for monthly trends, 90d for quarterly analysis, 1y for long-term patterns)"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency for analysis (usd, eur, btc). USD recommended for standard financial metrics"
+              },
+              "include_technical_indicators": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include technical indicators (SMA, RSI, Bollinger Bands). Requires sufficient data points"
+              }
+            },
+            "required": [
+              "asset"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_assets",
+          "description": "Search for cryptocurrencies using smart matching. Supports partial names, symbols, categories, and more",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query (partial name, symbol, category, etc.)"
+              },
+              "category": {
+                "type": "string",
+                "description": "Filter by category (defi, layer-1, stablecoin, etc.)"
+              },
+              "asset_type": {
+                "type": "string",
+                "enum": [
+                  "cryptocurrency",
+                  "token",
+                  "defi_protocol"
+                ],
+                "description": "Filter by asset type"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of results (1-50)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_assets_by_category",
+          "description": "Get all cryptocurrencies in a specific category with current price data",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "description": "Category name (defi, layer-1, stablecoin, etc.)"
+              },
+              "include_prices": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include current price data"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Currency for price data"
+              }
+            },
+            "required": [
+              "category"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ping",
+          "description": "Simple ping tool for testing the server connection and getting server status",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 29,
+      "tool_names": [
+        "coingecko_get_coin_price_detailed",
+        "coingecko_get_market_chart_detailed",
+        "coingecko_get_trending_coins",
+        "get_top_protocols",
+        "defillama_get_protocols_paginated",
+        "defillama_get_protocols",
+        "defillama_search_protocols",
+        "get_historical_tvl",
+        "list_supported_protocols",
+        "resolve_protocol_name",
+        "defillama_get_chain_historical_tvl",
+        "defillama_get_protocol_fees_history",
+        "defillama_get_yields_historical",
+        "defillama_get_stablecoin_historical",
+        "defillama_compare_protocols_historical",
+        "get_dex_volume",
+        "get_derivatives_overview",
+        "get_derivatives_volume",
+        "defillama_get_cache_status",
+        "defillama_refresh_cache",
+        "defillama_search_cached_protocols",
+        "defillama_analyze_cache_performance",
+        "get_current_price",
+        "compare_prices",
+        "get_historical_price",
+        "get_price_analytics",
+        "search_assets",
+        "get_assets_by_category",
+        "ping"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 40,
+      "name": "Scry MCP Server",
+      "author": "@yongkangc/scry-mcp-raw-js",
+      "overview": "Provide real-time and comprehensive cryptocurrency and DeFi data from multiple trusted Sources.\n\nEnable AI assistants to access market data, trending coins, protocol analytics, and more with intelligent rate limiting and caching for optimal performance.\n\nIntegrate seamlessly with MCP clients to enhance your crypto-related applications and workflows.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@yongkangc/scry-mcp-raw-js",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "2,869",
+      "success_rate": "99.97%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@yongkangc_scry-mcp-raw-js.json",
+      "tools_count": 29,
+      "tools": [
+        {
+          "name": "coingecko_get_coin_price_detailed",
+          "description": "🔧 ADVANCED: Get detailed cryptocurrency prices directly from CoinGecko API with all CoinGecko-specific features. For general price data, use 'get_current_price' instead. Use this when you specifically need CoinGecko's unique data fields or API behavior.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "coin_id": {
+                "type": "string",
+                "description": "CoinGecko coin ID ('bitcoin', 'ethereum', 'cardano'). Use search_assets to find exact IDs for any cryptocurrency"
+              },
+              "vs_currencies": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ],
+                "default": "usd",
+                "description": "Target currencies for price data (usd, eur, btc, eth). Multiple currencies supported as array"
+              },
+              "include_market_cap": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include market cap data for valuation analysis"
+              },
+              "include_24hr_vol": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include 24h volume for liquidity assessment"
+              },
+              "include_24hr_change": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include 24h price change for momentum analysis"
+              },
+              "include_last_updated_at": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include data freshness timestamp"
+              }
+            },
+            "required": [
+              "coin_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "coingecko_get_market_chart_detailed",
+          "description": "🔧 ADVANCED: Get detailed historical data directly from CoinGecko API with all CoinGecko-specific features. For general historical data, use 'get_historical_price' instead. Use this when you specifically need CoinGecko's unique data structure or API behavior.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "coin_id": {
+                "type": "string",
+                "description": "CoinGecko coin ID ('bitcoin', 'ethereum', 'cardano'). Use search_assets to find exact IDs"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency for price data (usd, eur, btc). USD recommended for cross-asset comparisons"
+              },
+              "days": {
+                "type": [
+                  "number",
+                  "string"
+                ],
+                "default": 1,
+                "description": "Number of days of data (1, 7, 14, 30, 90, 180, 365, max). Use shorter periods for intraday analysis, longer for trend assessment"
+              },
+              "interval": {
+                "type": "string",
+                "description": "Data interval (daily, hourly). Hourly for detailed analysis, daily for long-term trends. Auto-selected if not specified"
+              }
+            },
+            "required": [
+              "coin_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "coingecko_get_trending_coins",
+          "description": "Discover trending cryptocurrencies based on real-time search activity from CoinGecko users. Use for identifying market attention, viral projects, and emerging opportunities. Updated every few hours with search volume rankings. This is unique CoinGecko data not available elsewhere.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "random_string": {
+                "type": "string",
+                "default": "dummy",
+                "description": "Dummy parameter for no-parameter tools"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_top_protocols",
+          "description": "Get top DeFi protocols ranked by TVL with filtering by category and blockchain. Recommended over get_protocols for manageable result sets that won't overwhelm responses. Returns formatted TVL values, 24h changes, and chain distribution data for quick protocol discovery.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "description": "Number of top protocols to return (1-100, default: 10). Use smaller values for quick insights, larger for comprehensive market overview"
+              },
+              "category": {
+                "type": "string",
+                "description": "Filter by category ('Dexes', 'Lending', 'Yield', 'CDP'). Use exact category names for precise filtering"
+              },
+              "chain": {
+                "type": "string",
+                "description": "Filter by blockchain ('Ethereum', 'BSC', 'Polygon', 'Arbitrum'). Use exact chain names for accurate results"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_protocols_paginated",
+          "description": "Browse DeFi protocols with pagination and sorting for comprehensive market analysis. Use for large datasets when get_top_protocols isn't sufficient. Returns structured data with pagination controls and flexible sorting options.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "minimum": 1,
+                "default": 1,
+                "description": "Page number (starting from 1). Use for iterating through large protocol datasets"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "description": "Number of protocols per page (1-100, default: 20). Larger values for fewer API calls, smaller for faster responses"
+              },
+              "sort_by": {
+                "type": "string",
+                "enum": [
+                  "tvl",
+                  "name",
+                  "change_1d",
+                  "change_7d"
+                ],
+                "default": "tvl",
+                "description": "Sort protocols by field (tvl for market cap ranking, change_1d/7d for performance analysis)"
+              },
+              "sort_order": {
+                "type": "string",
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "default": "desc",
+                "description": "Sort order (desc for top performers, asc for reverse ranking)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_protocols",
+          "description": "⚠️ DEPRECATED: Use defillama_get_top_protocols or defillama_get_protocols_paginated instead. Gets DeFi protocols (limited to prevent overwhelming responses).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of protocols to return (1-50, default: 10)"
+              },
+              "include_warning": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include deprecation warning in response"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_search_protocols",
+          "description": "Search for DeFi protocols by name, symbol, category, or description. Returns matching protocols sorted by TVL.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query (protocol name, symbol, category, or keyword)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of results to return (1-50, default: 10)"
+              },
+              "category_filter": {
+                "type": "string",
+                "description": "Additional filter by category"
+              },
+              "chain_filter": {
+                "type": "string",
+                "description": "Additional filter by blockchain"
+              },
+              "min_tvl": {
+                "type": "number",
+                "description": "Minimum TVL in USD (e.g., 1000000 for $1M+)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_historical_tvl",
+          "description": "Get comprehensive historical TVL data for any protocol with intelligent multi-source aggregation, analytics, and cross-validation. This unified tool abstracts away data sources and provides the best available data with quality scoring.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Protocol name or identifier (e.g., 'Uniswap', 'AAVE', 'Compound', 'uni', 'maker'). Automatically resolves across data sources."
+              },
+              "start_date": {
+                "type": "string",
+                "description": "Start date in YYYY-MM-DD format (e.g., '2024-01-01')"
+              },
+              "end_date": {
+                "type": "string",
+                "description": "End date in YYYY-MM-DD format (e.g., '2024-12-31')"
+              },
+              "granularity": {
+                "type": "string",
+                "enum": [
+                  "hourly",
+                  "daily",
+                  "weekly"
+                ],
+                "default": "daily",
+                "description": "Data granularity"
+              },
+              "max_data_points": {
+                "type": "number",
+                "minimum": 10,
+                "maximum": 2000,
+                "default": 500,
+                "description": "Maximum number of data points to return (10-2000, default: 500). Lower values = faster responses. Use 100-200 for quick analysis, 500+ for detailed analysis."
+              },
+              "days_limit": {
+                "type": "number",
+                "minimum": 7,
+                "maximum": 1095,
+                "description": "Maximum number of days to fetch (7-1095). Only applies if start_date/end_date not specified. Use 30-90 for recent analysis, 365+ for long-term trends."
+              },
+              "sample_strategy": {
+                "type": "string",
+                "enum": [
+                  "even",
+                  "recent",
+                  "weekly"
+                ],
+                "default": "even",
+                "description": "How to sample data when truncating: 'even' = evenly spaced, 'recent' = prioritize recent data, 'weekly' = weekly intervals"
+              },
+              "include_analytics": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include growth metrics, volatility analysis, and insights"
+              },
+              "include_predictions": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include trend predictions (experimental)"
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_supported_protocols",
+          "description": "List all pre-configured protocols supported by the unified historical TVL aggregation system, organized by category.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "description": "Filter by category (e.g., 'dex', 'lending', 'yield', 'liquid-staking')"
+              },
+              "chain": {
+                "type": "string",
+                "description": "Filter by blockchain (e.g., 'ethereum', 'polygon', 'arbitrum')"
+              },
+              "show_details": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include detailed protocol information"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "resolve_protocol_name",
+          "description": "Test protocol name resolution to see how a protocol query will be interpreted by the unified system. Useful for finding the correct protocol name before making data requests.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Protocol name, symbol, or alias to resolve (e.g., 'uni', 'maker', 'pancake')"
+              },
+              "show_alternatives": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show alternative matches if exact match not found"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_chain_historical_tvl",
+          "description": "Get historical TVL data for blockchain ecosystems to track capital flows and identify mercenary capital patterns across chains.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "Chain name (e.g., 'Ethereum', 'Arbitrum', 'Optimism', 'Polygon')"
+              },
+              "start_timestamp": {
+                "type": "number",
+                "description": "Start timestamp (Unix seconds)"
+              },
+              "end_timestamp": {
+                "type": "number",
+                "description": "End timestamp (Unix seconds)"
+              }
+            },
+            "required": [
+              "chain"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_protocol_fees_history",
+          "description": "Get historical fees and revenue data to analyze protocol sustainability and real value generation beyond TVL incentives.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Protocol slug for fees data"
+              },
+              "data_type": {
+                "type": "string",
+                "enum": [
+                  "dailyFees",
+                  "dailyRevenue"
+                ],
+                "default": "dailyFees",
+                "description": "Data type to retrieve: 'dailyFees' for fees paid by users, 'dailyRevenue' for protocol revenue"
+              },
+              "start_timestamp": {
+                "type": "number",
+                "description": "Start timestamp (Unix seconds)"
+              },
+              "end_timestamp": {
+                "type": "number",
+                "description": "End timestamp (Unix seconds)"
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_yields_historical",
+          "description": "Get historical yield/APY data for liquidity pools to analyze incentive effectiveness and reward sustainability patterns.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pool_id": {
+                "type": "string",
+                "description": "Pool ID from yields API (use yields search first to find pool IDs)"
+              },
+              "days": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 365,
+                "default": 30,
+                "description": "Number of days of historical data"
+              }
+            },
+            "required": [
+              "pool_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_stablecoin_historical",
+          "description": "Get historical stablecoin circulation data to track capital flows and identify mercenary capital patterns through stablecoin movement.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "stablecoin": {
+                "type": "string",
+                "description": "Stablecoin identifier (e.g., 'USDC', 'USDT', 'DAI')"
+              },
+              "chain": {
+                "type": "string",
+                "description": "Specific chain to analyze (e.g., 'Ethereum', 'Arbitrum')"
+              },
+              "start_timestamp": {
+                "type": "number",
+                "description": "Start timestamp (Unix seconds)"
+              },
+              "end_timestamp": {
+                "type": "number",
+                "description": "End timestamp (Unix seconds)"
+              }
+            },
+            "required": [
+              "stablecoin"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_compare_protocols_historical",
+          "description": "Compare historical TVL data across multiple protocols to identify relative performance and capital flow patterns.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 5,
+                "description": "Array of protocol slugs to compare (2-5 protocols)"
+              },
+              "start_timestamp": {
+                "type": "number",
+                "description": "Start timestamp (Unix seconds)"
+              },
+              "end_timestamp": {
+                "type": "number",
+                "description": "End timestamp (Unix seconds)"
+              },
+              "normalize_to_start": {
+                "type": "boolean",
+                "default": false,
+                "description": "Normalize all protocols to 100 at start date for relative comparison"
+              }
+            },
+            "required": [
+              "protocols"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_dex_volume",
+          "description": "Get comprehensive trading volume data for both spot and perpetuals trading. Automatically searches both DEX and derivatives APIs to provide complete volume analysis. Supports major protocols like Uniswap, Curve (spot) and GMX, Hyperliquid, dYdX (perpetuals). Returns separate data for spot and perpetuals when both are available.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Protocol name or slug (e.g., 'hyperliquid', 'gmx', 'uniswap', 'curve'). Will search both spot and perpetuals data automatically"
+              },
+              "include_historical": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include historical volume data for trend analysis"
+              },
+              "include_breakdown": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include chain-level volume breakdown for multi-chain protocols"
+              },
+              "days_limit": {
+                "type": "number",
+                "minimum": 7,
+                "maximum": 365,
+                "default": 90,
+                "description": "Number of days of historical data to include (7-365, default: 90)"
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_derivatives_overview",
+          "description": "Get comprehensive derivatives/perpetuals trading volume data for all protocols. Essential for perpetual DEX competitive analysis. Includes GMX, dYdX, Hyperliquid, Jupiter Perps, and other major perpetual trading platforms.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chain": {
+                "type": "string",
+                "description": "Filter by specific chain (e.g., 'Arbitrum', 'Solana', 'Hyperliquid L1')"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "description": "Number of top protocols to return (1-100, default: 20)"
+              },
+              "include_breakdown": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include chain-level volume breakdown for multi-chain protocols"
+              },
+              "min_volume_24h": {
+                "type": "number",
+                "description": "Minimum 24h volume in USD to filter protocols"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_derivatives_volume",
+          "description": "Get detailed volume data for a specific derivatives/perpetuals protocol with historical analysis. Use for in-depth analysis of individual perpetual DEX protocols like GMX, dYdX, Hyperliquid, etc.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "Derivatives protocol name or slug (e.g., 'hyperliquid', 'gmx', 'dydx', 'jupiter-perps')"
+              },
+              "include_historical": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include historical volume trends"
+              },
+              "days_limit": {
+                "type": "number",
+                "minimum": 7,
+                "maximum": 365,
+                "default": 90,
+                "description": "Number of days of historical data to include (7-365, default: 90)"
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_get_cache_status",
+          "description": "Get detailed cache status, statistics, and performance metrics for DeFiLlama API calls. Useful for monitoring cache efficiency and debugging performance issues.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "include_details": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include detailed cache statistics and performance metrics"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_refresh_cache",
+          "description": "Manually refresh the DeFiLlama protocol cache to get the latest protocol data. Useful when new protocols are added or when troubleshooting cache issues.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cache_type": {
+                "type": "string",
+                "enum": [
+                  "protocols",
+                  "all"
+                ],
+                "default": "protocols",
+                "description": "Type of cache to refresh: 'protocols' for protocol list only, 'all' to clear all caches"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_search_cached_protocols",
+          "description": "Search through cached protocol data for debugging and protocol discovery. This uses the local cache for fast searches and doesn't make API calls.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query to find protocols (name, symbol, category, etc.)"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "default": 10,
+                "description": "Maximum number of results to return"
+              },
+              "show_details": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include detailed protocol information"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "defillama_analyze_cache_performance",
+          "description": "Analyze cache performance and provide optimization recommendations for DeFiLlama API usage patterns.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "show_recommendations": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include detailed optimization recommendations"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_price",
+          "description": "Get current cryptocurrency prices with automatic source selection and intelligent fallbacks. Use for price discovery when you don't know which data source to use. Supports symbols (BTC, ETH), names (Bitcoin, Ethereum), or contract addresses across CoinGecko, CoinMarketCap, and DeFiLlama.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "asset": {
+                "type": "string",
+                "description": "Cryptocurrency symbol (BTC, ETH), name (Bitcoin, Ethereum), or contract address. Automatically resolves across all supported data sources"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency (usd, eur, btc, etc.). USD recommended for cross-protocol comparisons"
+              },
+              "include_market_data": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include market cap, volume, and 24h change data for comprehensive analysis"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Specific data sources to use (coingecko, cmc, defillama). Automatic selection if not specified"
+              }
+            },
+            "required": [
+              "asset"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "compare_prices",
+          "description": "Compare current prices of multiple cryptocurrencies side by side with sorting and ranking. Use for market analysis, portfolio tracking, and relative performance assessment. Maximum 20 assets per request for optimal performance.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "assets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of cryptocurrency symbols, names, or addresses to compare (2-20 items). Mix different asset types for comprehensive analysis"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency for comparison (usd, eur, btc). USD recommended for relative valuation"
+              },
+              "sort_by": {
+                "type": "string",
+                "enum": [
+                  "price",
+                  "market_cap",
+                  "volume",
+                  "change_24h"
+                ],
+                "default": "market_cap",
+                "description": "Sort results by metric (market_cap for size ranking, change_24h for performance ranking)"
+              }
+            },
+            "required": [
+              "assets"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_historical_price",
+          "description": "Get historical price data with intelligent multi-source aggregation for comprehensive trend analysis. Use for volatility assessment, pattern recognition, and performance tracking over custom timeframes. Automatically combines data from multiple sources for optimal coverage.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "asset": {
+                "type": "string",
+                "description": "Cryptocurrency symbol (BTC, ETH), name (Bitcoin, Ethereum), or contract address. Automatically resolves across all data sources"
+              },
+              "start_date": {
+                "type": "string",
+                "description": "Start date in YYYY-MM-DD format (default: 30 days ago). Use recent dates for short-term analysis, older dates for long-term trends"
+              },
+              "end_date": {
+                "type": "string",
+                "description": "End date in YYYY-MM-DD format (default: today). Typically current date for up-to-date analysis"
+              },
+              "granularity": {
+                "type": "string",
+                "enum": [
+                  "hourly",
+                  "daily",
+                  "weekly",
+                  "monthly"
+                ],
+                "default": "daily",
+                "description": "Data granularity (hourly for intraday analysis, daily for standard trends, weekly/monthly for long-term patterns)"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency (usd, eur, btc). USD recommended for cross-asset comparisons"
+              },
+              "include_volume": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include trading volume for liquidity analysis and trend confirmation"
+              },
+              "include_market_cap": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include market cap data for valuation analysis and size comparison"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Specific data sources to use (coingecko, cmc, defillama). Automatic selection for best coverage if not specified"
+              }
+            },
+            "required": [
+              "asset"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_price_analytics",
+          "description": "Generate comprehensive price analytics including volatility metrics, trend analysis, support/resistance levels, and technical indicators. Use for investment analysis, risk assessment, and trading insights with professional-grade calculations.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "asset": {
+                "type": "string",
+                "description": "Cryptocurrency symbol, name, or contract address. Supports all major cryptocurrencies"
+              },
+              "period": {
+                "type": "string",
+                "enum": [
+                  "7d",
+                  "30d",
+                  "90d",
+                  "1y"
+                ],
+                "default": "30d",
+                "description": "Analysis period (7d for short-term momentum, 30d for monthly trends, 90d for quarterly analysis, 1y for long-term patterns)"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Target currency for analysis (usd, eur, btc). USD recommended for standard financial metrics"
+              },
+              "include_technical_indicators": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include technical indicators (SMA, RSI, Bollinger Bands). Requires sufficient data points"
+              }
+            },
+            "required": [
+              "asset"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_assets",
+          "description": "Search for cryptocurrencies using smart matching. Supports partial names, symbols, categories, and more",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query (partial name, symbol, category, etc.)"
+              },
+              "category": {
+                "type": "string",
+                "description": "Filter by category (defi, layer-1, stablecoin, etc.)"
+              },
+              "asset_type": {
+                "type": "string",
+                "enum": [
+                  "cryptocurrency",
+                  "token",
+                  "defi_protocol"
+                ],
+                "description": "Filter by asset type"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of results (1-50)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_assets_by_category",
+          "description": "Get all cryptocurrencies in a specific category with current price data",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "description": "Category name (defi, layer-1, stablecoin, etc.)"
+              },
+              "include_prices": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include current price data"
+              },
+              "vs_currency": {
+                "type": "string",
+                "default": "usd",
+                "description": "Currency for price data"
+              }
+            },
+            "required": [
+              "category"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ping",
+          "description": "Simple ping tool for testing the server connection and getting server status",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@yongkangc/scry-mcp-raw-js/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@yongkangc/scry-mcp-raw-js/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0041.@yongkangc_scry-mcp-raw-js_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 40
+  }
+}

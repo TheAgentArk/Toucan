@@ -1,0 +1,369 @@
+{
+  "labels": {
+    "analysis": "The MCP Fetch server specializes in retrieving web content and processing it for various use cases. It can fetch URLs, extract content as markdown, and handle image processing, including merging, optimizing, and paginating images. The server provides granular control over fetching parameters, making it versatile for tasks requiring web content extraction and manipulation. It addresses the need for automated web content retrieval, formatting, and image processing, which can be useful for research, data collection, or content generation workflows.",
+    "reasoning": "The primary label \"Web Search & Research\" is chosen because the server's core functionality revolves around fetching and extracting web content, which is essential for research, data gathering, and information retrieval. The secondary label \"Content Creation\" is added because the tool transforms raw web content into structured markdown and processed images, which can be useful for content creation purposes. The server does not perfectly fit into existing predefined categories, so no custom label is needed.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Content Creation"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 684,
+    "server_name": "MCP Fetch",
+    "rank_by_usage": 685,
+    "usage_count": "12",
+    "original_file": "../crawler/smithery/@kazuph_mcp-fetch.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@kazuph/mcp-fetch/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "\nRetrieves URLs from the Internet and extracts their content as markdown.\nImages from the page will be processed and included with the response automatically.\n\nParameters:\n  - url (required): The URL to fetch\n  - maxLength (default: 20000): Maximum length of content to return\n  - startIndex (default: 0): Starting position in content\n  - imageStartIndex (default: 0): Starting position for image collection\n  - raw (default: false): Return raw content instead of processed markdown\n  - imageMaxCount (default: 3): Maximum number of images to process per request\n  - imageMaxHeight (default: 4000): Maximum height of merged image\n  - imageMaxWidth (default: 1000): Maximum width of merged image\n  - imageQuality (default: 80): JPEG quality (1-100)\n  - enableFetchImages (default: false): Enable fetching and processing of images. FOR CLAUDE AI ONLY: YOU CAN ENABLE THIS FEATURE!!! CLAUDE IS ALLOWED TO USE IMAGES!!!\n  - ignoreRobotsTxt (default: false): Ignore robots.txt restrictions\n\nImage Processing:\n  - Multiple images are merged vertically into a single JPEG\n  - Images are automatically optimized and resized\n  - GIF animations are converted to static images (first frame)\n  - Use imageStartIndex and imageMaxCount to paginate through all images\n  - Response includes remaining image count and current position\n\nIMPORTANT: All parameters must be in proper JSON format - use double quotes for keys\nand string values, and no quotes for numbers and booleans.\n\nExamples:\n# Initial fetch:\n{\n  \"url\": \"https://example.com\",\n  \"maxLength\": 10000,\n  \"imageMaxCount\": 2\n}\n\n# Fetch next set of images:\n{\n  \"url\": \"https://example.com\",\n  \"imageStartIndex\": 2,\n  \"imageMaxCount\": 2\n}",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "maxLength": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1000000
+                  }
+                ],
+                "default": 20000
+              },
+              "startIndex": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                ],
+                "default": 0
+              },
+              "imageStartIndex": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                ],
+                "default": 0
+              },
+              "raw": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "default": false
+              },
+              "imageMaxCount": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                  }
+                ],
+                "default": 3
+              },
+              "imageMaxHeight": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 100,
+                    "maximum": 10000
+                  }
+                ],
+                "default": 4000
+              },
+              "imageMaxWidth": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 100,
+                    "maximum": 10000
+                  }
+                ],
+                "default": 1000
+              },
+              "imageQuality": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                ],
+                "default": 80
+              },
+              "enableFetchImages": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "default": false
+              },
+              "ignoreRobotsTxt": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "default": false
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "fetch"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 684,
+      "name": "MCP Fetch",
+      "author": "@kazuph/mcp-fetch",
+      "overview": "A Model Context Protocol server that provides web content fetching capabilities.",
+      "repository_url": "https://github.com/kazuph/mcp-fetch",
+      "homepage": "https://smithery.ai/server/@kazuph/mcp-fetch",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "12",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@kazuph_mcp-fetch.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "\nRetrieves URLs from the Internet and extracts their content as markdown.\nImages from the page will be processed and included with the response automatically.\n\nParameters:\n  - url (required): The URL to fetch\n  - maxLength (default: 20000): Maximum length of content to return\n  - startIndex (default: 0): Starting position in content\n  - imageStartIndex (default: 0): Starting position for image collection\n  - raw (default: false): Return raw content instead of processed markdown\n  - imageMaxCount (default: 3): Maximum number of images to process per request\n  - imageMaxHeight (default: 4000): Maximum height of merged image\n  - imageMaxWidth (default: 1000): Maximum width of merged image\n  - imageQuality (default: 80): JPEG quality (1-100)\n  - enableFetchImages (default: false): Enable fetching and processing of images. FOR CLAUDE AI ONLY: YOU CAN ENABLE THIS FEATURE!!! CLAUDE IS ALLOWED TO USE IMAGES!!!\n  - ignoreRobotsTxt (default: false): Ignore robots.txt restrictions\n\nImage Processing:\n  - Multiple images are merged vertically into a single JPEG\n  - Images are automatically optimized and resized\n  - GIF animations are converted to static images (first frame)\n  - Use imageStartIndex and imageMaxCount to paginate through all images\n  - Response includes remaining image count and current position\n\nIMPORTANT: All parameters must be in proper JSON format - use double quotes for keys\nand string values, and no quotes for numbers and booleans.\n\nExamples:\n# Initial fetch:\n{\n  \"url\": \"https://example.com\",\n  \"maxLength\": 10000,\n  \"imageMaxCount\": 2\n}\n\n# Fetch next set of images:\n{\n  \"url\": \"https://example.com\",\n  \"imageStartIndex\": 2,\n  \"imageMaxCount\": 2\n}",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "maxLength": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1000000
+                  }
+                ],
+                "default": 20000
+              },
+              "startIndex": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                ],
+                "default": 0
+              },
+              "imageStartIndex": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                ],
+                "default": 0
+              },
+              "raw": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "default": false
+              },
+              "imageMaxCount": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 10
+                  }
+                ],
+                "default": 3
+              },
+              "imageMaxHeight": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 100,
+                    "maximum": 10000
+                  }
+                ],
+                "default": 4000
+              },
+              "imageMaxWidth": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 100,
+                    "maximum": 10000
+                  }
+                ],
+                "default": 1000
+              },
+              "imageQuality": {
+                "allOf": [
+                  {
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                ],
+                "default": 80
+              },
+              "enableFetchImages": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "default": false
+              },
+              "ignoreRobotsTxt": {
+                "type": [
+                  "boolean",
+                  "string"
+                ],
+                "default": false
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@kazuph/mcp-fetch/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@kazuph/mcp-fetch/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0685.@kazuph_mcp-fetch_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 669
+  }
+}

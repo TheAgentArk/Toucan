@@ -1,0 +1,180 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is focused on integrating with Obsidian, a popular note-taking and knowledge management application. The core functionality revolves around interacting with notes within an Obsidian vault, enabling the creation, modification, deletion, searching, and organization of note files. The available tools allow for precise manipulation of content within notes, such as inserting content relative to headings or frontmatter, appending content, and listing or searching files. This server enhances productivity by automating and streamlining the management of notes in Obsidian.",
+    "reasoning": "The primary label **File Management** was chosen because the server's main functionality is centered around managing files (notes) within an Obsidian vault, including operations like reading, writing, searching, and deleting files. The **Memory Management** secondary label is appropriate because the server interacts with a knowledge base (Obsidian vault) and aids in organizing information. The **Daily Productivity** secondary label was selected because the server's tools enhance personal organization and productivity by automating note-taking tasks. No custom label is needed as the predefined labels adequately cover the server's functionality.",
+    "primary_label": "File Management",
+    "secondary_labels": [
+      "Memory Management",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 171,
+    "server_name": "Obsidian Integration Server",
+    "rank_by_usage": 172,
+    "usage_count": "282",
+    "original_file": "../crawler/smithery/@gregkonush_mcp-obsidian.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@gregkonush/mcp-obsidian/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 171,
+      "name": "Obsidian Integration Server",
+      "author": "@gregkonush/mcp-obsidian",
+      "overview": "Enable your AI assistants to seamlessly interact with your notes. Read, create, and manipulate files in your Obsidian vault effortlessly, enhancing your productivity and organization.",
+      "repository_url": "https://github.com/gregkonush/mcp-obsidian",
+      "homepage": "https://smithery.ai/server/@gregkonush/mcp-obsidian",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "282",
+      "success_rate": "99.08%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@gregkonush_mcp-obsidian.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "get_active_file",
+          "description": "Deploy Server Obsidian Integration Server Claim Server @gregkonush/mcp-obsidian Try in Playground get_active_file",
+          "parameters": [
+            {
+              "name": "get_active_file",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "delete_active_file",
+          "description": "Deletes the currently active file in Obsidian.",
+          "parameters": [
+            {
+              "name": "delete_active_file",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "insert_active_file",
+          "description": "Allows you to modify the content relative to a heading, block reference, or frontmatter field in your document.",
+          "parameters": [
+            {
+              "name": "More",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "random",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "append_active_file",
+          "description": "Appends content to the end of the currently-open note.",
+          "parameters": [
+            {
+              "name": "append_active_file",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "content",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "open_file",
+          "description": "Opens a file in Obsidian.",
+          "parameters": [
+            {
+              "name": "open_file",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "filename",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "insert_file",
+          "description": "Insert content into an existing note relative to a heading within your note. Allows you to modify the content relative to a heading, block reference, or frontmatter field in your document.",
+          "parameters": []
+        },
+        {
+          "name": "search_simple",
+          "description": "Search for documents matching a specified text query",
+          "parameters": [
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "contextLength",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_files",
+          "description": "Lists files in a directory",
+          "parameters": [
+            {
+              "name": "list_files",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "directory",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@gregkonush/mcp-obsidian/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "obsidianToken",
+          "required": true,
+          "description": "The authentication token for accessing Obsidian."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@gregkonush/mcp-obsidian/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0172.@gregkonush_mcp-obsidian_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 168
+  }
+}

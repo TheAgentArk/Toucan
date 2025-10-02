@@ -1,0 +1,183 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide structured access to project information, including file content, directory structure, and metadata. It enhances project context accessibility by offering tools to summarize projects, retrieve file contents, and visualize directory trees. The server facilitates seamless integration of project data, improving development workflows by standardizing how projects are analyzed and accessed.",
+    "reasoning": "The primary functionality of organizing, accessing, and managing project data aligns well with the \"File Management\" category, as it deals with file operations and document handling. The tools also support project overview and structure analysis, which can be related to \"Development Tools\" due to their role in aiding development workflows. There is no evident need for a custom label, as the predefined categories sufficiently describe the server's core purpose.",
+    "primary_label": "File Management",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 845,
+    "server_name": "Project Ingest MCP Server",
+    "rank_by_usage": 846,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@linyimin0812_project-ingest-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@linyimin0812/project-ingest-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "project_summary",
+          "description": "\n    Get a summary of a project that includes\n        - project name,\n        - Files in project\n        - Number of tokens in repo\n        - Summary from the README.md\n\n    Args:\n        project: The path of the project\n    ",
+          "input_schema": {
+            "properties": {
+              "project": {
+                "title": "Project",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "project_tree",
+          "description": "\n    Get the tree structure of a project\n\n    Args:\n        project: The path of the project\n    ",
+          "input_schema": {
+            "properties": {
+              "project": {
+                "title": "Project",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "file_content",
+          "description": "\n    Get the content of specific files from a project\n\n    Args:\n        project: The path of project\n        file_path: path to file within the project\n    ",
+          "input_schema": {
+            "properties": {
+              "project": {
+                "title": "Project",
+                "type": "string"
+              },
+              "file_path": {
+                "default": null,
+                "title": "File Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "project_summary",
+        "project_tree",
+        "file_content"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 845,
+      "name": "Project Ingest MCP Server",
+      "author": "@linyimin0812/project-ingest-mcp",
+      "overview": "Provide project information including file content, directory structure, and other metadata to enhance project context accessibility. Enable seamless integration of project data for improved development workflows. Facilitate efficient retrieval and management of project resources through a standardized MCP interface.",
+      "repository_url": "https://github.com/linyimin0812/project-ingest-mcp",
+      "homepage": "https://smithery.ai/server/@linyimin0812/project-ingest-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@linyimin0812_project-ingest-mcp.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "project_summary",
+          "description": "\n    Get a summary of a project that includes\n        - project name,\n        - Files in project\n        - Number of tokens in repo\n        - Summary from the README.md\n\n    Args:\n        project: The path of the project\n    ",
+          "input_schema": {
+            "properties": {
+              "project": {
+                "title": "Project",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "project_tree",
+          "description": "\n    Get the tree structure of a project\n\n    Args:\n        project: The path of the project\n    ",
+          "input_schema": {
+            "properties": {
+              "project": {
+                "title": "Project",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "file_content",
+          "description": "\n    Get the content of specific files from a project\n\n    Args:\n        project: The path of project\n        file_path: path to file within the project\n    ",
+          "input_schema": {
+            "properties": {
+              "project": {
+                "title": "Project",
+                "type": "string"
+              },
+              "file_path": {
+                "default": null,
+                "title": "File Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@linyimin0812/project-ingest-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@linyimin0812/project-ingest-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0846.@linyimin0812_project-ingest-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 827
+  }
+}

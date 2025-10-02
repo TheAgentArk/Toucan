@@ -1,0 +1,422 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is focused on hotel booking operations, enabling users to search for hotels with specific amenities, view detailed information, and complete bookings with payment functionality. The core functionality revolves around location normalization, comprehensive hotel searches, detailed information retrieval, and secure payment processing. User workflows involve multiple steps including facility filtering, hotel searches, detailed inspection, and booking finalization.",
+    "reasoning": "The primary label selected is \"E-commerce\" as the server's main functionality is centered around purchasing hotel bookings. The secondary label \"Travel & Maps\" is added due to the significant focus on location-based searches and travel-related services. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "E-commerce",
+    "secondary_labels": [
+      "Travel & Maps"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": true
+  },
+  "metadata": {
+    "server_id": 55,
+    "server_name": "Hotel Booking Server",
+    "rank_by_usage": 56,
+    "usage_count": "1,712",
+    "original_file": "../crawler/smithery/@jinkoso_jinko-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jinkoso/jinko-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "find-place",
+          "description": "Use this tool to convert a user's location query into standardized place information with coordinates.\nThis is essential when you need latitude and longitude for hotel searches but only have a text description.\nThe tool accepts city names, hotel names, landmarks, or other location identifiers and returns a list of \nmatching places with their details and precise coordinates.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "User's input for place search"
+              },
+              "language": {
+                "type": "string",
+                "default": "en",
+                "description": "Language for the place search"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-hotels",
+          "description": "Search for available hotels based on location coordinates and booking requirements.\nThis tool returns a paginated list of hotels with their key details including name, address, \nstar rating, price range, and available room types. Each hotel includes summary information \nabout amenities and available rates.\n\nThe results are limited to 50 hotels per request. If more results are available, you can \nretrieve them using the load-more-hotels tool with the returned session_id.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "description": "Latitude of the location"
+              },
+              "longitude": {
+                "type": "number",
+                "description": "Longitude of the location"
+              },
+              "name": {
+                "type": "string",
+                "description": "Optional location name or hotel name."
+              },
+              "check_in_date": {
+                "type": "string",
+                "default": "2025-06-25",
+                "description": "Check-in date (YYYY-MM-DD)"
+              },
+              "check_out_date": {
+                "type": "string",
+                "default": "2025-06-26",
+                "description": "Check-out date (YYYY-MM-DD)"
+              },
+              "adults": {
+                "type": "number",
+                "minimum": 1,
+                "default": 2,
+                "description": "Number of adults"
+              },
+              "children": {
+                "type": "number",
+                "minimum": 0,
+                "default": 0,
+                "description": "Number of children"
+              },
+              "search_context": {
+                "type": "string",
+                "description": "A summary of the search context which will be used by the server to better make the recommendation"
+              },
+              "facilities": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "description": "Facility IDs to filter hotels by, the IDs can be inferred with facilities resource."
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "load-more-hotels",
+          "description": "Retrieve additional hotel results from a previous search using the session_id.\nThis tool continues pagination from a previous search-hotels request, returning the next \nbatch of hotels with the same format and details as the original search.\n\nThe response format matches search-hotels and includes information about whether \nfurther pagination is possible.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "session_id": {
+                "type": "string",
+                "description": "Session ID from a previous search-hotels or load-more-hotels response"
+              }
+            },
+            "required": [
+              "session_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-hotel-details",
+          "description": "Retrieve comprehensive details about a specific hotel identified by its ID.\nThis tool provides more extensive information than what's available in search results,\nincluding complete descriptions, all available room types, detailed rate information,\ncancellation policies, and full amenity lists.\n\nUse this tool when a user expresses interest in a specific hotel from search results\nto provide them with all available options and complete booking information.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "session_id": {
+                "type": "string",
+                "description": "The session ID from a previous search"
+              },
+              "hotel_id": {
+                "type": "string",
+                "description": "ID of the hotel to get details for"
+              }
+            },
+            "required": [
+              "session_id",
+              "hotel_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "book-hotel",
+          "description": "Initiate a hotel booking process for a specific hotel and rate option.\n\nIMPORTANT WORKFLOW:\n1. Before calling this tool, you MUST present a specific hotel's all available rate options to the user using get-hotel-details\n2. The user MUST select a specific rate option they want to book\n3. This tool will generate a secure payment link that the user needs to open in their browser to complete the booking\n\nThe response includes a payment_link that must be prominently displayed to the user, along with\nbooking details such as hotel name, check-in/out dates, and total price.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "session_id": {
+                "type": "string",
+                "description": "The session ID from a previous search"
+              },
+              "hotel_id": {
+                "type": "string",
+                "description": "ID of the hotel to book"
+              },
+              "rate_id": {
+                "type": "string",
+                "description": "ID of the specific rate option the user has selected"
+              }
+            },
+            "required": [
+              "session_id",
+              "hotel_id",
+              "rate_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-facilities",
+          "description": "IMPORTANT: ALWAYS USE THIS TOOL FIRST when a user mentions ANY specific hotel amenities or requirements.\n\nThis tool must be called BEFORE search-hotels whenever the user mentions requirements like:\n- Pet-friendly or traveling with pets/dogs/cats\n- WiFi or internet access\n- Swimming pools\n- Parking (free or paid)\n- Air conditioning or heating\n- Fitness center or gym\n- Restaurant or room service\n- Family rooms\n- Non-smoking rooms\n- Any other specific hotel features\n\nThe tool returns facility IDs that MUST be used with the search-hotels tool's facilities parameter\nto properly filter hotels. Without using this tool first, searches will not correctly filter for \nuser-requested amenities.\n\nExample workflow:\n1. User asks for \"pet-friendly hotels in Paris\"\n2. Call get-facilities to find the facility_id for \"Pets allowed\"\n3. Use that facility_id in the search-hotels facilities parameter\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for facility names (en, es, it, he, ar, de)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "find-place",
+        "search-hotels",
+        "load-more-hotels",
+        "get-hotel-details",
+        "book-hotel",
+        "get-facilities"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 55,
+      "name": "Hotel Booking Server",
+      "author": "@jinkoso/jinko-mcp",
+      "overview": "Enable your agents to search and book from over 2 million hotels with live pricing and booking capabilities. Create booking sessions with location normalization, retrieve detailed hotel information, and generate payment links for seamless hotel reservations. Increase revenue by integrating comprehensive hotel shopping and booking features directly into your applications.",
+      "repository_url": "https://github.com/jinkoso/jinko-mcp",
+      "homepage": "https://smithery.ai/server/@jinkoso/jinko-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1,712",
+      "success_rate": "98.73%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jinkoso_jinko-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "find-place",
+          "description": "Use this tool to convert a user's location query into standardized place information with coordinates.\nThis is essential when you need latitude and longitude for hotel searches but only have a text description.\nThe tool accepts city names, hotel names, landmarks, or other location identifiers and returns a list of \nmatching places with their details and precise coordinates.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "User's input for place search"
+              },
+              "language": {
+                "type": "string",
+                "default": "en",
+                "description": "Language for the place search"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-hotels",
+          "description": "Search for available hotels based on location coordinates and booking requirements.\nThis tool returns a paginated list of hotels with their key details including name, address, \nstar rating, price range, and available room types. Each hotel includes summary information \nabout amenities and available rates.\n\nThe results are limited to 50 hotels per request. If more results are available, you can \nretrieve them using the load-more-hotels tool with the returned session_id.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "description": "Latitude of the location"
+              },
+              "longitude": {
+                "type": "number",
+                "description": "Longitude of the location"
+              },
+              "name": {
+                "type": "string",
+                "description": "Optional location name or hotel name."
+              },
+              "check_in_date": {
+                "type": "string",
+                "default": "2025-06-25",
+                "description": "Check-in date (YYYY-MM-DD)"
+              },
+              "check_out_date": {
+                "type": "string",
+                "default": "2025-06-26",
+                "description": "Check-out date (YYYY-MM-DD)"
+              },
+              "adults": {
+                "type": "number",
+                "minimum": 1,
+                "default": 2,
+                "description": "Number of adults"
+              },
+              "children": {
+                "type": "number",
+                "minimum": 0,
+                "default": 0,
+                "description": "Number of children"
+              },
+              "search_context": {
+                "type": "string",
+                "description": "A summary of the search context which will be used by the server to better make the recommendation"
+              },
+              "facilities": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "description": "Facility IDs to filter hotels by, the IDs can be inferred with facilities resource."
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "load-more-hotels",
+          "description": "Retrieve additional hotel results from a previous search using the session_id.\nThis tool continues pagination from a previous search-hotels request, returning the next \nbatch of hotels with the same format and details as the original search.\n\nThe response format matches search-hotels and includes information about whether \nfurther pagination is possible.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "session_id": {
+                "type": "string",
+                "description": "Session ID from a previous search-hotels or load-more-hotels response"
+              }
+            },
+            "required": [
+              "session_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-hotel-details",
+          "description": "Retrieve comprehensive details about a specific hotel identified by its ID.\nThis tool provides more extensive information than what's available in search results,\nincluding complete descriptions, all available room types, detailed rate information,\ncancellation policies, and full amenity lists.\n\nUse this tool when a user expresses interest in a specific hotel from search results\nto provide them with all available options and complete booking information.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "session_id": {
+                "type": "string",
+                "description": "The session ID from a previous search"
+              },
+              "hotel_id": {
+                "type": "string",
+                "description": "ID of the hotel to get details for"
+              }
+            },
+            "required": [
+              "session_id",
+              "hotel_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "book-hotel",
+          "description": "Initiate a hotel booking process for a specific hotel and rate option.\n\nIMPORTANT WORKFLOW:\n1. Before calling this tool, you MUST present a specific hotel's all available rate options to the user using get-hotel-details\n2. The user MUST select a specific rate option they want to book\n3. This tool will generate a secure payment link that the user needs to open in their browser to complete the booking\n\nThe response includes a payment_link that must be prominently displayed to the user, along with\nbooking details such as hotel name, check-in/out dates, and total price.\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "session_id": {
+                "type": "string",
+                "description": "The session ID from a previous search"
+              },
+              "hotel_id": {
+                "type": "string",
+                "description": "ID of the hotel to book"
+              },
+              "rate_id": {
+                "type": "string",
+                "description": "ID of the specific rate option the user has selected"
+              }
+            },
+            "required": [
+              "session_id",
+              "hotel_id",
+              "rate_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-facilities",
+          "description": "IMPORTANT: ALWAYS USE THIS TOOL FIRST when a user mentions ANY specific hotel amenities or requirements.\n\nThis tool must be called BEFORE search-hotels whenever the user mentions requirements like:\n- Pet-friendly or traveling with pets/dogs/cats\n- WiFi or internet access\n- Swimming pools\n- Parking (free or paid)\n- Air conditioning or heating\n- Fitness center or gym\n- Restaurant or room service\n- Family rooms\n- Non-smoking rooms\n- Any other specific hotel features\n\nThe tool returns facility IDs that MUST be used with the search-hotels tool's facilities parameter\nto properly filter hotels. Without using this tool first, searches will not correctly filter for \nuser-requested amenities.\n\nExample workflow:\n1. User asks for \"pet-friendly hotels in Paris\"\n2. Call get-facilities to find the facility_id for \"Pets allowed\"\n3. Use that facility_id in the search-hotels facilities parameter\n",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "default": "en",
+                "description": "Language code for facility names (en, es, it, he, ar, de)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jinkoso/jinko-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jinkoso/jinko-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0056.@jinkoso_jinko-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 55
+  }
+}

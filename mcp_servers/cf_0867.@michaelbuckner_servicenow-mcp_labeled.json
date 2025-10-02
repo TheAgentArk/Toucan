@@ -1,0 +1,138 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to facilitate natural language interactions with ServiceNow data, enabling users to search, update, and manage records through intuitive commands. Its core functionality revolves around integrating AI capabilities with ServiceNow's IT service management platform, allowing for streamlined workflows and enhanced productivity through natural language processing (NLP) and secure API access. The available tools primarily focus on incident management, record querying, and data updates, with strong emphasis on natural language-based operations.",
+    "reasoning": "The primary label \"IT Operations & Service Management\" best captures the server's role in managing IT operations within ServiceNow. Secondary labels \"API Integration\" and \"Natural Language Processing\" are chosen because the server heavily relies on API interactions with ServiceNow and uses NLP for user-friendly command processing. Given the unique integration of NLP with ServiceNow operations, a custom label is created to explicitly highlight this synergy.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "API Integration",
+      "AI/ML Tools"
+    ],
+    "custom_label": "ServiceNow NLP Integration",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 866,
+    "server_name": "ServiceNow MCP Server",
+    "rank_by_usage": 867,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@michaelbuckner_servicenow-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@michaelbuckner/servicenow-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 866,
+      "name": "ServiceNow MCP Server",
+      "author": "@michaelbuckner/servicenow-mcp",
+      "overview": "Enable AI agents to interact with ServiceNow data through natural language. Search, update, and manage records effortlessly using a secure API. Simplify your workflow and enhance productivity with intuitive commands.",
+      "repository_url": "https://github.com/michaelbuckner/servicenow-mcp",
+      "homepage": "https://smithery.ai/server/@michaelbuckner/servicenow-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@michaelbuckner_servicenow-mcp.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "create_incident",
+          "description": "Deploy Server ServiceNow MCP Server Claim Server @michaelbuckner/servicenow-mcp Try in Playground create_incident",
+          "parameters": [
+            {
+              "name": "JSON",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "response",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "from",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "ServiceNow",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "update_incident",
+          "description": "Update an existing incident in ServiceNow Args: number: The incident number (INC0010001) updates: The fields to update ctx: Optional context object for progress reporting Returns: JSON response from ServiceNow",
+          "parameters": []
+        },
+        {
+          "name": "search_records",
+          "description": "Search for records in ServiceNow using text query Args: query: Text to search for table: Table to search in limit: Maximum number of results to return ctx: Optional context object for progress reporting Returns: JSON response containing matching records",
+          "parameters": []
+        },
+        {
+          "name": "get_record",
+          "description": "Get a specific record by sys_id Args: table: Table to query sys_id: System ID of the record ctx: Optional context object for progress reporting Returns: JSON response containing the record",
+          "parameters": []
+        },
+        {
+          "name": "perform_query",
+          "description": "Perform a query against ServiceNow Args: table: Table to query query: Encoded query string (ServiceNow syntax) limit: Maximum number of results to return offset: Number of records to skip fields: List of fields to return (or all fields if None) ctx: Optional context object for progress reporting Returns: JSON response containing query results",
+          "parameters": []
+        },
+        {
+          "name": "add_comment",
+          "description": "Add a comment to an incident (customer visible) Args: number: Incident number comment: Comment to add ctx: Optional context object for progress reporting Returns: JSON response from ServiceNow",
+          "parameters": []
+        },
+        {
+          "name": "add_work_notes",
+          "description": "Add work notes to an incident (internal) Args: number: Incident number work_notes: Work notes to add ctx: Optional context object for progress reporting Returns: JSON response from ServiceNow",
+          "parameters": []
+        },
+        {
+          "name": "natural_language_search",
+          "description": "Search for records using natural language Examples: - \"find all incidents about SAP\" - \"search for incidents related to email\" - \"show me all incidents with high priority\" Args: query: Natural language query ctx: Optional context object for progress reporting Returns: JSON response containing matching records",
+          "parameters": []
+        },
+        {
+          "name": "natural_language_update",
+          "description": "Update a record using natural language Examples: - \"Update incident INC0010001 saying I'm working on it\" - \"Set incident INC0010002 to in progress\" - \"Close incident INC0010003 with resolution: fixed the issue\" Args: command: Natural language update command ctx: Optional context object for progress reporting Returns: JSON response from ServiceNow",
+          "parameters": []
+        },
+        {
+          "name": "update_script",
+          "description": "Update a ServiceNow script Args: script_update: The script update details ctx: Optional context object for progress reporting Returns: JSON response from ServiceNow",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@michaelbuckner/servicenow-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@michaelbuckner/servicenow-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0867.@michaelbuckner_servicenow-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 848
+  }
+}

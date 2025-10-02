@@ -1,0 +1,194 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide comprehensive Google Maps API functionality, enabling applications to access real-time geographic data, location-based services, and place details. The available tools focus on geographic information systems (GIS) operations such as geocoding, reverse geocoding, distance calculations, elevation data, and directions. This server enhances applications with location awareness, making it particularly useful for navigation, logistics, and location-based services.",
+    "reasoning": "The primary label \"Travel & Maps\" is chosen because the server's core functionality revolves around location services, maps, and geographic data. \"API Integration\" is added as a secondary label since the server provides a facade for interacting with the Google Maps API. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Travel & Maps",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2196,
+    "server_name": "Google Maps API Server",
+    "rank_by_usage": 2197,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@lowkeyrd_google-map-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@lowkeyrd/google-map-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 2196,
+      "name": "Google Maps API Server",
+      "author": "@lowkeyrd/google-map-mcp-server",
+      "overview": "Leverage the power of Google Maps to enhance your applications with location services, directions, and place details. Integrate seamlessly with your LLMs to provide real-time geographic data and insights. Start building location-aware applications effortlessly with this MCP server.",
+      "repository_url": "https://github.com/lowkeyrd/servers",
+      "homepage": "https://smithery.ai/server/@lowkeyrd/google-map-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@lowkeyrd_google-map-mcp-server.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "maps_geocode",
+          "description": "Deploy Server Google Maps API Server @lowkeyrd/google-map-mcp-server Try in Playground maps_geocode",
+          "parameters": [
+            {
+              "name": "maps_geocode",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "address",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_reverse_geocode",
+          "description": "Convert coordinates into an address",
+          "parameters": [
+            {
+              "name": "latitude",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "longitude",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_search_places",
+          "description": "Search for places using Google Places API",
+          "parameters": [
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "radius",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_place_details",
+          "description": "Get detailed information about a specific place",
+          "parameters": [
+            {
+              "name": "maps_place_details",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "place_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_distance_matrix",
+          "description": "Calculate travel distance and time for multiple origins and destinations",
+          "parameters": [
+            {
+              "name": "maps_distance_matrix",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_elevation",
+          "description": "Get elevation data for locations on the earth",
+          "parameters": [
+            {
+              "name": "locations",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "Add",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Item",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_directions",
+          "description": "Get directions between two points",
+          "parameters": [
+            {
+              "name": "mode",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "destination",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@lowkeyrd/google-map-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "googleMapsApiKeyHack",
+          "required": true,
+          "description": "Google Maps API key for authentication"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@lowkeyrd/google-map-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_2197.@lowkeyrd_google-map-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1895
+  }
+}

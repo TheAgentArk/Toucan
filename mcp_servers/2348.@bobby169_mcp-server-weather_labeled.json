@@ -1,0 +1,168 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide weather-related information such as forecasts and active weather alerts. It allows users to query weather data by location (latitude/longitude) or by U.S. state, making it a specialized tool for retrieving real-time weather information. The tools available (get-alerts and get-forecast) indicate a focus on delivering precise and timely weather data through a simple interface.",
+    "reasoning": "The primary functionality of this server is to provide weather forecasts and alerts, which directly aligns with the \"Weather\" category. While it could also be considered for \"API Integration\" due to its MCP interface, the core purpose is weather-related. No custom labels are necessary as the predefined categories cover the server's functionality well.",
+    "primary_label": "Weather",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2347,
+    "server_name": "Weather Information Server",
+    "rank_by_usage": 2348,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@bobby169_mcp-server-weather.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@bobby169/mcp-server-weather/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-alerts",
+          "description": "Get weather alerts for a state",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "description": "Two-letter state code (e.g. CA, NY)"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-forecast",
+          "description": "Get weather forecast for a location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90,
+                "description": "Latitude of the location"
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180,
+                "description": "Longitude of the location"
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get-alerts",
+        "get-forecast"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2347,
+      "name": "Weather Information Server",
+      "author": "@bobby169/mcp-server-weather",
+      "overview": "Provide up-to-date weather forecasts and active weather alerts for specific locations. Enable applications to retrieve current weather data by latitude and longitude or get alerts for US states. Enhance your tools with reliable and timely weather information through a simple MCP interface.",
+      "repository_url": "https://github.com/bobby169/mcp-server-weather",
+      "homepage": "https://smithery.ai/server/@bobby169/mcp-server-weather",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@bobby169_mcp-server-weather.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get-alerts",
+          "description": "Get weather alerts for a state",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "description": "Two-letter state code (e.g. CA, NY)"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-forecast",
+          "description": "Get weather forecast for a location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90,
+                "description": "Latitude of the location"
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180,
+                "description": "Longitude of the location"
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@bobby169/mcp-server-weather/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@bobby169/mcp-server-weather/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2348.@bobby169_mcp-server-weather_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2016
+  }
+}

@@ -1,0 +1,1201 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is specifically designed to execute dbt (data build tool) commands, which are used for managing and transforming data within a data warehouse or data platform. It provides a suite of tools that enable an AI agent to perform operations such as running models, testing data quality, listing resources, compiling models, troubleshooting, managing dependencies, seeding data, and previewing results. These capabilities are essential for data engineering workflows focused on data transformation and management.",
+    "reasoning": "The primary functionality of this server revolves around data transformation and management through dbt, which directly aligns with database and data warehouse operations. While \"Data Analysis & Processing\" is somewhat relevant, the core focus is on the operational and execution aspects of dbt commands rather than analysis itself. \"Database Operations\" is chosen as the primary label because the tools provided are tightly integrated with database operations—specifically the execution and validation of data transformations. The custom label \"dbt Command Interface\" is added to highlight the server's specialized tooling for dbt operations.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "dbt Command Interface",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1186,
+    "server_name": "DBT CLI MCP Server",
+    "rank_by_usage": 1187,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@MammothGrowth_dbt-cli-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@MammothGrowth/dbt-cli-mcp/mcp?config=eyJkYnRQYXRoIjogImRidCIsICJlbnZGaWxlIjogIi5lbnYiLCAibG9nTGV2ZWwiOiAiSU5GTyIsICJtb2NrTW9kZSI6IGZhbHNlfQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "dbt_run",
+          "description": "Run dbt models. An AI agent should use this tool when it needs to execute dbt models to transform data and build analytical tables in the data warehouse. This is essential for refreshing data or implementing new data transformations in a project.\n\n        Returns:\n            Output from the dbt run command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to run, using the dbt selection syntax (e.g., \"model_name+\")",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              },
+              "full_refresh": {
+                "default": false,
+                "description": "Whether to perform a full refresh",
+                "title": "Full Refresh",
+                "type": "boolean"
+              }
+            },
+            "title": "dbt_runArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_test",
+          "description": "Run dbt tests. An AI agent should use this tool when it needs to validate data quality and integrity by running tests defined in a dbt project. This helps ensure that data transformations meet expected business rules and constraints before being used for analysis or reporting.\n\n        Returns:\n            Output from the dbt test command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to test, using the dbt selection syntax",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_testArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_ls",
+          "description": "List dbt resources. An AI agent should use this tool when it needs to discover available models, tests, sources, and other resources within a dbt project. This helps the agent understand the project structure, identify dependencies, and select specific resources for other operations like running or testing.\n\n        Returns:\n            When output_format is 'json' (default):\n              - With verbose=False (default): returns a simplified JSON with only name, resource_type, and depends_on.nodes\n              - With verbose=True: returns a full JSON with all resource details\n            When output_format is 'name', 'path', or 'selector', returns plain text with the respective format.\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to list, using the dbt selection syntax. Note that you probably want to specify your selection here e.g. silver.fact",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "resource_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Type of resource to list (model, test, source, etc.)",
+                "title": "Resource Type"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              },
+              "output_format": {
+                "default": "json",
+                "description": "Output format (json, name, path, or selector)",
+                "title": "Output Format",
+                "type": "string"
+              },
+              "verbose": {
+                "default": false,
+                "description": "Return full JSON output instead of simplified version",
+                "title": "Verbose",
+                "type": "boolean"
+              }
+            },
+            "title": "dbt_lsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_compile",
+          "description": "Compile dbt models. An AI agent should use this tool when it needs to generate the SQL that will be executed without actually running it against the database. This is valuable for validating SQL syntax, previewing transformations, or investigating how dbt interprets models before committing to execution.\n\n        Returns:\n            Output from the dbt compile command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to compile, using the dbt selection syntax",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_compileArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_debug",
+          "description": "Run dbt debug to validate the project setup. An AI agent should use this tool when it needs to troubleshoot configuration issues, check database connectivity, or verify that all project dependencies are properly installed. This is essential for diagnosing problems before attempting to run models or tests.\n\n        Returns:\n            Output from the dbt debug command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_debugArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_deps",
+          "description": "Install dbt package dependencies. An AI agent should use this tool when it needs to install or update external packages that the dbt project depends on. This ensures that all required modules, macros, and models from other packages are available before running the project.\n\n        Returns:\n            Output from the dbt deps command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_depsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_seed",
+          "description": "Load CSV files as seed data. An AI agent should use this tool when it needs to load initial data from CSV files into the database. This is essential for creating reference tables, test datasets, or any static data that models will depend on.\n\n        Returns:\n            Output from the dbt seed command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Seeds to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_seedArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_show",
+          "description": "Preview the results of a model. An AI agent should use this tool when it needs to preview data from a specific model without materializing it. This helps inspect transformation results, debug issues, or demonstrate how data looks after processing without modifying the target database.\n\n        Returns:\n            Output from the dbt show command, defaulting to JSON format if not specified\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "description": "Specific model to show. For model references, use standard dbt syntax like 'model_name'. For inline SQL, use the format 'select * from {{ ref(\"model_name\") }}' to reference other models.",
+                "title": "Models",
+                "type": "string"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              },
+              "limit": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Limit the number of rows returned",
+                "title": "Limit"
+              },
+              "output": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": "json",
+                "description": "Output format (json, table, etc.)",
+                "title": "Output"
+              }
+            },
+            "required": [
+              "models"
+            ],
+            "title": "dbt_showArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_build",
+          "description": "Run build command (seeds, tests, snapshots, and models). An AI agent should use this tool when it needs to execute a comprehensive build process that runs seeds, snapshots, models, and tests in the correct order. This is ideal for complete project deployment or ensuring all components work together.\n\n        Returns:\n            Output from the dbt build command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to build, using the dbt selection syntax",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              },
+              "full_refresh": {
+                "default": false,
+                "description": "Whether to perform a full refresh",
+                "title": "Full Refresh",
+                "type": "boolean"
+              }
+            },
+            "title": "dbt_buildArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "dbt_run",
+        "dbt_test",
+        "dbt_ls",
+        "dbt_compile",
+        "dbt_debug",
+        "dbt_deps",
+        "dbt_seed",
+        "dbt_show",
+        "dbt_build"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1186,
+      "name": "DBT CLI MCP Server",
+      "author": "@MammothGrowth/dbt-cli-mcp",
+      "overview": "Execute dbt commands seamlessly through standardized tools. Enhance your AI coding agents' capabilities by integrating with dbt projects for efficient data transformation and management.",
+      "repository_url": "https://github.com/MammothGrowth/dbt-cli-mcp",
+      "homepage": "https://smithery.ai/server/@MammothGrowth/dbt-cli-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@MammothGrowth_dbt-cli-mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "dbt_run",
+          "description": "Run dbt models. An AI agent should use this tool when it needs to execute dbt models to transform data and build analytical tables in the data warehouse. This is essential for refreshing data or implementing new data transformations in a project.\n\n        Returns:\n            Output from the dbt run command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to run, using the dbt selection syntax (e.g., \"model_name+\")",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              },
+              "full_refresh": {
+                "default": false,
+                "description": "Whether to perform a full refresh",
+                "title": "Full Refresh",
+                "type": "boolean"
+              }
+            },
+            "title": "dbt_runArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_test",
+          "description": "Run dbt tests. An AI agent should use this tool when it needs to validate data quality and integrity by running tests defined in a dbt project. This helps ensure that data transformations meet expected business rules and constraints before being used for analysis or reporting.\n\n        Returns:\n            Output from the dbt test command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to test, using the dbt selection syntax",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_testArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_ls",
+          "description": "List dbt resources. An AI agent should use this tool when it needs to discover available models, tests, sources, and other resources within a dbt project. This helps the agent understand the project structure, identify dependencies, and select specific resources for other operations like running or testing.\n\n        Returns:\n            When output_format is 'json' (default):\n              - With verbose=False (default): returns a simplified JSON with only name, resource_type, and depends_on.nodes\n              - With verbose=True: returns a full JSON with all resource details\n            When output_format is 'name', 'path', or 'selector', returns plain text with the respective format.\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to list, using the dbt selection syntax. Note that you probably want to specify your selection here e.g. silver.fact",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "resource_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Type of resource to list (model, test, source, etc.)",
+                "title": "Resource Type"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              },
+              "output_format": {
+                "default": "json",
+                "description": "Output format (json, name, path, or selector)",
+                "title": "Output Format",
+                "type": "string"
+              },
+              "verbose": {
+                "default": false,
+                "description": "Return full JSON output instead of simplified version",
+                "title": "Verbose",
+                "type": "boolean"
+              }
+            },
+            "title": "dbt_lsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_compile",
+          "description": "Compile dbt models. An AI agent should use this tool when it needs to generate the SQL that will be executed without actually running it against the database. This is valuable for validating SQL syntax, previewing transformations, or investigating how dbt interprets models before committing to execution.\n\n        Returns:\n            Output from the dbt compile command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to compile, using the dbt selection syntax",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_compileArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_debug",
+          "description": "Run dbt debug to validate the project setup. An AI agent should use this tool when it needs to troubleshoot configuration issues, check database connectivity, or verify that all project dependencies are properly installed. This is essential for diagnosing problems before attempting to run models or tests.\n\n        Returns:\n            Output from the dbt debug command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_debugArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_deps",
+          "description": "Install dbt package dependencies. An AI agent should use this tool when it needs to install or update external packages that the dbt project depends on. This ensures that all required modules, macros, and models from other packages are available before running the project.\n\n        Returns:\n            Output from the dbt deps command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_depsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_seed",
+          "description": "Load CSV files as seed data. An AI agent should use this tool when it needs to load initial data from CSV files into the database. This is essential for creating reference tables, test datasets, or any static data that models will depend on.\n\n        Returns:\n            Output from the dbt seed command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Seeds to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              }
+            },
+            "title": "dbt_seedArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_show",
+          "description": "Preview the results of a model. An AI agent should use this tool when it needs to preview data from a specific model without materializing it. This helps inspect transformation results, debug issues, or demonstrate how data looks after processing without modifying the target database.\n\n        Returns:\n            Output from the dbt show command, defaulting to JSON format if not specified\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "description": "Specific model to show. For model references, use standard dbt syntax like 'model_name'. For inline SQL, use the format 'select * from {{ ref(\"model_name\") }}' to reference other models.",
+                "title": "Models",
+                "type": "string"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              },
+              "limit": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Limit the number of rows returned",
+                "title": "Limit"
+              },
+              "output": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": "json",
+                "description": "Output format (json, table, etc.)",
+                "title": "Output"
+              }
+            },
+            "required": [
+              "models"
+            ],
+            "title": "dbt_showArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "dbt_build",
+          "description": "Run build command (seeds, tests, snapshots, and models). An AI agent should use this tool when it needs to execute a comprehensive build process that runs seeds, snapshots, models, and tests in the correct order. This is ideal for complete project deployment or ensuring all components work together.\n\n        Returns:\n            Output from the dbt build command as text (this command does not support JSON output format)\n        ",
+          "input_schema": {
+            "properties": {
+              "models": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Specific models to build, using the dbt selection syntax",
+                "title": "Models"
+              },
+              "selector": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Named selector to use",
+                "title": "Selector"
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Models to exclude",
+                "title": "Exclude"
+              },
+              "project_dir": {
+                "default": ".",
+                "description": "ABSOLUTE PATH to the directory containing the dbt project (e.g. '/Users/username/projects/dbt_project' not '.')",
+                "title": "Project Dir",
+                "type": "string"
+              },
+              "profiles_dir": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Directory containing the profiles.yml file (defaults to project_dir if not specified)",
+                "title": "Profiles Dir"
+              },
+              "full_refresh": {
+                "default": false,
+                "description": "Whether to perform a full refresh",
+                "title": "Full Refresh",
+                "type": "boolean"
+              }
+            },
+            "title": "dbt_buildArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"dbtPath\": \"dbt\",\n  \"envFile\": \".env\",\n  \"logLevel\": \"INFO\",\n  \"mockMode\": false\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@MammothGrowth/dbt-cli-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"dbtPath\": \"dbt\",\n  \"envFile\": \".env\",\n  \"logLevel\": \"INFO\",\n  \"mockMode\": false\n}",
+      "python_sdk_url": "https://server.smithery.ai/@MammothGrowth/dbt-cli-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1187.@MammothGrowth_dbt-cli-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1152
+  }
+}

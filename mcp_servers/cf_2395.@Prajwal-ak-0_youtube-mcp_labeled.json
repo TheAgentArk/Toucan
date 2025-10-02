@@ -1,0 +1,107 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is primarily focused on YouTube content analysis and interaction. It provides tools to extract transcripts, summarize videos, answer questions about video content, search for videos, retrieve comments, and fetch like counts. The core functionality revolves around accessing, processing, and analyzing YouTube data with the assistance of Gemini AI for tasks like summarization and querying. The server enhances productivity for users who need to extract insights or manage YouTube video interactions efficiently.",
+    "reasoning": "The primary label \"Web Search & Research\" was chosen because the server enables users to search for videos, extract information, and answer questions based on video content. This aligns with the server's role in assisting with research and content discovery. \"Content Creation\" is a secondary label as it helps users understand and potentially create content based on video analysis. The custom label \"YouTube Data Processing\" captures the unique focus on analyzing and interacting with YouTube-specific data.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Content Creation"
+    ],
+    "custom_label": "YouTube Data Processing",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2394,
+    "server_name": "YouTube MCP",
+    "rank_by_usage": 2395,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@Prajwal-ak-0_youtube-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Prajwal-ak-0/youtube-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 2394,
+      "name": "YouTube MCP",
+      "author": "@Prajwal-ak-0/youtube-mcp",
+      "overview": "Extract transcripts, summarize content, and query videos effortlessly. Leverage Gemini AI to enhance your YouTube video analysis capabilities. Gain insights and streamline your video content interactions with powerful tools.",
+      "repository_url": "https://github.com/Prajwal-ak-0/youtube-mcp",
+      "homepage": "https://smithery.ai/server/@Prajwal-ak-0/youtube-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Prajwal-ak-0_youtube-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "youtube/get-transcript",
+          "description": "Deploy Server YouTube MCP @Prajwal-ak-0/youtube-mcp Try in Playground youtube/get-transcript",
+          "parameters": []
+        },
+        {
+          "name": "youtube/summarize",
+          "description": "Generates a concise summary of a YouTube video's content using Gemini AI. This tool first retrieves the video's transcript, then uses Google's Gemini 2.0 Flash model to create a structured summary of the key points discussed in the video. Args: video_id (str): The YouTube video ID to summarize Returns: List[Dict]: A list containing a single dictionary with: - type: \"summary\" - data: Dictionary containing video_id, summary text, and model used Raises: ToolError: When summarization fails (API key missing, transcript unavailable, etc.)",
+          "parameters": []
+        },
+        {
+          "name": "youtube/query",
+          "description": "Answers natural language questions about a YouTube video's content. This tool leverages Google's Gemini 2.0 Flash model to provide responses to questions based solely on the video's transcript. It extracts insights, facts, and context without watching the video itself. Args: video_id (str): The YouTube video ID to query query (str): Natural language question about the video content Returns: List[Dict]: A list containing a single dictionary with: - type: \"query-response\" - data: Dictionary containing video_id, the original query, the AI-generated response, and model used Raises: ToolError: When query fails (API key missing, transcript unavailable, etc.)",
+          "parameters": []
+        },
+        {
+          "name": "youtube/search",
+          "description": "Searches YouTube for videos matching a specific query and returns detailed metadata. This tool performs a two-step API process: 1. First searches for videos matching the query 2. Then fetches detailed metadata for each result (title, channel, views, etc.) Args: query (str): Search terms to find relevant videos max_results (int, optional): Maximum number of results to return. Defaults to 5, capped at 50. Returns: List[Dict]: A list containing a single dictionary with: - type: \"search-results\" - data: Dictionary containing original query, list of video objects with detailed metadata, and total result count Video metadata includes: - id: YouTube video ID - title: Video title - description: Video description - thumbnail: URL to high-quality thumbnail - channel_title: Channel name - channel_id: YouTube channel ID - published_at: Publication timestamp - views: View count - likes: Like count - comments: Comment count - duration: Video duration in ISO 8601 format Raises: ToolError: When search fails (API key missing, API error, etc.)",
+          "parameters": []
+        },
+        {
+          "name": "youtube/get-comments",
+          "description": "Retrieves comments from a YouTube video using the YouTube Data API. This tool fetches top-level comments from a video's comment section, including author information, comment text, timestamps, and like counts. Args: video_id (str): The YouTube video ID to get comments from max_comments (int, optional): Maximum number of comments to retrieve. Defaults to 100, capped at 100 per API limits. Returns: List[Dict]: A list containing a single dictionary with: - type: \"comments\" - data: Dictionary containing video_id and a list of comment objects Comment objects include metadata from the YouTube API such as: - authorDisplayName: Comment author's display name - authorProfileImageUrl: URL to author's profile picture - authorChannelUrl: URL to author's YouTube channel - textDisplay: Comment text with formatting - textOriginal: Plain text version of comment - likeCount: Number of likes on the comment - publishedAt: Comment publication timestamp - updatedAt: Last edit timestamp (if edited) Raises: ToolError: When comment retrieval fails (API key missing, comments disabled, etc.)",
+          "parameters": []
+        },
+        {
+          "name": "youtube/get-likes",
+          "description": "Retrieves the current like count for a specified YouTube video. This tool accesses the YouTube Data API to fetch the most up-to-date engagement statistics for a video, specifically focusing on like count. Args: video_id (str): The YouTube video ID to get likes for Returns: List[Dict]: A list containing a single dictionary with: - type: \"stats\" - data: Dictionary containing video_id and likes count Raises: ToolError: When like count retrieval fails (API key missing, video unavailable, etc.)",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Prajwal-ak-0/youtube-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "GEMINI_API_KEY",
+          "required": true,
+          "description": "Google Gemini API key for AI operations"
+        },
+        {
+          "name": "YOUTUBE_API_KEY",
+          "required": true,
+          "description": "YouTube Data API key for search and comments"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Prajwal-ak-0/youtube-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_2395.@Prajwal-ak-0_youtube-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2049
+  }
+}

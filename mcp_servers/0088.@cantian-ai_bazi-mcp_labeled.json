@@ -1,0 +1,324 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in Chinese metaphysical calculations, specifically Bazi (八字), which is a traditional system used to analyze personality and destiny based on birth time and gender. The tools provided enable precise generation and interpretation of Bazi data, conversion between solar and lunar dates, and retrieval of traditional Chinese calendar information. This server is designed to empower AI agents with accurate cultural and spiritual insights, particularly in fortune-telling and Chinese metaphysics. It serves as a collaborative platform for traditional analysis enhanced by AI.",
+    "reasoning": "The primary label \"Astrology & Divination\" was chosen because the server's core functionality revolves around Bazi calculations, a form of traditional astrology used for predicting and analyzing personality traits and destiny. The tools provided are directly related to this practice, making this the most accurate primary category. Since the provided categories do not include \"Astrology & Divination,\" a custom label was created. Additional secondary labels were selected based on the server's secondary functionalities like date conversion and Chinese calendar information.",
+    "primary_label": "Others",
+    "secondary_labels": [
+      "Daily Productivity",
+      "Content Creation"
+    ],
+    "custom_label": "Chinese Metaphysics Analysis",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 87,
+    "server_name": "Bazi Calculator",
+    "rank_by_usage": 88,
+    "usage_count": "887",
+    "original_file": "../crawler/smithery/@cantian-ai_bazi-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@cantian-ai/bazi-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "getBaziDetail",
+          "description": "根据时间（公历或农历）、性别来获取八字信息。solarDatetime和lunarDatetime必须传且只传其中一个。",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "solarDatetime": {
+                "type": "string",
+                "description": "用ISO时间格式表示的公历时间. 例如：`2008-03-01T13:00:00+08:00`。"
+              },
+              "lunarDatetime": {
+                "type": "string",
+                "description": "农历时间。例如农历2000年5月初五中午12点整表示为：`2000-5-5 12:00:00`。"
+              },
+              "gender": {
+                "type": "number",
+                "description": "传0表示女性，传1表示男性。"
+              },
+              "eightCharProviderSect": {
+                "type": "number",
+                "default": 2,
+                "description": "早晚子时配置。传1表示23:00-23:59日干支为明天，传2表示23:00-23:59日干支为当天。"
+              }
+            },
+            "required": [
+              "gender"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getSolarTimes",
+          "description": "根据八字获取公历时间列表。返回的时间格式为：YYYY-MM-DD hh:mm:ss。例如时间1998年7月31日下午2点整表示为：1998-07-31 14:00:00",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "bazi": {
+                "type": "string",
+                "description": "八字，按年柱、月柱、日柱、时柱顺序，用空格隔开。例如：戊寅 己未 己卯 辛未"
+              }
+            },
+            "required": [
+              "bazi"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getChineseCalendar",
+          "description": "获取指定公历时间（默认今天）的黄历信息。",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "solarDatetime": {
+                "type": "string",
+                "description": "用ISO时间格式表示的公历时间. 例如：`2008-03-01T13:00:00+08:00`。"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "buildBaziFromLunarDatetime",
+          "description": "根据农历时间、性别来获取八字信息。",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "lunarDatetime": {
+                "type": "string",
+                "description": "农历时间。例如：`2000-5-15 12:00:00`。"
+              },
+              "gender": {
+                "type": "number",
+                "description": "传0表示女性，传1表示男性。"
+              },
+              "eightCharProviderSect": {
+                "type": "number",
+                "default": 2,
+                "description": "早晚子时配置。传1表示23:00-23:59日干支为明天，传2表示23:00-23:59日干支为当天。"
+              }
+            },
+            "required": [
+              "lunarDatetime",
+              "gender"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "buildBaziFromSolarDatetime",
+          "description": "根据阳历时间、性别来获取八字信息。",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "solarDatetime": {
+                "type": "string",
+                "description": "用ISO时间格式表示的阳历时间. 例如：`2008-03-01T13:00:00+08:00`。"
+              },
+              "gender": {
+                "type": "number",
+                "description": "传0表示女性，传1表示男性。"
+              },
+              "eightCharProviderSect": {
+                "type": "number",
+                "default": 2,
+                "description": "早晚子时配置。传1表示23:00-23:59日干支为明天，传2表示23:00-23:59日干支为当天。"
+              }
+            },
+            "required": [
+              "solarDatetime",
+              "gender"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "getBaziDetail",
+        "getSolarTimes",
+        "getChineseCalendar",
+        "buildBaziFromLunarDatetime",
+        "buildBaziFromSolarDatetime"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 87,
+      "name": "Bazi Calculator",
+      "author": "@cantian-ai/bazi-mcp",
+      "overview": "Provide precise Bazi (Chinese metaphysical) calculations to empower AI agents with accurate personality and destiny insights. Enable reliable and community-driven Bazi data services for applications in fortune-telling and Chinese metaphysics. Join a collaborative platform to advance traditional cultural analysis with AI.",
+      "repository_url": "https://github.com/cantian-ai/bazi-mcp",
+      "homepage": "https://smithery.ai/server/@cantian-ai/bazi-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "887",
+      "success_rate": "97.21%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@cantian-ai_bazi-mcp.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "getBaziDetail",
+          "description": "根据时间（公历或农历）、性别来获取八字信息。solarDatetime和lunarDatetime必须传且只传其中一个。",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "solarDatetime": {
+                "type": "string",
+                "description": "用ISO时间格式表示的公历时间. 例如：`2008-03-01T13:00:00+08:00`。"
+              },
+              "lunarDatetime": {
+                "type": "string",
+                "description": "农历时间。例如农历2000年5月初五中午12点整表示为：`2000-5-5 12:00:00`。"
+              },
+              "gender": {
+                "type": "number",
+                "description": "传0表示女性，传1表示男性。"
+              },
+              "eightCharProviderSect": {
+                "type": "number",
+                "default": 2,
+                "description": "早晚子时配置。传1表示23:00-23:59日干支为明天，传2表示23:00-23:59日干支为当天。"
+              }
+            },
+            "required": [
+              "gender"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getSolarTimes",
+          "description": "根据八字获取公历时间列表。返回的时间格式为：YYYY-MM-DD hh:mm:ss。例如时间1998年7月31日下午2点整表示为：1998-07-31 14:00:00",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "bazi": {
+                "type": "string",
+                "description": "八字，按年柱、月柱、日柱、时柱顺序，用空格隔开。例如：戊寅 己未 己卯 辛未"
+              }
+            },
+            "required": [
+              "bazi"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getChineseCalendar",
+          "description": "获取指定公历时间（默认今天）的黄历信息。",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "solarDatetime": {
+                "type": "string",
+                "description": "用ISO时间格式表示的公历时间. 例如：`2008-03-01T13:00:00+08:00`。"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "buildBaziFromLunarDatetime",
+          "description": "根据农历时间、性别来获取八字信息。",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "lunarDatetime": {
+                "type": "string",
+                "description": "农历时间。例如：`2000-5-15 12:00:00`。"
+              },
+              "gender": {
+                "type": "number",
+                "description": "传0表示女性，传1表示男性。"
+              },
+              "eightCharProviderSect": {
+                "type": "number",
+                "default": 2,
+                "description": "早晚子时配置。传1表示23:00-23:59日干支为明天，传2表示23:00-23:59日干支为当天。"
+              }
+            },
+            "required": [
+              "lunarDatetime",
+              "gender"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "buildBaziFromSolarDatetime",
+          "description": "根据阳历时间、性别来获取八字信息。",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "solarDatetime": {
+                "type": "string",
+                "description": "用ISO时间格式表示的阳历时间. 例如：`2008-03-01T13:00:00+08:00`。"
+              },
+              "gender": {
+                "type": "number",
+                "description": "传0表示女性，传1表示男性。"
+              },
+              "eightCharProviderSect": {
+                "type": "number",
+                "default": 2,
+                "description": "早晚子时配置。传1表示23:00-23:59日干支为明天，传2表示23:00-23:59日干支为当天。"
+              }
+            },
+            "required": [
+              "solarDatetime",
+              "gender"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@cantian-ai/bazi-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@cantian-ai/bazi-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0088.@cantian-ai_bazi-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 86
+  }
+}

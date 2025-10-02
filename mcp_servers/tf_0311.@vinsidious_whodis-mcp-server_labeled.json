@@ -1,0 +1,117 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides domain availability checking functionality through WHOIS lookups. Its primary purpose is to enable verification of whether domain names are available for registration. The tool is designed for integration into workflows of AI assistants and other tools, offering a simple CLI interface and detailed logging for testing and monitoring. The core functionality revolves around domain registration status checking, which is essential for businesses, developers, or individuals looking to register new domains.",
+    "reasoning": "The primary label is \"Cryptocurrency & Blockchain\" because domain availability checks are often used in conjunction with blockchain and cryptocurrency projects for setting up web presences. While this might seem unconventional, the tool's utility in this space is significant, especially for DeFi projects or crypto-related services needing identifiable domain names. \"Web Search & Research\" is a secondary label because the domain availability check inherently involves researching domain registration status, which is a form of web-based information gathering. The custom label \"Domain Management\" was chosen to specifically describe the server's unique focus on domain-related tools beyond generic availability checks.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "Web Search & Research"
+    ],
+    "custom_label": "Domain Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 310,
+    "server_name": "Whodis Domain Availability Server",
+    "rank_by_usage": 311,
+    "usage_count": "105",
+    "original_file": "../crawler/smithery/@vinsidious_whodis-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@vinsidious/whodis-mcp-server/mcp?config=eyJkZWJ1ZyI6IGZhbHNlfQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "check-domain-availability",
+          "description": "PURPOSE: Checks the availability of one or more domain names.\n        INPUT: An array of domain names.\n        OUTPUT: A JSON object containing two arrays: 'available' (domains that appear to be unregistered) and 'unavailable' (domains that appear to be registered). Note: Availability checks depend on WHOIS server responses and might not be 100% accurate for all TLDs or due to temporary network issues. Domains where lookup failed are omitted.\n        WHEN TO USE: Use this tool when you need to determine if specific domain names can potentially be registered.\n        EXAMPLE: { \"domains\": [\"google.com\", \"example-domain-that-is-likely-free-12345.com\"] }",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domains": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "description": "An array of domain names to check for availability"
+              }
+            },
+            "required": [
+              "domains"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "check-domain-availability"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 310,
+      "name": "Whodis Domain Availability Server",
+      "author": "@vinsidious/whodis-mcp-server",
+      "overview": "Check the availability of domain names using WHOIS lookups integrated as an MCP tool. Enable AI assistants and other tools to seamlessly verify domain registration status within their workflows. Provides a CLI interface and detailed logging for easy testing and monitoring.",
+      "repository_url": "https://github.com/vinsidious/whodis-mcp-server",
+      "homepage": "https://smithery.ai/server/@vinsidious/whodis-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "105",
+      "success_rate": "98.41%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@vinsidious_whodis-mcp-server.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "check-domain-availability",
+          "description": "PURPOSE: Checks the availability of one or more domain names.\n        INPUT: An array of domain names.\n        OUTPUT: A JSON object containing two arrays: 'available' (domains that appear to be unregistered) and 'unavailable' (domains that appear to be registered). Note: Availability checks depend on WHOIS server responses and might not be 100% accurate for all TLDs or due to temporary network issues. Domains where lookup failed are omitted.\n        WHEN TO USE: Use this tool when you need to determine if specific domain names can potentially be registered.\n        EXAMPLE: { \"domains\": [\"google.com\", \"example-domain-that-is-likely-free-12345.com\"] }",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domains": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "description": "An array of domain names to check for availability"
+              }
+            },
+            "required": [
+              "domains"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@vinsidious/whodis-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false\n}",
+      "python_sdk_url": "https://server.smithery.ai/@vinsidious/whodis-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0311.@vinsidious_whodis-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 307
+  }
+}

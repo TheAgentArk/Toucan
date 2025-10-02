@@ -1,0 +1,285 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in converting Figma design files into high-fidelity HTML/CSS markup, facilitating a seamless design-to-code workflow. It allows users to extract code and images for specific design nodes using node IDs or direct Figma file URLs. The primary functionality revolves around transforming visual design elements into functional code while ensuring design accuracy through visual verification tools.",
+    "reasoning": "The primary label \"Design-to-Code\" was chosen because it accurately describes the server's core purpose of converting design files into code. The secondary labels \"Web Development\" and \"Browser Automation\" were selected due to the server's focus on generating HTML/CSS markup (web development) and its ability to interact with Figma files via node IDs (browser automation). No custom label was necessary as the predefined labels effectively cover the server's functionality.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Development Tools",
+      "Browser Automation"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 511,
+    "server_name": "F2C Design to Code Server",
+    "rank_by_usage": 512,
+    "usage_count": "30",
+    "original_file": "../crawler/smithery/@f2c-ai_f2c-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@f2c-ai/f2c-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_code",
+          "description": "Generate UI code for a given node or the currently selected node in the Figma desktop app. Use the nodeId parameter to specify a node id. If no node id is provided, the currently selected node will be used. If a URL is provided, extract the node id from the URL, for example, if given the URL https://figma.com/design/:fileKey/:fileName?node-id=1-2, the extracted nodeId would be 1:2. IMPORTANT: After you call this tool, you should call get_image to get an image of the node for context.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The Figma file identifier found in the file URL (e.g., https://www.figma.com/file/XXXXXXXXXXXX/). Extract the XXXXXXXXXXXX portion as the fileKey."
+              },
+              "ids": {
+                "type": "string",
+                "description": "Comma-separated list of Figma node IDs for conversion. To obtain node IDs, select elements in Figma, right-click and select \"Copy/Paste as\" → \"Copy ID\"."
+              },
+              "personalToken": {
+                "type": "string",
+                "description": "Figma personal access token for API authentication.The parameters are not required when the tool is called."
+              },
+              "localPath": {
+                "type": "string",
+                "description": "Absolute path for asset(e.g., images) and code storage. Directory will be created if non-existent. Path must follow OS-specific format without special character escaping. When this path is set, all code-related static resources are stored in this directory, while other assets (e.g., images) will be saved into the subdirectory named assets under this path."
+              },
+              "imgFormat": {
+                "type": "string",
+                "enum": [
+                  "png",
+                  "jpg",
+                  "svg"
+                ],
+                "default": "png",
+                "description": "Export format for image assets: \"png\" for lossless quality, \"jpg\" for compressed files, or \"svg\" for vector graphics."
+              },
+              "scaleSize": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 4,
+                "default": 2,
+                "description": "Image export scale factor (1-4). Higher values yield better quality at the cost of larger file sizes."
+              }
+            },
+            "required": [
+              "fileKey",
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_image",
+          "description": "Generate an image for a given node or the currently selected node in the Figma desktop app. Use the nodeId parameter to specify a node id. If no node id is provided, the currently selected node will be used. If a URL is provided, extract the node id from the URL, for example, if given the URL https://figma.com/design/:fileKey/:fileName?node-id=1-2, the extracted nodeId would be 1:2. Also export Figma design images for visual verification and design fidelity validation. Essential for comparing generated code output against original designs, ensuring pixel-perfect implementation and catching visual discrepancies during the design-to-code process.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "Figma file identifier from the URL for accessing the design source"
+              },
+              "ids": {
+                "type": "string",
+                "description": "Comma-separated node IDs to export. Use \"Copy ID\" from Figma context menu to get precise element references for comparison"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "jpg",
+                  "png",
+                  "svg",
+                  "pdf"
+                ],
+                "description": "Export format for verification: \"png\" for pixel-perfect comparison with transparency, \"jpg\" for quick previews, \"svg\" for scalable reference, \"pdf\" for print validation"
+              },
+              "scale": {
+                "type": "number",
+                "description": "Scale factor (1-4x) for high-resolution comparison. Use 2x+ for detailed fidelity checks on retina displays"
+              },
+              "svg_include_id": {
+                "type": "boolean",
+                "description": "Include element IDs in SVG for precise element mapping during code validation"
+              },
+              "svg_simplify_stroke": {
+                "type": "boolean",
+                "description": "Simplify stroke paths for cleaner reference images during visual comparison"
+              },
+              "use_absolute_bounds": {
+                "type": "boolean",
+                "description": "Use absolute positioning for accurate layout verification against implemented code"
+              },
+              "version": {
+                "type": "string",
+                "description": "Specific design version for consistent comparison baseline"
+              },
+              "personalToken": {
+                "type": "string",
+                "description": "Figma personal access token for authenticated access to design files"
+              }
+            },
+            "required": [
+              "fileKey",
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get_code",
+        "get_image"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 511,
+      "name": "F2C Design to Code Server",
+      "author": "@f2c-ai/f2c-mcp",
+      "overview": "Convert Figma design nodes into high-fidelity HTML/CSS markup to streamline your design-to-code workflow. Provide Figma design context to AI coding tools, enabling seamless integration and enhanced productivity. Support direct usage of Figma file URLs with fileKey and nodeId parameters for precise context retrieval.",
+      "repository_url": "https://github.com/f2c-ai/f2c-mcp",
+      "homepage": "https://smithery.ai/server/@f2c-ai/f2c-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "30",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@f2c-ai_f2c-mcp.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get_code",
+          "description": "Generate UI code for a given node or the currently selected node in the Figma desktop app. Use the nodeId parameter to specify a node id. If no node id is provided, the currently selected node will be used. If a URL is provided, extract the node id from the URL, for example, if given the URL https://figma.com/design/:fileKey/:fileName?node-id=1-2, the extracted nodeId would be 1:2. IMPORTANT: After you call this tool, you should call get_image to get an image of the node for context.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The Figma file identifier found in the file URL (e.g., https://www.figma.com/file/XXXXXXXXXXXX/). Extract the XXXXXXXXXXXX portion as the fileKey."
+              },
+              "ids": {
+                "type": "string",
+                "description": "Comma-separated list of Figma node IDs for conversion. To obtain node IDs, select elements in Figma, right-click and select \"Copy/Paste as\" → \"Copy ID\"."
+              },
+              "personalToken": {
+                "type": "string",
+                "description": "Figma personal access token for API authentication.The parameters are not required when the tool is called."
+              },
+              "localPath": {
+                "type": "string",
+                "description": "Absolute path for asset(e.g., images) and code storage. Directory will be created if non-existent. Path must follow OS-specific format without special character escaping. When this path is set, all code-related static resources are stored in this directory, while other assets (e.g., images) will be saved into the subdirectory named assets under this path."
+              },
+              "imgFormat": {
+                "type": "string",
+                "enum": [
+                  "png",
+                  "jpg",
+                  "svg"
+                ],
+                "default": "png",
+                "description": "Export format for image assets: \"png\" for lossless quality, \"jpg\" for compressed files, or \"svg\" for vector graphics."
+              },
+              "scaleSize": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 4,
+                "default": 2,
+                "description": "Image export scale factor (1-4). Higher values yield better quality at the cost of larger file sizes."
+              }
+            },
+            "required": [
+              "fileKey",
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_image",
+          "description": "Generate an image for a given node or the currently selected node in the Figma desktop app. Use the nodeId parameter to specify a node id. If no node id is provided, the currently selected node will be used. If a URL is provided, extract the node id from the URL, for example, if given the URL https://figma.com/design/:fileKey/:fileName?node-id=1-2, the extracted nodeId would be 1:2. Also export Figma design images for visual verification and design fidelity validation. Essential for comparing generated code output against original designs, ensuring pixel-perfect implementation and catching visual discrepancies during the design-to-code process.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "Figma file identifier from the URL for accessing the design source"
+              },
+              "ids": {
+                "type": "string",
+                "description": "Comma-separated node IDs to export. Use \"Copy ID\" from Figma context menu to get precise element references for comparison"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "jpg",
+                  "png",
+                  "svg",
+                  "pdf"
+                ],
+                "description": "Export format for verification: \"png\" for pixel-perfect comparison with transparency, \"jpg\" for quick previews, \"svg\" for scalable reference, \"pdf\" for print validation"
+              },
+              "scale": {
+                "type": "number",
+                "description": "Scale factor (1-4x) for high-resolution comparison. Use 2x+ for detailed fidelity checks on retina displays"
+              },
+              "svg_include_id": {
+                "type": "boolean",
+                "description": "Include element IDs in SVG for precise element mapping during code validation"
+              },
+              "svg_simplify_stroke": {
+                "type": "boolean",
+                "description": "Simplify stroke paths for cleaner reference images during visual comparison"
+              },
+              "use_absolute_bounds": {
+                "type": "boolean",
+                "description": "Use absolute positioning for accurate layout verification against implemented code"
+              },
+              "version": {
+                "type": "string",
+                "description": "Specific design version for consistent comparison baseline"
+              },
+              "personalToken": {
+                "type": "string",
+                "description": "Figma personal access token for authenticated access to design files"
+              }
+            },
+            "required": [
+              "fileKey",
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@f2c-ai/f2c-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@f2c-ai/f2c-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0512.@f2c-ai_f2c-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 501
+  }
+}

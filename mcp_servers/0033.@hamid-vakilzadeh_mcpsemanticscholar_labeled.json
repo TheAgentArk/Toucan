@@ -1,0 +1,723 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"AI Research Assistant - Semantic Scholar\" is designed for academic research and exploration. It provides tools to search, retrieve, and analyze academic papers, authors, and citation networks. The primary focus is on enabling AI-powered research by giving users immediate access to vast amounts of scholarly information without requiring API keys for basic access. This server solves problems related to discovering academic literature, understanding citation relationships, and finding relevant authors or papers efficiently.",
+    "reasoning": "The primary label \"Web Search & Research\" was chosen because the server's core functionality revolves around searching and retrieving academic research papers and related metadata. The tools provided (e.g., basic/advanced searches, citation/network analysis) align closely with research-oriented tasks. Secondary labels \"Data Analysis & Processing\" and \"database operations\" were selected because the server allows for in-depth analysis of citation networks and metadata querying. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": true
+  },
+  "metadata": {
+    "server_id": 32,
+    "server_name": "AI Research Assistant - Semantic Scholar",
+    "rank_by_usage": 33,
+    "usage_count": "3,623",
+    "original_file": "../crawler/smithery/@hamid-vakilzadeh_mcpsemanticscholar.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@hamid-vakilzadeh/mcpsemanticscholar/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "papers-search-basic",
+          "description": "Search for academic papers with a simple query.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query for papers"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of results to return"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-search-advanced",
+          "description": "Search for academic papers with advanced filtering options",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query for papers"
+              },
+              "yearStart": {
+                "type": "number",
+                "description": "Starting year for filtering (inclusive)"
+              },
+              "yearEnd": {
+                "type": "number",
+                "description": "Ending year for filtering (inclusive)"
+              },
+              "minCitations": {
+                "type": "number",
+                "description": "Minimum number of citations"
+              },
+              "openAccessOnly": {
+                "type": "boolean",
+                "description": "Only include open access papers"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of results to return"
+              },
+              "fieldsOfStudy": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Fields of study to filter by"
+              },
+              "publicationTypes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Publication types to filter by"
+              },
+              "sortBy": {
+                "type": "string",
+                "enum": [
+                  "relevance",
+                  "citationCount",
+                  "year"
+                ],
+                "default": "relevance",
+                "description": "Field to sort by"
+              },
+              "sortOrder": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-match",
+          "description": "Find a paper by closest title match",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Paper title to match"
+              },
+              "yearStart": {
+                "type": "number",
+                "description": "Starting year for filtering (inclusive)"
+              },
+              "yearEnd": {
+                "type": "number",
+                "description": "Ending year for filtering (inclusive)"
+              },
+              "minCitations": {
+                "type": "number",
+                "description": "Minimum number of citations"
+              },
+              "openAccessOnly": {
+                "type": "boolean",
+                "description": "Only include open access papers"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-get",
+          "description": "Get detailed information about a specific paper",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperId": {
+                "type": "string",
+                "description": "Paper ID (Semantic Scholar ID, arXiv ID, DOI, etc.)"
+              }
+            },
+            "required": [
+              "paperId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-citations",
+          "description": "Get papers that cite a specific paper",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperId": {
+                "type": "string",
+                "description": "Paper ID (Semantic Scholar ID, arXiv ID, DOI, etc.)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of citations to return"
+              },
+              "offset": {
+                "type": "number",
+                "default": 0,
+                "description": "Offset for pagination"
+              }
+            },
+            "required": [
+              "paperId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-references",
+          "description": "Get papers cited by a specific paper",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperId": {
+                "type": "string",
+                "description": "Paper ID (Semantic Scholar ID, arXiv ID, DOI, etc.)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of references to return"
+              },
+              "offset": {
+                "type": "number",
+                "default": 0,
+                "description": "Offset for pagination"
+              }
+            },
+            "required": [
+              "paperId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "authors-search",
+          "description": "Search for authors by name or affiliation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query for authors"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of results to return"
+              },
+              "offset": {
+                "type": "number",
+                "default": 0,
+                "description": "Offset for pagination"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "authors-papers",
+          "description": "Get papers written by a specific author",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "authorId": {
+                "type": "string",
+                "description": "Author ID"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of papers to return"
+              },
+              "offset": {
+                "type": "number",
+                "default": 0,
+                "description": "Offset for pagination"
+              }
+            },
+            "required": [
+              "authorId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-batch",
+          "description": "Look up multiple papers by their IDs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of paper IDs (Semantic Scholar IDs, arXiv IDs, DOIs, etc.)"
+              }
+            },
+            "required": [
+              "paperIds"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analysis-citation-network",
+          "description": "Analyze the citation network for a specific paper",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperId": {
+                "type": "string",
+                "description": "Paper ID (Semantic Scholar ID, arXiv ID, DOI, etc.)"
+              },
+              "depth": {
+                "type": "string",
+                "description": "Depth of citation network (1 or 2)"
+              },
+              "citationsLimit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of citations to analyze per paper"
+              },
+              "referencesLimit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of references to analyze per paper"
+              }
+            },
+            "required": [
+              "paperId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 10,
+      "tool_names": [
+        "papers-search-basic",
+        "papers-search-advanced",
+        "papers-match",
+        "papers-get",
+        "papers-citations",
+        "papers-references",
+        "authors-search",
+        "authors-papers",
+        "papers-batch",
+        "analysis-citation-network"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 32,
+      "name": "AI Research Assistant - Semantic Scholar",
+      "author": "@hamid-vakilzadeh/mcpsemanticscholar",
+      "overview": "The server provides immediate access to millions of academic papers and author profiles, making it an essential tool for AI-powered research assistance and academic exploration. No API key is required. The API allows up to 100 requests per 5 minutes. To access a higher rate limit, visit https://www.semanticscholar.org/product/api#Partner-Form to request authentication for your project.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@hamid-vakilzadeh/mcpsemanticscholar",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "3,623",
+      "success_rate": "99.51%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@hamid-vakilzadeh_mcpsemanticscholar.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "papers-search-basic",
+          "description": "Search for academic papers with a simple query.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query for papers"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of results to return"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-search-advanced",
+          "description": "Search for academic papers with advanced filtering options",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query for papers"
+              },
+              "yearStart": {
+                "type": "number",
+                "description": "Starting year for filtering (inclusive)"
+              },
+              "yearEnd": {
+                "type": "number",
+                "description": "Ending year for filtering (inclusive)"
+              },
+              "minCitations": {
+                "type": "number",
+                "description": "Minimum number of citations"
+              },
+              "openAccessOnly": {
+                "type": "boolean",
+                "description": "Only include open access papers"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of results to return"
+              },
+              "fieldsOfStudy": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Fields of study to filter by"
+              },
+              "publicationTypes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Publication types to filter by"
+              },
+              "sortBy": {
+                "type": "string",
+                "enum": [
+                  "relevance",
+                  "citationCount",
+                  "year"
+                ],
+                "default": "relevance",
+                "description": "Field to sort by"
+              },
+              "sortOrder": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-match",
+          "description": "Find a paper by closest title match",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Paper title to match"
+              },
+              "yearStart": {
+                "type": "number",
+                "description": "Starting year for filtering (inclusive)"
+              },
+              "yearEnd": {
+                "type": "number",
+                "description": "Ending year for filtering (inclusive)"
+              },
+              "minCitations": {
+                "type": "number",
+                "description": "Minimum number of citations"
+              },
+              "openAccessOnly": {
+                "type": "boolean",
+                "description": "Only include open access papers"
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-get",
+          "description": "Get detailed information about a specific paper",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperId": {
+                "type": "string",
+                "description": "Paper ID (Semantic Scholar ID, arXiv ID, DOI, etc.)"
+              }
+            },
+            "required": [
+              "paperId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-citations",
+          "description": "Get papers that cite a specific paper",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperId": {
+                "type": "string",
+                "description": "Paper ID (Semantic Scholar ID, arXiv ID, DOI, etc.)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of citations to return"
+              },
+              "offset": {
+                "type": "number",
+                "default": 0,
+                "description": "Offset for pagination"
+              }
+            },
+            "required": [
+              "paperId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-references",
+          "description": "Get papers cited by a specific paper",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperId": {
+                "type": "string",
+                "description": "Paper ID (Semantic Scholar ID, arXiv ID, DOI, etc.)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of references to return"
+              },
+              "offset": {
+                "type": "number",
+                "default": 0,
+                "description": "Offset for pagination"
+              }
+            },
+            "required": [
+              "paperId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "authors-search",
+          "description": "Search for authors by name or affiliation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query for authors"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of results to return"
+              },
+              "offset": {
+                "type": "number",
+                "default": 0,
+                "description": "Offset for pagination"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "authors-papers",
+          "description": "Get papers written by a specific author",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "authorId": {
+                "type": "string",
+                "description": "Author ID"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of papers to return"
+              },
+              "offset": {
+                "type": "number",
+                "default": 0,
+                "description": "Offset for pagination"
+              }
+            },
+            "required": [
+              "authorId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "papers-batch",
+          "description": "Look up multiple papers by their IDs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of paper IDs (Semantic Scholar IDs, arXiv IDs, DOIs, etc.)"
+              }
+            },
+            "required": [
+              "paperIds"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analysis-citation-network",
+          "description": "Analyze the citation network for a specific paper",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paperId": {
+                "type": "string",
+                "description": "Paper ID (Semantic Scholar ID, arXiv ID, DOI, etc.)"
+              },
+              "depth": {
+                "type": "string",
+                "description": "Depth of citation network (1 or 2)"
+              },
+              "citationsLimit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of citations to analyze per paper"
+              },
+              "referencesLimit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of references to analyze per paper"
+              }
+            },
+            "required": [
+              "paperId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@hamid-vakilzadeh/mcpsemanticscholar/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@hamid-vakilzadeh/mcpsemanticscholar/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0033.@hamid-vakilzadeh_mcpsemanticscholar_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 32
+  }
+}

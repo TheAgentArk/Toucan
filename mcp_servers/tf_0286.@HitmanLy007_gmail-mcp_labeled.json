@@ -1,0 +1,3528 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides complete integration with Gmail's API functionalities, allowing comprehensive management of email workflows. It supports all major Gmail operations including message management (send, delete, trashing), label organization, draft handling, account settings configuration, delegation, filtering rules, send-as alias management, and S/MIME security. The server enables secure OAuth2 authentication for personalized user access, making it ideal for applications requiring email automation and enterprise-scale email management.",
+    "reasoning": "The primary label of \"Communication Tools\" is chosen because the server's core functionality revolves around managing and automating email communications. Secondary labels \"API Integration\" and \"Data Processing\" were selected because the server provides an API interface for Gmail operations and handles comprehensive email data manipulation. A custom label wasn't needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "API Integration",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 285,
+    "server_name": "Gmail API Integration Server",
+    "rank_by_usage": 286,
+    "usage_count": "124",
+    "original_file": "../crawler/smithery/@HitmanLy007_gmail-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@HitmanLy007/gmail-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "create_draft",
+          "description": "Create a draft email in Gmail. Note the mechanics of the raw parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "raw": {
+                "type": "string",
+                "description": "The entire email message in base64url encoded RFC 2822 format, ignores params.to, cc, bcc, subject, body, includeBodyHtml if provided"
+              },
+              "threadId": {
+                "type": "string",
+                "description": "The thread ID to associate this draft with"
+              },
+              "to": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of recipient email addresses"
+              },
+              "cc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of CC recipient email addresses"
+              },
+              "bcc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of BCC recipient email addresses"
+              },
+              "subject": {
+                "type": "string",
+                "description": "The subject of the email"
+              },
+              "body": {
+                "type": "string",
+                "description": "The body of the email"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_draft",
+          "description": "Delete a draft",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the draft to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_draft",
+          "description": "Get a specific draft by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the draft to retrieve"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_drafts",
+          "description": "List drafts in the user's mailbox",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "maxResults": {
+                "type": "number",
+                "description": "Maximum number of drafts to return. Accepts values between 1-500"
+              },
+              "q": {
+                "type": "string",
+                "description": "Only return drafts matching the specified query. Supports the same query format as the Gmail search box"
+              },
+              "includeSpamTrash": {
+                "type": "boolean",
+                "description": "Include drafts from SPAM and TRASH in the results"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "send_draft",
+          "description": "Send an existing draft",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the draft to send"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "create_label",
+          "description": "Create a new label",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The display name of the label"
+              },
+              "messageListVisibility": {
+                "type": "string",
+                "enum": [
+                  "show",
+                  "hide"
+                ],
+                "description": "The visibility of messages with this label in the message list"
+              },
+              "labelListVisibility": {
+                "type": "string",
+                "enum": [
+                  "labelShow",
+                  "labelShowIfUnread",
+                  "labelHide"
+                ],
+                "description": "The visibility of the label in the label list"
+              },
+              "color": {
+                "type": "object",
+                "properties": {
+                  "textColor": {
+                    "type": "string",
+                    "description": "The text color of the label as hex string"
+                  },
+                  "backgroundColor": {
+                    "type": "string",
+                    "description": "The background color of the label as hex string"
+                  }
+                },
+                "required": [
+                  "textColor",
+                  "backgroundColor"
+                ],
+                "additionalProperties": false,
+                "description": "The color settings for the label"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_label",
+          "description": "Delete a label",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the label to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_label",
+          "description": "Get a specific label by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the label to retrieve"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_labels",
+          "description": "List all labels in the user's mailbox",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "patch_label",
+          "description": "Patch an existing label (partial update)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the label to patch"
+              },
+              "name": {
+                "type": "string",
+                "description": "The display name of the label"
+              },
+              "messageListVisibility": {
+                "type": "string",
+                "enum": [
+                  "show",
+                  "hide"
+                ],
+                "description": "The visibility of messages with this label in the message list"
+              },
+              "labelListVisibility": {
+                "type": "string",
+                "enum": [
+                  "labelShow",
+                  "labelShowIfUnread",
+                  "labelHide"
+                ],
+                "description": "The visibility of the label in the label list"
+              },
+              "color": {
+                "type": "object",
+                "properties": {
+                  "textColor": {
+                    "type": "string",
+                    "description": "The text color of the label as hex string"
+                  },
+                  "backgroundColor": {
+                    "type": "string",
+                    "description": "The background color of the label as hex string"
+                  }
+                },
+                "required": [
+                  "textColor",
+                  "backgroundColor"
+                ],
+                "additionalProperties": false,
+                "description": "The color settings for the label"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_label",
+          "description": "Update an existing label",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the label to update"
+              },
+              "name": {
+                "type": "string",
+                "description": "The display name of the label"
+              },
+              "messageListVisibility": {
+                "type": "string",
+                "enum": [
+                  "show",
+                  "hide"
+                ],
+                "description": "The visibility of messages with this label in the message list"
+              },
+              "labelListVisibility": {
+                "type": "string",
+                "enum": [
+                  "labelShow",
+                  "labelShowIfUnread",
+                  "labelHide"
+                ],
+                "description": "The visibility of the label in the label list"
+              },
+              "color": {
+                "type": "object",
+                "properties": {
+                  "textColor": {
+                    "type": "string",
+                    "description": "The text color of the label as hex string"
+                  },
+                  "backgroundColor": {
+                    "type": "string",
+                    "description": "The background color of the label as hex string"
+                  }
+                },
+                "required": [
+                  "textColor",
+                  "backgroundColor"
+                ],
+                "additionalProperties": false,
+                "description": "The color settings for the label"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "batch_delete_messages",
+          "description": "Delete multiple messages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The IDs of the messages to delete"
+              }
+            },
+            "required": [
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "batch_modify_messages",
+          "description": "Modify the labels on multiple messages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The IDs of the messages to modify"
+              },
+              "addLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to add to the messages"
+              },
+              "removeLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to remove from the messages"
+              }
+            },
+            "required": [
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_message",
+          "description": "Immediately and permanently delete a message",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_message",
+          "description": "Get a specific message by ID with format options",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to retrieve"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_messages",
+          "description": "List messages in the user's mailbox with optional filtering",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "maxResults": {
+                "type": "number",
+                "description": "Maximum number of messages to return. Accepts values between 1-500"
+              },
+              "pageToken": {
+                "type": "string",
+                "description": "Page token to retrieve a specific page of results"
+              },
+              "q": {
+                "type": "string",
+                "description": "Only return messages matching the specified query. Supports the same query format as the Gmail search box"
+              },
+              "labelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Only return messages with labels that match all of the specified label IDs"
+              },
+              "includeSpamTrash": {
+                "type": "boolean",
+                "description": "Include messages from SPAM and TRASH in the results"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "modify_message",
+          "description": "Modify the labels on a message",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to modify"
+              },
+              "addLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to add to the message"
+              },
+              "removeLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to remove from the message"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "send_message",
+          "description": "Send an email message to specified recipients. Note the mechanics of the raw parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "raw": {
+                "type": "string",
+                "description": "The entire email message in base64url encoded RFC 2822 format, ignores params.to, cc, bcc, subject, body, includeBodyHtml if provided"
+              },
+              "threadId": {
+                "type": "string",
+                "description": "The thread ID to associate this message with"
+              },
+              "to": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of recipient email addresses"
+              },
+              "cc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of CC recipient email addresses"
+              },
+              "bcc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of BCC recipient email addresses"
+              },
+              "subject": {
+                "type": "string",
+                "description": "The subject of the email"
+              },
+              "body": {
+                "type": "string",
+                "description": "The body of the email"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "trash_message",
+          "description": "Move a message to the trash",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to move to trash"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "untrash_message",
+          "description": "Remove a message from the trash",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to remove from trash"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_attachment",
+          "description": "Get a message attachment",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "messageId": {
+                "type": "string",
+                "description": "ID of the message containing the attachment"
+              },
+              "id": {
+                "type": "string",
+                "description": "The ID of the attachment"
+              }
+            },
+            "required": [
+              "messageId",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_thread",
+          "description": "Delete a thread",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_thread",
+          "description": "Get a specific thread by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to retrieve"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_threads",
+          "description": "List threads in the user's mailbox",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "maxResults": {
+                "type": "number",
+                "description": "Maximum number of threads to return"
+              },
+              "pageToken": {
+                "type": "string",
+                "description": "Page token to retrieve a specific page of results"
+              },
+              "q": {
+                "type": "string",
+                "description": "Only return threads matching the specified query"
+              },
+              "labelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Only return threads with labels that match all of the specified label IDs"
+              },
+              "includeSpamTrash": {
+                "type": "boolean",
+                "description": "Include threads from SPAM and TRASH in the results"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "modify_thread",
+          "description": "Modify the labels applied to a thread",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to modify"
+              },
+              "addLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to add to the thread"
+              },
+              "removeLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to remove from the thread"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "trash_thread",
+          "description": "Move a thread to the trash",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to move to trash"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "untrash_thread",
+          "description": "Remove a thread from the trash",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to remove from trash"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_auto_forwarding",
+          "description": "Gets auto-forwarding settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_imap",
+          "description": "Gets IMAP settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_language",
+          "description": "Gets language settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_pop",
+          "description": "Gets POP settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_vacation",
+          "description": "Get vacation responder settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "update_auto_forwarding",
+          "description": "Updates automatic forwarding settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Whether all incoming mail is automatically forwarded to another address"
+              },
+              "emailAddress": {
+                "type": "string",
+                "description": "Email address to which messages should be automatically forwarded"
+              },
+              "disposition": {
+                "type": "string",
+                "enum": [
+                  "leaveInInbox",
+                  "archive",
+                  "trash",
+                  "markRead"
+                ],
+                "description": "The state in which messages should be left after being forwarded"
+              }
+            },
+            "required": [
+              "enabled",
+              "emailAddress",
+              "disposition"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_imap",
+          "description": "Updates IMAP settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Whether IMAP is enabled for the account"
+              },
+              "expungeBehavior": {
+                "type": "string",
+                "enum": [
+                  "archive",
+                  "trash",
+                  "deleteForever"
+                ],
+                "description": "The action that will be executed on a message when it is marked as deleted and expunged from the last visible IMAP folder"
+              },
+              "maxFolderSize": {
+                "type": "number",
+                "description": "An optional limit on the number of messages that can be accessed through IMAP"
+              }
+            },
+            "required": [
+              "enabled"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_language",
+          "description": "Updates language settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "displayLanguage": {
+                "type": "string",
+                "description": "The language to display Gmail in, formatted as an RFC 3066 Language Tag"
+              }
+            },
+            "required": [
+              "displayLanguage"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_pop",
+          "description": "Updates POP settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "accessWindow": {
+                "type": "string",
+                "enum": [
+                  "disabled",
+                  "allMail",
+                  "fromNowOn"
+                ],
+                "description": "The range of messages which are accessible via POP"
+              },
+              "disposition": {
+                "type": "string",
+                "enum": [
+                  "archive",
+                  "trash",
+                  "leaveInInbox"
+                ],
+                "description": "The action that will be executed on a message after it has been fetched via POP"
+              }
+            },
+            "required": [
+              "accessWindow",
+              "disposition"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_vacation",
+          "description": "Update vacation responder settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "enableAutoReply": {
+                "type": "boolean",
+                "description": "Whether the vacation responder is enabled"
+              },
+              "responseSubject": {
+                "type": "string",
+                "description": "Optional subject line for the vacation responder auto-reply"
+              },
+              "responseBodyPlainText": {
+                "type": "string",
+                "description": "Response body in plain text format"
+              },
+              "restrictToContacts": {
+                "type": "boolean",
+                "description": "Whether responses are only sent to contacts"
+              },
+              "restrictToDomain": {
+                "type": "boolean",
+                "description": "Whether responses are only sent to users in the same domain"
+              },
+              "startTime": {
+                "type": "string",
+                "description": "Start time for sending auto-replies (epoch ms)"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time for sending auto-replies (epoch ms)"
+              }
+            },
+            "required": [
+              "enableAutoReply",
+              "responseBodyPlainText"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "add_delegate",
+          "description": "Adds a delegate to the specified account",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegateEmail": {
+                "type": "string",
+                "description": "Email address of delegate to add"
+              }
+            },
+            "required": [
+              "delegateEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "remove_delegate",
+          "description": "Removes the specified delegate",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegateEmail": {
+                "type": "string",
+                "description": "Email address of delegate to remove"
+              }
+            },
+            "required": [
+              "delegateEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_delegate",
+          "description": "Gets the specified delegate",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegateEmail": {
+                "type": "string",
+                "description": "The email address of the delegate to retrieve"
+              }
+            },
+            "required": [
+              "delegateEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_delegates",
+          "description": "Lists the delegates for the specified account",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create_filter",
+          "description": "Creates a filter",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "criteria": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "description": "The sender's display name or email address"
+                  },
+                  "to": {
+                    "type": "string",
+                    "description": "The recipient's display name or email address"
+                  },
+                  "subject": {
+                    "type": "string",
+                    "description": "Case-insensitive phrase in the message's subject"
+                  },
+                  "query": {
+                    "type": "string",
+                    "description": "A Gmail search query that specifies the filter's criteria"
+                  },
+                  "negatedQuery": {
+                    "type": "string",
+                    "description": "A Gmail search query that specifies criteria the message must not match"
+                  },
+                  "hasAttachment": {
+                    "type": "boolean",
+                    "description": "Whether the message has any attachment"
+                  },
+                  "excludeChats": {
+                    "type": "boolean",
+                    "description": "Whether the response should exclude chats"
+                  },
+                  "size": {
+                    "type": "number",
+                    "description": "The size of the entire RFC822 message in bytes"
+                  },
+                  "sizeComparison": {
+                    "type": "string",
+                    "enum": [
+                      "smaller",
+                      "larger"
+                    ],
+                    "description": "How the message size in bytes should be in relation to the size field"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Filter criteria"
+              },
+              "action": {
+                "type": "object",
+                "properties": {
+                  "addLabelIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of labels to add to messages"
+                  },
+                  "removeLabelIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of labels to remove from messages"
+                  },
+                  "forward": {
+                    "type": "string",
+                    "description": "Email address that the message should be forwarded to"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Actions to perform on messages matching the criteria"
+              }
+            },
+            "required": [
+              "criteria",
+              "action"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_filter",
+          "description": "Deletes a filter",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the filter to be deleted"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_filter",
+          "description": "Gets a filter",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the filter to be fetched"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_filters",
+          "description": "Lists the message filters of a Gmail user",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create_forwarding_address",
+          "description": "Creates a forwarding address",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "forwardingEmail": {
+                "type": "string",
+                "description": "An email address to which messages can be forwarded"
+              }
+            },
+            "required": [
+              "forwardingEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_forwarding_address",
+          "description": "Deletes the specified forwarding address",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "forwardingEmail": {
+                "type": "string",
+                "description": "The forwarding address to be deleted"
+              }
+            },
+            "required": [
+              "forwardingEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_forwarding_address",
+          "description": "Gets the specified forwarding address",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "forwardingEmail": {
+                "type": "string",
+                "description": "The forwarding address to be retrieved"
+              }
+            },
+            "required": [
+              "forwardingEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_forwarding_addresses",
+          "description": "Lists the forwarding addresses for the specified account",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create_send_as",
+          "description": "Creates a custom send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "displayName": {
+                "type": "string",
+                "description": "A name that appears in the 'From:' header"
+              },
+              "replyToAddress": {
+                "type": "string",
+                "description": "An optional email address that is included in a 'Reply-To:' header"
+              },
+              "signature": {
+                "type": "string",
+                "description": "An optional HTML signature"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "Whether this address is the primary address"
+              },
+              "treatAsAlias": {
+                "type": "boolean",
+                "description": "Whether Gmail should treat this address as an alias"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_send_as",
+          "description": "Deletes the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be deleted"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_send_as",
+          "description": "Gets the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be retrieved"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_send_as",
+          "description": "Lists the send-as aliases for the specified account",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "patch_send_as",
+          "description": "Patches the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be updated"
+              },
+              "displayName": {
+                "type": "string",
+                "description": "A name that appears in the 'From:' header"
+              },
+              "replyToAddress": {
+                "type": "string",
+                "description": "An optional email address that is included in a 'Reply-To:' header"
+              },
+              "signature": {
+                "type": "string",
+                "description": "An optional HTML signature"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "Whether this address is the primary address"
+              },
+              "treatAsAlias": {
+                "type": "boolean",
+                "description": "Whether Gmail should treat this address as an alias"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_send_as",
+          "description": "Updates a send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be updated"
+              },
+              "displayName": {
+                "type": "string",
+                "description": "A name that appears in the 'From:' header"
+              },
+              "replyToAddress": {
+                "type": "string",
+                "description": "An optional email address that is included in a 'Reply-To:' header"
+              },
+              "signature": {
+                "type": "string",
+                "description": "An optional HTML signature"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "Whether this address is the primary address"
+              },
+              "treatAsAlias": {
+                "type": "boolean",
+                "description": "Whether Gmail should treat this address as an alias"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "verify_send_as",
+          "description": "Sends a verification email to the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be verified"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_smime_info",
+          "description": "Deletes the specified S/MIME config for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "id": {
+                "type": "string",
+                "description": "The immutable ID for the S/MIME config"
+              }
+            },
+            "required": [
+              "sendAsEmail",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_smime_info",
+          "description": "Gets the specified S/MIME config for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "id": {
+                "type": "string",
+                "description": "The immutable ID for the S/MIME config"
+              }
+            },
+            "required": [
+              "sendAsEmail",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "insert_smime_info",
+          "description": "Insert (upload) the given S/MIME config for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "encryptedKeyPassword": {
+                "type": "string",
+                "description": "Encrypted key password"
+              },
+              "pkcs12": {
+                "type": "string",
+                "description": "PKCS#12 format containing a single private/public key pair and certificate chain"
+              }
+            },
+            "required": [
+              "sendAsEmail",
+              "encryptedKeyPassword",
+              "pkcs12"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_smime_info",
+          "description": "Lists S/MIME configs for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "set_default_smime_info",
+          "description": "Sets the default S/MIME config for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "id": {
+                "type": "string",
+                "description": "The immutable ID for the S/MIME config"
+              }
+            },
+            "required": [
+              "sendAsEmail",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_profile",
+          "description": "Get the current user's Gmail profile",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "watch_mailbox",
+          "description": "Watch for changes to the user's mailbox",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "topicName": {
+                "type": "string",
+                "description": "The name of the Cloud Pub/Sub topic to publish notifications to"
+              },
+              "labelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Label IDs to restrict notifications to"
+              },
+              "labelFilterAction": {
+                "type": "string",
+                "enum": [
+                  "include",
+                  "exclude"
+                ],
+                "description": "Whether to include or exclude the specified labels"
+              }
+            },
+            "required": [
+              "topicName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "stop_mail_watch",
+          "description": "Stop receiving push notifications for the given user mailbox",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        }
+      ],
+      "tool_count": 64,
+      "tool_names": [
+        "create_draft",
+        "delete_draft",
+        "get_draft",
+        "list_drafts",
+        "send_draft",
+        "create_label",
+        "delete_label",
+        "get_label",
+        "list_labels",
+        "patch_label",
+        "update_label",
+        "batch_delete_messages",
+        "batch_modify_messages",
+        "delete_message",
+        "get_message",
+        "list_messages",
+        "modify_message",
+        "send_message",
+        "trash_message",
+        "untrash_message",
+        "get_attachment",
+        "delete_thread",
+        "get_thread",
+        "list_threads",
+        "modify_thread",
+        "trash_thread",
+        "untrash_thread",
+        "get_auto_forwarding",
+        "get_imap",
+        "get_language",
+        "get_pop",
+        "get_vacation",
+        "update_auto_forwarding",
+        "update_imap",
+        "update_language",
+        "update_pop",
+        "update_vacation",
+        "add_delegate",
+        "remove_delegate",
+        "get_delegate",
+        "list_delegates",
+        "create_filter",
+        "delete_filter",
+        "get_filter",
+        "list_filters",
+        "create_forwarding_address",
+        "delete_forwarding_address",
+        "get_forwarding_address",
+        "list_forwarding_addresses",
+        "create_send_as",
+        "delete_send_as",
+        "get_send_as",
+        "list_send_as",
+        "patch_send_as",
+        "update_send_as",
+        "verify_send_as",
+        "delete_smime_info",
+        "get_smime_info",
+        "insert_smime_info",
+        "list_smime_info",
+        "set_default_smime_info",
+        "get_profile",
+        "watch_mailbox",
+        "stop_mail_watch"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 285,
+      "name": "Gmail API Integration Server",
+      "author": "@HitmanLy007/gmail-mcp",
+      "overview": "Provide seamless access to Gmail functionalities including email sending, retrieval, label and thread management, and mailbox settings through a standardized interface. Enable secure OAuth2 authentication for personalized user access and support comprehensive Gmail API features. Simplify email management workflows by integrating Gmail capabilities into your applications or agents.",
+      "repository_url": "https://github.com/HitmanLy007/gmail-mcp",
+      "homepage": "https://smithery.ai/server/@HitmanLy007/gmail-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "124",
+      "success_rate": "99.31%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@HitmanLy007_gmail-mcp.json",
+      "tools_count": 64,
+      "tools": [
+        {
+          "name": "create_draft",
+          "description": "Create a draft email in Gmail. Note the mechanics of the raw parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "raw": {
+                "type": "string",
+                "description": "The entire email message in base64url encoded RFC 2822 format, ignores params.to, cc, bcc, subject, body, includeBodyHtml if provided"
+              },
+              "threadId": {
+                "type": "string",
+                "description": "The thread ID to associate this draft with"
+              },
+              "to": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of recipient email addresses"
+              },
+              "cc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of CC recipient email addresses"
+              },
+              "bcc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of BCC recipient email addresses"
+              },
+              "subject": {
+                "type": "string",
+                "description": "The subject of the email"
+              },
+              "body": {
+                "type": "string",
+                "description": "The body of the email"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_draft",
+          "description": "Delete a draft",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the draft to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_draft",
+          "description": "Get a specific draft by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the draft to retrieve"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_drafts",
+          "description": "List drafts in the user's mailbox",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "maxResults": {
+                "type": "number",
+                "description": "Maximum number of drafts to return. Accepts values between 1-500"
+              },
+              "q": {
+                "type": "string",
+                "description": "Only return drafts matching the specified query. Supports the same query format as the Gmail search box"
+              },
+              "includeSpamTrash": {
+                "type": "boolean",
+                "description": "Include drafts from SPAM and TRASH in the results"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "send_draft",
+          "description": "Send an existing draft",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the draft to send"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "create_label",
+          "description": "Create a new label",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The display name of the label"
+              },
+              "messageListVisibility": {
+                "type": "string",
+                "enum": [
+                  "show",
+                  "hide"
+                ],
+                "description": "The visibility of messages with this label in the message list"
+              },
+              "labelListVisibility": {
+                "type": "string",
+                "enum": [
+                  "labelShow",
+                  "labelShowIfUnread",
+                  "labelHide"
+                ],
+                "description": "The visibility of the label in the label list"
+              },
+              "color": {
+                "type": "object",
+                "properties": {
+                  "textColor": {
+                    "type": "string",
+                    "description": "The text color of the label as hex string"
+                  },
+                  "backgroundColor": {
+                    "type": "string",
+                    "description": "The background color of the label as hex string"
+                  }
+                },
+                "required": [
+                  "textColor",
+                  "backgroundColor"
+                ],
+                "additionalProperties": false,
+                "description": "The color settings for the label"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_label",
+          "description": "Delete a label",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the label to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_label",
+          "description": "Get a specific label by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the label to retrieve"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_labels",
+          "description": "List all labels in the user's mailbox",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "patch_label",
+          "description": "Patch an existing label (partial update)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the label to patch"
+              },
+              "name": {
+                "type": "string",
+                "description": "The display name of the label"
+              },
+              "messageListVisibility": {
+                "type": "string",
+                "enum": [
+                  "show",
+                  "hide"
+                ],
+                "description": "The visibility of messages with this label in the message list"
+              },
+              "labelListVisibility": {
+                "type": "string",
+                "enum": [
+                  "labelShow",
+                  "labelShowIfUnread",
+                  "labelHide"
+                ],
+                "description": "The visibility of the label in the label list"
+              },
+              "color": {
+                "type": "object",
+                "properties": {
+                  "textColor": {
+                    "type": "string",
+                    "description": "The text color of the label as hex string"
+                  },
+                  "backgroundColor": {
+                    "type": "string",
+                    "description": "The background color of the label as hex string"
+                  }
+                },
+                "required": [
+                  "textColor",
+                  "backgroundColor"
+                ],
+                "additionalProperties": false,
+                "description": "The color settings for the label"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_label",
+          "description": "Update an existing label",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the label to update"
+              },
+              "name": {
+                "type": "string",
+                "description": "The display name of the label"
+              },
+              "messageListVisibility": {
+                "type": "string",
+                "enum": [
+                  "show",
+                  "hide"
+                ],
+                "description": "The visibility of messages with this label in the message list"
+              },
+              "labelListVisibility": {
+                "type": "string",
+                "enum": [
+                  "labelShow",
+                  "labelShowIfUnread",
+                  "labelHide"
+                ],
+                "description": "The visibility of the label in the label list"
+              },
+              "color": {
+                "type": "object",
+                "properties": {
+                  "textColor": {
+                    "type": "string",
+                    "description": "The text color of the label as hex string"
+                  },
+                  "backgroundColor": {
+                    "type": "string",
+                    "description": "The background color of the label as hex string"
+                  }
+                },
+                "required": [
+                  "textColor",
+                  "backgroundColor"
+                ],
+                "additionalProperties": false,
+                "description": "The color settings for the label"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "batch_delete_messages",
+          "description": "Delete multiple messages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The IDs of the messages to delete"
+              }
+            },
+            "required": [
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "batch_modify_messages",
+          "description": "Modify the labels on multiple messages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The IDs of the messages to modify"
+              },
+              "addLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to add to the messages"
+              },
+              "removeLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to remove from the messages"
+              }
+            },
+            "required": [
+              "ids"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_message",
+          "description": "Immediately and permanently delete a message",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_message",
+          "description": "Get a specific message by ID with format options",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to retrieve"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_messages",
+          "description": "List messages in the user's mailbox with optional filtering",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "maxResults": {
+                "type": "number",
+                "description": "Maximum number of messages to return. Accepts values between 1-500"
+              },
+              "pageToken": {
+                "type": "string",
+                "description": "Page token to retrieve a specific page of results"
+              },
+              "q": {
+                "type": "string",
+                "description": "Only return messages matching the specified query. Supports the same query format as the Gmail search box"
+              },
+              "labelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Only return messages with labels that match all of the specified label IDs"
+              },
+              "includeSpamTrash": {
+                "type": "boolean",
+                "description": "Include messages from SPAM and TRASH in the results"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "modify_message",
+          "description": "Modify the labels on a message",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to modify"
+              },
+              "addLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to add to the message"
+              },
+              "removeLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to remove from the message"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "send_message",
+          "description": "Send an email message to specified recipients. Note the mechanics of the raw parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "raw": {
+                "type": "string",
+                "description": "The entire email message in base64url encoded RFC 2822 format, ignores params.to, cc, bcc, subject, body, includeBodyHtml if provided"
+              },
+              "threadId": {
+                "type": "string",
+                "description": "The thread ID to associate this message with"
+              },
+              "to": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of recipient email addresses"
+              },
+              "cc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of CC recipient email addresses"
+              },
+              "bcc": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of BCC recipient email addresses"
+              },
+              "subject": {
+                "type": "string",
+                "description": "The subject of the email"
+              },
+              "body": {
+                "type": "string",
+                "description": "The body of the email"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "trash_message",
+          "description": "Move a message to the trash",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to move to trash"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "untrash_message",
+          "description": "Remove a message from the trash",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the message to remove from trash"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_attachment",
+          "description": "Get a message attachment",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "messageId": {
+                "type": "string",
+                "description": "ID of the message containing the attachment"
+              },
+              "id": {
+                "type": "string",
+                "description": "The ID of the attachment"
+              }
+            },
+            "required": [
+              "messageId",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_thread",
+          "description": "Delete a thread",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_thread",
+          "description": "Get a specific thread by ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to retrieve"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_threads",
+          "description": "List threads in the user's mailbox",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "maxResults": {
+                "type": "number",
+                "description": "Maximum number of threads to return"
+              },
+              "pageToken": {
+                "type": "string",
+                "description": "Page token to retrieve a specific page of results"
+              },
+              "q": {
+                "type": "string",
+                "description": "Only return threads matching the specified query"
+              },
+              "labelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Only return threads with labels that match all of the specified label IDs"
+              },
+              "includeSpamTrash": {
+                "type": "boolean",
+                "description": "Include threads from SPAM and TRASH in the results"
+              },
+              "includeBodyHtml": {
+                "type": "boolean",
+                "description": "Whether to include the parsed HTML in the return for each body, excluded by default because they can be excessively large"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "modify_thread",
+          "description": "Modify the labels applied to a thread",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to modify"
+              },
+              "addLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to add to the thread"
+              },
+              "removeLabelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of label IDs to remove from the thread"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "trash_thread",
+          "description": "Move a thread to the trash",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to move to trash"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "untrash_thread",
+          "description": "Remove a thread from the trash",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the thread to remove from trash"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_auto_forwarding",
+          "description": "Gets auto-forwarding settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_imap",
+          "description": "Gets IMAP settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_language",
+          "description": "Gets language settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_pop",
+          "description": "Gets POP settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "get_vacation",
+          "description": "Get vacation responder settings",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "update_auto_forwarding",
+          "description": "Updates automatic forwarding settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Whether all incoming mail is automatically forwarded to another address"
+              },
+              "emailAddress": {
+                "type": "string",
+                "description": "Email address to which messages should be automatically forwarded"
+              },
+              "disposition": {
+                "type": "string",
+                "enum": [
+                  "leaveInInbox",
+                  "archive",
+                  "trash",
+                  "markRead"
+                ],
+                "description": "The state in which messages should be left after being forwarded"
+              }
+            },
+            "required": [
+              "enabled",
+              "emailAddress",
+              "disposition"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_imap",
+          "description": "Updates IMAP settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Whether IMAP is enabled for the account"
+              },
+              "expungeBehavior": {
+                "type": "string",
+                "enum": [
+                  "archive",
+                  "trash",
+                  "deleteForever"
+                ],
+                "description": "The action that will be executed on a message when it is marked as deleted and expunged from the last visible IMAP folder"
+              },
+              "maxFolderSize": {
+                "type": "number",
+                "description": "An optional limit on the number of messages that can be accessed through IMAP"
+              }
+            },
+            "required": [
+              "enabled"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_language",
+          "description": "Updates language settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "displayLanguage": {
+                "type": "string",
+                "description": "The language to display Gmail in, formatted as an RFC 3066 Language Tag"
+              }
+            },
+            "required": [
+              "displayLanguage"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_pop",
+          "description": "Updates POP settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "accessWindow": {
+                "type": "string",
+                "enum": [
+                  "disabled",
+                  "allMail",
+                  "fromNowOn"
+                ],
+                "description": "The range of messages which are accessible via POP"
+              },
+              "disposition": {
+                "type": "string",
+                "enum": [
+                  "archive",
+                  "trash",
+                  "leaveInInbox"
+                ],
+                "description": "The action that will be executed on a message after it has been fetched via POP"
+              }
+            },
+            "required": [
+              "accessWindow",
+              "disposition"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_vacation",
+          "description": "Update vacation responder settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "enableAutoReply": {
+                "type": "boolean",
+                "description": "Whether the vacation responder is enabled"
+              },
+              "responseSubject": {
+                "type": "string",
+                "description": "Optional subject line for the vacation responder auto-reply"
+              },
+              "responseBodyPlainText": {
+                "type": "string",
+                "description": "Response body in plain text format"
+              },
+              "restrictToContacts": {
+                "type": "boolean",
+                "description": "Whether responses are only sent to contacts"
+              },
+              "restrictToDomain": {
+                "type": "boolean",
+                "description": "Whether responses are only sent to users in the same domain"
+              },
+              "startTime": {
+                "type": "string",
+                "description": "Start time for sending auto-replies (epoch ms)"
+              },
+              "endTime": {
+                "type": "string",
+                "description": "End time for sending auto-replies (epoch ms)"
+              }
+            },
+            "required": [
+              "enableAutoReply",
+              "responseBodyPlainText"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "add_delegate",
+          "description": "Adds a delegate to the specified account",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegateEmail": {
+                "type": "string",
+                "description": "Email address of delegate to add"
+              }
+            },
+            "required": [
+              "delegateEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "remove_delegate",
+          "description": "Removes the specified delegate",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegateEmail": {
+                "type": "string",
+                "description": "Email address of delegate to remove"
+              }
+            },
+            "required": [
+              "delegateEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_delegate",
+          "description": "Gets the specified delegate",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "delegateEmail": {
+                "type": "string",
+                "description": "The email address of the delegate to retrieve"
+              }
+            },
+            "required": [
+              "delegateEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_delegates",
+          "description": "Lists the delegates for the specified account",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create_filter",
+          "description": "Creates a filter",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "criteria": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "description": "The sender's display name or email address"
+                  },
+                  "to": {
+                    "type": "string",
+                    "description": "The recipient's display name or email address"
+                  },
+                  "subject": {
+                    "type": "string",
+                    "description": "Case-insensitive phrase in the message's subject"
+                  },
+                  "query": {
+                    "type": "string",
+                    "description": "A Gmail search query that specifies the filter's criteria"
+                  },
+                  "negatedQuery": {
+                    "type": "string",
+                    "description": "A Gmail search query that specifies criteria the message must not match"
+                  },
+                  "hasAttachment": {
+                    "type": "boolean",
+                    "description": "Whether the message has any attachment"
+                  },
+                  "excludeChats": {
+                    "type": "boolean",
+                    "description": "Whether the response should exclude chats"
+                  },
+                  "size": {
+                    "type": "number",
+                    "description": "The size of the entire RFC822 message in bytes"
+                  },
+                  "sizeComparison": {
+                    "type": "string",
+                    "enum": [
+                      "smaller",
+                      "larger"
+                    ],
+                    "description": "How the message size in bytes should be in relation to the size field"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Filter criteria"
+              },
+              "action": {
+                "type": "object",
+                "properties": {
+                  "addLabelIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of labels to add to messages"
+                  },
+                  "removeLabelIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of labels to remove from messages"
+                  },
+                  "forward": {
+                    "type": "string",
+                    "description": "Email address that the message should be forwarded to"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Actions to perform on messages matching the criteria"
+              }
+            },
+            "required": [
+              "criteria",
+              "action"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_filter",
+          "description": "Deletes a filter",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the filter to be deleted"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_filter",
+          "description": "Gets a filter",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The ID of the filter to be fetched"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_filters",
+          "description": "Lists the message filters of a Gmail user",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create_forwarding_address",
+          "description": "Creates a forwarding address",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "forwardingEmail": {
+                "type": "string",
+                "description": "An email address to which messages can be forwarded"
+              }
+            },
+            "required": [
+              "forwardingEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_forwarding_address",
+          "description": "Deletes the specified forwarding address",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "forwardingEmail": {
+                "type": "string",
+                "description": "The forwarding address to be deleted"
+              }
+            },
+            "required": [
+              "forwardingEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_forwarding_address",
+          "description": "Gets the specified forwarding address",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "forwardingEmail": {
+                "type": "string",
+                "description": "The forwarding address to be retrieved"
+              }
+            },
+            "required": [
+              "forwardingEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_forwarding_addresses",
+          "description": "Lists the forwarding addresses for the specified account",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create_send_as",
+          "description": "Creates a custom send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "displayName": {
+                "type": "string",
+                "description": "A name that appears in the 'From:' header"
+              },
+              "replyToAddress": {
+                "type": "string",
+                "description": "An optional email address that is included in a 'Reply-To:' header"
+              },
+              "signature": {
+                "type": "string",
+                "description": "An optional HTML signature"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "Whether this address is the primary address"
+              },
+              "treatAsAlias": {
+                "type": "boolean",
+                "description": "Whether Gmail should treat this address as an alias"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_send_as",
+          "description": "Deletes the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be deleted"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_send_as",
+          "description": "Gets the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be retrieved"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_send_as",
+          "description": "Lists the send-as aliases for the specified account",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "patch_send_as",
+          "description": "Patches the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be updated"
+              },
+              "displayName": {
+                "type": "string",
+                "description": "A name that appears in the 'From:' header"
+              },
+              "replyToAddress": {
+                "type": "string",
+                "description": "An optional email address that is included in a 'Reply-To:' header"
+              },
+              "signature": {
+                "type": "string",
+                "description": "An optional HTML signature"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "Whether this address is the primary address"
+              },
+              "treatAsAlias": {
+                "type": "boolean",
+                "description": "Whether Gmail should treat this address as an alias"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "update_send_as",
+          "description": "Updates a send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be updated"
+              },
+              "displayName": {
+                "type": "string",
+                "description": "A name that appears in the 'From:' header"
+              },
+              "replyToAddress": {
+                "type": "string",
+                "description": "An optional email address that is included in a 'Reply-To:' header"
+              },
+              "signature": {
+                "type": "string",
+                "description": "An optional HTML signature"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "Whether this address is the primary address"
+              },
+              "treatAsAlias": {
+                "type": "boolean",
+                "description": "Whether Gmail should treat this address as an alias"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "verify_send_as",
+          "description": "Sends a verification email to the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The send-as alias to be verified"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "delete_smime_info",
+          "description": "Deletes the specified S/MIME config for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "id": {
+                "type": "string",
+                "description": "The immutable ID for the S/MIME config"
+              }
+            },
+            "required": [
+              "sendAsEmail",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_smime_info",
+          "description": "Gets the specified S/MIME config for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "id": {
+                "type": "string",
+                "description": "The immutable ID for the S/MIME config"
+              }
+            },
+            "required": [
+              "sendAsEmail",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "insert_smime_info",
+          "description": "Insert (upload) the given S/MIME config for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "encryptedKeyPassword": {
+                "type": "string",
+                "description": "Encrypted key password"
+              },
+              "pkcs12": {
+                "type": "string",
+                "description": "PKCS#12 format containing a single private/public key pair and certificate chain"
+              }
+            },
+            "required": [
+              "sendAsEmail",
+              "encryptedKeyPassword",
+              "pkcs12"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list_smime_info",
+          "description": "Lists S/MIME configs for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              }
+            },
+            "required": [
+              "sendAsEmail"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "set_default_smime_info",
+          "description": "Sets the default S/MIME config for the specified send-as alias",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sendAsEmail": {
+                "type": "string",
+                "description": "The email address that appears in the 'From:' header"
+              },
+              "id": {
+                "type": "string",
+                "description": "The immutable ID for the S/MIME config"
+              }
+            },
+            "required": [
+              "sendAsEmail",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_profile",
+          "description": "Get the current user's Gmail profile",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "watch_mailbox",
+          "description": "Watch for changes to the user's mailbox",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "topicName": {
+                "type": "string",
+                "description": "The name of the Cloud Pub/Sub topic to publish notifications to"
+              },
+              "labelIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Label IDs to restrict notifications to"
+              },
+              "labelFilterAction": {
+                "type": "string",
+                "enum": [
+                  "include",
+                  "exclude"
+                ],
+                "description": "Whether to include or exclude the specified labels"
+              }
+            },
+            "required": [
+              "topicName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "stop_mail_watch",
+          "description": "Stop receiving push notifications for the given user mailbox",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {
+            "title": null,
+            "readOnlyHint": null,
+            "destructiveHint": null,
+            "idempotentHint": null,
+            "openWorldHint": null
+          }
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@HitmanLy007/gmail-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "CLIENT_SECRET",
+          "required": true,
+          "description": "CLIENT_SECRET - OAuth2 client Secret (required for remote server)"
+        },
+        {
+          "name": "REFRESH_TOKEN",
+          "required": true,
+          "description": "REFRESH_TOKEN - OAuth2 refresh token (required for remote server)"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@HitmanLy007/gmail-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0286.@HitmanLy007_gmail-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 282
+  }
+}

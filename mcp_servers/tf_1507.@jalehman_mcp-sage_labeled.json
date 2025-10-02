@@ -1,0 +1,258 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Sage\" is designed to provide high-quality second opinions, code reviews, and implementation plans leveraging AI models with automatic context management. Its tools focus on multi-model debating and self-debate workflows to generate comprehensive, well-refined outputs for complex tasks, particularly in software development. The server excel at integrating file context into AI-generated suggestions and enabling collaborative refinement of plans.",
+    "reasoning": "The \"Development Tools\" label was chosen as the primary category because the server's core functionality revolves around code analysis, review, and implementation planning - all essential aspects of software development. The secondary \"Memory Management\" label is included due to its handling of large file context for accurate AI assistance, while \"AI/ML Tools\" is selected for its focus on multi-model debates and AI-powered refinement processes.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Memory Management",
+      "AI/ML Tools"
+    ],
+    "custom_label": "Codebase Intelligence",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1506,
+    "server_name": "Sage",
+    "rank_by_usage": 1507,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@jalehman_mcp-sage.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jalehman/mcp-sage/mcp?config=eyJodHRwUG9ydCI6IDB9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "sage-opinion",
+          "description": "Send a prompt to sage-like model for its opinion on a matter.\n\n    Include the paths to all relevant files and/or directories that are pertinent to the matter.\n    \n    IMPORTANT: All paths must be absolute paths (e.g., /home/user/project/src), not relative paths.\n\n    Do not worry about context limits; feel free to include as much as you think is relevant. If you include too much it will error and tell you, and then you can include less. Err on the side of including more context.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The prompt to send to the external model."
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Paths to include as context. MUST be absolute paths (e.g., /home/user/project/src). Including directories will include all files contained within recursively."
+              }
+            },
+            "required": [
+              "prompt",
+              "paths"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "sage-review",
+          "description": "Send code to the sage model for expert review and get specific edit suggestions as SEARCH/REPLACE blocks.\n\n    Use this tool any time the user asks for a \"sage review\" or \"code review\" or \"expert review\".\n\n    This tool includes the full content of all files in the specified paths and instructs the model to return edit suggestions in a specific format with search and replace blocks.\n    \n    IMPORTANT: All paths must be absolute paths (e.g., /home/user/project/src), not relative paths.\n\n    If the user hasn't provided specific paths, use as many paths to files or directories as you're aware of that are useful in the context of the prompt.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instruction": {
+                "type": "string",
+                "description": "The specific changes or improvements needed."
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Paths to include as context. MUST be absolute paths (e.g., /home/user/project/src). Including directories will include all files contained within recursively."
+              }
+            },
+            "required": [
+              "instruction",
+              "paths"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "sage-plan",
+          "description": "Generate an implementation plan via multi-model debate.\n    \n    This tool leverages multiple AI models to debate, critique, and refine implementation plans.\n    \n    Models will generate initial plans, critique each other's work, refine their plans based on critiques,\n    and finally produce a consensus plan that combines the best ideas.\n    \n    IMPORTANT: All paths must be absolute paths (e.g., /home/user/project/src), not relative paths.\n    \n    The process creates detailed, well-thought-out implementation plans that benefit from\n    diverse model perspectives and iterative refinement.\n    \n    When the optional outputPath parameter is provided, the final plan will be saved to that file path,\n    and a complete transcript of the debate will be saved to a companion file with \"-full-transcript\"\n    added to the filename. This is strongly recommended for preserving the expensive results of the debate.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The task to create an implementation plan for"
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Paths to include as context. MUST be absolute paths (e.g., /home/user/project/src). Including directories will include all files contained within recursively."
+              },
+              "rounds": {
+                "type": "number",
+                "description": "Number of debate rounds (default: 3)"
+              },
+              "maxTokens": {
+                "type": "number",
+                "description": "Maximum token budget for the debate"
+              },
+              "outputPath": {
+                "type": "string",
+                "description": "Markdown file path to save the final plan. Will also save a full transcript to a '-full-transcript.md' suffixed file."
+              }
+            },
+            "required": [
+              "prompt",
+              "paths"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "sage-opinion",
+        "sage-review",
+        "sage-plan"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1506,
+      "name": "Sage",
+      "author": "@jalehman/mcp-sage",
+      "overview": "Provide detailed second opinions, code reviews, and implementation plans by leveraging large context models with automatic model selection based on token count. Enable multi-model debates and self-debate workflows to generate high-quality, thoughtful plans and suggestions for complex codebases. Seamlessly integrate file context into prompts for accurate and comprehensive AI assistance.",
+      "repository_url": "https://github.com/jalehman/mcp-sage",
+      "homepage": "https://smithery.ai/server/@jalehman/mcp-sage",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jalehman_mcp-sage.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "sage-opinion",
+          "description": "Send a prompt to sage-like model for its opinion on a matter.\n\n    Include the paths to all relevant files and/or directories that are pertinent to the matter.\n    \n    IMPORTANT: All paths must be absolute paths (e.g., /home/user/project/src), not relative paths.\n\n    Do not worry about context limits; feel free to include as much as you think is relevant. If you include too much it will error and tell you, and then you can include less. Err on the side of including more context.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The prompt to send to the external model."
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Paths to include as context. MUST be absolute paths (e.g., /home/user/project/src). Including directories will include all files contained within recursively."
+              }
+            },
+            "required": [
+              "prompt",
+              "paths"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "sage-review",
+          "description": "Send code to the sage model for expert review and get specific edit suggestions as SEARCH/REPLACE blocks.\n\n    Use this tool any time the user asks for a \"sage review\" or \"code review\" or \"expert review\".\n\n    This tool includes the full content of all files in the specified paths and instructs the model to return edit suggestions in a specific format with search and replace blocks.\n    \n    IMPORTANT: All paths must be absolute paths (e.g., /home/user/project/src), not relative paths.\n\n    If the user hasn't provided specific paths, use as many paths to files or directories as you're aware of that are useful in the context of the prompt.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "instruction": {
+                "type": "string",
+                "description": "The specific changes or improvements needed."
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Paths to include as context. MUST be absolute paths (e.g., /home/user/project/src). Including directories will include all files contained within recursively."
+              }
+            },
+            "required": [
+              "instruction",
+              "paths"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "sage-plan",
+          "description": "Generate an implementation plan via multi-model debate.\n    \n    This tool leverages multiple AI models to debate, critique, and refine implementation plans.\n    \n    Models will generate initial plans, critique each other's work, refine their plans based on critiques,\n    and finally produce a consensus plan that combines the best ideas.\n    \n    IMPORTANT: All paths must be absolute paths (e.g., /home/user/project/src), not relative paths.\n    \n    The process creates detailed, well-thought-out implementation plans that benefit from\n    diverse model perspectives and iterative refinement.\n    \n    When the optional outputPath parameter is provided, the final plan will be saved to that file path,\n    and a complete transcript of the debate will be saved to a companion file with \"-full-transcript\"\n    added to the filename. This is strongly recommended for preserving the expensive results of the debate.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The task to create an implementation plan for"
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Paths to include as context. MUST be absolute paths (e.g., /home/user/project/src). Including directories will include all files contained within recursively."
+              },
+              "rounds": {
+                "type": "number",
+                "description": "Number of debate rounds (default: 3)"
+              },
+              "maxTokens": {
+                "type": "number",
+                "description": "Maximum token budget for the debate"
+              },
+              "outputPath": {
+                "type": "string",
+                "description": "Markdown file path to save the final plan. Will also save a full transcript to a '-full-transcript.md' suffixed file."
+              }
+            },
+            "required": [
+              "prompt",
+              "paths"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"httpPort\": 0\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@jalehman/mcp-sage/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"httpPort\": 0\n}",
+      "python_sdk_url": "https://server.smithery.ai/@jalehman/mcp-sage/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1507.@jalehman_mcp-sage_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1388
+  }
+}

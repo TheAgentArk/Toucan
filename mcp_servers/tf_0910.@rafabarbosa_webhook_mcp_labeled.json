@@ -1,0 +1,165 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to facilitate HTTP request sending to webhooks with configurable parameters, headers, timeouts, and input validation. It offers detailed logging and error handling to ensure reliable API integrations. The server primarily serves as a bridge for webhook interactions, allowing users to automate HTTP-based communications with external services.",
+    "reasoning": "The primary functionality of this server revolves around making HTTP requests, which is a core aspect of API integration. As such, the \"API Integration\" label is most appropriate. Given that webhook interactions often involve automated messaging or data transmission, the \"Communication Tools\" label is also relevant. While there is no unique functionality that warrants a custom label, the server's focus on HTTP request handling makes it well-suited to the predefined categories.",
+    "primary_label": "API Integration",
+    "secondary_labels": [
+      "Communication Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 909,
+    "server_name": "Webhooks HTTP Request Server",
+    "rank_by_usage": 910,
+    "usage_count": "4",
+    "original_file": "../crawler/smithery/@rafabarbosa_webhook_mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@rafabarbosa/webhook_mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "send_webhook",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL do webhook (ex: https://meuwebhook.com.br)"
+              },
+              "method": {
+                "type": "string",
+                "enum": [
+                  "GET",
+                  "POST",
+                  "PUT",
+                  "PATCH",
+                  "DELETE"
+                ],
+                "description": "Método HTTP da requisição"
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Parâmetros a serem enviados (ex: {nome: 'João', email: 'joao@email.com', telefone: '11999999999'})"
+              },
+              "headers": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Headers HTTP adicionais (opcional)"
+              },
+              "timeout": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Timeout da requisição em milissegundos (padrão: 30000)"
+              }
+            },
+            "required": [
+              "url",
+              "method"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "send_webhook"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 909,
+      "name": "Webhooks HTTP Request Server",
+      "author": "@rafabarbosa/webhook_mcp",
+      "overview": "Send HTTP requests to webhooks with dynamic parameters using all HTTP methods. Customize headers, configure timeouts, and validate inputs to integrate external APIs seamlessly. Gain detailed logging and error handling for reliable webhook interactions.",
+      "repository_url": "https://github.com/rafabarbosa/webhook_mcp",
+      "homepage": "https://smithery.ai/server/@rafabarbosa/webhook_mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "4",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@rafabarbosa_webhook_mcp.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "send_webhook",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL do webhook (ex: https://meuwebhook.com.br)"
+              },
+              "method": {
+                "type": "string",
+                "enum": [
+                  "GET",
+                  "POST",
+                  "PUT",
+                  "PATCH",
+                  "DELETE"
+                ],
+                "description": "Método HTTP da requisição"
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Parâmetros a serem enviados (ex: {nome: 'João', email: 'joao@email.com', telefone: '11999999999'})"
+              },
+              "headers": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Headers HTTP adicionais (opcional)"
+              },
+              "timeout": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Timeout da requisição em milissegundos (padrão: 30000)"
+              }
+            },
+            "required": [
+              "url",
+              "method"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@rafabarbosa/webhook_mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@rafabarbosa/webhook_mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0910.@rafabarbosa_webhook_mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 890
+  }
+}

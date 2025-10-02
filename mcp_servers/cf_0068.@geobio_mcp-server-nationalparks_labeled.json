@@ -1,0 +1,179 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide comprehensive, up-to-date information about U.S. National Parks. Its core functionality revolves around aiding users—such as travelers, planners, and visitors—in making informed decisions about park visits. The available tools enable users to search for park details, check alerts for safety, locate visitor centers, find campgrounds, and discover events, either for planning purposes or real-time information during visits. The server leverages real-time data to enhance trip planning, safety, and user experience.",
+    "reasoning": "The primary label is \"Travel & Maps\" because the server is centered around location-based services, travel planning, and navigation within national parks. \"Web Search & Research\" is a secondary label due to the server's ability to provide detailed, searchable information about parks, which encapsulates research functionality. \"Daily Productivity\" is another secondary label given that the server assists users in efficient trip planning, which is a productivity-related task. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Travel & Maps",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 67,
+    "server_name": "National Parks Information Server",
+    "rank_by_usage": 68,
+    "usage_count": "1,244",
+    "original_file": "../crawler/smithery/@geobio_mcp-server-nationalparks.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@geobio/mcp-server-nationalparks/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 67,
+      "name": "National Parks Information Server",
+      "author": "@geobio/mcp-server-nationalparks",
+      "overview": "Provide real-time, detailed information about U.S. National Parks including park details, alerts, visitor centers, campgrounds, and events. Enable users to search parks by location, activities, and other criteria to plan visits effectively. Access up-to-date alerts and operational information to enhance trip planning and safety.",
+      "repository_url": "https://github.com/geobio/mcp-server-nationalparks",
+      "homepage": "https://smithery.ai/server/@geobio/mcp-server-nationalparks",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "1,244",
+      "success_rate": "99.89%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@geobio_mcp-server-nationalparks.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "findParks",
+          "description": "Deploy Server National Parks Information Server @geobio/mcp-server-nationalparks Try in Playground",
+          "parameters": [
+            {
+              "name": "findParks",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getParkDetails",
+          "description": "Get detailed information about a specific national park",
+          "parameters": [
+            {
+              "name": "getParkDetails",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "parkCode",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getAlerts",
+          "description": "Get current alerts for national parks including closures, hazards, and important information",
+          "parameters": [
+            {
+              "name": "q",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "start",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "parkCode",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getVisitorCenters",
+          "description": "Get information about visitor centers and their operating hours",
+          "parameters": [
+            {
+              "name": "getVisitorCenters",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getCampgrounds",
+          "description": "Get information about available campgrounds and their amenities",
+          "parameters": [
+            {
+              "name": "getCampgrounds",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getEvents",
+          "description": "Find upcoming events at parks",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "start",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "dateEnd",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "parkCode",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "dateStart",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@geobio/mcp-server-nationalparks/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "npsApiKey",
+          "required": true,
+          "description": "API key for the National Park Service"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@geobio/mcp-server-nationalparks/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0068.@geobio_mcp-server-nationalparks_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 67
+  }
+}

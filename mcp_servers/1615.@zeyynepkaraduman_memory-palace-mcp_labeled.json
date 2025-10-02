@@ -1,0 +1,683 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Memory Palace\" is designed to help users enhance learning and recall through spatial memory techniques. It allows users to create themed virtual memory palaces, organize them with rooms and memory items, and utilize multi-sensory encoding for better retention. The available tools enable the creation, management, and review of memory palaces, as well as tracking progress through analytics. This server solves problems related to memory retention and structured learning using a spatial organization method known as the memory palace technique.",
+    "reasoning": "The primary label \"Education\" is chosen because the server's core functionality is centered around learning and memory retention, which are key aspects of educational tools. The secondary label \"Memory Management\" is selected due to the server's focus on organizing and accessing memory items, which aligns with data storage and retrieval. The custom label \"Spatial Memory Techniques\" is added to highlight the unique method of memory palaces, which is a specific and innovative approach not covered by the predefined categories.",
+    "primary_label": "Education",
+    "secondary_labels": [
+      "Memory Management"
+    ],
+    "custom_label": "Spatial Memory Techniques",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1614,
+    "server_name": "Memory Palace",
+    "rank_by_usage": 1615,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@zeyynepkaraduman_memory-palace-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@zeyynepkaraduman/memory-palace-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "create_palace",
+          "description": "Create a new memory palace with a specific theme",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the memory palace"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the palace"
+              },
+              "theme": {
+                "type": "string",
+                "enum": [
+                  "ancient",
+                  "modern",
+                  "nature",
+                  "space",
+                  "underwater",
+                  "library"
+                ],
+                "description": "Visual theme of the palace"
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_palaces",
+          "description": "List all memory palaces",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_room",
+          "description": "Create a new room in a memory palace",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the room"
+              },
+              "palaceId": {
+                "type": "string",
+                "description": "ID of the palace this room belongs to"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the room"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "description": "X coordinate"
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "Y coordinate"
+                  },
+                  "z": {
+                    "type": "number",
+                    "description": "Z coordinate (floor level)"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "description": "Position in the palace"
+              },
+              "color": {
+                "type": "string",
+                "description": "Color of the room (hex code)"
+              },
+              "size": {
+                "type": "string",
+                "enum": [
+                  "small",
+                  "medium",
+                  "large"
+                ],
+                "description": "Size of the room"
+              }
+            },
+            "required": [
+              "name",
+              "palaceId",
+              "position"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_memory_item",
+          "description": "Add a memory item to a room with visual cues",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the memory item"
+              },
+              "content": {
+                "type": "string",
+                "description": "The actual content/information to remember"
+              },
+              "roomId": {
+                "type": "string",
+                "description": "ID of the room where this item will be placed"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "description": "X coordinate within the room"
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "Y coordinate within the room"
+                  },
+                  "z": {
+                    "type": "number",
+                    "description": "Z coordinate (height)"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "description": "Position within the room"
+              },
+              "visualCue": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "image",
+                      "icon",
+                      "color",
+                      "shape"
+                    ],
+                    "description": "Type of visual cue"
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "The visual cue value (URL, icon name, color code, or shape name)"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the visual cue"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "description": "Visual cue to help remember this item"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags for categorization"
+              },
+              "importance": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+                ],
+                "description": "Importance level"
+              }
+            },
+            "required": [
+              "title",
+              "content",
+              "roomId",
+              "position",
+              "visualCue"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_journey",
+          "description": "Create a memory journey through rooms",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the memory journey"
+              },
+              "palaceId": {
+                "type": "string",
+                "description": "ID of the palace for this journey"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the journey"
+              },
+              "roomIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of room IDs in the order to visit them"
+              },
+              "difficulty": {
+                "type": "string",
+                "enum": [
+                  "beginner",
+                  "intermediate",
+                  "advanced"
+                ],
+                "description": "Difficulty level"
+              }
+            },
+            "required": [
+              "name",
+              "palaceId",
+              "roomIds"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "take_journey",
+          "description": "Take a memory journey and review items",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "journeyId": {
+                "type": "string",
+                "description": "ID of the journey to take"
+              }
+            },
+            "required": [
+              "journeyId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_memories",
+          "description": "Search for memory items by content or tags",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_palace_layout",
+          "description": "Get detailed layout of a palace with all rooms and items",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "palaceId": {
+                "type": "string",
+                "description": "ID of the palace"
+              }
+            },
+            "required": [
+              "palaceId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statistics",
+          "description": "Get statistics about all memory palaces",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "create_palace",
+        "list_palaces",
+        "create_room",
+        "add_memory_item",
+        "create_journey",
+        "take_journey",
+        "search_memories",
+        "get_palace_layout",
+        "get_statistics"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1614,
+      "name": "Memory Palace",
+      "author": "@zeyynepkaraduman/memory-palace-mcp",
+      "overview": "Create and organize virtual memory palaces using spatial memory techniques to enhance learning and recall. Build themed palaces, add rooms and memory items with visual cues, and create guided memory journeys for structured review. Track your progress with analytics and leverage multi-sensory encoding for better retention.",
+      "repository_url": "https://github.com/zeyynepkaraduman/Memory-Palace-MCP",
+      "homepage": "https://smithery.ai/server/@zeyynepkaraduman/memory-palace-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@zeyynepkaraduman_memory-palace-mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "create_palace",
+          "description": "Create a new memory palace with a specific theme",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the memory palace"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the palace"
+              },
+              "theme": {
+                "type": "string",
+                "enum": [
+                  "ancient",
+                  "modern",
+                  "nature",
+                  "space",
+                  "underwater",
+                  "library"
+                ],
+                "description": "Visual theme of the palace"
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_palaces",
+          "description": "List all memory palaces",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_room",
+          "description": "Create a new room in a memory palace",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the room"
+              },
+              "palaceId": {
+                "type": "string",
+                "description": "ID of the palace this room belongs to"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the room"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "description": "X coordinate"
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "Y coordinate"
+                  },
+                  "z": {
+                    "type": "number",
+                    "description": "Z coordinate (floor level)"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "description": "Position in the palace"
+              },
+              "color": {
+                "type": "string",
+                "description": "Color of the room (hex code)"
+              },
+              "size": {
+                "type": "string",
+                "enum": [
+                  "small",
+                  "medium",
+                  "large"
+                ],
+                "description": "Size of the room"
+              }
+            },
+            "required": [
+              "name",
+              "palaceId",
+              "position"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_memory_item",
+          "description": "Add a memory item to a room with visual cues",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the memory item"
+              },
+              "content": {
+                "type": "string",
+                "description": "The actual content/information to remember"
+              },
+              "roomId": {
+                "type": "string",
+                "description": "ID of the room where this item will be placed"
+              },
+              "position": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number",
+                    "description": "X coordinate within the room"
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "Y coordinate within the room"
+                  },
+                  "z": {
+                    "type": "number",
+                    "description": "Z coordinate (height)"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "description": "Position within the room"
+              },
+              "visualCue": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "image",
+                      "icon",
+                      "color",
+                      "shape"
+                    ],
+                    "description": "Type of visual cue"
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "The visual cue value (URL, icon name, color code, or shape name)"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the visual cue"
+                  }
+                },
+                "required": [
+                  "type",
+                  "value"
+                ],
+                "description": "Visual cue to help remember this item"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags for categorization"
+              },
+              "importance": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high",
+                  "critical"
+                ],
+                "description": "Importance level"
+              }
+            },
+            "required": [
+              "title",
+              "content",
+              "roomId",
+              "position",
+              "visualCue"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_journey",
+          "description": "Create a memory journey through rooms",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the memory journey"
+              },
+              "palaceId": {
+                "type": "string",
+                "description": "ID of the palace for this journey"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the journey"
+              },
+              "roomIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of room IDs in the order to visit them"
+              },
+              "difficulty": {
+                "type": "string",
+                "enum": [
+                  "beginner",
+                  "intermediate",
+                  "advanced"
+                ],
+                "description": "Difficulty level"
+              }
+            },
+            "required": [
+              "name",
+              "palaceId",
+              "roomIds"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "take_journey",
+          "description": "Take a memory journey and review items",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "journeyId": {
+                "type": "string",
+                "description": "ID of the journey to take"
+              }
+            },
+            "required": [
+              "journeyId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_memories",
+          "description": "Search for memory items by content or tags",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search query"
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_palace_layout",
+          "description": "Get detailed layout of a palace with all rooms and items",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "palaceId": {
+                "type": "string",
+                "description": "ID of the palace"
+              }
+            },
+            "required": [
+              "palaceId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statistics",
+          "description": "Get statistics about all memory palaces",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@zeyynepkaraduman/memory-palace-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@zeyynepkaraduman/memory-palace-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1615.@zeyynepkaraduman_memory-palace-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1468
+  }
+}

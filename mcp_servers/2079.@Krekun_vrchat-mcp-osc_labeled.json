@@ -1,0 +1,514 @@
+{
+  "labels": {
+    "analysis": "The MCP Server acts as a bridge for AI assistants to control VRChat avatars and environments through a high-level API. It enables manipulation of avatar parameters, movement, and interaction with VR events, making it a tool for enhancing virtual reality experiences with AI-driven automation. The available tools focus on avatar management (selection, parameter changes), basic movements, and interaction (messaging, voice control).",
+    "reasoning": "The primary functionality revolves around controlling and automating avatar behaviors in VRChat, which fits best under the \"Gaming\" category. It also has elements of \"Developer Tools\" due to the API integration and parameter manipulation capabilities. There isn't a clear predefined category for VR avatar control as a standalone, so the custom label emphasizes this unique aspect.",
+    "primary_label": "Gaming",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": "VR Avatar Control",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2078,
+    "server_name": "VRChat AI Assistant Bridge",
+    "rank_by_usage": 2079,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@Krekun_vrchat-mcp-osc.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Krekun/vrchat-mcp-osc/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAibm9SZWxheSI6IGZhbHNlLCAib3NjU2VuZElwIjogIjEyNy4wLjAuMSIsICJvc2NTZW5kUG9ydCI6IDkwMDAsICJvc2NSZWNlaXZlSXAiOiAiMTI3LjAuMC4xIiwgIndlYnNvY2tldEhvc3QiOiAibG9jYWxob3N0IiwgIndlYnNvY2tldFBvcnQiOiA4NzY1LCAib3NjUmVjZWl2ZVBvcnQiOiA5MDAxfQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_avatar_list",
+          "description": "Get a list of available avatars.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "set_avatar",
+          "description": "Change to a specific avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "avatar_id": {
+                "type": "string",
+                "description": "ID of the avatar to change to"
+              }
+            },
+            "required": [
+              "avatar_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_avatar_name",
+          "description": "Get the name of the current avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "set_avatar_parameter",
+          "description": "Set a parameter on the current avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "parameter_name": {
+                "type": "string",
+                "description": "Name of the parameter to set"
+              },
+              "value": {
+                "type": [
+                  "number",
+                  "boolean",
+                  "string"
+                ],
+                "description": "Value to set"
+              }
+            },
+            "required": [
+              "parameter_name",
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_avatar_parameters",
+          "description": "Get a list of parameters available on the current avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "set_emote_parameter",
+          "description": "Set VRCEmote on the current avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": [
+                  "number",
+                  "string"
+                ],
+                "description": "Value to set"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "move_avatar",
+          "description": "Move the avatar in a specific direction.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "forward",
+                  "backward",
+                  "left",
+                  "right"
+                ],
+                "description": "Direction to move"
+              },
+              "duration": {
+                "type": "number",
+                "default": 1,
+                "description": "Duration in seconds"
+              }
+            },
+            "required": [
+              "direction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "look_direction",
+          "description": "Turn to look in a specific direction.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "right"
+                ],
+                "description": "Direction to look"
+              },
+              "duration": {
+                "type": "number",
+                "default": 1,
+                "description": "Duration in seconds"
+              }
+            },
+            "required": [
+              "direction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "jump",
+          "description": "Make the avatar jump.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "menu",
+          "description": "Toggle Menu.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "voice",
+          "description": "Toggle voice",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "send_message",
+          "description": "Send a message to the VRChat chatbox.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Message to send"
+              },
+              "send_immediately": {
+                "type": "boolean",
+                "default": true,
+                "description": "Send immediately or just populate chatbox"
+              }
+            },
+            "required": [
+              "message"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "get_avatar_list",
+        "set_avatar",
+        "get_avatar_name",
+        "set_avatar_parameter",
+        "get_avatar_parameters",
+        "set_emote_parameter",
+        "move_avatar",
+        "look_direction",
+        "jump",
+        "menu",
+        "voice",
+        "send_message"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2078,
+      "name": "VRChat AI Assistant Bridge",
+      "author": "@Krekun/vrchat-mcp-osc",
+      "overview": "Enable AI assistants to control and interact with VRChat avatars and environments using a high-level API. Manipulate avatar parameters, send messages, and respond to VR events seamlessly. Enhance virtual reality experiences by integrating AI-driven avatar control through OSC and MCP protocols.",
+      "repository_url": "https://github.com/Krekun/vrchat-mcp-osc",
+      "homepage": "https://smithery.ai/server/@Krekun/vrchat-mcp-osc",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Krekun_vrchat-mcp-osc.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "get_avatar_list",
+          "description": "Get a list of available avatars.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "set_avatar",
+          "description": "Change to a specific avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "avatar_id": {
+                "type": "string",
+                "description": "ID of the avatar to change to"
+              }
+            },
+            "required": [
+              "avatar_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_avatar_name",
+          "description": "Get the name of the current avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "set_avatar_parameter",
+          "description": "Set a parameter on the current avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "parameter_name": {
+                "type": "string",
+                "description": "Name of the parameter to set"
+              },
+              "value": {
+                "type": [
+                  "number",
+                  "boolean",
+                  "string"
+                ],
+                "description": "Value to set"
+              }
+            },
+            "required": [
+              "parameter_name",
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_avatar_parameters",
+          "description": "Get a list of parameters available on the current avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "set_emote_parameter",
+          "description": "Set VRCEmote on the current avatar.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": [
+                  "number",
+                  "string"
+                ],
+                "description": "Value to set"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "move_avatar",
+          "description": "Move the avatar in a specific direction.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "forward",
+                  "backward",
+                  "left",
+                  "right"
+                ],
+                "description": "Direction to move"
+              },
+              "duration": {
+                "type": "number",
+                "default": 1,
+                "description": "Duration in seconds"
+              }
+            },
+            "required": [
+              "direction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "look_direction",
+          "description": "Turn to look in a specific direction.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "right"
+                ],
+                "description": "Direction to look"
+              },
+              "duration": {
+                "type": "number",
+                "default": 1,
+                "description": "Duration in seconds"
+              }
+            },
+            "required": [
+              "direction"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "jump",
+          "description": "Make the avatar jump.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "menu",
+          "description": "Toggle Menu.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "voice",
+          "description": "Toggle voice",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "send_message",
+          "description": "Send a message to the VRChat chatbox.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Message to send"
+              },
+              "send_immediately": {
+                "type": "boolean",
+                "default": true,
+                "description": "Send immediately or just populate chatbox"
+              }
+            },
+            "required": [
+              "message"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"noRelay\": false,\n  \"oscSendIp\": \"127.0.0.1\",\n  \"oscSendPort\": 9000,\n  \"oscReceiveIp\": \"127.0.0.1\",\n  \"websocketHost\": \"localhost\",\n  \"websocketPort\": 8765,\n  \"oscReceivePort\": 9001\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@Krekun/vrchat-mcp-osc/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"noRelay\": false,\n  \"oscSendIp\": \"127.0.0.1\",\n  \"oscSendPort\": 9000,\n  \"oscReceiveIp\": \"127.0.0.1\",\n  \"websocketHost\": \"localhost\",\n  \"websocketPort\": 8765,\n  \"oscReceivePort\": 9001\n}",
+      "python_sdk_url": "https://server.smithery.ai/@Krekun/vrchat-mcp-osc/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "2079.@Krekun_vrchat-mcp-osc_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1811
+  }
+}

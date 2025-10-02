@@ -1,0 +1,494 @@
+{
+  "labels": {
+    "analysis": "The WhatsApp MCP Server allows users to connect their personal WhatsApp accounts to an AI agent, enabling seamless interaction with messages, contacts, and chats. The available tools (search_contacts, list_messages, list_chats, get_chat, get_message_context, send_message, and search_messages) focus on managing WhatsApp communications through an AI interface. The primary functionality centers around messaging, contact management, and chat operations, all while maintaining data security and locality.",
+    "reasoning": "The primary label \"Communication Tools\" is chosen because the server's core functionality revolves around messaging and interaction with WhatsApp contacts. \"Messaging\" is a key secondary label as the tools are primarily used for sending, receiving, and managing messages. \"Contact Management\" is added as a secondary label due to the presence of the search_contacts tool. No custom label is needed as the predefined categories adequately capture the server's functionality.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "Communication Tools",
+      "Communication Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 189,
+    "server_name": "WhatsApp MCP Server",
+    "rank_by_usage": 190,
+    "usage_count": "248",
+    "original_file": "../crawler/smithery/@jlucaso1_whatsapp-mcp-ts.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jlucaso1/whatsapp-mcp-ts/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_contacts",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Search term for contact name or phone number part of JID"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_messages",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chat_jid": {
+                "type": "string",
+                "description": "The JID of the chat (e.g., '123456@s.whatsapp.net' or 'group@g.us')"
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 20,
+                "description": "Max messages per page (default 20)"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "description": "Page number (0-indexed, default 0)"
+              }
+            },
+            "required": [
+              "chat_jid"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_chats",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 20,
+                "description": "Max chats per page (default 20)"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "description": "Page number (0-indexed, default 0)"
+              },
+              "sort_by": {
+                "type": "string",
+                "enum": [
+                  "last_active",
+                  "name"
+                ],
+                "default": "last_active",
+                "description": "Sort order: 'last_active' (default) or 'name'"
+              },
+              "query": {
+                "type": "string",
+                "description": "Optional filter by chat name or JID"
+              },
+              "include_last_message": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include last message details (default true)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_chat",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chat_jid": {
+                "type": "string",
+                "description": "The JID of the chat to retrieve"
+              },
+              "include_last_message": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include last message details (default true)"
+              }
+            },
+            "required": [
+              "chat_jid"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_message_context",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message_id": {
+                "type": "string",
+                "description": "The ID of the target message to get context around"
+              },
+              "before": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 5,
+                "description": "Number of messages before (default 5)"
+              },
+              "after": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 5,
+                "description": "Number of messages after (default 5)"
+              }
+            },
+            "required": [
+              "message_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "recipient": {
+                "type": "string",
+                "description": "Recipient JID (user or group, e.g., '12345@s.whatsapp.net' or 'group123@g.us')"
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The text message to send"
+              }
+            },
+            "required": [
+              "recipient",
+              "message"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_messages",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The text content to search for within messages"
+              },
+              "chat_jid": {
+                "type": "string",
+                "description": "Optional: The JID of a specific chat to search within (e.g., '123...net' or 'group@g.us'). If omitted, searches all chats."
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 10,
+                "description": "Max messages per page (default 10)"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "description": "Page number (0-indexed, default 0)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "search_contacts",
+        "list_messages",
+        "list_chats",
+        "get_chat",
+        "get_message_context",
+        "send_message",
+        "search_messages"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 189,
+      "name": "WhatsApp MCP Server",
+      "author": "@jlucaso1/whatsapp-mcp-ts",
+      "overview": "Connect your personal WhatsApp account to an AI agent, enabling seamless interaction with your messages and contacts. Search, send messages, and manage chats directly through your AI interface, all while keeping your data secure and local.",
+      "repository_url": "https://github.com/jlucaso1/whatsapp-mcp-ts",
+      "homepage": "https://smithery.ai/server/@jlucaso1/whatsapp-mcp-ts",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "248",
+      "success_rate": "96.58%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jlucaso1_whatsapp-mcp-ts.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "search_contacts",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Search term for contact name or phone number part of JID"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_messages",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chat_jid": {
+                "type": "string",
+                "description": "The JID of the chat (e.g., '123456@s.whatsapp.net' or 'group@g.us')"
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 20,
+                "description": "Max messages per page (default 20)"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "description": "Page number (0-indexed, default 0)"
+              }
+            },
+            "required": [
+              "chat_jid"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_chats",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 20,
+                "description": "Max chats per page (default 20)"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "description": "Page number (0-indexed, default 0)"
+              },
+              "sort_by": {
+                "type": "string",
+                "enum": [
+                  "last_active",
+                  "name"
+                ],
+                "default": "last_active",
+                "description": "Sort order: 'last_active' (default) or 'name'"
+              },
+              "query": {
+                "type": "string",
+                "description": "Optional filter by chat name or JID"
+              },
+              "include_last_message": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include last message details (default true)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_chat",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chat_jid": {
+                "type": "string",
+                "description": "The JID of the chat to retrieve"
+              },
+              "include_last_message": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include last message details (default true)"
+              }
+            },
+            "required": [
+              "chat_jid"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_message_context",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message_id": {
+                "type": "string",
+                "description": "The ID of the target message to get context around"
+              },
+              "before": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 5,
+                "description": "Number of messages before (default 5)"
+              },
+              "after": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 5,
+                "description": "Number of messages after (default 5)"
+              }
+            },
+            "required": [
+              "message_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "recipient": {
+                "type": "string",
+                "description": "Recipient JID (user or group, e.g., '12345@s.whatsapp.net' or 'group123@g.us')"
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The text message to send"
+              }
+            },
+            "required": [
+              "recipient",
+              "message"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_messages",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The text content to search for within messages"
+              },
+              "chat_jid": {
+                "type": "string",
+                "description": "Optional: The JID of a specific chat to search within (e.g., '123...net' or 'group@g.us'). If omitted, searches all chats."
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "default": 10,
+                "description": "Max messages per page (default 10)"
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0,
+                "description": "Page number (0-indexed, default 0)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jlucaso1/whatsapp-mcp-ts/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jlucaso1/whatsapp-mcp-ts/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0190.@jlucaso1_whatsapp-mcp-ts_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 186
+  }
+}

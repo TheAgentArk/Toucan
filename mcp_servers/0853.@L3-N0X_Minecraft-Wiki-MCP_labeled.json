@@ -1,0 +1,405 @@
+{
+  "labels": {
+    "analysis": "The MCP Server primarily functions as a specialized interface for accessing and navigating the Minecraft Wiki. It provides tools for searching, retrieving, and organizing detailed information about Minecraft-related content such as structures, entities, items, and blocks. The server is designed to facilitate efficient access to the official wiki's content, supporting multi-language access and offering structured workflows for retrieving specific information through a series of interconnected tools.",
+    "reasoning": "The primary label is chosen because the server's core functionality revolves around searching and retrieving information from the Minecraft Wiki, which aligns with the Web Search & Research category. Secondary labels are added because the server also involves searching and accessing categorical information, which fits well with the Database Operations category. The Game Information label is a custom label to reflect the server's specialized focus on Minecraft-related content, which is unique to the context of the Minecraft Wiki.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Database Operations"
+    ],
+    "custom_label": "Game Information",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 852,
+    "server_name": "Minecraft Wiki Server",
+    "rank_by_usage": 853,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@L3-N0X_Minecraft-Wiki-MCP.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@L3-N0X/Minecraft-Wiki-MCP/mcp?config=eyJhcGlVcmwiOiAiaHR0cHM6Ly9taW5lY3JhZnQud2lraS9hcGkucGhwIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "MinecraftWiki_searchWiki",
+          "description": "Search the Minecraft Wiki for a specific structure, entity, item or block. NOTE: Only use for basic search terms like item/block/structure/entity names - complex queries (like 'loot table of X' or 'how to craft Y') will not work. For best results: 1. Search for the basic entity/structure/etc name first, 2. Then use getPageSummary to see available sections, 3. Finally use getPageSection to get specific section content.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search term to find on the Minecraft Wiki."
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getPageSummary",
+          "description": "Step 2 of the recommended workflow: After finding a page through search, use this to get both the page summary AND a list of all available sections. This helps determine which specific section to retrieve next using getPageSection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the Minecraft Wiki page"
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getSectionsInPage",
+          "description": "Retrieves an overview of all sections in the page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the page to retrieve sections for."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getPageSection",
+          "description": "Get a specific section from a Minecraft Wiki page. Should be used as step 3 after searching for the page and getting its summary. The section index corresponds to the order of sections on the page, starting with 0 for the main content, 1 for the first section, 2 for the second section, etc.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the Minecraft Wiki page"
+              },
+              "sectionIndex": {
+                "type": "number",
+                "description": "Index of the section to retrieve (0 = main, 1 = first section, 2 = second section, etc.)"
+              }
+            },
+            "required": [
+              "title",
+              "sectionIndex"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getPageContent",
+          "description": "Get the raw wikitext content of a specific Minecraft Wiki page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the Minecraft Wiki page to retrieve the raw wikitext content for."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_resolveRedirect",
+          "description": "Resolve a redirect and return the title of the target page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the page to resolve the redirect for."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_listCategoryMembers",
+          "description": "List all pages that are members of a specific category on the Minecraft Wiki.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "description": "The name of the category to list members from (e.g., 'Items', 'Blocks', 'Entities', 'Structure Blueprints')."
+              },
+              "limit": {
+                "type": "number",
+                "description": "The maximum number of pages to return (default: 100, max: 500)."
+              }
+            },
+            "required": [
+              "category"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_listAllCategories",
+          "description": "List all categories in the Minecraft Wiki.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prefix": {
+                "type": "string",
+                "description": "Filters categories by prefix."
+              },
+              "limit": {
+                "type": "number",
+                "description": "The maximum number of categories to return (default: 10, max: 500)."
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getCategoriesForPage",
+          "description": "Get categories associated with a specific page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the Minecraft Wiki page"
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "MinecraftWiki_searchWiki",
+        "MinecraftWiki_getPageSummary",
+        "MinecraftWiki_getSectionsInPage",
+        "MinecraftWiki_getPageSection",
+        "MinecraftWiki_getPageContent",
+        "MinecraftWiki_resolveRedirect",
+        "MinecraftWiki_listCategoryMembers",
+        "MinecraftWiki_listAllCategories",
+        "MinecraftWiki_getCategoriesForPage"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 852,
+      "name": "Minecraft Wiki Server",
+      "author": "@L3-N0X/Minecraft-Wiki-MCP",
+      "overview": "Browse the official Minecraft Wiki effortlessly. Search for structures, entities, items, and blocks, and access detailed content with ease. Enjoy multi-language support to explore the wiki in your preferred language.",
+      "repository_url": "https://github.com/L3-N0X/Minecraft-Wiki-MCP",
+      "homepage": "https://smithery.ai/server/@L3-N0X/Minecraft-Wiki-MCP",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@L3-N0X_Minecraft-Wiki-MCP.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "MinecraftWiki_searchWiki",
+          "description": "Search the Minecraft Wiki for a specific structure, entity, item or block. NOTE: Only use for basic search terms like item/block/structure/entity names - complex queries (like 'loot table of X' or 'how to craft Y') will not work. For best results: 1. Search for the basic entity/structure/etc name first, 2. Then use getPageSummary to see available sections, 3. Finally use getPageSection to get specific section content.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search term to find on the Minecraft Wiki."
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getPageSummary",
+          "description": "Step 2 of the recommended workflow: After finding a page through search, use this to get both the page summary AND a list of all available sections. This helps determine which specific section to retrieve next using getPageSection.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the Minecraft Wiki page"
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getSectionsInPage",
+          "description": "Retrieves an overview of all sections in the page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the page to retrieve sections for."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getPageSection",
+          "description": "Get a specific section from a Minecraft Wiki page. Should be used as step 3 after searching for the page and getting its summary. The section index corresponds to the order of sections on the page, starting with 0 for the main content, 1 for the first section, 2 for the second section, etc.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the Minecraft Wiki page"
+              },
+              "sectionIndex": {
+                "type": "number",
+                "description": "Index of the section to retrieve (0 = main, 1 = first section, 2 = second section, etc.)"
+              }
+            },
+            "required": [
+              "title",
+              "sectionIndex"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getPageContent",
+          "description": "Get the raw wikitext content of a specific Minecraft Wiki page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the Minecraft Wiki page to retrieve the raw wikitext content for."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_resolveRedirect",
+          "description": "Resolve a redirect and return the title of the target page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the page to resolve the redirect for."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_listCategoryMembers",
+          "description": "List all pages that are members of a specific category on the Minecraft Wiki.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "description": "The name of the category to list members from (e.g., 'Items', 'Blocks', 'Entities', 'Structure Blueprints')."
+              },
+              "limit": {
+                "type": "number",
+                "description": "The maximum number of pages to return (default: 100, max: 500)."
+              }
+            },
+            "required": [
+              "category"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_listAllCategories",
+          "description": "List all categories in the Minecraft Wiki.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prefix": {
+                "type": "string",
+                "description": "Filters categories by prefix."
+              },
+              "limit": {
+                "type": "number",
+                "description": "The maximum number of categories to return (default: 10, max: 500)."
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "MinecraftWiki_getCategoriesForPage",
+          "description": "Get categories associated with a specific page.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title of the Minecraft Wiki page"
+              }
+            },
+            "required": [
+              "title"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"apiUrl\": \"https://minecraft.wiki/api.php\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@L3-N0X/Minecraft-Wiki-MCP/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"apiUrl\": \"https://minecraft.wiki/api.php\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@L3-N0X/Minecraft-Wiki-MCP/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0853.@L3-N0X_Minecraft-Wiki-MCP_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 834
+  }
+}

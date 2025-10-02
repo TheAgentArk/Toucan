@@ -1,0 +1,729 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is focused on educational technology (EdTech), specifically integrating with Canvas LMS and Gradescope platforms. The core functionality revolves around retrieving, managing, and searching for course-related information such as courses, modules, assignments, submissions, and grades. The tools enable users to query their educational materials, access learning resources, and manage coursework efficiently within AI applications.",
+    "reasoning": "The primary functionality is centered around managing educational content and interactions within Canvas and Gradescope, hence the primary label is Education. Secondary labels like Database Operations reflect the server's ability to query and retrieve structured data, while Communication Tools highlight the user's ability to access and interact with educational resources. While it could encompass aspects of productivity or file management, the core purpose is education-focused.",
+    "primary_label": "Education",
+    "secondary_labels": [
+      "Database Operations",
+      "Communication Tools"
+    ],
+    "custom_label": "EdTech Integration",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1019,
+    "server_name": "Canvas MCP",
+    "rank_by_usage": 1020,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@aryankeluskar_canvas-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@aryankeluskar/canvas-mcp/mcp?config=eyJjYW52YXNBcGlLZXkiOiAiIiwgImdvb2dsZUFwaUtleSI6ICIiLCAiZ3JhZGVzY29wZUVtYWlsIjogIiIsICJncmFkZXNjb3BlUGFzc3dvcmQiOiAiIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_courses",
+          "description": "Use this tool to retrieve all available Canvas courses for the current user. This tool returns a dictionary mapping course names to their corresponding IDs. Use this when you need to find course IDs based on names, display all available courses, or when needing to access any course-related information.",
+          "input_schema": {
+            "properties": {},
+            "title": "get_coursesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_modules",
+          "description": "Use this tool to retrieve all modules within a specific Canvas course. This tool returns a list of module objects containing module details like ID, name, and status. Use this when exploring or navigating course content structure.",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "course_id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id"
+            ],
+            "title": "get_modulesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_module_items",
+          "description": "Use this tool to retrieve all items within a specific module in a Canvas course. This tool returns a list of module item objects containing details like title, type, and URLs. Use this when you need to access specific learning materials, assignments, or other content within a module.",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "course_id",
+                "type": "string"
+              },
+              "module_id": {
+                "title": "module_id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "module_id"
+            ],
+            "title": "get_module_itemsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_url",
+          "description": "Use this tool to get the direct download URL for a file stored in Canvas. This tool returns a URL string that can be used to access or download the file. Use this when you need direct access to file content rather than just the Canvas page URL.",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "course_id",
+                "type": "string"
+              },
+              "file_id": {
+                "title": "file_id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "file_id"
+            ],
+            "title": "get_file_urlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find_resources",
+          "description": "Use this tool to search for and identify the most relevant learning resources across Canvas courses based on a text query or image. This tool analyzes user needs and returns resources ranked by relevance. Use this when helping users find specific learning materials, lecture notes, or content related to their questions.",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "image_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Image Path"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "find_resourcesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_course_assignments",
+          "description": "Use this tool to retrieve all assignments for a specific Canvas course, with optional filtering by status. This tool returns assignment details including name, description, due date, and submission status. Use this when helping users manage their coursework, check due dates, or find assignment details.\n    \n    Args:\n        course_id: The Canvas course ID\n        bucket: Optional filter - past, overdue, undated, ungraded, unsubmitted, upcoming, future\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "course_id",
+                "type": "string"
+              },
+              "bucket": {
+                "default": null,
+                "title": "Bucket",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id"
+            ],
+            "title": "get_course_assignmentsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_assignments_by_course_name",
+          "description": "Use this tool to retrieve all assignments for a Canvas course using its name rather than ID. This tool returns assignment details the same as get_course_assignments. Use this when you have the course name but not the ID, or when helping users find assignments across multiple courses.\n    \n    Args:\n        course_name: The name of the course as it appears in Canvas (partial matches supported)\n        bucket: Optional filter - past, overdue, undated, ungraded, unsubmitted, upcoming, future\n    ",
+          "input_schema": {
+            "properties": {
+              "course_name": {
+                "title": "Course Name",
+                "type": "string"
+              },
+              "bucket": {
+                "default": null,
+                "title": "Bucket",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_name"
+            ],
+            "title": "get_assignments_by_course_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_canvas_courses",
+          "description": "Use this tool to retrieve all available Canvas courses for the current user. This is an alias for get_courses. Use this when you need to find course IDs based on names or display all available courses.",
+          "input_schema": {
+            "properties": {},
+            "title": "get_canvas_coursesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_courses",
+          "description": "Use this tool to retrieve all available Gradescope courses for the current user. This tool returns a dictionary of courses organized by user role. Use this when helping users access or manage their Gradescope course information.",
+          "input_schema": {
+            "properties": {
+              "random_string": {
+                "default": "",
+                "title": "Random String",
+                "type": "string"
+              }
+            },
+            "title": "get_gradescope_coursesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_course_by_name",
+          "description": "Use this tool to find a specific Gradescope course by name (partial matches supported). This tool returns the course object if found. Use this when you need to get course details or ID when only the name is known.\n    \n    Args:\n        course_name: The name or partial name of the Gradescope course to search for\n    ",
+          "input_schema": {
+            "properties": {
+              "course_name": {
+                "title": "Course Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_name"
+            ],
+            "title": "get_gradescope_course_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_assignments",
+          "description": "Use this tool to retrieve all assignments for a specific Gradescope course. This tool returns a list of assignment objects with details like name, due date, and status. Use this when helping users manage their Gradescope coursework.\n    \n    Args:\n        course_id: The Gradescope course ID\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "Course Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id"
+            ],
+            "title": "get_gradescope_assignmentsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_assignment_by_name",
+          "description": "Use this tool to find a specific Gradescope assignment by name within a course. This tool returns the assignment object if found. Use this when you need assignment details or ID when only the name and course are known.\n    \n    Args:\n        course_id: The Gradescope course ID\n        assignment_name: The name or partial name of the assignment to search for\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "Course Id",
+                "type": "string"
+              },
+              "assignment_name": {
+                "title": "Assignment Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "assignment_name"
+            ],
+            "title": "get_gradescope_assignment_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_submissions",
+          "description": "Use this tool to retrieve all submissions for a specific Gradescope assignment. This tool returns a list of submission objects with details like submission time and score. Use this when helping users review or manage submission information.\n    \n    Args:\n        course_id: The Gradescope course ID\n        assignment_id: The Gradescope assignment ID\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "Course Id",
+                "type": "string"
+              },
+              "assignment_id": {
+                "title": "Assignment Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "assignment_id"
+            ],
+            "title": "get_gradescope_submissionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_student_submission",
+          "description": "Use this tool to retrieve a specific student's submission for a Gradescope assignment. This tool returns the submission object if found. Use this when helping a student review their own submission or when an instructor needs details about a specific student's work.\n    \n    Args:\n        course_id: The Gradescope course ID\n        assignment_id: The Gradescope assignment ID\n        student_email: The email address of the student whose submission to retrieve\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "Course Id",
+                "type": "string"
+              },
+              "assignment_id": {
+                "title": "Assignment Id",
+                "type": "string"
+              },
+              "student_email": {
+                "title": "Student Email",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "assignment_id",
+              "student_email"
+            ],
+            "title": "get_gradescope_student_submissionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "call_search_gradescope",
+          "description": "Use this tool to search for information across Gradescope using natural language queries. This tool analyzes the query and returns relevant information about courses, assignments, or submissions. Use this when helping users find Gradescope information without knowing specific IDs or technical details.\n    \n    Args:\n        query: Natural language query about Gradescope courses, assignments, etc.\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "call_search_gradescopeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_education_platforms",
+          "description": "Use this tool to search for information across both Canvas and Gradescope using natural language queries. This tool determines which platform is most relevant to the query and returns appropriately formatted results. Use this for broad educational queries when the user hasn't specified which platform they're interested in.\n    \n    Args:\n        query: Natural language query about courses, assignments, or other educational content\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_education_platformsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 16,
+      "tool_names": [
+        "get_courses",
+        "get_modules",
+        "get_module_items",
+        "get_file_url",
+        "find_resources",
+        "get_course_assignments",
+        "get_assignments_by_course_name",
+        "get_canvas_courses",
+        "get_gradescope_courses",
+        "get_gradescope_course_by_name",
+        "get_gradescope_assignments",
+        "get_gradescope_assignment_by_name",
+        "get_gradescope_submissions",
+        "get_gradescope_student_submission",
+        "call_search_gradescope",
+        "search_education_platforms"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1019,
+      "name": "Canvas MCP",
+      "author": "@aryankeluskar/canvas-mcp",
+      "overview": "EdTech MCP. This is a collection of Canvas LMS tools for the model context protocol. Allows you to query your courses and get help for your assignments in the AI app of your choice. try now!",
+      "repository_url": "https://github.com/aryankeluskar/canvas-mcp",
+      "homepage": "https://smithery.ai/server/@aryankeluskar/canvas-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@aryankeluskar_canvas-mcp.json",
+      "tools_count": 16,
+      "tools": [
+        {
+          "name": "get_courses",
+          "description": "Use this tool to retrieve all available Canvas courses for the current user. This tool returns a dictionary mapping course names to their corresponding IDs. Use this when you need to find course IDs based on names, display all available courses, or when needing to access any course-related information.",
+          "input_schema": {
+            "properties": {},
+            "title": "get_coursesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_modules",
+          "description": "Use this tool to retrieve all modules within a specific Canvas course. This tool returns a list of module objects containing module details like ID, name, and status. Use this when exploring or navigating course content structure.",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "course_id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id"
+            ],
+            "title": "get_modulesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_module_items",
+          "description": "Use this tool to retrieve all items within a specific module in a Canvas course. This tool returns a list of module item objects containing details like title, type, and URLs. Use this when you need to access specific learning materials, assignments, or other content within a module.",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "course_id",
+                "type": "string"
+              },
+              "module_id": {
+                "title": "module_id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "module_id"
+            ],
+            "title": "get_module_itemsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_url",
+          "description": "Use this tool to get the direct download URL for a file stored in Canvas. This tool returns a URL string that can be used to access or download the file. Use this when you need direct access to file content rather than just the Canvas page URL.",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "course_id",
+                "type": "string"
+              },
+              "file_id": {
+                "title": "file_id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "file_id"
+            ],
+            "title": "get_file_urlArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find_resources",
+          "description": "Use this tool to search for and identify the most relevant learning resources across Canvas courses based on a text query or image. This tool analyzes user needs and returns resources ranked by relevance. Use this when helping users find specific learning materials, lecture notes, or content related to their questions.",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "image_path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Image Path"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "find_resourcesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_course_assignments",
+          "description": "Use this tool to retrieve all assignments for a specific Canvas course, with optional filtering by status. This tool returns assignment details including name, description, due date, and submission status. Use this when helping users manage their coursework, check due dates, or find assignment details.\n    \n    Args:\n        course_id: The Canvas course ID\n        bucket: Optional filter - past, overdue, undated, ungraded, unsubmitted, upcoming, future\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "course_id",
+                "type": "string"
+              },
+              "bucket": {
+                "default": null,
+                "title": "Bucket",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id"
+            ],
+            "title": "get_course_assignmentsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_assignments_by_course_name",
+          "description": "Use this tool to retrieve all assignments for a Canvas course using its name rather than ID. This tool returns assignment details the same as get_course_assignments. Use this when you have the course name but not the ID, or when helping users find assignments across multiple courses.\n    \n    Args:\n        course_name: The name of the course as it appears in Canvas (partial matches supported)\n        bucket: Optional filter - past, overdue, undated, ungraded, unsubmitted, upcoming, future\n    ",
+          "input_schema": {
+            "properties": {
+              "course_name": {
+                "title": "Course Name",
+                "type": "string"
+              },
+              "bucket": {
+                "default": null,
+                "title": "Bucket",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_name"
+            ],
+            "title": "get_assignments_by_course_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_canvas_courses",
+          "description": "Use this tool to retrieve all available Canvas courses for the current user. This is an alias for get_courses. Use this when you need to find course IDs based on names or display all available courses.",
+          "input_schema": {
+            "properties": {},
+            "title": "get_canvas_coursesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_courses",
+          "description": "Use this tool to retrieve all available Gradescope courses for the current user. This tool returns a dictionary of courses organized by user role. Use this when helping users access or manage their Gradescope course information.",
+          "input_schema": {
+            "properties": {
+              "random_string": {
+                "default": "",
+                "title": "Random String",
+                "type": "string"
+              }
+            },
+            "title": "get_gradescope_coursesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_course_by_name",
+          "description": "Use this tool to find a specific Gradescope course by name (partial matches supported). This tool returns the course object if found. Use this when you need to get course details or ID when only the name is known.\n    \n    Args:\n        course_name: The name or partial name of the Gradescope course to search for\n    ",
+          "input_schema": {
+            "properties": {
+              "course_name": {
+                "title": "Course Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_name"
+            ],
+            "title": "get_gradescope_course_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_assignments",
+          "description": "Use this tool to retrieve all assignments for a specific Gradescope course. This tool returns a list of assignment objects with details like name, due date, and status. Use this when helping users manage their Gradescope coursework.\n    \n    Args:\n        course_id: The Gradescope course ID\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "Course Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id"
+            ],
+            "title": "get_gradescope_assignmentsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_assignment_by_name",
+          "description": "Use this tool to find a specific Gradescope assignment by name within a course. This tool returns the assignment object if found. Use this when you need assignment details or ID when only the name and course are known.\n    \n    Args:\n        course_id: The Gradescope course ID\n        assignment_name: The name or partial name of the assignment to search for\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "Course Id",
+                "type": "string"
+              },
+              "assignment_name": {
+                "title": "Assignment Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "assignment_name"
+            ],
+            "title": "get_gradescope_assignment_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_submissions",
+          "description": "Use this tool to retrieve all submissions for a specific Gradescope assignment. This tool returns a list of submission objects with details like submission time and score. Use this when helping users review or manage submission information.\n    \n    Args:\n        course_id: The Gradescope course ID\n        assignment_id: The Gradescope assignment ID\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "Course Id",
+                "type": "string"
+              },
+              "assignment_id": {
+                "title": "Assignment Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "assignment_id"
+            ],
+            "title": "get_gradescope_submissionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_gradescope_student_submission",
+          "description": "Use this tool to retrieve a specific student's submission for a Gradescope assignment. This tool returns the submission object if found. Use this when helping a student review their own submission or when an instructor needs details about a specific student's work.\n    \n    Args:\n        course_id: The Gradescope course ID\n        assignment_id: The Gradescope assignment ID\n        student_email: The email address of the student whose submission to retrieve\n    ",
+          "input_schema": {
+            "properties": {
+              "course_id": {
+                "title": "Course Id",
+                "type": "string"
+              },
+              "assignment_id": {
+                "title": "Assignment Id",
+                "type": "string"
+              },
+              "student_email": {
+                "title": "Student Email",
+                "type": "string"
+              }
+            },
+            "required": [
+              "course_id",
+              "assignment_id",
+              "student_email"
+            ],
+            "title": "get_gradescope_student_submissionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "call_search_gradescope",
+          "description": "Use this tool to search for information across Gradescope using natural language queries. This tool analyzes the query and returns relevant information about courses, assignments, or submissions. Use this when helping users find Gradescope information without knowing specific IDs or technical details.\n    \n    Args:\n        query: Natural language query about Gradescope courses, assignments, etc.\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "call_search_gradescopeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_education_platforms",
+          "description": "Use this tool to search for information across both Canvas and Gradescope using natural language queries. This tool determines which platform is most relevant to the query and returns appropriately formatted results. Use this for broad educational queries when the user hasn't specified which platform they're interested in.\n    \n    Args:\n        query: Natural language query about courses, assignments, or other educational content\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_education_platformsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"canvasApiKey\": \"\",\n  \"googleApiKey\": \"\",\n  \"gradescopeEmail\": \"\",\n  \"gradescopePassword\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@aryankeluskar/canvas-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"canvasApiKey\": \"\",\n  \"googleApiKey\": \"\",\n  \"gradescopeEmail\": \"\",\n  \"gradescopePassword\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@aryankeluskar/canvas-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1020.@aryankeluskar_canvas-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 998
+  }
+}

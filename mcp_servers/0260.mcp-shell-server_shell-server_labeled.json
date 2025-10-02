@@ -1,0 +1,138 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is a Shell Server that allows execution of whitelisted shell commands in a secure manner.\n    It provides basic file operations, text processing, and directory navigation capabilities\n    through allowed commands like find, cat, ls, wc, pwd, grep, and touch.\n    This server is focused on providing a controlled environment for executing fundamental\n    command-line operations rather than advanced system management or processing.",
+    "reasoning": "The primary functionality aligns with file operations and basic system interactions,\n    making \"Operating System\" the most appropriate primary label.\n    \"File Management\" is a relevant secondary label since many of the allowed commands are\n    file-related. The tool set is somewhat limited but could also relate to basic\n    data processing through text manipulation commands.",
+    "primary_label": "Operating System",
+    "secondary_labels": [
+      "File Management",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Shell Command Execution",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 259,
+    "server_name": "Shell Server",
+    "rank_by_usage": 260,
+    "usage_count": "147",
+    "original_file": "../crawler/smithery/mcp-shell-server_shell-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/mcp-shell-server/mcp?config=eyJhbGxvd0NvbW1hbmRzIjogImxzLGNhdCxwd2QsZ3JlcCx3Yyx0b3VjaCxmaW5kIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "shell_execute",
+          "description": "Execute a shell command\nAllowed commands: find, cat, ls, wc, pwd, grep, touch",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Command and its arguments as array"
+              },
+              "stdin": {
+                "type": "string",
+                "description": "Input to be passed to the command via stdin"
+              },
+              "directory": {
+                "type": "string",
+                "description": "Working directory where the command will be executed"
+              },
+              "timeout": {
+                "type": "integer",
+                "description": "Maximum execution time in seconds",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "command",
+              "directory"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "shell_execute"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 259,
+      "name": "Shell Server",
+      "author": "mcp-shell-server",
+      "overview": "Execute whitelisted shell commands securely via MCP.",
+      "repository_url": "https://github.com/tumf/mcp-shell-server",
+      "homepage": "https://smithery.ai/server/mcp-shell-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "147",
+      "success_rate": "99.62%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/mcp-shell-server_shell-server.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "shell_execute",
+          "description": "Execute a shell command\nAllowed commands: find, cat, ls, wc, pwd, grep, touch",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Command and its arguments as array"
+              },
+              "stdin": {
+                "type": "string",
+                "description": "Input to be passed to the command via stdin"
+              },
+              "directory": {
+                "type": "string",
+                "description": "Working directory where the command will be executed"
+              },
+              "timeout": {
+                "type": "integer",
+                "description": "Maximum execution time in seconds",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "command",
+              "directory"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"allowCommands\": \"ls,cat,pwd,grep,wc,touch,find\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/mcp-shell-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"allowCommands\": \"ls,cat,pwd,grep,wc,touch,find\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/mcp-shell-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0260.mcp-shell-server_shell-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 256
+  }
+}

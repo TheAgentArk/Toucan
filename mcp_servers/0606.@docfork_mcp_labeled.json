@@ -1,0 +1,126 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Docfork\" is designed to retrieve and present up-to-date documentation and code examples for a vast repository of libraries. Its core functionality revolves around accessing and delivering documentation, making it an essential tool for developers working with AI code editors. The \"get-library-docs\" tool allows users to specify libraries and topics, ensuring the returned documentation is relevant and focused, thus enhancing developer productivity and learning.",
+    "reasoning": "The primary label \"Web Search & Research\" is chosen because the tool's main function is to search for and retrieve information (documentation) in a focused manner. \"Development Tools\" is a secondary label as it aids developers in code understanding and integration. The server also facilitates knowledge retrieval, which aligns with \"Memory Management\" as it stores and retrieves documentation dynamically.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Development Tools",
+      "Memory Management"
+    ],
+    "custom_label": "Documentation Retrieval",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 605,
+    "server_name": "Docfork",
+    "rank_by_usage": 606,
+    "usage_count": "17",
+    "original_file": "../crawler/smithery/@docfork_mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@docfork/mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-library-docs",
+          "description": "Retrieves up-to-date documentation and code examples for any library. This tool automatically searches for the library by name and fetches its documentation.\n\nUsage:\n1. Provide the author and library name pair (e.g., \"vercel/next.js\", \"shadcn-ui/ui\", \"vuejs/docs\")\n2. Specify a topic to focus the documentation on (e.g., \"dynamic\", \"routing\", \"authentication\")\n\nThe tool will:\n1. Automatically find and select the most relevant library based on the provided name\n2. Fetch comprehensive documentation for the selected library\n3. Return relevant sections focused on the specified topic\n\nResponse includes:\n- Library selection explanation\n- Comprehensive documentation with code examples\n- Focused content if a topic was specified",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "libraryName": {
+                "type": "string",
+                "description": "Author and library name pair to search for and retrieve documentation (e.g., 'vercel/next.js', 'reactjs/react.dev', 'vuejs/docs')"
+              },
+              "topic": {
+                "type": "string",
+                "description": "Topic to focus documentation on (e.g., 'hooks', 'routing', 'authentication')"
+              },
+              "tokens": {
+                "type": "number",
+                "description": "Maximum number of tokens of documentation to retrieve (default: 10000). Higher values provide more context but consume more tokens."
+              }
+            },
+            "required": [
+              "libraryName",
+              "topic"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "get-library-docs"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 605,
+      "name": "Docfork",
+      "author": "@docfork/mcp",
+      "overview": "@latest docs for 9000+ libraries in your AI code editor, with a single MCP.",
+      "repository_url": "https://github.com/docfork/docfork-mcp",
+      "homepage": "https://smithery.ai/server/@docfork/mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "17",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@docfork_mcp.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "get-library-docs",
+          "description": "Retrieves up-to-date documentation and code examples for any library. This tool automatically searches for the library by name and fetches its documentation.\n\nUsage:\n1. Provide the author and library name pair (e.g., \"vercel/next.js\", \"shadcn-ui/ui\", \"vuejs/docs\")\n2. Specify a topic to focus the documentation on (e.g., \"dynamic\", \"routing\", \"authentication\")\n\nThe tool will:\n1. Automatically find and select the most relevant library based on the provided name\n2. Fetch comprehensive documentation for the selected library\n3. Return relevant sections focused on the specified topic\n\nResponse includes:\n- Library selection explanation\n- Comprehensive documentation with code examples\n- Focused content if a topic was specified",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "libraryName": {
+                "type": "string",
+                "description": "Author and library name pair to search for and retrieve documentation (e.g., 'vercel/next.js', 'reactjs/react.dev', 'vuejs/docs')"
+              },
+              "topic": {
+                "type": "string",
+                "description": "Topic to focus documentation on (e.g., 'hooks', 'routing', 'authentication')"
+              },
+              "tokens": {
+                "type": "number",
+                "description": "Maximum number of tokens of documentation to retrieve (default: 10000). Higher values provide more context but consume more tokens."
+              }
+            },
+            "required": [
+              "libraryName",
+              "topic"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@docfork/mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@docfork/mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0606.@docfork_mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 591
+  }
+}

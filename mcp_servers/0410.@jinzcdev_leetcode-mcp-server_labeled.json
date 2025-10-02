@@ -1,0 +1,713 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide advanced automation and intelligent interaction with the LeetCode platform. It offers tools for retrieving problem details, user profiles, contest rankings, and community solutions. The server focuses on enabling users to access and analyze LeetCode data efficiently, supporting both individual problem-solving and contest participation tracking.",
+    "reasoning": "The primary label of \"Developer Tools\" is chosen because the server is heavily aimed at developers and coding enthusiasts, providing tools to interact with coding problems, solutions, and user data on LeetCode. \"Education\" is included as a secondary label because it facilitates learning through problem access and community solutions. No custom label is needed as the functionality is well-covered by existing categories.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Education"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": true
+  },
+  "metadata": {
+    "server_id": 409,
+    "server_name": "LeetCode",
+    "rank_by_usage": 410,
+    "usage_count": "55",
+    "original_file": "../crawler/smithery/@jinzcdev_leetcode-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jinzcdev/leetcode-mcp-server/mcp?config=eyJzaXRlIjogImdsb2JhbCJ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_daily_challenge",
+          "description": "Retrieves today's LeetCode Daily Challenge problem with complete details, including problem description, constraints, and examples",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_problem",
+          "description": "Retrieves details about a specific LeetCode problem, including its description, examples, constraints, and related information",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "titleSlug": {
+                "type": "string",
+                "description": "The URL slug/identifier of the problem (e.g., 'two-sum', 'add-two-numbers') as it appears in the LeetCode URL"
+              }
+            },
+            "required": [
+              "titleSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_problems",
+          "description": "Searches for LeetCode problems based on multiple filter criteria including categories, tags, difficulty levels, and keywords, with pagination support",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "enum": [
+                  "all-code-essentials",
+                  "algorithms",
+                  "database",
+                  "pandas",
+                  "javascript",
+                  "shell",
+                  "concurrency"
+                ],
+                "default": "all-code-essentials",
+                "description": "Problem category filter (e.g., 'algorithms', 'database', 'shell') to narrow down the problem domain"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "array",
+                    "string",
+                    "hash-table",
+                    "dynamic-programming",
+                    "math",
+                    "sorting",
+                    "greedy",
+                    "depth-first-search",
+                    "binary-search",
+                    "database",
+                    "tree",
+                    "breadth-first-search",
+                    "matrix",
+                    "bit-manipulation",
+                    "two-pointers",
+                    "binary-tree",
+                    "heap-priority-queue",
+                    "prefix-sum",
+                    "stack",
+                    "simulation",
+                    "graph",
+                    "counting",
+                    "sliding-window",
+                    "design",
+                    "backtracking",
+                    "enumeration",
+                    "linked-list",
+                    "union-find",
+                    "ordered-set",
+                    "monotonic-stack",
+                    "number-theory",
+                    "trie",
+                    "segment-tree",
+                    "recursion",
+                    "divide-and-conquer",
+                    "queue",
+                    "combinatorics",
+                    "binary-search-tree",
+                    "bitmask",
+                    "memoization",
+                    "geometry",
+                    "binary-indexed-tree",
+                    "hash-function",
+                    "topological-sort",
+                    "string-matching",
+                    "shortest-path",
+                    "rolling-hash",
+                    "game-theory",
+                    "data-stream",
+                    "interactive",
+                    "monotonic-queue",
+                    "brainteaser",
+                    "doubly-linked-list",
+                    "merge-sort",
+                    "randomized",
+                    "quickselect",
+                    "counting-sort",
+                    "iterator",
+                    "probability-and-statistics",
+                    "concurrency",
+                    "bucket-sort",
+                    "suffix-array",
+                    "line-sweep",
+                    "minimum-spanning-tree",
+                    "shell",
+                    "reservoir-sampling",
+                    "strongly-connected-component",
+                    "eulerian-circuit",
+                    "radix-sort",
+                    "biconnected-component",
+                    "rejection-sampling"
+                  ]
+                },
+                "description": "List of topic tags to filter problems by (e.g., ['array', 'dynamic-programming', 'tree'])"
+              },
+              "difficulty": {
+                "type": "string",
+                "enum": [
+                  "EASY",
+                  "MEDIUM",
+                  "HARD"
+                ],
+                "description": "Problem difficulty level filter to show only problems of a specific difficulty"
+              },
+              "searchKeywords": {
+                "type": "string",
+                "description": "Keywords to search in problem titles and descriptions"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of problems to return in a single request (for pagination)"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Number of problems to skip (for pagination)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_profile",
+          "description": "Retrieves profile information about a LeetCode user, including user stats, solved problems, and profile details",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "LeetCode username to retrieve profile information for"
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_recent_submissions",
+          "description": "Retrieves a user's recent submissions on LeetCode Global, including both accepted and failed submissions with detailed metadata",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "LeetCode username to retrieve recent submissions for"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of submissions to return (optional, defaults to server-defined limit)"
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_recent_ac_submissions",
+          "description": "Retrieves a user's recent accepted (AC) submissions on LeetCode Global, focusing only on successfully completed problems",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "LeetCode username to retrieve recent accepted submissions for"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of accepted submissions to return (optional, defaults to server-defined limit)"
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_contest_ranking",
+          "description": "Retrieves a user's contest ranking information on LeetCode, including overall ranking, participation history, and performance metrics across contests",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "LeetCode username to retrieve contest ranking information for"
+              },
+              "attended": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include only the contests the user has participated in (true) or all contests (false); defaults to true"
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_problem_solutions",
+          "description": "Retrieves a list of community solutions for a specific LeetCode problem, including only metadata like topicId. To view the full content of a solution, use the 'get_problem_solution' tool with the topicId returned by this tool.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "questionSlug": {
+                "type": "string",
+                "description": "The URL slug/identifier of the problem to retrieve solutions for (e.g., 'two-sum', 'add-two-numbers'). This is the same string that appears in the LeetCode problem URL after '/problems/'"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of solutions to return per request. Used for pagination and controlling response size. Default is 20 if not specified. Must be a positive integer."
+              },
+              "skip": {
+                "type": "number",
+                "description": "Number of solutions to skip before starting to collect results. Used in conjunction with 'limit' for implementing pagination. Default is 0 if not specified. Must be a non-negative integer."
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "HOT",
+                  " MOST_RECENT",
+                  "MOST_VOTES"
+                ],
+                "default": "HOT",
+                "description": "Sorting criteria for the returned solutions. 'DEFAULT' sorts by LeetCode's default algorithm (typically a combination of recency and popularity), 'MOST_VOTES' sorts by the number of upvotes (highest first), and 'MOST_RECENT' sorts by publication date (newest first)."
+              },
+              "userInput": {
+                "type": "string",
+                "description": "Search term to filter solutions by title, content, or author name. Case insensitive. Useful for finding specific approaches or algorithms mentioned in solutions."
+              },
+              "tagSlugs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Array of tag identifiers to filter solutions by programming languages (e.g., 'python', 'java') or problem algorithm/data-structure tags (e.g., 'dynamic-programming', 'recursion'). Only solutions tagged with at least one of the specified tags will be returned."
+              }
+            },
+            "required": [
+              "questionSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_problem_solution",
+          "description": "Retrieves the complete content and metadata of a specific solution, including the full article text, author information, and related navigation links",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "topicId": {
+                "type": "string",
+                "description": "The unique topic ID of the solution to retrieve. This ID can be obtained from the 'topicId' field in the response of the 'list_problem_solutions' tool. Format is typically a string of numbers and letters that uniquely identifies the solution in LeetCode's database."
+              }
+            },
+            "required": [
+              "topicId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "get_daily_challenge",
+        "get_problem",
+        "search_problems",
+        "get_user_profile",
+        "get_recent_submissions",
+        "get_recent_ac_submissions",
+        "get_user_contest_ranking",
+        "list_problem_solutions",
+        "get_problem_solution"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 409,
+      "name": "LeetCode",
+      "author": "@jinzcdev/leetcode-mcp-server",
+      "overview": "MCP server for LeetCode API, enabling advanced automation and intelligent interaction with LeetCode problems, contests, solutions and user data (Supports authenticated APIs).",
+      "repository_url": "https://github.com/jinzcdev/leetcode-mcp-server",
+      "homepage": "https://smithery.ai/server/@jinzcdev/leetcode-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "55",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jinzcdev_leetcode-mcp-server.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "get_daily_challenge",
+          "description": "Retrieves today's LeetCode Daily Challenge problem with complete details, including problem description, constraints, and examples",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_problem",
+          "description": "Retrieves details about a specific LeetCode problem, including its description, examples, constraints, and related information",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "titleSlug": {
+                "type": "string",
+                "description": "The URL slug/identifier of the problem (e.g., 'two-sum', 'add-two-numbers') as it appears in the LeetCode URL"
+              }
+            },
+            "required": [
+              "titleSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_problems",
+          "description": "Searches for LeetCode problems based on multiple filter criteria including categories, tags, difficulty levels, and keywords, with pagination support",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "type": "string",
+                "enum": [
+                  "all-code-essentials",
+                  "algorithms",
+                  "database",
+                  "pandas",
+                  "javascript",
+                  "shell",
+                  "concurrency"
+                ],
+                "default": "all-code-essentials",
+                "description": "Problem category filter (e.g., 'algorithms', 'database', 'shell') to narrow down the problem domain"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "array",
+                    "string",
+                    "hash-table",
+                    "dynamic-programming",
+                    "math",
+                    "sorting",
+                    "greedy",
+                    "depth-first-search",
+                    "binary-search",
+                    "database",
+                    "tree",
+                    "breadth-first-search",
+                    "matrix",
+                    "bit-manipulation",
+                    "two-pointers",
+                    "binary-tree",
+                    "heap-priority-queue",
+                    "prefix-sum",
+                    "stack",
+                    "simulation",
+                    "graph",
+                    "counting",
+                    "sliding-window",
+                    "design",
+                    "backtracking",
+                    "enumeration",
+                    "linked-list",
+                    "union-find",
+                    "ordered-set",
+                    "monotonic-stack",
+                    "number-theory",
+                    "trie",
+                    "segment-tree",
+                    "recursion",
+                    "divide-and-conquer",
+                    "queue",
+                    "combinatorics",
+                    "binary-search-tree",
+                    "bitmask",
+                    "memoization",
+                    "geometry",
+                    "binary-indexed-tree",
+                    "hash-function",
+                    "topological-sort",
+                    "string-matching",
+                    "shortest-path",
+                    "rolling-hash",
+                    "game-theory",
+                    "data-stream",
+                    "interactive",
+                    "monotonic-queue",
+                    "brainteaser",
+                    "doubly-linked-list",
+                    "merge-sort",
+                    "randomized",
+                    "quickselect",
+                    "counting-sort",
+                    "iterator",
+                    "probability-and-statistics",
+                    "concurrency",
+                    "bucket-sort",
+                    "suffix-array",
+                    "line-sweep",
+                    "minimum-spanning-tree",
+                    "shell",
+                    "reservoir-sampling",
+                    "strongly-connected-component",
+                    "eulerian-circuit",
+                    "radix-sort",
+                    "biconnected-component",
+                    "rejection-sampling"
+                  ]
+                },
+                "description": "List of topic tags to filter problems by (e.g., ['array', 'dynamic-programming', 'tree'])"
+              },
+              "difficulty": {
+                "type": "string",
+                "enum": [
+                  "EASY",
+                  "MEDIUM",
+                  "HARD"
+                ],
+                "description": "Problem difficulty level filter to show only problems of a specific difficulty"
+              },
+              "searchKeywords": {
+                "type": "string",
+                "description": "Keywords to search in problem titles and descriptions"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of problems to return in a single request (for pagination)"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Number of problems to skip (for pagination)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_profile",
+          "description": "Retrieves profile information about a LeetCode user, including user stats, solved problems, and profile details",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "LeetCode username to retrieve profile information for"
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_recent_submissions",
+          "description": "Retrieves a user's recent submissions on LeetCode Global, including both accepted and failed submissions with detailed metadata",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "LeetCode username to retrieve recent submissions for"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of submissions to return (optional, defaults to server-defined limit)"
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_recent_ac_submissions",
+          "description": "Retrieves a user's recent accepted (AC) submissions on LeetCode Global, focusing only on successfully completed problems",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "LeetCode username to retrieve recent accepted submissions for"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of accepted submissions to return (optional, defaults to server-defined limit)"
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_contest_ranking",
+          "description": "Retrieves a user's contest ranking information on LeetCode, including overall ranking, participation history, and performance metrics across contests",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "description": "LeetCode username to retrieve contest ranking information for"
+              },
+              "attended": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include only the contests the user has participated in (true) or all contests (false); defaults to true"
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_problem_solutions",
+          "description": "Retrieves a list of community solutions for a specific LeetCode problem, including only metadata like topicId. To view the full content of a solution, use the 'get_problem_solution' tool with the topicId returned by this tool.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "questionSlug": {
+                "type": "string",
+                "description": "The URL slug/identifier of the problem to retrieve solutions for (e.g., 'two-sum', 'add-two-numbers'). This is the same string that appears in the LeetCode problem URL after '/problems/'"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of solutions to return per request. Used for pagination and controlling response size. Default is 20 if not specified. Must be a positive integer."
+              },
+              "skip": {
+                "type": "number",
+                "description": "Number of solutions to skip before starting to collect results. Used in conjunction with 'limit' for implementing pagination. Default is 0 if not specified. Must be a non-negative integer."
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "HOT",
+                  " MOST_RECENT",
+                  "MOST_VOTES"
+                ],
+                "default": "HOT",
+                "description": "Sorting criteria for the returned solutions. 'DEFAULT' sorts by LeetCode's default algorithm (typically a combination of recency and popularity), 'MOST_VOTES' sorts by the number of upvotes (highest first), and 'MOST_RECENT' sorts by publication date (newest first)."
+              },
+              "userInput": {
+                "type": "string",
+                "description": "Search term to filter solutions by title, content, or author name. Case insensitive. Useful for finding specific approaches or algorithms mentioned in solutions."
+              },
+              "tagSlugs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Array of tag identifiers to filter solutions by programming languages (e.g., 'python', 'java') or problem algorithm/data-structure tags (e.g., 'dynamic-programming', 'recursion'). Only solutions tagged with at least one of the specified tags will be returned."
+              }
+            },
+            "required": [
+              "questionSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_problem_solution",
+          "description": "Retrieves the complete content and metadata of a specific solution, including the full article text, author information, and related navigation links",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "topicId": {
+                "type": "string",
+                "description": "The unique topic ID of the solution to retrieve. This ID can be obtained from the 'topicId' field in the response of the 'list_problem_solutions' tool. Format is typically a string of numbers and letters that uniquely identifies the solution in LeetCode's database."
+              }
+            },
+            "required": [
+              "topicId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"site\": \"global\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@jinzcdev/leetcode-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"site\": \"global\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@jinzcdev/leetcode-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0410.@jinzcdev_leetcode-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 404
+  }
+}

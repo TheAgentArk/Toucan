@@ -1,0 +1,129 @@
+{
+  "labels": {
+    "analysis": "The MCP Server for Recraft AI focuses on advanced image generation, manipulation, and enhancement. Its tools enable users to create and edit high-quality raster and vector images, including features like style creation, vectorization, background removal/replacement, and upscaling. The server's capabilities are centered around creative workflows and image processing, primarily serving digital artists, designers, and content creators.",
+    "reasoning": "The primary category is **Content Creation** since the server's main purpose is generating, editing, and enhancing images. The inclusion of **AI/ML Tools** is justified because all functionalities leverage AI-powered operations like image generation and style transfer. No custom label is needed as the predefined categories sufficiently cover the server's features.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "AI/ML Tools"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 765,
+    "server_name": "Recraft AI",
+    "rank_by_usage": 766,
+    "usage_count": "8",
+    "original_file": "../crawler/smithery/@recraft-ai_mcp-recraft-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@recraft-ai/mcp-recraft-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 765,
+      "name": "Recraft AI",
+      "author": "@recraft-ai/mcp-recraft-server",
+      "overview": "Generate and edit high-quality raster and vector images using Recraft AI's advanced tools. Create custom styles, vectorize images, remove or replace backgrounds, and upscale images seamlessly. Enhance your creative workflows by integrating these powerful image operations into your MCP Client.",
+      "repository_url": "https://github.com/recraft-ai/mcp-recraft-server",
+      "homepage": "https://smithery.ai/server/@recraft-ai/mcp-recraft-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "8",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@recraft-ai_mcp-recraft-server.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "generate_image",
+          "description": "Deploy Server @recraft-ai/mcp-recraft-server Try in Playground generate_image",
+          "parameters": []
+        },
+        {
+          "name": "create_style",
+          "description": "Create a style in Recraft AI from the set of style reference images. A style is extracted from the provided images and can be used in image generation tools. ID of the created style will be returned in the response.",
+          "parameters": []
+        },
+        {
+          "name": "vectorize_image",
+          "description": "Vectorize an input image using Recraft AI. This operation takes an input image and returns a vector SVG image, close to it. Local path or URL to resulting image and its preview will be returned in the response.",
+          "parameters": []
+        },
+        {
+          "name": "image_to_image",
+          "description": "Generate an image using Recraft AI from an input image and a text prompt. You can specify the reference input image, style, model, and number of images to generate. You should provide the same style/substyle/styleID settings as were used for input image generation (if exists) if there are no specific requirements to change the style. Other parameters are recommended to keep default if you don't have any specific requirements on them. You can use styles to refine the image generation, and also to generate raster or vector images. Local paths or URLs to generated images and their previews will be returned in the response.",
+          "parameters": []
+        },
+        {
+          "name": "remove_background",
+          "description": "Remove background in the input image using Recraft AI. This operation takes an input image and returns the same image with detected background removed. Raster image will be always returned. Local path or URL to resulting image and its preview will be returned in the response.",
+          "parameters": [
+            {
+              "name": "imageURI",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "replace_background",
+          "description": "Generate an image using Recraft AI from an input image with its detected background replaced based on the prompt. You can specify the input image, style, model, and number of images to generate. You should provide the same style/substyle/styleID settings as were used for input image generation (if exists) if there are no specific requirements to change the style. Other parameters are recommended to keep default if you don't have any specific requirements on them. You can use styles to refine the image background generation, and also to generate raster or vector images. Local paths or URLs to generated images and their previews will be returned in the response.",
+          "parameters": []
+        },
+        {
+          "name": "crisp_upscale",
+          "description": "Crisp upscale of the input image using Recraft AI. This operation takes an input image and returns an upscaled image, making the image sharper and cleaner. This version of upscale is much cheaper and faster than creative upscale. Local path or URL to resulting image and its preview will be returned in the response.",
+          "parameters": []
+        },
+        {
+          "name": "creative_upscale",
+          "description": "Creative upscale of the input image using Recraft AI. This operation takes an input image and returns an upscaled image, boosting resolution with a focus on refining small details and faces. This version of upscale is expensive and slower than crisp upscale. Local path or URL to resulting image and its preview will be returned in the response.",
+          "parameters": []
+        },
+        {
+          "name": "get_user",
+          "description": "Get information about the current Recraft AI API user (their email, name, and credit balance).",
+          "parameters": [
+            {
+              "name": "get_user",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@recraft-ai/mcp-recraft-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "RECRAFT_API_KEY",
+          "required": true,
+          "description": "Your Recraft AI API key. Get one at https://www.recraft.ai/profile/api"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@recraft-ai/mcp-recraft-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0766.@recraft-ai_mcp-recraft-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 748
+  }
+}

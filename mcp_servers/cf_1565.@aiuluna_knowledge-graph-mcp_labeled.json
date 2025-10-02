@@ -1,0 +1,147 @@
+{
+  "labels": {
+    "analysis": "The MCP Knowledge Graph Server is designed for managing, analyzing, and visualizing structured knowledge graphs. It supports various graph types including topologies, timelines, and ontologies, and integrates with AI assistants. The available tools enable comprehensive operations like creating, modifying, and deleting nodes, edges, and resources in the graph. It also helps in managing graph versions and status tracking, making it suitable for building and maintaining complex knowledge workflows.",
+    "reasoning": "The primary functionality aligns with knowledge management and graph data operations, hence \"Knowledge Management\" is an appropriate primary label. The server's graph manipulation tools and version tracking capabilities support data analysis, so that is a logical secondary label. Since the tools are specific to graph-based knowledge structures, a custom label for graph knowledge operations is justified.",
+    "primary_label": "Memory Management",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Graph Knowledge Operations",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1564,
+    "server_name": "Knowledge Graph Server",
+    "rank_by_usage": 1565,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@aiuluna_knowledge-graph-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@aiuluna/knowledge-graph-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1564,
+      "name": "Knowledge Graph Server",
+      "author": "@aiuluna/knowledge-graph-mcp",
+      "overview": "Manage, analyze, and visualize knowledge graphs with support for multiple graph types including topologies, timelines, and ontologies. Seamlessly integrate with MCP-compatible AI assistants to query and manipulate knowledge graph data. Benefit from comprehensive resource management and version status tracking to enhance your knowledge workflows.",
+      "repository_url": "https://github.com/aiuluna/knowledge-graph-mcp",
+      "homepage": "https://smithery.ai/server/@aiuluna/knowledge-graph-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@aiuluna_knowledge-graph-mcp.json",
+      "tools_count": 15,
+      "tools": [
+        {
+          "name": "create_graph",
+          "description": "Deploy Server Knowledge Graph Server @aiuluna/knowledge-graph-mcp Try in Playground create_graph",
+          "parameters": []
+        },
+        {
+          "name": "add_node",
+          "description": "向知识图谱添加节点。节点是图谱的基本单元，不同类型的图谱支持不同类型的节点。",
+          "parameters": [
+            {
+              "name": "add_node",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "add_edge",
+          "description": "在知识图谱中添加边，连接两个节点以构建关系网络。边表示节点之间的关系类型，如依赖、包含、关联等。 使用前提： 1. 必须先创建图谱（使用create_graph） 2. 必须已经创建了源节点和目标节点 3. 边的类型必须与图谱类型匹配 使用建议： 1. 先使用list_graphs获取图谱和节点信息 2. 确认源节点和目标节点都存在且类型匹配 3. 根据图谱类型选择合适的边类型 4. 为边添加有意义的标签，帮助理解关系 5. 如果关系有强弱之分，可以通过weight参数表示 返回数据： - data: 新创建的边信息 * id: 边ID * type: 边类型 * sourceId: 源节点ID * targetId: 目标节点ID * label: 边标签 * weight: 边权重",
+          "parameters": []
+        },
+        {
+          "name": "publish_graph",
+          "description": "发布知识图谱，将图谱状态从草稿变更为已发布。发布后的图谱仍然可以修改，但建议通过版本管理跟踪重要变更。 使用前提： 1. 图谱必须存在且处于草稿状态 2. 建议在发布前确保图谱内容完整 3. 确保所有必要的节点和边都已添加 使用建议： 1. 先使用list_graphs检查图谱的当前状态 2. 使用get_node_details检查关键节点的完整性 3. 在发布前对图谱结构进行最后审查 4. 记录发布时间，用于版本管理 5. 发布后及时通知相关团队成员 返回数据： - data: 发布后的图谱信息 * id: 图谱ID * name: 图谱名称 * type: 图谱类型 * status: 已发布 * publishedAt: 发布时间",
+          "parameters": []
+        },
+        {
+          "name": "list_graphs",
+          "description": "列出所有知识图谱，支持按状态和类型筛选。这是获取已有图谱信息的主要工具，也是获取节点ID的重要途径。 使用场景： 1. 查看所有可用的图谱及其基本信息 2. 获取特定图谱的节点列表，用于后续的边添加或节点详情查询 3. 按状态筛选图谱，如查看所有草稿或已发布的图谱 4. 按类型筛选图谱，如只查看拓扑图或时间线图谱 使用建议： 1. 首先调用此工具获取图谱列表和节点信息 2. 从返回的数据中获取需要的图谱ID和节点ID 3. 使用这些ID调用其他工具（如add_edge、get_node_details） 4. 建议在进行任何节点或边操作前，先用此工具确认目标图谱的状态 返回数据： - data: 图谱列表，每个图谱包含： * id: 图谱ID（用于其他工具的graphId参数） * name: 图谱名称 * description: 图谱描述 * type: 图谱类型 * status: 图谱状态 * nodesCount: 节点数量 * edgesCount: 边数量 * createdAt: 创建时间 * updatedAt: 更新时间 * publishedAt: 发布时间（如果已发布） * nodes: 节点列表，每个节点包含： - id: 节点ID（用于add_edge和get_node_details等工具） - name: 节点名称 - type: 节点类型",
+          "parameters": []
+        },
+        {
+          "name": "get_node_details",
+          "description": "获取图谱中特定节点的详细信息。此工具需要配合list_graphs工具使用，因为nodeId必须从list_graphs的返回结果中获取。 使用场景： 1. 查看节点的完整属性信息 2. 检查节点关联的资源（SVG/Markdown） 3. 分析节点与其他节点的关系网络 4. 在修改节点前查看当前状态 使用建议： 1. 先调用list_graphs获取目标图谱的节点列表 2. 从返回的nodes数组中获取需要的nodeId 3. 使用获取到的graphId和nodeId调用本工具 4. 检查返回的关系数据，确定是否需要进一步操作 返回数据： - data: 节点详细信息 * id: 节点ID * name: 节点名称 * type: 节点类型 * description: 节点描述 * filePath: 关联文件路径 * metadata: 节点元数据 * resources: 关联资源列表 - id: 资源ID - type: 资源类型(svg/markdown) - title: 资源标题 * relationships: 关系列表 - id: 边ID - type: 边类型 - targetNode: 目标节点信息",
+          "parameters": []
+        },
+        {
+          "name": "get_creation_guidelines",
+          "description": "获取SVG图形和Markdown文档的创建规范和指南。此工具是save_resource工具的前置工具，必须在创建和保存任何资源前调用。 使用场景： 1. 创建SVG可视化图形前获取绘制规范 2. 创建Markdown文档前获取格式要求 3. 批量创建资源前获取完整规范 使用建议： 1. 在开始任何资源创建前，先调用此工具获取规范 2. 仔细阅读并遵循规范中的命名规则和目录结构 3. 根据规范创建资源后，使用save_resource工具保存 4. 建议将规范保存下来，供团队成员参考 返回数据： - data: 规范内容 * guidelines: 规范文本内容 - 文件命名规则 - 目录结构要求 - 格式规范 - 样式指南 * type: 规范类型（svg/markdown/all） * version: 规范版本",
+          "parameters": []
+        },
+        {
+          "name": "save_resource",
+          "description": "获取SVG图形和Markdown文档的创建规范和指南。此工具是save_resource工具的前置工具，必须在创建和保存任何资源前调用。 1. 创建SVG可视化图形前获取绘制规范 2. 创建Markdown文档前获取格式要求 3. 批量创建资源前获取完整规范",
+          "parameters": []
+        },
+        {
+          "name": "update_node",
+          "description": "修改知识图谱中的节点。此工具需要配合list_graphs和get_node_details工具使用。 使用场景： 1. 更新节点的基本信息（名称、描述等） 2. 更新节点关联的文件路径 3. 更新节点的元数据信息 使用建议： 1. 先调用list_graphs获取目标图谱和节点ID 2. 使用get_node_details查看节点当前状态 3. 只更新需要修改的字段，其他字段保持不变 4. 更新后可再次调用get_node_details确认修改 返回数据： - data: 更新后的节点信息 * id: 节点ID * name: 节点名称 * type: 节点类型 * description: 节点描述 * filePath: 关联文件路径 * metadata: 节点元数据 * updatedAt: 更新时间",
+          "parameters": []
+        },
+        {
+          "name": "update_edge",
+          "description": "修改知识图谱中的边。此工具需要配合list_graphs和get_node_details工具使用。 使用场景： 1. 更新边的标签信息 2. 调整边的权重值 3. 更新边的元数据信息 使用建议： 1. 先调用list_graphs获取目标图谱信息 2. 使用get_node_details查看相关节点的边列表 3. 只更新需要修改的字段，其他字段保持不变 4. 更新后可再次调用get_node_details确认修改 返回数据： - data: 更新后的边信息 * id: 边ID * type: 边类型 * sourceId: 源节点ID * targetId: 目标节点ID * label: 边标签 * weight: 边权重 * metadata: 边元数据 * updatedAt: 更新时间",
+          "parameters": []
+        },
+        {
+          "name": "delete_node",
+          "description": "删除知识图谱中的节点。此工具需要配合list_graphs工具使用，且操作不可撤销。 使用场景： 1. 删除错误创建的节点 2. 删除不再需要的节点 3. 重构图谱结构时删除冗余节点 使用建议： 1. 先调用list_graphs获取目标图谱和节点信息 2. 使用get_node_details检查节点的关联资源和关系 3. 确认删除不会影响其他重要节点 4. 设置confirmDelete为true以确认删除 5. 建议在删除前备份重要数据 注意事项： - 删除节点会同时删除与该节点相关的所有边 - 如果节点有关联的资源，资源不会被删除，但会解除关联 返回数据： - data: 删除结果 * id: 被删除的节点ID * name: 节点名称 * type: 节点类型 * deletedAt: 删除时间",
+          "parameters": []
+        },
+        {
+          "name": "delete_edge",
+          "description": "删除知识图谱中的边。此工具需要配合list_graphs和get_node_details工具使用，且操作不可撤销。 使用场景： 1. 删除错误创建的关系 2. 更新节点之间的关系结构 3. 重构图谱时清理冗余关系 使用建议： 1. 先调用list_graphs获取目标图谱信息 2. 使用get_node_details获取边的详细信息 3. 确认删除不会破坏重要的关系结构 4. 设置confirmDelete为true以确认删除 注意事项： - 删除边不会影响相关的节点 - 删除后需要重新调用get_node_details查看更新后的关系 返回数据： - data: 删除结果 * id: 被删除的边ID * deletedAt: 删除时间",
+          "parameters": []
+        },
+        {
+          "name": "update_resource",
+          "description": "更新知识图谱中的资源信息。此工具需要配合list_graphs和get_node_details工具使用。 使用场景： 1. 修改资源的标题或描述 2. 更新资源的元数据信息 3. 完善资源的文档说明 使用建议： 1. 先调用list_graphs获取目标图谱信息 2. 使用get_node_details查看资源当前信息 3. 只更新需要修改的字段 4. 保持资源命名的一致性 返回数据： - data: 更新后的资源信息 * id: 资源ID * name: 资源名称 * title: 资源标题 * description: 资源描述 * updatedAt: 更新时间",
+          "parameters": []
+        },
+        {
+          "name": "delete_resource",
+          "description": "删除知识图谱中的资源。此工具需要配合list_graphs和get_node_details工具使用，且操作不可撤销。 使用场景： 1. 删除过时的资源文件 2. 清理不再需要的文档 3. 移除错误创建的资源 使用建议： 1. 先调用list_graphs获取目标图谱信息 2. 使用get_node_details确认资源的关联关系 3. 确认删除不会影响其他节点 4. 设置confirmDelete为true以确认删除 5. 建议在删除前备份重要资源 注意事项： - 删除资源会同时删除物理文件 - 会自动解除与所有节点的关联 - 此操作不可恢复 返回数据： - data: 删除结果 * id: 被删除的资源ID * type: 资源类型 * deletedAt: 删除时间",
+          "parameters": []
+        },
+        {
+          "name": "unlink_resource",
+          "description": "解除资源与节点的关联关系。此工具需要配合list_graphs和get_node_details工具使用。 使用场景： 1. 调整资源的关联关系 2. 移除错误的资源关联 3. 重组节点的资源结构 使用建议： 1. 先调用list_graphs获取目标图谱信息 2. 使用get_node_details查看节点的资源关联 3. 确认解除关联不会影响其他功能 4. 记录变更以便需要时重新关联 注意事项： - 只解除关联，不删除资源 - 资源仍然可以被其他节点使用 - 可以随时重新建立关联 返回数据： - data: 操作结果 * resourceId: 资源ID * nodeId: 节点ID * unlinkedAt: 解除关联时间",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@aiuluna/knowledge-graph-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@aiuluna/knowledge-graph-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1565.@aiuluna_knowledge-graph-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1432
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "labels": {
+    "analysis": "The BioMCP server specializes in accessing and querying biomedical and clinical trial databases, enabling structured searches and detailed retrievals from PubMed, ClinicalTrials.gov, and MyVariant.info. Its core functionality revolves around searching and retrieving biomedical literature, clinical trial protocols, locations, outcomes, references, and genetic variant information using standardized APIs. The server is particularly useful for researchers, healthcare professionals, and data analysts working in the biomedical and clinical research fields.",
+    "reasoning": "The primary label of \"Web Search & Research\" is chosen because the server's main functionality is centered around searching and retrieving structured biomedical information from authoritative databases. Secondary labels of \"Data Analysis & Processing\" and \"Database Operations\" are selected due to the server's ability to process complex queries and interact with specialized biomedical databases. The custom label of \"Biomedical Research Tools\" was created to capture the server's unique focus on biomedical and clinical research data.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Database Operations"
+    ],
+    "custom_label": "Biomedical Research Tools",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 282,
+    "server_name": "BioMCP",
+    "rank_by_usage": 283,
+    "usage_count": "128",
+    "original_file": "../crawler/smithery/@genomoncology_biomcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@genomoncology/biomcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "Connection timeout (20 seconds)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 282,
+      "name": "BioMCP",
+      "author": "@genomoncology/biomcp",
+      "overview": "Access critical biomedical databases with structured queries. Enhance your LLM's capabilities by integrating with PubMed, ClinicalTrials.gov, and MyVariant.info for comprehensive biomedical insights.",
+      "repository_url": "https://github.com/genomoncology/biomcp",
+      "homepage": "https://smithery.ai/server/@genomoncology/biomcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "128",
+      "success_rate": "99.53%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@genomoncology_biomcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "article_details",
+          "description": "Deploy Server @genomoncology/biomcp Try in Playground article_details",
+          "parameters": [
+            {
+              "name": "PubMed",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "ID",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "article_searcher",
+          "description": "Searches PubMed articles using structured criteria. Input: A `PubmedRequest` object containing lists for `genes`, `variants`, `diseases`, `chemicals`, and `keywords`. Use full terms (\"Non-small cell lung carcinoma\") over abbreviations (\"NSCLC\"). Use keywords to specify terms that don't fit in disease, gene (\"EGFR\"), chemical (\"Cisplatin\"), or variant (\"BRAF V600E\"). Process: Resolves entities then queries PubTator3's search API. Output: A Markdown formatted list summarizing matching articles (PMID, title, abstract, etc.). Limited to max 40 results.",
+          "parameters": []
+        },
+        {
+          "name": "trial_protocol",
+          "description": "Retrieves core protocol information for a single clinical trial identified by its NCT ID. Input: A single NCT ID (string, e.g., \"NCT04280705\"). Process: Fetches standard \"Protocol\" view modules (like ID, Status, Sponsor, Design, Eligibility) from the ClinicalTrials.gov v2 API. Output: A Markdown formatted string detailing title, status, sponsor, purpose, study design, phase, interventions, eligibility criteria, etc. Returns error if invalid.",
+          "parameters": []
+        },
+        {
+          "name": "trial_locations",
+          "description": "Retrieves contact and location details for a single clinical trial identified by its NCT ID. Input: A single NCT ID (string, e.g., \"NCT04280705\"). Process: Fetches the `ContactsLocationsModule` from the ClinicalTrials.gov v2 API for the given NCT ID. Output: A Markdown formatted string detailing facility names, addresses (city, state, country), and contact info. Returns an error message if the NCT ID is invalid.",
+          "parameters": []
+        },
+        {
+          "name": "trial_outcomes",
+          "description": "Retrieves outcome measures, results (if available), and adverse event data for a single clinical trial. Input: A single NCT ID (string, e.g., \"NCT04280705\"). Process: Fetches the `OutcomesModule` and `ResultsSection` from the ClinicalTrials.gov v2 API for the NCT ID. Output: A Markdown formatted string detailing primary/secondary outcomes, participant flow, results tables (if posted), and adverse event summaries. Returns an error if invalid.",
+          "parameters": []
+        },
+        {
+          "name": "trial_references",
+          "description": "Retrieves publications and other references associated with a single clinical trial identified by its NCT ID. Input: A single NCT ID (string, e.g., \"NCT04280705\"). Process: Fetches the `ReferencesModule` from the ClinicalTrials.gov v2 API for the NCT ID. Output: A Markdown formatted string listing citations, associated PubMed IDs (PMIDs), and reference types (e.g., result publication). Returns error if invalid.",
+          "parameters": []
+        },
+        {
+          "name": "trial_searcher",
+          "description": "Searches for clinical trials based on specified criteria. Input: A `TrialQuery` object containing fields like `conditions`, `interventions`, `terms`, `recruiting_status`, `phase`, `location` (lat/long/distance), date ranges, etc. Process: Queries the ClinicalTrials.gov v2 API Output: A Markdown formatted list summarizing matching trials (NCT ID, Title, Status, Conditions, Interventions, Summary). Results are typically paginated by the API.",
+          "parameters": []
+        },
+        {
+          "name": "variant_searcher",
+          "description": "Searches for genetic variants based on specified criteria. Input: A `VariantQuery` object containing fields like `gene`, HGVS notations `hgvsp`, `hgvsc`), `rsid`, `region`, `significance`, frequency ranges, prediction scores, etc. Process: Constructs a query for the MyVariant.info query endpoint (`/v1/query`) based on the input object. Output: A Markdown formatted list summarizing matching variants with key annotations (ID, gene, significance, frequency). Includes a summary section with total hits found.",
+          "parameters": []
+        },
+        {
+          "name": "variant_details",
+          "description": "Retrieves detailed information for a *single* genetic variant. Input: A variant identifier (\"chr7:g.140453136A>T\") Process: Queries the MyVariant.info GET endpoint Output: A Markdown formatted string containing comprehensive variant annotations (genomic context, frequencies, predictions, clinical data). Returns error if invalid. Note: Use the variant_searcher to find the variant id first.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@genomoncology/biomcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@genomoncology/biomcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0283.@genomoncology_biomcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 279
+  }
+}

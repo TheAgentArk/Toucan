@@ -1,0 +1,183 @@
+{
+  "labels": {
+    "analysis": "The MCP Firebird server is primarily designed for interacting with Firebird databases, offering a range of tools for querying, analyzing, and maintaining database operations. Tools include executing SQL queries, listing and describing tables, optimizing query performance, and performing database validation, backup, and restore operations. The server's AI integration suggests natural language processing capabilities for database manipulation as well.",
+    "reasoning": "The primary label \"Database Operations\" is chosen because the server's core functionality revolves around database querying, maintenance, and optimization. Secondary labels \"Data Analysis & Processing\" and \"AI/ML Tools\" are selected because the server provides query performance analysis and likely uses AI for natural language querying. No custom label is needed as the predefined categories cover the server's functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "AI/ML Tools"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1124,
+    "server_name": "MCP Firebird",
+    "rank_by_usage": 1125,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@PuroDelphi_mcpFirebird.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@PuroDelphi/mcpFirebird/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1124,
+      "name": "MCP Firebird",
+      "author": "@PuroDelphi/mcpFirebird",
+      "overview": "Connect and manipulate Firebird databases securely with AI. Analyze, query, and optimize your data using natural language and SQL commands effortlessly.",
+      "repository_url": "https://github.com/PuroDelphi/mcpFirebird",
+      "homepage": "https://smithery.ai/server/@PuroDelphi/mcpFirebird",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@PuroDelphi_mcpFirebird.json",
+      "tools_count": 13,
+      "tools": [
+        {
+          "name": "execute-query",
+          "description": "Deploy Server MCP Firebird @PuroDelphi/mcpFirebird Try in Playground execute-query",
+          "parameters": []
+        },
+        {
+          "name": "list-tables",
+          "description": "Lists all user tables in the current Firebird database.",
+          "parameters": []
+        },
+        {
+          "name": "describe-table",
+          "description": "Gets the detailed schema (columns, types, etc.) of a specific table.",
+          "parameters": [
+            {
+              "name": "tableName",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get-field-descriptions",
+          "description": "Gets the stored descriptions for fields of a specific table (if they exist).",
+          "parameters": []
+        },
+        {
+          "name": "analyze-query-performance",
+          "description": "Analyzes the performance of a SQL query by executing it multiple times and measuring execution time",
+          "parameters": []
+        },
+        {
+          "name": "get-execution-plan",
+          "description": "Gets the execution plan for a SQL query to understand how the database will execute it",
+          "parameters": []
+        },
+        {
+          "name": "analyze-missing-indexes",
+          "description": "Analyzes a SQL query to identify missing indexes that could improve performance",
+          "parameters": []
+        },
+        {
+          "name": "backup-database",
+          "description": "Creates a backup of the Firebird database",
+          "parameters": [
+            {
+              "name": "options",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "backupPath",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "restore-database",
+          "description": "Restores a Firebird database from a backup",
+          "parameters": [
+            {
+              "name": "options",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "backupPath",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "targetPath",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "validate-database",
+          "description": "Validates the integrity of the Firebird database",
+          "parameters": [
+            {
+              "name": "options",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get-methods",
+          "description": "Returns a description of all available MCP tools (methods)",
+          "parameters": []
+        },
+        {
+          "name": "describe-method",
+          "description": "Returns a description of a specific MCP tool (method)",
+          "parameters": [
+            {
+              "name": "name",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "ping",
+          "description": "Tests connectivity to the Firebird MCP server",
+          "parameters": [
+            {
+              "name": "ping",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@PuroDelphi/mcpFirebird/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@PuroDelphi/mcpFirebird/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1125.@PuroDelphi_mcpFirebird_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1102
+  }
+}

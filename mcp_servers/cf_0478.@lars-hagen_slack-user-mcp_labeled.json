@@ -1,0 +1,205 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to enable interaction with Slack workspaces as a user. It provides a suite of tools that allow for reading and posting messages, managing user profiles, and interacting with channels and threads within Slack. The core functionality revolves around user-level operations such as sending messages, retrieving channel history, and managing thread conversations, which are essential for communication and collaboration within Slack environments.",
+    "reasoning": "The primary functionality of the server is centered around communication within Slack, making \"Communication Tools\" the most appropriate primary label. The tools also enable some level of data retrieval and interaction with user profiles, which aligns well with \"Database Operations\" as a secondary label. There are no unique functionalities that warrant a custom label beyond the predefined categories.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 477,
+    "server_name": "Slack User MCP Server",
+    "rank_by_usage": 478,
+    "usage_count": "37",
+    "original_file": "../crawler/smithery/@lars-hagen_slack-user-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@lars-hagen/slack-user-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 477,
+      "name": "Slack User MCP Server",
+      "author": "@lars-hagen/slack-user-mcp",
+      "overview": "Enable interaction with Slack workspaces as a user.",
+      "repository_url": "https://github.com/lars-hagen/slack-user-mcp",
+      "homepage": "https://smithery.ai/server/@lars-hagen/slack-user-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "37",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@lars-hagen_slack-user-mcp.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "slack_list_channels",
+          "description": "Deploy Server Slack User MCP Server @lars-hagen/slack-user-mcp Try in Playground slack_list_channels",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "cursor",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "slack_post_message",
+          "description": "Post a new message to a Slack channel",
+          "parameters": [
+            {
+              "name": "text",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "channel_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "slack_reply_to_thread",
+          "description": "Reply to a specific message thread in Slack",
+          "parameters": [
+            {
+              "name": "text",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "thread_ts",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "channel_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "slack_add_reaction",
+          "description": "Add a reaction emoji to a message",
+          "parameters": [
+            {
+              "name": "reaction",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "timestamp",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "channel_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "slack_get_channel_history",
+          "description": "Get recent messages from a channel",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "channel_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "slack_get_thread_replies",
+          "description": "Get all replies in a message thread",
+          "parameters": [
+            {
+              "name": "thread_ts",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "channel_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "slack_get_users",
+          "description": "Get a list of all users in the workspace with their basic profile information",
+          "parameters": [
+            {
+              "name": "slack_get_users",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "slack_get_user_profile",
+          "description": "Get detailed profile information for a specific user",
+          "parameters": [
+            {
+              "name": "slack_get_user_profile",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "user_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@lars-hagen/slack-user-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "slackToken",
+          "required": true,
+          "description": "The User OAuth Token for Slack, starting with 'xoxp-'"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@lars-hagen/slack-user-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0478.@lars-hagen_slack-user-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 468
+  }
+}

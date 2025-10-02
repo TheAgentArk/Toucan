@@ -1,0 +1,199 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to manage Twitter account interactions programmatically. It provides tools to retrieve tweets, post content, delete tweets, and manage user timelines, allowing users to automate and streamline their Twitter activities. The server facilitates direct Twitter API interactions, which can be integrated into applications for enhanced Twitter management.",
+    "reasoning": "The primary functionality of the server revolves around Twitter account management, making \"Social Media\" the most appropriate label. Secondary functionalities include automating interactions, aligning with \"Browser Automation\" for web interactions, and API-based operations fitting under \"API Integration\". No custom label is needed as predefined categories cover the server's features adequately.",
+    "primary_label": "Social Media",
+    "secondary_labels": [
+      "Browser Automation",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1328,
+    "server_name": "Twitter MCP Server",
+    "rank_by_usage": 1329,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@LuniaKunal_mcp-twitter.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@LuniaKunal/mcp-twitter/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1328,
+      "name": "Twitter MCP Server",
+      "author": "@LuniaKunal/mcp-twitter",
+      "overview": "Manage your Twitter account programmatically with powerful features like retrieving timelines, fetching user tweets, searching hashtags, sending direct messages, and creating or deleting posts. Automate and streamline your Twitter interactions efficiently through this server. Enhance your Twitter experience by integrating these capabilities into your applications.",
+      "repository_url": "https://github.com/LuniaKunal/mcp-twitter",
+      "homepage": "https://smithery.ai/server/@LuniaKunal/mcp-twitter",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@LuniaKunal_mcp-twitter.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "get_tweets",
+          "description": "Deploy Server Twitter MCP Server @LuniaKunal/mcp-twitter Try in Playground",
+          "parameters": [
+            {
+              "name": "count",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "sort_by",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_user_tweets",
+          "description": "Get tweets from a specific user's timeline.",
+          "parameters": [
+            {
+              "name": "count",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "username",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "tweet_type",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_replies_for_tweet",
+          "description": "Get Tweets replies of a specific tweet using tweet_id.",
+          "parameters": [
+            {
+              "name": "count",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "tweet_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "post_tweet",
+          "description": "Post a tweet with optional media, reply, and tags.",
+          "parameters": [
+            {
+              "name": "tags",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "text",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "reply_to",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "media_paths",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "delete_tweet",
+          "description": "Delete a tweet by its ID.",
+          "parameters": [
+            {
+              "name": "delete_tweet",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "tweet_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_timeline",
+          "description": "Get tweets from your home timeline (For You).",
+          "parameters": [
+            {
+              "name": "get_timeline",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "count",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_latest_timeline",
+          "description": "Get tweets from your home timeline (Following).",
+          "parameters": [
+            {
+              "name": "get_latest_timeline",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "count",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@LuniaKunal/mcp-twitter/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@LuniaKunal/mcp-twitter/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1329.@LuniaKunal_mcp-twitter_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1257
+  }
+}

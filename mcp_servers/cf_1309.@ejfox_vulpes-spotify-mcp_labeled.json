@@ -1,0 +1,167 @@
+{
+  "labels": {
+    "analysis": "The Vulpes Spotify Server is designed to integrate Spotify's music capabilities with AI assistants, allowing users to search, play, and manage Spotify tracks and playlists through AI interactions. It provides tools for playback control, playlist management, and device tracking, making it a bridge between music streaming and AI-driven workflows. The server emphasizes seamless music control and information retrieval within AI environments.",
+    "reasoning": "The primary functionality revolves around interaction with Spotify's API for media playback and management, which aligns most closely with the \"Music & Entertainment\" category. However, since \"Music & Entertainment\" isn't explicitly in the predefined list, \"Daily Productivity\" is a fitting primary label due to its focus on workflow integration. \"Communication Tools\" is a secondary label as it enables AI assistants (a communication medium) to interact with Spotify. No custom label is needed as predefined categories cover the server's functionality adequately.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "Communication Tools"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1308,
+    "server_name": "Vulpes Spotify Server",
+    "rank_by_usage": 1309,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@ejfox_vulpes-spotify-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ejfox/vulpes-spotify-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1308,
+      "name": "Vulpes Spotify Server",
+      "author": "@ejfox/vulpes-spotify-mcp",
+      "overview": "Enable AI assistants to search, play, and control Spotify tracks and playlists seamlessly. Access your Spotify playback devices, currently playing track info, and manage playlists directly through AI interactions. Enhance your music experience by integrating Spotify controls into your AI workflows.",
+      "repository_url": "https://github.com/ejfox/vulpes-spotify-mcp",
+      "homepage": "https://smithery.ai/server/@ejfox/vulpes-spotify-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ejfox_vulpes-spotify-mcp.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "spotify-search",
+          "description": "Deploy Server Vulpes Spotify Server @ejfox/vulpes-spotify-mcp Try in Playground spotify-search",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "spotify-play",
+          "description": "Play a specific track by ID or URI",
+          "parameters": [
+            {
+              "name": "trackId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "spotify-currently-playing",
+          "description": "Get the currently playing track",
+          "parameters": []
+        },
+        {
+          "name": "spotify-devices",
+          "description": "Get available Spotify playback devices",
+          "parameters": []
+        },
+        {
+          "name": "spotify-playlists",
+          "description": "Get a list of the user's Spotify playlists",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "spotify-playlist-tracks",
+          "description": "Get tracks from a specific playlist",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "playlistId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "spotify-play-playlist",
+          "description": "Play a specific playlist (with optional shuffle)",
+          "parameters": []
+        },
+        {
+          "name": "spotify-search-and-play",
+          "description": "Search for a track and play the top result",
+          "parameters": [
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "spotify-find-playlist",
+          "description": "Find a playlist by name and play it (with optional shuffle)",
+          "parameters": []
+        },
+        {
+          "name": "spotify-debug",
+          "description": "Debug Spotify configuration and connection",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ejfox/vulpes-spotify-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "spotifyClientSecret",
+          "required": true,
+          "description": "Your Spotify API Client Secret"
+        },
+        {
+          "name": "spotifyRefreshToken",
+          "required": true,
+          "description": "Your Spotify Refresh Token"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ejfox/vulpes-spotify-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1309.@ejfox_vulpes-spotify-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1243
+  }
+}

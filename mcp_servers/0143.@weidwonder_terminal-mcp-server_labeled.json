@@ -1,0 +1,140 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed primarily for executing system commands both locally and on remote hosts. Its core functionality revolves around command execution, session management, and environment variable manipulation. This makes it a powerful tool for system administration, automation, and integrating command-line operations into AI workflows. The server's ability to handle remote execution suggests utility in networked systems and distributed environments.",
+    "reasoning": "The primary label \"Operating System\" is chosen because the server's main functionality directly involves executing system commands, which is a core aspect of operating system interaction. The secondary label \"Development Tools\" is included because command execution is often used in development workflows for automation, testing, and environment setup. The server could also be relevant for \"Cloud Services\" if used in cloud infrastructure management scenarios.",
+    "primary_label": "Operating System",
+    "secondary_labels": [
+      "Development Tools",
+      "Cloud Services"
+    ],
+    "custom_label": "Remote Command Execution",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 142,
+    "server_name": "Terminal MCP Server",
+    "rank_by_usage": 143,
+    "usage_count": "408",
+    "original_file": "../crawler/smithery/@weidwonder_terminal-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@weidwonder/terminal-mcp-server/mcp?config=eyJzc2UiOiBmYWxzZSwgImhvc3QiOiAibG9jYWxob3N0IiwgInBvcnQiOiA4MDgwLCAiZW5kcG9pbnQiOiAiL3NzZSJ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "execute_command",
+          "description": "Execute commands on remote hosts or locally (This tool can be used for both remote hosts and the current machine)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "host": {
+                "type": "string",
+                "description": "Host to connect to (optional, if not provided the command will be executed locally)"
+              },
+              "username": {
+                "type": "string",
+                "description": "Username for SSH connection (required when host is specified)"
+              },
+              "session": {
+                "type": "string",
+                "description": "Session name, defaults to 'default'. The same session name will reuse the same terminal environment for 20 minutes, which is useful for operations requiring specific environments like conda.",
+                "default": "default"
+              },
+              "command": {
+                "type": "string",
+                "description": "Command to execute. Before running commands, it's best to determine the system type (Mac, Linux, etc.)"
+              },
+              "env": {
+                "type": "object",
+                "description": "Environment variables",
+                "default": {}
+              }
+            },
+            "required": [
+              "command"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "execute_command"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 142,
+      "name": "Terminal MCP Server",
+      "author": "@weidwonder/terminal-mcp-server",
+      "overview": "Execute commands on local or remote hosts seamlessly. Leverage a powerful interface to run system commands, manage sessions, and set environment variables effortlessly. Enhance your AI models and applications with robust command execution capabilities.",
+      "repository_url": "https://github.com/weidwonder/terminal-mcp-server",
+      "homepage": "https://smithery.ai/server/@weidwonder/terminal-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "408",
+      "success_rate": "89.23%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@weidwonder_terminal-mcp-server.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "execute_command",
+          "description": "Execute commands on remote hosts or locally (This tool can be used for both remote hosts and the current machine)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "host": {
+                "type": "string",
+                "description": "Host to connect to (optional, if not provided the command will be executed locally)"
+              },
+              "username": {
+                "type": "string",
+                "description": "Username for SSH connection (required when host is specified)"
+              },
+              "session": {
+                "type": "string",
+                "description": "Session name, defaults to 'default'. The same session name will reuse the same terminal environment for 20 minutes, which is useful for operations requiring specific environments like conda.",
+                "default": "default"
+              },
+              "command": {
+                "type": "string",
+                "description": "Command to execute. Before running commands, it's best to determine the system type (Mac, Linux, etc.)"
+              },
+              "env": {
+                "type": "object",
+                "description": "Environment variables",
+                "default": {}
+              }
+            },
+            "required": [
+              "command"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"sse\": false,\n  \"host\": \"localhost\",\n  \"port\": 8080,\n  \"endpoint\": \"/sse\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@weidwonder/terminal-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"sse\": false,\n  \"host\": \"localhost\",\n  \"port\": 8080,\n  \"endpoint\": \"/sse\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@weidwonder/terminal-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0143.@weidwonder_terminal-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 140
+  }
+}

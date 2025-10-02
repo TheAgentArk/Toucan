@@ -1,0 +1,103 @@
+{
+  "labels": {
+    "analysis": "The Workday MCP Server is designed to integrate with Claude Desktop, providing direct access to Workday HRMS data through a Python-based MCP server. Its primary functionality revolves around managing employee HR data, including accessing worker information, leave balances, absence types, and processing time-off requests. The tools enable dynamic interaction with Workday's HR systems, allowing users to fetch, request, and cancel leave events, making it a powerful tool for HR workflow automation.",
+    "reasoning": "The primary label of \"HR Management\" is chosen because the server's core functionality is centered around Human Resources operations, specifically interacting with Workday's HRMS system. The secondary label of \"API Integration\" is appropriate as the server relies on Workday's API for all its operations. The custom label \"Workday Integration\" is used to specifically denote the server's dedicated integration with Workday's HRMS system, which is a unique aspect not covered by the predefined categories.",
+    "primary_label": "Others",
+    "secondary_labels": [
+      "API Integration",
+      "Daily Productivity"
+    ],
+    "custom_label": "Workday Integration",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2039,
+    "server_name": "Workday MCP Server",
+    "rank_by_usage": 2040,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@think41_workday_mcp-nandish.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@think41/workday_mcp-nandish/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 2039,
+      "name": "Workday MCP Server",
+      "author": "@think41/workday_mcp-nandish",
+      "overview": "Provide a Python-based MCP server that integrates seamlessly with Claude Desktop to enable dynamic context and tool usage. Simplify the deployment and management of MCP servers with easy installation and environment configuration options. Enhance your LLM applications by connecting them to Workday HRMS data and tools through this server.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@think41/workday_mcp-nandish",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@think41_workday_mcp-nandish.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "get_workday_workers",
+          "description": "Deploy Server Workday MCP Server @think41/workday_mcp-nandish Try in Playground get_workday_workers",
+          "parameters": []
+        },
+        {
+          "name": "get_worker_eligible_absence_types",
+          "description": "Fetch eligible absence types for a specific worker from Workday API using the access token from environment Args: worker_id (str): The ID of the worker to fetch absence types for its an uuid example (\"cc19e2bfeac21006b0b576e5d0840000\") effective (str): Absence balances as of the specified date using the yyyy-mm-dd format. limit (int): The maximum number of objects in a single response. The default is 50. The maximum is 100. offset (int): The zero-based index of the first object in a response collection. The default is 0. Use offset with the limit parameter to control paging of a response collection. Example: If limit is 5 and offset is 9, the response returns a collection of 5 objects starting with the 10th object. Returns: Dict[str, Any]: Response from Workday API containing eligible absence types",
+          "parameters": []
+        },
+        {
+          "name": "request_time_off",
+          "description": "Submit a time off request for a worker before calling this tool make sure to call the tools eligible absence types and balance and notify user about his eligible types and his leave balance using these tools \"get_worker_eligible_absence_types\" and \"get_worker_leave_balances\" Args: worker_id (str): The ID of the worker requesting time off the id is uuid example (\"cc19e2bfeac21006b0b576e5d0840000\") date (str): The date for the time off request in ISO format (e.g., \"2025-02-28T17:00:00.000Z\") daily_quantity (str): The amount of time off requested (e.g., \"1\" for full day) time_off_type_id (str): The ID of the time off type the id is uuid example (\"ac107c2eb30710212889f3cb512f0000\") ctx: MCP context for logging Returns: Dict[str, Any]: Response from Workday API containing the request result",
+          "parameters": []
+        },
+        {
+          "name": "get_worker_leave_balances",
+          "description": "Fetch time off balances for a specific worker\n\nArgs:\n    worker_id (str): The ID of the worker to fetch balances for the id is uuid example (\"cc19e2bfeac21006b0b576e5d0840000\")\n    category_id (str, optional): The category ID to filter balances by the id is uuid example (\"7bd6531c90c100016d4b06f2b8a07ce\") if user doesnt provide any category id use this \"7bd6531c90c100016d4b06f2b8a07ce\"\n    ctx: MCP context for logging\n\nReturns:\n    Dict[str, Any]: Response from Workday API containing worker's time off balances",
+          "parameters": []
+        },
+        {
+          "name": "get_worker_leave_process_events",
+          "description": "Fetch business process events for a specific worker this wi Args: worker_id (str): The ID of the worker to fetch events for the id is uuid example (\"cc19e2bfeac21006b0b576e5d0840000\") limit (int): The maximum number of objects in a single response. The default is 50. The maximum is 100. offset (int): The zero-based index of the first object in a response collection. The default is 0. Use offset with the limit parameter to control paging of a response collection. Example: If limit is 5 and offset is 9, the response returns a collection of 5 objects starting with the 10th object. status (str, optional): The status to filter events by ctx: MCP context for logging Returns: Dict[str, Any]: Response from Workday API containing business process events for the worker",
+          "parameters": []
+        },
+        {
+          "name": "cancel_leave_event",
+          "description": "Cancel a leave request of a worker Args: event_id (str): The ID of the business process event to cancel. This is a uuid example (\"43fa59c7367a100164bfb87ede060000\") You can get this ID by calling the get_worker_leave_process_events tool the id will be present inside the each object's \"overallBusinessProcess\" for example \"overallBusinessProcess\": { \"descriptor\": \"Absence Request: 01_Bastien Claude\", \"id\": \"f93a85ca6ed210014eac2039f4bc0000\" },\" get this id and use it comment (str, optional): Comment explaining the reason for cancellation ctx: MCP context for logging Returns: Dict[str, Any]: Response from Workday API containing the result of the cancellation",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@think41/workday_mcp-nandish/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "workdayAccessToken",
+          "required": true,
+          "description": "The access token for the Workday API."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@think41/workday_mcp-nandish/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_2040.@think41_workday_mcp-nandish_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1777
+  }
+}

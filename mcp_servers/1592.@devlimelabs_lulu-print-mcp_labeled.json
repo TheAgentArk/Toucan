@@ -1,0 +1,158 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Lulu Print\" is designed to facilitate integration with a print-on-demand service (Lulu Print) through the Lulu Print API. Its core functionality includes managing print jobs, validating files, calculating costs, handling shipping, and tracking order statuses. The available tools allow users to calculate the cost of a print job and retrieve product details. This indicates the server's primary use case is in enabling and automating print-on-demand workflows, likely for applications that need to interact with Lulu Print's infrastructure. The mention of webhook subscriptions also highlights the server's capability for real-time updates.",
+    "reasoning": "The primary functionality of creating, managing, and tracking print jobs aligns best with **E-commerce** due to the order processing and fulfillment aspects, as print-on-demand services often integrate with e-commerce platforms. Additionally, the **API Integration** label is relevant as the server provides integration capabilities through the Lulu Print API. The custom label \"Print-on-Demand\" further describes the unique functionality specifically related to this service.",
+    "primary_label": "E-commerce",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": "Print-on-Demand",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1591,
+    "server_name": "Lulu Print",
+    "rank_by_usage": 1592,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@devlimelabs_lulu-print-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@devlimelabs/lulu-print-mcp/mcp?config=eyJMVUxVX0FQSV9LRVkiOiAiIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "calculate-print-job-cost",
+          "description": "Calculate the cost of a print job without creating it",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product_id": {
+                "type": "string",
+                "description": "Lulu product ID"
+              },
+              "quantity": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "Number of copies"
+              }
+            },
+            "required": [
+              "product_id",
+              "quantity"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-product-details",
+          "description": "Get specifications and details for a Lulu product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product_id": {
+                "type": "string",
+                "description": "Lulu product ID"
+              }
+            },
+            "required": [
+              "product_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "calculate-print-job-cost",
+        "get-product-details"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1591,
+      "name": "Lulu Print",
+      "author": "@devlimelabs/lulu-print-mcp",
+      "overview": "Integrate print-on-demand services with your applications by managing print jobs, validating files, calculating costs, and handling shipping through Lulu Print API. Streamline book printing workflows and track order statuses seamlessly. Enable webhook subscriptions for real-time print job updates.",
+      "repository_url": "https://github.com/devlimelabs/lulu-print-mcp",
+      "homepage": "https://smithery.ai/server/@devlimelabs/lulu-print-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@devlimelabs_lulu-print-mcp.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "calculate-print-job-cost",
+          "description": "Calculate the cost of a print job without creating it",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product_id": {
+                "type": "string",
+                "description": "Lulu product ID"
+              },
+              "quantity": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "Number of copies"
+              }
+            },
+            "required": [
+              "product_id",
+              "quantity"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-product-details",
+          "description": "Get specifications and details for a Lulu product",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "product_id": {
+                "type": "string",
+                "description": "Lulu product ID"
+              }
+            },
+            "required": [
+              "product_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"LULU_API_KEY\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@devlimelabs/lulu-print-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"LULU_API_KEY\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@devlimelabs/lulu-print-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1592.@devlimelabs_lulu-print-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1452
+  }
+}

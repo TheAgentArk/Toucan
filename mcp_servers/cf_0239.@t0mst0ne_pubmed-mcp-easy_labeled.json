@@ -1,0 +1,145 @@
+{
+  "labels": {
+    "analysis": "The PubMed Server is designed to facilitate the search, retrieval, and analysis of biomedical literature and research papers from the PubMed database. It provides a range of tools for querying articles by various criteria (e.g., author, journal, keywords), finding related or citing articles, retrieving abstracts and full texts, and checking open access availability. The server targets researchers, medical professionals, and scientists who need efficient access to biomedical research data.",
+    "reasoning": "The primary functionality of the server is centered around searching and retrieving research articles, which aligns most closely with the \"Web Search & Research\" category. The advanced search capabilities, batch processing, and specific query tools make it a specialized tool for academic and medical research. No custom label is needed as the predefined categories sufficiently capture its purpose.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Database Operations",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 238,
+    "server_name": "PubMed Server",
+    "rank_by_usage": 239,
+    "usage_count": "175",
+    "original_file": "../crawler/smithery/@t0mst0ne_pubmed-mcp-easy.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@t0mst0ne/pubmed-mcp-easy/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 238,
+      "name": "PubMed Server",
+      "author": "@t0mst0ne/pubmed-mcp-easy",
+      "overview": "Search and retrieve biomedical literature and research papers from PubMed efficiently. Utilize advanced search capabilities and API key support for faster, unlimited downloads of abstracts and full texts of open access articles.",
+      "repository_url": "https://github.com/t0mst0ne/pubmed-mcp-easy",
+      "homepage": "https://smithery.ai/server/@t0mst0ne/pubmed-mcp-easy",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "175",
+      "success_rate": "99.80%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@t0mst0ne_pubmed-mcp-easy.json",
+      "tools_count": 11,
+      "tools": [
+        {
+          "name": "pubmed_search",
+          "description": "Deploy Server PubMed Server @t0mst0ne/pubmed-mcp-easy Try in Playground pubmed_search",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_similar",
+          "description": "Finds similar articles to a specific PubMed article based on its PMID. Best for finding related articles to a specific paper. Returns information including: titles, authors, publication dates, PMIDs, PMCs, and DOIs.",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_cites",
+          "description": "Finds articles that a specific PubMed article cites based on its PMID. Best for finding articles that a specific paper cites. Returns information including: titles, authors, publication dates, PMIDs, PMCs, and DOIs.",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_cited_by",
+          "description": "Finds articles that cite a specific PubMed article based on its PMID. Best for finding articles that have cited a specific paper. Returns information including: titles, authors, publication dates, PMIDs, PMCs, and DOIs.",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_abstract",
+          "description": "Retrieves the abstract text of a specific PubMed article based on its PMID. Returns only the abstract text.",
+          "parameters": [
+            {
+              "name": "pmid",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "pubmed_open_access",
+          "description": "Checks if a specific PubMed article is open access based on its PMID. Returns true if the article is open access, false otherwise.",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_full_text",
+          "description": "Retrieves the full text of an open access PubMed article based on its PMID. Please check if a PMID is open access before using this tool.",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_batch_search",
+          "description": "Performs multiple PubMed searches in parallel for efficient batch processing. Returns results for each query in the same order as the input queries.",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_author_search",
+          "description": "Searches for papers by a specific author. The author name should be in the format \"Last Name, First Initial\" (e.g., \"Smith, J\")",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_advanced_search",
+          "description": "Performs an advanced PubMed search using field tags. Example params: \"author\": \"Smith J\", \"journal\": \"Nature\", \"year\": \"2020\", \"title\": \"cancer\", \"mesh\": \"Drug Therapy\"",
+          "parameters": []
+        },
+        {
+          "name": "pubmed_journal_search",
+          "description": "Searches for papers published in a specific journal.",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "journal",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@t0mst0ne/pubmed-mcp-easy/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "apiKey",
+          "required": true,
+          "description": "Your NCBI API key."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@t0mst0ne/pubmed-mcp-easy/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0239.@t0mst0ne_pubmed-mcp-easy_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 235
+  }
+}

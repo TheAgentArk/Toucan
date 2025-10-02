@@ -1,0 +1,1067 @@
+{
+  "labels": {
+    "analysis": "The Yuque MCP Server focuses primarily on managing documents and user information within the Yuque platform through its API. It offers a comprehensive set of tools for CRUD operations on documents, user management, and analytics regarding document and user interactions. The tools enable detailed tracking of user activities, document statistics, and knowledge base optimizations, which suggests a strong emphasis on knowledge management and collaboration.",
+    "reasoning": "The primary functionality revolves around document and knowledge management, which aligns well with the \"Document Management\" category. Secondary labels such as \"API Integration\" and \"Data Analysis & Processing\" are relevant due to the server's capabilities for interacting with the Yuque API and processing statistical data. Given that \"Document Management\" is not a predefined category but closely related to \"File Management,\" I will create a custom label to accurately reflect this specific functionality.",
+    "primary_label": "File Management",
+    "secondary_labels": [
+      "API Integration",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Document Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 762,
+    "server_name": "Yuque MCP Server",
+    "rank_by_usage": 763,
+    "usage_count": "8",
+    "original_file": "../crawler/smithery/@HenryHaoson_Yuque-MCP-Server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@HenryHaoson/Yuque-MCP-Server/mcp?config=eyJ5dXF1ZUFwaVRva2VuIjogIiIsICJ5dXF1ZUFwaUJhc2VVcmwiOiAiaHR0cHM6Ly93d3cueXVxdWUuY29tL2FwaS92MiJ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_current_user",
+          "description": "获取当前认证用户的信息，包括用户ID、用户名、头像等语雀账号基本信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_docs",
+          "description": "获取当前用户的所有知识库文档列表，包括私人和协作文档",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_repos",
+          "description": "获取指定用户的知识库列表，知识库是语雀中组织文档的集合",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "用户的登录名或唯一标识"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_repo_docs",
+          "description": "获取特定知识库中的所有文档列表，包括文档标题、更新时间等信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_doc",
+          "description": "获取语雀中特定文档的详细内容，包括正文、修改历史和权限信息（支持分块处理大型文档）",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "slug": {
+                "type": "string",
+                "description": "文档的唯一标识或短链接名称"
+              },
+              "chunk_index": {
+                "type": "number",
+                "description": "要获取的文档块索引，不提供则返回第一块或全部（如果内容较小）"
+              },
+              "chunk_size": {
+                "type": "number",
+                "description": "分块大小（字符数），默认为100000"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "slug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_doc",
+          "description": "在指定知识库中创建新的语雀文档，支持多种格式内容",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "title": {
+                "type": "string",
+                "description": "文档标题"
+              },
+              "slug": {
+                "type": "string",
+                "description": "文档的短链接名称，用于URL路径"
+              },
+              "body": {
+                "type": "string",
+                "description": "文档内容，支持Markdown格式"
+              },
+              "format": {
+                "type": "string",
+                "description": "内容格式，可选值：markdown、html、lake，默认为 markdown"
+              },
+              "public_level": {
+                "type": "number",
+                "description": "公开性，可选值：0(私密)、1(公开)、2(企业内公开)，默认为 1"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "title",
+              "slug",
+              "body"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_doc",
+          "description": "更新语雀中已存在的文档，可以修改标题、内容或权限设置",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "id": {
+                "type": "number",
+                "description": "要更新的文档ID"
+              },
+              "title": {
+                "type": "string",
+                "description": "文档的新标题"
+              },
+              "slug": {
+                "type": "string",
+                "description": "文档的新短链接名称"
+              },
+              "body": {
+                "type": "string",
+                "description": "文档的新内容，支持Markdown格式"
+              },
+              "public": {
+                "type": "number",
+                "description": "文档的公开状态，0(私密)、1(公开)、2(企业内公开)"
+              },
+              "format": {
+                "type": "string",
+                "description": "内容格式，可选值：markdown、html、lake"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_doc",
+          "description": "从语雀知识库中删除指定文档，此操作不可撤销",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "id": {
+                "type": "number",
+                "description": "要删除的文档ID"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "在语雀平台中搜索文档或知识库内容，支持范围和作者筛选",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "搜索关键词"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "doc",
+                  "repo"
+                ],
+                "description": "要搜索的内容类型：doc(文档) 或 repo(知识库)"
+              },
+              "scope": {
+                "type": "string",
+                "description": "搜索范围，不填默认搜索当前用户/团队"
+              },
+              "page": {
+                "type": "number",
+                "description": "页码，默认为1"
+              },
+              "creator": {
+                "type": "string",
+                "description": "仅搜索指定作者的内容"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "query",
+              "type"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_group_statistics",
+          "description": "获取团队的汇总统计数据，包括成员人数、文档数量、阅读量和互动数据等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "团队的登录名或唯一标识"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_group_member_statistics",
+          "description": "获取团队成员的统计数据，包括各成员的编辑次数、阅读量、点赞量等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "团队的登录名或唯一标识"
+              },
+              "name": {
+                "type": "string",
+                "description": "成员名称，用于过滤特定成员"
+              },
+              "range": {
+                "type": "number",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）"
+              },
+              "page": {
+                "type": "number",
+                "description": "页码，默认为1"
+              },
+              "limit": {
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20"
+              },
+              "sortField": {
+                "type": "string",
+                "description": "排序字段，可选值：write_doc_count、write_count、read_count、like_count"
+              },
+              "sortOrder": {
+                "type": "string",
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_group_book_statistics",
+          "description": "获取团队知识库的统计数据，包括各知识库的文档数、字数、阅读量等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "团队的登录名或唯一标识"
+              },
+              "name": {
+                "type": "string",
+                "description": "知识库名称，用于过滤特定知识库"
+              },
+              "range": {
+                "type": "number",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）"
+              },
+              "page": {
+                "type": "number",
+                "description": "页码，默认为1"
+              },
+              "limit": {
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20"
+              },
+              "sortField": {
+                "type": "string",
+                "description": "排序字段，可选值：content_updated_at_ms、word_count、post_count、read_count、like_count、watch_count、comment_count"
+              },
+              "sortOrder": {
+                "type": "string",
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_group_doc_statistics",
+          "description": "获取团队文档的统计数据，包括各文档的字数、阅读量、评论量等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "团队的登录名或唯一标识"
+              },
+              "bookId": {
+                "type": "number",
+                "description": "知识库ID，用于过滤特定知识库的文档"
+              },
+              "name": {
+                "type": "string",
+                "description": "文档名称，用于过滤特定文档"
+              },
+              "range": {
+                "type": "number",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）"
+              },
+              "page": {
+                "type": "number",
+                "description": "页码，默认为1"
+              },
+              "limit": {
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20"
+              },
+              "sortField": {
+                "type": "string",
+                "description": "排序字段，可选值：content_updated_at、word_count、read_count、like_count、comment_count、created_at"
+              },
+              "sortOrder": {
+                "type": "string",
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_doc_chunks_info",
+          "description": "获取文档的分块元信息，包括总块数、每块的字符数等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "slug": {
+                "type": "string",
+                "description": "文档的唯一标识或短链接名称"
+              },
+              "chunk_size": {
+                "type": "number",
+                "description": "分块大小（字符数），默认为100000"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "slug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 14,
+      "tool_names": [
+        "get_current_user",
+        "get_user_docs",
+        "get_user_repos",
+        "get_repo_docs",
+        "get_doc",
+        "create_doc",
+        "update_doc",
+        "delete_doc",
+        "search",
+        "get_group_statistics",
+        "get_group_member_statistics",
+        "get_group_book_statistics",
+        "get_group_doc_statistics",
+        "get_doc_chunks_info"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 762,
+      "name": "Yuque MCP Server",
+      "author": "@HenryHaoson/Yuque-MCP-Server",
+      "overview": "Integrate with the Yuque API to manage documents and user information seamlessly. Create, read, update, and delete documents while accessing analytics and statistics for your knowledge base. Enhance your AI models with powerful tools to interact with Yuque data effortlessly.",
+      "repository_url": "https://github.com/HenryHaoson/Yuque-MCP-Server",
+      "homepage": "https://smithery.ai/server/@HenryHaoson/Yuque-MCP-Server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "8",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@HenryHaoson_Yuque-MCP-Server.json",
+      "tools_count": 14,
+      "tools": [
+        {
+          "name": "get_current_user",
+          "description": "获取当前认证用户的信息，包括用户ID、用户名、头像等语雀账号基本信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_docs",
+          "description": "获取当前用户的所有知识库文档列表，包括私人和协作文档",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_user_repos",
+          "description": "获取指定用户的知识库列表，知识库是语雀中组织文档的集合",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "用户的登录名或唯一标识"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_repo_docs",
+          "description": "获取特定知识库中的所有文档列表，包括文档标题、更新时间等信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_doc",
+          "description": "获取语雀中特定文档的详细内容，包括正文、修改历史和权限信息（支持分块处理大型文档）",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "slug": {
+                "type": "string",
+                "description": "文档的唯一标识或短链接名称"
+              },
+              "chunk_index": {
+                "type": "number",
+                "description": "要获取的文档块索引，不提供则返回第一块或全部（如果内容较小）"
+              },
+              "chunk_size": {
+                "type": "number",
+                "description": "分块大小（字符数），默认为100000"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "slug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_doc",
+          "description": "在指定知识库中创建新的语雀文档，支持多种格式内容",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "title": {
+                "type": "string",
+                "description": "文档标题"
+              },
+              "slug": {
+                "type": "string",
+                "description": "文档的短链接名称，用于URL路径"
+              },
+              "body": {
+                "type": "string",
+                "description": "文档内容，支持Markdown格式"
+              },
+              "format": {
+                "type": "string",
+                "description": "内容格式，可选值：markdown、html、lake，默认为 markdown"
+              },
+              "public_level": {
+                "type": "number",
+                "description": "公开性，可选值：0(私密)、1(公开)、2(企业内公开)，默认为 1"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "title",
+              "slug",
+              "body"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_doc",
+          "description": "更新语雀中已存在的文档，可以修改标题、内容或权限设置",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "id": {
+                "type": "number",
+                "description": "要更新的文档ID"
+              },
+              "title": {
+                "type": "string",
+                "description": "文档的新标题"
+              },
+              "slug": {
+                "type": "string",
+                "description": "文档的新短链接名称"
+              },
+              "body": {
+                "type": "string",
+                "description": "文档的新内容，支持Markdown格式"
+              },
+              "public": {
+                "type": "number",
+                "description": "文档的公开状态，0(私密)、1(公开)、2(企业内公开)"
+              },
+              "format": {
+                "type": "string",
+                "description": "内容格式，可选值：markdown、html、lake"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_doc",
+          "description": "从语雀知识库中删除指定文档，此操作不可撤销",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "id": {
+                "type": "number",
+                "description": "要删除的文档ID"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "在语雀平台中搜索文档或知识库内容，支持范围和作者筛选",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "搜索关键词"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "doc",
+                  "repo"
+                ],
+                "description": "要搜索的内容类型：doc(文档) 或 repo(知识库)"
+              },
+              "scope": {
+                "type": "string",
+                "description": "搜索范围，不填默认搜索当前用户/团队"
+              },
+              "page": {
+                "type": "number",
+                "description": "页码，默认为1"
+              },
+              "creator": {
+                "type": "string",
+                "description": "仅搜索指定作者的内容"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "query",
+              "type"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_group_statistics",
+          "description": "获取团队的汇总统计数据，包括成员人数、文档数量、阅读量和互动数据等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "团队的登录名或唯一标识"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_group_member_statistics",
+          "description": "获取团队成员的统计数据，包括各成员的编辑次数、阅读量、点赞量等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "团队的登录名或唯一标识"
+              },
+              "name": {
+                "type": "string",
+                "description": "成员名称，用于过滤特定成员"
+              },
+              "range": {
+                "type": "number",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）"
+              },
+              "page": {
+                "type": "number",
+                "description": "页码，默认为1"
+              },
+              "limit": {
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20"
+              },
+              "sortField": {
+                "type": "string",
+                "description": "排序字段，可选值：write_doc_count、write_count、read_count、like_count"
+              },
+              "sortOrder": {
+                "type": "string",
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_group_book_statistics",
+          "description": "获取团队知识库的统计数据，包括各知识库的文档数、字数、阅读量等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "团队的登录名或唯一标识"
+              },
+              "name": {
+                "type": "string",
+                "description": "知识库名称，用于过滤特定知识库"
+              },
+              "range": {
+                "type": "number",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）"
+              },
+              "page": {
+                "type": "number",
+                "description": "页码，默认为1"
+              },
+              "limit": {
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20"
+              },
+              "sortField": {
+                "type": "string",
+                "description": "排序字段，可选值：content_updated_at_ms、word_count、post_count、read_count、like_count、watch_count、comment_count"
+              },
+              "sortOrder": {
+                "type": "string",
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_group_doc_statistics",
+          "description": "获取团队文档的统计数据，包括各文档的字数、阅读量、评论量等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "login": {
+                "type": "string",
+                "description": "团队的登录名或唯一标识"
+              },
+              "bookId": {
+                "type": "number",
+                "description": "知识库ID，用于过滤特定知识库的文档"
+              },
+              "name": {
+                "type": "string",
+                "description": "文档名称，用于过滤特定文档"
+              },
+              "range": {
+                "type": "number",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）"
+              },
+              "page": {
+                "type": "number",
+                "description": "页码，默认为1"
+              },
+              "limit": {
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20"
+              },
+              "sortField": {
+                "type": "string",
+                "description": "排序字段，可选值：content_updated_at、word_count、read_count、like_count、comment_count、created_at"
+              },
+              "sortOrder": {
+                "type": "string",
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "login"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_doc_chunks_info",
+          "description": "获取文档的分块元信息，包括总块数、每块的字符数等",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo"
+              },
+              "slug": {
+                "type": "string",
+                "description": "文档的唯一标识或短链接名称"
+              },
+              "chunk_size": {
+                "type": "number",
+                "description": "分块大小（字符数），默认为100000"
+              },
+              "accessToken": {
+                "type": "string",
+                "description": "用于认证 API 请求的令牌"
+              }
+            },
+            "required": [
+              "namespace",
+              "slug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"yuqueApiToken\": \"\",\n  \"yuqueApiBaseUrl\": \"https://www.yuque.com/api/v2\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@HenryHaoson/Yuque-MCP-Server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"yuqueApiToken\": \"\",\n  \"yuqueApiBaseUrl\": \"https://www.yuque.com/api/v2\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@HenryHaoson/Yuque-MCP-Server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0763.@HenryHaoson_Yuque-MCP-Server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 745
+  }
+}

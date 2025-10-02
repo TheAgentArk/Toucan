@@ -1,0 +1,113 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in web scraping, crawling, and content extraction, offering tools for discovering URLs, extracting structured data, and conducting comprehensive research using web-based methods. It supports advanced features like intelligent crawling, LLM-powered analysis, and deep research capabilities, making it suitable for a wide range of information gathering and data processing tasks.",
+    "reasoning": "The primary label is chosen because the server's core functionality revolves around browsing the web, extracting content, and performing research—activities that align closely with web searching and research. Secondary labels are selected to emphasize additional capabilities like structured data extraction and browser automation, which are significant aspects of the server's toolset.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Browser Automation"
+    ],
+    "custom_label": "Web Content Extraction",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 655,
+    "server_name": "Firecrawl Web Scraping Server",
+    "rank_by_usage": 656,
+    "usage_count": "14",
+    "original_file": "../crawler/smithery/@yjiace_firecrawl-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@yjiace/firecrawl-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 655,
+      "name": "Firecrawl Web Scraping Server",
+      "author": "@yjiace/firecrawl-mcp-server",
+      "overview": "Enable advanced web scraping, crawling, and content extraction capabilities for your agents. Perform deep research, batch scraping, and structured data extraction with automatic retries and rate limiting. Supports both cloud and self-hosted deployments with SSE and parallel processing.",
+      "repository_url": "https://github.com/yjiace/firecrawl-mcp-server",
+      "homepage": "https://smithery.ai/server/@yjiace/firecrawl-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "14",
+      "success_rate": "500%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@yjiace_firecrawl-mcp-server.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "firecrawl_scrape",
+          "description": "Deploy Server Firecrawl Web Scraping Server @yjiace/firecrawl-mcp-server Try in Playground firecrawl_scrape",
+          "parameters": []
+        },
+        {
+          "name": "firecrawl_map",
+          "description": "Map a website to discover all indexed URLs on the site. **Best for:** Discovering URLs on a website before deciding what to scrape; finding specific sections of a website. **Not recommended for:** When you already know which specific URL you need (use scrape or batch_scrape); when you need the content of the pages (use scrape after mapping). **Common mistakes:** Using crawl to discover URLs instead of map. **Prompt Example:** \"List all URLs on example.com.\" **Usage Example:** ```json \"name\": \"firecrawl_map\", \"arguments\": { \"url\": \"https://example.com\" **Returns:** Array of URLs found on the site.",
+          "parameters": []
+        },
+        {
+          "name": "firecrawl_crawl",
+          "description": "Starts an asynchronous crawl job on a website and extracts content from all pages. **Best for:** Extracting content from multiple related pages, when you need comprehensive coverage. **Not recommended for:** Extracting content from a single page (use scrape); when token limits are a concern (use map + batch_scrape); when you need fast results (crawling can be slow). **Warning:** Crawl responses can be very large and may exceed token limits. Limit the crawl depth and number of pages, or use map + batch_scrape for better control. **Common mistakes:** Setting limit or maxDepth too high (causes token overflow); using crawl for a single page (use scrape instead). **Prompt Example:** \"Get all blog posts from the first two levels of example.com/blog.\" **Usage Example:** ```json \"name\": \"firecrawl_crawl\", \"arguments\": { \"url\": \"https://example.com/blog/*\", \"maxDepth\": 2, \"limit\": 100, \"allowExternalLinks\": false, \"deduplicateSimilarURLs\": true **Returns:** Operation ID for status checking; use firecrawl_check_crawl_status to check progress.",
+          "parameters": []
+        },
+        {
+          "name": "firecrawl_check_crawl_status",
+          "description": "Check the status of a crawl job. **Usage Example:** ```json \"name\": \"firecrawl_check_crawl_status\", \"arguments\": { \"id\": \"550e8400-e29b-41d4-a716-446655440000\" **Returns:** Status and progress of the crawl job, including results if available.",
+          "parameters": []
+        },
+        {
+          "name": "firecrawl_search",
+          "description": "Search the web and optionally extract content from search results. This is the most powerful search tool available, and if available you should always default to using this tool for any web search needs. **Best for:** Finding specific information across multiple websites, when you don't know which website has the information; when you need the most relevant content for a query. **Not recommended for:** When you already know which website to scrape (use scrape); when you need comprehensive coverage of a single website (use map or crawl). **Common mistakes:** Using crawl or map for open-ended questions (use search instead). **Prompt Example:** \"Find the latest research papers on AI published in 2023.\" **Usage Example:** ```json \"name\": \"firecrawl_search\", \"arguments\": { \"query\": \"latest AI research papers 2023\", \"limit\": 5, \"lang\": \"en\", \"country\": \"us\", \"scrapeOptions\": { \"formats\": [\"markdown\"], \"onlyMainContent\": true **Returns:** Array of search results (with optional scraped content).",
+          "parameters": []
+        },
+        {
+          "name": "firecrawl_extract",
+          "description": "Extract structured information from web pages using LLM capabilities. Supports both cloud AI and self-hosted LLM extraction. **Best for:** Extracting specific structured data like prices, names, details from web pages. **Not recommended for:** When you need the full content of a page (use scrape); when you're not looking for specific structured data. **Arguments:** - urls: Array of URLs to extract information from - prompt: Custom prompt for the LLM extraction - systemPrompt: System prompt to guide the LLM - schema: JSON schema for structured data extraction - allowExternalLinks: Allow extraction from external links - enableWebSearch: Enable web search for additional context - includeSubdomains: Include subdomains in extraction **Prompt Example:** \"Extract the product name, price, and description from these product pages.\" **Usage Example:** ```json \"name\": \"firecrawl_extract\", \"arguments\": { \"urls\": [\"https://example.com/page1\", \"https://example.com/page2\"], \"prompt\": \"Extract product information including name, price, and description\", \"systemPrompt\": \"You are a helpful assistant that extracts product information\", \"schema\": { \"type\": \"object\", \"properties\": { \"name\": { \"type\": \"string\" }, \"price\": { \"type\": \"number\" }, \"description\": { \"type\": \"string\" } \"required\": [\"name\", \"price\"] \"allowExternalLinks\": false, \"enableWebSearch\": false, \"includeSubdomains\": false **Returns:** Extracted structured data as defined by your schema.",
+          "parameters": []
+        },
+        {
+          "name": "firecrawl_deep_research",
+          "description": "Conduct deep web research on a query using intelligent crawling, search, and LLM analysis. **Best for:** Complex research questions requiring multiple sources, in-depth analysis. **Not recommended for:** Simple questions that can be answered with a single search; when you need very specific information from a known page (use scrape); when you need results quickly (deep research can take time). **Arguments:** - query (string, required): The research question or topic to explore. - maxDepth (number, optional): Maximum recursive depth for crawling/search (default: 3). - timeLimit (number, optional): Time limit in seconds for the research session (default: 120). - maxUrls (number, optional): Maximum number of URLs to analyze (default: 50). **Prompt Example:** \"Research the environmental impact of electric vehicles versus gasoline vehicles.\" **Usage Example:** ```json \"name\": \"firecrawl_deep_research\", \"arguments\": { \"query\": \"What are the environmental impacts of electric vehicles compared to gasoline vehicles?\", \"maxDepth\": 3, \"timeLimit\": 120, \"maxUrls\": 50 **Returns:** Final analysis generated by an LLM based on research. (data.finalAnalysis); may also include structured activities and sources used in the research process.",
+          "parameters": []
+        },
+        {
+          "name": "firecrawl_generate_llmstxt",
+          "description": "Generate a standardized llms.txt (and optionally llms-full.txt) file for a given domain. This file defines how large language models should interact with the site. **Best for:** Creating machine-readable permission guidelines for AI models. **Not recommended for:** General content extraction or research. **Arguments:** - url (string, required): The base URL of the website to analyze. - maxUrls (number, optional): Max number of URLs to include (default: 10). - showFullText (boolean, optional): Whether to include llms-full.txt contents in the response. **Prompt Example:** \"Generate an LLMs.txt file for example.com.\" **Usage Example:** ```json \"name\": \"firecrawl_generate_llmstxt\", \"arguments\": { \"url\": \"https://example.com\", \"maxUrls\": 20, \"showFullText\": true **Returns:** LLMs.txt file contents (and optionally llms-full.txt).",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@yjiace/firecrawl-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "fireCrawlApiKey",
+          "required": true,
+          "description": "Your Firecrawl API key. Required for cloud API usage."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@yjiace/firecrawl-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0656.@yjiace_firecrawl-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 641
+  }
+}

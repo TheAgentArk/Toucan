@@ -1,0 +1,1397 @@
+{
+  "labels": {
+    "analysis": "The MCP Think Tank server is designed to enhance AI capabilities like Cursor and Claude by providing a structured environment for advanced reasoning, persistent memory, and tool orchestration. Its core functionality revolves around knowledge graph memory management, task management, and web research integration. The server enables multi-step reasoning (Sequential Thinking), maintains state across sessions (Persistent Context), and guides reflection without rigid constraints (Enhanced Reflection). The available tools support these features with capabilities like entity relation management, task planning, and web searches via Exa API.",
+    "reasoning": "The primary label \"Memory Management\" was chosen because the server's core functionality revolves around a knowledge graph system for persistent memory. Secondary labels \"Data Analysis & Processing\" (for structured reasoning) and \"Web Search & Research\" (for Exa API integration) were selected based on key features. No custom label is needed as the predefined categories sufficiently describe the server's capabilities.",
+    "primary_label": "Memory Management",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Web Search & Research"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 174,
+    "server_name": "Think Tank",
+    "rank_by_usage": 175,
+    "usage_count": "273",
+    "original_file": "../crawler/smithery/@flight505_mcp-think-tank.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@flight505/mcp-think-tank/mcp?config=eyJtZW1vcnlQYXRoIjogIi90bXAvbWVtb3J5Lmpzb25sIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "upsert_entities",
+          "description": "Create new entities or update existing ones in the knowledge graph using an upsert pattern",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "entities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Unique identifier for the entity"
+                    },
+                    "entityType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Type classification of the entity"
+                    },
+                    "observations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Facts or observations about the entity"
+                    },
+                    "context": {
+                      "type": "string",
+                      "description": "Optional context or situation relevant to this entity (e.g., project, meeting, or scenario)"
+                    },
+                    "update": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "If true, will fully replace an existing entity; if false, will only create if entity doesn't exist"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "entityType",
+                    "observations"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of entities to create or update"
+              }
+            },
+            "required": [
+              "entities"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_relations",
+          "description": "Create multiple new relations between entities in the knowledge graph. Relations should be in active voice",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Source entity name"
+                    },
+                    "to": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Target entity name"
+                    },
+                    "relationType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Type of relationship (in active voice)"
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "to",
+                    "relationType"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of relations to create"
+              }
+            },
+            "required": [
+              "relations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_observations",
+          "description": "Add new observations to existing entities in the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "observations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "entityName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Name of the entity to add observations to"
+                    },
+                    "contents": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Observations to add to the entity"
+                    }
+                  },
+                  "required": [
+                    "entityName",
+                    "contents"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of entity observations to add"
+              }
+            },
+            "required": [
+              "observations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_entities",
+          "description": "Delete multiple entities and their associated relations from the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "entityNames": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Array of entity names to delete"
+              }
+            },
+            "required": [
+              "entityNames"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_observations",
+          "description": "Delete specific observations from entities in the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "deletions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "entityName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Name of the entity to remove observations from"
+                    },
+                    "observations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Observations to remove from the entity"
+                    }
+                  },
+                  "required": [
+                    "entityName",
+                    "observations"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of entity observations to delete"
+              }
+            },
+            "required": [
+              "deletions"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_relations",
+          "description": "Delete multiple relations from the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Source entity name"
+                    },
+                    "to": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Target entity name"
+                    },
+                    "relationType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Type of relationship (in active voice)"
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "to",
+                    "relationType"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of relations to delete"
+              }
+            },
+            "required": [
+              "relations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_graph",
+          "description": "Read the entire knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "dummy": {
+                "type": "string",
+                "description": "Placeholder parameter - this tool doesn't require parameters but returns the complete knowledge graph with entities and relationships"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_nodes",
+          "description": "Search for nodes in the knowledge graph based on a query",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Search query to find matching entities"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "open_nodes",
+          "description": "Open specific nodes in the knowledge graph by their names",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "names": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Array of entity names to retrieve"
+              }
+            },
+            "required": [
+              "names"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_relations",
+          "description": "Update multiple existing relations in the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Source entity name"
+                    },
+                    "to": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Target entity name"
+                    },
+                    "relationType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Type of relationship (in active voice)"
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "to",
+                    "relationType"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of relations to update"
+              }
+            },
+            "required": [
+              "relations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "memory_query",
+          "description": "Query the memory store with advanced filters",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Text to search for in observations"
+              },
+              "before": {
+                "type": "string",
+                "description": "ISO date to filter observations before"
+              },
+              "after": {
+                "type": "string",
+                "description": "ISO date to filter observations after"
+              },
+              "tag": {
+                "type": "string",
+                "description": "Tag to filter observations by"
+              },
+              "agent": {
+                "type": "string",
+                "description": "Agent that created the observations"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of results to return"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "think",
+          "description": "Use the tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed. Consider including: problem definition, relevant context, analysis steps, self-reflection on your reasoning, and conclusions. Adapt this structure as needed for your specific thought process.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "structuredReasoning": {
+                "type": "string",
+                "minLength": 10,
+                "description": "A structured thought process to work through complex problems. Use this as a dedicated space for reasoning step-by-step."
+              },
+              "associateWithEntity": {
+                "type": "string",
+                "description": "Optional entity name to associate this thought with"
+              },
+              "category": {
+                "type": "string",
+                "description": "Optional category for the thought (e.g., \"problem-solving\", \"analysis\", \"planning\")"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional tags to help categorize and find this thought later"
+              },
+              "storeInMemory": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to store this thought in the knowledge graph memory"
+              },
+              "context": {
+                "type": "string",
+                "description": "Optional context or situation relevant to this thought (e.g., project, meeting, or scenario)"
+              },
+              "plannedSteps": {
+                "type": "number",
+                "description": "The total number of steps planned for this thinking process"
+              },
+              "currentStep": {
+                "type": "number",
+                "description": "The current step number in the thinking process"
+              },
+              "selfReflect": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to perform a self-reflection pass after generating the answer"
+              },
+              "allowResearch": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to allow research via external tools during the reasoning process"
+              },
+              "reflectPrompt": {
+                "type": "string",
+                "description": "Custom prompt for the self-reflection stage"
+              },
+              "researchQuery": {
+                "type": "string",
+                "description": "Optional research query to execute during the reasoning process"
+              },
+              "formatOutput": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to apply markdown formatting to the output"
+              },
+              "formatType": {
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "general",
+                  "problem",
+                  "comparison"
+                ],
+                "default": "auto",
+                "description": "The type of formatting to apply"
+              }
+            },
+            "required": [
+              "structuredReasoning"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "plan_tasks",
+          "description": "Create multiple tasks from a plan. Generates IDs and syncs with knowledge graph.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_tasks",
+          "description": "List tasks with optional filtering by status and priority.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "next_task",
+          "description": "Get the next highest priority todo task and mark it as in-progress.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "complete_task",
+          "description": "Mark a task as completed.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_tasks",
+          "description": "Update multiple tasks with new values.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "show_memory_path",
+          "description": "Return absolute path of the active knowledge-graph file.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "random_string": {
+                "type": "string",
+                "description": "Dummy parameter for no-parameter tools"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "exa_search",
+          "description": "Search the web using Exa API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The search query to execute"
+              },
+              "num_results": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 5,
+                "description": "Number of results to return (1-100)"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "keyword",
+                  "neural"
+                ],
+                "default": "auto",
+                "description": "Search type: auto (default), keyword (exact matching), or neural (semantic search)"
+              },
+              "start_published_date": {
+                "type": "string",
+                "description": "Filter results published after this date (ISO format)"
+              },
+              "end_published_date": {
+                "type": "string",
+                "description": "Filter results published before this date (ISO format)"
+              },
+              "include_domains": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Only include results from these domains"
+              },
+              "exclude_domains": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Exclude results from these domains"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "general",
+                  "company",
+                  "research paper",
+                  "news",
+                  "pdf",
+                  "github",
+                  "tweet",
+                  "personal site",
+                  "linkedin profile",
+                  "financial report"
+                ],
+                "default": "general",
+                "description": "Filter results by content category"
+              },
+              "live_crawl": {
+                "type": "string",
+                "enum": [
+                  "always",
+                  "fallback"
+                ],
+                "default": "always",
+                "description": "When to use live crawling: 'always' or 'fallback' (when cached not available)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "exa_answer",
+          "description": "Ask a question and get a sourced answer via Exa /answer API.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "minLength": 5,
+                "description": "The question to ask and get an answer with sources"
+              },
+              "max_citations": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 10,
+                "default": 5,
+                "description": "Maximum number of citations to include in the answer (1-10)"
+              }
+            },
+            "required": [
+              "question"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 20,
+      "tool_names": [
+        "upsert_entities",
+        "create_relations",
+        "add_observations",
+        "delete_entities",
+        "delete_observations",
+        "delete_relations",
+        "read_graph",
+        "search_nodes",
+        "open_nodes",
+        "update_relations",
+        "memory_query",
+        "think",
+        "plan_tasks",
+        "list_tasks",
+        "next_task",
+        "complete_task",
+        "update_tasks",
+        "show_memory_path",
+        "exa_search",
+        "exa_answer"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 174,
+      "name": "Think Tank",
+      "author": "@flight505/mcp-think-tank",
+      "overview": "MCP Think Tank is a powerful Model Context Protocol (MCP) server designed to enhance the capabilities of AI assistants like Cursor and Claude. It provides a structured environment for enhanced reasoning, persistent memory, and responsible tool usage. Key capabilities include advanced Sequential Thinking & Chained Reasoning, a robust Knowledge Graph Memory system with versioning, and intelligent Tool Orchestration with Call-Limit Safeguards. This platform empowers AI to tackle complex problems through structured analysis, maintain knowledge across sessions, and utilize external resources like web search, all while adhering to configurable usage limits.\n\n🎯 Philosophy MCP Think Tank is built on three core principles:\n\nElegant Simplicity: Minimal, well-designed tools that complement AI capabilities rather than trying to replicate them. \nEnhanced Reflection: Gentle guidance fosters better reasoning and self-reflection without rigid constraints. \nPersistent Context: A simple, yet effective knowledge graph provides memory across conversations.\n\nKey Features 💭 Think Tool: Dedicated space for structured reasoning and self-reflection. 🧩 Knowledge Graph: Simple and effective persistent memory system. 📝 Task Management Tools: Plan, track, and update tasks, integrated with the knowledge graph. 🌐 Web Research Tools (Exa): Search the web and get sourced answers using the Exa API. 🔍 Memory Tools: Easy-to-use tools for storing and retrieving information from the knowledge graph. 🤝 Client Support: Seamless integration with Cursor, Claude @Web, and other MCP clients. 🛡️ Tool Orchestration & Call Limits: Built-in safeguards for efficient and responsible tool usage with configurable limits. ⚡ Content Caching: Performance optimization for file and URL operations with automatic duplicate detection. 🔄 Sequential Thinking: Enables multi-step reasoning processes with progress tracking. 🔎 Self-Reflection: Automated reflection passes to improve reasoning quality. 📊 Structured Outputs: Automatic formatting of thought processes for better readability. 🔗 Research Integration: Seamless incorporation of web research findings into reasoning flows.",
+      "repository_url": "https://github.com/flight505/mcp-think-tank",
+      "homepage": "https://smithery.ai/server/@flight505/mcp-think-tank",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "273",
+      "success_rate": "97.62%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@flight505_mcp-think-tank.json",
+      "tools_count": 20,
+      "tools": [
+        {
+          "name": "upsert_entities",
+          "description": "Create new entities or update existing ones in the knowledge graph using an upsert pattern",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "entities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Unique identifier for the entity"
+                    },
+                    "entityType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Type classification of the entity"
+                    },
+                    "observations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Facts or observations about the entity"
+                    },
+                    "context": {
+                      "type": "string",
+                      "description": "Optional context or situation relevant to this entity (e.g., project, meeting, or scenario)"
+                    },
+                    "update": {
+                      "type": "boolean",
+                      "default": false,
+                      "description": "If true, will fully replace an existing entity; if false, will only create if entity doesn't exist"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "entityType",
+                    "observations"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of entities to create or update"
+              }
+            },
+            "required": [
+              "entities"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_relations",
+          "description": "Create multiple new relations between entities in the knowledge graph. Relations should be in active voice",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Source entity name"
+                    },
+                    "to": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Target entity name"
+                    },
+                    "relationType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Type of relationship (in active voice)"
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "to",
+                    "relationType"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of relations to create"
+              }
+            },
+            "required": [
+              "relations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_observations",
+          "description": "Add new observations to existing entities in the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "observations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "entityName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Name of the entity to add observations to"
+                    },
+                    "contents": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Observations to add to the entity"
+                    }
+                  },
+                  "required": [
+                    "entityName",
+                    "contents"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of entity observations to add"
+              }
+            },
+            "required": [
+              "observations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_entities",
+          "description": "Delete multiple entities and their associated relations from the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "entityNames": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Array of entity names to delete"
+              }
+            },
+            "required": [
+              "entityNames"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_observations",
+          "description": "Delete specific observations from entities in the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "deletions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "entityName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Name of the entity to remove observations from"
+                    },
+                    "observations": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Observations to remove from the entity"
+                    }
+                  },
+                  "required": [
+                    "entityName",
+                    "observations"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of entity observations to delete"
+              }
+            },
+            "required": [
+              "deletions"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_relations",
+          "description": "Delete multiple relations from the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Source entity name"
+                    },
+                    "to": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Target entity name"
+                    },
+                    "relationType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Type of relationship (in active voice)"
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "to",
+                    "relationType"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of relations to delete"
+              }
+            },
+            "required": [
+              "relations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_graph",
+          "description": "Read the entire knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "dummy": {
+                "type": "string",
+                "description": "Placeholder parameter - this tool doesn't require parameters but returns the complete knowledge graph with entities and relationships"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_nodes",
+          "description": "Search for nodes in the knowledge graph based on a query",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Search query to find matching entities"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "open_nodes",
+          "description": "Open specific nodes in the knowledge graph by their names",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "names": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "description": "Array of entity names to retrieve"
+              }
+            },
+            "required": [
+              "names"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_relations",
+          "description": "Update multiple existing relations in the knowledge graph",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "relations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "from": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Source entity name"
+                    },
+                    "to": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Target entity name"
+                    },
+                    "relationType": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Type of relationship (in active voice)"
+                    }
+                  },
+                  "required": [
+                    "from",
+                    "to",
+                    "relationType"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of relations to update"
+              }
+            },
+            "required": [
+              "relations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "memory_query",
+          "description": "Query the memory store with advanced filters",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Text to search for in observations"
+              },
+              "before": {
+                "type": "string",
+                "description": "ISO date to filter observations before"
+              },
+              "after": {
+                "type": "string",
+                "description": "ISO date to filter observations after"
+              },
+              "tag": {
+                "type": "string",
+                "description": "Tag to filter observations by"
+              },
+              "agent": {
+                "type": "string",
+                "description": "Agent that created the observations"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of results to return"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "think",
+          "description": "Use the tool to think about something. It will not obtain new information or change the database, but just append the thought to the log. Use it when complex reasoning or some cache memory is needed. Consider including: problem definition, relevant context, analysis steps, self-reflection on your reasoning, and conclusions. Adapt this structure as needed for your specific thought process.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "structuredReasoning": {
+                "type": "string",
+                "minLength": 10,
+                "description": "A structured thought process to work through complex problems. Use this as a dedicated space for reasoning step-by-step."
+              },
+              "associateWithEntity": {
+                "type": "string",
+                "description": "Optional entity name to associate this thought with"
+              },
+              "category": {
+                "type": "string",
+                "description": "Optional category for the thought (e.g., \"problem-solving\", \"analysis\", \"planning\")"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional tags to help categorize and find this thought later"
+              },
+              "storeInMemory": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to store this thought in the knowledge graph memory"
+              },
+              "context": {
+                "type": "string",
+                "description": "Optional context or situation relevant to this thought (e.g., project, meeting, or scenario)"
+              },
+              "plannedSteps": {
+                "type": "number",
+                "description": "The total number of steps planned for this thinking process"
+              },
+              "currentStep": {
+                "type": "number",
+                "description": "The current step number in the thinking process"
+              },
+              "selfReflect": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to perform a self-reflection pass after generating the answer"
+              },
+              "allowResearch": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to allow research via external tools during the reasoning process"
+              },
+              "reflectPrompt": {
+                "type": "string",
+                "description": "Custom prompt for the self-reflection stage"
+              },
+              "researchQuery": {
+                "type": "string",
+                "description": "Optional research query to execute during the reasoning process"
+              },
+              "formatOutput": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to apply markdown formatting to the output"
+              },
+              "formatType": {
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "general",
+                  "problem",
+                  "comparison"
+                ],
+                "default": "auto",
+                "description": "The type of formatting to apply"
+              }
+            },
+            "required": [
+              "structuredReasoning"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "plan_tasks",
+          "description": "Create multiple tasks from a plan. Generates IDs and syncs with knowledge graph.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_tasks",
+          "description": "List tasks with optional filtering by status and priority.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "next_task",
+          "description": "Get the next highest priority todo task and mark it as in-progress.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "complete_task",
+          "description": "Mark a task as completed.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_tasks",
+          "description": "Update multiple tasks with new values.",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "show_memory_path",
+          "description": "Return absolute path of the active knowledge-graph file.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "random_string": {
+                "type": "string",
+                "description": "Dummy parameter for no-parameter tools"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "exa_search",
+          "description": "Search the web using Exa API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The search query to execute"
+              },
+              "num_results": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "default": 5,
+                "description": "Number of results to return (1-100)"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "keyword",
+                  "neural"
+                ],
+                "default": "auto",
+                "description": "Search type: auto (default), keyword (exact matching), or neural (semantic search)"
+              },
+              "start_published_date": {
+                "type": "string",
+                "description": "Filter results published after this date (ISO format)"
+              },
+              "end_published_date": {
+                "type": "string",
+                "description": "Filter results published before this date (ISO format)"
+              },
+              "include_domains": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Only include results from these domains"
+              },
+              "exclude_domains": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Exclude results from these domains"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "general",
+                  "company",
+                  "research paper",
+                  "news",
+                  "pdf",
+                  "github",
+                  "tweet",
+                  "personal site",
+                  "linkedin profile",
+                  "financial report"
+                ],
+                "default": "general",
+                "description": "Filter results by content category"
+              },
+              "live_crawl": {
+                "type": "string",
+                "enum": [
+                  "always",
+                  "fallback"
+                ],
+                "default": "always",
+                "description": "When to use live crawling: 'always' or 'fallback' (when cached not available)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "exa_answer",
+          "description": "Ask a question and get a sourced answer via Exa /answer API.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "minLength": 5,
+                "description": "The question to ask and get an answer with sources"
+              },
+              "max_citations": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 10,
+                "default": 5,
+                "description": "Maximum number of citations to include in the answer (1-10)"
+              }
+            },
+            "required": [
+              "question"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"memoryPath\": \"/tmp/memory.jsonl\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@flight505/mcp-think-tank/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"memoryPath\": \"/tmp/memory.jsonl\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@flight505/mcp-think-tank/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0175.@flight505_mcp-think-tank_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 171
+  }
+}

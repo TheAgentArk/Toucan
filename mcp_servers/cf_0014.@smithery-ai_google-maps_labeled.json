@@ -1,0 +1,195 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides location-based services through the Google Maps Platform APIs. It includes tools for geocoding, reverse geocoding, searching places, retrieving place details, calculating distances, getting elevation data, and obtaining directions. These functionalities are essential for navigation, travel planning, and location-based applications.",
+    "reasoning": "The primary label \"Travel & Maps\" is chosen because the server's core functionality revolves around mapping and location services, which directly align with navigation, travel planning, and location-based queries. The secondary label \"Data Analysis & Processing\" is included because tools like distance matrix and elevation data can be used for analytical purposes. The secondary label \"API Integration\" is also relevant as the server interacts with Google Maps APIs.",
+    "primary_label": "Travel & Maps",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 13,
+    "server_name": "Google Maps",
+    "rank_by_usage": 14,
+    "usage_count": "8,304",
+    "original_file": "../crawler/smithery/@smithery-ai_google-maps.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@smithery-ai/google-maps/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 13,
+      "name": "Google Maps",
+      "author": "@smithery-ai/google-maps",
+      "overview": "Provides location-based services and mapping functionality through the Google Maps Platform APIs",
+      "repository_url": "https://github.com/smithery-ai/mcp-servers",
+      "homepage": "https://smithery.ai/server/@smithery-ai/google-maps",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "8,304",
+      "success_rate": "96.30%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@smithery-ai_google-maps.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "maps_geocode",
+          "description": "Deploy Server Google Maps @smithery-ai/google-maps Try in Playground maps_geocode",
+          "parameters": [
+            {
+              "name": "maps_geocode",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "address",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_reverse_geocode",
+          "description": "Convert coordinates into an address",
+          "parameters": [
+            {
+              "name": "latitude",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "longitude",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_search_places",
+          "description": "Search for places using Google Places API",
+          "parameters": [
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "radius",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_place_details",
+          "description": "Get detailed information about a specific place",
+          "parameters": [
+            {
+              "name": "maps_place_details",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "place_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_distance_matrix",
+          "description": "Calculate travel distance and time for multiple origins and destinations",
+          "parameters": [
+            {
+              "name": "maps_distance_matrix",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_elevation",
+          "description": "Get elevation data for locations on the earth",
+          "parameters": [
+            {
+              "name": "locations",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "Add",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Item",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "maps_directions",
+          "description": "Get directions between two points",
+          "parameters": [
+            {
+              "name": "mode",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "destination",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@smithery-ai/google-maps/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "apiKey",
+          "required": true,
+          "description": "Google Maps API key. Get one from https://mapsplatform.google.com"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@smithery-ai/google-maps/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0014.@smithery-ai_google-maps_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 14
+  }
+}

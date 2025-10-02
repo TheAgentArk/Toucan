@@ -1,0 +1,419 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to enable flight search and analysis without requiring traditional API keys by leveraging web scraping. It provides a comprehensive tool (scrape_flights_tool) that allows users to retrieve detailed flight information including prices, schedules, airlines, baggage allowances, and more. The tool supports various filters such as flight type (one-way/round-trip), cabin class, airline preferences, and sorting options, making it highly customizable for users. This functionality primarily serves users who need detailed flight information for travel planning, price comparison, or travel research.",
+    "reasoning": "The primary label is \"Travel & Maps\" because the core functionality revolves around flight search and travel-related data retrieval. \"Web Search & Research\" is added as a secondary label due to its capability to scrape and provide detailed flight information that can be used for research purposes. No custom label is needed as the predefined labels adequately cover the server's functionality.",
+    "primary_label": "Travel & Maps",
+    "secondary_labels": [
+      "Web Search & Research"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1137,
+    "server_name": "Flight Search Server",
+    "rank_by_usage": 1138,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@alan5543_flight-search-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@alan5543/flight-search-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "scrape_flights_tool",
+          "description": "Scrape flight data from Kayak with pagination support. You can ask the user whether it is a one-way or round-trip flight, if they only give you the departure date, then it is a one-way flight, if they give you the departure date and return date, then it is a round-trip flight.\n    You can also ask the user what is their sort option, if they don't give you the sort option, then you can use the default sort option.\n    You can also ask the user what is their plane type, if they don't give you the plane type, then you can use the default plane type.\n    You can also ask the user what is their alliance, if they don't give you the alliance, then you can use the default alliance.\n    You can also ask the user what is their include airlines, if they don't give you the include airlines, then you can use the default include airlines.\n    You can also ask the user what is their exclude airlines, if they don't give you the exclude airlines, then you can use the default exclude airlines.\n    You can also ask the user what is their wifi only, if they don't give you the wifi only, then you can use the default wifi only.\n    You can also ask the user what is their start index, if they don't give you the start index, then you can use the default start index.\n\n    Args:\n        departure_airport: 3-letter IATA code for departure airport (e.g., \"YYZ\" for Toronto).\n        arrival_airport: 3-letter IATA code for arrival airport (e.g., \"HKG\" for Hong Kong).\n        departure_date: Departure date in ISO 8601 format (YYYY-MM-DD, e.g., \"2025-07-01\").\n        return_date: Return date in ISO 8601 format (YYYY-MM-DD, e.g., \"2025-07-25\"). None for one-way flights.\n        adults: Number of adult passengers (age 12+). Default: 2.\n        students: Number of student passengers (age 12+ with student fare eligibility). Default: 0.\n        children: List of child passenger types: \"11\" (age 2-11), \"1S\" (toddler under 2 with seat), \"1L\" (infant under 2 on lap). Default: [].\n        plane_type: Cabin class: \"economy\", \"premium\", \"business\", or \"first\". Default: \"economy\".\n        sort_option: Sort order for results: \"bestflight_a\" (best flights), \"price_a\" (cheapest), \"price_b\" (most expensive), \"duration_a\" (quickest), \"duration_b\" (slowest), \"depart_a\" (earliest takeoff), \"depart_b\" (latest takeoff), \"arrive_a\" (earliest landing), \"arrive_b\" (latest landing), \"departReturn_a\" (earliest return takeoff), \"departReturn_b\" (latest return takeoff), \"arriveReturn_a\" (earliest return landing), \"arriveReturn_b\" (latest return landing). Default: \"price_a\".\n        carry_on_free: Minimum number of free carry-on bags. None for no preference. Default: 1.\n        checked_bags_free: Minimum number of free checked bags. None for no preference. Default: None.\n        stops: Maximum number of stops (0 for direct flights). None for no preference. Default: None.\n        max_price: Maximum price in CAD. None for no price limit. Default: 6000.\n        alliance: Airline alliance: \"VALUE_ALLIANCE\", \"ONE_WORLD\", \"SKY_TEAM\", \"STAR_ALLIANCE\". None for no preference. Default: None.\n        include_airlines: Set of 2-letter IATA airline codes to include (e.g., {\"AC\", \"UA\"}). None for no inclusion filter. Default: None.\n        exclude_airlines: Set of 2-letter IATA airline codes to exclude (e.g., {\"NK\", \"F9\"}). None for no exclusion filter. Default: None.\n        wifi_only: If true, only include flights with Wi-Fi available. Default: False.\n        start_index: Starting index of flight results to return (0-based, inclusive). Default: 0.\n        end_index: Ending index of flight results to return (inclusive). Must be >= start_index. Default: 15.\n\n    Returns:\n        A string summarizing flight results, with each flight separated by \"---\". Includes price, outbound/return times, airlines, airports, stops, and stop details. If no flights are found or an error occurs, returns an error message with total results count.\n    ",
+          "input_schema": {
+            "properties": {
+              "departure_airport": {
+                "title": "Departure Airport",
+                "type": "string"
+              },
+              "arrival_airport": {
+                "title": "Arrival Airport",
+                "type": "string"
+              },
+              "departure_date": {
+                "title": "Departure Date",
+                "type": "string"
+              },
+              "return_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Return Date"
+              },
+              "adults": {
+                "default": 2,
+                "title": "Adults",
+                "type": "integer"
+              },
+              "students": {
+                "default": 0,
+                "title": "Students",
+                "type": "integer"
+              },
+              "children": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Children",
+                "type": "array"
+              },
+              "plane_type": {
+                "default": "economy",
+                "title": "Plane Type",
+                "type": "string"
+              },
+              "sort_option": {
+                "default": "price_a",
+                "title": "Sort Option",
+                "type": "string"
+              },
+              "carry_on_free": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 1,
+                "title": "Carry On Free"
+              },
+              "checked_bags_free": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Checked Bags Free"
+              },
+              "stops": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Stops"
+              },
+              "max_price": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 6000,
+                "title": "Max Price"
+              },
+              "alliance": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Alliance"
+              },
+              "include_airlines": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Include Airlines"
+              },
+              "exclude_airlines": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Exclude Airlines"
+              },
+              "wifi_only": {
+                "default": false,
+                "title": "Wifi Only",
+                "type": "boolean"
+              },
+              "start_index": {
+                "default": 0,
+                "title": "Start Index",
+                "type": "integer"
+              },
+              "end_index": {
+                "default": 15,
+                "title": "End Index",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "departure_airport",
+              "arrival_airport",
+              "departure_date"
+            ],
+            "title": "scrape_flights_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "scrape_flights_tool"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1137,
+      "name": "Flight Search Server",
+      "author": "@alan5543/flight-search-mcp",
+      "overview": "Enable LLMs to retrieve detailed flight search and detail information without requiring an API key. Scrape comprehensive flight data including prices, schedules, airlines, baggage allowances, and more. Enhance flight search and analysis capabilities seamlessly with MCP-compatible clients.",
+      "repository_url": "https://github.com/alan5543/Flight-Search-MCP",
+      "homepage": "https://smithery.ai/server/@alan5543/flight-search-mcp",
+      "remote_or_local": "Remote",
+      "license": "https://smithery.ai/server/@alan5543/flight-scraper",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@alan5543_flight-search-mcp.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "scrape_flights_tool",
+          "description": "Scrape flight data from Kayak with pagination support. You can ask the user whether it is a one-way or round-trip flight, if they only give you the departure date, then it is a one-way flight, if they give you the departure date and return date, then it is a round-trip flight.\n    You can also ask the user what is their sort option, if they don't give you the sort option, then you can use the default sort option.\n    You can also ask the user what is their plane type, if they don't give you the plane type, then you can use the default plane type.\n    You can also ask the user what is their alliance, if they don't give you the alliance, then you can use the default alliance.\n    You can also ask the user what is their include airlines, if they don't give you the include airlines, then you can use the default include airlines.\n    You can also ask the user what is their exclude airlines, if they don't give you the exclude airlines, then you can use the default exclude airlines.\n    You can also ask the user what is their wifi only, if they don't give you the wifi only, then you can use the default wifi only.\n    You can also ask the user what is their start index, if they don't give you the start index, then you can use the default start index.\n\n    Args:\n        departure_airport: 3-letter IATA code for departure airport (e.g., \"YYZ\" for Toronto).\n        arrival_airport: 3-letter IATA code for arrival airport (e.g., \"HKG\" for Hong Kong).\n        departure_date: Departure date in ISO 8601 format (YYYY-MM-DD, e.g., \"2025-07-01\").\n        return_date: Return date in ISO 8601 format (YYYY-MM-DD, e.g., \"2025-07-25\"). None for one-way flights.\n        adults: Number of adult passengers (age 12+). Default: 2.\n        students: Number of student passengers (age 12+ with student fare eligibility). Default: 0.\n        children: List of child passenger types: \"11\" (age 2-11), \"1S\" (toddler under 2 with seat), \"1L\" (infant under 2 on lap). Default: [].\n        plane_type: Cabin class: \"economy\", \"premium\", \"business\", or \"first\". Default: \"economy\".\n        sort_option: Sort order for results: \"bestflight_a\" (best flights), \"price_a\" (cheapest), \"price_b\" (most expensive), \"duration_a\" (quickest), \"duration_b\" (slowest), \"depart_a\" (earliest takeoff), \"depart_b\" (latest takeoff), \"arrive_a\" (earliest landing), \"arrive_b\" (latest landing), \"departReturn_a\" (earliest return takeoff), \"departReturn_b\" (latest return takeoff), \"arriveReturn_a\" (earliest return landing), \"arriveReturn_b\" (latest return landing). Default: \"price_a\".\n        carry_on_free: Minimum number of free carry-on bags. None for no preference. Default: 1.\n        checked_bags_free: Minimum number of free checked bags. None for no preference. Default: None.\n        stops: Maximum number of stops (0 for direct flights). None for no preference. Default: None.\n        max_price: Maximum price in CAD. None for no price limit. Default: 6000.\n        alliance: Airline alliance: \"VALUE_ALLIANCE\", \"ONE_WORLD\", \"SKY_TEAM\", \"STAR_ALLIANCE\". None for no preference. Default: None.\n        include_airlines: Set of 2-letter IATA airline codes to include (e.g., {\"AC\", \"UA\"}). None for no inclusion filter. Default: None.\n        exclude_airlines: Set of 2-letter IATA airline codes to exclude (e.g., {\"NK\", \"F9\"}). None for no exclusion filter. Default: None.\n        wifi_only: If true, only include flights with Wi-Fi available. Default: False.\n        start_index: Starting index of flight results to return (0-based, inclusive). Default: 0.\n        end_index: Ending index of flight results to return (inclusive). Must be >= start_index. Default: 15.\n\n    Returns:\n        A string summarizing flight results, with each flight separated by \"---\". Includes price, outbound/return times, airlines, airports, stops, and stop details. If no flights are found or an error occurs, returns an error message with total results count.\n    ",
+          "input_schema": {
+            "properties": {
+              "departure_airport": {
+                "title": "Departure Airport",
+                "type": "string"
+              },
+              "arrival_airport": {
+                "title": "Arrival Airport",
+                "type": "string"
+              },
+              "departure_date": {
+                "title": "Departure Date",
+                "type": "string"
+              },
+              "return_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Return Date"
+              },
+              "adults": {
+                "default": 2,
+                "title": "Adults",
+                "type": "integer"
+              },
+              "students": {
+                "default": 0,
+                "title": "Students",
+                "type": "integer"
+              },
+              "children": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Children",
+                "type": "array"
+              },
+              "plane_type": {
+                "default": "economy",
+                "title": "Plane Type",
+                "type": "string"
+              },
+              "sort_option": {
+                "default": "price_a",
+                "title": "Sort Option",
+                "type": "string"
+              },
+              "carry_on_free": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 1,
+                "title": "Carry On Free"
+              },
+              "checked_bags_free": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Checked Bags Free"
+              },
+              "stops": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Stops"
+              },
+              "max_price": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": 6000,
+                "title": "Max Price"
+              },
+              "alliance": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Alliance"
+              },
+              "include_airlines": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Include Airlines"
+              },
+              "exclude_airlines": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Exclude Airlines"
+              },
+              "wifi_only": {
+                "default": false,
+                "title": "Wifi Only",
+                "type": "boolean"
+              },
+              "start_index": {
+                "default": 0,
+                "title": "Start Index",
+                "type": "integer"
+              },
+              "end_index": {
+                "default": 15,
+                "title": "End Index",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "departure_airport",
+              "arrival_airport",
+              "departure_date"
+            ],
+            "title": "scrape_flights_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@alan5543/flight-search-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@alan5543/flight-search-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1138.@alan5543_flight-search-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1115
+  }
+}

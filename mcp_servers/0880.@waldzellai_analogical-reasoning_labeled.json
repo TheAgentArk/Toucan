@@ -1,0 +1,563 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in enabling analogical reasoning, allowing models to systematically map and evaluate relationships between different domains. It supports structured problem-solving, explanation, and creative ideation through analogy construction, inference generation, and visualization. The primary tool, \"analogicalReasoning,\" facilitates explicit domain mapping, evaluation, and knowledge transfer, making it particularly useful for conceptual understanding, problem-solving, and creative thinking.",
+    "reasoning": "The \"Education\" label is chosen because the server primarily enhances learning and understanding through structured analogies, which is core to educational applications. \"Content Creation\" is a secondary label as it aids in explaining complex concepts, and \"Creative Ideation\" (custom label) captures its unique role in fostering innovative connections between domains.\n    The server does not neatly fit into predefined productivity or browser automation categories, though it could support those indirectly. The custom label \"Creative Ideation\" is used to highlight its unique creative problem-solving capabilities.",
+    "primary_label": "Education",
+    "secondary_labels": [
+      "Content Creation"
+    ],
+    "custom_label": "Creative Ideation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 879,
+    "server_name": "Analogical Reasoning Server",
+    "rank_by_usage": 880,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@waldzellai_analogical-reasoning.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@waldzellai/analogical-reasoning/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "analogicalReasoning",
+          "description": "A detailed tool for analogical thinking between source and target domains.\nThis tool helps models structure analogies systematically to improve understanding and reasoning.\nIt facilitates explicit mapping between domains, inference generation, and analogy evaluation.\n\nWhen to use this tool:\n- Understanding new concepts through analogies to familiar domains\n- Problem-solving by transferring insights between domains\n- Creative thinking by establishing connections between different fields\n- Explaining complex concepts through structured comparisons\n- Evaluating analogies for their strengths and limitations\n\nKey features:\n- Explicit domain structure representation\n- Systematic mapping between domains\n- Inference generation and evaluation\n- Visual representation of analogical mappings\n- Tracking of analogy strengths and limitations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sourceDomain": {
+                "type": "object",
+                "description": "The familiar domain used as the basis for the analogy",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the source domain"
+                  },
+                  "elements": {
+                    "type": "array",
+                    "description": "Elements in the source domain",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the element"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the element"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "entity",
+                            "attribute",
+                            "relation",
+                            "process"
+                          ],
+                          "description": "Type of element"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Description of the element"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "type",
+                        "description"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "elements"
+                ]
+              },
+              "targetDomain": {
+                "type": "object",
+                "description": "The domain being understood through the analogy",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the target domain"
+                  },
+                  "elements": {
+                    "type": "array",
+                    "description": "Elements in the target domain",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the element"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the element"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "entity",
+                            "attribute",
+                            "relation",
+                            "process"
+                          ],
+                          "description": "Type of element"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Description of the element"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "type",
+                        "description"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "elements"
+                ]
+              },
+              "mappings": {
+                "type": "array",
+                "description": "Mappings between source and target domain elements",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "sourceElement": {
+                      "type": "string",
+                      "description": "ID of the source domain element"
+                    },
+                    "targetElement": {
+                      "type": "string",
+                      "description": "ID of the target domain element"
+                    },
+                    "mappingStrength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Strength of the mapping (0.0-1.0)"
+                    },
+                    "justification": {
+                      "type": "string",
+                      "description": "Justification for the mapping"
+                    },
+                    "limitations": {
+                      "type": "array",
+                      "description": "Limitations of this specific mapping",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "sourceElement",
+                    "targetElement",
+                    "mappingStrength",
+                    "justification"
+                  ]
+                }
+              },
+              "analogyId": {
+                "type": "string",
+                "description": "Unique identifier for this analogy"
+              },
+              "purpose": {
+                "type": "string",
+                "enum": [
+                  "explanation",
+                  "prediction",
+                  "problem-solving",
+                  "creative-generation"
+                ],
+                "description": "The purpose of the analogy"
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Confidence in the overall analogy (0.0-1.0)"
+              },
+              "iteration": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Current iteration of the analogy"
+              },
+              "strengths": {
+                "type": "array",
+                "description": "Strengths of the analogy",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "limitations": {
+                "type": "array",
+                "description": "Limitations of the analogy",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "inferences": {
+                "type": "array",
+                "description": "Inferences drawn from the analogy",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "statement": {
+                      "type": "string",
+                      "description": "The inference statement"
+                    },
+                    "confidence": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Confidence in the inference (0.0-1.0)"
+                    },
+                    "basedOnMappings": {
+                      "type": "array",
+                      "description": "IDs of mappings supporting this inference",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "statement",
+                    "confidence",
+                    "basedOnMappings"
+                  ]
+                }
+              },
+              "nextOperationNeeded": {
+                "type": "boolean",
+                "description": "Whether another operation is needed"
+              },
+              "suggestedOperations": {
+                "type": "array",
+                "description": "Suggested next operations",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "add-mapping",
+                    "revise-mapping",
+                    "draw-inference",
+                    "evaluate-limitation",
+                    "try-new-source"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "sourceDomain",
+              "targetDomain",
+              "analogyId",
+              "purpose",
+              "confidence",
+              "iteration",
+              "nextOperationNeeded"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "analogicalReasoning"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 879,
+      "name": "Analogical Reasoning Server",
+      "author": "@waldzellai/analogical-reasoning",
+      "overview": "Enable models to perform structured analogical thinking by explicitly mapping and evaluating relationships between source and target domains. Enhance problem-solving, explanation, and creative ideation through systematic analogy construction, inference generation, and evaluation. Visualize analogical mappings to improve understanding and transfer of knowledge across domains.",
+      "repository_url": "https://github.com/waldzellai/model-enhancement-servers",
+      "homepage": "https://smithery.ai/server/@waldzellai/analogical-reasoning",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@waldzellai_analogical-reasoning.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "analogicalReasoning",
+          "description": "A detailed tool for analogical thinking between source and target domains.\nThis tool helps models structure analogies systematically to improve understanding and reasoning.\nIt facilitates explicit mapping between domains, inference generation, and analogy evaluation.\n\nWhen to use this tool:\n- Understanding new concepts through analogies to familiar domains\n- Problem-solving by transferring insights between domains\n- Creative thinking by establishing connections between different fields\n- Explaining complex concepts through structured comparisons\n- Evaluating analogies for their strengths and limitations\n\nKey features:\n- Explicit domain structure representation\n- Systematic mapping between domains\n- Inference generation and evaluation\n- Visual representation of analogical mappings\n- Tracking of analogy strengths and limitations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sourceDomain": {
+                "type": "object",
+                "description": "The familiar domain used as the basis for the analogy",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the source domain"
+                  },
+                  "elements": {
+                    "type": "array",
+                    "description": "Elements in the source domain",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the element"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the element"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "entity",
+                            "attribute",
+                            "relation",
+                            "process"
+                          ],
+                          "description": "Type of element"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Description of the element"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "type",
+                        "description"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "elements"
+                ]
+              },
+              "targetDomain": {
+                "type": "object",
+                "description": "The domain being understood through the analogy",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the target domain"
+                  },
+                  "elements": {
+                    "type": "array",
+                    "description": "Elements in the target domain",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the element"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Name of the element"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "entity",
+                            "attribute",
+                            "relation",
+                            "process"
+                          ],
+                          "description": "Type of element"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Description of the element"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "type",
+                        "description"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "elements"
+                ]
+              },
+              "mappings": {
+                "type": "array",
+                "description": "Mappings between source and target domain elements",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "sourceElement": {
+                      "type": "string",
+                      "description": "ID of the source domain element"
+                    },
+                    "targetElement": {
+                      "type": "string",
+                      "description": "ID of the target domain element"
+                    },
+                    "mappingStrength": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Strength of the mapping (0.0-1.0)"
+                    },
+                    "justification": {
+                      "type": "string",
+                      "description": "Justification for the mapping"
+                    },
+                    "limitations": {
+                      "type": "array",
+                      "description": "Limitations of this specific mapping",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "sourceElement",
+                    "targetElement",
+                    "mappingStrength",
+                    "justification"
+                  ]
+                }
+              },
+              "analogyId": {
+                "type": "string",
+                "description": "Unique identifier for this analogy"
+              },
+              "purpose": {
+                "type": "string",
+                "enum": [
+                  "explanation",
+                  "prediction",
+                  "problem-solving",
+                  "creative-generation"
+                ],
+                "description": "The purpose of the analogy"
+              },
+              "confidence": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1,
+                "description": "Confidence in the overall analogy (0.0-1.0)"
+              },
+              "iteration": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Current iteration of the analogy"
+              },
+              "strengths": {
+                "type": "array",
+                "description": "Strengths of the analogy",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "limitations": {
+                "type": "array",
+                "description": "Limitations of the analogy",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "inferences": {
+                "type": "array",
+                "description": "Inferences drawn from the analogy",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "statement": {
+                      "type": "string",
+                      "description": "The inference statement"
+                    },
+                    "confidence": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Confidence in the inference (0.0-1.0)"
+                    },
+                    "basedOnMappings": {
+                      "type": "array",
+                      "description": "IDs of mappings supporting this inference",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "statement",
+                    "confidence",
+                    "basedOnMappings"
+                  ]
+                }
+              },
+              "nextOperationNeeded": {
+                "type": "boolean",
+                "description": "Whether another operation is needed"
+              },
+              "suggestedOperations": {
+                "type": "array",
+                "description": "Suggested next operations",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "add-mapping",
+                    "revise-mapping",
+                    "draw-inference",
+                    "evaluate-limitation",
+                    "try-new-source"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "sourceDomain",
+              "targetDomain",
+              "analogyId",
+              "purpose",
+              "confidence",
+              "iteration",
+              "nextOperationNeeded"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@waldzellai/analogical-reasoning/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@waldzellai/analogical-reasoning/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0880.@waldzellai_analogical-reasoning_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 861
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "labels": {
+    "analysis": "The MCP Server serves as an interface between AI agents and the Instantly.ai cold email outreach platform. Its core functionality revolves around campaign management and performance analytics for cold email campaigns. The tools provided enable automated systems to list all available campaigns, retrieve detailed metrics about campaign performance (daily, step-based, and overview analytics), and access specific campaign details. The primary use case appears to be for monitoring, comparing, and optimizing cold email campaign performance through automated data retrieval.",
+    "reasoning": "The primary label of \"Data Analysis & Processing\" was chosen because the server's main functionality is centered around retrieving, analyzing, and comparing performance metrics from cold email campaigns. The secondary label of \"Marketing & Outreach\" is relevant due to the focus on email campaign performance, which is a key aspect of marketing automation. While \"Database Operations\" could be considered, the server's primary focus is more on analytical tools rather than pure database operations.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [],
+    "custom_label": "Cold Email Analytics",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1103,
+    "server_name": "Instantly",
+    "rank_by_usage": 1104,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@orchidautomation_instantly-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@orchidautomation/instantly-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1103,
+      "name": "Instantly",
+      "author": "@orchidautomation/instantly-mcp",
+      "overview": "This Model Context Protocol (MCP) server acts as a bridge between AI agents and the Instantly.ai platform. It exposes tools allowing automated systems to fetch campaign lists, retrieve specific campaign details, and access various performance analytics (overview, daily, and step-based) for cold email outreach.",
+      "repository_url": "https://github.com/orchidautomation/smithery_instantly-MCP",
+      "homepage": "https://smithery.ai/server/@orchidautomation/instantly-mcp",
+      "remote_or_local": "Remote",
+      "license": "orchidautomation/smithery_instantly-MCP",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@orchidautomation_instantly-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "list-campaigns",
+          "description": "Deploy Server @orchidautomation/instantly-mcp Try in Playground list-campaigns",
+          "parameters": []
+        },
+        {
+          "name": "get-campaign-analytics",
+          "description": "Fetches detailed performance metrics for one or multiple campaigns. For a single campaign use 'id', for multiple campaigns use 'ids' as an array. **If the user provides campaign names, use 'list-campaigns' first to find the IDs.** Returns an array of campaign stats (name, ID, leads, contacted, opens, replies, etc.). Perfect for comparing multiple campaigns side by side.",
+          "parameters": []
+        },
+        {
+          "name": "get-campaign-analytics-overview",
+          "description": "Fetches aggregated performance metrics across one or multiple campaigns. For a single campaign use 'id', for multiple campaigns use 'ids' as an array. **If the user provides campaign names, use 'list-campaigns' first to find the IDs.** Returns a single object with combined totals (opens, replies, meetings booked, etc.). Great for overall performance analysis.",
+          "parameters": [
+            {
+              "name": "ids",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Add",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Item",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "end_date",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "start_date",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "campaign_status",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get-daily-campaign-analytics",
+          "description": "Fetches daily performance metrics for specified campaigns within a date range. Returns an array of objects, each representing a single day's aggregated stats (sent, opened, replies, clicks).",
+          "parameters": []
+        },
+        {
+          "name": "get-campaign-steps-analytics",
+          "description": "Fetches performance metrics broken down by individual steps and variants within specified campaigns. Returns an array of objects, each representing a step/variant combination.",
+          "parameters": []
+        },
+        {
+          "name": "get-campaign",
+          "description": "list-campaigns Fetches a summarized list of all campaigns, including name, ID, status, timestamps, PL value, tracking settings, daily limit, email count, and schedule information. Use this for an overview or to find a campaign ID. For full details like email copy (sequences) or the complete email list, use the 'get-campaign' tool with the campaign ID.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@orchidautomation/instantly-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "instantlyApiKey",
+          "required": true,
+          "description": "Instantly API key for authentication"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@orchidautomation/instantly-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1104.@orchidautomation_instantly-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1081
+  }
+}

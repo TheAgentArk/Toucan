@@ -1,0 +1,615 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Vibe-Coder\" is designed to guide LlMs through a structured coding development workflow. Its core functionality includes feature clarification, task and phase management, progress tracking, and document storage. The available tools support creating product requirements, managing development phases, updating task statuses, and document handling. The server focuses on enhancing project organization, visibility, and productivity in software development.",
+    "reasoning": "The primary label \"Development Tools\" was chosen because the server's main functionality revolves around code development workflows, task management, and documentation. \"Document Management\" was selected as a secondary label due to the server's document storage and retrieval capabilities. \"Project Management\" was chosen as another secondary label because of the phased development and task tracking features. No custom label is needed as the functionality aligns well with the predefined categories.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "File Management",
+      "Project Management"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 247,
+    "server_name": "Vibe-Coder",
+    "rank_by_usage": 248,
+    "usage_count": "160",
+    "original_file": "../crawler/smithery/@crazyrabbitLTC_mcp-vibecoder.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@crazyrabbitLTC/mcp-vibecoder/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "start_feature_clarification",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureName": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 100
+              },
+              "initialDescription": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "featureName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "provide_clarification",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "question": {
+                "type": "string",
+                "minLength": 1
+              },
+              "answer": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "question",
+              "answer"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_prd",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_phase",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "name",
+              "description"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_phase_status",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phaseId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "in_progress",
+                  "completed",
+                  "reviewed"
+                ]
+              }
+            },
+            "required": [
+              "featureId",
+              "phaseId",
+              "status"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_task",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phaseId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "phaseId",
+              "description"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_task_status",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phaseId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "taskId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "completed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "featureId",
+              "phaseId",
+              "taskId",
+              "completed"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_next_phase_action",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_document_path",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "documentType": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "documentType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "save_document",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "documentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "filePath": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "documentType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 10,
+      "tool_names": [
+        "start_feature_clarification",
+        "provide_clarification",
+        "generate_prd",
+        "create_phase",
+        "update_phase_status",
+        "add_task",
+        "update_task_status",
+        "get_next_phase_action",
+        "get_document_path",
+        "save_document"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 247,
+      "name": "Vibe-Coder",
+      "author": "@crazyrabbitLTC/mcp-vibecoder",
+      "overview": "Guide LLMs through a structured and safe coding development workflow by clarifying features, generating plans, tracking progress, and managing documentation. Streamline feature planning with phased task management and document storage. Enhance development organization and visibility for better project outcomes.",
+      "repository_url": "https://github.com/crazyrabbitLTC/mcp-vibecoder",
+      "homepage": "https://smithery.ai/server/@crazyrabbitLTC/mcp-vibecoder",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "160",
+      "success_rate": "98.30%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@crazyrabbitLTC_mcp-vibecoder.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "start_feature_clarification",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureName": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 100
+              },
+              "initialDescription": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "featureName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "provide_clarification",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "question": {
+                "type": "string",
+                "minLength": 1
+              },
+              "answer": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "question",
+              "answer"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_prd",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_phase",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "name",
+              "description"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_phase_status",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phaseId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "in_progress",
+                  "completed",
+                  "reviewed"
+                ]
+              }
+            },
+            "required": [
+              "featureId",
+              "phaseId",
+              "status"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_task",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phaseId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "phaseId",
+              "description"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_task_status",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phaseId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "taskId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "completed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "featureId",
+              "phaseId",
+              "taskId",
+              "completed"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_next_phase_action",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_document_path",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "documentType": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "documentType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "save_document",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "featureId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "documentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "filePath": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "featureId",
+              "documentType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@crazyrabbitLTC/mcp-vibecoder/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@crazyrabbitLTC/mcp-vibecoder/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0248.@crazyrabbitLTC_mcp-vibecoder_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 244
+  }
+}

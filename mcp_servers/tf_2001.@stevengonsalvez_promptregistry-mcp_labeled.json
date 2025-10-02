@@ -1,0 +1,455 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to manage and organize AI prompts in a structured, file-based system. It allows users to add, retrieve, update, delete, and filter prompts stored in JSON format, with support for version control and project-specific overrides. The key functionality revolves around prompt lifecycle management, making it particularly useful for developers and researchers who work with multiple AI models or projects and need to maintain consistency across their prompt libraries.",
+    "reasoning": "The primary label \"Development Tools\" is chosen because the server is primarily used for managing AI prompts, which is a core activity in AI development workflows. The secondary labels \"File Management\" and \"Memory Management\" are selected because the server interacts with file systems through JSON-based storage and version control, while also maintaining structured knowledge bases for prompts. The custom label \"Prompt Management\" is added to capture the unique functionality specific to organizing and maintaining AI prompts.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "File Management",
+      "Memory Management"
+    ],
+    "custom_label": "Prompt Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2000,
+    "server_name": "Prompt Registry",
+    "rank_by_usage": 2001,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@stevengonsalvez_promptregistry-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@stevengonsalvez/promptregistry-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "add_prompt",
+          "description": "Adds a new prompt to the project-specific prompt directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique ID for the prompt"
+              },
+              "content": {
+                "type": "string",
+                "description": "The prompt content template (e.g., 'Hello, {{name}}!')"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the prompt for MCP listing"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Tags for categorizing the prompt"
+              },
+              "variables": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "default": {},
+                "description": "Schema for template variables (e.g., { name: { description: 'User name', required: true } })"
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": {},
+                "default": {},
+                "description": "Additional metadata"
+              }
+            },
+            "required": [
+              "id",
+              "content"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_prompt_file_content",
+          "description": "Retrieves the raw JSON definition of the active prompt (project-specific or user global default).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ID of the prompt to retrieve its file content"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_prompt",
+          "description": "Updates an existing prompt. Updates are always written to the project-specific directory, creating an override if necessary.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ID of the prompt to update"
+              },
+              "content": {
+                "type": "string",
+                "description": "New prompt content template"
+              },
+              "description": {
+                "type": "string",
+                "description": "New description for the prompt"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "New set of tags (replaces existing)"
+              },
+              "variables": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "description": "New schema for template variables (replaces existing)"
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "New metadata (replaces existing)"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_prompt",
+          "description": "Deletes a prompt from the project-specific directory. If a user global default with the same ID exists, it will become active.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ID of the prompt to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_prompts_by_tags",
+          "description": "Lists active prompts (project-specific or user global defaults) that match all specified tags.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "description": "Filter prompts by tags (must match all specified tags)"
+              }
+            },
+            "required": [
+              "tags"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "load_default_prompts",
+          "description": "Loads all default prompts from the default_prompts_data directory into the active prompt directory, skipping any that already exist.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "add_prompt",
+        "get_prompt_file_content",
+        "update_prompt",
+        "delete_prompt",
+        "filter_prompts_by_tags",
+        "load_default_prompts"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2000,
+      "name": "Prompt Registry",
+      "author": "@stevengonsalvez/promptregistry-mcp",
+      "overview": "Manage and organize your AI prompts efficiently with a lightweight, file-based prompt server. Store all prompts in a single directory with easy JSON editing and version control. Integrate seamlessly with MCP clients via stdio for local development and prompt management.",
+      "repository_url": "https://github.com/stevengonsalvez/promptregistry-mcp",
+      "homepage": "https://smithery.ai/server/@stevengonsalvez/promptregistry-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@stevengonsalvez_promptregistry-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "add_prompt",
+          "description": "Adds a new prompt to the project-specific prompt directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Unique ID for the prompt"
+              },
+              "content": {
+                "type": "string",
+                "description": "The prompt content template (e.g., 'Hello, {{name}}!')"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the prompt for MCP listing"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Tags for categorizing the prompt"
+              },
+              "variables": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "default": {},
+                "description": "Schema for template variables (e.g., { name: { description: 'User name', required: true } })"
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": {},
+                "default": {},
+                "description": "Additional metadata"
+              }
+            },
+            "required": [
+              "id",
+              "content"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_prompt_file_content",
+          "description": "Retrieves the raw JSON definition of the active prompt (project-specific or user global default).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ID of the prompt to retrieve its file content"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_prompt",
+          "description": "Updates an existing prompt. Updates are always written to the project-specific directory, creating an override if necessary.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ID of the prompt to update"
+              },
+              "content": {
+                "type": "string",
+                "description": "New prompt content template"
+              },
+              "description": {
+                "type": "string",
+                "description": "New description for the prompt"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "New set of tags (replaces existing)"
+              },
+              "variables": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "description": "New schema for template variables (replaces existing)"
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "New metadata (replaces existing)"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_prompt",
+          "description": "Deletes a prompt from the project-specific directory. If a user global default with the same ID exists, it will become active.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "ID of the prompt to delete"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_prompts_by_tags",
+          "description": "Lists active prompts (project-specific or user global defaults) that match all specified tags.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "description": "Filter prompts by tags (must match all specified tags)"
+              }
+            },
+            "required": [
+              "tags"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "load_default_prompts",
+          "description": "Loads all default prompts from the default_prompts_data directory into the active prompt directory, skipping any that already exist.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@stevengonsalvez/promptregistry-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@stevengonsalvez/promptregistry-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2001.@stevengonsalvez_promptregistry-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1745
+  }
+}

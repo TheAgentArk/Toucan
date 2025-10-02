@@ -1,0 +1,831 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to enable LLMs to interact with web pages through structured accessibility snapshots, providing browser automation capabilities. It supports navigation, interaction with page elements, form filling, tab management, and retrieving page content in various formats (including markdown). The tools focus on lightweight, efficient browser automation without relying on screenshots or vision models, making it suitable for tasks like web scraping, research, and automated browsing.",
+    "reasoning": "The primary label \"Browser Automation\" was chosen because the server's core functionality revolves around automating interactions with web pages (clicking, filling forms, navigating tabs, etc.). The secondary label \"Web Search & Research\" is included because the ability to retrieve page content (text, markdown, links) and navigate the web makes it useful for research tasks. The secondary label \"API Integration\" is relevant because some tools (like executing JavaScript) can interact with web applications programmatically. A custom label was not necessary as the predefined categories adequately cover the functionality.",
+    "primary_label": "Browser Automation",
+    "secondary_labels": [
+      "Web Search & Research",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 133,
+    "server_name": "Browser Use MCP Server",
+    "rank_by_usage": 134,
+    "usage_count": "432",
+    "original_file": "../crawler/smithery/@bytedance_mcp-server-browser.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@bytedance/mcp-server-browser/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "browser_navigate",
+          "description": "Navigate to a URL",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_go_back",
+          "description": "Go back to the previous page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_go_forward",
+          "description": "Go forward to the next page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_download_list",
+          "description": "Get the list of downloaded files",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_screenshot",
+          "description": "Take a screenshot of the current page or a specific element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name for the screenshot"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for element to screenshot"
+              },
+              "index": {
+                "type": "number",
+                "description": "index of the element to screenshot"
+              },
+              "width": {
+                "type": "number",
+                "description": "Width in pixels (default: viewport width)"
+              },
+              "height": {
+                "type": "number",
+                "description": "Height in pixels (default: viewport height)"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Full page screenshot (default: false)"
+              },
+              "highlight": {
+                "type": "boolean",
+                "default": false,
+                "description": "Highlight the element"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_click",
+          "description": "Click an element on the page, before using the tool, use `browser_get_clickable_elements` to get the index of the element, but not call `browser_get_clickable_elements` multiple times",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "Index of the element to click"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_form_input_fill",
+          "description": "Fill out an input field, before using the tool, Either 'index' or 'selector' must be provided",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for input field"
+              },
+              "index": {
+                "type": "number",
+                "description": "Index of the element to fill"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value to fill"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_select",
+          "description": "Select an element on the page with index, Either 'index' or 'selector' must be provided",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "Index of the element to select"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for element to select"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value to select"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_hover",
+          "description": "Hover an element on the page, Either 'index' or 'selector' must be provided",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "Index of the element to hover"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for element to hover"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_evaluate",
+          "description": "Execute JavaScript in the browser console",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "JavaScript code to execute"
+              }
+            },
+            "required": [
+              "script"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_html",
+          "description": "Deprecated, please use browser_get_markdown instead",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_clickable_elements",
+          "description": "Get the clickable or hoverable or selectable elements on the current page, don't call this tool multiple times",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_text",
+          "description": "Get the text content of the current page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_markdown",
+          "description": "Get the markdown content of the current page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_read_links",
+          "description": "Get all links on the current page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_scroll",
+          "description": "Scroll the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number",
+                "description": "Pixels to scroll (positive for down, negative for up), if the amount is not provided, scroll to the bottom of the page"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_tab_list",
+          "description": "Get the list of tabs",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_new_tab",
+          "description": "Open a new tab",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to open in the new tab"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_close",
+          "description": "Close the browser when the task is done and the browser is not needed anymore",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_close_tab",
+          "description": "Close the current tab",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_switch_tab",
+          "description": "Switch to a specific tab",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "Tab index to switch to"
+              }
+            },
+            "required": [
+              "index"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_press_key",
+          "description": "Press a key on the keyboard",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "enum": [
+                  "Enter",
+                  "Tab",
+                  "Escape",
+                  "Backspace",
+                  "Delete",
+                  "Insert",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4",
+                  "F5",
+                  "F6",
+                  "F7",
+                  "F8",
+                  "F9",
+                  "F10",
+                  "F11",
+                  "F12",
+                  "ArrowLeft",
+                  "ArrowRight",
+                  "ArrowUp",
+                  "ArrowDown",
+                  "PageUp",
+                  "PageDown",
+                  "Home",
+                  "End",
+                  "ShiftLeft",
+                  "ShiftRight",
+                  "ControlLeft",
+                  "ControlRight",
+                  "AltLeft",
+                  "AltRight",
+                  "MetaLeft",
+                  "MetaRight",
+                  "CapsLock",
+                  "PrintScreen",
+                  "ScrollLock",
+                  "Pause",
+                  "ContextMenu"
+                ],
+                "description": "Name of the key to press or a character to generate, such as Enter, Tab, Escape, Backspace, Delete, Insert, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, ArrowLeft, ArrowRight, ArrowUp, ArrowDown, PageUp, PageDown, Home, End, ShiftLeft, ShiftRight, ControlLeft, ControlRight, AltLeft, AltRight, MetaLeft, MetaRight, CapsLock, PrintScreen, ScrollLock, Pause, ContextMenu"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 22,
+      "tool_names": [
+        "browser_navigate",
+        "browser_go_back",
+        "browser_go_forward",
+        "browser_get_download_list",
+        "browser_screenshot",
+        "browser_click",
+        "browser_form_input_fill",
+        "browser_select",
+        "browser_hover",
+        "browser_evaluate",
+        "browser_get_html",
+        "browser_get_clickable_elements",
+        "browser_get_text",
+        "browser_get_markdown",
+        "browser_read_links",
+        "browser_scroll",
+        "browser_tab_list",
+        "browser_new_tab",
+        "browser_close",
+        "browser_close_tab",
+        "browser_switch_tab",
+        "browser_press_key"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 133,
+      "name": "Browser Use MCP Server",
+      "author": "@bytedance/mcp-server-browser",
+      "overview": "Enable LLMs to interact with web pages through structured accessibility snapshots without relying on screenshots or vision models. Provide fast, lightweight, and cross-platform browser automation capabilities optimized for LLM usage. Support both local and remote browser control with extensible configuration options.",
+      "repository_url": "https://github.com/bytedance/UI-TARS-desktop",
+      "homepage": "https://smithery.ai/server/@bytedance/mcp-server-browser",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "432",
+      "success_rate": "98.04%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@bytedance_mcp-server-browser.json",
+      "tools_count": 22,
+      "tools": [
+        {
+          "name": "browser_navigate",
+          "description": "Navigate to a URL",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_go_back",
+          "description": "Go back to the previous page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_go_forward",
+          "description": "Go forward to the next page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_download_list",
+          "description": "Get the list of downloaded files",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_screenshot",
+          "description": "Take a screenshot of the current page or a specific element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name for the screenshot"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for element to screenshot"
+              },
+              "index": {
+                "type": "number",
+                "description": "index of the element to screenshot"
+              },
+              "width": {
+                "type": "number",
+                "description": "Width in pixels (default: viewport width)"
+              },
+              "height": {
+                "type": "number",
+                "description": "Height in pixels (default: viewport height)"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Full page screenshot (default: false)"
+              },
+              "highlight": {
+                "type": "boolean",
+                "default": false,
+                "description": "Highlight the element"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_click",
+          "description": "Click an element on the page, before using the tool, use `browser_get_clickable_elements` to get the index of the element, but not call `browser_get_clickable_elements` multiple times",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "Index of the element to click"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_form_input_fill",
+          "description": "Fill out an input field, before using the tool, Either 'index' or 'selector' must be provided",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for input field"
+              },
+              "index": {
+                "type": "number",
+                "description": "Index of the element to fill"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value to fill"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_select",
+          "description": "Select an element on the page with index, Either 'index' or 'selector' must be provided",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "Index of the element to select"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for element to select"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value to select"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_hover",
+          "description": "Hover an element on the page, Either 'index' or 'selector' must be provided",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "Index of the element to hover"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for element to hover"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_evaluate",
+          "description": "Execute JavaScript in the browser console",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "JavaScript code to execute"
+              }
+            },
+            "required": [
+              "script"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_html",
+          "description": "Deprecated, please use browser_get_markdown instead",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_clickable_elements",
+          "description": "Get the clickable or hoverable or selectable elements on the current page, don't call this tool multiple times",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_text",
+          "description": "Get the text content of the current page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_get_markdown",
+          "description": "Get the markdown content of the current page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_read_links",
+          "description": "Get all links on the current page",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_scroll",
+          "description": "Scroll the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number",
+                "description": "Pixels to scroll (positive for down, negative for up), if the amount is not provided, scroll to the bottom of the page"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_tab_list",
+          "description": "Get the list of tabs",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_new_tab",
+          "description": "Open a new tab",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to open in the new tab"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_close",
+          "description": "Close the browser when the task is done and the browser is not needed anymore",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_close_tab",
+          "description": "Close the current tab",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_switch_tab",
+          "description": "Switch to a specific tab",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "Tab index to switch to"
+              }
+            },
+            "required": [
+              "index"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "browser_press_key",
+          "description": "Press a key on the keyboard",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "enum": [
+                  "Enter",
+                  "Tab",
+                  "Escape",
+                  "Backspace",
+                  "Delete",
+                  "Insert",
+                  "F1",
+                  "F2",
+                  "F3",
+                  "F4",
+                  "F5",
+                  "F6",
+                  "F7",
+                  "F8",
+                  "F9",
+                  "F10",
+                  "F11",
+                  "F12",
+                  "ArrowLeft",
+                  "ArrowRight",
+                  "ArrowUp",
+                  "ArrowDown",
+                  "PageUp",
+                  "PageDown",
+                  "Home",
+                  "End",
+                  "ShiftLeft",
+                  "ShiftRight",
+                  "ControlLeft",
+                  "ControlRight",
+                  "AltLeft",
+                  "AltRight",
+                  "MetaLeft",
+                  "MetaRight",
+                  "CapsLock",
+                  "PrintScreen",
+                  "ScrollLock",
+                  "Pause",
+                  "ContextMenu"
+                ],
+                "description": "Name of the key to press or a character to generate, such as Enter, Tab, Escape, Backspace, Delete, Insert, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, ArrowLeft, ArrowRight, ArrowUp, ArrowDown, PageUp, PageDown, Home, End, ShiftLeft, ShiftRight, ControlLeft, ControlRight, AltLeft, AltRight, MetaLeft, MetaRight, CapsLock, PrintScreen, ScrollLock, Pause, ContextMenu"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@bytedance/mcp-server-browser/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@bytedance/mcp-server-browser/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0134.@bytedance_mcp-server-browser_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 131
+  }
+}

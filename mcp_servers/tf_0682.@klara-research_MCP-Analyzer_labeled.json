@@ -1,0 +1,130 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on log analysis and debugging, primarily for Model Context Protocol logs. Its core functionality allows users to read, filter, paginate, and retrieve log entries from standard locations to troubleshoot integrations and understand tool interactions. The available tool, read_mcp_logs, enables direct access to these logs, facilitating debugging and monitoring.",
+    "reasoning": "The primary label \"Security & Authentication\" was chosen because log analysis is often associated with security monitoring, debugging, and ensuring the proper functioning of authentication and system interactions. Secondary labels like \"Development Tools\" and \"API Integration\" were selected because log reading is crucial for debugging during development and ensuring smooth API/functionality integration. No custom label is needed as the predefined labels adequately cover the server's functionality.",
+    "primary_label": "Security & Authentication",
+    "secondary_labels": [
+      "Development Tools",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 681,
+    "server_name": "Log Reader",
+    "rank_by_usage": 682,
+    "usage_count": "12",
+    "original_file": "../crawler/smithery/@klara-research_MCP-Analyzer.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@klara-research/MCP-Analyzer/mcp?config=eyJwYWdlIjogMSwgImxpbmVzIjogMTAwLCAiZmlsdGVyIjogIiIsICJmaWxlTGltaXQiOiA1LCAiY3VzdG9tUGF0aCI6ICIifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "read_mcp_logs",
+          "description": "Read MCP logs from the standard location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "lines": {
+                "type": "number",
+                "description": "Number of lines to read from the end of each log file (default: 100)"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Optional text to filter log entries by (case-insensitive)"
+              },
+              "customPath": {
+                "type": "string",
+                "description": "Optional custom path to log directory (default is system-specific)"
+              },
+              "fileLimit": {
+                "type": "number",
+                "description": "Maximum number of files to read per page (default: 5)"
+              },
+              "page": {
+                "type": "number",
+                "description": "Page number for pagination (default: 1)"
+              }
+            }
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "read_mcp_logs"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 681,
+      "name": "Log Reader",
+      "author": "@klara-research/MCP-Analyzer",
+      "overview": "Analyze and debug your Model Context Protocol logs effortlessly. Filter, paginate, and retrieve log entries from standard locations across all platforms to troubleshoot integrations and understand tool interactions. Seamlessly integrate with Claude Desktop for direct log access.",
+      "repository_url": "https://github.com/klara-research/MCP-Analyzer",
+      "homepage": "https://smithery.ai/server/@klara-research/MCP-Analyzer",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "12",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@klara-research_MCP-Analyzer.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "read_mcp_logs",
+          "description": "Read MCP logs from the standard location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "lines": {
+                "type": "number",
+                "description": "Number of lines to read from the end of each log file (default: 100)"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Optional text to filter log entries by (case-insensitive)"
+              },
+              "customPath": {
+                "type": "string",
+                "description": "Optional custom path to log directory (default is system-specific)"
+              },
+              "fileLimit": {
+                "type": "number",
+                "description": "Maximum number of files to read per page (default: 5)"
+              },
+              "page": {
+                "type": "number",
+                "description": "Page number for pagination (default: 1)"
+              }
+            }
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"page\": 1,\n  \"lines\": 100,\n  \"filter\": \"\",\n  \"fileLimit\": 5,\n  \"customPath\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@klara-research/MCP-Analyzer/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"page\": 1,\n  \"lines\": 100,\n  \"filter\": \"\",\n  \"fileLimit\": 5,\n  \"customPath\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@klara-research/MCP-Analyzer/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0682.@klara-research_MCP-Analyzer_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 666
+  }
+}

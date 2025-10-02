@@ -1,0 +1,417 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is designed to allow AI models to interact with Windows command-line functionality in a secure and controlled manner. Its core tools center around system monitoring, command execution, and process management. The available tools enable users to gather system and network information, manage processes, execute commands, and interact with Windows services and scheduled tasks. The primary focus appears to be on enabling secure and efficient system administration and workflow automation through controlled command-line operations.",
+    "reasoning": "The primary label, \"Operating System,\" was chosen because the MCP Server's main functionality revolves around interacting with and managing Windows system processes and commands. Secondary labels such as \"System Monitoring\" and \"Security & Authentication\" were selected because the server provides tools for monitoring system and network information and ensures secure command execution through allowed command lists. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Operating System",
+    "secondary_labels": [
+      "Operating System",
+      "Security & Authentication"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 199,
+    "server_name": "Windows Command Line MCP Server",
+    "rank_by_usage": 200,
+    "usage_count": "237",
+    "original_file": "../crawler/smithery/@alxspiker_Windows-Command-Line-MCP-Server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@alxspiker/Windows-Command-Line-MCP-Server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list_running_processes",
+          "description": "List all running processes on the system. Can be filtered by providing an optional filter string that will match against process names.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string",
+                "description": "Optional filter string to match against process names"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_system_info",
+          "description": "Retrieve system information including OS, hardware, and user details. Can provide basic or full details.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "detail": {
+                "type": "string",
+                "enum": [
+                  "basic",
+                  "full"
+                ],
+                "default": "basic",
+                "description": "Level of detail"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_network_info",
+          "description": "Retrieve network configuration information including IP addresses, adapters, and DNS settings. Can be filtered to a specific interface.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "networkInterface": {
+                "type": "string",
+                "description": "Optional interface name to filter results"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_scheduled_tasks",
+          "description": "Retrieve information about scheduled tasks on the system. Can query all tasks or get detailed status of a specific task.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "query",
+                  "status"
+                ],
+                "default": "query",
+                "description": "Action to perform"
+              },
+              "taskName": {
+                "type": "string",
+                "description": "Name of the specific task (optional)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_service_info",
+          "description": "Retrieve information about Windows services. Can query all services or get detailed status of a specific service.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "query",
+                  "status"
+                ],
+                "default": "query",
+                "description": "Action to perform"
+              },
+              "serviceName": {
+                "type": "string",
+                "description": "Service name to get info about (optional)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_allowed_commands",
+          "description": "List all commands that are allowed to be executed by this server. This helps understand what operations are permitted.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_command",
+          "description": "Execute a Windows command and return its output. Only commands in the allowed list can be executed. This tool should be used for running simple commands like 'dir', 'echo', etc.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "The command to execute"
+              },
+              "workingDir": {
+                "type": "string",
+                "description": "Working directory for the command"
+              },
+              "timeout": {
+                "type": "number",
+                "default": 30000,
+                "description": "Timeout in milliseconds"
+              }
+            },
+            "required": [
+              "command"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_powershell",
+          "description": "Execute a PowerShell script and return its output. This allows for more complex operations and script execution. PowerShell must be in the allowed commands list.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "PowerShell script to execute"
+              },
+              "workingDir": {
+                "type": "string",
+                "description": "Working directory for the script"
+              },
+              "timeout": {
+                "type": "number",
+                "default": 30000,
+                "description": "Timeout in milliseconds"
+              }
+            },
+            "required": [
+              "script"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 8,
+      "tool_names": [
+        "list_running_processes",
+        "get_system_info",
+        "get_network_info",
+        "get_scheduled_tasks",
+        "get_service_info",
+        "list_allowed_commands",
+        "execute_command",
+        "execute_powershell"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 199,
+      "name": "Windows Command Line MCP Server",
+      "author": "@alxspiker/Windows-Command-Line-MCP-Server",
+      "overview": "Enable AI models to interact with Windows command-line functionality securely and efficiently. Execute commands, create projects, and retrieve system information while maintaining strict security protocols. Enhance your development workflows with safe command execution and project management tools.",
+      "repository_url": "https://github.com/alxspiker/Windows-Command-Line-MCP-Server",
+      "homepage": "https://smithery.ai/server/@alxspiker/Windows-Command-Line-MCP-Server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "237",
+      "success_rate": "98.53%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@alxspiker_Windows-Command-Line-MCP-Server.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "list_running_processes",
+          "description": "List all running processes on the system. Can be filtered by providing an optional filter string that will match against process names.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string",
+                "description": "Optional filter string to match against process names"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_system_info",
+          "description": "Retrieve system information including OS, hardware, and user details. Can provide basic or full details.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "detail": {
+                "type": "string",
+                "enum": [
+                  "basic",
+                  "full"
+                ],
+                "default": "basic",
+                "description": "Level of detail"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_network_info",
+          "description": "Retrieve network configuration information including IP addresses, adapters, and DNS settings. Can be filtered to a specific interface.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "networkInterface": {
+                "type": "string",
+                "description": "Optional interface name to filter results"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_scheduled_tasks",
+          "description": "Retrieve information about scheduled tasks on the system. Can query all tasks or get detailed status of a specific task.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "query",
+                  "status"
+                ],
+                "default": "query",
+                "description": "Action to perform"
+              },
+              "taskName": {
+                "type": "string",
+                "description": "Name of the specific task (optional)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_service_info",
+          "description": "Retrieve information about Windows services. Can query all services or get detailed status of a specific service.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "query",
+                  "status"
+                ],
+                "default": "query",
+                "description": "Action to perform"
+              },
+              "serviceName": {
+                "type": "string",
+                "description": "Service name to get info about (optional)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_allowed_commands",
+          "description": "List all commands that are allowed to be executed by this server. This helps understand what operations are permitted.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_command",
+          "description": "Execute a Windows command and return its output. Only commands in the allowed list can be executed. This tool should be used for running simple commands like 'dir', 'echo', etc.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "The command to execute"
+              },
+              "workingDir": {
+                "type": "string",
+                "description": "Working directory for the command"
+              },
+              "timeout": {
+                "type": "number",
+                "default": 30000,
+                "description": "Timeout in milliseconds"
+              }
+            },
+            "required": [
+              "command"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_powershell",
+          "description": "Execute a PowerShell script and return its output. This allows for more complex operations and script execution. PowerShell must be in the allowed commands list.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "PowerShell script to execute"
+              },
+              "workingDir": {
+                "type": "string",
+                "description": "Working directory for the script"
+              },
+              "timeout": {
+                "type": "number",
+                "default": 30000,
+                "description": "Timeout in milliseconds"
+              }
+            },
+            "required": [
+              "script"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@alxspiker/Windows-Command-Line-MCP-Server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@alxspiker/Windows-Command-Line-MCP-Server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0200.@alxspiker_Windows-Command-Line-MCP-Server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 196
+  }
+}

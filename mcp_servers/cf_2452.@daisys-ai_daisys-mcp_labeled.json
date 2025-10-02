@@ -1,0 +1,119 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Daisys Audio Interaction Server\" is primarily focused on audio interaction capabilities, particularly speech processing and text-to-speech (TTS) services. It allows users to convert text into speech, manage voice models (create, retrieve, and possibly remove voices), and customize speech parameters such as pitch, pace, and expression. The tools provided suggest a strong emphasis on voice customization and efficient audio file management, with integration into the Daisys platform for seamless functionality. The server simplifies audio workflows by enabling easy configuration and integration, potentially solving use cases in voice-based applications, accessibility, and multimedia content creation.",
+    "reasoning": "The primary functionality of text-to-speech, voice model management, and customizable speech synthesis aligns closely with AI-powered audio interaction, making \"AI/ML Tools\" the most appropriate primary label. Secondary labels are chosen to highlight the server's capabilities in managing audio data and integrating with external APIs (speech processing and cloud services). No custom label is necessary as the predefined categories effectively cover the server's unique functionality.",
+    "primary_label": "AI/ML Tools",
+    "secondary_labels": [
+      "File Management",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2451,
+    "server_name": "Daisys Audio Interaction Server",
+    "rank_by_usage": 2452,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@daisys-ai_daisys-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@daisys-ai/daisys-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 2451,
+      "name": "Daisys Audio Interaction Server",
+      "author": "@daisys-ai/daisys-mcp",
+      "overview": "Enable seamless audio interaction capabilities by connecting your MCP client to the Daisys platform. Manage and store audio files efficiently while leveraging Daisys' speech processing features. Simplify audio-based workflows with easy integration and configuration.",
+      "repository_url": "https://github.com/daisys-ai/daisys-mcp",
+      "homepage": "https://smithery.ai/server/@daisys-ai/daisys-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@daisys-ai_daisys-mcp.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "text_to_speech",
+          "description": "Deploy Server Daisys Audio Interaction Server @daisys-ai/daisys-mcp Try in Playground text_to_speech",
+          "parameters": []
+        },
+        {
+          "name": "get_voices",
+          "description": "Get available voices can be filtered by model and gender, and sorted by name or timestamp in ascending or descending order.",
+          "parameters": [
+            {
+              "name": "get_voices",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_models",
+          "description": "Get all available models from Daisys API. Args: language (str, optional): needs to be \"de\" for german, \"en\" for english and \"nl\" for dutch. Defaults to None. sort_by (str, optional): can be \"name\" or \"displayname\". Defaults to \"displayname\". sort_direction (str, optional): can be \"asc\" or \"desc\". Defaults to \"asc\". Returns: model_list: An object containing details of all models",
+          "parameters": []
+        },
+        {
+          "name": "create_voice",
+          "description": "Convert text to speech with a given voice and play the audio buffer. Voice_id can be provided. If not provided, the latest voice will be used. before calling also call get models so it always inputs a valid model ⚠️ TOKEN WARNING: This tool makes an API call to Daisys API which may incur costs. Args: name (str, optional): The name of the voice to create. Defaults to \"Daisy\". gender (str, optional): The gender of the voice can be \"male\" or \"female\". Defaults to \"female\". model (str, optional): The model of the voice. Defaults to \"english-v3.0\". pitch (int, optional): Adjusts the pitch level; -10 for very low pitch, 10 for very high pitch. pace (int, optional): Controls the speech rate; -10 for very slow, 10 for very fast. expression (int, optional): Modulates expressiveness; -10 for monotone, 10 for highly expressive. Returns: McpVoice: An object containing details of the created voice, including voice_id, name, gender, model, and description.",
+          "parameters": []
+        },
+        {
+          "name": "remove_voice",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "remove_voice",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Delete",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "a",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "voice_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@daisys-ai/daisys-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@daisys-ai/daisys-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_2452.@daisys-ai_daisys-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2092
+  }
+}

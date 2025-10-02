@@ -1,0 +1,709 @@
+{
+  "labels": {
+    "analysis": "The OpenDota API Server provides extensive access to Dota 2 game data, including real-time statistics, match information, player profiles, and professional player insights. Its core functionality revolves around retrieving and analyzing Dota 2 data through a standardized API interface. The available tools enable users to fetch detailed information about players, matches, heroes, teams, and rankings. This server is particularly useful for game analytics,_player tracking, and enabling AI assistants to parse Dota 2-related data.",
+    "reasoning": "The primary label \"Gaming\" was chosen because the server's core functionality is centered around Dota 2 game data, which falls under gaming-related tools. The secondary label \"Data Analysis & Processing\" was selected because many of the tools involve statistical analysis and data processing of game information. The custom label \"Dota 2 Analytics\" was created to specifically describe the server's unique focus on Dota 2 data retrieval and analysis, as this is not fully captured by the predefined categories.",
+    "primary_label": "Gaming",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Dota 2 Analytics",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 472,
+    "server_name": "OpenDota API Server",
+    "rank_by_usage": 473,
+    "usage_count": "38",
+    "original_file": "../crawler/smithery/@lieyanqzu_opendota-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@lieyanqzu/opendota-mcp-server/mcp?config=eyJvcGVuZG90YUFwaUtleSI6ICIifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_player_by_id",
+          "description": "Get a player's information by their account ID.\n\n    Args:\n        account_id: The player's Steam32 account ID\n\n    Returns:\n        Player information including rank, matches, and statistics\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_by_idArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_recent_matches",
+          "description": "Get recent matches played by a player.\n\n    Args:\n        account_id: Steam32 account ID of the player\n        limit: Number of matches to retrieve (default: 5)\n\n    Returns:\n        List of recent matches with details\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_recent_matchesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_match_data",
+          "description": "Get detailed data for a specific match.\n\n    Args:\n        match_id: ID of the match to retrieve\n\n    Returns:\n        Detailed match information including players, scores, and stats\n    ",
+          "input_schema": {
+            "properties": {
+              "match_id": {
+                "title": "Match Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "match_id"
+            ],
+            "title": "get_match_dataArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_win_loss",
+          "description": "Get win/loss statistics for a player.\n\n    Args:\n        account_id: Steam32 account ID of the player\n\n    Returns:\n        Win/loss record\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_win_lossArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_heroes",
+          "description": "Get a player's most played heroes.\n\n    Args:\n        account_id: Steam32 account ID of the player\n        limit: Number of heroes to retrieve (default: 5)\n\n    Returns:\n        List of most played heroes with stats\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_heroesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_hero_stats",
+          "description": "Get statistics for heroes.\n\n    Args:\n        hero_id: Optional hero ID to get stats for a specific hero\n\n    Returns:\n        Hero statistics including win rates by skill bracket\n    ",
+          "input_schema": {
+            "properties": {
+              "hero_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Hero Id"
+              }
+            },
+            "title": "get_hero_statsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "search_player",
+          "description": "Search for players by name.\n\n    Args:\n        query: Name to search for\n\n    Returns:\n        List of matching players\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_playerArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_pro_players",
+          "description": "Get list of professional players.\n\n    Args:\n        limit: Number of players to retrieve (default: 10)\n\n    Returns:\n        List of professional players\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "get_pro_playersArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_pro_matches",
+          "description": "Get recent professional matches.\n\n    Args:\n        limit: Number of matches to retrieve (default: 5)\n\n    Returns:\n        List of recent professional matches\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "get_pro_matchesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_peers",
+          "description": "Get players who have played with the specified player.\n\n    Args:\n        account_id: Steam32 account ID of the player\n        limit: Number of peers to retrieve (default: 5)\n\n    Returns:\n        List of players frequently played with\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_peersArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_heroes",
+          "description": "Get list of all Dota 2 heroes.\n\n    Returns:\n        List of all heroes with basic information\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_heroesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_totals",
+          "description": "Get player's overall stats totals.\n\n    Args:\n        account_id: Steam32 account ID of the player\n\n    Returns:\n        Summary of player's total stats\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_totalsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_rankings",
+          "description": "Get player hero rankings.\n\n    Args:\n        account_id: Steam32 account ID of the player\n\n    Returns:\n        Player's hero rankings\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_rankingsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_wordcloud",
+          "description": "Get most common words used by player in chat.\n\n    Args:\n        account_id: Steam32 account ID of the player\n\n    Returns:\n        List of player's most frequently used words\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_wordcloudArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_team_info",
+          "description": "Get information about a team.\n\n    Args:\n        team_id: Team ID\n\n    Returns:\n        Team information\n    ",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "get_team_infoArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_public_matches",
+          "description": "Get recent public matches.\n\n    Args:\n        limit: Number of matches to retrieve (default: 5)\n\n    Returns:\n        List of recent public matches\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "get_public_matchesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_match_heroes",
+          "description": "Get heroes played in a specific match.\n\n    Args:\n        match_id: ID of the match to retrieve\n\n    Returns:\n        List of heroes played by each player in the match\n    ",
+          "input_schema": {
+            "properties": {
+              "match_id": {
+                "title": "Match Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "match_id"
+            ],
+            "title": "get_match_heroesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 17,
+      "tool_names": [
+        "get_player_by_id",
+        "get_player_recent_matches",
+        "get_match_data",
+        "get_player_win_loss",
+        "get_player_heroes",
+        "get_hero_stats",
+        "search_player",
+        "get_pro_players",
+        "get_pro_matches",
+        "get_player_peers",
+        "get_heroes",
+        "get_player_totals",
+        "get_player_rankings",
+        "get_player_wordcloud",
+        "get_team_info",
+        "get_public_matches",
+        "get_match_heroes"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 472,
+      "name": "OpenDota API Server",
+      "author": "@lieyanqzu/opendota-mcp-server",
+      "overview": "Provide real-time access to Dota 2 statistics, match data, player profiles, and professional player information through a standardized interface. Enable AI assistants and LLMs to retrieve detailed game data and player insights seamlessly. Enhance your applications with comprehensive Dota 2 data retrieval capabilities.",
+      "repository_url": "https://github.com/lieyanqzu/opendota-mcp-server",
+      "homepage": "https://smithery.ai/server/@lieyanqzu/opendota-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "38",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@lieyanqzu_opendota-mcp-server.json",
+      "tools_count": 17,
+      "tools": [
+        {
+          "name": "get_player_by_id",
+          "description": "Get a player's information by their account ID.\n\n    Args:\n        account_id: The player's Steam32 account ID\n\n    Returns:\n        Player information including rank, matches, and statistics\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_by_idArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_recent_matches",
+          "description": "Get recent matches played by a player.\n\n    Args:\n        account_id: Steam32 account ID of the player\n        limit: Number of matches to retrieve (default: 5)\n\n    Returns:\n        List of recent matches with details\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_recent_matchesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_match_data",
+          "description": "Get detailed data for a specific match.\n\n    Args:\n        match_id: ID of the match to retrieve\n\n    Returns:\n        Detailed match information including players, scores, and stats\n    ",
+          "input_schema": {
+            "properties": {
+              "match_id": {
+                "title": "Match Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "match_id"
+            ],
+            "title": "get_match_dataArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_win_loss",
+          "description": "Get win/loss statistics for a player.\n\n    Args:\n        account_id: Steam32 account ID of the player\n\n    Returns:\n        Win/loss record\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_win_lossArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_heroes",
+          "description": "Get a player's most played heroes.\n\n    Args:\n        account_id: Steam32 account ID of the player\n        limit: Number of heroes to retrieve (default: 5)\n\n    Returns:\n        List of most played heroes with stats\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_heroesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_hero_stats",
+          "description": "Get statistics for heroes.\n\n    Args:\n        hero_id: Optional hero ID to get stats for a specific hero\n\n    Returns:\n        Hero statistics including win rates by skill bracket\n    ",
+          "input_schema": {
+            "properties": {
+              "hero_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Hero Id"
+              }
+            },
+            "title": "get_hero_statsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "search_player",
+          "description": "Search for players by name.\n\n    Args:\n        query: Name to search for\n\n    Returns:\n        List of matching players\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_playerArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_pro_players",
+          "description": "Get list of professional players.\n\n    Args:\n        limit: Number of players to retrieve (default: 10)\n\n    Returns:\n        List of professional players\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "get_pro_playersArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_pro_matches",
+          "description": "Get recent professional matches.\n\n    Args:\n        limit: Number of matches to retrieve (default: 5)\n\n    Returns:\n        List of recent professional matches\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "get_pro_matchesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_peers",
+          "description": "Get players who have played with the specified player.\n\n    Args:\n        account_id: Steam32 account ID of the player\n        limit: Number of peers to retrieve (default: 5)\n\n    Returns:\n        List of players frequently played with\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              },
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_peersArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_heroes",
+          "description": "Get list of all Dota 2 heroes.\n\n    Returns:\n        List of all heroes with basic information\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_heroesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_totals",
+          "description": "Get player's overall stats totals.\n\n    Args:\n        account_id: Steam32 account ID of the player\n\n    Returns:\n        Summary of player's total stats\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_totalsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_rankings",
+          "description": "Get player hero rankings.\n\n    Args:\n        account_id: Steam32 account ID of the player\n\n    Returns:\n        Player's hero rankings\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_rankingsArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_player_wordcloud",
+          "description": "Get most common words used by player in chat.\n\n    Args:\n        account_id: Steam32 account ID of the player\n\n    Returns:\n        List of player's most frequently used words\n    ",
+          "input_schema": {
+            "properties": {
+              "account_id": {
+                "title": "Account Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "account_id"
+            ],
+            "title": "get_player_wordcloudArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_team_info",
+          "description": "Get information about a team.\n\n    Args:\n        team_id: Team ID\n\n    Returns:\n        Team information\n    ",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "get_team_infoArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_public_matches",
+          "description": "Get recent public matches.\n\n    Args:\n        limit: Number of matches to retrieve (default: 5)\n\n    Returns:\n        List of recent public matches\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "get_public_matchesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get_match_heroes",
+          "description": "Get heroes played in a specific match.\n\n    Args:\n        match_id: ID of the match to retrieve\n\n    Returns:\n        List of heroes played by each player in the match\n    ",
+          "input_schema": {
+            "properties": {
+              "match_id": {
+                "title": "Match Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "match_id"
+            ],
+            "title": "get_match_heroesArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"opendotaApiKey\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@lieyanqzu/opendota-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"opendotaApiKey\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@lieyanqzu/opendota-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0473.@lieyanqzu_opendota-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 463
+  }
+}

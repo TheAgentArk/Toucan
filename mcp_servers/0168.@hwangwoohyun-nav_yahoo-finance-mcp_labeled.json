@@ -1,0 +1,482 @@
+{
+  "labels": {
+    "analysis": "The Yahoo Finance Server is primarily focused on providing comprehensive financial data and analysis tools related to stocks and market investments. Its core functionality includes retrieving historical stock prices, company information, financial statements, market news, option chain data, and various analytical metrics. This server is designed for investors, financial analysts, and traders who need detailed financial insights for research, market analysis, and investment decision-making. The tools enable dynamic data retrieval and facilitate integration with LLMs for enhanced financial analysis.",
+    "reasoning": "The primary label \"Financial Services\" is chosen because the server provides extensive tools and data related to stock market analysis, company financials, and investment research, which are integral to financial services. The secondary labels \"Data Analysis & Processing\" and \"API Integration\" are selected because the server allows for in-depth data processing and has capabilities for integration with other applications or LLMs. No custom label is needed as the predefined categories adequately cover the server's functionalities.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 167,
+    "server_name": "Yahoo Finance Server",
+    "rank_by_usage": 168,
+    "usage_count": "290",
+    "original_file": "../crawler/smithery/@hwangwoohyun-nav_yahoo-finance-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@hwangwoohyun-nav/yahoo-finance-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_historical_stock_prices",
+          "description": "Get historical stock prices for a given ticker symbol from yahoo finance. Include the following information: Date, Open, High, Low, Close, Volume, Adj Close.\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get historical prices for, e.g. \"AAPL\"\n    period : str\n        Valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max\n        Either Use period parameter or use start and end\n        Default is \"1mo\"\n    interval : str\n        Valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo\n        Intraday data cannot extend last 60 days\n        Default is \"1d\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "period": {
+                "default": "1mo",
+                "title": "Period",
+                "type": "string"
+              },
+              "interval": {
+                "default": "1d",
+                "title": "Interval",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_historical_stock_pricesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_stock_info",
+          "description": "Get stock information for a given ticker symbol from yahoo finance. Include the following information:\nStock Price & Trading Info, Company Information, Financial Metrics, Earnings & Revenue, Margins & Returns, Dividends, Balance Sheet, Ownership, Analyst Coverage, Risk Metrics, Other.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get information for, e.g. \"AAPL\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_stock_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_yahoo_finance_news",
+          "description": "Get news for a given ticker symbol from yahoo finance.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get news for, e.g. \"AAPL\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_yahoo_finance_newsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_stock_actions",
+          "description": "Get stock dividends and stock splits for a given ticker symbol from yahoo finance.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get stock actions for, e.g. \"AAPL\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_stock_actionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_financial_statement",
+          "description": "Get financial statement for a given ticker symbol from yahoo finance. You can choose from the following financial statement types: income_stmt, quarterly_income_stmt, balance_sheet, quarterly_balance_sheet, cashflow, quarterly_cashflow.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get financial statement for, e.g. \"AAPL\"\n    financial_type: str\n        The type of financial statement to get. You can choose from the following financial statement types: income_stmt, quarterly_income_stmt, balance_sheet, quarterly_balance_sheet, cashflow, quarterly_cashflow.\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "financial_type": {
+                "title": "Financial Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker",
+              "financial_type"
+            ],
+            "title": "get_financial_statementArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_holder_info",
+          "description": "Get holder information for a given ticker symbol from yahoo finance. You can choose from the following holder types: major_holders, institutional_holders, mutualfund_holders, insider_transactions, insider_purchases, insider_roster_holders.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get holder information for, e.g. \"AAPL\"\n    holder_type: str\n        The type of holder information to get. You can choose from the following holder types: major_holders, institutional_holders, mutualfund_holders, insider_transactions, insider_purchases, insider_roster_holders.\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "holder_type": {
+                "title": "Holder Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker",
+              "holder_type"
+            ],
+            "title": "get_holder_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_option_expiration_dates",
+          "description": "Fetch the available options expiration dates for a given ticker symbol.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get option expiration dates for, e.g. \"AAPL\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_option_expiration_datesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_option_chain",
+          "description": "Fetch the option chain for a given ticker symbol, expiration date, and option type.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get option chain for, e.g. \"AAPL\"\n    expiration_date: str\n        The expiration date for the options chain (format: 'YYYY-MM-DD')\n    option_type: str\n        The type of option to fetch ('calls' or 'puts')\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "expiration_date": {
+                "title": "Expiration Date",
+                "type": "string"
+              },
+              "option_type": {
+                "title": "Option Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker",
+              "expiration_date",
+              "option_type"
+            ],
+            "title": "get_option_chainArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_recommendations",
+          "description": "Get recommendations or upgrades/downgrades for a given ticker symbol from yahoo finance. You can also specify the number of months back to get upgrades/downgrades for, default is 12.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get recommendations for, e.g. \"AAPL\"\n    recommendation_type: str\n        The type of recommendation to get. You can choose from the following recommendation types: recommendations, upgrades_downgrades.\n    months_back: int\n        The number of months back to get upgrades/downgrades for, default is 12.\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "recommendation_type": {
+                "title": "Recommendation Type",
+                "type": "string"
+              },
+              "months_back": {
+                "default": 12,
+                "title": "Months Back",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "ticker",
+              "recommendation_type"
+            ],
+            "title": "get_recommendationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "get_historical_stock_prices",
+        "get_stock_info",
+        "get_yahoo_finance_news",
+        "get_stock_actions",
+        "get_financial_statement",
+        "get_holder_info",
+        "get_option_expiration_dates",
+        "get_option_chain",
+        "get_recommendations"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 167,
+      "name": "Yahoo Finance Server",
+      "author": "@hwangwoohyun-nav/yahoo-finance-mcp",
+      "overview": "Provide comprehensive financial data from Yahoo Finance including stock prices, company information, financial statements, options data, and market news. Enable detailed stock analysis, market research, and investment research through a rich set of tools. Facilitate integration with LLMs for dynamic financial data retrieval and analysis.",
+      "repository_url": "https://github.com/hwangwoohyun-nav/yahoo-finance-mcp",
+      "homepage": "https://smithery.ai/server/@hwangwoohyun-nav/yahoo-finance-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "290",
+      "success_rate": "99.82%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@hwangwoohyun-nav_yahoo-finance-mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "get_historical_stock_prices",
+          "description": "Get historical stock prices for a given ticker symbol from yahoo finance. Include the following information: Date, Open, High, Low, Close, Volume, Adj Close.\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get historical prices for, e.g. \"AAPL\"\n    period : str\n        Valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max\n        Either Use period parameter or use start and end\n        Default is \"1mo\"\n    interval : str\n        Valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo\n        Intraday data cannot extend last 60 days\n        Default is \"1d\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "period": {
+                "default": "1mo",
+                "title": "Period",
+                "type": "string"
+              },
+              "interval": {
+                "default": "1d",
+                "title": "Interval",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_historical_stock_pricesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_stock_info",
+          "description": "Get stock information for a given ticker symbol from yahoo finance. Include the following information:\nStock Price & Trading Info, Company Information, Financial Metrics, Earnings & Revenue, Margins & Returns, Dividends, Balance Sheet, Ownership, Analyst Coverage, Risk Metrics, Other.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get information for, e.g. \"AAPL\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_stock_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_yahoo_finance_news",
+          "description": "Get news for a given ticker symbol from yahoo finance.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get news for, e.g. \"AAPL\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_yahoo_finance_newsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_stock_actions",
+          "description": "Get stock dividends and stock splits for a given ticker symbol from yahoo finance.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get stock actions for, e.g. \"AAPL\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_stock_actionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_financial_statement",
+          "description": "Get financial statement for a given ticker symbol from yahoo finance. You can choose from the following financial statement types: income_stmt, quarterly_income_stmt, balance_sheet, quarterly_balance_sheet, cashflow, quarterly_cashflow.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get financial statement for, e.g. \"AAPL\"\n    financial_type: str\n        The type of financial statement to get. You can choose from the following financial statement types: income_stmt, quarterly_income_stmt, balance_sheet, quarterly_balance_sheet, cashflow, quarterly_cashflow.\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "financial_type": {
+                "title": "Financial Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker",
+              "financial_type"
+            ],
+            "title": "get_financial_statementArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_holder_info",
+          "description": "Get holder information for a given ticker symbol from yahoo finance. You can choose from the following holder types: major_holders, institutional_holders, mutualfund_holders, insider_transactions, insider_purchases, insider_roster_holders.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get holder information for, e.g. \"AAPL\"\n    holder_type: str\n        The type of holder information to get. You can choose from the following holder types: major_holders, institutional_holders, mutualfund_holders, insider_transactions, insider_purchases, insider_roster_holders.\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "holder_type": {
+                "title": "Holder Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker",
+              "holder_type"
+            ],
+            "title": "get_holder_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_option_expiration_dates",
+          "description": "Fetch the available options expiration dates for a given ticker symbol.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get option expiration dates for, e.g. \"AAPL\"\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker"
+            ],
+            "title": "get_option_expiration_datesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_option_chain",
+          "description": "Fetch the option chain for a given ticker symbol, expiration date, and option type.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get option chain for, e.g. \"AAPL\"\n    expiration_date: str\n        The expiration date for the options chain (format: 'YYYY-MM-DD')\n    option_type: str\n        The type of option to fetch ('calls' or 'puts')\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "expiration_date": {
+                "title": "Expiration Date",
+                "type": "string"
+              },
+              "option_type": {
+                "title": "Option Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "ticker",
+              "expiration_date",
+              "option_type"
+            ],
+            "title": "get_option_chainArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_recommendations",
+          "description": "Get recommendations or upgrades/downgrades for a given ticker symbol from yahoo finance. You can also specify the number of months back to get upgrades/downgrades for, default is 12.\n\nArgs:\n    ticker: str\n        The ticker symbol of the stock to get recommendations for, e.g. \"AAPL\"\n    recommendation_type: str\n        The type of recommendation to get. You can choose from the following recommendation types: recommendations, upgrades_downgrades.\n    months_back: int\n        The number of months back to get upgrades/downgrades for, default is 12.\n",
+          "input_schema": {
+            "properties": {
+              "ticker": {
+                "title": "Ticker",
+                "type": "string"
+              },
+              "recommendation_type": {
+                "title": "Recommendation Type",
+                "type": "string"
+              },
+              "months_back": {
+                "default": 12,
+                "title": "Months Back",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "ticker",
+              "recommendation_type"
+            ],
+            "title": "get_recommendationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@hwangwoohyun-nav/yahoo-finance-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@hwangwoohyun-nav/yahoo-finance-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0168.@hwangwoohyun-nav_yahoo-finance-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 165
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "labels": {
+    "analysis": "The Rijksmuseum Server is primarily focused on interacting with the Rijksmuseum API to retrieve, search, and analyze artwork data from one of the world's leading art museums. Its core tools enable deep research into artworks, including detailed metadata, high-resolution image access, and user-curated collections. The server has strong applications in art history, cultural research, and interactive art viewing, with tools specifically designed for analyzing artwork details, images, and thematic groupings.",
+    "reasoning": "The primary label \"Web Search & Research\" was chosen because the server's main functionality revolves around searching and retrieving extensive information about artworks (including metadata, images, and historical context). Secondary labels \"Content Creation\" (for user-curated collections and art analysis) and \"Data Analysis & Processing\" (for structured metadata retrieval and analysis) were added as the server supports both presentation of art content and analysis of art data. No custom label is needed as predefined ones adequately cover the functionality.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Content Creation",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1833,
+    "server_name": "Rijksmuseum Server",
+    "rank_by_usage": 1834,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/mcp-server-rijksmuseum_rijksmuseum-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/mcp-server-rijksmuseum/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1833,
+      "name": "Rijksmuseum Server",
+      "author": "mcp-server-rijksmuseum",
+      "overview": "Interact with the Rijksmuseum API for artwork searches, retrieval of artwork details, and access to high-resolution images and user collections.",
+      "repository_url": "https://github.com/r-huijts/rijksmuseum-mcp",
+      "homepage": "https://smithery.ai/server/mcp-server-rijksmuseum",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/mcp-server-rijksmuseum_rijksmuseum-server.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "search_artwork",
+          "description": "Deploy Server Rijksmuseum Server Claim Server mcp-server-rijksmuseum Try in Playground search_artwork",
+          "parameters": [
+            {
+              "name": "search_artwork",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_artwork_details",
+          "description": "Retrieve comprehensive details about a specific artwork from the Rijksmuseum collection. Returns extensive information including: - Basic details (title, artist, dates) - Physical properties (dimensions, materials, techniques) - Historical context (dating, historical persons, documentation) - Visual information (colors, image data) - Curatorial information (descriptions, labels, location) - Acquisition details - Exhibition history This is the primary tool for in-depth research on a specific artwork, providing all available museum documentation and metadata.",
+          "parameters": []
+        },
+        {
+          "name": "get_artwork_image",
+          "description": "Retrieve detailed image tile information for high-resolution viewing of an artwork. This tool provides data for implementing deep zoom functionality, allowing detailed examination of the artwork at various zoom levels. The response includes multiple zoom levels (z0 to z6): - z0: Highest resolution (largest image) - z6: Lowest resolution (smallest image) Each zoom level contains: - Total width and height of the image at that level - A set of image tiles that make up the complete image - Position information (x,y) for each tile This is particularly useful for: - Implementing deep zoom viewers - Studying fine artwork details - Analyzing brushwork or conservation details - Creating interactive viewing experiences",
+          "parameters": []
+        },
+        {
+          "name": "get_user_sets",
+          "description": "Retrieve collections created by Rijksstudio users. These are curated sets of artworks that users have grouped together based on themes, artists, periods, or personal interests. Each set includes: - Basic information (name, description, creation date) - Creator details (username, language preference) - Collection statistics (number of items) - Navigation links (API and web URLs) This tool is useful for: - Discovering user-curated exhibitions - Finding thematically related artworks - Exploring popular artwork groupings - Studying collection patterns",
+          "parameters": []
+        },
+        {
+          "name": "get_user_set_details",
+          "description": "Retrieve detailed information about a specific user-created collection in Rijksstudio. Returns comprehensive information about the set and its contents, including: - Set metadata (name, description, creation date) - Creator information - List of artworks in the set - Image data for each artwork - Navigation links This tool is particularly useful for: - Analyzing thematic groupings of artworks - Studying curatorial choices - Understanding collection patterns - Exploring relationships between artworks",
+          "parameters": []
+        },
+        {
+          "name": "open_image_in_browser",
+          "description": "Open a high-resolution image of an artwork in the default web browser for viewing. This tool is useful when you want to examine an artwork visually or show it to the user. Works with any valid Rijksmuseum image URL.",
+          "parameters": [
+            {
+              "name": "open_image_in_browser",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_artist_timeline",
+          "description": "Generate a chronological timeline of an artist's works in the Rijksmuseum collection. This tool is perfect for studying an artist's development, analyzing their artistic periods, or understanding their contribution to art history over time.",
+          "parameters": [
+            {
+              "name": "get_artist_timeline",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/mcp-server-rijksmuseum/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "RIJKSMUSEUM_API_KEY",
+          "required": true,
+          "description": "API key for accessing the Rijksmuseum API"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/mcp-server-rijksmuseum/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1834.mcp-server-rijksmuseum_rijksmuseum-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1630
+  }
+}

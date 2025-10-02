@@ -1,0 +1,400 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Goose App Maker\" is primarily designed for local web application development and management. It allows users to create, serve, manage, and debug custom web applications built with HTML, CSS, and JavaScript. The tools provided focus on app lifecycle management (creation, deletion, listing), local hosting (serving, stopping), and interaction (opening, refreshing). Additional features include error reporting and response handling for debugging and dynamic content. This server solves the problem of local web app development by providing an integrated environment for building, testing, and managing small-scale web applications without requiring external deployment.",
+    "reasoning": "The primary label \"Web App Development\" is chosen because the server's core functionality revolves around creating and managing local web applications. Secondary labels like \"Browser Automation\" are included because of the server's ability to automate opening and refreshing web applications, and \"Development Tools\" because it provides utilities for code debugging and app management. No custom label is needed as the pre-defined categories sufficiently cover the server's functionality.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Development Tools",
+      "Browser Automation"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 625,
+    "server_name": "Goose App Maker",
+    "rank_by_usage": 626,
+    "usage_count": "15",
+    "original_file": "../crawler/smithery/@michaelneale_goose-app-maker-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@michaelneale/goose-app-maker-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "app_list",
+          "description": "\n    List all available web applications.\n    \n    Returns:\n        A dictionary containing the list of available apps and their details\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "app_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_delete",
+          "description": "\n    Delete an existing web application.\n    \n    Args:\n        app_name: Name of the application to delete\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {
+              "app_name": {
+                "title": "App Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "app_name"
+            ],
+            "title": "app_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_create",
+          "description": "\n    Create a new web application directory and copy starter files.\n    The starter files are for you to replace with actual content, you don't have to use them as is.\n    the goose_api.js file is a utility you will want to keep in case you need to do api calls as part of your app via goose.\n    \n    Args:\n        app_name: Name of the application (will be used as directory name)\n        description: Brief description of the application (default: \"\")\n    \n    Returns:\n        A dictionary containing the result of the operation\n\n    After this, consider how you want to change the app to meet the functionality, look at the examples in resources dir if you like.\n    Or, you can replace the content with existing html/css/js files you have (just make sure to leave the goose_api.js file in the app dir)\n\n    Use the app_error tool once it is opened and user has interacted (or has started) to check for errors you can correct the first time, this is important to know it works.\n\n    ",
+          "input_schema": {
+            "properties": {
+              "app_name": {
+                "title": "App Name",
+                "type": "string"
+              },
+              "description": {
+                "default": "",
+                "title": "Description",
+                "type": "string"
+              }
+            },
+            "required": [
+              "app_name"
+            ],
+            "title": "app_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_serve",
+          "description": "\n    Serve an existing web application on a local HTTP server.\n    The server will automatically find an available port.\n\n    Can only serve one app at a time\n    \n    Args:\n        app_name: Name of the application to serve\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {
+              "app_name": {
+                "title": "App Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "app_name"
+            ],
+            "title": "app_serveArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_stop_server",
+          "description": "\n    Stop the currently running HTTP server.\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "app_stop_serverArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_open",
+          "description": "\n    Open an app in the default web browser. If the app is not currently being served,\n    it will be served first.\n    Can only open one app at a time.\n    \n    Args:\n        app_name: Name of the application to open\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {
+              "app_name": {
+                "title": "App Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "app_name"
+            ],
+            "title": "app_openArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_refresh",
+          "description": "\n    Refresh the currently open app in Chrome.\n    Only works on macOS with Google Chrome.\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "app_refreshArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_response",
+          "description": "\n    Use this to return a response to the app that has been requested.\n    Provide only one of string_data, list_data, or table_data.\n    \n    Args:\n        string_data: Optional string response\n        list_data: Optional list of strings response\n        table_data: Optional table response with columns and rows\n                    Format: {\"columns\": [\"col1\", \"col2\", ...], \"rows\": [[\"row1col1\", \"row1col2\", ...], ...]}\n    \n    Returns:\n        True if the response was stored successfully, False otherwise\n    ",
+          "input_schema": {
+            "properties": {
+              "string_data": {
+                "default": null,
+                "title": "String Data",
+                "type": "string"
+              },
+              "list_data": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "List Data",
+                "type": "array"
+              },
+              "table_data": {
+                "additionalProperties": {
+                  "items": {},
+                  "type": "array"
+                },
+                "default": null,
+                "title": "Table Data",
+                "type": "object"
+              }
+            },
+            "title": "app_responseArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_error",
+          "description": "\n    Report an error from the app or retrieve the list of errors.\n    This is useful while developing or debugging the app as it allows errors (or any messages) to be reported and monitored\n    \n    Args:\n        error_message: Optional error message to report. If None, returns the list of errors.\n        clear: Optional, If True, clears the list of errors\n    \n    Returns:\n        A string containing the list of errors if error_message is None,\n        otherwise a confirmation message.\n    ",
+          "input_schema": {
+            "properties": {
+              "error_message": {
+                "default": null,
+                "title": "Error Message",
+                "type": "string"
+              },
+              "clear": {
+                "default": false,
+                "title": "clear",
+                "type": "string"
+              }
+            },
+            "title": "app_errorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "app_list",
+        "app_delete",
+        "app_create",
+        "app_serve",
+        "app_stop_server",
+        "app_open",
+        "app_refresh",
+        "app_response",
+        "app_error"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 625,
+      "name": "Goose App Maker",
+      "author": "@michaelneale/goose-app-maker-mcp",
+      "overview": "Create, manage, and serve custom web applications locally with ease. Quickly build apps using HTML, CSS, and JavaScript, and open them in your default browser. Efficiently update, list, and delete your web applications stored in a dedicated directory.",
+      "repository_url": "https://github.com/michaelneale/goose-app-maker-mcp",
+      "homepage": "https://smithery.ai/server/@michaelneale/goose-app-maker-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "15",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@michaelneale_goose-app-maker-mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "app_list",
+          "description": "\n    List all available web applications.\n    \n    Returns:\n        A dictionary containing the list of available apps and their details\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "app_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_delete",
+          "description": "\n    Delete an existing web application.\n    \n    Args:\n        app_name: Name of the application to delete\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {
+              "app_name": {
+                "title": "App Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "app_name"
+            ],
+            "title": "app_deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_create",
+          "description": "\n    Create a new web application directory and copy starter files.\n    The starter files are for you to replace with actual content, you don't have to use them as is.\n    the goose_api.js file is a utility you will want to keep in case you need to do api calls as part of your app via goose.\n    \n    Args:\n        app_name: Name of the application (will be used as directory name)\n        description: Brief description of the application (default: \"\")\n    \n    Returns:\n        A dictionary containing the result of the operation\n\n    After this, consider how you want to change the app to meet the functionality, look at the examples in resources dir if you like.\n    Or, you can replace the content with existing html/css/js files you have (just make sure to leave the goose_api.js file in the app dir)\n\n    Use the app_error tool once it is opened and user has interacted (or has started) to check for errors you can correct the first time, this is important to know it works.\n\n    ",
+          "input_schema": {
+            "properties": {
+              "app_name": {
+                "title": "App Name",
+                "type": "string"
+              },
+              "description": {
+                "default": "",
+                "title": "Description",
+                "type": "string"
+              }
+            },
+            "required": [
+              "app_name"
+            ],
+            "title": "app_createArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_serve",
+          "description": "\n    Serve an existing web application on a local HTTP server.\n    The server will automatically find an available port.\n\n    Can only serve one app at a time\n    \n    Args:\n        app_name: Name of the application to serve\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {
+              "app_name": {
+                "title": "App Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "app_name"
+            ],
+            "title": "app_serveArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_stop_server",
+          "description": "\n    Stop the currently running HTTP server.\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "app_stop_serverArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_open",
+          "description": "\n    Open an app in the default web browser. If the app is not currently being served,\n    it will be served first.\n    Can only open one app at a time.\n    \n    Args:\n        app_name: Name of the application to open\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {
+              "app_name": {
+                "title": "App Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "app_name"
+            ],
+            "title": "app_openArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_refresh",
+          "description": "\n    Refresh the currently open app in Chrome.\n    Only works on macOS with Google Chrome.\n    \n    Returns:\n        A dictionary containing the result of the operation\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "app_refreshArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_response",
+          "description": "\n    Use this to return a response to the app that has been requested.\n    Provide only one of string_data, list_data, or table_data.\n    \n    Args:\n        string_data: Optional string response\n        list_data: Optional list of strings response\n        table_data: Optional table response with columns and rows\n                    Format: {\"columns\": [\"col1\", \"col2\", ...], \"rows\": [[\"row1col1\", \"row1col2\", ...], ...]}\n    \n    Returns:\n        True if the response was stored successfully, False otherwise\n    ",
+          "input_schema": {
+            "properties": {
+              "string_data": {
+                "default": null,
+                "title": "String Data",
+                "type": "string"
+              },
+              "list_data": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "List Data",
+                "type": "array"
+              },
+              "table_data": {
+                "additionalProperties": {
+                  "items": {},
+                  "type": "array"
+                },
+                "default": null,
+                "title": "Table Data",
+                "type": "object"
+              }
+            },
+            "title": "app_responseArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "app_error",
+          "description": "\n    Report an error from the app or retrieve the list of errors.\n    This is useful while developing or debugging the app as it allows errors (or any messages) to be reported and monitored\n    \n    Args:\n        error_message: Optional error message to report. If None, returns the list of errors.\n        clear: Optional, If True, clears the list of errors\n    \n    Returns:\n        A string containing the list of errors if error_message is None,\n        otherwise a confirmation message.\n    ",
+          "input_schema": {
+            "properties": {
+              "error_message": {
+                "default": null,
+                "title": "Error Message",
+                "type": "string"
+              },
+              "clear": {
+                "default": false,
+                "title": "clear",
+                "type": "string"
+              }
+            },
+            "title": "app_errorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@michaelneale/goose-app-maker-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@michaelneale/goose-app-maker-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0626.@michaelneale_goose-app-maker-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 611
+  }
+}

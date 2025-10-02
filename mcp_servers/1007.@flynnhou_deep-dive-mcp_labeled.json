@@ -1,0 +1,169 @@
+{
+  "labels": {
+    "analysis": "The Deep Dive MCP Server functions as a flexible platform for integrating tools and resources via the Model Context Protocol, specifically designed to enhance LLM applications. Its primary focus appears to be enabling dynamic tool integration, particularly around weather-related tasks, as evidenced by the two available tools. The server supports deployment in containerized environments and integrates with Claude Desktop, suggesting a development or productivity enhancement use case.",
+    "reasoning": "The primary functionality revolves around tool integration and protocol implementation, which aligns with API integration capabilities. Secondary labels of Weather and Daily Productivity were chosen based on the available tools and potential use cases for personal productivity. No custom label was needed as the predefined categories adequately cover the functionality.",
+    "primary_label": "API Integration",
+    "secondary_labels": [
+      "Weather",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1006,
+    "server_name": "Deep Dive MCP Server",
+    "rank_by_usage": 1007,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@flynnhou_deep-dive-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@flynnhou/deep-dive-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-alerts",
+          "description": "Get weather alerts for a state",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "description": "Two-letter state code (e.g., CA, NY"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get-forecast",
+          "description": "Get weather forecast for a location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90,
+                "description": "Latitude of the location"
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180,
+                "description": "Longitude of the location"
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "get-alerts",
+        "get-forecast"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1006,
+      "name": "Deep Dive MCP Server",
+      "author": "@flynnhou/deep-dive-mcp",
+      "overview": "Provide a customizable MCP server implementation that integrates with Claude Desktop and other clients. Enable dynamic loading and execution of tools and resources via the Model Context Protocol to enhance LLM applications. Simplify installation and deployment with support for Smithery and containerized environments.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@flynnhou/deep-dive-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@flynnhou_deep-dive-mcp.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "get-alerts",
+          "description": "Get weather alerts for a state",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "description": "Two-letter state code (e.g., CA, NY"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get-forecast",
+          "description": "Get weather forecast for a location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90,
+                "description": "Latitude of the location"
+              },
+              "longitude": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180,
+                "description": "Longitude of the location"
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@flynnhou/deep-dive-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@flynnhou/deep-dive-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1007.@flynnhou_deep-dive-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 985
+  }
+}

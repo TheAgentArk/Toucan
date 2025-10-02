@@ -1,0 +1,233 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in scraping comprehensive data from Airbnb listings without requiring API access. It provides structured information about listings, including prices, amenities, host details, ratings, and more. The server solves the problem of obtaining and integrating Airbnb data programmatically, which is useful for travel planning, property analysis, or automated insights.",
+    "reasoning": "The primary label \"Web Scraping\" was chosen because the server's core functionality revolves around extracting data from Airbnb listings via web scraping. The secondary labels \"Travel & Maps\" and \"Data Analysis & Processing\" were selected because the scraped data is useful for travel-related applications and can be processed for analytical purposes. No custom label is needed as the server's functionality is well-covered by predefined categories.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Travel & Maps",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 953,
+    "server_name": "Airbnb Listings Scraper",
+    "rank_by_usage": 954,
+    "usage_count": "3",
+    "original_file": "../crawler/smithery/@alan5543_airbnb-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@alan5543/airbnb-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_airbnb_listings",
+          "description": "\n    Scrapes Airbnb listings for a given location and dates, returning detailed information for each listing.\n    Always fetches details from individual listing pages to include beds, bedrooms, bathrooms, amenities, and location.\n    Optimized for Telegram with concise output and sanitized titles.\n\n    Args:\n        place: The location name, Please use the English name of the location (e.g., \"Hong Kong\").\n        checkin_date: The check-in date in YYYY-MM-DD format (e.g., \"2025-08-01\").\n        checkout_date: The check-out date in YYYY-MM-DD format (e.g., \"2025-08-06\").\n        adults: Number of adults (default: 1).\n        children: Number of children (default: 0).\n        infants: Number of infants (default: 0).\n        pets: Number of pets (default: 0).\n        price_max: Maximum price per night (you must ask the user to provide how is their budget).\n        max_pages: Maximum number of pages to scrape (default: 3).\n\n    Returns:\n        str: JSON string containing a list of listings, each with:\n            - listing_id: Unique listing identifier\n            - url: Direct link to the Airbnb listing\n            - title: Listing title (sanitized, max 50 characters)\n            - price: Price per night or total (e.g., \"$39 CAD per night\")\n            - price_qualifier: Additional price context (e.g., \"per night\")\n            - average_rating: Rating (e.g., \"4.78\") or \"N/A\"\n            - rating_count: Number of reviews\n            - host_name: Host's first name\n            - host_is_verified: Whether host is verified\n            - host_is_superhost: Whether host is a superhost\n            - host_years: Years as host\n            - host_months: Months as host\n            - latitude: Listing latitude\n            - longitude: Listing longitude\n            - beds: Number of beds (e.g., \"2 beds\")\n            - guests: Number of guests (e.g., \"4 guests\")\n            - bedrooms: Number of bedrooms (e.g., \"2 bedrooms\")\n            - bathrooms: Number of bathrooms (e.g., \"1 bath\")\n            - amenities: List of amenities (e.g., [\"Wi-Fi\", \"Kitchen\"])\n            - location: Neighborhood or specific location\n            - image_urls: List of image URLs\n            - badges: List of badges (e.g., [\"NEW\"])\n            - listing_type: Type of listing (e.g., \"Private Room\")\n        If no listings are found, returns a plain-text error message.\n    ",
+          "input_schema": {
+            "properties": {
+              "place": {
+                "title": "Place",
+                "type": "string"
+              },
+              "checkin_date": {
+                "title": "Checkin Date",
+                "type": "string"
+              },
+              "checkout_date": {
+                "title": "Checkout Date",
+                "type": "string"
+              },
+              "adults": {
+                "default": 1,
+                "title": "Adults",
+                "type": "integer"
+              },
+              "children": {
+                "default": 0,
+                "title": "Children",
+                "type": "integer"
+              },
+              "infants": {
+                "default": 0,
+                "title": "Infants",
+                "type": "integer"
+              },
+              "pets": {
+                "default": 0,
+                "title": "Pets",
+                "type": "integer"
+              },
+              "price_max": {
+                "default": 1000,
+                "title": "Price Max",
+                "type": "integer"
+              },
+              "max_pages": {
+                "default": 3,
+                "title": "Max Pages",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "place",
+              "checkin_date",
+              "checkout_date"
+            ],
+            "title": "search_airbnb_listingsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "scrape_airbnb_listing_info",
+          "description": "\n    Scrapes comprehensive information from a single Airbnb listing URL, including title, location, host, price, ratings, amenities, policies, and booking parameters, returning a structured text summary.\n\n    Args:\n        url: The Airbnb listing URL, including optional query parameters like check_in, check_out, guests, and adults (e.g., \"https://www.airbnb.ca/rooms/15956982?check_in=2025-08-01&check_out=2025-08-06&guests=1&adults=1\").\n        max_retries: Number of attempts to fetch the HTML content if the initial request fails (default: 3).\n\n    Returns:\n        A information string containing a structured summary of the Airbnb Description, Location, Host, Rating and Reviews, House Rules, Prices Info, and Image Info.\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              },
+              "max_retries": {
+                "default": 3,
+                "title": "Max Retries",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "scrape_airbnb_listing_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "search_airbnb_listings",
+        "scrape_airbnb_listing_info"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 953,
+      "name": "Airbnb Listings Scraper",
+      "author": "@alan5543/airbnb-mcp-server",
+      "overview": "Scrape Airbnb listings and detailed information without needing an API key. Search listings by location, dates, and filters, and retrieve structured summaries of individual listings. Enable seamless integration of Airbnb data into your applications via web scraping.",
+      "repository_url": "https://github.com/alan5543/airbnb-mcp-server",
+      "homepage": "https://smithery.ai/server/@alan5543/airbnb-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "3",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@alan5543_airbnb-mcp-server.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "search_airbnb_listings",
+          "description": "\n    Scrapes Airbnb listings for a given location and dates, returning detailed information for each listing.\n    Always fetches details from individual listing pages to include beds, bedrooms, bathrooms, amenities, and location.\n    Optimized for Telegram with concise output and sanitized titles.\n\n    Args:\n        place: The location name, Please use the English name of the location (e.g., \"Hong Kong\").\n        checkin_date: The check-in date in YYYY-MM-DD format (e.g., \"2025-08-01\").\n        checkout_date: The check-out date in YYYY-MM-DD format (e.g., \"2025-08-06\").\n        adults: Number of adults (default: 1).\n        children: Number of children (default: 0).\n        infants: Number of infants (default: 0).\n        pets: Number of pets (default: 0).\n        price_max: Maximum price per night (you must ask the user to provide how is their budget).\n        max_pages: Maximum number of pages to scrape (default: 3).\n\n    Returns:\n        str: JSON string containing a list of listings, each with:\n            - listing_id: Unique listing identifier\n            - url: Direct link to the Airbnb listing\n            - title: Listing title (sanitized, max 50 characters)\n            - price: Price per night or total (e.g., \"$39 CAD per night\")\n            - price_qualifier: Additional price context (e.g., \"per night\")\n            - average_rating: Rating (e.g., \"4.78\") or \"N/A\"\n            - rating_count: Number of reviews\n            - host_name: Host's first name\n            - host_is_verified: Whether host is verified\n            - host_is_superhost: Whether host is a superhost\n            - host_years: Years as host\n            - host_months: Months as host\n            - latitude: Listing latitude\n            - longitude: Listing longitude\n            - beds: Number of beds (e.g., \"2 beds\")\n            - guests: Number of guests (e.g., \"4 guests\")\n            - bedrooms: Number of bedrooms (e.g., \"2 bedrooms\")\n            - bathrooms: Number of bathrooms (e.g., \"1 bath\")\n            - amenities: List of amenities (e.g., [\"Wi-Fi\", \"Kitchen\"])\n            - location: Neighborhood or specific location\n            - image_urls: List of image URLs\n            - badges: List of badges (e.g., [\"NEW\"])\n            - listing_type: Type of listing (e.g., \"Private Room\")\n        If no listings are found, returns a plain-text error message.\n    ",
+          "input_schema": {
+            "properties": {
+              "place": {
+                "title": "Place",
+                "type": "string"
+              },
+              "checkin_date": {
+                "title": "Checkin Date",
+                "type": "string"
+              },
+              "checkout_date": {
+                "title": "Checkout Date",
+                "type": "string"
+              },
+              "adults": {
+                "default": 1,
+                "title": "Adults",
+                "type": "integer"
+              },
+              "children": {
+                "default": 0,
+                "title": "Children",
+                "type": "integer"
+              },
+              "infants": {
+                "default": 0,
+                "title": "Infants",
+                "type": "integer"
+              },
+              "pets": {
+                "default": 0,
+                "title": "Pets",
+                "type": "integer"
+              },
+              "price_max": {
+                "default": 1000,
+                "title": "Price Max",
+                "type": "integer"
+              },
+              "max_pages": {
+                "default": 3,
+                "title": "Max Pages",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "place",
+              "checkin_date",
+              "checkout_date"
+            ],
+            "title": "search_airbnb_listingsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "scrape_airbnb_listing_info",
+          "description": "\n    Scrapes comprehensive information from a single Airbnb listing URL, including title, location, host, price, ratings, amenities, policies, and booking parameters, returning a structured text summary.\n\n    Args:\n        url: The Airbnb listing URL, including optional query parameters like check_in, check_out, guests, and adults (e.g., \"https://www.airbnb.ca/rooms/15956982?check_in=2025-08-01&check_out=2025-08-06&guests=1&adults=1\").\n        max_retries: Number of attempts to fetch the HTML content if the initial request fails (default: 3).\n\n    Returns:\n        A information string containing a structured summary of the Airbnb Description, Location, Host, Rating and Reviews, House Rules, Prices Info, and Image Info.\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              },
+              "max_retries": {
+                "default": 3,
+                "title": "Max Retries",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "scrape_airbnb_listing_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@alan5543/airbnb-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@alan5543/airbnb-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0954.@alan5543_airbnb-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 932
+  }
+}

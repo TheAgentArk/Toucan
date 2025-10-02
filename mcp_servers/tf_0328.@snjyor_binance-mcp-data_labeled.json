@@ -1,0 +1,772 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide real-time cryptocurrency market data from Binance, enabling AI agents to access current prices, order books, trading history, and price statistics. The available tools focus on retrieving various types of financial data directly from the Binance API, which facilitates market analysis, trading decisions, and financial monitoring without needing to visit external sites. This aligns strongly with financial and trading-related functionalities.",
+    "reasoning": "The primary label \"Cryptocurrency & Blockchain\" was chosen because the server's core functionality revolves around providing market data for trading and financial analysis, which is central to the world of cryptocurrency and blockchain. The secondary label \"Financial Services\" was added because the data accessed (prices, trading history, ticker data) is broadly useful for financial monitoring and decision-making beyond just trading.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "Financial Services"
+    ],
+    "custom_label": "Real-Time Market Data",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 327,
+    "server_name": "Binance Cryptocurrency Market Data Service",
+    "rank_by_usage": 328,
+    "usage_count": "98",
+    "original_file": "../crawler/smithery/@snjyor_binance-mcp-data.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@snjyor/binance-mcp-data/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_order_book",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Order book depth, default 100, max 5000"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_recent_trades",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of trades to return, default 500, max 1000"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_historical_trades",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of trades to return, default 500, max 1000"
+              },
+              "fromId": {
+                "type": "number",
+                "description": "Trade ID to start from, default returns the most recent trades"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_aggregate_trades",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "fromId": {
+                "type": "number",
+                "description": "Aggregate trade ID to start from"
+              },
+              "startTime": {
+                "type": "number",
+                "description": "Start timestamp (milliseconds)"
+              },
+              "endTime": {
+                "type": "number",
+                "description": "End timestamp (milliseconds)"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of trades to return, default 500, max 1000"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_klines",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "interval": {
+                "type": "string",
+                "description": "K-line interval, e.g. 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M"
+              },
+              "startTime": {
+                "type": "number",
+                "description": "Start timestamp (milliseconds)"
+              },
+              "endTime": {
+                "type": "number",
+                "description": "End timestamp (milliseconds)"
+              },
+              "timeZone": {
+                "type": "string",
+                "description": "Time zone, default UTC"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of K-lines to return, default 500, max 1000"
+              }
+            },
+            "required": [
+              "symbol",
+              "interval"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ui_klines",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "interval": {
+                "type": "string",
+                "description": "K-line interval, e.g. 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M"
+              },
+              "startTime": {
+                "type": "number",
+                "description": "Start timestamp (milliseconds)"
+              },
+              "endTime": {
+                "type": "number",
+                "description": "End timestamp (milliseconds)"
+              },
+              "timeZone": {
+                "type": "string",
+                "description": "Time zone, default UTC"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of K-lines to return, default 500, max 1000"
+              }
+            },
+            "required": [
+              "symbol",
+              "interval"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_avg_price",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_24hr_ticker",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trading_day_ticker",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              },
+              "timeZone": {
+                "type": "number",
+                "description": "Time zone, default 0"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "FULL",
+                  "MINI"
+                ],
+                "description": "Return data type, FULL or MINI"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_price",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_book_ticker",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_rolling_window_ticker",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              },
+              "windowSize": {
+                "type": "string",
+                "description": "Window size, e.g. 1m, 4h, 1d"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "FULL",
+                  "MINI"
+                ],
+                "description": "Return data type, FULL or MINI"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "get_order_book",
+        "get_recent_trades",
+        "get_historical_trades",
+        "get_aggregate_trades",
+        "get_klines",
+        "get_ui_klines",
+        "get_avg_price",
+        "get_24hr_ticker",
+        "get_trading_day_ticker",
+        "get_price",
+        "get_book_ticker",
+        "get_rolling_window_ticker"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 327,
+      "name": "Binance Cryptocurrency Market Data Service",
+      "author": "@snjyor/binance-mcp-data",
+      "overview": "Provide real-time cryptocurrency market data from Binance directly to AI agents. Access current prices, order books, candlestick charts, trading history, and price statistics seamlessly. Enable AI-driven queries about the latest market trends without visiting external sites.",
+      "repository_url": "https://github.com/snjyor/binance-mcp",
+      "homepage": "https://smithery.ai/server/@snjyor/binance-mcp-data",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "98",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@snjyor_binance-mcp-data.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "get_order_book",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Order book depth, default 100, max 5000"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_recent_trades",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of trades to return, default 500, max 1000"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_historical_trades",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of trades to return, default 500, max 1000"
+              },
+              "fromId": {
+                "type": "number",
+                "description": "Trade ID to start from, default returns the most recent trades"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_aggregate_trades",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "fromId": {
+                "type": "number",
+                "description": "Aggregate trade ID to start from"
+              },
+              "startTime": {
+                "type": "number",
+                "description": "Start timestamp (milliseconds)"
+              },
+              "endTime": {
+                "type": "number",
+                "description": "End timestamp (milliseconds)"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of trades to return, default 500, max 1000"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_klines",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "interval": {
+                "type": "string",
+                "description": "K-line interval, e.g. 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M"
+              },
+              "startTime": {
+                "type": "number",
+                "description": "Start timestamp (milliseconds)"
+              },
+              "endTime": {
+                "type": "number",
+                "description": "End timestamp (milliseconds)"
+              },
+              "timeZone": {
+                "type": "string",
+                "description": "Time zone, default UTC"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of K-lines to return, default 500, max 1000"
+              }
+            },
+            "required": [
+              "symbol",
+              "interval"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_ui_klines",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "interval": {
+                "type": "string",
+                "description": "K-line interval, e.g. 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M"
+              },
+              "startTime": {
+                "type": "number",
+                "description": "Start timestamp (milliseconds)"
+              },
+              "endTime": {
+                "type": "number",
+                "description": "End timestamp (milliseconds)"
+              },
+              "timeZone": {
+                "type": "string",
+                "description": "Time zone, default UTC"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Number of K-lines to return, default 500, max 1000"
+              }
+            },
+            "required": [
+              "symbol",
+              "interval"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_avg_price",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              }
+            },
+            "required": [
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_24hr_ticker",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_trading_day_ticker",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              },
+              "timeZone": {
+                "type": "number",
+                "description": "Time zone, default 0"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "FULL",
+                  "MINI"
+                ],
+                "description": "Return data type, FULL or MINI"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_price",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_book_ticker",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_rolling_window_ticker",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol, e.g. BTCUSDT"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of multiple trading pair symbols"
+              },
+              "windowSize": {
+                "type": "string",
+                "description": "Window size, e.g. 1m, 4h, 1d"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "FULL",
+                  "MINI"
+                ],
+                "description": "Return data type, FULL or MINI"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@snjyor/binance-mcp-data/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@snjyor/binance-mcp-data/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0328.@snjyor_binance-mcp-data_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 324
+  }
+}

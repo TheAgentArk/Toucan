@@ -1,0 +1,168 @@
+{
+  "labels": {
+    "analysis": "The MCP Server for Memos is designed to interact with Memos instances, allowing AI assistants to securely manage notes (memos) through an API. Its core functionality includes searching, creating, updating, deleting, and filtering memos, as well as managing comments and tags. The tools provided are focused on note-taking, organization, and efficient retrieval of information. The server's primary purpose is to enhance productivity by automating memo-related tasks.",
+    "reasoning": "The primary label \"Memory Management\" is chosen because the server's main functionality revolves around storing, retrieving, and organizing notes (memos). The secondary label \"Daily Productivity\" is selected as the tools aim to improve efficiency in personal or work-related tasks. No custom label is needed as the functionality aligns well with predefined categories.",
+    "primary_label": "Memory Management",
+    "secondary_labels": [
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1710,
+    "server_name": "Memos MCP 服务器",
+    "rank_by_usage": 1711,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@yuzhi-jiang_memos-cmp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@yuzhi-jiang/memos-cmp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1710,
+      "name": "Memos MCP 服务器",
+      "author": "@yuzhi-jiang/memos-cmp",
+      "overview": "连接到你的 Memos 实例，安全地通过 AI 助手与备忘录交互。利用强大的工具进行搜索、创建、更新和管理备忘录，提升你的工作效率。",
+      "repository_url": "https://github.com/yuzhi-jiang/memos-cmp",
+      "homepage": "https://smithery.ai/server/@yuzhi-jiang/memos-cmp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@yuzhi-jiang_memos-cmp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "search_memos",
+          "description": "Deploy Server Memos MCP 服务器 @yuzhi-jiang/memos-cmp Try in Playground search_memos",
+          "parameters": [
+            {
+              "name": "CEL",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "filter_memos",
+          "description": "使用 CEL 表达式过滤备忘录 Args: filter_expr: CEL 表达式过滤器，例如 \"content.contains('关键词')\" 或 \"createTime > timestamp('2023-01-01T00:00:00Z')\"",
+          "parameters": []
+        },
+        {
+          "name": "create_memo",
+          "description": "创建新备忘录 Args: content: 备忘录内容 visibility: 可见性设置 (PRIVATE, PROTECTED, PUBLIC) tags: 标签列表，如果不提供则使用默认标签",
+          "parameters": []
+        },
+        {
+          "name": "update_memo",
+          "description": "更新备忘录 Args: memo_id: 备忘录ID content: 新的备忘录内容 visibility: 新的可见性设置 (PRIVATE, PROTECTED, PUBLIC)",
+          "parameters": []
+        },
+        {
+          "name": "delete_memo",
+          "description": "删除备忘录\n    \n    Args:\n        memo_id: 要删除的备忘录ID",
+          "parameters": [
+            {
+              "name": "memo_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_memo_comments",
+          "description": "列出备忘录的评论\n    \n    Args:\n        memo_id: 备忘录ID",
+          "parameters": [
+            {
+              "name": "memo_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create_memo_comment",
+          "description": "创建备忘录评论\n    \n    Args:\n        memo_id: 备忘录ID\n        content: 评论内容",
+          "parameters": [
+            {
+              "name": "content",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "memo_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "delete_memo_comment",
+          "description": "删除备忘录评论\n    \n    Args:\n        memo_id: 备忘录ID\n        comment_id: 评论ID",
+          "parameters": [
+            {
+              "name": "memo_id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "comment_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "delete_memo_tag",
+          "description": "从备忘录中删除标签\n    \n    Args:\n        memo_id: 备忘录ID\n        tag: 要删除的标签名称(不包含#符号)",
+          "parameters": [
+            {
+              "name": "tag",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "memo_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@yuzhi-jiang/memos-cmp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "memosApiKey",
+          "required": true,
+          "description": "API Key for Memos authentication."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@yuzhi-jiang/memos-cmp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1711.@yuzhi-jiang_memos-cmp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1540
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described, AverbePorto, is primarily focused on document authentication, management, and retrieval related to Brazilian fiscal documents (such as NF-e, CT-e, MDF-e). It provides tools for secure login, document upload, protocol consultation, key decomposition, and document retrieval through the AverbePorto API. The server emphasizes secure API interactions, automated document processing, and compliance with Brazilian fiscal regulations.\n    The core functionality revolves around document submission, authentication, and retrieval, making it a specialized tool for businesses dealing with Brazilian fiscal and logistical documentation.",
+    "reasoning": "The primary label **\"Financial Services\"** is chosen because the server deals with cargo insurance endorsements, document submission (which can be associated with financial transactions), and compliance with financial and fiscal regulations in Brazil. This aligns closely with the financial and logistical domain.\n    The secondary label **\"File Management\"** is selected because the server includes tools for document upload and retrieval, which are fundamental operations in file management.\n    The secondary label **\"API Integration\"** is also appropriate because the server heavily relies on API calls for authentication, document processing, and retrieval, indicating a strong focus on API-based interaction.\n    The custom label **\"Brazilian Fiscal Documentation\"** is included to highlight the server's specialization in handling Brazilian fiscal documents, which is a unique aspect not fully covered by the predefined labels.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "File Management",
+      "API Integration"
+    ],
+    "custom_label": "Brazilian Fiscal Documentation",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1732,
+    "server_name": "AverbePorto",
+    "rank_by_usage": 1733,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@GHSix_averbeporto-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@GHSix/averbeporto-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1732,
+      "name": "AverbePorto",
+      "author": "@GHSix/averbeporto-mcp",
+      "overview": "Integrate with AverbePorto to streamline authentication and document submission using AI tools. Effortlessly manage your cargo insurance endorsements and access essential services through a secure API. Enhance your workflow with automated document handling and protocol consultations.",
+      "repository_url": "https://github.com/GHSix/AverbePorto-MCP",
+      "homepage": "https://smithery.ai/server/@GHSix/averbeporto-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@GHSix_averbeporto-mcp.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "login",
+          "description": "Authenticates a user with the AverbePorto API using their username and password. Establishes a session and returns a unique `sessionId` required for subsequent API calls.",
+          "parameters": []
+        },
+        {
+          "name": "upload",
+          "description": "Uploads a specified file to the AverbePorto API for processing. Requires an active `sessionId` obtained from the `login` tool. Returns the processing status, including counts of processed/duplicated/rejected/denied items, generated protocol numbers, and any errors encountered.",
+          "parameters": []
+        },
+        {
+          "name": "consultProtocol",
+          "description": "Consults the AverbePorto API to retrieve details associated with one or more document access keys (44 digits) or protocol numbers (40 digits). Requires an active `sessionId`.",
+          "parameters": []
+        },
+        {
+          "name": "decomposeKey",
+          "description": "Parses a 44-digit (infCte/Id) Brazilian electronic fiscal document access key (like NF-e, CT-e, MDF-e) into its individual components. Provides details such as state code, emission date, emitter CNPJ, document model, series, number, and emission type. This operation is performed locally without calling an external API.",
+          "parameters": []
+        },
+        {
+          "name": "retrieveDocument",
+          "description": "Retrieves a list of electronic fiscal documents (NF-e, CT-e, MDF-e, Minuta CT-e) from the AverbePorto API based on specified filter criteria. Filters include document type, date range, date type (emission, update, send), document number (9 char max), involved parties (CNPJs), status, and more. Supports pagination. Requires an active `sessionId`.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@GHSix/averbeporto-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@GHSix/averbeporto-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1733.@GHSix_averbeporto-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1558
+  }
+}

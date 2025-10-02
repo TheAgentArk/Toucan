@@ -1,0 +1,154 @@
+{
+  "labels": {
+    "analysis": "The MCP VirusTotal Server is primarily designed for security analysis and threat intelligence. It provides access to VirusTotal's API, enabling comprehensive analysis of URLs, files, IP addresses, and domains. The server offers detailed reports and relationship queries that uncover malicious activities, file behaviors, network connections, and threat actor associations. It serves as a powerful tool for cybersecurity investigations, threat tracking, and security research.",
+    "reasoning": "The primary label \"Security & Authentication\" was chosen because the server's core functionality revolves around threat analysis and security reporting. The secondary label \"API Integration\" is relevant due to its VirusTotal API-based operation. No custom label is needed as the predefined categories sufficiently cover the server's purpose.",
+    "primary_label": "Security & Authentication",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1511,
+    "server_name": "VirusTotal Server",
+    "rank_by_usage": 1512,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@burtthecoder_mcp-virustotal.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@burtthecoder/mcp-virustotal/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1511,
+      "name": "VirusTotal Server",
+      "author": "@burtthecoder/mcp-virustotal",
+      "overview": "MCP server for VirusTotal API integration, providing comprehensive security analysis tools.",
+      "repository_url": "https://github.com/BurtTheCoder/mcp-virustotal",
+      "homepage": "https://smithery.ai/server/@burtthecoder/mcp-virustotal",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@burtthecoder_mcp-virustotal.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "get_url_report",
+          "description": "Deploy Server VirusTotal Server Claim Server @burtthecoder/mcp-virustotal Try in Playground get_url_report",
+          "parameters": [
+            {
+              "name": "get_url_report",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_url_relationship",
+          "description": "Query a specific relationship type for a URL with pagination support. Choose from 17 relationship types including analyses, communicating files, contacted domains/IPs, downloaded files, graphs, referrers, redirects, and threat actors. Useful for detailed investigation of specific relationship types.",
+          "parameters": [
+            {
+              "name": "get_url_relationship",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_file_report",
+          "description": "Get a comprehensive file analysis report using its hash (MD5/SHA-1/SHA-256). Includes detection results, file properties, and key relationships (behaviors, dropped files, network connections, embedded content, threat actors). Returns both the basic analysis and automatically fetched relationship data.",
+          "parameters": [
+            {
+              "name": "get_file_report",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "hash",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_file_relationship",
+          "description": "Query a specific relationship type for a file with pagination support. Choose from 41 relationship types including behaviors, network connections, dropped files, embedded content, execution chains, and threat actors. Useful for detailed investigation of specific relationship types.",
+          "parameters": [
+            {
+              "name": "get_file_relationship",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_ip_report",
+          "description": "Get a comprehensive IP address analysis report including geolocation, reputation data, and key relationships (communicating files, historical certificates/WHOIS, resolutions). Returns both the basic analysis and automatically fetched relationship data.",
+          "parameters": [
+            {
+              "name": "get_ip_report",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_ip_relationship",
+          "description": "Query a specific relationship type for an IP address with pagination support. Choose from 12 relationship types including communicating files, historical SSL certificates, WHOIS records, resolutions, and threat actors. Useful for detailed investigation of specific relationship types.",
+          "parameters": [
+            {
+              "name": "get_ip_relationship",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_domain_report",
+          "description": "Get a comprehensive domain analysis report including DNS records, WHOIS data, and key relationships (SSL certificates, subdomains, historical data). Optionally specify which relationships to include in the report. Returns both the basic analysis and relationship data.",
+          "parameters": [
+            {
+              "name": "get_domain_report",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@burtthecoder/mcp-virustotal/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "virustotalApiKey",
+          "required": true,
+          "description": "Your VirusTotal API key."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@burtthecoder/mcp-virustotal/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1512.@burtthecoder_mcp-virustotal_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1392
+  }
+}

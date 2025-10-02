@@ -1,0 +1,437 @@
+{
+  "labels": {
+    "analysis": "The MCP Server Semgrep is primarily focused on enhancing code quality and security by performing static code analysis. It provides tools to scan directories for vulnerabilities, list available security rules, analyze and filter scan results, and manage Semgrep rules. The server simplifies the process of detecting errors, enforcing coding standards, and comparing scan results over time. Its functionality is geared toward developers and security teams who need to integrate automated code analysis into their workflows.",
+    "reasoning": "The primary label \"Security & Authentication\" was chosen because the server's core functionality revolves around detecting security vulnerabilities and enforcing coding standards. The secondary label \"Development Tools\" is appropriate as it assists in the development process by automating code analysis and error detection. The tertiary label \"Web Search & Research\" could apply if the server also facilitates querying or researching security best practices, though this is less central to its functionality.",
+    "primary_label": "Security & Authentication",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": "Static Code Analysis",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 288,
+    "server_name": "MCP Server Semgrep",
+    "rank_by_usage": 289,
+    "usage_count": "122",
+    "original_file": "../crawler/smithery/@Szowesgad_mcp-server-semgrep.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Szowesgad/mcp-server-semgrep/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "scan_directory",
+          "description": "Performs a Semgrep scan on a directory",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Absolute path to the directory to scan (must be within MCP directory)"
+              },
+              "config": {
+                "type": "string",
+                "description": "Semgrep configuration (e.g. \"auto\" or absolute path to rule file)",
+                "default": "auto"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_rules",
+          "description": "Lists available Semgrep rules",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Programming language for rules (optional)"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_results",
+          "description": "Analyzes scan results",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "results_file": {
+                "type": "string",
+                "description": "Absolute path to JSON results file (must be within MCP directory)"
+              }
+            },
+            "required": [
+              "results_file"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_rule",
+          "description": "Creates a new Semgrep rule",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "output_path": {
+                "type": "string",
+                "description": "Absolute path for output rule file"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Search pattern for the rule"
+              },
+              "language": {
+                "type": "string",
+                "description": "Target language for the rule"
+              },
+              "message": {
+                "type": "string",
+                "description": "Message to display when rule matches"
+              },
+              "severity": {
+                "type": "string",
+                "description": "Rule severity (ERROR, WARNING, INFO)",
+                "default": "WARNING"
+              },
+              "id": {
+                "type": "string",
+                "description": "Rule identifier",
+                "default": "custom_rule"
+              }
+            },
+            "required": [
+              "output_path",
+              "pattern",
+              "language",
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_results",
+          "description": "Filters scan results by various criteria",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "results_file": {
+                "type": "string",
+                "description": "Absolute path to JSON results file"
+              },
+              "severity": {
+                "type": "string",
+                "description": "Filter by severity (ERROR, WARNING, INFO)"
+              },
+              "rule_id": {
+                "type": "string",
+                "description": "Filter by rule ID"
+              },
+              "path_pattern": {
+                "type": "string",
+                "description": "Filter by file path pattern (regex)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Filter by programming language"
+              },
+              "message_pattern": {
+                "type": "string",
+                "description": "Filter by message content (regex)"
+              }
+            },
+            "required": [
+              "results_file"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "export_results",
+          "description": "Exports scan results in various formats",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "results_file": {
+                "type": "string",
+                "description": "Absolute path to JSON results file"
+              },
+              "output_file": {
+                "type": "string",
+                "description": "Absolute path to output file"
+              },
+              "format": {
+                "type": "string",
+                "description": "Output format (json, sarif, text)",
+                "default": "text"
+              }
+            },
+            "required": [
+              "results_file",
+              "output_file"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "compare_results",
+          "description": "Compares two scan results",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "old_results": {
+                "type": "string",
+                "description": "Absolute path to older JSON results file"
+              },
+              "new_results": {
+                "type": "string",
+                "description": "Absolute path to newer JSON results file"
+              }
+            },
+            "required": [
+              "old_results",
+              "new_results"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "scan_directory",
+        "list_rules",
+        "analyze_results",
+        "create_rule",
+        "filter_results",
+        "export_results",
+        "compare_results"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 288,
+      "name": "MCP Server Semgrep",
+      "author": "@Szowesgad/mcp-server-semgrep",
+      "overview": "Integrate advanced static code analysis and security vulnerability detection into your development workflow. Enhance code quality and maintainability through a conversational interface with AI assistants. Automate error detection and enforce coding standards effortlessly.",
+      "repository_url": "https://github.com/Szowesgad/mcp-server-semgrep",
+      "homepage": "https://smithery.ai/server/@Szowesgad/mcp-server-semgrep",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "122",
+      "success_rate": "47.73%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Szowesgad_mcp-server-semgrep.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "scan_directory",
+          "description": "Performs a Semgrep scan on a directory",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Absolute path to the directory to scan (must be within MCP directory)"
+              },
+              "config": {
+                "type": "string",
+                "description": "Semgrep configuration (e.g. \"auto\" or absolute path to rule file)",
+                "default": "auto"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_rules",
+          "description": "Lists available Semgrep rules",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Programming language for rules (optional)"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_results",
+          "description": "Analyzes scan results",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "results_file": {
+                "type": "string",
+                "description": "Absolute path to JSON results file (must be within MCP directory)"
+              }
+            },
+            "required": [
+              "results_file"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_rule",
+          "description": "Creates a new Semgrep rule",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "output_path": {
+                "type": "string",
+                "description": "Absolute path for output rule file"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Search pattern for the rule"
+              },
+              "language": {
+                "type": "string",
+                "description": "Target language for the rule"
+              },
+              "message": {
+                "type": "string",
+                "description": "Message to display when rule matches"
+              },
+              "severity": {
+                "type": "string",
+                "description": "Rule severity (ERROR, WARNING, INFO)",
+                "default": "WARNING"
+              },
+              "id": {
+                "type": "string",
+                "description": "Rule identifier",
+                "default": "custom_rule"
+              }
+            },
+            "required": [
+              "output_path",
+              "pattern",
+              "language",
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_results",
+          "description": "Filters scan results by various criteria",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "results_file": {
+                "type": "string",
+                "description": "Absolute path to JSON results file"
+              },
+              "severity": {
+                "type": "string",
+                "description": "Filter by severity (ERROR, WARNING, INFO)"
+              },
+              "rule_id": {
+                "type": "string",
+                "description": "Filter by rule ID"
+              },
+              "path_pattern": {
+                "type": "string",
+                "description": "Filter by file path pattern (regex)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Filter by programming language"
+              },
+              "message_pattern": {
+                "type": "string",
+                "description": "Filter by message content (regex)"
+              }
+            },
+            "required": [
+              "results_file"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "export_results",
+          "description": "Exports scan results in various formats",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "results_file": {
+                "type": "string",
+                "description": "Absolute path to JSON results file"
+              },
+              "output_file": {
+                "type": "string",
+                "description": "Absolute path to output file"
+              },
+              "format": {
+                "type": "string",
+                "description": "Output format (json, sarif, text)",
+                "default": "text"
+              }
+            },
+            "required": [
+              "results_file",
+              "output_file"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "compare_results",
+          "description": "Compares two scan results",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "old_results": {
+                "type": "string",
+                "description": "Absolute path to older JSON results file"
+              },
+              "new_results": {
+                "type": "string",
+                "description": "Absolute path to newer JSON results file"
+              }
+            },
+            "required": [
+              "old_results",
+              "new_results"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Szowesgad/mcp-server-semgrep/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Szowesgad/mcp-server-semgrep/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0289.@Szowesgad_mcp-server-semgrep_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 285
+  }
+}

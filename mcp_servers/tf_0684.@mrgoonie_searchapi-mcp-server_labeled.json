@@ -1,0 +1,370 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described, \"SearchAPI Server,\" primarily functions as a gateway that connects AI assistants to external search engines (Google, Bing, YouTube) through a standardized interface. It provides tools for performing web, image, and video searches, with support for pagination, filtering, and formatted results. The server emphasizes easy integration with AI systems via CLI or HTTP transports, enabling automated or AI-driven search capabilities.",
+    "reasoning": "The primary label, \"Web Search & Research,\" is chosen because the server's core functionality revolves around facilitating searches on external platforms (Google, YouTube) and returning structured data. While it enables automation, its primary use case is providing search results rather than browser automation. No custom label is needed as the predefined categories sufficiently cover its functionality.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "API Integration",
+      "Browser Automation"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 683,
+    "server_name": "SearchAPI Server",
+    "rank_by_usage": 684,
+    "usage_count": "12",
+    "original_file": "../crawler/smithery/@mrgoonie_searchapi-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@mrgoonie/searchapi-mcp-server/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAiaXBhcGlBcGlUb2tlbiI6ICIifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_google",
+          "description": "Performs a Google search using SearchAPI.site. \nRequires a search \"query\" string, can be able to search multiple keywords that separated by commas.\nReturns formatted search results including titles, snippets, and links.\nCreate your SearchAPI.site API key at https://searchapi.site/profile",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The search query to perform"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "Your SearchAPI.site API key"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of results to return (1-100)"
+              },
+              "offset": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Offset for pagination"
+              },
+              "sort": {
+                "type": "string",
+                "description": "Sort order (e.g., \"date:d\" for newest first)"
+              },
+              "from_date": {
+                "type": "string",
+                "description": "Start date for filtering results (format: YYYY-MM-DD)"
+              },
+              "to_date": {
+                "type": "string",
+                "description": "End date for filtering results (format: YYYY-MM-DD)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_google_images",
+          "description": "Performs a Google image search using SearchAPI.site.\nRequires a search query and your SearchAPI.site API key.\nReturns formatted image search results including titles, thumbnails, and source links.\nCreate your SearchAPI.site API key at https://searchapi.site/profile",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The image search query to perform"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "Your SearchAPI.site API key"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of results to return (1-100)"
+              },
+              "offset": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Offset for pagination"
+              },
+              "sort": {
+                "type": "string",
+                "description": "Sort order (e.g., \"date:d\" for newest first)"
+              },
+              "from_date": {
+                "type": "string",
+                "description": "Start date for filtering results (format: YYYY-MM-DD)"
+              },
+              "to_date": {
+                "type": "string",
+                "description": "End date for filtering results (format: YYYY-MM-DD)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_youtube",
+          "description": "Performs a YouTube search using SearchAPI.site.\nRequires a search query and your SearchAPI.site API key.\nReturns formatted YouTube search results including video titles, thumbnails, descriptions, and links.\nSupports optional parameters for pagination, sorting, filtering by date and duration.\nCreate your SearchAPI.site API key at https://searchapi.site/profile",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The YouTube search query to perform"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "Your SearchAPI.site API key"
+              },
+              "maxResults": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "description": "Maximum number of results to return (1-50)"
+              },
+              "pageToken": {
+                "type": "string",
+                "description": "Token for pagination to get next/previous page of results"
+              },
+              "order": {
+                "type": "string",
+                "enum": [
+                  "date",
+                  "viewCount",
+                  "rating",
+                  "relevance"
+                ],
+                "description": "Sort order for results"
+              },
+              "publishedAfter": {
+                "type": "number",
+                "description": "Number of days to filter videos from"
+              },
+              "videoDuration": {
+                "type": "string",
+                "enum": [
+                  "short",
+                  "medium",
+                  "long",
+                  "any"
+                ],
+                "description": "Filter by video duration"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "search_google",
+        "search_google_images",
+        "search_youtube"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 683,
+      "name": "SearchAPI Server",
+      "author": "@mrgoonie/searchapi-mcp-server",
+      "overview": "Connect AI assistants to external search data sources like Google and Bing via SearchAPI.site. Perform web, image, and YouTube searches seamlessly through a standardized MCP interface. Enable easy integration with AI systems using CLI or HTTP transports for flexible deployment.",
+      "repository_url": "https://github.com/mrgoonie/searchapi-mcp-server",
+      "homepage": "https://smithery.ai/server/@mrgoonie/searchapi-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "12",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@mrgoonie_searchapi-mcp-server.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "search_google",
+          "description": "Performs a Google search using SearchAPI.site. \nRequires a search \"query\" string, can be able to search multiple keywords that separated by commas.\nReturns formatted search results including titles, snippets, and links.\nCreate your SearchAPI.site API key at https://searchapi.site/profile",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The search query to perform"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "Your SearchAPI.site API key"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of results to return (1-100)"
+              },
+              "offset": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Offset for pagination"
+              },
+              "sort": {
+                "type": "string",
+                "description": "Sort order (e.g., \"date:d\" for newest first)"
+              },
+              "from_date": {
+                "type": "string",
+                "description": "Start date for filtering results (format: YYYY-MM-DD)"
+              },
+              "to_date": {
+                "type": "string",
+                "description": "End date for filtering results (format: YYYY-MM-DD)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_google_images",
+          "description": "Performs a Google image search using SearchAPI.site.\nRequires a search query and your SearchAPI.site API key.\nReturns formatted image search results including titles, thumbnails, and source links.\nCreate your SearchAPI.site API key at https://searchapi.site/profile",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The image search query to perform"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "Your SearchAPI.site API key"
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of results to return (1-100)"
+              },
+              "offset": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Offset for pagination"
+              },
+              "sort": {
+                "type": "string",
+                "description": "Sort order (e.g., \"date:d\" for newest first)"
+              },
+              "from_date": {
+                "type": "string",
+                "description": "Start date for filtering results (format: YYYY-MM-DD)"
+              },
+              "to_date": {
+                "type": "string",
+                "description": "End date for filtering results (format: YYYY-MM-DD)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_youtube",
+          "description": "Performs a YouTube search using SearchAPI.site.\nRequires a search query and your SearchAPI.site API key.\nReturns formatted YouTube search results including video titles, thumbnails, descriptions, and links.\nSupports optional parameters for pagination, sorting, filtering by date and duration.\nCreate your SearchAPI.site API key at https://searchapi.site/profile",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The YouTube search query to perform"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "Your SearchAPI.site API key"
+              },
+              "maxResults": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 50,
+                "description": "Maximum number of results to return (1-50)"
+              },
+              "pageToken": {
+                "type": "string",
+                "description": "Token for pagination to get next/previous page of results"
+              },
+              "order": {
+                "type": "string",
+                "enum": [
+                  "date",
+                  "viewCount",
+                  "rating",
+                  "relevance"
+                ],
+                "description": "Sort order for results"
+              },
+              "publishedAfter": {
+                "type": "number",
+                "description": "Number of days to filter videos from"
+              },
+              "videoDuration": {
+                "type": "string",
+                "enum": [
+                  "short",
+                  "medium",
+                  "long",
+                  "any"
+                ],
+                "description": "Filter by video duration"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"ipapiApiToken\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@mrgoonie/searchapi-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"ipapiApiToken\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@mrgoonie/searchapi-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0684.@mrgoonie_searchapi-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 668
+  }
+}

@@ -1,0 +1,2330 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to enable LLMs to interact with browser functionalities, allowing for the creation, management, and automation of browser instances and web operations. It provides tools for managing browser instances, groups, and performing various web interactions such as navigation, element manipulation, and page content extraction. The server also supports advanced configurations like fingerprint and proxy settings, making it suitable for tasks requiring automated browser control and web interaction.",
+    "reasoning": "The primary label is \"Web Automation\" because the server's core functionality revolves around automating browser operations and web interactions. Secondary labels include \"Browser Automation\" (for browser control specifically) and \"API Integration\" (for web service interactions). No custom label is needed as the predefined categories cover the server's functionality well.",
+    "primary_label": "Browser Automation",
+    "secondary_labels": [
+      "Browser Automation",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 934,
+    "server_name": "LocalAPI MCP Server",
+    "rank_by_usage": 935,
+    "usage_count": "3",
+    "original_file": "../crawler/smithery/@AdsPower_local-api-mcp-typescript.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@AdsPower/local-api-mcp-typescript/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "open-browser",
+          "description": "Open the browser, both environment and profile mean browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "serialNumber": {
+                "type": "string",
+                "description": "The serial number of the browser to open"
+              },
+              "userId": {
+                "type": "string",
+                "description": "The browser id of the browser to open"
+              },
+              "ipTab": {
+                "type": "string",
+                "enum": [
+                  "0",
+                  "1"
+                ],
+                "description": "The ip tab of the browser, 0 is not use ip tab, 1 is use ip tab, default is 0"
+              },
+              "launchArgs": {
+                "type": "string",
+                "description": "The launch args of the browser, use chrome launch args, eg: [\"--blink-settings=imagesEnabled=false\",\"--disable-notifications\"], or vista url, eg: [\"https://www.adspower.net\"]"
+              },
+              "clearCacheAfterClosing": {
+                "type": "string",
+                "enum": [
+                  "0",
+                  "1"
+                ],
+                "description": "The clear cache after closing of the browser, 0 is not clear cache after closing, 1 is clear cache after closing, default is 0"
+              },
+              "cdpMask": {
+                "type": "string",
+                "enum": [
+                  "0",
+                  "1"
+                ],
+                "description": "The cdp mask of the browser, 0 is not use cdp mask, 1 is use cdp mask, default is 0"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "close-browser",
+          "description": "Close the browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "The browser id of the browser to stop, it is required when you want to stop the browser"
+              }
+            },
+            "required": [
+              "userId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-browser",
+          "description": "Create a browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domainName": {
+                "type": "string",
+                "description": "The domain name of the browser, eg: facebook.com"
+              },
+              "openUrls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The open urls of the browser, eg: [\"https://www.google.com\"]"
+              },
+              "cookie": {
+                "type": "string",
+                "description": "The cookie of the browser, eg: \"[{\"domain\":\".baidu.com\",\"expirationDate\":\"\",\"name\":\"\",\"path\":\"/\",\"sameSite\":\"unspecified\",\"secure\":true,\"value\":\"\",\"id\":1}]\""
+              },
+              "username": {
+                "type": "string",
+                "description": "The username of the browser, eg: \"user\""
+              },
+              "password": {
+                "type": "string",
+                "description": "The password of the browser, eg: \"password\""
+              },
+              "groupId": {
+                "type": "string",
+                "pattern": "^\\d+$",
+                "description": "The group id of the browser, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list or create a new group, or default is 0"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the browser, eg: \"My Browser\""
+              },
+              "country": {
+                "type": "string",
+                "description": "The country of the browser, eg: \"CN\""
+              },
+              "sysAppCateId": {
+                "type": "string",
+                "description": "The sys app cate id of the browser, you can use the get-application-list tool to get the application list"
+              },
+              "userProxyConfig": {
+                "type": "object",
+                "properties": {
+                  "proxy_soft": {
+                    "type": "string",
+                    "enum": [
+                      "brightdata",
+                      "brightauto",
+                      "oxylabsauto",
+                      "922S5auto",
+                      "ipideeauto",
+                      "ipfoxyauto",
+                      "922S5auth",
+                      "kookauto",
+                      "ssh",
+                      "other",
+                      "no_proxy"
+                    ],
+                    "description": "The proxy soft of the browser"
+                  },
+                  "proxy_type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "https",
+                      "socks5",
+                      "no_proxy"
+                    ]
+                  },
+                  "proxy_host": {
+                    "type": "string",
+                    "description": "The proxy host of the browser, eg: 127.0.0.1"
+                  },
+                  "proxy_port": {
+                    "type": "string",
+                    "description": "The proxy port of the browser, eg: 8080"
+                  },
+                  "proxy_user": {
+                    "type": "string",
+                    "description": "The proxy user of the browser, eg: user"
+                  },
+                  "proxy_password": {
+                    "type": "string",
+                    "description": "The proxy password of the browser, eg: password"
+                  },
+                  "proxy_url": {
+                    "type": "string",
+                    "description": "The proxy url of the browser, eg: http://127.0.0.1:8080"
+                  },
+                  "global_config": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The global config of the browser, default is 0"
+                  }
+                },
+                "required": [
+                  "proxy_soft"
+                ],
+                "additionalProperties": false,
+                "description": "The user proxy config of the browser"
+              },
+              "fingerprintConfig": {
+                "type": "object",
+                "properties": {
+                  "automatic_timezone": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The automatic timezone of the browser, default is 0"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "The timezone of the browser, eg: Asia/Shanghai"
+                  },
+                  "language": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The language of the browser, eg: [\"en-US\", \"zh-CN\"]"
+                  },
+                  "flash": {
+                    "type": "string",
+                    "enum": [
+                      "block",
+                      "allow"
+                    ],
+                    "description": "The flash of the browser, default is disabled"
+                  },
+                  "fonts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The fonts of the browser, eg: [\"Arial\", \"Times New Roman\"]"
+                  },
+                  "webrtc": {
+                    "type": "string",
+                    "enum": [
+                      "disabled",
+                      "forward",
+                      "proxy",
+                      "local"
+                    ],
+                    "description": "The webrtc of the browser, default is disabled"
+                  },
+                  "browser_kernel_config": {
+                    "type": "object",
+                    "properties": {
+                      "version": {
+                        "type": "string",
+                        "enum": [
+                          "92",
+                          "99",
+                          "102",
+                          "105",
+                          "108",
+                          "111",
+                          "114",
+                          "115",
+                          "116",
+                          "117",
+                          "118",
+                          "119",
+                          "120",
+                          "121",
+                          "122",
+                          "123",
+                          "124",
+                          "125",
+                          "126",
+                          "127",
+                          "128",
+                          "129",
+                          "130",
+                          "131",
+                          "132",
+                          "133",
+                          "134",
+                          "ua_auto"
+                        ],
+                        "description": "The version of the browser, default is ua_auto"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "chrome",
+                          "firefox"
+                        ],
+                        "description": "The type of the browser, default is chrome"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The browser kernel config of the browser, default is version: ua_auto, type: chrome"
+                  },
+                  "random_ua": {
+                    "type": "object",
+                    "properties": {
+                      "ua_version": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "ua_system_version": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "Android 9",
+                            "Android 10",
+                            "Android 11",
+                            "Android 12",
+                            "Android 13",
+                            "iOS 14",
+                            "iOS 15",
+                            "Windows 7",
+                            "Windows 8",
+                            "Windows 10",
+                            "Windows 11",
+                            "Mac OS X 10",
+                            "Mac OS X 11",
+                            "Mac OS X 12",
+                            "Mac OS X 13",
+                            "Linux"
+                          ]
+                        },
+                        "description": "The ua system version of the browser, eg: [\"Android 9\", \"iOS 14\"]"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The random ua config of the browser, default is ua_version: [], ua_system_version: []"
+                  },
+                  "tls_switch": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The tls switch of the browser, default is 0"
+                  },
+                  "tls": {
+                    "type": "string",
+                    "description": "The tls of the browser, if tls_switch is 1, you can set the tls of the browser, eg: \"0xC02C,0xC030\""
+                  }
+                },
+                "additionalProperties": false,
+                "description": "The fingerprint config of the browser, default is automatic_timezone: 0, timezone: \"\", language: [], flash: \"\", fonts: [], webrtc: disabled, browser_kernel_config: ua_auto, random_ua: ua_version: [], ua_system_version: [], tls_switch: 0, tls: \"\""
+              },
+              "storageStrategy": {
+                "type": "number",
+                "description": "The storage strategy of the browser, default is 0"
+              }
+            },
+            "required": [
+              "groupId",
+              "userProxyConfig"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update-browser",
+          "description": "Update the browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domainName": {
+                "type": "string",
+                "description": "The domain name of the browser, eg: facebook.com"
+              },
+              "openUrls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The open urls of the browser, eg: [\"https://www.google.com\"]"
+              },
+              "cookie": {
+                "type": "string",
+                "description": "The cookie of the browser, eg: \"[{\"domain\":\".baidu.com\",\"expirationDate\":\"\",\"name\":\"\",\"path\":\"/\",\"sameSite\":\"unspecified\",\"secure\":true,\"value\":\"\",\"id\":1}]\""
+              },
+              "username": {
+                "type": "string",
+                "description": "The username of the browser, eg: \"user\""
+              },
+              "password": {
+                "type": "string",
+                "description": "The password of the browser, eg: \"password\""
+              },
+              "groupId": {
+                "type": "string",
+                "description": "The group id of the browser, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list or create a new group"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the browser, eg: \"My Browser\""
+              },
+              "country": {
+                "type": "string",
+                "description": "The country of the browser, eg: \"CN\""
+              },
+              "sysAppCateId": {
+                "type": "string",
+                "description": "The sys app cate id of the browser, you can use the get-application-list tool to get the application list"
+              },
+              "userProxyConfig": {
+                "type": "object",
+                "properties": {
+                  "proxy_soft": {
+                    "type": "string",
+                    "enum": [
+                      "brightdata",
+                      "brightauto",
+                      "oxylabsauto",
+                      "922S5auto",
+                      "ipideeauto",
+                      "ipfoxyauto",
+                      "922S5auth",
+                      "kookauto",
+                      "ssh",
+                      "other",
+                      "no_proxy"
+                    ],
+                    "description": "The proxy soft of the browser"
+                  },
+                  "proxy_type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "https",
+                      "socks5",
+                      "no_proxy"
+                    ]
+                  },
+                  "proxy_host": {
+                    "type": "string",
+                    "description": "The proxy host of the browser, eg: 127.0.0.1"
+                  },
+                  "proxy_port": {
+                    "type": "string",
+                    "description": "The proxy port of the browser, eg: 8080"
+                  },
+                  "proxy_user": {
+                    "type": "string",
+                    "description": "The proxy user of the browser, eg: user"
+                  },
+                  "proxy_password": {
+                    "type": "string",
+                    "description": "The proxy password of the browser, eg: password"
+                  },
+                  "proxy_url": {
+                    "type": "string",
+                    "description": "The proxy url of the browser, eg: http://127.0.0.1:8080"
+                  },
+                  "global_config": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The global config of the browser, default is 0"
+                  }
+                },
+                "required": [
+                  "proxy_soft"
+                ],
+                "additionalProperties": false,
+                "description": "The user proxy config of the browser"
+              },
+              "fingerprintConfig": {
+                "type": "object",
+                "properties": {
+                  "automatic_timezone": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The automatic timezone of the browser, default is 0"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "The timezone of the browser, eg: Asia/Shanghai"
+                  },
+                  "language": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The language of the browser, eg: [\"en-US\", \"zh-CN\"]"
+                  },
+                  "flash": {
+                    "type": "string",
+                    "enum": [
+                      "block",
+                      "allow"
+                    ],
+                    "description": "The flash of the browser, default is disabled"
+                  },
+                  "fonts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The fonts of the browser, eg: [\"Arial\", \"Times New Roman\"]"
+                  },
+                  "webrtc": {
+                    "type": "string",
+                    "enum": [
+                      "disabled",
+                      "forward",
+                      "proxy",
+                      "local"
+                    ],
+                    "description": "The webrtc of the browser, default is disabled"
+                  },
+                  "browser_kernel_config": {
+                    "type": "object",
+                    "properties": {
+                      "version": {
+                        "type": "string",
+                        "enum": [
+                          "92",
+                          "99",
+                          "102",
+                          "105",
+                          "108",
+                          "111",
+                          "114",
+                          "115",
+                          "116",
+                          "117",
+                          "118",
+                          "119",
+                          "120",
+                          "121",
+                          "122",
+                          "123",
+                          "124",
+                          "125",
+                          "126",
+                          "127",
+                          "128",
+                          "129",
+                          "130",
+                          "131",
+                          "132",
+                          "133",
+                          "134",
+                          "ua_auto"
+                        ],
+                        "description": "The version of the browser, default is ua_auto"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "chrome",
+                          "firefox"
+                        ],
+                        "description": "The type of the browser, default is chrome"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The browser kernel config of the browser, default is version: ua_auto, type: chrome"
+                  },
+                  "random_ua": {
+                    "type": "object",
+                    "properties": {
+                      "ua_version": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "ua_system_version": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "Android 9",
+                            "Android 10",
+                            "Android 11",
+                            "Android 12",
+                            "Android 13",
+                            "iOS 14",
+                            "iOS 15",
+                            "Windows 7",
+                            "Windows 8",
+                            "Windows 10",
+                            "Windows 11",
+                            "Mac OS X 10",
+                            "Mac OS X 11",
+                            "Mac OS X 12",
+                            "Mac OS X 13",
+                            "Linux"
+                          ]
+                        },
+                        "description": "The ua system version of the browser, eg: [\"Android 9\", \"iOS 14\"]"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The random ua config of the browser, default is ua_version: [], ua_system_version: []"
+                  },
+                  "tls_switch": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The tls switch of the browser, default is 0"
+                  },
+                  "tls": {
+                    "type": "string",
+                    "description": "The tls of the browser, if tls_switch is 1, you can set the tls of the browser, eg: \"0xC02C,0xC030\""
+                  }
+                },
+                "additionalProperties": false,
+                "description": "The fingerprint config of the browser, default is automatic_timezone: 0, timezone: \"\", language: [], flash: \"\", fonts: [], webrtc: disabled, browser_kernel_config: ua_auto, random_ua: ua_version: [], ua_system_version: [], tls_switch: 0, tls: \"\""
+              },
+              "storageStrategy": {
+                "type": "number",
+                "description": "The storage strategy of the browser, default is 0"
+              },
+              "userId": {
+                "type": "string",
+                "description": "The user id of the browser to update, it is required when you want to update the browser"
+              }
+            },
+            "required": [
+              "userId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete-browser",
+          "description": "Delete the browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The user ids of the browsers to delete, it is required when you want to delete the browser"
+              }
+            },
+            "required": [
+              "userIds"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-browser-list",
+          "description": "Get the list of browsers",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "string",
+                "pattern": "^\\d+$",
+                "description": "The group id of the browser, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list"
+              },
+              "size": {
+                "type": "number",
+                "description": "The size of the page, max is 100, if get more than 100, you need to use the page to get the next page, default is 10"
+              },
+              "page": {
+                "type": "number",
+                "description": "The page of the browser, default is 1"
+              },
+              "id": {
+                "type": "string",
+                "description": "The id of the browser"
+              },
+              "serialNumber": {
+                "type": "string",
+                "description": "The serial number of the browser"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "serial_number",
+                  "last_open_time",
+                  "created_time"
+                ],
+                "description": "The sort of the browser"
+              },
+              "order": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "description": "The order of the browser"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-opened-browser",
+          "description": "Get the list of opened browsers",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "move-browser",
+          "description": "Move browsers to a group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "string",
+                "pattern": "^\\d+$",
+                "description": "The target group id, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list"
+              },
+              "userIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The browser ids to move"
+              }
+            },
+            "required": [
+              "groupId",
+              "userIds"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-group",
+          "description": "Create a browser group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupName": {
+                "type": "string",
+                "description": "The name of the group to create"
+              },
+              "remark": {
+                "type": "string",
+                "description": "The remark of the group"
+              }
+            },
+            "required": [
+              "groupName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update-group",
+          "description": "Update the browser group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "string",
+                "pattern": "^\\d+$",
+                "description": "The id of the group to update, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list"
+              },
+              "groupName": {
+                "type": "string",
+                "description": "The new name of the group"
+              },
+              "remark": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The new remark of the group"
+              }
+            },
+            "required": [
+              "groupId",
+              "groupName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-group-list",
+          "description": "Get the list of groups",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupName": {
+                "type": "string",
+                "description": "The name of the group to search, use like to search, often used group name to find the group id, so eg: \"test\" will search \"test\" and \"test1\""
+              },
+              "size": {
+                "type": "number",
+                "description": "The size of the page, max is 100, if get more than 100, you need to use the page to get the next page, default is 10"
+              },
+              "page": {
+                "type": "number",
+                "description": "The page of the group, default is 1"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-application-list",
+          "description": "Get the list of applications",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "size": {
+                "type": "number",
+                "description": "The size of the page"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "connect-browser-with-ws",
+          "description": "Connect the browser with the ws url",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "The browser id of the browser to connect"
+              },
+              "serialNumber": {
+                "type": "string",
+                "description": "The serial number of the browser to connect"
+              },
+              "wsUrl": {
+                "type": "string",
+                "description": "The ws url of the browser, get from the open-browser tool content `ws.puppeteer`"
+              }
+            },
+            "required": [
+              "wsUrl"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "open-new-page",
+          "description": "Open a new page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "navigate",
+          "description": "Navigate to the url",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The url to navigate to"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "screenshot",
+          "description": "Get the screenshot of the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "savePath": {
+                "type": "string",
+                "description": "The path to save the screenshot"
+              },
+              "isFullPage": {
+                "type": "boolean",
+                "description": "The is full page of the screenshot"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-page-visible-text",
+          "description": "Get the visible text content of the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-page-html",
+          "description": "Get the html content of the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "click-element",
+          "description": "Click the element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to click, find from the page source code"
+              }
+            },
+            "required": [
+              "selector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "fill-input",
+          "description": "Fill the input",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the input to fill, find from the page source code"
+              },
+              "text": {
+                "type": "string",
+                "description": "The text to fill in the input"
+              }
+            },
+            "required": [
+              "selector",
+              "text"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "select-option",
+          "description": "Select the option",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the option to select, find from the page source code"
+              },
+              "value": {
+                "type": "string",
+                "description": "The value of the option to select"
+              }
+            },
+            "required": [
+              "selector",
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hover-element",
+          "description": "Hover the element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to hover, find from the page source code"
+              }
+            },
+            "required": [
+              "selector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "scroll-element",
+          "description": "Scroll the element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to scroll, find from the page source code, Simulates a user navigating page by scrolling, usually finding element in the bottom of the page"
+              }
+            },
+            "required": [
+              "selector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "press-key",
+          "description": "Press the key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The key to press, eg: \"Enter\""
+              },
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to press the key, find from the page source code"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "evaluate-script",
+          "description": "Evaluate the script",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "The script to evaluate, eg: \"document.querySelector('#username').value = 'test'\""
+              }
+            },
+            "required": [
+              "script"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "drag-element",
+          "description": "Drag the element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to drag, find from the page source code"
+              },
+              "targetSelector": {
+                "type": "string",
+                "description": "The selector of the element to drag to, find from the page source code"
+              }
+            },
+            "required": [
+              "selector",
+              "targetSelector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "iframe-click-element",
+          "description": "Click the element in the iframe",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to click, find from the page source code"
+              },
+              "iframeSelector": {
+                "type": "string",
+                "description": "The selector of the iframe to click, find from the page source code"
+              }
+            },
+            "required": [
+              "selector",
+              "iframeSelector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 27,
+      "tool_names": [
+        "open-browser",
+        "close-browser",
+        "create-browser",
+        "update-browser",
+        "delete-browser",
+        "get-browser-list",
+        "get-opened-browser",
+        "move-browser",
+        "create-group",
+        "update-group",
+        "get-group-list",
+        "get-application-list",
+        "connect-browser-with-ws",
+        "open-new-page",
+        "navigate",
+        "screenshot",
+        "get-page-visible-text",
+        "get-page-html",
+        "click-element",
+        "fill-input",
+        "select-option",
+        "hover-element",
+        "scroll-element",
+        "press-key",
+        "evaluate-script",
+        "drag-element",
+        "iframe-click-element"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 934,
+      "name": "LocalAPI MCP Server",
+      "author": "@AdsPower/local-api-mcp-typescript",
+      "overview": "Enable LLMs to interact with browser functionalities like creating, updating, and managing browser instances seamlessly. Automate browser operations and enhance your workflow with advanced fingerprint and proxy configurations. Simplify your browser management tasks with intuitive commands and integrations.",
+      "repository_url": "https://github.com/AdsPower/local-api-mcp-typescript",
+      "homepage": "https://smithery.ai/server/@AdsPower/local-api-mcp-typescript",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "3",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@AdsPower_local-api-mcp-typescript.json",
+      "tools_count": 27,
+      "tools": [
+        {
+          "name": "open-browser",
+          "description": "Open the browser, both environment and profile mean browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "serialNumber": {
+                "type": "string",
+                "description": "The serial number of the browser to open"
+              },
+              "userId": {
+                "type": "string",
+                "description": "The browser id of the browser to open"
+              },
+              "ipTab": {
+                "type": "string",
+                "enum": [
+                  "0",
+                  "1"
+                ],
+                "description": "The ip tab of the browser, 0 is not use ip tab, 1 is use ip tab, default is 0"
+              },
+              "launchArgs": {
+                "type": "string",
+                "description": "The launch args of the browser, use chrome launch args, eg: [\"--blink-settings=imagesEnabled=false\",\"--disable-notifications\"], or vista url, eg: [\"https://www.adspower.net\"]"
+              },
+              "clearCacheAfterClosing": {
+                "type": "string",
+                "enum": [
+                  "0",
+                  "1"
+                ],
+                "description": "The clear cache after closing of the browser, 0 is not clear cache after closing, 1 is clear cache after closing, default is 0"
+              },
+              "cdpMask": {
+                "type": "string",
+                "enum": [
+                  "0",
+                  "1"
+                ],
+                "description": "The cdp mask of the browser, 0 is not use cdp mask, 1 is use cdp mask, default is 0"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "close-browser",
+          "description": "Close the browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "The browser id of the browser to stop, it is required when you want to stop the browser"
+              }
+            },
+            "required": [
+              "userId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-browser",
+          "description": "Create a browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domainName": {
+                "type": "string",
+                "description": "The domain name of the browser, eg: facebook.com"
+              },
+              "openUrls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The open urls of the browser, eg: [\"https://www.google.com\"]"
+              },
+              "cookie": {
+                "type": "string",
+                "description": "The cookie of the browser, eg: \"[{\"domain\":\".baidu.com\",\"expirationDate\":\"\",\"name\":\"\",\"path\":\"/\",\"sameSite\":\"unspecified\",\"secure\":true,\"value\":\"\",\"id\":1}]\""
+              },
+              "username": {
+                "type": "string",
+                "description": "The username of the browser, eg: \"user\""
+              },
+              "password": {
+                "type": "string",
+                "description": "The password of the browser, eg: \"password\""
+              },
+              "groupId": {
+                "type": "string",
+                "pattern": "^\\d+$",
+                "description": "The group id of the browser, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list or create a new group, or default is 0"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the browser, eg: \"My Browser\""
+              },
+              "country": {
+                "type": "string",
+                "description": "The country of the browser, eg: \"CN\""
+              },
+              "sysAppCateId": {
+                "type": "string",
+                "description": "The sys app cate id of the browser, you can use the get-application-list tool to get the application list"
+              },
+              "userProxyConfig": {
+                "type": "object",
+                "properties": {
+                  "proxy_soft": {
+                    "type": "string",
+                    "enum": [
+                      "brightdata",
+                      "brightauto",
+                      "oxylabsauto",
+                      "922S5auto",
+                      "ipideeauto",
+                      "ipfoxyauto",
+                      "922S5auth",
+                      "kookauto",
+                      "ssh",
+                      "other",
+                      "no_proxy"
+                    ],
+                    "description": "The proxy soft of the browser"
+                  },
+                  "proxy_type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "https",
+                      "socks5",
+                      "no_proxy"
+                    ]
+                  },
+                  "proxy_host": {
+                    "type": "string",
+                    "description": "The proxy host of the browser, eg: 127.0.0.1"
+                  },
+                  "proxy_port": {
+                    "type": "string",
+                    "description": "The proxy port of the browser, eg: 8080"
+                  },
+                  "proxy_user": {
+                    "type": "string",
+                    "description": "The proxy user of the browser, eg: user"
+                  },
+                  "proxy_password": {
+                    "type": "string",
+                    "description": "The proxy password of the browser, eg: password"
+                  },
+                  "proxy_url": {
+                    "type": "string",
+                    "description": "The proxy url of the browser, eg: http://127.0.0.1:8080"
+                  },
+                  "global_config": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The global config of the browser, default is 0"
+                  }
+                },
+                "required": [
+                  "proxy_soft"
+                ],
+                "additionalProperties": false,
+                "description": "The user proxy config of the browser"
+              },
+              "fingerprintConfig": {
+                "type": "object",
+                "properties": {
+                  "automatic_timezone": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The automatic timezone of the browser, default is 0"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "The timezone of the browser, eg: Asia/Shanghai"
+                  },
+                  "language": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The language of the browser, eg: [\"en-US\", \"zh-CN\"]"
+                  },
+                  "flash": {
+                    "type": "string",
+                    "enum": [
+                      "block",
+                      "allow"
+                    ],
+                    "description": "The flash of the browser, default is disabled"
+                  },
+                  "fonts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The fonts of the browser, eg: [\"Arial\", \"Times New Roman\"]"
+                  },
+                  "webrtc": {
+                    "type": "string",
+                    "enum": [
+                      "disabled",
+                      "forward",
+                      "proxy",
+                      "local"
+                    ],
+                    "description": "The webrtc of the browser, default is disabled"
+                  },
+                  "browser_kernel_config": {
+                    "type": "object",
+                    "properties": {
+                      "version": {
+                        "type": "string",
+                        "enum": [
+                          "92",
+                          "99",
+                          "102",
+                          "105",
+                          "108",
+                          "111",
+                          "114",
+                          "115",
+                          "116",
+                          "117",
+                          "118",
+                          "119",
+                          "120",
+                          "121",
+                          "122",
+                          "123",
+                          "124",
+                          "125",
+                          "126",
+                          "127",
+                          "128",
+                          "129",
+                          "130",
+                          "131",
+                          "132",
+                          "133",
+                          "134",
+                          "ua_auto"
+                        ],
+                        "description": "The version of the browser, default is ua_auto"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "chrome",
+                          "firefox"
+                        ],
+                        "description": "The type of the browser, default is chrome"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The browser kernel config of the browser, default is version: ua_auto, type: chrome"
+                  },
+                  "random_ua": {
+                    "type": "object",
+                    "properties": {
+                      "ua_version": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "ua_system_version": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "Android 9",
+                            "Android 10",
+                            "Android 11",
+                            "Android 12",
+                            "Android 13",
+                            "iOS 14",
+                            "iOS 15",
+                            "Windows 7",
+                            "Windows 8",
+                            "Windows 10",
+                            "Windows 11",
+                            "Mac OS X 10",
+                            "Mac OS X 11",
+                            "Mac OS X 12",
+                            "Mac OS X 13",
+                            "Linux"
+                          ]
+                        },
+                        "description": "The ua system version of the browser, eg: [\"Android 9\", \"iOS 14\"]"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The random ua config of the browser, default is ua_version: [], ua_system_version: []"
+                  },
+                  "tls_switch": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The tls switch of the browser, default is 0"
+                  },
+                  "tls": {
+                    "type": "string",
+                    "description": "The tls of the browser, if tls_switch is 1, you can set the tls of the browser, eg: \"0xC02C,0xC030\""
+                  }
+                },
+                "additionalProperties": false,
+                "description": "The fingerprint config of the browser, default is automatic_timezone: 0, timezone: \"\", language: [], flash: \"\", fonts: [], webrtc: disabled, browser_kernel_config: ua_auto, random_ua: ua_version: [], ua_system_version: [], tls_switch: 0, tls: \"\""
+              },
+              "storageStrategy": {
+                "type": "number",
+                "description": "The storage strategy of the browser, default is 0"
+              }
+            },
+            "required": [
+              "groupId",
+              "userProxyConfig"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update-browser",
+          "description": "Update the browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "domainName": {
+                "type": "string",
+                "description": "The domain name of the browser, eg: facebook.com"
+              },
+              "openUrls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The open urls of the browser, eg: [\"https://www.google.com\"]"
+              },
+              "cookie": {
+                "type": "string",
+                "description": "The cookie of the browser, eg: \"[{\"domain\":\".baidu.com\",\"expirationDate\":\"\",\"name\":\"\",\"path\":\"/\",\"sameSite\":\"unspecified\",\"secure\":true,\"value\":\"\",\"id\":1}]\""
+              },
+              "username": {
+                "type": "string",
+                "description": "The username of the browser, eg: \"user\""
+              },
+              "password": {
+                "type": "string",
+                "description": "The password of the browser, eg: \"password\""
+              },
+              "groupId": {
+                "type": "string",
+                "description": "The group id of the browser, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list or create a new group"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the browser, eg: \"My Browser\""
+              },
+              "country": {
+                "type": "string",
+                "description": "The country of the browser, eg: \"CN\""
+              },
+              "sysAppCateId": {
+                "type": "string",
+                "description": "The sys app cate id of the browser, you can use the get-application-list tool to get the application list"
+              },
+              "userProxyConfig": {
+                "type": "object",
+                "properties": {
+                  "proxy_soft": {
+                    "type": "string",
+                    "enum": [
+                      "brightdata",
+                      "brightauto",
+                      "oxylabsauto",
+                      "922S5auto",
+                      "ipideeauto",
+                      "ipfoxyauto",
+                      "922S5auth",
+                      "kookauto",
+                      "ssh",
+                      "other",
+                      "no_proxy"
+                    ],
+                    "description": "The proxy soft of the browser"
+                  },
+                  "proxy_type": {
+                    "type": "string",
+                    "enum": [
+                      "http",
+                      "https",
+                      "socks5",
+                      "no_proxy"
+                    ]
+                  },
+                  "proxy_host": {
+                    "type": "string",
+                    "description": "The proxy host of the browser, eg: 127.0.0.1"
+                  },
+                  "proxy_port": {
+                    "type": "string",
+                    "description": "The proxy port of the browser, eg: 8080"
+                  },
+                  "proxy_user": {
+                    "type": "string",
+                    "description": "The proxy user of the browser, eg: user"
+                  },
+                  "proxy_password": {
+                    "type": "string",
+                    "description": "The proxy password of the browser, eg: password"
+                  },
+                  "proxy_url": {
+                    "type": "string",
+                    "description": "The proxy url of the browser, eg: http://127.0.0.1:8080"
+                  },
+                  "global_config": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The global config of the browser, default is 0"
+                  }
+                },
+                "required": [
+                  "proxy_soft"
+                ],
+                "additionalProperties": false,
+                "description": "The user proxy config of the browser"
+              },
+              "fingerprintConfig": {
+                "type": "object",
+                "properties": {
+                  "automatic_timezone": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The automatic timezone of the browser, default is 0"
+                  },
+                  "timezone": {
+                    "type": "string",
+                    "description": "The timezone of the browser, eg: Asia/Shanghai"
+                  },
+                  "language": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The language of the browser, eg: [\"en-US\", \"zh-CN\"]"
+                  },
+                  "flash": {
+                    "type": "string",
+                    "enum": [
+                      "block",
+                      "allow"
+                    ],
+                    "description": "The flash of the browser, default is disabled"
+                  },
+                  "fonts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The fonts of the browser, eg: [\"Arial\", \"Times New Roman\"]"
+                  },
+                  "webrtc": {
+                    "type": "string",
+                    "enum": [
+                      "disabled",
+                      "forward",
+                      "proxy",
+                      "local"
+                    ],
+                    "description": "The webrtc of the browser, default is disabled"
+                  },
+                  "browser_kernel_config": {
+                    "type": "object",
+                    "properties": {
+                      "version": {
+                        "type": "string",
+                        "enum": [
+                          "92",
+                          "99",
+                          "102",
+                          "105",
+                          "108",
+                          "111",
+                          "114",
+                          "115",
+                          "116",
+                          "117",
+                          "118",
+                          "119",
+                          "120",
+                          "121",
+                          "122",
+                          "123",
+                          "124",
+                          "125",
+                          "126",
+                          "127",
+                          "128",
+                          "129",
+                          "130",
+                          "131",
+                          "132",
+                          "133",
+                          "134",
+                          "ua_auto"
+                        ],
+                        "description": "The version of the browser, default is ua_auto"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "chrome",
+                          "firefox"
+                        ],
+                        "description": "The type of the browser, default is chrome"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The browser kernel config of the browser, default is version: ua_auto, type: chrome"
+                  },
+                  "random_ua": {
+                    "type": "object",
+                    "properties": {
+                      "ua_version": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "ua_system_version": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "enum": [
+                            "Android 9",
+                            "Android 10",
+                            "Android 11",
+                            "Android 12",
+                            "Android 13",
+                            "iOS 14",
+                            "iOS 15",
+                            "Windows 7",
+                            "Windows 8",
+                            "Windows 10",
+                            "Windows 11",
+                            "Mac OS X 10",
+                            "Mac OS X 11",
+                            "Mac OS X 12",
+                            "Mac OS X 13",
+                            "Linux"
+                          ]
+                        },
+                        "description": "The ua system version of the browser, eg: [\"Android 9\", \"iOS 14\"]"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The random ua config of the browser, default is ua_version: [], ua_system_version: []"
+                  },
+                  "tls_switch": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1"
+                    ],
+                    "description": "The tls switch of the browser, default is 0"
+                  },
+                  "tls": {
+                    "type": "string",
+                    "description": "The tls of the browser, if tls_switch is 1, you can set the tls of the browser, eg: \"0xC02C,0xC030\""
+                  }
+                },
+                "additionalProperties": false,
+                "description": "The fingerprint config of the browser, default is automatic_timezone: 0, timezone: \"\", language: [], flash: \"\", fonts: [], webrtc: disabled, browser_kernel_config: ua_auto, random_ua: ua_version: [], ua_system_version: [], tls_switch: 0, tls: \"\""
+              },
+              "storageStrategy": {
+                "type": "number",
+                "description": "The storage strategy of the browser, default is 0"
+              },
+              "userId": {
+                "type": "string",
+                "description": "The user id of the browser to update, it is required when you want to update the browser"
+              }
+            },
+            "required": [
+              "userId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete-browser",
+          "description": "Delete the browser",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The user ids of the browsers to delete, it is required when you want to delete the browser"
+              }
+            },
+            "required": [
+              "userIds"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-browser-list",
+          "description": "Get the list of browsers",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "string",
+                "pattern": "^\\d+$",
+                "description": "The group id of the browser, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list"
+              },
+              "size": {
+                "type": "number",
+                "description": "The size of the page, max is 100, if get more than 100, you need to use the page to get the next page, default is 10"
+              },
+              "page": {
+                "type": "number",
+                "description": "The page of the browser, default is 1"
+              },
+              "id": {
+                "type": "string",
+                "description": "The id of the browser"
+              },
+              "serialNumber": {
+                "type": "string",
+                "description": "The serial number of the browser"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "serial_number",
+                  "last_open_time",
+                  "created_time"
+                ],
+                "description": "The sort of the browser"
+              },
+              "order": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "description": "The order of the browser"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-opened-browser",
+          "description": "Get the list of opened browsers",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "move-browser",
+          "description": "Move browsers to a group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "string",
+                "pattern": "^\\d+$",
+                "description": "The target group id, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list"
+              },
+              "userIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "The browser ids to move"
+              }
+            },
+            "required": [
+              "groupId",
+              "userIds"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-group",
+          "description": "Create a browser group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupName": {
+                "type": "string",
+                "description": "The name of the group to create"
+              },
+              "remark": {
+                "type": "string",
+                "description": "The remark of the group"
+              }
+            },
+            "required": [
+              "groupName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update-group",
+          "description": "Update the browser group",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupId": {
+                "type": "string",
+                "pattern": "^\\d+$",
+                "description": "The id of the group to update, must be a numeric string (e.g., \"123\"). You can use the get-group-list tool to get the group list"
+              },
+              "groupName": {
+                "type": "string",
+                "description": "The new name of the group"
+              },
+              "remark": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "The new remark of the group"
+              }
+            },
+            "required": [
+              "groupId",
+              "groupName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-group-list",
+          "description": "Get the list of groups",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "groupName": {
+                "type": "string",
+                "description": "The name of the group to search, use like to search, often used group name to find the group id, so eg: \"test\" will search \"test\" and \"test1\""
+              },
+              "size": {
+                "type": "number",
+                "description": "The size of the page, max is 100, if get more than 100, you need to use the page to get the next page, default is 10"
+              },
+              "page": {
+                "type": "number",
+                "description": "The page of the group, default is 1"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-application-list",
+          "description": "Get the list of applications",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "size": {
+                "type": "number",
+                "description": "The size of the page"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "connect-browser-with-ws",
+          "description": "Connect the browser with the ws url",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "The browser id of the browser to connect"
+              },
+              "serialNumber": {
+                "type": "string",
+                "description": "The serial number of the browser to connect"
+              },
+              "wsUrl": {
+                "type": "string",
+                "description": "The ws url of the browser, get from the open-browser tool content `ws.puppeteer`"
+              }
+            },
+            "required": [
+              "wsUrl"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "open-new-page",
+          "description": "Open a new page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "navigate",
+          "description": "Navigate to the url",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The url to navigate to"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "screenshot",
+          "description": "Get the screenshot of the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "savePath": {
+                "type": "string",
+                "description": "The path to save the screenshot"
+              },
+              "isFullPage": {
+                "type": "boolean",
+                "description": "The is full page of the screenshot"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-page-visible-text",
+          "description": "Get the visible text content of the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-page-html",
+          "description": "Get the html content of the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "click-element",
+          "description": "Click the element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to click, find from the page source code"
+              }
+            },
+            "required": [
+              "selector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "fill-input",
+          "description": "Fill the input",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the input to fill, find from the page source code"
+              },
+              "text": {
+                "type": "string",
+                "description": "The text to fill in the input"
+              }
+            },
+            "required": [
+              "selector",
+              "text"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "select-option",
+          "description": "Select the option",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the option to select, find from the page source code"
+              },
+              "value": {
+                "type": "string",
+                "description": "The value of the option to select"
+              }
+            },
+            "required": [
+              "selector",
+              "value"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hover-element",
+          "description": "Hover the element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to hover, find from the page source code"
+              }
+            },
+            "required": [
+              "selector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "scroll-element",
+          "description": "Scroll the element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to scroll, find from the page source code, Simulates a user navigating page by scrolling, usually finding element in the bottom of the page"
+              }
+            },
+            "required": [
+              "selector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "press-key",
+          "description": "Press the key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The key to press, eg: \"Enter\""
+              },
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to press the key, find from the page source code"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "evaluate-script",
+          "description": "Evaluate the script",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "The script to evaluate, eg: \"document.querySelector('#username').value = 'test'\""
+              }
+            },
+            "required": [
+              "script"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "drag-element",
+          "description": "Drag the element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to drag, find from the page source code"
+              },
+              "targetSelector": {
+                "type": "string",
+                "description": "The selector of the element to drag to, find from the page source code"
+              }
+            },
+            "required": [
+              "selector",
+              "targetSelector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "iframe-click-element",
+          "description": "Click the element in the iframe",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "The selector of the element to click, find from the page source code"
+              },
+              "iframeSelector": {
+                "type": "string",
+                "description": "The selector of the iframe to click, find from the page source code"
+              }
+            },
+            "required": [
+              "selector",
+              "iframeSelector"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@AdsPower/local-api-mcp-typescript/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@AdsPower/local-api-mcp-typescript/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0935.@AdsPower_local-api-mcp-typescript_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 914
+  }
+}

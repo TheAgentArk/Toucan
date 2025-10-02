@@ -1,0 +1,814 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in managing and automating frontmatter operations for Hugo Markdown files. It provides tools to read, update, and validate YAML frontmatter fields such as titles, dates, tags, images, and draft statuses. The server supports batch operations across directories, enabling efficient content management workflows for Hugo-based websites. Its primary functionality revolves around content organization, metadata management, and automation of frontmatter-related tasks.",
+    "reasoning": "The primary label \"Content Creation\" was chosen because the server's core functionality directly supports creating, editing, and organizing content within Hugo Markdown files. Secondary labels \"File Management\" and \"Data Analysis & Processing\" were selected because the server interacts with file systems to manage content structures and performs analytical operations like tag counting and validation. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "File Management",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1689,
+    "server_name": "Hugo Frontmatter Manager",
+    "rank_by_usage": 1690,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@wdm0006_hugo-frontmatter-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@wdm0006/hugo-frontmatter-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_frontmatter",
+          "description": "Reads and returns the entire YAML frontmatter from the specified Markdown file. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path"
+            ],
+            "title": "get_frontmatterArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_field",
+          "description": "Retrieves the value of a specific field from the frontmatter of a file. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "field_name": {
+                "title": "Field Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "field_name"
+            ],
+            "title": "get_fieldArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_title",
+          "description": "Sets the 'title' (string) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "title"
+            ],
+            "title": "set_titleArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_date",
+          "description": "Sets the 'date' (string, e.g., YYYY-MM-DD) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "date_value": {
+                "title": "Date Value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "date_value"
+            ],
+            "title": "set_dateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_publish_date",
+          "description": "Sets the 'publishDate' (string, e.g., YYYY-MM-DD) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "publish_date_value": {
+                "title": "Publish Date Value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "publish_date_value"
+            ],
+            "title": "set_publish_dateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_description",
+          "description": "Sets the 'description' (string) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "description": {
+                "title": "Description",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "description"
+            ],
+            "title": "set_descriptionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_draft_status",
+          "description": "Sets the 'draft' status (boolean) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "draft_status": {
+                "title": "Draft Status",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "file_path",
+              "draft_status"
+            ],
+            "title": "set_draft_statusArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_tag",
+          "description": "Adds a tag to the 'tags' list in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "tag_to_add": {
+                "title": "Tag To Add",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "tag_to_add"
+            ],
+            "title": "add_tagArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "remove_tag",
+          "description": "Removes a tag from the 'tags' list in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "tag_to_remove": {
+                "title": "Tag To Remove",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "tag_to_remove"
+            ],
+            "title": "remove_tagArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_image",
+          "description": "Adds an image path to the 'images' list in the frontmatter. Expects an absolute file path for the post.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "image_path_to_add": {
+                "title": "Image Path To Add",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "image_path_to_add"
+            ],
+            "title": "add_imageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "remove_image",
+          "description": "Removes an image path from the 'images' list in the frontmatter. Expects an absolute file path for the post.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "image_path_to_remove": {
+                "title": "Image Path To Remove",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "image_path_to_remove"
+            ],
+            "title": "remove_imageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_tags_in_directory",
+          "description": "Scans .md files in a directory for 'tags' in their frontmatter and returns tag counts. Expects an absolute directory path.",
+          "input_schema": {
+            "properties": {
+              "directory_path_str": {
+                "title": "Directory Path Str",
+                "type": "string"
+              },
+              "recursive": {
+                "default": true,
+                "title": "Recursive",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directory_path_str"
+            ],
+            "title": "list_tags_in_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find_posts_by_tag",
+          "description": "Finds all posts containing a specific tag. Expects an absolute directory path.",
+          "input_schema": {
+            "properties": {
+              "directory_path_str": {
+                "title": "Directory Path Str",
+                "type": "string"
+              },
+              "tag_to_find": {
+                "title": "Tag To Find",
+                "type": "string"
+              },
+              "recursive": {
+                "default": true,
+                "title": "Recursive",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directory_path_str",
+              "tag_to_find"
+            ],
+            "title": "find_posts_by_tagArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename_tag_in_directory",
+          "description": "Renames a tag in all posts within a directory. Expects absolute paths for directory and tags as non-empty strings.",
+          "input_schema": {
+            "properties": {
+              "directory_path_str": {
+                "title": "Directory Path Str",
+                "type": "string"
+              },
+              "old_tag": {
+                "title": "Old Tag",
+                "type": "string"
+              },
+              "new_tag": {
+                "title": "New Tag",
+                "type": "string"
+              },
+              "recursive": {
+                "default": true,
+                "title": "Recursive",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directory_path_str",
+              "old_tag",
+              "new_tag"
+            ],
+            "title": "rename_tag_in_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "validate_date_formats",
+          "description": "Validates date formats in frontmatter. Expects an absolute directory path.",
+          "input_schema": {
+            "properties": {
+              "directory_path_str": {
+                "title": "Directory Path Str",
+                "type": "string"
+              },
+              "field_name": {
+                "default": "date",
+                "title": "Field Name",
+                "type": "string"
+              },
+              "expected_format_str": {
+                "default": "%Y-%m-%d",
+                "title": "Expected Format Str",
+                "type": "string"
+              },
+              "recursive": {
+                "default": true,
+                "title": "Recursive",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directory_path_str"
+            ],
+            "title": "validate_date_formatsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 15,
+      "tool_names": [
+        "get_frontmatter",
+        "get_field",
+        "set_title",
+        "set_date",
+        "set_publish_date",
+        "set_description",
+        "set_draft_status",
+        "add_tag",
+        "remove_tag",
+        "add_image",
+        "remove_image",
+        "list_tags_in_directory",
+        "find_posts_by_tag",
+        "rename_tag_in_directory",
+        "validate_date_formats"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1689,
+      "name": "Hugo Frontmatter Manager",
+      "author": "@wdm0006/hugo-frontmatter-mcp",
+      "overview": "Manage and automate frontmatter operations in Hugo Markdown files. Read, update, and validate YAML frontmatter fields, and perform batch operations on tags, images, and dates across directories. Streamline content management workflows for Hugo sites with programmatic APIs.",
+      "repository_url": "https://github.com/wdm0006/hugo-frontmatter-mcp",
+      "homepage": "https://smithery.ai/server/@wdm0006/hugo-frontmatter-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@wdm0006_hugo-frontmatter-mcp.json",
+      "tools_count": 15,
+      "tools": [
+        {
+          "name": "get_frontmatter",
+          "description": "Reads and returns the entire YAML frontmatter from the specified Markdown file. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path"
+            ],
+            "title": "get_frontmatterArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_field",
+          "description": "Retrieves the value of a specific field from the frontmatter of a file. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "field_name": {
+                "title": "Field Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "field_name"
+            ],
+            "title": "get_fieldArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_title",
+          "description": "Sets the 'title' (string) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "title": {
+                "title": "Title",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "title"
+            ],
+            "title": "set_titleArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_date",
+          "description": "Sets the 'date' (string, e.g., YYYY-MM-DD) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "date_value": {
+                "title": "Date Value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "date_value"
+            ],
+            "title": "set_dateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_publish_date",
+          "description": "Sets the 'publishDate' (string, e.g., YYYY-MM-DD) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "publish_date_value": {
+                "title": "Publish Date Value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "publish_date_value"
+            ],
+            "title": "set_publish_dateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_description",
+          "description": "Sets the 'description' (string) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "description": {
+                "title": "Description",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "description"
+            ],
+            "title": "set_descriptionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_draft_status",
+          "description": "Sets the 'draft' status (boolean) in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "draft_status": {
+                "title": "Draft Status",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "file_path",
+              "draft_status"
+            ],
+            "title": "set_draft_statusArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_tag",
+          "description": "Adds a tag to the 'tags' list in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "tag_to_add": {
+                "title": "Tag To Add",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "tag_to_add"
+            ],
+            "title": "add_tagArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "remove_tag",
+          "description": "Removes a tag from the 'tags' list in the frontmatter. Expects an absolute file path.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "tag_to_remove": {
+                "title": "Tag To Remove",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "tag_to_remove"
+            ],
+            "title": "remove_tagArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_image",
+          "description": "Adds an image path to the 'images' list in the frontmatter. Expects an absolute file path for the post.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "image_path_to_add": {
+                "title": "Image Path To Add",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "image_path_to_add"
+            ],
+            "title": "add_imageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "remove_image",
+          "description": "Removes an image path from the 'images' list in the frontmatter. Expects an absolute file path for the post.",
+          "input_schema": {
+            "properties": {
+              "file_path": {
+                "title": "File Path",
+                "type": "string"
+              },
+              "image_path_to_remove": {
+                "title": "Image Path To Remove",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file_path",
+              "image_path_to_remove"
+            ],
+            "title": "remove_imageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_tags_in_directory",
+          "description": "Scans .md files in a directory for 'tags' in their frontmatter and returns tag counts. Expects an absolute directory path.",
+          "input_schema": {
+            "properties": {
+              "directory_path_str": {
+                "title": "Directory Path Str",
+                "type": "string"
+              },
+              "recursive": {
+                "default": true,
+                "title": "Recursive",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directory_path_str"
+            ],
+            "title": "list_tags_in_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find_posts_by_tag",
+          "description": "Finds all posts containing a specific tag. Expects an absolute directory path.",
+          "input_schema": {
+            "properties": {
+              "directory_path_str": {
+                "title": "Directory Path Str",
+                "type": "string"
+              },
+              "tag_to_find": {
+                "title": "Tag To Find",
+                "type": "string"
+              },
+              "recursive": {
+                "default": true,
+                "title": "Recursive",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directory_path_str",
+              "tag_to_find"
+            ],
+            "title": "find_posts_by_tagArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename_tag_in_directory",
+          "description": "Renames a tag in all posts within a directory. Expects absolute paths for directory and tags as non-empty strings.",
+          "input_schema": {
+            "properties": {
+              "directory_path_str": {
+                "title": "Directory Path Str",
+                "type": "string"
+              },
+              "old_tag": {
+                "title": "Old Tag",
+                "type": "string"
+              },
+              "new_tag": {
+                "title": "New Tag",
+                "type": "string"
+              },
+              "recursive": {
+                "default": true,
+                "title": "Recursive",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directory_path_str",
+              "old_tag",
+              "new_tag"
+            ],
+            "title": "rename_tag_in_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "validate_date_formats",
+          "description": "Validates date formats in frontmatter. Expects an absolute directory path.",
+          "input_schema": {
+            "properties": {
+              "directory_path_str": {
+                "title": "Directory Path Str",
+                "type": "string"
+              },
+              "field_name": {
+                "default": "date",
+                "title": "Field Name",
+                "type": "string"
+              },
+              "expected_format_str": {
+                "default": "%Y-%m-%d",
+                "title": "Expected Format Str",
+                "type": "string"
+              },
+              "recursive": {
+                "default": true,
+                "title": "Recursive",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "directory_path_str"
+            ],
+            "title": "validate_date_formatsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@wdm0006/hugo-frontmatter-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@wdm0006/hugo-frontmatter-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1690.@wdm0006_hugo-frontmatter-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1525
+  }
+}

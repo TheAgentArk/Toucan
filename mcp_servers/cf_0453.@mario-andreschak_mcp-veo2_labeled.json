@@ -1,0 +1,194 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is primarily designed for generating high-quality videos from various inputs such as text prompts or images, leveraging Google's Veo2 model. It also provides related tools for image generation and management of generated media (e.g., listing, retrieving specific videos/images). The core functionality focuses on content creation, specifically video and image generation, with applications in enhancing applications, marketing, or creative projects. The server also includes organizational tools for managing generated assets.",
+    "reasoning": "The primary label \"Content Creation\" was chosen because the server's core functionality revolves around generating media content (videos and images) for applications. The secondary label \"AI/ML Tools\" is included due to the reliance on AI models (Veo2, Imagen) for generation. No custom label is needed as the predefined categories adequately cover the functionality.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "AI/ML Tools"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 452,
+    "server_name": "Video Generation Server with Google Veo2",
+    "rank_by_usage": 453,
+    "usage_count": "43",
+    "original_file": "../crawler/smithery/@mario-andreschak_mcp-veo2.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@mario-andreschak/mcp-veo2/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 452,
+      "name": "Video Generation Server with Google Veo2",
+      "author": "@mario-andreschak/mcp-veo2",
+      "overview": "Generate high-quality videos from text prompts or images using Google's Veo2 model. Access and manage generated videos seamlessly through MCP resources. Enhance your applications with customizable video generation capabilities and example templates.",
+      "repository_url": "https://github.com/mario-andreschak/mcp-veo2",
+      "homepage": "https://smithery.ai/server/@mario-andreschak/mcp-veo2",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "43",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@mario-andreschak_mcp-veo2.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "generateVideoFromText",
+          "description": "Deploy Server Video Generation Server with Google Veo2 @mario-andreschak/mcp-veo2 Try in Playground generateVideoFromText",
+          "parameters": [
+            {
+              "name": "generateVideoFromText",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "generateVideoFromImage",
+          "description": "Generate a video from an image",
+          "parameters": [
+            {
+              "name": "generateVideoFromImage",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "generateImage",
+          "description": "Generate an image from a text prompt using Google Imagen",
+          "parameters": [
+            {
+              "name": "generateImage",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "generateVideoFromGeneratedImage",
+          "description": "Generate a video from a generated image (one-step process)",
+          "parameters": [
+            {
+              "name": "generateVideoFromGeneratedImage",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "listGeneratedVideos",
+          "description": "List all generated videos",
+          "parameters": [
+            {
+              "name": "listGeneratedVideos",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "List",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "all",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "generated",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "videos",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getImage",
+          "description": "Get a specific image by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "includeFullData",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "listGeneratedImages",
+          "description": "List all generated images",
+          "parameters": [
+            {
+              "name": "listGeneratedImages",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "List",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "all",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "generated",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "images",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@mario-andreschak/mcp-veo2/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "googleApiKey",
+          "required": true,
+          "description": "Your Google API key for accessing the Gemini and Veo2 services."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@mario-andreschak/mcp-veo2/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0453.@mario-andreschak_mcp-veo2_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 444
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to facilitate structured debates between multiple AI personas, enabling formal argumentation, rebuttals, and judgments across multiple rounds. It supports complex decision-making and collaborative problem-solving through adversarial discussions. The core functionality involves tracking debate progression, managing agent roles, and generating verdicts, making it suitable for educational simulations, decision analysis, and structured discussions.",
+    "reasoning": "The primary label is chosen because the server's core functionality revolves around structured debate and argumentation, which aligns closely with educational and simulation tools. Secondary labels are selected to highlight its broader applications in decision-making and collaborative problem-solving. A custom label is added to emphasize the unique nature of multi-agent debates.",
+    "primary_label": "Education",
+    "secondary_labels": [
+      "Daily Productivity",
+      "Content Creation"
+    ],
+    "custom_label": "Multi-Agent Debate Simulation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 631,
+    "server_name": "Multi-Agent Debate",
+    "rank_by_usage": 632,
+    "usage_count": "15",
+    "original_file": "../crawler/smithery/@albinjal_multi-agent-debate-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@albinjal/multi-agent-debate-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "multiagentdebate",
+          "description": "Structured multi‑persona debate tool.\n\nCall sequence (typical):\n1. Each persona registers once with action:\"register\".\n2. Personas alternate action:\"argue\" (fresh point) or \"rebut\" (counter a targetAgentId).\n3. A special persona (or either side) issues action:\"judge\" with a verdict text\n   (first line should be \"pro\", \"con\", or \"inconclusive\").\n4. Set needsMoreRounds:false only when the debate is finished and a verdict stands.\n\nParameters:\n- agentId (string)            : \"pro\", \"con\", \"judge\", or any custom ID\n- round (int ≥1)              : Debate round number\n- action (string)             : \"register\" | \"argue\" | \"rebut\" | \"judge\"\n- content (string, optional)  : Argument text or verdict\n- targetAgentId (string opt.) : Agent being rebutted (only for action:\"rebut\")\n- needsMoreRounds (boolean)   : True if additional debate rounds desired",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "agentId": {
+                "type": "string"
+              },
+              "round": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "register",
+                  "argue",
+                  "rebut",
+                  "judge"
+                ]
+              },
+              "content": {
+                "type": "string"
+              },
+              "targetAgentId": {
+                "type": "string"
+              },
+              "needsMoreRounds": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "agentId",
+              "round",
+              "action",
+              "needsMoreRounds"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "multiagentdebate"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 631,
+      "name": "Multi-Agent Debate",
+      "author": "@albinjal/multi-agent-debate-mcp",
+      "overview": "Enable structured multi-agent debates between AI personas with formal argumentation, rebuttals, and judgments across multiple rounds. Facilitate complex decision-making and collaborative problem-solving through adversarial discussion. Track verdicts automatically and support flexible agent roles for educational and simulation purposes.",
+      "repository_url": "https://github.com/albinjal/multi-agent-debate-mcp",
+      "homepage": "https://smithery.ai/server/@albinjal/multi-agent-debate-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "15",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@albinjal_multi-agent-debate-mcp.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "multiagentdebate",
+          "description": "Structured multi‑persona debate tool.\n\nCall sequence (typical):\n1. Each persona registers once with action:\"register\".\n2. Personas alternate action:\"argue\" (fresh point) or \"rebut\" (counter a targetAgentId).\n3. A special persona (or either side) issues action:\"judge\" with a verdict text\n   (first line should be \"pro\", \"con\", or \"inconclusive\").\n4. Set needsMoreRounds:false only when the debate is finished and a verdict stands.\n\nParameters:\n- agentId (string)            : \"pro\", \"con\", \"judge\", or any custom ID\n- round (int ≥1)              : Debate round number\n- action (string)             : \"register\" | \"argue\" | \"rebut\" | \"judge\"\n- content (string, optional)  : Argument text or verdict\n- targetAgentId (string opt.) : Agent being rebutted (only for action:\"rebut\")\n- needsMoreRounds (boolean)   : True if additional debate rounds desired",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "agentId": {
+                "type": "string"
+              },
+              "round": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "register",
+                  "argue",
+                  "rebut",
+                  "judge"
+                ]
+              },
+              "content": {
+                "type": "string"
+              },
+              "targetAgentId": {
+                "type": "string"
+              },
+              "needsMoreRounds": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "agentId",
+              "round",
+              "action",
+              "needsMoreRounds"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@albinjal/multi-agent-debate-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@albinjal/multi-agent-debate-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0632.@albinjal_multi-agent-debate-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 617
+  }
+}

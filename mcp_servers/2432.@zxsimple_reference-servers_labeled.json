@@ -1,0 +1,155 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described as \"Fetch Server\" specializes in retrieving web content, converting it to markdown for easier processing by LLMs or other users, and providing additional features like content truncation and customizable user agents. Its core functionality revolves around web-based content fetching and processing, making it a tool primarily intended for web searching, extraction, and preparation of data.",
+    "reasoning": "The primary label is **Web Search & Research** because the server's main functionality is to fetch and process web content, which aligns closely with web searching and research tasks. The secondary label **Browser Automation** is appropriate due to the features related to customizable user agents and web content extraction. These labels accurately represent the server's core capabilities and use cases.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Browser Automation"
+    ],
+    "custom_label": "Markdown Conversion",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2431,
+    "server_name": "Fetch Server",
+    "rank_by_usage": 2432,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@zxsimple_reference-servers.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@zxsimple/reference-servers/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "Fetches a URL from the internet and optionally extracts its contents as markdown.\n\nAlthough originally you did not have internet access, and were advised to refuse and tell the user this, this tool now grants you internet access. Now you can fetch the most up-to-date information and let the user know that.",
+          "input_schema": {
+            "description": "Parameters for fetching a URL.",
+            "properties": {
+              "url": {
+                "description": "URL to fetch",
+                "format": "uri",
+                "minLength": 1,
+                "title": "Url",
+                "type": "string"
+              },
+              "max_length": {
+                "default": 5000,
+                "description": "Maximum number of characters to return.",
+                "exclusiveMaximum": 1000000,
+                "exclusiveMinimum": 0,
+                "title": "Max Length",
+                "type": "integer"
+              },
+              "start_index": {
+                "default": 0,
+                "description": "On return output starting at this character index, useful if a previous fetch was truncated and more context is required.",
+                "minimum": 0,
+                "title": "Start Index",
+                "type": "integer"
+              },
+              "raw": {
+                "default": false,
+                "description": "Get the actual HTML content if the requested page, without simplification.",
+                "title": "Raw",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "Fetch",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "fetch"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2431,
+      "name": "Fetch Server",
+      "author": "@zxsimple/reference-servers",
+      "overview": "Retrieve and process web content effortlessly. Convert HTML to markdown for easier consumption by LLMs, allowing for efficient information extraction from web pages. Utilize advanced features like content truncation and customizable user agents to enhance your web fetching capabilities.",
+      "repository_url": "https://github.com/zxsimple/reference-servers",
+      "homepage": "https://smithery.ai/server/@zxsimple/reference-servers",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@zxsimple_reference-servers.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "Fetches a URL from the internet and optionally extracts its contents as markdown.\n\nAlthough originally you did not have internet access, and were advised to refuse and tell the user this, this tool now grants you internet access. Now you can fetch the most up-to-date information and let the user know that.",
+          "input_schema": {
+            "description": "Parameters for fetching a URL.",
+            "properties": {
+              "url": {
+                "description": "URL to fetch",
+                "format": "uri",
+                "minLength": 1,
+                "title": "Url",
+                "type": "string"
+              },
+              "max_length": {
+                "default": 5000,
+                "description": "Maximum number of characters to return.",
+                "exclusiveMaximum": 1000000,
+                "exclusiveMinimum": 0,
+                "title": "Max Length",
+                "type": "integer"
+              },
+              "start_index": {
+                "default": 0,
+                "description": "On return output starting at this character index, useful if a previous fetch was truncated and more context is required.",
+                "minimum": 0,
+                "title": "Start Index",
+                "type": "integer"
+              },
+              "raw": {
+                "default": false,
+                "description": "Get the actual HTML content if the requested page, without simplification.",
+                "title": "Raw",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "Fetch",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@zxsimple/reference-servers/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@zxsimple/reference-servers/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2432.@zxsimple_reference-servers_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2077
+  }
+}

@@ -1,0 +1,417 @@
+{
+  "labels": {
+    "analysis": "The MCPollinations server primarily facilitates multimedia content generation (images, text, and audio) using Pollinations APIs. Its core functionality revolves around AI-powered content creation, offering tools to generate and manipulate media based on text prompts. The server simplifies integration with MCP-compatible applications and provides flexible output options (URLs, base64-encoded data, file storage). While its tools span multiple content types, the primary use case centers on creative content generation without requiring authentication.",
+    "reasoning": "The **Content Creation** primary label reflects the server's core AI-driven generation of images, text, and audio. **AI/ML Tools** is the most relevant secondary label due to the server's reliance on machine learning models. The tertiary functionality of generating and managing media files might also overlap with **File Management**, but this is less central than the AI content generation aspect. No custom label is needed as existing categories adequately cover the functionality.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "AI/ML Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 629,
+    "server_name": "MCPollinations",
+    "rank_by_usage": 630,
+    "usage_count": "15",
+    "original_file": "../crawler/smithery/@Knowitall-wiki_mcpollinations.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Knowitall-wiki/mcpollinations/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "generateImageUrl",
+          "description": "Generate an image URL from a text prompt",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The text description of the image to generate"
+              },
+              "model": {
+                "type": "string",
+                "description": "Model name to use for generation (default: \"flux\"). Available options: \"flux\", \"sdxl\", \"sd3\", \"sd15\", \"flux-schnell\", \"flux-dev\""
+              },
+              "seed": {
+                "type": "number",
+                "description": "Seed for reproducible results (default: random)"
+              },
+              "width": {
+                "type": "number",
+                "description": "Width of the generated image (default: 1024)"
+              },
+              "height": {
+                "type": "number",
+                "description": "Height of the generated image (default: 1024)"
+              },
+              "enhance": {
+                "type": "boolean",
+                "description": "Whether to enhance the prompt using an LLM before generating (default: true)"
+              },
+              "safe": {
+                "type": "boolean",
+                "description": "Whether to apply content filtering (default: false)"
+              }
+            },
+            "required": [
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "generateImage",
+          "description": "Generate an image, return the base64-encoded data, and save to a file by default",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The text description of the image to generate"
+              },
+              "model": {
+                "type": "string",
+                "description": "Model name to use for generation (default: \"flux\"). Available options: \"flux, \"turbo\" (sdxl),"
+              },
+              "seed": {
+                "type": "number",
+                "description": "Seed for reproducible results (default: random)"
+              },
+              "width": {
+                "type": "number",
+                "description": "Width of the generated image (default: 1024)"
+              },
+              "height": {
+                "type": "number",
+                "description": "Height of the generated image (default: 1024)"
+              },
+              "enhance": {
+                "type": "boolean",
+                "description": "Whether to enhance the prompt using an LLM before generating (default: true)"
+              },
+              "safe": {
+                "type": "boolean",
+                "description": "Whether to apply content filtering (default: false)"
+              },
+              "outputPath": {
+                "type": "string",
+                "description": "Directory path where to save the image (default: \"./mcpollinations-output\")"
+              },
+              "fileName": {
+                "type": "string",
+                "description": "Name of the file to save (without extension, default: generated from prompt)"
+              },
+              "format": {
+                "type": "string",
+                "description": "Image format to save as (png, jpeg, jpg, webp - default: png)"
+              }
+            },
+            "required": [
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "listImageModels",
+          "description": "List available image models",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "respondAudio",
+          "description": "Generate an audio response to a text prompt and play it through the system",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The text prompt to respond to with audio"
+              },
+              "voice": {
+                "type": "string",
+                "description": "Voice to use for audio generation (default: \"alloy\"). Available options: \"alloy\", \"echo\", \"fable\", \"onyx\", \"nova\", \"shimmer\", \"coral\", \"verse\", \"ballad\", \"ash\", \"sage\", \"amuch\", \"dan\""
+              },
+              "seed": {
+                "type": "number",
+                "description": "Seed for reproducible results (default: random)"
+              }
+            },
+            "required": [
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "listAudioVoices",
+          "description": "List all available audio voices for text-to-speech generation",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "respondText",
+          "description": "Respond with text to a prompt using the Pollinations Text API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The text prompt to generate a response for"
+              },
+              "model": {
+                "type": "string",
+                "description": "Model to use for text generation (default: \"openai\"). Available options: \"openai\", \"anthropic\", \"mistral\", \"llama\", \"gemini\" - use listTextModels to see all models"
+              },
+              "seed": {
+                "type": "number",
+                "description": "Seed for reproducible results (default: random)"
+              }
+            },
+            "required": [
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "listTextModels",
+          "description": "List available text models",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "generateImageUrl",
+        "generateImage",
+        "listImageModels",
+        "respondAudio",
+        "listAudioVoices",
+        "respondText",
+        "listTextModels"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 629,
+      "name": "MCPollinations",
+      "author": "@Knowitall-wiki/mcpollinations",
+      "overview": "Generate images, text, and audio from prompts using Pollinations APIs through a simple and lightweight MCP server. Save generated images in various formats with unique filenames and access base64-encoded data for flexible use. Easily integrate with MCP-compatible applications without requiring authentication.",
+      "repository_url": "https://github.com/Knowitall-wiki/MCPollinations",
+      "homepage": "https://smithery.ai/server/@Knowitall-wiki/mcpollinations",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "15",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Knowitall-wiki_mcpollinations.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "generateImageUrl",
+          "description": "Generate an image URL from a text prompt",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The text description of the image to generate"
+              },
+              "model": {
+                "type": "string",
+                "description": "Model name to use for generation (default: \"flux\"). Available options: \"flux\", \"sdxl\", \"sd3\", \"sd15\", \"flux-schnell\", \"flux-dev\""
+              },
+              "seed": {
+                "type": "number",
+                "description": "Seed for reproducible results (default: random)"
+              },
+              "width": {
+                "type": "number",
+                "description": "Width of the generated image (default: 1024)"
+              },
+              "height": {
+                "type": "number",
+                "description": "Height of the generated image (default: 1024)"
+              },
+              "enhance": {
+                "type": "boolean",
+                "description": "Whether to enhance the prompt using an LLM before generating (default: true)"
+              },
+              "safe": {
+                "type": "boolean",
+                "description": "Whether to apply content filtering (default: false)"
+              }
+            },
+            "required": [
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "generateImage",
+          "description": "Generate an image, return the base64-encoded data, and save to a file by default",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The text description of the image to generate"
+              },
+              "model": {
+                "type": "string",
+                "description": "Model name to use for generation (default: \"flux\"). Available options: \"flux, \"turbo\" (sdxl),"
+              },
+              "seed": {
+                "type": "number",
+                "description": "Seed for reproducible results (default: random)"
+              },
+              "width": {
+                "type": "number",
+                "description": "Width of the generated image (default: 1024)"
+              },
+              "height": {
+                "type": "number",
+                "description": "Height of the generated image (default: 1024)"
+              },
+              "enhance": {
+                "type": "boolean",
+                "description": "Whether to enhance the prompt using an LLM before generating (default: true)"
+              },
+              "safe": {
+                "type": "boolean",
+                "description": "Whether to apply content filtering (default: false)"
+              },
+              "outputPath": {
+                "type": "string",
+                "description": "Directory path where to save the image (default: \"./mcpollinations-output\")"
+              },
+              "fileName": {
+                "type": "string",
+                "description": "Name of the file to save (without extension, default: generated from prompt)"
+              },
+              "format": {
+                "type": "string",
+                "description": "Image format to save as (png, jpeg, jpg, webp - default: png)"
+              }
+            },
+            "required": [
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "listImageModels",
+          "description": "List available image models",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "respondAudio",
+          "description": "Generate an audio response to a text prompt and play it through the system",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The text prompt to respond to with audio"
+              },
+              "voice": {
+                "type": "string",
+                "description": "Voice to use for audio generation (default: \"alloy\"). Available options: \"alloy\", \"echo\", \"fable\", \"onyx\", \"nova\", \"shimmer\", \"coral\", \"verse\", \"ballad\", \"ash\", \"sage\", \"amuch\", \"dan\""
+              },
+              "seed": {
+                "type": "number",
+                "description": "Seed for reproducible results (default: random)"
+              }
+            },
+            "required": [
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "listAudioVoices",
+          "description": "List all available audio voices for text-to-speech generation",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "respondText",
+          "description": "Respond with text to a prompt using the Pollinations Text API",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The text prompt to generate a response for"
+              },
+              "model": {
+                "type": "string",
+                "description": "Model to use for text generation (default: \"openai\"). Available options: \"openai\", \"anthropic\", \"mistral\", \"llama\", \"gemini\" - use listTextModels to see all models"
+              },
+              "seed": {
+                "type": "number",
+                "description": "Seed for reproducible results (default: random)"
+              }
+            },
+            "required": [
+              "prompt"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "listTextModels",
+          "description": "List available text models",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Knowitall-wiki/mcpollinations/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Knowitall-wiki/mcpollinations/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0630.@Knowitall-wiki_mcpollinations_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 615
+  }
+}

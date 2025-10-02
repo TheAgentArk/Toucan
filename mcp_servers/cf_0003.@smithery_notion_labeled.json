@@ -1,0 +1,197 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is focused on interacting with Notion, a collaborative workspace platform. Its core functionality revolves around managing Notion databases, pages, blocks, and comments. The tools enable users to list, query, create, update, and retrieve Notion content, as well as search and comment within the platform. The server acts as an interface to programmatically manipulate and retrieve information from Notion workspaces.",
+    "reasoning": "The primary label \"Database Operations\" was chosen because the server heavily interacts with Notion databases, allowing querying, creation, and updates. The secondary label \"Content Management\" was added because the tools handle page manipulation and content organization, which aligns with content management systems. The custom label \"Notion Integration\" was created to highlight the server's specialized focus on Notion's platform.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "File Management",
+      "Browser Automation"
+    ],
+    "custom_label": "Notion Integration",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2,
+    "server_name": "Notion",
+    "rank_by_usage": 3,
+    "usage_count": "52,946",
+    "original_file": "../crawler/smithery/@smithery_notion.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@smithery/notion/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 2,
+      "name": "Notion",
+      "author": "@smithery/notion",
+      "overview": "A Notion workspace is a collaborative environment where teams can organize work, manage projects, and store information in a highly customizable way.",
+      "repository_url": "https://github.com/smithery-ai/mcp-servers",
+      "homepage": "https://smithery.ai/server/@smithery/notion",
+      "remote_or_local": "Remote",
+      "license": "Not specified",
+      "usage_count": "52,946",
+      "success_rate": "98.34%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@smithery_notion.json",
+      "tools_count": 15,
+      "tools": [
+        {
+          "name": "list-databases",
+          "description": "Deploy Server @smithery/notion Try in Playground list-databases",
+          "parameters": []
+        },
+        {
+          "name": "query-database",
+          "description": "Query a database with optional filtering, sorting, and pagination",
+          "parameters": []
+        },
+        {
+          "name": "create-database",
+          "description": "Create a new database in a parent page",
+          "parameters": []
+        },
+        {
+          "name": "update-database",
+          "description": "Update an existing database's title, description, or properties",
+          "parameters": []
+        },
+        {
+          "name": "get_page",
+          "description": "Get a Notion page by ID. Returns page metadata and properties, but NOT the actual content blocks. To get page content, use get-block-children with the page ID.",
+          "parameters": [
+            {
+              "name": "get_page",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create-page",
+          "description": "Create a new Notion page in a specific parent page or database",
+          "parameters": []
+        },
+        {
+          "name": "update_page",
+          "description": "Update an existing page's properties",
+          "parameters": [
+            {
+              "name": "page_id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "properties",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get-block",
+          "description": "Description not available",
+          "parameters": []
+        },
+        {
+          "name": "get-block-children",
+          "description": "Description not available",
+          "parameters": []
+        },
+        {
+          "name": "append-block-children",
+          "description": "Append new children blocks to a parent block",
+          "parameters": []
+        },
+        {
+          "name": "update-block",
+          "description": "Update an existing block",
+          "parameters": [
+            {
+              "name": "content",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "archived",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "True",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "False",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "blockType",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "search",
+          "description": "Search for pages and databases in Notion by title or content. Returns page/database metadata. To retrieve actual page content after finding it, use get-block-children with the page ID. To get comments on a page, use get-comments with the page ID.",
+          "parameters": [
+            {
+              "name": "search",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get-comments",
+          "description": "Description not available",
+          "parameters": []
+        },
+        {
+          "name": "get-all-page-comments",
+          "description": "Retrieve ALL comments from a Notion page by searching both the page itself and every block within the page. This is more comprehensive than get-comments as it finds comments attached to any block in the page.",
+          "parameters": []
+        },
+        {
+          "name": "create-comment",
+          "description": "Create a new comment on a Notion page or specific block. Comments can be attached to: 1) An entire page (use page ID), or 2) A specific block within a page (use block ID). To reply to an existing comment thread, use the discussionId.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@smithery/notion/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "notionApiKey",
+          "required": true,
+          "description": "Notion API key, obtained from https://www.notion.so/profile/integrations/"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@smithery/notion/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0003.@smithery_notion_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 3
+  }
+}

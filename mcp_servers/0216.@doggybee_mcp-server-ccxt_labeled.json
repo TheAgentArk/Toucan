@@ -1,0 +1,1575 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed specifically for cryptocurrency exchange integration using the CCXT library. Its primary functionality revolves around interacting with various cryptocurrency exchanges, retrieving market data, executing trades, and managing account settings. The tools provided enable users to access real-time market information (tickers, order books, OHLCV data), place market orders, adjust trading parameters (leverage, margin mode), and manage proxy configurations for exchange connections.",
+    "reasoning": "The primary label \"Cryptocurrency & Blockchain\" was chosen because the server's core functionality centers around cryptocurrency exchange operations. Secondary labels \"API Integration\" and \"Development Tools\" were selected because the server acts as an intermediary for exchange APIs and is likely used by developers for building trading systems. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "API Integration",
+      "Development Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 215,
+    "server_name": "CCXT MCP Server",
+    "rank_by_usage": 216,
+    "usage_count": "208",
+    "original_file": "../crawler/smithery/@doggybee_mcp-server-ccxt.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@doggybee/mcp-server-ccxt/mcp?config=eyJkZWZhdWx0RXhjaGFuZ2UiOiAiYmluYW5jZSJ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "cache-stats",
+          "description": "Get CCXT cache statistics",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clear-cache",
+          "description": "Clear CCXT cache",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-log-level",
+          "description": "Set logging level",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "enum": [
+                  "debug",
+                  "info",
+                  "warning",
+                  "error"
+                ],
+                "description": "Logging level to set"
+              }
+            },
+            "required": [
+              "level"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-exchanges",
+          "description": "List all available cryptocurrency exchanges",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-ticker",
+          "description": "Get current ticker information for a trading pair",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "batch-get-tickers",
+          "description": "Get ticker information for multiple trading pairs at once",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of trading pair symbols (e.g., ['BTC/USDT', 'ETH/USDT'])"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbols"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-orderbook",
+          "description": "Get market order book for a trading pair",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 20,
+                "description": "Depth of the orderbook"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-ohlcv",
+          "description": "Get OHLCV candlestick data for a trading pair",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "timeframe": {
+                "type": "string",
+                "default": "1d",
+                "description": "Timeframe (e.g., 1m, 5m, 1h, 1d)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 100,
+                "description": "Number of candles to fetch (max 1000)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-trades",
+          "description": "Get recent trades for a trading pair",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 50,
+                "description": "Number of trades to fetch"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-markets",
+          "description": "Get all available markets for an exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "page": {
+                "type": "number",
+                "default": 1,
+                "description": "Page number"
+              },
+              "pageSize": {
+                "type": "number",
+                "default": 100,
+                "description": "Items per page"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-exchange-info",
+          "description": "Get exchange information and status",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-leverage-tiers",
+          "description": "Get futures leverage tiers for trading pairs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (optional, e.g., BTC/USDT)"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "future",
+                "description": "Market type (default: future)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-funding-rates",
+          "description": "Get current funding rates for perpetual contracts",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of trading pair symbols (optional)"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "swap",
+                "description": "Market type (default: swap)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-market-types",
+          "description": "Get market types supported by an exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "account-balance",
+          "description": "Get your account balance from a crypto exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "place-market-order",
+          "description": "Place a market order on an exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "buy",
+                  "sell"
+                ],
+                "description": "Order side: buy or sell"
+              },
+              "amount": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Amount to buy/sell"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol",
+              "side",
+              "amount",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-leverage",
+          "description": "Set leverage for futures trading",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "leverage": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Leverage value"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "future",
+                "description": "Market type (default: future)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol",
+              "leverage",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-margin-mode",
+          "description": "Set margin mode for futures trading",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "marginMode": {
+                "type": "string",
+                "enum": [
+                  "cross",
+                  "isolated"
+                ],
+                "description": "Margin mode: cross or isolated"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "future",
+                "description": "Market type (default: future)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol",
+              "marginMode",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "place-futures-market-order",
+          "description": "Place a futures market order",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "buy",
+                  "sell"
+                ],
+                "description": "Order side: buy or sell"
+              },
+              "amount": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Amount to buy/sell"
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Additional order parameters"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "future",
+                "description": "Market type (default: future)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol",
+              "side",
+              "amount",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-proxy-config",
+          "description": "Get the current proxy configuration",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-proxy-config",
+          "description": "Configure proxy settings for all exchanges",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Enable or disable proxy"
+              },
+              "url": {
+                "type": "string",
+                "description": "Proxy URL (e.g., http://proxy-server:port)"
+              },
+              "username": {
+                "type": "string",
+                "description": "Proxy username (optional)"
+              },
+              "password": {
+                "type": "string",
+                "description": "Proxy password (optional)"
+              },
+              "clearCache": {
+                "type": "boolean",
+                "default": true,
+                "description": "Clear exchange cache to apply changes immediately"
+              }
+            },
+            "required": [
+              "enabled",
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "test-proxy-connection",
+          "description": "Test the proxy connection with a specified exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID to test connection with (e.g., binance)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clear-exchange-cache",
+          "description": "Clear exchange instance cache to apply configuration changes",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-market-type",
+          "description": "Set default market type for all exchanges",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type to set"
+              },
+              "clearCache": {
+                "type": "boolean",
+                "default": true,
+                "description": "Clear exchange cache to apply changes immediately"
+              }
+            },
+            "required": [
+              "marketType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 24,
+      "tool_names": [
+        "cache-stats",
+        "clear-cache",
+        "set-log-level",
+        "list-exchanges",
+        "get-ticker",
+        "batch-get-tickers",
+        "get-orderbook",
+        "get-ohlcv",
+        "get-trades",
+        "get-markets",
+        "get-exchange-info",
+        "get-leverage-tiers",
+        "get-funding-rates",
+        "get-market-types",
+        "account-balance",
+        "place-market-order",
+        "set-leverage",
+        "set-margin-mode",
+        "place-futures-market-order",
+        "get-proxy-config",
+        "set-proxy-config",
+        "test-proxy-connection",
+        "clear-exchange-cache",
+        "set-market-type"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 215,
+      "name": "CCXT MCP Server",
+      "author": "@doggybee/mcp-server-ccxt",
+      "overview": "High-performance CCXT MCP server for cryptocurrency exchange integration.",
+      "repository_url": "https://github.com/doggybee/mcp-server-ccxt",
+      "homepage": "https://smithery.ai/server/@doggybee/mcp-server-ccxt",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "208",
+      "success_rate": "98.97%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@doggybee_mcp-server-ccxt.json",
+      "tools_count": 24,
+      "tools": [
+        {
+          "name": "cache-stats",
+          "description": "Get CCXT cache statistics",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clear-cache",
+          "description": "Clear CCXT cache",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-log-level",
+          "description": "Set logging level",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "enum": [
+                  "debug",
+                  "info",
+                  "warning",
+                  "error"
+                ],
+                "description": "Logging level to set"
+              }
+            },
+            "required": [
+              "level"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list-exchanges",
+          "description": "List all available cryptocurrency exchanges",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-ticker",
+          "description": "Get current ticker information for a trading pair",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "batch-get-tickers",
+          "description": "Get ticker information for multiple trading pairs at once",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of trading pair symbols (e.g., ['BTC/USDT', 'ETH/USDT'])"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbols"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-orderbook",
+          "description": "Get market order book for a trading pair",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 20,
+                "description": "Depth of the orderbook"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-ohlcv",
+          "description": "Get OHLCV candlestick data for a trading pair",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "timeframe": {
+                "type": "string",
+                "default": "1d",
+                "description": "Timeframe (e.g., 1m, 5m, 1h, 1d)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 100,
+                "description": "Number of candles to fetch (max 1000)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-trades",
+          "description": "Get recent trades for a trading pair",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 50,
+                "description": "Number of trades to fetch"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-markets",
+          "description": "Get all available markets for an exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "page": {
+                "type": "number",
+                "default": 1,
+                "description": "Page number"
+              },
+              "pageSize": {
+                "type": "number",
+                "default": 100,
+                "description": "Items per page"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-exchange-info",
+          "description": "Get exchange information and status",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-leverage-tiers",
+          "description": "Get futures leverage tiers for trading pairs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (optional, e.g., BTC/USDT)"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "future",
+                "description": "Market type (default: future)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-funding-rates",
+          "description": "Get current funding rates for perpetual contracts",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of trading pair symbols (optional)"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "swap",
+                "description": "Market type (default: swap)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-market-types",
+          "description": "Get market types supported by an exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "account-balance",
+          "description": "Get your account balance from a crypto exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "place-market-order",
+          "description": "Place a market order on an exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, coinbase)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "buy",
+                  "sell"
+                ],
+                "description": "Order side: buy or sell"
+              },
+              "amount": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Amount to buy/sell"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type (default: spot)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol",
+              "side",
+              "amount",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-leverage",
+          "description": "Set leverage for futures trading",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "leverage": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Leverage value"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "future",
+                "description": "Market type (default: future)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol",
+              "leverage",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-margin-mode",
+          "description": "Set margin mode for futures trading",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "marginMode": {
+                "type": "string",
+                "enum": [
+                  "cross",
+                  "isolated"
+                ],
+                "description": "Margin mode: cross or isolated"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "future",
+                "description": "Market type (default: future)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol",
+              "marginMode",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "place-futures-market-order",
+          "description": "Place a futures market order",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID (e.g., binance, bybit)"
+              },
+              "symbol": {
+                "type": "string",
+                "description": "Trading pair symbol (e.g., BTC/USDT)"
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "buy",
+                  "sell"
+                ],
+                "description": "Order side: buy or sell"
+              },
+              "amount": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Amount to buy/sell"
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Additional order parameters"
+              },
+              "apiKey": {
+                "type": "string",
+                "description": "API key for authentication"
+              },
+              "secret": {
+                "type": "string",
+                "description": "API secret for authentication"
+              },
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "future",
+                  "swap"
+                ],
+                "default": "future",
+                "description": "Market type (default: future)"
+              }
+            },
+            "required": [
+              "exchange",
+              "symbol",
+              "side",
+              "amount",
+              "apiKey",
+              "secret"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-proxy-config",
+          "description": "Get the current proxy configuration",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-proxy-config",
+          "description": "Configure proxy settings for all exchanges",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Enable or disable proxy"
+              },
+              "url": {
+                "type": "string",
+                "description": "Proxy URL (e.g., http://proxy-server:port)"
+              },
+              "username": {
+                "type": "string",
+                "description": "Proxy username (optional)"
+              },
+              "password": {
+                "type": "string",
+                "description": "Proxy password (optional)"
+              },
+              "clearCache": {
+                "type": "boolean",
+                "default": true,
+                "description": "Clear exchange cache to apply changes immediately"
+              }
+            },
+            "required": [
+              "enabled",
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "test-proxy-connection",
+          "description": "Test the proxy connection with a specified exchange",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "exchange": {
+                "type": "string",
+                "description": "Exchange ID to test connection with (e.g., binance)"
+              }
+            },
+            "required": [
+              "exchange"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clear-exchange-cache",
+          "description": "Clear exchange instance cache to apply configuration changes",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set-market-type",
+          "description": "Set default market type for all exchanges",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "marketType": {
+                "type": "string",
+                "enum": [
+                  "spot",
+                  "future",
+                  "swap",
+                  "option",
+                  "margin"
+                ],
+                "description": "Market type to set"
+              },
+              "clearCache": {
+                "type": "boolean",
+                "default": true,
+                "description": "Clear exchange cache to apply changes immediately"
+              }
+            },
+            "required": [
+              "marketType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"defaultExchange\": \"binance\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@doggybee/mcp-server-ccxt/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"defaultExchange\": \"binance\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@doggybee/mcp-server-ccxt/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0216.@doggybee_mcp-server-ccxt_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 212
+  }
+}

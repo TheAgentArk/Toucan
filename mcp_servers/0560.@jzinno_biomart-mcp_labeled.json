@@ -1,0 +1,507 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in biological data retrieval and analysis through interactions with Biomart databases. Its primary function is to facilitate the discovery, exploration, and querying of biological data by providing access to various datasets, attributes, and filters within Biomart. The server offers tools for listing available marts and datasets, exploring attributes and filters, and retrieving specific biological data based on user-defined queries. It also supports identifier translation between different attribute types, which is crucial for data integration and analysis in bioinformatics.",
+    "reasoning": "The primary label \"Bioinformatics & Genomics\" was chosen because the server's core functionality revolves around querying and processing biological data, which is central to bioinformatics and genomics research. The secondary label \"Data Analysis & Processing\" was selected due to the server's capabilities in filtering, transforming, and retrieving biological data for analytical purposes. The secondary label \"Database Operations\" was also chosen because the server interfaces with organized biological databases (Biomart) and allows querying structured data.",
+    "primary_label": "Others",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Database Operations"
+    ],
+    "custom_label": "Biological Data Querying",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 559,
+    "server_name": "Biomart MCP",
+    "rank_by_usage": 560,
+    "usage_count": "22",
+    "original_file": "../crawler/smithery/@jzinno_biomart-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jzinno/biomart-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list_marts",
+          "description": "\n    Lists all available Biomart marts (databases) from Ensembl.\n\n    Biomart organizes biological data in a hierarchy: MART -> DATASET -> ATTRIBUTES/FILTERS.\n    This function returns all available marts as a CSV string.\n\n    Returns:\n        str: CSV-formatted table of all marts with their display names and descriptions.\n\n    Example:\n        list_marts()\n        >>> \"name,display_name,description\n             ENSEMBL_MART_ENSEMBL,Ensembl Genes,Gene annotation from Ensembl\n             ENSEMBL_MART_MOUSE,Mouse strains,Strain-specific data for mouse\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "list_martsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_datasets",
+          "description": "\n    Lists all available biomart datasets for a given mart.\n\n    Each mart contains multiple datasets. This function returns all datasets\n    available in the specified mart as a CSV string.\n\n    Args:\n        mart (str): The mart identifier to list datasets from.\n            Valid values include: ENSEMBL_MART_ENSEMBL, ENSEMBL_MART_MOUSE,\n            ENSEMBL_MART_ONTOLOGY, ENSEMBL_MART_GENOMIC, ENSEMBL_MART_SNP,\n            ENSEMBL_MART_FUNCGEN\n\n    Returns:\n        str: CSV-formatted table of all datasets with their display names and descriptions.\n\n    Example:\n        list_datasets(\"ENSEMBL_MART_ENSEMBL\")\n        >>> \"name,display_name,description\n             hsapiens_gene_ensembl,Human genes,Human genes (GRCh38.p13)\n             mmusculus_gene_ensembl,Mouse genes,Mouse genes (GRCm39)\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart"
+            ],
+            "title": "list_datasetsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_common_attributes",
+          "description": "\n    Lists commonly used attributes available for a given dataset.\n\n    This function returns only the most frequently used attributes (defined in COMMON_ATTRIBUTES)\n    to avoid overwhelming the model with too many options. For a complete list,\n    use list_all_attributes.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n\n    Returns:\n        str: CSV-formatted table of common attributes with their display names and descriptions.\n\n    Example:\n        list_common_attributes(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\")\n        >>> \"name,display_name,description\n             ensembl_gene_id,Gene stable ID,Ensembl stable ID for the gene\n             external_gene_name,Gene name,The gene name\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset"
+            ],
+            "title": "list_common_attributesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_all_attributes",
+          "description": "\n    Lists all available attributes for a given dataset with some filtering.\n\n    This function returns a filtered list of all attributes available for the specified\n    dataset. Some less commonly used attributes (homologs, microarray probes) are\n    filtered out to reduce the response size.\n\n    CAUTION: This function can return a large number of attributes and may be unstable\n    for certain datasets. Consider using list_common_attributes first.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n\n    Returns:\n        str: CSV-formatted table of all filtered attributes.\n\n    Example:\n        list_all_attributes(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\")\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset"
+            ],
+            "title": "list_all_attributesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_filters",
+          "description": "\n    Lists all available filters for a given dataset.\n\n    Filters are used to narrow down the results of a Biomart query.\n    This function returns all filters that can be applied to the specified dataset.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n\n    Returns:\n        str: CSV-formatted table of all filters with their display names and descriptions.\n\n    Example:\n        list_filters(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\")\n        >>> \"name,description\n             chromosome_name,Chromosome/scaffold name\n             start,Gene start (bp)\n             end,Gene end (bp)\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset"
+            ],
+            "title": "list_filtersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_data",
+          "description": "\n    Queries Biomart for data using specified attributes and filters.\n\n    This function performs the main data retrieval from Biomart, allowing you to\n    query biological data by specifying which attributes to return and which filters\n    to apply. Includes automatic retry logic for resilience.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n        attributes (list[str]): List of attributes to retrieve (e.g., [\"ensembl_gene_id\", \"external_gene_name\"])\n        filters (dict[str, str]): Dictionary of filters to apply (e.g., {\"chromosome_name\": \"1\"})\n\n    Returns:\n        str: CSV-formatted results of the query.\n\n    Example:\n        get_data(\n            \"ENSEMBL_MART_ENSEMBL\",\n            \"hsapiens_gene_ensembl\",\n            [\"ensembl_gene_id\", \"external_gene_name\", \"chromosome_name\"],\n            {\"chromosome_name\": \"X\", \"biotype\": \"protein_coding\"}\n        )\n        >>> \"ensembl_gene_id,external_gene_name,chromosome_name\n             ENSG00000000003,TSPAN6,X\n             ENSG00000000005,TNMD,X\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              },
+              "attributes": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Attributes",
+                "type": "array"
+              },
+              "filters": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "title": "Filters",
+                "type": "object"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset",
+              "attributes",
+              "filters"
+            ],
+            "title": "get_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_translation",
+          "description": "\n    Translates a single identifier from one attribute type to another.\n\n    This function allows conversion between different identifier types, such as\n    converting a gene symbol to an Ensembl ID. Results are cached to improve performance.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n        from_attr (str): The source attribute name (e.g., \"hgnc_symbol\")\n        to_attr (str): The target attribute name (e.g., \"ensembl_gene_id\")\n        target (str): The identifier value to translate (e.g., \"TP53\")\n\n    Returns:\n        str: The translated identifier, or an error message if not found.\n\n    Example:\n        get_translation(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\", \"hgnc_symbol\", \"ensembl_gene_id\", \"TP53\")\n        >>> \"ENSG00000141510\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              },
+              "from_attr": {
+                "title": "From Attr",
+                "type": "string"
+              },
+              "to_attr": {
+                "title": "To Attr",
+                "type": "string"
+              },
+              "target": {
+                "title": "Target",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset",
+              "from_attr",
+              "to_attr",
+              "target"
+            ],
+            "title": "get_translationArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "batch_translate",
+          "description": "\n    Translates multiple identifiers in a single batch operation.\n\n    This function is more efficient than multiple calls to get_translation when\n    you need to translate many identifiers at once.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n        from_attr (str): The source attribute name (e.g., \"hgnc_symbol\")\n        to_attr (str): The target attribute name (e.g., \"ensembl_gene_id\")\n        targets (list[str]): List of identifier values to translate (e.g., [\"TP53\", \"BRCA1\", \"BRCA2\"])\n\n    Returns:\n        dict: A dictionary containing:\n            - translations: Dictionary mapping input IDs to translated IDs\n            - not_found: List of IDs that could not be translated\n            - found_count: Number of successfully translated IDs\n            - not_found_count: Number of IDs that could not be translated\n\n    Example:\n        batch_translate(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\", \"hgnc_symbol\", \"ensembl_gene_id\", [\"TP53\", \"BRCA1\", \"BRCA2\"])\n        >>> {\"translations\": {\"TP53\": \"ENSG00000141510\", \"BRCA1\": \"ENSG00000012048\"}, \"not_found\": [\"BRCA2\"], \"found_count\": 2, \"not_found_count\": 1}\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              },
+              "from_attr": {
+                "title": "From Attr",
+                "type": "string"
+              },
+              "to_attr": {
+                "title": "To Attr",
+                "type": "string"
+              },
+              "targets": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Targets",
+                "type": "array"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset",
+              "from_attr",
+              "to_attr",
+              "targets"
+            ],
+            "title": "batch_translateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 8,
+      "tool_names": [
+        "list_marts",
+        "list_datasets",
+        "list_common_attributes",
+        "list_all_attributes",
+        "list_filters",
+        "get_data",
+        "get_translation",
+        "batch_translate"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 559,
+      "name": "Biomart MCP",
+      "author": "@jzinno/biomart-mcp",
+      "overview": "Interface with Biomart databases to discover marts, datasets, and retrieve biological data efficiently. Utilize tools for attribute exploration and ID translation to enhance your data analysis capabilities. Streamline your biological data queries with a standardized MCP server.",
+      "repository_url": "https://github.com/jzinno/biomart-mcp",
+      "homepage": "https://smithery.ai/server/@jzinno/biomart-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "22",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jzinno_biomart-mcp.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "list_marts",
+          "description": "\n    Lists all available Biomart marts (databases) from Ensembl.\n\n    Biomart organizes biological data in a hierarchy: MART -> DATASET -> ATTRIBUTES/FILTERS.\n    This function returns all available marts as a CSV string.\n\n    Returns:\n        str: CSV-formatted table of all marts with their display names and descriptions.\n\n    Example:\n        list_marts()\n        >>> \"name,display_name,description\n             ENSEMBL_MART_ENSEMBL,Ensembl Genes,Gene annotation from Ensembl\n             ENSEMBL_MART_MOUSE,Mouse strains,Strain-specific data for mouse\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "list_martsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_datasets",
+          "description": "\n    Lists all available biomart datasets for a given mart.\n\n    Each mart contains multiple datasets. This function returns all datasets\n    available in the specified mart as a CSV string.\n\n    Args:\n        mart (str): The mart identifier to list datasets from.\n            Valid values include: ENSEMBL_MART_ENSEMBL, ENSEMBL_MART_MOUSE,\n            ENSEMBL_MART_ONTOLOGY, ENSEMBL_MART_GENOMIC, ENSEMBL_MART_SNP,\n            ENSEMBL_MART_FUNCGEN\n\n    Returns:\n        str: CSV-formatted table of all datasets with their display names and descriptions.\n\n    Example:\n        list_datasets(\"ENSEMBL_MART_ENSEMBL\")\n        >>> \"name,display_name,description\n             hsapiens_gene_ensembl,Human genes,Human genes (GRCh38.p13)\n             mmusculus_gene_ensembl,Mouse genes,Mouse genes (GRCm39)\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart"
+            ],
+            "title": "list_datasetsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_common_attributes",
+          "description": "\n    Lists commonly used attributes available for a given dataset.\n\n    This function returns only the most frequently used attributes (defined in COMMON_ATTRIBUTES)\n    to avoid overwhelming the model with too many options. For a complete list,\n    use list_all_attributes.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n\n    Returns:\n        str: CSV-formatted table of common attributes with their display names and descriptions.\n\n    Example:\n        list_common_attributes(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\")\n        >>> \"name,display_name,description\n             ensembl_gene_id,Gene stable ID,Ensembl stable ID for the gene\n             external_gene_name,Gene name,The gene name\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset"
+            ],
+            "title": "list_common_attributesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_all_attributes",
+          "description": "\n    Lists all available attributes for a given dataset with some filtering.\n\n    This function returns a filtered list of all attributes available for the specified\n    dataset. Some less commonly used attributes (homologs, microarray probes) are\n    filtered out to reduce the response size.\n\n    CAUTION: This function can return a large number of attributes and may be unstable\n    for certain datasets. Consider using list_common_attributes first.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n\n    Returns:\n        str: CSV-formatted table of all filtered attributes.\n\n    Example:\n        list_all_attributes(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\")\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset"
+            ],
+            "title": "list_all_attributesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_filters",
+          "description": "\n    Lists all available filters for a given dataset.\n\n    Filters are used to narrow down the results of a Biomart query.\n    This function returns all filters that can be applied to the specified dataset.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n\n    Returns:\n        str: CSV-formatted table of all filters with their display names and descriptions.\n\n    Example:\n        list_filters(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\")\n        >>> \"name,description\n             chromosome_name,Chromosome/scaffold name\n             start,Gene start (bp)\n             end,Gene end (bp)\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset"
+            ],
+            "title": "list_filtersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_data",
+          "description": "\n    Queries Biomart for data using specified attributes and filters.\n\n    This function performs the main data retrieval from Biomart, allowing you to\n    query biological data by specifying which attributes to return and which filters\n    to apply. Includes automatic retry logic for resilience.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n        attributes (list[str]): List of attributes to retrieve (e.g., [\"ensembl_gene_id\", \"external_gene_name\"])\n        filters (dict[str, str]): Dictionary of filters to apply (e.g., {\"chromosome_name\": \"1\"})\n\n    Returns:\n        str: CSV-formatted results of the query.\n\n    Example:\n        get_data(\n            \"ENSEMBL_MART_ENSEMBL\",\n            \"hsapiens_gene_ensembl\",\n            [\"ensembl_gene_id\", \"external_gene_name\", \"chromosome_name\"],\n            {\"chromosome_name\": \"X\", \"biotype\": \"protein_coding\"}\n        )\n        >>> \"ensembl_gene_id,external_gene_name,chromosome_name\n             ENSG00000000003,TSPAN6,X\n             ENSG00000000005,TNMD,X\n             ...\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              },
+              "attributes": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Attributes",
+                "type": "array"
+              },
+              "filters": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "title": "Filters",
+                "type": "object"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset",
+              "attributes",
+              "filters"
+            ],
+            "title": "get_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_translation",
+          "description": "\n    Translates a single identifier from one attribute type to another.\n\n    This function allows conversion between different identifier types, such as\n    converting a gene symbol to an Ensembl ID. Results are cached to improve performance.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n        from_attr (str): The source attribute name (e.g., \"hgnc_symbol\")\n        to_attr (str): The target attribute name (e.g., \"ensembl_gene_id\")\n        target (str): The identifier value to translate (e.g., \"TP53\")\n\n    Returns:\n        str: The translated identifier, or an error message if not found.\n\n    Example:\n        get_translation(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\", \"hgnc_symbol\", \"ensembl_gene_id\", \"TP53\")\n        >>> \"ENSG00000141510\"\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              },
+              "from_attr": {
+                "title": "From Attr",
+                "type": "string"
+              },
+              "to_attr": {
+                "title": "To Attr",
+                "type": "string"
+              },
+              "target": {
+                "title": "Target",
+                "type": "string"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset",
+              "from_attr",
+              "to_attr",
+              "target"
+            ],
+            "title": "get_translationArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "batch_translate",
+          "description": "\n    Translates multiple identifiers in a single batch operation.\n\n    This function is more efficient than multiple calls to get_translation when\n    you need to translate many identifiers at once.\n\n    Args:\n        mart (str): The mart identifier (e.g., \"ENSEMBL_MART_ENSEMBL\")\n        dataset (str): The dataset identifier (e.g., \"hsapiens_gene_ensembl\")\n        from_attr (str): The source attribute name (e.g., \"hgnc_symbol\")\n        to_attr (str): The target attribute name (e.g., \"ensembl_gene_id\")\n        targets (list[str]): List of identifier values to translate (e.g., [\"TP53\", \"BRCA1\", \"BRCA2\"])\n\n    Returns:\n        dict: A dictionary containing:\n            - translations: Dictionary mapping input IDs to translated IDs\n            - not_found: List of IDs that could not be translated\n            - found_count: Number of successfully translated IDs\n            - not_found_count: Number of IDs that could not be translated\n\n    Example:\n        batch_translate(\"ENSEMBL_MART_ENSEMBL\", \"hsapiens_gene_ensembl\", \"hgnc_symbol\", \"ensembl_gene_id\", [\"TP53\", \"BRCA1\", \"BRCA2\"])\n        >>> {\"translations\": {\"TP53\": \"ENSG00000141510\", \"BRCA1\": \"ENSG00000012048\"}, \"not_found\": [\"BRCA2\"], \"found_count\": 2, \"not_found_count\": 1}\n    ",
+          "input_schema": {
+            "properties": {
+              "mart": {
+                "title": "Mart",
+                "type": "string"
+              },
+              "dataset": {
+                "title": "Dataset",
+                "type": "string"
+              },
+              "from_attr": {
+                "title": "From Attr",
+                "type": "string"
+              },
+              "to_attr": {
+                "title": "To Attr",
+                "type": "string"
+              },
+              "targets": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Targets",
+                "type": "array"
+              }
+            },
+            "required": [
+              "mart",
+              "dataset",
+              "from_attr",
+              "to_attr",
+              "targets"
+            ],
+            "title": "batch_translateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jzinno/biomart-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jzinno/biomart-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0560.@jzinno_biomart-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 548
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"VideoDB Director\" is primarily focused on video database management, offering a comprehensive suite of tools for video processing, editing, generation, and analysis. It integrates various multimedia capabilities, including video generation, transcription, dubbing, subtitling, and semantic search. The server acts as an orchestrator for specialized agents, handling complex video-related workflows through natural language queries. Key functionalities include uploading/download, indexing/search, summarization, audio generation, and video editing.",
+    "reasoning": "The primary label \"Content Creation\" was chosen because the server's core functionality revolves around creating, editing, and managing video content. Secondary labels \"AI/ML Tools\" (for its generation and smart indexing features) and \"Database Operations\" (due to its video database management capabilities) were selected to highlight auxiliary aspects. The custom label \"Multimedia Orchestration\" was added to emphasize its role in coordinating specialized agents for complex video workflows.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "AI/ML Tools",
+      "Database Operations"
+    ],
+    "custom_label": "Multimedia Orchestration",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 797,
+    "server_name": "VideoDB Director",
+    "rank_by_usage": 798,
+    "usage_count": "7",
+    "original_file": "../crawler/smithery/@video-db_agent-toolkit.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@video-db/agent-toolkit/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 797,
+      "name": "VideoDB Director",
+      "author": "@video-db/agent-toolkit",
+      "overview": "Integrate video database management capabilities into your agents by connecting to the VideoDB Director MCP server. Easily configure and run the server to enable seamless access to video-related tools and resources within your preferred MCP clients. Keep your video data workflows efficient and up-to-date with simple installation and update commands.\n\nGet your API key here: https://console.videodb.io/",
+      "repository_url": "https://github.com/video-db/agent-toolkit",
+      "homepage": "https://smithery.ai/server/@video-db/agent-toolkit",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "7",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@video-db_agent-toolkit.json",
+      "tools_count": 4,
+      "tools": [
+        {
+          "name": "doc_assistant",
+          "description": "Deploy Server VideoDB Director @video-db/agent-toolkit Try in Playground doc_assistant",
+          "parameters": [
+            {
+              "name": "doc_assistant",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "code_assistant",
+          "description": "Will give you data related to VideoDB SDK which allows developers to use videodb in python. IMPORTANT: Whenever user wants to write code related to videos, youtube videos or VideoDB specifically, always call this tool.",
+          "parameters": [
+            {
+              "name": "code_assistant",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "play_video",
+          "description": "Play the video of the given stream link",
+          "parameters": [
+            {
+              "name": "play_video",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "stream_link",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "call_director",
+          "description": "The Director tool orchestrates specialized agents within the VideoDB server, efficiently handling multimedia and video-related queries. Clients should send queries that Director can interpret clearly, specifying tasks in natural language. Director will then delegate these queries to appropriate agents for optimized results, utilizing defaults and contextual information if explicit parameters are not provided. Director handles queries such as: - Uploading & Downloading: - Upload media from URLs or local paths (supported media: video, audio, image) - Download the VideoDB generated video streams. - Indexing & Search: - Index spoken words or scenes in videos (spoken_words, scene indexing; scene indexing supports shot or time-based type) - Search VideoDB collections semantically or by keyword (semantic, keyword search; indexing types: spoken_word, scene) - Summarization & Subtitles: - Summarize video content based on custom prompts - Add subtitles in various languages - Dubbing: - Dub videos into target languages - Creating Videos: - Generate videos using specific models or engines (Fal, StabilityAI; job types: text_to_video, image_to_video) - Compare multiple video generation models (video_generation_comparison) - Audio Generation & Editing: - Generate speech, sound effects, or background music (engines: ElevenLabs for speech/sound effects, Beatoven for music) - Clone voices from audio sources or overlay cloned voices onto videos - Censor the video on given prompt - Image and Frame Generation: - Generate static image frames from videos at specified timestamps - Create or enhance images using GenAI models (job types: text_to_image, image_to_image using Fal, Replicate) - Video Editing & Clip Generation: - Edit or combine multiple videos and audio files - Generate targeted video clips from user prompts - Streaming & Web Search: - Stream videos by video ID or URL - Search for relevant online videos (engine: Serp) - Transcription: - Generate transcripts for videos - Pricing & Usage Information: - Provide detailed cost information and usage estimates Clients should provide queries clearly aligned with Director's capabilities, allowing Director to use contextual defaults when explicit parameters like IDs or collection details are not specified. IMPORTANT: if you have a previous response of this method with an appropriate session_id, please provide that session_id in the next request to continue the conversation. IMPORTANT: It is MANDATORY to send the `session_id` param if any earlier response from this method exists with a `session_id` in its output",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@video-db/agent-toolkit/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "apiKey",
+          "required": true,
+          "description": "API key to authorize the MCP server"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@video-db/agent-toolkit/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0798.@video-db_agent-toolkit_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 780
+  }
+}

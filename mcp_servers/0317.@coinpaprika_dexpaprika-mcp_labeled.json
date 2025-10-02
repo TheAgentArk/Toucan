@@ -1,0 +1,913 @@
+{
+  "labels": {
+    "analysis": "DexPaprika Server is designed to provide access to decentralized exchange (DEX) data without requiring API keys. It specializes in querying DEX, token, and liquidity pool information across various blockchain networks. The tools available allow for comprehensive analysis of blockchain-based financial markets, including pool performance, token details, price data (OHLCV), and transaction history. This makes it particularly useful for financial analysis, trading strategies, market research, and AI-powered insights related to decentralized finance (DeFi).",
+    "reasoning": "The primary function of DexPaprika revolves around fetching and analyzing DeFi-related data, making \"Cryptocurrency & Blockchain\" the most fitting primary label. Secondary labels like \"Data Analysis & Processing\" and \"API Integration\" are also relevant due to the server's focus on market data extraction and the absence of required API keys for access. No custom label is necessary as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 316,
+    "server_name": "DexPaprika",
+    "rank_by_usage": 317,
+    "usage_count": "101",
+    "original_file": "../crawler/smithery/@coinpaprika_dexpaprika-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@coinpaprika/dexpaprika-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "getNetworks",
+          "description": "Retrieve a list of all supported blockchain networks and their metadata",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNetworkDexes",
+          "description": "Get a list of available decentralized exchanges on a specific network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              }
+            },
+            "required": [
+              "network"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getTopPools",
+          "description": "Get a paginated list of top liquidity pools from all networks",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "volume_usd",
+                  "price_usd",
+                  "transactions",
+                  "last_price_change_usd_24h",
+                  "created_at"
+                ],
+                "default": "volume_usd",
+                "description": "Field to order by"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNetworkPools",
+          "description": "Get a list of top liquidity pools on a specific network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "volume_usd",
+                  "price_usd",
+                  "transactions",
+                  "last_price_change_usd_24h",
+                  "created_at"
+                ],
+                "default": "volume_usd",
+                "description": "Field to order by"
+              }
+            },
+            "required": [
+              "network"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getDexPools",
+          "description": "Get top pools on a specific DEX within a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "dex": {
+                "type": "string",
+                "description": "DEX identifier"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "volume_usd",
+                  "price_usd",
+                  "transactions",
+                  "last_price_change_usd_24h",
+                  "created_at"
+                ],
+                "default": "volume_usd",
+                "description": "Field to order by"
+              }
+            },
+            "required": [
+              "network",
+              "dex"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getPoolDetails",
+          "description": "Get detailed information about a specific pool on a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "poolAddress": {
+                "type": "string",
+                "description": "Pool address or identifier"
+              },
+              "inversed": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to invert the price ratio"
+              }
+            },
+            "required": [
+              "network",
+              "poolAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getTokenDetails",
+          "description": "Get detailed information about a specific token on a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "tokenAddress": {
+                "type": "string",
+                "description": "Token address or identifier"
+              }
+            },
+            "required": [
+              "network",
+              "tokenAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getTokenPools",
+          "description": "Get a list of top liquidity pools for a specific token on a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "tokenAddress": {
+                "type": "string",
+                "description": "Token address or identifier"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "volume_usd",
+                  "price_usd",
+                  "transactions",
+                  "last_price_change_usd_24h",
+                  "created_at"
+                ],
+                "default": "volume_usd",
+                "description": "Field to order by"
+              },
+              "address": {
+                "type": "string",
+                "description": "Filter pools that contain this additional token address"
+              }
+            },
+            "required": [
+              "network",
+              "tokenAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getPoolOHLCV",
+          "description": "Get OHLCV (Open-High-Low-Close-Volume) data for a specific pool - essential for price analysis, backtesting, model training, and visualization across various timeframes",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "poolAddress": {
+                "type": "string",
+                "description": "Pool address or identifier"
+              },
+              "start": {
+                "type": "string",
+                "description": "Start time for historical data (ISO-8601, yyyy-mm-dd, or Unix timestamp)"
+              },
+              "end": {
+                "type": "string",
+                "description": "End time for historical data (max 1 year from start)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 1,
+                "description": "Number of data points to retrieve (max 366) - adjust for different analysis needs"
+              },
+              "interval": {
+                "type": "string",
+                "default": "24h",
+                "description": "Interval granularity for data resolution (1m for short-term analysis, 1h for intraday patterns, 24h for long-term trends)"
+              },
+              "inversed": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to invert the price ratio for alternative pair perspective (e.g., ETH/USDC vs USDC/ETH)"
+              }
+            },
+            "required": [
+              "network",
+              "poolAddress",
+              "start"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getPoolTransactions",
+          "description": "Get transactions of a pool on a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "poolAddress": {
+                "type": "string",
+                "description": "Pool address or identifier"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Transaction ID used for cursor-based pagination"
+              }
+            },
+            "required": [
+              "network",
+              "poolAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search for tokens, pools, and DEXes by name or identifier",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search term (e.g., \"uniswap\", \"bitcoin\", or a token address)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStats",
+          "description": "Get high-level statistics about the DexPaprika ecosystem",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "getNetworks",
+        "getNetworkDexes",
+        "getTopPools",
+        "getNetworkPools",
+        "getDexPools",
+        "getPoolDetails",
+        "getTokenDetails",
+        "getTokenPools",
+        "getPoolOHLCV",
+        "getPoolTransactions",
+        "search",
+        "getStats"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 316,
+      "name": "DexPaprika",
+      "author": "@coinpaprika/dexpaprika-mcp",
+      "overview": "Access decentralized exchange data effortlessly. Fetch and analyze DEX, token, and liquidity pool information without the need for API keys, empowering your AI assistants with real-time insights.",
+      "repository_url": "https://github.com/coinpaprika/dexpaprika-mcp",
+      "homepage": "https://smithery.ai/server/@coinpaprika/dexpaprika-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "101",
+      "success_rate": "99.55%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@coinpaprika_dexpaprika-mcp.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "getNetworks",
+          "description": "Retrieve a list of all supported blockchain networks and their metadata",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNetworkDexes",
+          "description": "Get a list of available decentralized exchanges on a specific network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              }
+            },
+            "required": [
+              "network"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getTopPools",
+          "description": "Get a paginated list of top liquidity pools from all networks",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "volume_usd",
+                  "price_usd",
+                  "transactions",
+                  "last_price_change_usd_24h",
+                  "created_at"
+                ],
+                "default": "volume_usd",
+                "description": "Field to order by"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNetworkPools",
+          "description": "Get a list of top liquidity pools on a specific network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "volume_usd",
+                  "price_usd",
+                  "transactions",
+                  "last_price_change_usd_24h",
+                  "created_at"
+                ],
+                "default": "volume_usd",
+                "description": "Field to order by"
+              }
+            },
+            "required": [
+              "network"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getDexPools",
+          "description": "Get top pools on a specific DEX within a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "dex": {
+                "type": "string",
+                "description": "DEX identifier"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "volume_usd",
+                  "price_usd",
+                  "transactions",
+                  "last_price_change_usd_24h",
+                  "created_at"
+                ],
+                "default": "volume_usd",
+                "description": "Field to order by"
+              }
+            },
+            "required": [
+              "network",
+              "dex"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getPoolDetails",
+          "description": "Get detailed information about a specific pool on a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "poolAddress": {
+                "type": "string",
+                "description": "Pool address or identifier"
+              },
+              "inversed": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to invert the price ratio"
+              }
+            },
+            "required": [
+              "network",
+              "poolAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getTokenDetails",
+          "description": "Get detailed information about a specific token on a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "tokenAddress": {
+                "type": "string",
+                "description": "Token address or identifier"
+              }
+            },
+            "required": [
+              "network",
+              "tokenAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getTokenPools",
+          "description": "Get a list of top liquidity pools for a specific token on a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "tokenAddress": {
+                "type": "string",
+                "description": "Token address or identifier"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "sort": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc",
+                "description": "Sort order"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "volume_usd",
+                  "price_usd",
+                  "transactions",
+                  "last_price_change_usd_24h",
+                  "created_at"
+                ],
+                "default": "volume_usd",
+                "description": "Field to order by"
+              },
+              "address": {
+                "type": "string",
+                "description": "Filter pools that contain this additional token address"
+              }
+            },
+            "required": [
+              "network",
+              "tokenAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getPoolOHLCV",
+          "description": "Get OHLCV (Open-High-Low-Close-Volume) data for a specific pool - essential for price analysis, backtesting, model training, and visualization across various timeframes",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "poolAddress": {
+                "type": "string",
+                "description": "Pool address or identifier"
+              },
+              "start": {
+                "type": "string",
+                "description": "Start time for historical data (ISO-8601, yyyy-mm-dd, or Unix timestamp)"
+              },
+              "end": {
+                "type": "string",
+                "description": "End time for historical data (max 1 year from start)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 1,
+                "description": "Number of data points to retrieve (max 366) - adjust for different analysis needs"
+              },
+              "interval": {
+                "type": "string",
+                "default": "24h",
+                "description": "Interval granularity for data resolution (1m for short-term analysis, 1h for intraday patterns, 24h for long-term trends)"
+              },
+              "inversed": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to invert the price ratio for alternative pair perspective (e.g., ETH/USDC vs USDC/ETH)"
+              }
+            },
+            "required": [
+              "network",
+              "poolAddress",
+              "start"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getPoolTransactions",
+          "description": "Get transactions of a pool on a network",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "network": {
+                "type": "string",
+                "description": "Network ID (e.g., ethereum, solana)"
+              },
+              "poolAddress": {
+                "type": "string",
+                "description": "Pool address or identifier"
+              },
+              "page": {
+                "type": "number",
+                "default": 0,
+                "description": "Page number for pagination"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Transaction ID used for cursor-based pagination"
+              }
+            },
+            "required": [
+              "network",
+              "poolAddress"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search for tokens, pools, and DEXes by name or identifier",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Search term (e.g., \"uniswap\", \"bitcoin\", or a token address)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStats",
+          "description": "Get high-level statistics about the DexPaprika ecosystem",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@coinpaprika/dexpaprika-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@coinpaprika/dexpaprika-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0317.@coinpaprika_dexpaprika-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 313
+  }
+}

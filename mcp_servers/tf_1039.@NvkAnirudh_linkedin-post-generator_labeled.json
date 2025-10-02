@@ -1,0 +1,509 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is designed to automate the creation of professional LinkedIn posts by leveraging YouTube video content. Its core functionality includes extracting transcripts from YouTube videos, summarizing the content, and generating LinkedIn post drafts. This streamlines the process of content creation and expands reach by converting video content into text-based posts. The server primarily focuses on automating social media content generation from video transcripts.",
+    "reasoning": "The primary label \"Social Media\" is chosen because the server's main functionality revolves around creating content for LinkedIn, a social media platform. The secondary label \"Content Creation\" is selected because the server helps generate and tailor posts, which is a core aspect of content creation. Lastly, \"Web Search & Research\" could be considered if the summarization involves gathering external information, but it is less central than the first two.",
+    "primary_label": "Social Media",
+    "secondary_labels": [
+      "Content Creation",
+      "AI/ML Tools"
+    ],
+    "custom_label": "LinkedIn Post Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1038,
+    "server_name": "LinkedIn Post Generator",
+    "rank_by_usage": 1039,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@NvkAnirudh_linkedin-post-generator.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@NvkAnirudh/linkedin-post-generator/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "set_api_keys",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "openaiApiKey": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Your OpenAI API key"
+              },
+              "youtubeApiKey": {
+                "type": "string",
+                "description": "Your YouTube API key (optional)"
+              }
+            },
+            "required": [
+              "openaiApiKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_api_keys",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_transcript",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "youtubeUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "YouTube video URL"
+              }
+            },
+            "required": [
+              "youtubeUrl"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "summarize_transcript",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "transcript": {
+                "type": "string",
+                "description": "Video transcript text"
+              },
+              "tone": {
+                "type": "string",
+                "enum": [
+                  "educational",
+                  "inspirational",
+                  "professional",
+                  "conversational"
+                ],
+                "default": "professional",
+                "description": "Tone of the summary"
+              },
+              "audience": {
+                "type": "string",
+                "enum": [
+                  "general",
+                  "technical",
+                  "business",
+                  "academic"
+                ],
+                "default": "general",
+                "description": "Target audience for the summary"
+              },
+              "wordCount": {
+                "type": "number",
+                "minimum": 100,
+                "maximum": 300,
+                "default": 200,
+                "description": "Approximate word count for the summary"
+              }
+            },
+            "required": [
+              "transcript"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_linkedin_post",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "Summary of the video content"
+              },
+              "videoTitle": {
+                "type": "string",
+                "description": "Title of the YouTube video"
+              },
+              "speakerName": {
+                "type": "string",
+                "description": "Name of the speaker in the video (optional)"
+              },
+              "hashtags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Relevant hashtags (optional)"
+              },
+              "tone": {
+                "type": "string",
+                "enum": [
+                  "first-person",
+                  "third-person",
+                  "thought-leader"
+                ],
+                "default": "first-person",
+                "description": "Tone of the LinkedIn post"
+              },
+              "includeCallToAction": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include a call to action"
+              }
+            },
+            "required": [
+              "summary",
+              "videoTitle"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "youtube_to_linkedin_post",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "youtubeUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "YouTube video URL"
+              },
+              "tone": {
+                "type": "string",
+                "enum": [
+                  "first-person",
+                  "third-person",
+                  "thought-leader"
+                ],
+                "default": "first-person",
+                "description": "Tone of the LinkedIn post"
+              },
+              "summaryTone": {
+                "type": "string",
+                "enum": [
+                  "educational",
+                  "inspirational",
+                  "professional",
+                  "conversational"
+                ],
+                "default": "professional",
+                "description": "Tone of the summary"
+              },
+              "audience": {
+                "type": "string",
+                "enum": [
+                  "general",
+                  "technical",
+                  "business",
+                  "academic"
+                ],
+                "default": "general",
+                "description": "Target audience"
+              },
+              "hashtags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Relevant hashtags (optional)"
+              },
+              "includeCallToAction": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include a call to action"
+              }
+            },
+            "required": [
+              "youtubeUrl"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "set_api_keys",
+        "check_api_keys",
+        "extract_transcript",
+        "summarize_transcript",
+        "generate_linkedin_post",
+        "youtube_to_linkedin_post"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1038,
+      "name": "LinkedIn Post Generator",
+      "author": "@NvkAnirudh/linkedin-post-generator",
+      "overview": "Automate the creation of professional LinkedIn post drafts from YouTube videos. Extract transcripts, summarize content, and generate tailored posts with ease. Streamline your workflow from video to post in just a few steps.",
+      "repository_url": "https://github.com/NvkAnirudh/LinkedIn-Post-Generator",
+      "homepage": "https://smithery.ai/server/@NvkAnirudh/linkedin-post-generator",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@NvkAnirudh_linkedin-post-generator.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "set_api_keys",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "openaiApiKey": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Your OpenAI API key"
+              },
+              "youtubeApiKey": {
+                "type": "string",
+                "description": "Your YouTube API key (optional)"
+              }
+            },
+            "required": [
+              "openaiApiKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_api_keys",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_transcript",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "youtubeUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "YouTube video URL"
+              }
+            },
+            "required": [
+              "youtubeUrl"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "summarize_transcript",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "transcript": {
+                "type": "string",
+                "description": "Video transcript text"
+              },
+              "tone": {
+                "type": "string",
+                "enum": [
+                  "educational",
+                  "inspirational",
+                  "professional",
+                  "conversational"
+                ],
+                "default": "professional",
+                "description": "Tone of the summary"
+              },
+              "audience": {
+                "type": "string",
+                "enum": [
+                  "general",
+                  "technical",
+                  "business",
+                  "academic"
+                ],
+                "default": "general",
+                "description": "Target audience for the summary"
+              },
+              "wordCount": {
+                "type": "number",
+                "minimum": 100,
+                "maximum": 300,
+                "default": 200,
+                "description": "Approximate word count for the summary"
+              }
+            },
+            "required": [
+              "transcript"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_linkedin_post",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "Summary of the video content"
+              },
+              "videoTitle": {
+                "type": "string",
+                "description": "Title of the YouTube video"
+              },
+              "speakerName": {
+                "type": "string",
+                "description": "Name of the speaker in the video (optional)"
+              },
+              "hashtags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Relevant hashtags (optional)"
+              },
+              "tone": {
+                "type": "string",
+                "enum": [
+                  "first-person",
+                  "third-person",
+                  "thought-leader"
+                ],
+                "default": "first-person",
+                "description": "Tone of the LinkedIn post"
+              },
+              "includeCallToAction": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include a call to action"
+              }
+            },
+            "required": [
+              "summary",
+              "videoTitle"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "youtube_to_linkedin_post",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "youtubeUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "YouTube video URL"
+              },
+              "tone": {
+                "type": "string",
+                "enum": [
+                  "first-person",
+                  "third-person",
+                  "thought-leader"
+                ],
+                "default": "first-person",
+                "description": "Tone of the LinkedIn post"
+              },
+              "summaryTone": {
+                "type": "string",
+                "enum": [
+                  "educational",
+                  "inspirational",
+                  "professional",
+                  "conversational"
+                ],
+                "default": "professional",
+                "description": "Tone of the summary"
+              },
+              "audience": {
+                "type": "string",
+                "enum": [
+                  "general",
+                  "technical",
+                  "business",
+                  "academic"
+                ],
+                "default": "general",
+                "description": "Target audience"
+              },
+              "hashtags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Relevant hashtags (optional)"
+              },
+              "includeCallToAction": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include a call to action"
+              }
+            },
+            "required": [
+              "youtubeUrl"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@NvkAnirudh/linkedin-post-generator/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@NvkAnirudh/linkedin-post-generator/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1039.@NvkAnirudh_linkedin-post-generator_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1017
+  }
+}

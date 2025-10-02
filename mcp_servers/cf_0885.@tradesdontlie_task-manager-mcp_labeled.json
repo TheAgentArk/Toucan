@@ -1,0 +1,155 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is a Task Manager designed to help users efficiently create, track, and organize tasks, particularly in a development or project management context. It includes AI-powered features such as parsing product requirement documents into actionable tasks, breaking down tasks into subtasks, estimating task complexity, tracking dependencies, and suggesting next actions. The core functionality revolves around project and task management, with a focus on streamlining workflows and enhancing productivity.",
+    "reasoning": "The primary label \"Daily Productivity\" was chosen because the server's main focus is on managing tasks and projects, which falls under productivity tools. The secondary label \"Development Tools\" was selected because the server is tailored for development workflows, with features like task breakdown and complexity estimation. The custom label \"AI-Powered Task Management\" highlights the unique integration of AI assistance in task organization and decision-making.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": "AI-Powered Task Management",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 884,
+    "server_name": "Task Manager",
+    "rank_by_usage": 885,
+    "usage_count": "4",
+    "original_file": "../crawler/smithery/@tradesdontlie_task-manager-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@tradesdontlie/task-manager-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 884,
+      "name": "Task Manager",
+      "author": "@tradesdontlie/task-manager-mcp",
+      "overview": "Manage projects and tasks efficiently by creating, tracking, and organizing tasks with AI assistance. Automatically parse product requirement documents into actionable tasks and receive AI-powered suggestions for next steps. Streamline your development workflow with task complexity estimation and dependency tracking.",
+      "repository_url": "https://github.com/tradesdontlie/task-manager-mcp",
+      "homepage": "https://smithery.ai/server/@tradesdontlie/task-manager-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "4",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@tradesdontlie_task-manager-mcp.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "create_task_file",
+          "description": "Deploy Server Task Manager Claim Server @tradesdontlie/task-manager-mcp Try in Playground create_task_file",
+          "parameters": []
+        },
+        {
+          "name": "add_task",
+          "description": "Add a new task to a project's task file. Args: project_name: Name of the project title: Task title description: Task description subtasks: Optional list of subtasks batch_mode: If True, don't read existing tasks (for bulk additions) Returns: Confirmation message",
+          "parameters": []
+        },
+        {
+          "name": "parse_prd",
+          "description": "Parse a PRD and create tasks from it.",
+          "parameters": [
+            {
+              "name": "prd_content",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "project_name",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "update_task_status",
+          "description": "Update the status of a task or subtask. Args: project_name: Name of the project task_title: Title of the task subtask_title: Optional title of the subtask status: New status (todo/done) Returns: Confirmation message",
+          "parameters": []
+        },
+        {
+          "name": "get_next_task",
+          "description": "Get the next uncompleted task from a project. Args: project_name: Name of the project Returns: Next task information or completion message",
+          "parameters": []
+        },
+        {
+          "name": "expand_task",
+          "description": "Break down a task into smaller, more manageable subtasks using AI. Args: project_name: Name of the project task_title: Title of the task to expand Returns: Confirmation message with new subtasks",
+          "parameters": []
+        },
+        {
+          "name": "generate_task_file",
+          "description": "Generate a file template based on a task's description. Args: project_name: Name of the project task_title: Title of the task to generate file for Returns: Confirmation message with file path",
+          "parameters": []
+        },
+        {
+          "name": "get_task_dependencies",
+          "description": "Get all tasks that depend on the given task. Args: project_name: Name of the project task_title: Title of the task to check dependencies for Returns: JSON string of dependent tasks",
+          "parameters": []
+        },
+        {
+          "name": "estimate_task_complexity",
+          "description": "Estimate the complexity of a task using AI. Args: project_name: Name of the project task_title: Title of the task to estimate Returns: Complexity estimate (low/medium/high)",
+          "parameters": [
+            {
+              "name": "Complexity",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "estimate",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "suggest_next_actions",
+          "description": "Suggest next actions for a task using AI. Args: project_name: Name of the project task_title: Title of the task to get suggestions for Returns: JSON string of suggested actions",
+          "parameters": [
+            {
+              "name": "task_title",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "project_name",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@tradesdontlie/task-manager-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "llmApiKey",
+          "required": true,
+          "description": "API key for the chosen LLM provider"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@tradesdontlie/task-manager-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0885.@tradesdontlie_task-manager-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 866
+  }
+}

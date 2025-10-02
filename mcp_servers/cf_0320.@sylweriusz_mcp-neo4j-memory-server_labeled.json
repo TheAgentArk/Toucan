@@ -1,0 +1,131 @@
+{
+  "labels": {
+    "analysis": "The MCP Server functions as a persistent knowledge management system for AI agents, leveraging Neo4j's graph database to store, retrieve, and maintain contextual memories. It enables semantic search, relationship mapping, and temporal tracking, allowing AI assistants to maintain long-term memory across sessions. The primary use case is enhancing AI agent capabilities by providing a structured memory infrastructure that remembers user preferences, past interactions, and contextual information. The tools provided focus on memory storage, retrieval, modification, and database management within this graph-based system.",
+    "reasoning": "The primary label is chosen because the server's core functionality revolves around memory management and knowledge storage with graph database capabilities. Secondary labels are selected based on the server's ability to handle data relationships (graph database operations) and the potential for AI integration (AI/ML tools). A custom label is added to highlight the unique aspect of using a Neo4j-based knowledge graph specifically for memory persistence in AI systems.",
+    "primary_label": "Memory Management",
+    "secondary_labels": [
+      "Database Operations",
+      "AI/ML Tools"
+    ],
+    "custom_label": "Knowledge Graph Memory",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 319,
+    "server_name": "Neo4j Knowledge Graph Memory",
+    "rank_by_usage": 320,
+    "usage_count": "100",
+    "original_file": "../crawler/smithery/@sylweriusz_mcp-neo4j-memory-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@sylweriusz/mcp-neo4j-memory-server/mcp?config=eyJuZW80alVyaSI6ICIiLCAibmVvNGpEYXRhYmFzZSI6ICJuZW80aiIsICJuZW80alBhc3N3b3JkIjogIiIsICJuZW80alVzZXJuYW1lIjogIiJ9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 319,
+      "name": "Neo4j Knowledge Graph Memory",
+      "author": "@sylweriusz/mcp-neo4j-memory-server",
+      "overview": "Store and retrieve user-specific memories across sessions using Neo4j graph database. This MCP memory infrastructure enables AI assistants to maintain context, recall past interactions, and manage memories with semantic search capabilities. Transform your agent's conversations into a searchable memory bank with entities and relationships.\n\nKey capabilities:\nStore memories persistently across multiple sessions\nRetrieve context with hybrid semantic and exact search\nManage memory banks with multi-database project isolation\nRecall information through vector embeddings and graph traversal\nMemory extension for AI agents with temporal tracking\nKnowledge graph format with intelligent relationships\n\nPerfect for building AI assistants with long-term memory, maintaining user context, and creating memory systems that remember preferences and past interactions. Self-hosted memory infrastructure built on Neo4j for reliability and performance.",
+      "repository_url": "https://github.com/sylweriusz/mcp-neo4j-memory-server",
+      "homepage": "https://smithery.ai/server/@sylweriusz/mcp-neo4j-memory-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "100",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@sylweriusz_mcp-neo4j-memory-server.json",
+      "tools_count": 4,
+      "tools": [
+        {
+          "name": "memory_store",
+          "description": "Deploy Server Neo4j Knowledge Graph Memory @sylweriusz/mcp-neo4j-memory-server Try in Playground memory_store",
+          "parameters": [
+            {
+              "name": "memory_store",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "memory_find",
+          "description": "Unified search/retrieval. **Query**: text, IDs array, or \"*\". **Context**: minimal (lists), full (everything), relations-only (graph). **Temporal**: createdAfter \"7d\"/\"2024-01-15\". **Graph**: traverseFrom + relations + depth. **Always search before creating**. Updates access timestamps for analytics.",
+          "parameters": [
+            {
+              "name": "memory_find",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "memory_modify",
+          "description": "Update/delete memories, manage observations/relations. **Operations**: update (properties), delete (cascade), add-observations (append insights), create-relations (link existing). **Atomic**: All succeed or all fail. **Quality**: One substantial observation per session - complete context stories, not fragments.",
+          "parameters": [
+            {
+              "name": "operation",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "relations",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Add",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Item",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "observations",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "database_switch",
+          "description": "Switch active database context (creates if missing). ALL subsequent operations use this DB. Call once per session/project. Like 'cd' for memories. **Session-scoped**: Establishes context for entire workflow, not per-operation.",
+          "parameters": [
+            {
+              "name": "database_switch",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"neo4jUri\": \"\",\n  \"neo4jDatabase\": \"neo4j\",\n  \"neo4jPassword\": \"\",\n  \"neo4jUsername\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@sylweriusz/mcp-neo4j-memory-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"neo4jUri\": \"\",\n  \"neo4jDatabase\": \"neo4j\",\n  \"neo4jPassword\": \"\",\n  \"neo4jUsername\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@sylweriusz/mcp-neo4j-memory-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0320.@sylweriusz_mcp-neo4j-memory-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 316
+  }
+}

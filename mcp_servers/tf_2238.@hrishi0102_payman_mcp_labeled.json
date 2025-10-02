@@ -1,0 +1,793 @@
+{
+  "labels": {
+    "analysis": "The MCP Server enables AI assistants to interact with Payman AI's payment services through natural language. It provides tools for managing payees (creating, searching), sending payments, checking balances, and handling API keys. The primary functionality revolves around secure payment management, making it ideal for financial and payment-related operations within LLM applications.",
+    "reasoning": "The primary label \"Financial Services\" was chosen because the server's core functionality is centered around payment management, payee operations, and balance checks, all of which align with financial services. The secondary label \"API Integration\" is appropriate because the server interacts with Payman AI's API for these operations. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2237,
+    "server_name": "Payman API Server",
+    "rank_by_usage": 2238,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@hrishi0102_payman_mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@hrishi0102/payman_mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "set-api-key",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "apiKey": {
+                "type": "string",
+                "description": "The Payman API key to use for authentication"
+              }
+            },
+            "required": [
+              "apiKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-test-rails-payee",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the payee"
+              },
+              "type": {
+                "type": "string",
+                "const": "TEST_RAILS",
+                "default": "TEST_RAILS",
+                "description": "Type of payment rails to use"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional tags for the payee"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-us-ach-payee",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "US_ACH",
+                "default": "US_ACH",
+                "description": "Type of payment rails to use"
+              },
+              "accountType": {
+                "type": "string",
+                "enum": [
+                  "checking",
+                  "savings"
+                ],
+                "description": "The type of account (checking or savings)"
+              },
+              "accountNumber": {
+                "type": "string",
+                "description": "The bank account number for the account"
+              },
+              "routingNumber": {
+                "type": "string",
+                "description": "The routing number of the bank"
+              },
+              "accountHolderName": {
+                "type": "string",
+                "description": "The name of the account holder"
+              },
+              "accountHolderType": {
+                "type": "string",
+                "enum": [
+                  "individual",
+                  "business"
+                ],
+                "description": "The type of the account holder"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name you wish to associate with this payee for future lookups"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional labels you wish to assign to this payee"
+              },
+              "contactDetails": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address of the payee contact"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "The phone number of the payee contact"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "line1": {
+                        "type": "string",
+                        "description": "Address line 1"
+                      },
+                      "line2": {
+                        "type": "string",
+                        "description": "Address line 2"
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City"
+                      },
+                      "state": {
+                        "type": "string",
+                        "description": "State"
+                      },
+                      "postalCode": {
+                        "type": "string",
+                        "description": "Postal code"
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The address of the payee contact"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Contact details for this payee"
+              }
+            },
+            "required": [
+              "accountType",
+              "accountNumber",
+              "routingNumber",
+              "accountHolderName",
+              "accountHolderType",
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-crypto-payee",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "CRYPTO_ADDRESS",
+                "default": "CRYPTO_ADDRESS",
+                "description": "Type of payment rails to use"
+              },
+              "address": {
+                "type": "string",
+                "description": "The cryptocurrency address to send funds to"
+              },
+              "chain": {
+                "type": "string",
+                "description": "The blockchain to use for the transaction"
+              },
+              "currency": {
+                "type": "string",
+                "description": "The currency/token to use for the transaction"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name you wish to associate with this payee for future lookups"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional labels you wish to assign to this payee"
+              },
+              "contactDetails": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address of the payee contact"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "The phone number of the payee contact"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "line1": {
+                        "type": "string",
+                        "description": "Address line 1"
+                      },
+                      "line2": {
+                        "type": "string",
+                        "description": "Address line 2"
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City"
+                      },
+                      "state": {
+                        "type": "string",
+                        "description": "State"
+                      },
+                      "postalCode": {
+                        "type": "string",
+                        "description": "Postal code"
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The address of the payee contact"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Contact details for this payee"
+              }
+            },
+            "required": [
+              "address",
+              "chain",
+              "currency",
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send-payment",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "payeeId": {
+                "type": "string",
+                "description": "ID of the payee to send payment to"
+              },
+              "amountDecimal": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Amount to send (in decimal)"
+              },
+              "walletId": {
+                "type": "string",
+                "description": "The ID of the specific wallet from which to send the funds"
+              },
+              "memo": {
+                "type": "string",
+                "description": "Optional memo for the payment"
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Optional metadata for the payment"
+              }
+            },
+            "required": [
+              "payeeId",
+              "amountDecimal"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-payees",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the payee to search for (partial, case-insensitive match)"
+              },
+              "contactEmail": {
+                "type": "string",
+                "format": "email",
+                "description": "The contact email to search for"
+              },
+              "contactPhoneNumber": {
+                "type": "string",
+                "description": "The contact phone number to search for"
+              },
+              "contactTaxId": {
+                "type": "string",
+                "description": "The contact tax id to search for"
+              },
+              "accountNumber": {
+                "type": "string",
+                "description": "The US Bank account number to search for"
+              },
+              "routingNumber": {
+                "type": "string",
+                "description": "The US Bank routing number to search for"
+              },
+              "agentReference": {
+                "type": "string",
+                "description": "The Payman agent reference (id or handle) to search for"
+              },
+              "cryptoAddress": {
+                "type": "string",
+                "description": "The crypto address to search for"
+              },
+              "cryptoCurrency": {
+                "type": "string",
+                "description": "The crypto currency to search for"
+              },
+              "cryptoChain": {
+                "type": "string",
+                "description": "The crypto chain to search for"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-balance",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "set-api-key",
+        "create-test-rails-payee",
+        "create-us-ach-payee",
+        "create-crypto-payee",
+        "send-payment",
+        "search-payees",
+        "get-balance"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2237,
+      "name": "Payman API Server",
+      "author": "@hrishi0102/payman_mcp",
+      "overview": "Enable AI assistants to interact with Payman AI's payment services through natural language. Create payees, send payments, search payees, and check balances seamlessly within your LLM applications. Securely manage API keys and perform payment operations with ease.",
+      "repository_url": "https://github.com/hrishi0102/payman_mcp",
+      "homepage": "https://smithery.ai/server/@hrishi0102/payman_mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@hrishi0102_payman_mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "set-api-key",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "apiKey": {
+                "type": "string",
+                "description": "The Payman API key to use for authentication"
+              }
+            },
+            "required": [
+              "apiKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-test-rails-payee",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the payee"
+              },
+              "type": {
+                "type": "string",
+                "const": "TEST_RAILS",
+                "default": "TEST_RAILS",
+                "description": "Type of payment rails to use"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional tags for the payee"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-us-ach-payee",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "US_ACH",
+                "default": "US_ACH",
+                "description": "Type of payment rails to use"
+              },
+              "accountType": {
+                "type": "string",
+                "enum": [
+                  "checking",
+                  "savings"
+                ],
+                "description": "The type of account (checking or savings)"
+              },
+              "accountNumber": {
+                "type": "string",
+                "description": "The bank account number for the account"
+              },
+              "routingNumber": {
+                "type": "string",
+                "description": "The routing number of the bank"
+              },
+              "accountHolderName": {
+                "type": "string",
+                "description": "The name of the account holder"
+              },
+              "accountHolderType": {
+                "type": "string",
+                "enum": [
+                  "individual",
+                  "business"
+                ],
+                "description": "The type of the account holder"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name you wish to associate with this payee for future lookups"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional labels you wish to assign to this payee"
+              },
+              "contactDetails": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address of the payee contact"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "The phone number of the payee contact"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "line1": {
+                        "type": "string",
+                        "description": "Address line 1"
+                      },
+                      "line2": {
+                        "type": "string",
+                        "description": "Address line 2"
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City"
+                      },
+                      "state": {
+                        "type": "string",
+                        "description": "State"
+                      },
+                      "postalCode": {
+                        "type": "string",
+                        "description": "Postal code"
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The address of the payee contact"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Contact details for this payee"
+              }
+            },
+            "required": [
+              "accountType",
+              "accountNumber",
+              "routingNumber",
+              "accountHolderName",
+              "accountHolderType",
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create-crypto-payee",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "CRYPTO_ADDRESS",
+                "default": "CRYPTO_ADDRESS",
+                "description": "Type of payment rails to use"
+              },
+              "address": {
+                "type": "string",
+                "description": "The cryptocurrency address to send funds to"
+              },
+              "chain": {
+                "type": "string",
+                "description": "The blockchain to use for the transaction"
+              },
+              "currency": {
+                "type": "string",
+                "description": "The currency/token to use for the transaction"
+              },
+              "name": {
+                "type": "string",
+                "description": "The name you wish to associate with this payee for future lookups"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional labels you wish to assign to this payee"
+              },
+              "contactDetails": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "The email address of the payee contact"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "The phone number of the payee contact"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "line1": {
+                        "type": "string",
+                        "description": "Address line 1"
+                      },
+                      "line2": {
+                        "type": "string",
+                        "description": "Address line 2"
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City"
+                      },
+                      "state": {
+                        "type": "string",
+                        "description": "State"
+                      },
+                      "postalCode": {
+                        "type": "string",
+                        "description": "Postal code"
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "description": "The address of the payee contact"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Contact details for this payee"
+              }
+            },
+            "required": [
+              "address",
+              "chain",
+              "currency",
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send-payment",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "payeeId": {
+                "type": "string",
+                "description": "ID of the payee to send payment to"
+              },
+              "amountDecimal": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Amount to send (in decimal)"
+              },
+              "walletId": {
+                "type": "string",
+                "description": "The ID of the specific wallet from which to send the funds"
+              },
+              "memo": {
+                "type": "string",
+                "description": "Optional memo for the payment"
+              },
+              "metadata": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Optional metadata for the payment"
+              }
+            },
+            "required": [
+              "payeeId",
+              "amountDecimal"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search-payees",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the payee to search for (partial, case-insensitive match)"
+              },
+              "contactEmail": {
+                "type": "string",
+                "format": "email",
+                "description": "The contact email to search for"
+              },
+              "contactPhoneNumber": {
+                "type": "string",
+                "description": "The contact phone number to search for"
+              },
+              "contactTaxId": {
+                "type": "string",
+                "description": "The contact tax id to search for"
+              },
+              "accountNumber": {
+                "type": "string",
+                "description": "The US Bank account number to search for"
+              },
+              "routingNumber": {
+                "type": "string",
+                "description": "The US Bank routing number to search for"
+              },
+              "agentReference": {
+                "type": "string",
+                "description": "The Payman agent reference (id or handle) to search for"
+              },
+              "cryptoAddress": {
+                "type": "string",
+                "description": "The crypto address to search for"
+              },
+              "cryptoCurrency": {
+                "type": "string",
+                "description": "The crypto currency to search for"
+              },
+              "cryptoChain": {
+                "type": "string",
+                "description": "The crypto chain to search for"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-balance",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@hrishi0102/payman_mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@hrishi0102/payman_mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2238.@hrishi0102_payman_mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1929
+  }
+}

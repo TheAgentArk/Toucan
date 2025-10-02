@@ -1,0 +1,655 @@
+{
+  "labels": {
+    "analysis": "The KiCad MCP Server is designed to enhance the workflow for PCB design using the KiCad software suite. It provides tools for project management, schematic analysis, and PCB layout verification. Key functionalities include listing and validating projects, generating visual thumbnails, running design rule checks (DRC), analyzing bill of materials (BOM), extracting netlists, and identifying common circuit patterns. The server appears to act as an intermediary that automates and streamlines various aspects of the PCB design process, making it particularly useful for electronic engineers and hardware developers.",
+    "reasoning": "The primary label \"Electrical Engineering Tools\" was chosen because the server's core functionality revolves around PCB design, schematic analysis, and hardware-related tasks. This is not covered by the predefined categories, hence the creation of a custom label. Secondary labels like \"File Management\" and \"Data Analysis & Processing\" were added because the tools handle project files and perform analysis on schematic and BOM data. No predefined secondary labels were a perfect fit, but these came closest to representing additional aspects of the server's functionality.",
+    "primary_label": "Others",
+    "secondary_labels": [
+      "File Management",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Electrical Engineering Tools",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1127,
+    "server_name": "KiCad MCP Server",
+    "rank_by_usage": 1128,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@lamaalrajih_kicad-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@lamaalrajih/kicad-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list_projects",
+          "description": "Find and list all KiCad projects on this system.",
+          "input_schema": {
+            "properties": {},
+            "title": "list_projectsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_project_structure",
+          "description": "Get the structure and files of a KiCad project.",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "get_project_structureArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "open_project",
+          "description": "Open a KiCad project in KiCad.",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "open_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "validate_project",
+          "description": "Basic validation of a KiCad project.",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "validate_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_pcb_thumbnail",
+          "description": "Generate a thumbnail image of a KiCad PCB layout using kicad-cli.\n\n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: Context for MCP communication\n\n        Returns:\n            Thumbnail image of the PCB or None if generation failed\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "generate_pcb_thumbnailArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_project_thumbnail",
+          "description": "Generate a thumbnail of a KiCad project's PCB layout (Alias for generate_pcb_thumbnail).",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "generate_project_thumbnailArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_drc_history_tool",
+          "description": "Get the DRC check history for a KiCad project.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            \n        Returns:\n            Dictionary with DRC history entries\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "get_drc_history_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_drc_check",
+          "description": "Run a Design Rule Check on a KiCad PCB file.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with DRC results and statistics\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "run_drc_checkArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_bom",
+          "description": "Analyze a KiCad project's Bill of Materials.\n        \n        This tool will look for BOM files related to a KiCad project and provide\n        analysis including component counts, categories, and cost estimates if available.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with BOM analysis results\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "analyze_bomArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "export_bom_csv",
+          "description": "Export a Bill of Materials for a KiCad project.\n        \n        This tool attempts to generate a CSV BOM file for a KiCad project.\n        It requires KiCad to be installed with the appropriate command-line tools.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with export results\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "export_bom_csvArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_schematic_netlist",
+          "description": "Extract netlist information from a KiCad schematic.\n        \n        This tool parses a KiCad schematic file and extracts comprehensive\n        netlist information including components, connections, and labels.\n        \n        Args:\n            schematic_path: Path to the KiCad schematic file (.kicad_sch)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with netlist information\n        ",
+          "input_schema": {
+            "properties": {
+              "schematic_path": {
+                "title": "Schematic Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schematic_path"
+            ],
+            "title": "extract_schematic_netlistArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_project_netlist",
+          "description": "Extract netlist from a KiCad project's schematic.\n        \n        This tool finds the schematic associated with a KiCad project\n        and extracts its netlist information.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with netlist information\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "extract_project_netlistArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_schematic_connections",
+          "description": "Analyze connections in a KiCad schematic.\n        \n        This tool provides detailed analysis of component connections,\n        including power nets, signal paths, and potential issues.\n        \n        Args:\n            schematic_path: Path to the KiCad schematic file (.kicad_sch)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with connection analysis\n        ",
+          "input_schema": {
+            "properties": {
+              "schematic_path": {
+                "title": "Schematic Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schematic_path"
+            ],
+            "title": "analyze_schematic_connectionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find_component_connections",
+          "description": "Find all connections for a specific component in a KiCad project.\n        \n        This tool extracts information about how a specific component\n        is connected to other components in the schematic.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            component_ref: Component reference (e.g., \"R1\", \"U3\")\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with component connection information\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              },
+              "component_ref": {
+                "title": "Component Ref",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path",
+              "component_ref"
+            ],
+            "title": "find_component_connectionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "identify_circuit_patterns",
+          "description": "Identify common circuit patterns in a KiCad schematic.\n        \n        This tool analyzes a schematic to recognize common circuit blocks such as:\n        - Power supply circuits (linear regulators, switching converters)\n        - Amplifier circuits (op-amps, transistor amplifiers)\n        - Filter circuits (RC, LC, active filters)\n        - Digital interfaces (I2C, SPI, UART)\n        - Microcontroller circuits\n        - And more\n        \n        Args:\n            schematic_path: Path to the KiCad schematic file (.kicad_sch)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with identified circuit patterns\n        ",
+          "input_schema": {
+            "properties": {
+              "schematic_path": {
+                "title": "Schematic Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schematic_path"
+            ],
+            "title": "identify_circuit_patternsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_project_circuit_patterns",
+          "description": "Identify circuit patterns in a KiCad project's schematic.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with identified circuit patterns\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "analyze_project_circuit_patternsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 16,
+      "tool_names": [
+        "list_projects",
+        "get_project_structure",
+        "open_project",
+        "validate_project",
+        "generate_pcb_thumbnail",
+        "generate_project_thumbnail",
+        "get_drc_history_tool",
+        "run_drc_check",
+        "analyze_bom",
+        "export_bom_csv",
+        "extract_schematic_netlist",
+        "extract_project_netlist",
+        "analyze_schematic_connections",
+        "find_component_connections",
+        "identify_circuit_patterns",
+        "analyze_project_circuit_patterns"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1127,
+      "name": "KiCad MCP Server",
+      "author": "@lamaalrajih/kicad-mcp",
+      "overview": "Set up a server to enhance your KiCad experience. Manage projects, run design rule checks, and visualize PCB layouts seamlessly with any MCP-compliant client. Streamline your PCB design workflow and troubleshoot issues effectively.",
+      "repository_url": "https://github.com/lamaalrajih/kicad-mcp",
+      "homepage": "https://smithery.ai/server/@lamaalrajih/kicad-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@lamaalrajih_kicad-mcp.json",
+      "tools_count": 16,
+      "tools": [
+        {
+          "name": "list_projects",
+          "description": "Find and list all KiCad projects on this system.",
+          "input_schema": {
+            "properties": {},
+            "title": "list_projectsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_project_structure",
+          "description": "Get the structure and files of a KiCad project.",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "get_project_structureArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "open_project",
+          "description": "Open a KiCad project in KiCad.",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "open_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "validate_project",
+          "description": "Basic validation of a KiCad project.",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "validate_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_pcb_thumbnail",
+          "description": "Generate a thumbnail image of a KiCad PCB layout using kicad-cli.\n\n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: Context for MCP communication\n\n        Returns:\n            Thumbnail image of the PCB or None if generation failed\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "generate_pcb_thumbnailArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_project_thumbnail",
+          "description": "Generate a thumbnail of a KiCad project's PCB layout (Alias for generate_pcb_thumbnail).",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "generate_project_thumbnailArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_drc_history_tool",
+          "description": "Get the DRC check history for a KiCad project.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            \n        Returns:\n            Dictionary with DRC history entries\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "get_drc_history_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_drc_check",
+          "description": "Run a Design Rule Check on a KiCad PCB file.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with DRC results and statistics\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "run_drc_checkArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_bom",
+          "description": "Analyze a KiCad project's Bill of Materials.\n        \n        This tool will look for BOM files related to a KiCad project and provide\n        analysis including component counts, categories, and cost estimates if available.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with BOM analysis results\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "analyze_bomArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "export_bom_csv",
+          "description": "Export a Bill of Materials for a KiCad project.\n        \n        This tool attempts to generate a CSV BOM file for a KiCad project.\n        It requires KiCad to be installed with the appropriate command-line tools.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with export results\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "export_bom_csvArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_schematic_netlist",
+          "description": "Extract netlist information from a KiCad schematic.\n        \n        This tool parses a KiCad schematic file and extracts comprehensive\n        netlist information including components, connections, and labels.\n        \n        Args:\n            schematic_path: Path to the KiCad schematic file (.kicad_sch)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with netlist information\n        ",
+          "input_schema": {
+            "properties": {
+              "schematic_path": {
+                "title": "Schematic Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schematic_path"
+            ],
+            "title": "extract_schematic_netlistArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "extract_project_netlist",
+          "description": "Extract netlist from a KiCad project's schematic.\n        \n        This tool finds the schematic associated with a KiCad project\n        and extracts its netlist information.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with netlist information\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "extract_project_netlistArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_schematic_connections",
+          "description": "Analyze connections in a KiCad schematic.\n        \n        This tool provides detailed analysis of component connections,\n        including power nets, signal paths, and potential issues.\n        \n        Args:\n            schematic_path: Path to the KiCad schematic file (.kicad_sch)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with connection analysis\n        ",
+          "input_schema": {
+            "properties": {
+              "schematic_path": {
+                "title": "Schematic Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schematic_path"
+            ],
+            "title": "analyze_schematic_connectionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find_component_connections",
+          "description": "Find all connections for a specific component in a KiCad project.\n        \n        This tool extracts information about how a specific component\n        is connected to other components in the schematic.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            component_ref: Component reference (e.g., \"R1\", \"U3\")\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with component connection information\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              },
+              "component_ref": {
+                "title": "Component Ref",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path",
+              "component_ref"
+            ],
+            "title": "find_component_connectionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "identify_circuit_patterns",
+          "description": "Identify common circuit patterns in a KiCad schematic.\n        \n        This tool analyzes a schematic to recognize common circuit blocks such as:\n        - Power supply circuits (linear regulators, switching converters)\n        - Amplifier circuits (op-amps, transistor amplifiers)\n        - Filter circuits (RC, LC, active filters)\n        - Digital interfaces (I2C, SPI, UART)\n        - Microcontroller circuits\n        - And more\n        \n        Args:\n            schematic_path: Path to the KiCad schematic file (.kicad_sch)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with identified circuit patterns\n        ",
+          "input_schema": {
+            "properties": {
+              "schematic_path": {
+                "title": "Schematic Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schematic_path"
+            ],
+            "title": "identify_circuit_patternsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_project_circuit_patterns",
+          "description": "Identify circuit patterns in a KiCad project's schematic.\n        \n        Args:\n            project_path: Path to the KiCad project file (.kicad_pro)\n            ctx: MCP context for progress reporting\n            \n        Returns:\n            Dictionary with identified circuit patterns\n        ",
+          "input_schema": {
+            "properties": {
+              "project_path": {
+                "title": "Project Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_path"
+            ],
+            "title": "analyze_project_circuit_patternsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@lamaalrajih/kicad-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@lamaalrajih/kicad-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1128.@lamaalrajih_kicad-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1105
+  }
+}

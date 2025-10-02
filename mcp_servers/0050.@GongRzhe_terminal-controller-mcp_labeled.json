@@ -1,0 +1,594 @@
+{
+  "labels": {
+    "analysis": "The MCP Server functions as a secure terminal controller that enables users to execute terminal commands, manage files, and interact with the file system through a standardized interface. It provides tools for basic terminal operations (like command execution and directory navigation) as well as advanced file manipulation (like reading, writing, updating, and inserting content in files). The server effectively enhances an LLM's capabilities by allowing programmatic access to system operations in a controlled manner.",
+    "reasoning": "The primary label \"File Management\" is chosen because the server's core functionality revolves around file system interactions, including file operations and directory navigation. \"Operating System\" is selected as a secondary label because the server also provides terminal command execution, which is a common operating system functionality. No custom label is needed as the predefined labels sufficiently describe the server's capabilities.",
+    "primary_label": "File Management",
+    "secondary_labels": [
+      "Operating System"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 49,
+    "server_name": "Terminal Controller",
+    "rank_by_usage": 50,
+    "usage_count": "2,244",
+    "original_file": "../crawler/smithery/@GongRzhe_terminal-controller-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@GongRzhe/terminal-controller-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "execute_command",
+          "description": "\n    Execute terminal command and return results\n    \n    Args:\n        command: Command line command to execute\n        timeout: Command timeout in seconds, default is 30 seconds\n    \n    Returns:\n        Output of the command execution\n    ",
+          "input_schema": {
+            "properties": {
+              "command": {
+                "title": "Command",
+                "type": "string"
+              },
+              "timeout": {
+                "default": 30,
+                "title": "Timeout",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "command"
+            ],
+            "title": "execute_commandArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_command_history",
+          "description": "\n    Get recent command execution history\n    \n    Args:\n        count: Number of recent commands to return\n    \n    Returns:\n        Formatted command history record\n    ",
+          "input_schema": {
+            "properties": {
+              "count": {
+                "default": 10,
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "title": "get_command_historyArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_directory",
+          "description": "\n    Get current working directory\n    \n    Returns:\n        Path of current working directory\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_current_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "change_directory",
+          "description": "\n    Change current working directory\n    \n    Args:\n        path: Directory path to switch to\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "change_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_directory",
+          "description": "\n    List files and subdirectories in the specified directory\n    \n    Args:\n        path: Directory path to list contents, default is current directory\n    \n    Returns:\n        List of directory contents\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Path"
+              }
+            },
+            "title": "list_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "write_file",
+          "description": "\n    Write content to a file\n    \n    Args:\n        path: Path to the file\n        content: Content to write (string or JSON object)\n        mode: Write mode ('overwrite' or 'append')\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "content": {
+                "title": "Content",
+                "type": "string"
+              },
+              "mode": {
+                "default": "overwrite",
+                "title": "Mode",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "title": "write_fileArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_file",
+          "description": "\n    Read content from a file with optional row selection\n    \n    Args:\n        path: Path to the file\n        start_row: Starting row to read from (0-based, optional)\n        end_row: Ending row to read to (0-based, inclusive, optional)\n        as_json: If True, attempt to parse file content as JSON (optional)\n    \n    Returns:\n        File content or selected lines, optionally parsed as JSON\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "start_row": {
+                "default": null,
+                "title": "Start Row",
+                "type": "integer"
+              },
+              "end_row": {
+                "default": null,
+                "title": "End Row",
+                "type": "integer"
+              },
+              "as_json": {
+                "default": false,
+                "title": "As Json",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "read_fileArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "insert_file_content",
+          "description": "\n    Insert content at specific row(s) in a file\n    \n    Args:\n        path: Path to the file\n        content: Content to insert (string or JSON object)\n        row: Row number to insert at (0-based, optional)\n        rows: List of row numbers to insert at (0-based, optional)\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "content": {
+                "title": "Content",
+                "type": "string"
+              },
+              "row": {
+                "default": null,
+                "title": "Row",
+                "type": "integer"
+              },
+              "rows": {
+                "default": null,
+                "items": {},
+                "title": "Rows",
+                "type": "array"
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "title": "insert_file_contentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_file_content",
+          "description": "\n    Delete content at specific row(s) from a file\n    \n    Args:\n        path: Path to the file\n        row: Row number to delete (0-based, optional)\n        rows: List of row numbers to delete (0-based, optional)\n        substring: If provided, only delete this substring within the specified row(s), not the entire row (optional)\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "row": {
+                "default": null,
+                "title": "Row",
+                "type": "integer"
+              },
+              "rows": {
+                "default": null,
+                "items": {},
+                "title": "Rows",
+                "type": "array"
+              },
+              "substring": {
+                "default": null,
+                "title": "Substring",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "delete_file_contentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_file_content",
+          "description": "\n    Update content at specific row(s) in a file\n    \n    Args:\n        path: Path to the file\n        content: New content to place at the specified row(s)\n        row: Row number to update (0-based, optional)\n        rows: List of row numbers to update (0-based, optional)\n        substring: If provided, only replace this substring within the specified row(s), not the entire row\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "content": {
+                "title": "Content",
+                "type": "string"
+              },
+              "row": {
+                "default": null,
+                "title": "Row",
+                "type": "integer"
+              },
+              "rows": {
+                "default": null,
+                "items": {},
+                "title": "Rows",
+                "type": "array"
+              },
+              "substring": {
+                "default": null,
+                "title": "Substring",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "title": "update_file_contentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 10,
+      "tool_names": [
+        "execute_command",
+        "get_command_history",
+        "get_current_directory",
+        "change_directory",
+        "list_directory",
+        "write_file",
+        "read_file",
+        "insert_file_content",
+        "delete_file_content",
+        "update_file_content"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 49,
+      "name": "Terminal Controller",
+      "author": "@GongRzhe/terminal-controller-mcp",
+      "overview": "Execute terminal commands securely and manage your file system through a standardized interface. Navigate directories, run commands, and track command history effortlessly. Enhance your LLM's capabilities with powerful terminal interactions.",
+      "repository_url": "https://github.com/GongRzhe/terminal-controller-mcp",
+      "homepage": "https://smithery.ai/server/@GongRzhe/terminal-controller-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "2,244",
+      "success_rate": "99.97%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@GongRzhe_terminal-controller-mcp.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "execute_command",
+          "description": "\n    Execute terminal command and return results\n    \n    Args:\n        command: Command line command to execute\n        timeout: Command timeout in seconds, default is 30 seconds\n    \n    Returns:\n        Output of the command execution\n    ",
+          "input_schema": {
+            "properties": {
+              "command": {
+                "title": "Command",
+                "type": "string"
+              },
+              "timeout": {
+                "default": 30,
+                "title": "Timeout",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "command"
+            ],
+            "title": "execute_commandArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_command_history",
+          "description": "\n    Get recent command execution history\n    \n    Args:\n        count: Number of recent commands to return\n    \n    Returns:\n        Formatted command history record\n    ",
+          "input_schema": {
+            "properties": {
+              "count": {
+                "default": 10,
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "title": "get_command_historyArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_directory",
+          "description": "\n    Get current working directory\n    \n    Returns:\n        Path of current working directory\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_current_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "change_directory",
+          "description": "\n    Change current working directory\n    \n    Args:\n        path: Directory path to switch to\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "change_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_directory",
+          "description": "\n    List files and subdirectories in the specified directory\n    \n    Args:\n        path: Directory path to list contents, default is current directory\n    \n    Returns:\n        List of directory contents\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Path"
+              }
+            },
+            "title": "list_directoryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "write_file",
+          "description": "\n    Write content to a file\n    \n    Args:\n        path: Path to the file\n        content: Content to write (string or JSON object)\n        mode: Write mode ('overwrite' or 'append')\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "content": {
+                "title": "Content",
+                "type": "string"
+              },
+              "mode": {
+                "default": "overwrite",
+                "title": "Mode",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "title": "write_fileArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_file",
+          "description": "\n    Read content from a file with optional row selection\n    \n    Args:\n        path: Path to the file\n        start_row: Starting row to read from (0-based, optional)\n        end_row: Ending row to read to (0-based, inclusive, optional)\n        as_json: If True, attempt to parse file content as JSON (optional)\n    \n    Returns:\n        File content or selected lines, optionally parsed as JSON\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "start_row": {
+                "default": null,
+                "title": "Start Row",
+                "type": "integer"
+              },
+              "end_row": {
+                "default": null,
+                "title": "End Row",
+                "type": "integer"
+              },
+              "as_json": {
+                "default": false,
+                "title": "As Json",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "read_fileArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "insert_file_content",
+          "description": "\n    Insert content at specific row(s) in a file\n    \n    Args:\n        path: Path to the file\n        content: Content to insert (string or JSON object)\n        row: Row number to insert at (0-based, optional)\n        rows: List of row numbers to insert at (0-based, optional)\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "content": {
+                "title": "Content",
+                "type": "string"
+              },
+              "row": {
+                "default": null,
+                "title": "Row",
+                "type": "integer"
+              },
+              "rows": {
+                "default": null,
+                "items": {},
+                "title": "Rows",
+                "type": "array"
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "title": "insert_file_contentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_file_content",
+          "description": "\n    Delete content at specific row(s) from a file\n    \n    Args:\n        path: Path to the file\n        row: Row number to delete (0-based, optional)\n        rows: List of row numbers to delete (0-based, optional)\n        substring: If provided, only delete this substring within the specified row(s), not the entire row (optional)\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "row": {
+                "default": null,
+                "title": "Row",
+                "type": "integer"
+              },
+              "rows": {
+                "default": null,
+                "items": {},
+                "title": "Rows",
+                "type": "array"
+              },
+              "substring": {
+                "default": null,
+                "title": "Substring",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "delete_file_contentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_file_content",
+          "description": "\n    Update content at specific row(s) in a file\n    \n    Args:\n        path: Path to the file\n        content: New content to place at the specified row(s)\n        row: Row number to update (0-based, optional)\n        rows: List of row numbers to update (0-based, optional)\n        substring: If provided, only replace this substring within the specified row(s), not the entire row\n    \n    Returns:\n        Operation result information\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "content": {
+                "title": "Content",
+                "type": "string"
+              },
+              "row": {
+                "default": null,
+                "title": "Row",
+                "type": "integer"
+              },
+              "rows": {
+                "default": null,
+                "items": {},
+                "title": "Rows",
+                "type": "array"
+              },
+              "substring": {
+                "default": null,
+                "title": "Substring",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ],
+            "title": "update_file_contentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@GongRzhe/terminal-controller-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@GongRzhe/terminal-controller-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0050.@GongRzhe_terminal-controller-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 49
+  }
+}

@@ -1,0 +1,1952 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides a secure interface for interacting with Firebase Firestore databases. It offers comprehensive CRUD operations, advanced querying capabilities, batch operations, and transactional updates—all with fine-grained permission control. The tools enable manipulation of documents and collections, including path-based operations, atomic increments, array manipulations, and field-level operations. The server ensures data consistency and security through granular access controls and default deny rules.",
+    "reasoning": "The primary functionality is clearly centered around database operations, making \"Database Operations\" the most appropriate primary label. Secondary labels like \"Security & Authentication\" are included due to the emphasis on permission-controlled access and fine-grained access rules. The server's transactional and batch operation capabilities also align with data processing use cases. No custom label is needed as the predefined categories adequately cover its functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Security & Authentication",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 554,
+    "server_name": "Firestore Server",
+    "rank_by_usage": 555,
+    "usage_count": "22",
+    "original_file": "../crawler/smithery/@devlimelabs_firestore-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@devlimelabs/firestore-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "firestore-list-collections",
+          "description": "List Firestore collections",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-get-collection",
+          "description": "Get documents from a Firestore collection",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              }
+            },
+            "required": [
+              "collectionId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-get-document",
+          "description": "Get a document from Firestore",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "The ID of the document"
+              }
+            },
+            "required": [
+              "collectionId",
+              "documentId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-create-document",
+          "description": "Create a new document in Firestore",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "Optional document ID (auto-generated if not provided)"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "The document data"
+              }
+            },
+            "required": [
+              "collectionId",
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-update-document",
+          "description": "Update an existing Firestore document",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "The ID of the document to update"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "The document data to update"
+              }
+            },
+            "required": [
+              "collectionId",
+              "documentId",
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-delete-document",
+          "description": "Delete a document from Firestore",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "The ID of the document to delete"
+              }
+            },
+            "required": [
+              "collectionId",
+              "documentId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-query-collection",
+          "description": "Query documents in a Firestore collection",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "description": "Field path to filter on"
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "==",
+                        "!=",
+                        ">",
+                        ">=",
+                        "<",
+                        "<=",
+                        "array-contains",
+                        "in",
+                        "array-contains-any",
+                        "not-in"
+                      ],
+                      "description": "Operator for comparison"
+                    },
+                    "value": {
+                      "description": "Value to compare against"
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "operator"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of filter conditions"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of results to return"
+              },
+              "orderBy": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "Field to order by"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "description": "Sort direction"
+                  }
+                },
+                "required": [
+                  "field",
+                  "direction"
+                ],
+                "additionalProperties": false,
+                "description": "Order specification"
+              }
+            },
+            "required": [
+              "collectionId",
+              "filters"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-list-subcollections",
+          "description": "List subcollections of a document",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document (e.g., 'users/userId1')"
+              }
+            },
+            "required": [
+              "documentPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-get-collection-by-path",
+          "description": "Get documents from a collection using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionPath": {
+                "type": "string",
+                "description": "Full path to the collection (e.g., 'users/userId1/orders')"
+              }
+            },
+            "required": [
+              "collectionPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-get-document-by-path",
+          "description": "Get a document using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document (e.g., 'users/userId1/orders/orderId1')"
+              }
+            },
+            "required": [
+              "documentPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-create-document-by-path",
+          "description": "Create a document in a collection using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionPath": {
+                "type": "string",
+                "description": "Full path to the collection (e.g., 'users/userId1/orders')"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Document data to create"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "Optional document ID. If not provided, one will be generated"
+              }
+            },
+            "required": [
+              "collectionPath",
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-update-document-by-path",
+          "description": "Update a document using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document (e.g., 'users/userId1/orders/orderId1')"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Document data to update"
+              }
+            },
+            "required": [
+              "documentPath",
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-delete-document-by-path",
+          "description": "Delete a document using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document (e.g., 'users/userId1/orders/orderId1')"
+              }
+            },
+            "required": [
+              "documentPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-query-collection-by-path",
+          "description": "Query documents in a collection using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionPath": {
+                "type": "string",
+                "description": "Full path to the collection (e.g., 'users/userId1/orders')"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "description": "Field path to filter on"
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "==",
+                        "!=",
+                        ">",
+                        ">=",
+                        "<",
+                        "<=",
+                        "array-contains",
+                        "in",
+                        "array-contains-any",
+                        "not-in"
+                      ],
+                      "description": "Operator for comparison"
+                    },
+                    "value": {
+                      "description": "Value to compare against"
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "operator"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of filter conditions"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of results to return"
+              },
+              "orderBy": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "Field to order by"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "description": "Sort direction"
+                  }
+                },
+                "required": [
+                  "field",
+                  "direction"
+                ],
+                "additionalProperties": false,
+                "description": "Order specification"
+              }
+            },
+            "required": [
+              "collectionPath",
+              "filters"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-batch-write",
+          "description": "Execute multiple write operations in a single atomic batch",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "operations": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "create"
+                        },
+                        "collectionPath": {
+                          "type": "string"
+                        },
+                        "documentId": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "collectionPath",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "update"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "delete"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "description": "Array of write operations to execute"
+              }
+            },
+            "required": [
+              "operations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-batch-read",
+          "description": "Read multiple documents in a single operation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPaths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of document paths to read"
+              }
+            },
+            "required": [
+              "documentPaths"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-transaction",
+          "description": "Execute a transaction with read and write operations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "reads": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Document paths to read in the transaction"
+              },
+              "operations": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "create"
+                        },
+                        "collectionPath": {
+                          "type": "string"
+                        },
+                        "documentId": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "collectionPath",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "update"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "delete"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "description": "Write operations to execute based on read data"
+              },
+              "conditionScript": {
+                "type": "string",
+                "description": "JavaScript condition to evaluate before committing (optional)"
+              }
+            },
+            "required": [
+              "reads",
+              "operations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-increment-field",
+          "description": "Atomically increment a numeric field value",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "field": {
+                "type": "string",
+                "description": "Field name to increment"
+              },
+              "incrementBy": {
+                "type": "number",
+                "description": "Amount to increment by (can be negative)"
+              }
+            },
+            "required": [
+              "documentPath",
+              "field",
+              "incrementBy"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-array-union",
+          "description": "Add elements to an array field without duplicates",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "field": {
+                "type": "string",
+                "description": "Array field name"
+              },
+              "elements": {
+                "type": "array",
+                "description": "Elements to add to the array"
+              }
+            },
+            "required": [
+              "documentPath",
+              "field",
+              "elements"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-array-remove",
+          "description": "Remove elements from an array field",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "field": {
+                "type": "string",
+                "description": "Array field name"
+              },
+              "elements": {
+                "type": "array",
+                "description": "Elements to remove from the array"
+              }
+            },
+            "required": [
+              "documentPath",
+              "field",
+              "elements"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-server-timestamp",
+          "description": "Set a field to the server timestamp",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Field names to set to server timestamp"
+              }
+            },
+            "required": [
+              "documentPath",
+              "fields"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-delete-field",
+          "description": "Delete specific fields from a document",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Field names to delete"
+              }
+            },
+            "required": [
+              "documentPath",
+              "fields"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-field-value-batch",
+          "description": "Execute multiple field value operations in a batch",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "operations": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "increment"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "field": {
+                          "type": "string"
+                        },
+                        "incrementBy": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "field",
+                        "incrementBy"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "arrayUnion"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "field": {
+                          "type": "string"
+                        },
+                        "elements": {
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "field",
+                        "elements"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "arrayRemove"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "field": {
+                          "type": "string"
+                        },
+                        "elements": {
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "field",
+                        "elements"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "serverTimestamp"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "fields"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "deleteField"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "fields"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "description": "Array of field value operations to execute"
+              }
+            },
+            "required": [
+              "operations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 23,
+      "tool_names": [
+        "firestore-list-collections",
+        "firestore-get-collection",
+        "firestore-get-document",
+        "firestore-create-document",
+        "firestore-update-document",
+        "firestore-delete-document",
+        "firestore-query-collection",
+        "firestore-list-subcollections",
+        "firestore-get-collection-by-path",
+        "firestore-get-document-by-path",
+        "firestore-create-document-by-path",
+        "firestore-update-document-by-path",
+        "firestore-delete-document-by-path",
+        "firestore-query-collection-by-path",
+        "firestore-batch-write",
+        "firestore-batch-read",
+        "firestore-transaction",
+        "firestore-increment-field",
+        "firestore-array-union",
+        "firestore-array-remove",
+        "firestore-server-timestamp",
+        "firestore-delete-field",
+        "firestore-field-value-batch"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 554,
+      "name": "Firestore Server",
+      "author": "@devlimelabs/firestore-mcp",
+      "overview": "Provide secure, permission-controlled access to Firebase Firestore databases through a standardized MCP interface. Enable AI assistants and other clients to perform full CRUD operations, advanced queries, batch operations, and transactional updates with granular collection and operation-level permissions. Ensure data consistency and security with default deny rules and fine-grained access control.",
+      "repository_url": "https://github.com/devlimelabs/firestore-mcp",
+      "homepage": "https://smithery.ai/server/@devlimelabs/firestore-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "22",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@devlimelabs_firestore-mcp.json",
+      "tools_count": 23,
+      "tools": [
+        {
+          "name": "firestore-list-collections",
+          "description": "List Firestore collections",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-get-collection",
+          "description": "Get documents from a Firestore collection",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              }
+            },
+            "required": [
+              "collectionId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-get-document",
+          "description": "Get a document from Firestore",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "The ID of the document"
+              }
+            },
+            "required": [
+              "collectionId",
+              "documentId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-create-document",
+          "description": "Create a new document in Firestore",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "Optional document ID (auto-generated if not provided)"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "The document data"
+              }
+            },
+            "required": [
+              "collectionId",
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-update-document",
+          "description": "Update an existing Firestore document",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "The ID of the document to update"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "The document data to update"
+              }
+            },
+            "required": [
+              "collectionId",
+              "documentId",
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-delete-document",
+          "description": "Delete a document from Firestore",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "The ID of the document to delete"
+              }
+            },
+            "required": [
+              "collectionId",
+              "documentId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-query-collection",
+          "description": "Query documents in a Firestore collection",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The ID of the collection"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "description": "Field path to filter on"
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "==",
+                        "!=",
+                        ">",
+                        ">=",
+                        "<",
+                        "<=",
+                        "array-contains",
+                        "in",
+                        "array-contains-any",
+                        "not-in"
+                      ],
+                      "description": "Operator for comparison"
+                    },
+                    "value": {
+                      "description": "Value to compare against"
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "operator"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of filter conditions"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of results to return"
+              },
+              "orderBy": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "Field to order by"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "description": "Sort direction"
+                  }
+                },
+                "required": [
+                  "field",
+                  "direction"
+                ],
+                "additionalProperties": false,
+                "description": "Order specification"
+              }
+            },
+            "required": [
+              "collectionId",
+              "filters"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-list-subcollections",
+          "description": "List subcollections of a document",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document (e.g., 'users/userId1')"
+              }
+            },
+            "required": [
+              "documentPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-get-collection-by-path",
+          "description": "Get documents from a collection using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionPath": {
+                "type": "string",
+                "description": "Full path to the collection (e.g., 'users/userId1/orders')"
+              }
+            },
+            "required": [
+              "collectionPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-get-document-by-path",
+          "description": "Get a document using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document (e.g., 'users/userId1/orders/orderId1')"
+              }
+            },
+            "required": [
+              "documentPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-create-document-by-path",
+          "description": "Create a document in a collection using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionPath": {
+                "type": "string",
+                "description": "Full path to the collection (e.g., 'users/userId1/orders')"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Document data to create"
+              },
+              "documentId": {
+                "type": "string",
+                "description": "Optional document ID. If not provided, one will be generated"
+              }
+            },
+            "required": [
+              "collectionPath",
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-update-document-by-path",
+          "description": "Update a document using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document (e.g., 'users/userId1/orders/orderId1')"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Document data to update"
+              }
+            },
+            "required": [
+              "documentPath",
+              "data"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-delete-document-by-path",
+          "description": "Delete a document using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document (e.g., 'users/userId1/orders/orderId1')"
+              }
+            },
+            "required": [
+              "documentPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-query-collection-by-path",
+          "description": "Query documents in a collection using full path (supports subcollections)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionPath": {
+                "type": "string",
+                "description": "Full path to the collection (e.g., 'users/userId1/orders')"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "description": "Field path to filter on"
+                    },
+                    "operator": {
+                      "type": "string",
+                      "enum": [
+                        "==",
+                        "!=",
+                        ">",
+                        ">=",
+                        "<",
+                        "<=",
+                        "array-contains",
+                        "in",
+                        "array-contains-any",
+                        "not-in"
+                      ],
+                      "description": "Operator for comparison"
+                    },
+                    "value": {
+                      "description": "Value to compare against"
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "operator"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Array of filter conditions"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of results to return"
+              },
+              "orderBy": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "Field to order by"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "description": "Sort direction"
+                  }
+                },
+                "required": [
+                  "field",
+                  "direction"
+                ],
+                "additionalProperties": false,
+                "description": "Order specification"
+              }
+            },
+            "required": [
+              "collectionPath",
+              "filters"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-batch-write",
+          "description": "Execute multiple write operations in a single atomic batch",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "operations": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "create"
+                        },
+                        "collectionPath": {
+                          "type": "string"
+                        },
+                        "documentId": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "collectionPath",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "update"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "delete"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "description": "Array of write operations to execute"
+              }
+            },
+            "required": [
+              "operations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-batch-read",
+          "description": "Read multiple documents in a single operation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPaths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of document paths to read"
+              }
+            },
+            "required": [
+              "documentPaths"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-transaction",
+          "description": "Execute a transaction with read and write operations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "reads": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Document paths to read in the transaction"
+              },
+              "operations": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "create"
+                        },
+                        "collectionPath": {
+                          "type": "string"
+                        },
+                        "documentId": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "collectionPath",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "update"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "object",
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "data"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "delete"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "description": "Write operations to execute based on read data"
+              },
+              "conditionScript": {
+                "type": "string",
+                "description": "JavaScript condition to evaluate before committing (optional)"
+              }
+            },
+            "required": [
+              "reads",
+              "operations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-increment-field",
+          "description": "Atomically increment a numeric field value",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "field": {
+                "type": "string",
+                "description": "Field name to increment"
+              },
+              "incrementBy": {
+                "type": "number",
+                "description": "Amount to increment by (can be negative)"
+              }
+            },
+            "required": [
+              "documentPath",
+              "field",
+              "incrementBy"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-array-union",
+          "description": "Add elements to an array field without duplicates",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "field": {
+                "type": "string",
+                "description": "Array field name"
+              },
+              "elements": {
+                "type": "array",
+                "description": "Elements to add to the array"
+              }
+            },
+            "required": [
+              "documentPath",
+              "field",
+              "elements"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-array-remove",
+          "description": "Remove elements from an array field",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "field": {
+                "type": "string",
+                "description": "Array field name"
+              },
+              "elements": {
+                "type": "array",
+                "description": "Elements to remove from the array"
+              }
+            },
+            "required": [
+              "documentPath",
+              "field",
+              "elements"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-server-timestamp",
+          "description": "Set a field to the server timestamp",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Field names to set to server timestamp"
+              }
+            },
+            "required": [
+              "documentPath",
+              "fields"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-delete-field",
+          "description": "Delete specific fields from a document",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "documentPath": {
+                "type": "string",
+                "description": "Full path to the document"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Field names to delete"
+              }
+            },
+            "required": [
+              "documentPath",
+              "fields"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "firestore-field-value-batch",
+          "description": "Execute multiple field value operations in a batch",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "operations": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "increment"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "field": {
+                          "type": "string"
+                        },
+                        "incrementBy": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "field",
+                        "incrementBy"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "arrayUnion"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "field": {
+                          "type": "string"
+                        },
+                        "elements": {
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "field",
+                        "elements"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "arrayRemove"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "field": {
+                          "type": "string"
+                        },
+                        "elements": {
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "field",
+                        "elements"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "serverTimestamp"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "fields"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "deleteField"
+                        },
+                        "documentPath": {
+                          "type": "string"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "documentPath",
+                        "fields"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "description": "Array of field value operations to execute"
+              }
+            },
+            "required": [
+              "operations"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@devlimelabs/firestore-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@devlimelabs/firestore-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0555.@devlimelabs_firestore-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 543
+  }
+}

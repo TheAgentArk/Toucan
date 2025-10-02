@@ -1,0 +1,113 @@
+{
+  "labels": {
+    "analysis": "The Sendblue Messaging Server is designed to facilitate iMessage and SMS communication for LLMs (Language Model Management) through the Sendblue platform. It provides tools to send messages (individual and group), manage groups, check number services, send typing indicators, retrieve message history, add recipients to groups, and upload media for sending. The server integrates with popular clients like Claude Desktop and Cursor to enhance conversational capabilities. The core functionality revolves around messaging and communication management.",
+    "reasoning": "The primary label is Communication Tools because the server's primary purpose is to enable and manage messaging, which is a key aspect of communication. Secondary labels are Browser Automation (for potential webhook integrations) and API Integration (since it allows interactions with the Sendblue platform through APIs). There is no need for a custom label as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "Browser Automation",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 514,
+    "server_name": "Sendblue Messaging Server",
+    "rank_by_usage": 515,
+    "usage_count": "30",
+    "original_file": "../crawler/smithery/@adamanz_sendblue-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@adamanz/sendblue-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 514,
+      "name": "Sendblue Messaging Server",
+      "author": "@adamanz/sendblue-mcp",
+      "overview": "Enable LLMs to send and manage iMessage and SMS communications seamlessly. Use tools to send messages, manage groups, check number services, and retrieve message history via the Sendblue platform. Integrate easily with popular clients like Claude Desktop and Cursor for enhanced conversational capabilities.",
+      "repository_url": "https://github.com/adamanz/sendblue-mcp",
+      "homepage": "https://smithery.ai/server/@adamanz/sendblue-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "30",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@adamanz_sendblue-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "send_message",
+          "description": "Deploy Server Sendblue Messaging Server @adamanz/sendblue-mcp Try in Playground send_message",
+          "parameters": []
+        },
+        {
+          "name": "send_group_message",
+          "description": "Sends a message to a group of recipients. If the group does not exist, it will be created. Args: to_numbers: Array of E.164 formatted phone numbers for group recipients (max 25). group_id: UUID of an existing group. content: The text content of the message. from_number: The E.164 formatted Sendblue number to send the message from. media_url: Publicly accessible URL to media. send_style: Expressive style for iMessage. status_callback: Webhook URL for message status updates. Returns: Dict containing the Sendblue API response including group_id and message status.",
+          "parameters": []
+        },
+        {
+          "name": "lookup_number_service",
+          "description": "Determines if a phone number supports iMessage or SMS. Args: phone_number: The E.164 formatted phone number to evaluate. Returns: Dict containing the number and service type (iMessage or SMS).",
+          "parameters": []
+        },
+        {
+          "name": "send_typing_indicator",
+          "description": "Sends a typing indicator (animated dots) to a recipient. Args: to_number: The E.164 formatted phone number to send the typing indicator to. Returns: Dict containing the status of the typing indicator request.",
+          "parameters": []
+        },
+        {
+          "name": "get_message_history",
+          "description": "Retrieves message history for the account. Args: contact_phone_number: Filter by sender/recipient E.164 phone number. conversation_id: Filter by conversation ID (contact ID). limit: Maximum number of messages per request. offset: Offset for paginating through messages. from_date: Filter messages sent after this date/time (e.g., \"2023-06-15 12:00:00\"). Returns: List of message objects.",
+          "parameters": []
+        },
+        {
+          "name": "add_recipient_to_group",
+          "description": "Adds a new recipient to an existing group chat. Args: group_id: The ID (uuid) of the group to which the recipient will be added. recipient_number: The E.164 formatted phone number of the recipient to add to the group. Returns: Dict indicating success or failure.",
+          "parameters": []
+        },
+        {
+          "name": "upload_media_for_sending",
+          "description": "Uploads a media file from a publicly accessible URL to Sendblue's servers. Args: media_file_url: The publicly accessible URL of the media file. Returns: Dict containing upload status and mediaObjectId if successful.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@adamanz/sendblue-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "apiKey",
+          "required": true,
+          "description": "Your Sendblue API Key ID from the dashboard"
+        },
+        {
+          "name": "apiSecret",
+          "required": true,
+          "description": "Your Sendblue API Secret Key"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@adamanz/sendblue-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0515.@adamanz_sendblue-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 504
+  }
+}

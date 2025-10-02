@@ -1,0 +1,2289 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to enable AI agents to manage and interact with Redis data using natural language queries. It provides a comprehensive set of tools for operating on various Redis data structures including hashes, lists, sets, streams, and vectors. The server supports key management, data manipulation, and querying capabilities, with special features for Redis search indexes and vector similarity operations. This makes it particularly useful for applications requiring high-performance, real-time data operations.",
+    "reasoning": "The primary label is \"Database Operations\" because this server is fundamentally focused on managing Redis database operations. The secondary label includes \"AI/ML Tools\" due to its support for vector similarity searches used in machine learning applications, and \"Data Analysis & Processing\" as it enables complex queries and data retrieval operations. No custom label is necessary as the functionality is well-covered by existing categories.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "AI/ML Tools",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 227,
+    "server_name": "Redis",
+    "rank_by_usage": 228,
+    "usage_count": "193",
+    "original_file": "../crawler/smithery/@redis_mcp-redis.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@redis/mcp-redis/mcp?config=eyJyZWRpc1B3ZCI6ICIiLCAicmVkaXNTU0wiOiBmYWxzZSwgInJlZGlzSG9zdCI6ICIxMjcuMC4wLjEiLCAicmVkaXNQb3J0IjogNjM3OSwgInJlZGlzQ0FQYXRoIjogIiIsICJyZWRpc0NBQ2VydHMiOiAiIiwgInJlZGlzQ2VydFJlcXMiOiAicmVxdWlyZWQiLCAicmVkaXNVc2VybmFtZSI6ICJkZWZhdWx0IiwgInJlZGlzU1NMS2V5ZmlsZSI6ICIiLCAicmVkaXNTU0xDZXJ0ZmlsZSI6ICIifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "dbsize",
+          "description": "Get the number of keys stored in the Redis database\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "dbsizeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "info",
+          "description": "Get Redis server information and statistics.\n\nArgs:\n    section: The section of the info command (default, memory, cpu, etc.).\n\nReturns:\n    A dictionary of server information or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "section": {
+                "default": "default",
+                "title": "Section",
+                "type": "string"
+              }
+            },
+            "title": "infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "client_list",
+          "description": "Get a list of connected clients to the Redis server.",
+          "input_schema": {
+            "properties": {},
+            "title": "client_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete",
+          "description": "Delete a Redis key.\n\nArgs:\n    key (str): The key to delete.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "type",
+          "description": "Returns the string representation of the type of the value stored at key\n\nArgs:\n    key (str): The key to check.\n\nReturns:\n    str: The type of key, or none when key doesn't exist\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "expire",
+          "description": "Set an expiration time for a Redis key.\n\nArgs:\n    name: The Redis key.\n    expire_seconds: Time in seconds after which the key should expire.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "expire_seconds": {
+                "title": "Expire Seconds",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "expire_seconds"
+            ],
+            "title": "expireArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename",
+          "description": "\nRenames a Redis key from old_key to new_key.\n\nArgs:\n    old_key (str): The current name of the Redis key to rename.\n    new_key (str): The new name to assign to the key.\n\nReturns:\n    Dict[str, Any]: A dictionary containing the result of the operation.\n        On success: {\"status\": \"success\", \"message\": \"...\"}\n        On error: {\"error\": \"...\"}\n",
+          "input_schema": {
+            "properties": {
+              "old_key": {
+                "title": "Old Key",
+                "type": "string"
+              },
+              "new_key": {
+                "title": "New Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "old_key",
+              "new_key"
+            ],
+            "title": "renameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "scan_keys",
+          "description": "\nScan keys in the Redis database using the SCAN command (non-blocking, production-safe).\n\n⚠️  IMPORTANT: This returns PARTIAL results from one iteration. Use scan_all_keys() \nto get ALL matching keys, or call this function multiple times with the returned cursor\nuntil cursor becomes 0.\n\nThe SCAN command iterates through the keyspace in small chunks, making it safe to use\non large databases without blocking other operations.\n\nArgs:\n    pattern: Pattern to match keys against (default is \"*\" for all keys).\n            Common patterns: \"user:*\", \"cache:*\", \"*:123\", etc.\n    count: Hint for the number of keys to return per iteration (default 100).\n           Redis may return more or fewer keys than this hint.\n    cursor: The cursor position to start scanning from (0 to start from beginning).\n            To continue scanning, use the cursor value returned from previous call.\n\nReturns:\n    A dictionary containing:\n    - 'cursor': Next cursor position (0 means scan is complete)\n    - 'keys': List of keys found in this iteration (PARTIAL RESULTS)\n    - 'total_scanned': Number of keys returned in this batch\n    - 'scan_complete': Boolean indicating if scan is finished\n    Or an error message if something goes wrong.\n    \nExample usage:\n    First call: scan_keys(\"user:*\") -> returns cursor=1234, keys=[...], scan_complete=False\n    Next call: scan_keys(\"user:*\", cursor=1234) -> continues from where it left off\n    Final call: returns cursor=0, scan_complete=True when done\n",
+          "input_schema": {
+            "properties": {
+              "pattern": {
+                "default": "*",
+                "title": "Pattern",
+                "type": "string"
+              },
+              "count": {
+                "default": 100,
+                "title": "Count",
+                "type": "integer"
+              },
+              "cursor": {
+                "default": 0,
+                "title": "Cursor",
+                "type": "integer"
+              }
+            },
+            "title": "scan_keysArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "scan_all_keys",
+          "description": "\nScan and return ALL keys matching a pattern using multiple SCAN iterations.\n\nThis function automatically handles the SCAN cursor iteration to collect all matching keys.\nIt's safer than KEYS * for large databases but will still collect all results in memory.\n\n⚠️  WARNING: With very large datasets (millions of keys), this may consume significant memory.\nFor large-scale operations, consider using scan_keys() with manual iteration instead.\n\nArgs:\n    pattern: Pattern to match keys against (default is \"*\" for all keys).\n    batch_size: Number of keys to scan per iteration (default 100).\n\nReturns:\n    A list of all keys matching the pattern or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "pattern": {
+                "default": "*",
+                "title": "Pattern",
+                "type": "string"
+              },
+              "batch_size": {
+                "default": 100,
+                "title": "Batch Size",
+                "type": "integer"
+              }
+            },
+            "title": "scan_all_keysArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_indexes",
+          "description": "List of indexes in the Redis database\n\nReturns:\n    str: A JSON string containing the list of indexes or an error message.\n",
+          "input_schema": {
+            "properties": {},
+            "title": "get_indexesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_index_info",
+          "description": "Retrieve schema and information about a specific Redis index using FT.INFO.\n\nArgs:\n    index_name (str): The name of the index to retrieve information about.\n\nReturns:\n    str: Information about the specified index or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "index_name": {
+                "title": "Index Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "index_name"
+            ],
+            "title": "get_index_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_indexed_keys_number",
+          "description": "Retrieve the number of indexed keys by the index\n\nArgs:\n    index_name (str): The name of the index to retrieve information about.\n\nReturns:\n    int: Number of indexed keys\n",
+          "input_schema": {
+            "properties": {
+              "index_name": {
+                "title": "Index Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "index_name"
+            ],
+            "title": "get_indexed_keys_numberArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_vector_index_hash",
+          "description": "\nCreate a Redis 8 vector similarity index using HNSW on a Redis hash.\n\nThis function sets up a Redis index for approximate nearest neighbor (ANN)\nsearch using the HNSW algorithm and float32 vector embeddings.\n\nArgs:\n    index_name: The name of the Redis index to create. Unless specifically required, use the default name for the index.\n    prefix: The key prefix used to identify documents to index (e.g., 'doc:'). Unless specifically required, use the default prefix.\n    vector_field: The name of the vector field to be indexed for similarity search. Unless specifically required, use the default field name\n    dim: The dimensionality of the vectors stored under the vector_field.\n    distance_metric: The distance function to use (e.g., 'COSINE', 'L2', 'IP').\n\nReturns:\n    A string indicating whether the index was created successfully or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "index_name": {
+                "default": "vector_index",
+                "title": "Index Name",
+                "type": "string"
+              },
+              "prefix": {
+                "default": "doc:",
+                "title": "Prefix",
+                "type": "string"
+              },
+              "vector_field": {
+                "default": "vector",
+                "title": "Vector Field",
+                "type": "string"
+              },
+              "dim": {
+                "default": 1536,
+                "title": "Dim",
+                "type": "integer"
+              },
+              "distance_metric": {
+                "default": "COSINE",
+                "title": "Distance Metric",
+                "type": "string"
+              }
+            },
+            "title": "create_vector_index_hashArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "vector_search_hash",
+          "description": "\nPerform a KNN vector similarity search using Redis 8 or later version on vectors stored in hash data structures.\n\nArgs:\n    query_vector: List of floats to use as the query vector.\n    index_name: Name of the Redis index. Unless specifically specified, use the default index name.\n    vector_field: Name of the indexed vector field. Unless specifically required, use the default field name\n    k: Number of nearest neighbors to return.\n    return_fields: List of fields to return (optional).\n\nReturns:\n    A list of matched documents or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "query_vector": {
+                "items": {},
+                "title": "Query Vector",
+                "type": "array"
+              },
+              "index_name": {
+                "default": "vector_index",
+                "title": "Index Name",
+                "type": "string"
+              },
+              "vector_field": {
+                "default": "vector",
+                "title": "Vector Field",
+                "type": "string"
+              },
+              "k": {
+                "default": 5,
+                "title": "K",
+                "type": "integer"
+              },
+              "return_fields": {
+                "default": null,
+                "items": {},
+                "title": "Return Fields",
+                "type": "array"
+              }
+            },
+            "required": [
+              "query_vector"
+            ],
+            "title": "vector_search_hashArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hset",
+          "description": "Set a field in a hash stored at key with an optional expiration time.\n\nArgs:\n    name: The Redis hash key.\n    key: The field name inside the hash.\n    value: The value to set.\n    expire_seconds: Optional; time in seconds after which the key should expire.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expire_seconds": {
+                "default": null,
+                "title": "Expire Seconds",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "key",
+              "value"
+            ],
+            "title": "hsetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hget",
+          "description": "Get the value of a field in a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n    key: The field name inside the hash.\n\nReturns:\n    The field value or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "key"
+            ],
+            "title": "hgetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hdel",
+          "description": "Delete a field from a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n    key: The field name inside the hash.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "key"
+            ],
+            "title": "hdelArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hgetall",
+          "description": "Get all fields and values from a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n\nReturns:\n    A dictionary of field-value pairs or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "hgetallArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hexists",
+          "description": "Check if a field exists in a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n    key: The field name inside the hash.\n\nReturns:\n    True if the field exists, False otherwise.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "key"
+            ],
+            "title": "hexistsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_vector_in_hash",
+          "description": "Store a vector as a field in a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n    vector_field: The field name inside the hash. Unless specifically required, use the default field name\n    vector: The vector (list of numbers) to store in the hash.\n\nReturns:\n    True if the vector was successfully stored, False otherwise.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "vector": {
+                "items": {},
+                "title": "Vector",
+                "type": "array"
+              },
+              "vector_field": {
+                "default": "vector",
+                "title": "Vector Field",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "vector"
+            ],
+            "title": "set_vector_in_hashArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_vector_from_hash",
+          "description": "Retrieve a vector from a Redis hash and convert it back from binary blob.\n\nArgs:\n    name: The Redis hash key.\n    vector_field: The field name inside the hash. Unless specifically required, use the default field name\n\nReturns:\n    The vector as a list of floats, or an error message if retrieval fails.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "vector_field": {
+                "default": "vector",
+                "title": "Vector Field",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "get_vector_from_hashArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "lpush",
+          "description": "Push a value onto the left of a Redis list and optionally set an expiration time.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expire": {
+                "default": null,
+                "title": "Expire",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "title": "lpushArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rpush",
+          "description": "Push a value onto the right of a Redis list and optionally set an expiration time.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expire": {
+                "default": null,
+                "title": "Expire",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "title": "rpushArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "lpop",
+          "description": "Remove and return the first element from a Redis list.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "lpopArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rpop",
+          "description": "Remove and return the last element from a Redis list.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "rpopArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "lrange",
+          "description": "Get elements from a Redis list within a specific range.\n\nReturns:\nstr: A JSON string containing the list of elements or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "start": {
+                "title": "Start",
+                "type": "integer"
+              },
+              "stop": {
+                "title": "Stop",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "start",
+              "stop"
+            ],
+            "title": "lrangeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "llen",
+          "description": "Get the length of a Redis list.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "llenArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set",
+          "description": "Set a Redis string value with an optional expiration time.\n\nArgs:\n    key (str): The key to set.\n    value (str): The value to store.\n    expiration (int, optional): Expiration time in seconds.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expiration": {
+                "default": null,
+                "title": "Expiration",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "value"
+            ],
+            "title": "setArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get",
+          "description": "Get a Redis string value.\n\nArgs:\n    key (str): The key to retrieve.\n\nReturns:\n    str: The stored value or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "json_set",
+          "description": "Set a JSON value in Redis at a given path with an optional expiration time.\n\nArgs:\n    name: The Redis key where the JSON document is stored.\n    path: The JSON path where the value should be set.\n    value: The JSON value to store.\n    expire_seconds: Optional; time in seconds after which the key should expire.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "items": {},
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expire_seconds": {
+                "default": null,
+                "title": "Expire Seconds",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "path",
+              "value"
+            ],
+            "title": "json_setArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "json_get",
+          "description": "Retrieve a JSON value from Redis at a given path.\n\nArgs:\n    name: The Redis key where the JSON document is stored.\n    path: The JSON path to retrieve (default: root '$').\n\nReturns:\n    The retrieved JSON value or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "default": "$",
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "json_getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "json_del",
+          "description": "Delete a JSON value from Redis at a given path.\n\nArgs:\n    name: The Redis key where the JSON document is stored.\n    path: The JSON path to delete (default: root '$').\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "default": "$",
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "json_delArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "zadd",
+          "description": "Add a member to a Redis sorted set with an optional expiration time.\n\nArgs:\n    key (str): The sorted set key.\n    score (float): The score of the member.\n    member (str): The member to add.\n    expiration (int, optional): Expiration time in seconds.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "score": {
+                "title": "Score",
+                "type": "number"
+              },
+              "member": {
+                "title": "Member",
+                "type": "string"
+              },
+              "expiration": {
+                "default": null,
+                "title": "Expiration",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "score",
+              "member"
+            ],
+            "title": "zaddArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "zrange",
+          "description": "Retrieve a range of members from a Redis sorted set.\n\nArgs:\n    key (str): The sorted set key.\n    start (int): The starting index.\n    end (int): The ending index.\n    with_scores (bool, optional): Whether to include scores in the result.\n\nReturns:\n    str: The sorted set members in the given range or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "start": {
+                "title": "Start",
+                "type": "integer"
+              },
+              "end": {
+                "title": "End",
+                "type": "integer"
+              },
+              "with_scores": {
+                "default": false,
+                "title": "With Scores",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "key",
+              "start",
+              "end"
+            ],
+            "title": "zrangeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "zrem",
+          "description": "Remove a member from a Redis sorted set.\n\nArgs:\n    key (str): The sorted set key.\n    member (str): The member to remove.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "member": {
+                "title": "Member",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "member"
+            ],
+            "title": "zremArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "sadd",
+          "description": "Add a value to a Redis set with an optional expiration time.\n\nArgs:\n    name: The Redis set key.\n    value: The value to add to the set.\n    expire_seconds: Optional; time in seconds after which the set should expire.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "value": {
+                "title": "Value",
+                "type": "string"
+              },
+              "expire_seconds": {
+                "default": null,
+                "title": "Expire Seconds",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "title": "saddArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "srem",
+          "description": "Remove a value from a Redis set.\n\nArgs:\n    name: The Redis set key.\n    value: The value to remove from the set.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "value": {
+                "title": "Value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "title": "sremArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "smembers",
+          "description": "Get all members of a Redis set.\n\nArgs:\n    name: The Redis set key.\n\nReturns:\n    A list of values in the set or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "smembersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "xadd",
+          "description": "Add an entry to a Redis stream with an optional expiration time.\n\nArgs:\n    key (str): The stream key.\n    fields (dict): The fields and values for the stream entry.\n    expiration (int, optional): Expiration time in seconds.\n\nReturns:\n    str: The ID of the added entry or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "fields": {
+                "title": "Fields",
+                "type": "object"
+              },
+              "expiration": {
+                "default": null,
+                "title": "Expiration",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "fields"
+            ],
+            "title": "xaddArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "xrange",
+          "description": "Read entries from a Redis stream.\n\nArgs:\n    key (str): The stream key.\n    count (int, optional): Number of entries to retrieve.\n\nReturns:\n    str: The retrieved stream entries or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "count": {
+                "default": 1,
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "xrangeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "xdel",
+          "description": "Delete an entry from a Redis stream.\n\nArgs:\n    key (str): The stream key.\n    entry_id (str): The ID of the entry to delete.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "entry_id": {
+                "title": "Entry Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "entry_id"
+            ],
+            "title": "xdelArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "publish",
+          "description": "Publish a message to a Redis channel.\n\nArgs:\n    channel: The Redis channel to publish to.\n    message: The message to send.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "channel": {
+                "title": "Channel",
+                "type": "string"
+              },
+              "message": {
+                "title": "Message",
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel",
+              "message"
+            ],
+            "title": "publishArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "subscribe",
+          "description": "Subscribe to a Redis channel.\n\nArgs:\n    channel: The Redis channel to subscribe to.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "channel": {
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel"
+            ],
+            "title": "subscribeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "unsubscribe",
+          "description": "Unsubscribe from a Redis channel.\n\nArgs:\n    channel: The Redis channel to unsubscribe from.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "channel": {
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel"
+            ],
+            "title": "unsubscribeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 44,
+      "tool_names": [
+        "dbsize",
+        "info",
+        "client_list",
+        "delete",
+        "type",
+        "expire",
+        "rename",
+        "scan_keys",
+        "scan_all_keys",
+        "get_indexes",
+        "get_index_info",
+        "get_indexed_keys_number",
+        "create_vector_index_hash",
+        "vector_search_hash",
+        "hset",
+        "hget",
+        "hdel",
+        "hgetall",
+        "hexists",
+        "set_vector_in_hash",
+        "get_vector_from_hash",
+        "lpush",
+        "rpush",
+        "lpop",
+        "rpop",
+        "lrange",
+        "llen",
+        "set",
+        "get",
+        "json_set",
+        "json_get",
+        "json_del",
+        "zadd",
+        "zrange",
+        "zrem",
+        "sadd",
+        "srem",
+        "smembers",
+        "xadd",
+        "xrange",
+        "xdel",
+        "publish",
+        "subscribe",
+        "unsubscribe"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 227,
+      "name": "Redis",
+      "author": "@redis/mcp-redis",
+      "overview": "Enable AI agents to manage and search data in Redis using natural language queries. Seamlessly integrate with MCP clients to interact with Redis data structures like hashes, lists, sets, streams, and more. Enhance your applications with scalable, high-performance Redis data operations and real-time insights.",
+      "repository_url": "https://github.com/redis/mcp-redis",
+      "homepage": "https://smithery.ai/server/@redis/mcp-redis",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "193",
+      "success_rate": "98.29%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@redis_mcp-redis.json",
+      "tools_count": 44,
+      "tools": [
+        {
+          "name": "dbsize",
+          "description": "Get the number of keys stored in the Redis database\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "dbsizeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "info",
+          "description": "Get Redis server information and statistics.\n\nArgs:\n    section: The section of the info command (default, memory, cpu, etc.).\n\nReturns:\n    A dictionary of server information or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "section": {
+                "default": "default",
+                "title": "Section",
+                "type": "string"
+              }
+            },
+            "title": "infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "client_list",
+          "description": "Get a list of connected clients to the Redis server.",
+          "input_schema": {
+            "properties": {},
+            "title": "client_listArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete",
+          "description": "Delete a Redis key.\n\nArgs:\n    key (str): The key to delete.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "deleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "type",
+          "description": "Returns the string representation of the type of the value stored at key\n\nArgs:\n    key (str): The key to check.\n\nReturns:\n    str: The type of key, or none when key doesn't exist\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "expire",
+          "description": "Set an expiration time for a Redis key.\n\nArgs:\n    name: The Redis key.\n    expire_seconds: Time in seconds after which the key should expire.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "expire_seconds": {
+                "title": "Expire Seconds",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "expire_seconds"
+            ],
+            "title": "expireArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename",
+          "description": "\nRenames a Redis key from old_key to new_key.\n\nArgs:\n    old_key (str): The current name of the Redis key to rename.\n    new_key (str): The new name to assign to the key.\n\nReturns:\n    Dict[str, Any]: A dictionary containing the result of the operation.\n        On success: {\"status\": \"success\", \"message\": \"...\"}\n        On error: {\"error\": \"...\"}\n",
+          "input_schema": {
+            "properties": {
+              "old_key": {
+                "title": "Old Key",
+                "type": "string"
+              },
+              "new_key": {
+                "title": "New Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "old_key",
+              "new_key"
+            ],
+            "title": "renameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "scan_keys",
+          "description": "\nScan keys in the Redis database using the SCAN command (non-blocking, production-safe).\n\n⚠️  IMPORTANT: This returns PARTIAL results from one iteration. Use scan_all_keys() \nto get ALL matching keys, or call this function multiple times with the returned cursor\nuntil cursor becomes 0.\n\nThe SCAN command iterates through the keyspace in small chunks, making it safe to use\non large databases without blocking other operations.\n\nArgs:\n    pattern: Pattern to match keys against (default is \"*\" for all keys).\n            Common patterns: \"user:*\", \"cache:*\", \"*:123\", etc.\n    count: Hint for the number of keys to return per iteration (default 100).\n           Redis may return more or fewer keys than this hint.\n    cursor: The cursor position to start scanning from (0 to start from beginning).\n            To continue scanning, use the cursor value returned from previous call.\n\nReturns:\n    A dictionary containing:\n    - 'cursor': Next cursor position (0 means scan is complete)\n    - 'keys': List of keys found in this iteration (PARTIAL RESULTS)\n    - 'total_scanned': Number of keys returned in this batch\n    - 'scan_complete': Boolean indicating if scan is finished\n    Or an error message if something goes wrong.\n    \nExample usage:\n    First call: scan_keys(\"user:*\") -> returns cursor=1234, keys=[...], scan_complete=False\n    Next call: scan_keys(\"user:*\", cursor=1234) -> continues from where it left off\n    Final call: returns cursor=0, scan_complete=True when done\n",
+          "input_schema": {
+            "properties": {
+              "pattern": {
+                "default": "*",
+                "title": "Pattern",
+                "type": "string"
+              },
+              "count": {
+                "default": 100,
+                "title": "Count",
+                "type": "integer"
+              },
+              "cursor": {
+                "default": 0,
+                "title": "Cursor",
+                "type": "integer"
+              }
+            },
+            "title": "scan_keysArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "scan_all_keys",
+          "description": "\nScan and return ALL keys matching a pattern using multiple SCAN iterations.\n\nThis function automatically handles the SCAN cursor iteration to collect all matching keys.\nIt's safer than KEYS * for large databases but will still collect all results in memory.\n\n⚠️  WARNING: With very large datasets (millions of keys), this may consume significant memory.\nFor large-scale operations, consider using scan_keys() with manual iteration instead.\n\nArgs:\n    pattern: Pattern to match keys against (default is \"*\" for all keys).\n    batch_size: Number of keys to scan per iteration (default 100).\n\nReturns:\n    A list of all keys matching the pattern or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "pattern": {
+                "default": "*",
+                "title": "Pattern",
+                "type": "string"
+              },
+              "batch_size": {
+                "default": 100,
+                "title": "Batch Size",
+                "type": "integer"
+              }
+            },
+            "title": "scan_all_keysArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_indexes",
+          "description": "List of indexes in the Redis database\n\nReturns:\n    str: A JSON string containing the list of indexes or an error message.\n",
+          "input_schema": {
+            "properties": {},
+            "title": "get_indexesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_index_info",
+          "description": "Retrieve schema and information about a specific Redis index using FT.INFO.\n\nArgs:\n    index_name (str): The name of the index to retrieve information about.\n\nReturns:\n    str: Information about the specified index or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "index_name": {
+                "title": "Index Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "index_name"
+            ],
+            "title": "get_index_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_indexed_keys_number",
+          "description": "Retrieve the number of indexed keys by the index\n\nArgs:\n    index_name (str): The name of the index to retrieve information about.\n\nReturns:\n    int: Number of indexed keys\n",
+          "input_schema": {
+            "properties": {
+              "index_name": {
+                "title": "Index Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "index_name"
+            ],
+            "title": "get_indexed_keys_numberArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_vector_index_hash",
+          "description": "\nCreate a Redis 8 vector similarity index using HNSW on a Redis hash.\n\nThis function sets up a Redis index for approximate nearest neighbor (ANN)\nsearch using the HNSW algorithm and float32 vector embeddings.\n\nArgs:\n    index_name: The name of the Redis index to create. Unless specifically required, use the default name for the index.\n    prefix: The key prefix used to identify documents to index (e.g., 'doc:'). Unless specifically required, use the default prefix.\n    vector_field: The name of the vector field to be indexed for similarity search. Unless specifically required, use the default field name\n    dim: The dimensionality of the vectors stored under the vector_field.\n    distance_metric: The distance function to use (e.g., 'COSINE', 'L2', 'IP').\n\nReturns:\n    A string indicating whether the index was created successfully or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "index_name": {
+                "default": "vector_index",
+                "title": "Index Name",
+                "type": "string"
+              },
+              "prefix": {
+                "default": "doc:",
+                "title": "Prefix",
+                "type": "string"
+              },
+              "vector_field": {
+                "default": "vector",
+                "title": "Vector Field",
+                "type": "string"
+              },
+              "dim": {
+                "default": 1536,
+                "title": "Dim",
+                "type": "integer"
+              },
+              "distance_metric": {
+                "default": "COSINE",
+                "title": "Distance Metric",
+                "type": "string"
+              }
+            },
+            "title": "create_vector_index_hashArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "vector_search_hash",
+          "description": "\nPerform a KNN vector similarity search using Redis 8 or later version on vectors stored in hash data structures.\n\nArgs:\n    query_vector: List of floats to use as the query vector.\n    index_name: Name of the Redis index. Unless specifically specified, use the default index name.\n    vector_field: Name of the indexed vector field. Unless specifically required, use the default field name\n    k: Number of nearest neighbors to return.\n    return_fields: List of fields to return (optional).\n\nReturns:\n    A list of matched documents or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "query_vector": {
+                "items": {},
+                "title": "Query Vector",
+                "type": "array"
+              },
+              "index_name": {
+                "default": "vector_index",
+                "title": "Index Name",
+                "type": "string"
+              },
+              "vector_field": {
+                "default": "vector",
+                "title": "Vector Field",
+                "type": "string"
+              },
+              "k": {
+                "default": 5,
+                "title": "K",
+                "type": "integer"
+              },
+              "return_fields": {
+                "default": null,
+                "items": {},
+                "title": "Return Fields",
+                "type": "array"
+              }
+            },
+            "required": [
+              "query_vector"
+            ],
+            "title": "vector_search_hashArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hset",
+          "description": "Set a field in a hash stored at key with an optional expiration time.\n\nArgs:\n    name: The Redis hash key.\n    key: The field name inside the hash.\n    value: The value to set.\n    expire_seconds: Optional; time in seconds after which the key should expire.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expire_seconds": {
+                "default": null,
+                "title": "Expire Seconds",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "key",
+              "value"
+            ],
+            "title": "hsetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hget",
+          "description": "Get the value of a field in a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n    key: The field name inside the hash.\n\nReturns:\n    The field value or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "key"
+            ],
+            "title": "hgetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hdel",
+          "description": "Delete a field from a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n    key: The field name inside the hash.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "key"
+            ],
+            "title": "hdelArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hgetall",
+          "description": "Get all fields and values from a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n\nReturns:\n    A dictionary of field-value pairs or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "hgetallArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "hexists",
+          "description": "Check if a field exists in a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n    key: The field name inside the hash.\n\nReturns:\n    True if the field exists, False otherwise.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "key"
+            ],
+            "title": "hexistsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_vector_in_hash",
+          "description": "Store a vector as a field in a Redis hash.\n\nArgs:\n    name: The Redis hash key.\n    vector_field: The field name inside the hash. Unless specifically required, use the default field name\n    vector: The vector (list of numbers) to store in the hash.\n\nReturns:\n    True if the vector was successfully stored, False otherwise.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "vector": {
+                "items": {},
+                "title": "Vector",
+                "type": "array"
+              },
+              "vector_field": {
+                "default": "vector",
+                "title": "Vector Field",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "vector"
+            ],
+            "title": "set_vector_in_hashArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_vector_from_hash",
+          "description": "Retrieve a vector from a Redis hash and convert it back from binary blob.\n\nArgs:\n    name: The Redis hash key.\n    vector_field: The field name inside the hash. Unless specifically required, use the default field name\n\nReturns:\n    The vector as a list of floats, or an error message if retrieval fails.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "vector_field": {
+                "default": "vector",
+                "title": "Vector Field",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "get_vector_from_hashArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "lpush",
+          "description": "Push a value onto the left of a Redis list and optionally set an expiration time.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expire": {
+                "default": null,
+                "title": "Expire",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "title": "lpushArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rpush",
+          "description": "Push a value onto the right of a Redis list and optionally set an expiration time.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expire": {
+                "default": null,
+                "title": "Expire",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "title": "rpushArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "lpop",
+          "description": "Remove and return the first element from a Redis list.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "lpopArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rpop",
+          "description": "Remove and return the last element from a Redis list.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "rpopArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "lrange",
+          "description": "Get elements from a Redis list within a specific range.\n\nReturns:\nstr: A JSON string containing the list of elements or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "start": {
+                "title": "Start",
+                "type": "integer"
+              },
+              "stop": {
+                "title": "Stop",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "start",
+              "stop"
+            ],
+            "title": "lrangeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "llen",
+          "description": "Get the length of a Redis list.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "llenArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set",
+          "description": "Set a Redis string value with an optional expiration time.\n\nArgs:\n    key (str): The key to set.\n    value (str): The value to store.\n    expiration (int, optional): Expiration time in seconds.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expiration": {
+                "default": null,
+                "title": "Expiration",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "value"
+            ],
+            "title": "setArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get",
+          "description": "Get a Redis string value.\n\nArgs:\n    key (str): The key to retrieve.\n\nReturns:\n    str: The stored value or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "json_set",
+          "description": "Set a JSON value in Redis at a given path with an optional expiration time.\n\nArgs:\n    name: The Redis key where the JSON document is stored.\n    path: The JSON path where the value should be set.\n    value: The JSON value to store.\n    expire_seconds: Optional; time in seconds after which the key should expire.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "items": {},
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Value"
+              },
+              "expire_seconds": {
+                "default": null,
+                "title": "Expire Seconds",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "path",
+              "value"
+            ],
+            "title": "json_setArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "json_get",
+          "description": "Retrieve a JSON value from Redis at a given path.\n\nArgs:\n    name: The Redis key where the JSON document is stored.\n    path: The JSON path to retrieve (default: root '$').\n\nReturns:\n    The retrieved JSON value or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "default": "$",
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "json_getArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "json_del",
+          "description": "Delete a JSON value from Redis at a given path.\n\nArgs:\n    name: The Redis key where the JSON document is stored.\n    path: The JSON path to delete (default: root '$').\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "default": "$",
+                "title": "Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "json_delArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "zadd",
+          "description": "Add a member to a Redis sorted set with an optional expiration time.\n\nArgs:\n    key (str): The sorted set key.\n    score (float): The score of the member.\n    member (str): The member to add.\n    expiration (int, optional): Expiration time in seconds.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "score": {
+                "title": "Score",
+                "type": "number"
+              },
+              "member": {
+                "title": "Member",
+                "type": "string"
+              },
+              "expiration": {
+                "default": null,
+                "title": "Expiration",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "score",
+              "member"
+            ],
+            "title": "zaddArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "zrange",
+          "description": "Retrieve a range of members from a Redis sorted set.\n\nArgs:\n    key (str): The sorted set key.\n    start (int): The starting index.\n    end (int): The ending index.\n    with_scores (bool, optional): Whether to include scores in the result.\n\nReturns:\n    str: The sorted set members in the given range or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "start": {
+                "title": "Start",
+                "type": "integer"
+              },
+              "end": {
+                "title": "End",
+                "type": "integer"
+              },
+              "with_scores": {
+                "default": false,
+                "title": "With Scores",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "key",
+              "start",
+              "end"
+            ],
+            "title": "zrangeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "zrem",
+          "description": "Remove a member from a Redis sorted set.\n\nArgs:\n    key (str): The sorted set key.\n    member (str): The member to remove.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "member": {
+                "title": "Member",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "member"
+            ],
+            "title": "zremArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "sadd",
+          "description": "Add a value to a Redis set with an optional expiration time.\n\nArgs:\n    name: The Redis set key.\n    value: The value to add to the set.\n    expire_seconds: Optional; time in seconds after which the set should expire.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "value": {
+                "title": "Value",
+                "type": "string"
+              },
+              "expire_seconds": {
+                "default": null,
+                "title": "Expire Seconds",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "title": "saddArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "srem",
+          "description": "Remove a value from a Redis set.\n\nArgs:\n    name: The Redis set key.\n    value: The value to remove from the set.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "value": {
+                "title": "Value",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ],
+            "title": "sremArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "smembers",
+          "description": "Get all members of a Redis set.\n\nArgs:\n    name: The Redis set key.\n\nReturns:\n    A list of values in the set or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "smembersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "xadd",
+          "description": "Add an entry to a Redis stream with an optional expiration time.\n\nArgs:\n    key (str): The stream key.\n    fields (dict): The fields and values for the stream entry.\n    expiration (int, optional): Expiration time in seconds.\n\nReturns:\n    str: The ID of the added entry or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "fields": {
+                "title": "Fields",
+                "type": "object"
+              },
+              "expiration": {
+                "default": null,
+                "title": "Expiration",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "fields"
+            ],
+            "title": "xaddArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "xrange",
+          "description": "Read entries from a Redis stream.\n\nArgs:\n    key (str): The stream key.\n    count (int, optional): Number of entries to retrieve.\n\nReturns:\n    str: The retrieved stream entries or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "count": {
+                "default": 1,
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key"
+            ],
+            "title": "xrangeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "xdel",
+          "description": "Delete an entry from a Redis stream.\n\nArgs:\n    key (str): The stream key.\n    entry_id (str): The ID of the entry to delete.\n\nReturns:\n    str: Confirmation message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "key": {
+                "title": "Key",
+                "type": "string"
+              },
+              "entry_id": {
+                "title": "Entry Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "entry_id"
+            ],
+            "title": "xdelArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "publish",
+          "description": "Publish a message to a Redis channel.\n\nArgs:\n    channel: The Redis channel to publish to.\n    message: The message to send.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "channel": {
+                "title": "Channel",
+                "type": "string"
+              },
+              "message": {
+                "title": "Message",
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel",
+              "message"
+            ],
+            "title": "publishArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "subscribe",
+          "description": "Subscribe to a Redis channel.\n\nArgs:\n    channel: The Redis channel to subscribe to.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "channel": {
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel"
+            ],
+            "title": "subscribeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "unsubscribe",
+          "description": "Unsubscribe from a Redis channel.\n\nArgs:\n    channel: The Redis channel to unsubscribe from.\n\nReturns:\n    A success message or an error message.\n",
+          "input_schema": {
+            "properties": {
+              "channel": {
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel"
+            ],
+            "title": "unsubscribeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"redisPwd\": \"\",\n  \"redisSSL\": false,\n  \"redisHost\": \"127.0.0.1\",\n  \"redisPort\": 6379,\n  \"redisCAPath\": \"\",\n  \"redisCACerts\": \"\",\n  \"redisCertReqs\": \"required\",\n  \"redisUsername\": \"default\",\n  \"redisSSLKeyfile\": \"\",\n  \"redisSSLCertfile\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@redis/mcp-redis/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"redisPwd\": \"\",\n  \"redisSSL\": false,\n  \"redisHost\": \"127.0.0.1\",\n  \"redisPort\": 6379,\n  \"redisCAPath\": \"\",\n  \"redisCACerts\": \"\",\n  \"redisCertReqs\": \"required\",\n  \"redisUsername\": \"default\",\n  \"redisSSLKeyfile\": \"\",\n  \"redisSSLCertfile\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@redis/mcp-redis/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0228.@redis_mcp-redis_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 224
+  }
+}

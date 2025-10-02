@@ -1,0 +1,182 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to assist startups in refining and presenting their business ideas. It analyzes a given startup idea to identify key elements such as the sector, target audience, problem, and solution. Subsequently, it generates a concise and compelling elevator pitch based on the extracted information. The core functionality revolves around business idea analysis and pitch generation, making it a valuable tool for entrepreneurs and startups.",
+    "reasoning": "The primary label is \"Daily Productivity\" because the server helps users refine and present their business ideas efficiently, which is a common productivity task for entrepreneurs. The secondary label \"Content Creation\" is chosen because the generated elevator pitch is a form of content that needs to be persuasive and well-crafted. The custom label \"Startup Idea Analysis\" is specific to the unique functionality of analyzing business ideas and generating pitches.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "Content Creation"
+    ],
+    "custom_label": "Startup Idea Analysis",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2003,
+    "server_name": "Elevator Pitch",
+    "rank_by_usage": 2004,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@kaantenik_dictionary-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@kaantenik/dictionary-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "analyze_idea_tool",
+          "description": "\n    Verilen iş fikrinden sektör, hedef kitle, problem ve çözüm çıkarır.\n    ",
+          "input_schema": {
+            "properties": {
+              "idea": {
+                "title": "Idea",
+                "type": "string"
+              }
+            },
+            "required": [
+              "idea"
+            ],
+            "title": "analyze_idea_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_pitch_tool",
+          "description": "\n    Verilen bilgilerle kısa, etkileyici bir elevator pitch üretir.\n    ",
+          "input_schema": {
+            "properties": {
+              "sector": {
+                "title": "Sector",
+                "type": "string"
+              },
+              "target_audience": {
+                "title": "Target Audience",
+                "type": "string"
+              },
+              "problem": {
+                "title": "Problem",
+                "type": "string"
+              },
+              "solution": {
+                "title": "Solution",
+                "type": "string"
+              },
+              "tone": {
+                "title": "Tone",
+                "type": "string"
+              }
+            },
+            "required": [
+              "sector",
+              "target_audience",
+              "problem",
+              "solution",
+              "tone"
+            ],
+            "title": "generate_pitch_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "analyze_idea_tool",
+        "generate_pitch_tool"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2003,
+      "name": "Elevator Pitch",
+      "author": "@kaantenik/dictionary-mcp",
+      "overview": "Analyzes your startup idea Identifies the sector, target audience, problem & solution Instantly generates a compelling elevator pitch",
+      "repository_url": "https://github.com/kaantenik/dictionary-mcp",
+      "homepage": "https://smithery.ai/server/@kaantenik/dictionary-mcp",
+      "remote_or_local": "Remote",
+      "license": "https://server.smithery.ai/@kaantenik/dictionary-mcp/mcp?api_key=40e7e9b0-707e-41c0-9144-002b357229b1",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@kaantenik_dictionary-mcp.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "analyze_idea_tool",
+          "description": "\n    Verilen iş fikrinden sektör, hedef kitle, problem ve çözüm çıkarır.\n    ",
+          "input_schema": {
+            "properties": {
+              "idea": {
+                "title": "Idea",
+                "type": "string"
+              }
+            },
+            "required": [
+              "idea"
+            ],
+            "title": "analyze_idea_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_pitch_tool",
+          "description": "\n    Verilen bilgilerle kısa, etkileyici bir elevator pitch üretir.\n    ",
+          "input_schema": {
+            "properties": {
+              "sector": {
+                "title": "Sector",
+                "type": "string"
+              },
+              "target_audience": {
+                "title": "Target Audience",
+                "type": "string"
+              },
+              "problem": {
+                "title": "Problem",
+                "type": "string"
+              },
+              "solution": {
+                "title": "Solution",
+                "type": "string"
+              },
+              "tone": {
+                "title": "Tone",
+                "type": "string"
+              }
+            },
+            "required": [
+              "sector",
+              "target_audience",
+              "problem",
+              "solution",
+              "tone"
+            ],
+            "title": "generate_pitch_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@kaantenik/dictionary-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@kaantenik/dictionary-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2004.@kaantenik_dictionary-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1747
+  }
+}

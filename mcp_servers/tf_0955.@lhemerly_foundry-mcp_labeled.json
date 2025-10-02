@@ -1,0 +1,599 @@
+{
+  "labels": {
+    "analysis": "The Foundry MCP Server is designed to facilitate Ethereum smart contract development, testing, and deployment. Its core functionality revolves around managing Foundry projects, building Solidity contracts, running tests, and interacting with the Ethereum ecosystem. The available tools cover a comprehensive range of activities in the smart contract development lifecycle, from project creation to inspection, testing, and deployment. The server also includes utilities for blockchain interaction, such as running anvil (local Ethereum node) and cast (transaction utilities), which makes it a powerful environment for blockchain developers.",
+    "reasoning": "The primary label **Development Tools** was chosen because the MCP Server's primary functionality revolves around developing, building, and testing smart contracts, which is a core aspect of software development. The secondary labels **Cryptocurrency & Blockchain** and **Database Operations** were selected because the server provides tools specifically for Ethereum blockchain interaction and smart contract inspection, which include database-like queries of contract metadata and artifacts. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Cryptocurrency & Blockchain",
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 954,
+    "server_name": "Foundry MCP Server",
+    "rank_by_usage": 955,
+    "usage_count": "3",
+    "original_file": "../crawler/smithery/@lhemerly_foundry-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@lhemerly/foundry-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "create_project",
+          "description": "Creates a new Foundry project.",
+          "input_schema": {
+            "properties": {
+              "project_name": {
+                "title": "Project Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_name"
+            ],
+            "title": "create_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "build_project",
+          "description": "\n    Builds the current Foundry project with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `forge build` command. Possible values include:\n        * --names: Print compiled contract names.\n        * --sizes: Print compiled non-test contract sizes, exiting with code 1 if any of them are above the size limit.\n        * --skip: Skip compilation of non-essential contract directories like test or script (usage --skip test).\n        * [PATHS]...: Build source files from specified paths.\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n\n    Returns:\n    - str: The output of the `forge build` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "build_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "test_project",
+          "description": "\n    Runs the project's tests with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `forge test` command. Possible values include:\n        * --match-test: Only run test functions matching the specified regex pattern.\n        * --no-match-test: Only run test functions that do not match the specified regex pattern.\n        * --match-contract: Only run tests in contracts matching the specified regex pattern.\n        * --no-match-contract: Only run tests in contracts that do not match the specified regex pattern.\n        * --match-path: Only run tests in source files matching the specified glob pattern.\n        * --no-match-path: Only run tests in source files that do not match the specified glob pattern.\n        * --debug: Run a test in the debugger.\n        * --gas-report: Print a gas report.\n        * --allow-failure: Exit with code 0 even if a test fails.\n        * --fail-fast: Stop running tests after the first failure.\n        * --etherscan-api-key: Use Etherscan for trace decoding when --fork-url is set.\n        * --fork-url: Fetch state over a remote endpoint instead of starting from an empty state.\n        * --fork-block-number: Fetch state from a specific block number over a remote endpoint.\n        * --no-storage-caching: Disable the use of RPC caching.\n        * --verbosity: Set verbosity levels (e.g., -v, -vv, -vvv).\n        * --sender: Specify the address executing tests.\n        * --initial-balance: Set the initial balance of deployed contracts.\n        * --ffi: Enable the FFI cheatcode.\n        * --base-fee: Set the base fee in a block (in wei).\n        * --block-base-fee-per-gas: Set the base fee per gas in a block.\n        * --block-coinbase: Set the coinbase of the block.\n        * --block-difficulty: Set the block difficulty.\n        * --block-gas-limit: Set the block gas limit.\n        * --block-number: Set the block number.\n        * --block-timestamp: Set the block timestamp (in seconds).\n        * --chain-id: Set the chain ID.\n        * --gas-limit: Set the block gas limit.\n        * --gas-price: Set the gas price (in wei).\n        * --tx-origin: Set the transaction origin.\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n        * --list: List tests instead of running them.\n        * --json: Print the deployment information as JSON.\n\n    Returns:\n    - str: The output of the `forge test` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "test_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clone_contract",
+          "description": "Clones a contract from Etherscan with specified options.",
+          "input_schema": {
+            "properties": {
+              "contract_address": {
+                "title": "Contract Address",
+                "type": "string"
+              },
+              "root": {
+                "default": "",
+                "title": "Root",
+                "type": "string"
+              },
+              "chain_id": {
+                "default": "",
+                "title": "Chain Id",
+                "type": "string"
+              },
+              "etherscan_api_key": {
+                "default": "",
+                "title": "Etherscan Api Key",
+                "type": "string"
+              },
+              "no_remappings_txt": {
+                "default": false,
+                "title": "No Remappings Txt",
+                "type": "boolean"
+              },
+              "no_commit": {
+                "default": false,
+                "title": "No Commit",
+                "type": "boolean"
+              },
+              "no_git": {
+                "default": false,
+                "title": "No Git",
+                "type": "boolean"
+              },
+              "quiet": {
+                "default": false,
+                "title": "Quiet",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "contract_address"
+            ],
+            "title": "clone_contractArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_script",
+          "description": "Runs a script in the current Foundry project.",
+          "input_schema": {
+            "properties": {
+              "script_name": {
+                "title": "Script Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "script_name"
+            ],
+            "title": "run_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_cast_command_with_options",
+          "description": "\n    Executes a Cast command with optional parameters.\n\n    Parameters:\n    - command (str): The Cast command to execute. Possible commands include:\n        * General Commands: help, completions\n        * Chain Commands: chain-id, chain, client\n        * Transaction Commands: publish, receipt, send, call, rpc, tx, run, estimate, access-list, logs\n        * Block Commands: find-block, gas-price, block-number, basefee, block, age\n        * Account Commands: balance, storage, proof, nonce, code, codesize\n        * ENS Commands: lookup-address, resolve-name, namehash\n        * Etherscan Commands: etherscan-source\n        * ABI Commands: abi-encode, 4byte, 4byte-calldata, 4byte-event, calldata, decode-abi, decode-calldata, pretty-calldata, selectors, upload-signature\n        * Conversion Commands: format-bytes32-string, from-bin, from-fixed-point, from-utf8, from-wei, parse-bytes32-address, parse-bytes32-string, to-ascii, to-base, to-bytes32, to-dec, to-fixed-point, to-hex, to-hexdata, to-int256, to-rlp, to-uint256, to-unit, to-wei, shl, shr\n        * Utility Commands: address-zero, sig, sig-event, keccak, compute-address, create2, interface, index, concat-hex, max-int, min-int, max-uint, to-check-sum-address\n        * Wallet Commands: wallet, wallet new, wallet address, wallet sign, wallet vanity, wallet verify\n    - options (str): Additional options for the Cast command. Possible options include:\n        * -V, --version: Print version info and exit.\n        * -h, --help: Prints help information.\n\n    Returns:\n    - str: The output of the Cast command.\n    ",
+          "input_schema": {
+            "properties": {
+              "command": {
+                "title": "Command",
+                "type": "string"
+              },
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "required": [
+              "command"
+            ],
+            "title": "run_cast_command_with_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "start_anvil_with_options",
+          "description": "\n    Starts the Anvil local Ethereum node with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `anvil` command. Possible values include:\n        * --accounts: Set the number of accounts (default: 10).\n        * --auto-impersonate: Enable autoImpersonate on startup.\n        * --block-time: Block time in seconds for interval mining.\n        * --balance: Set the balance of the accounts (default: 10000).\n        * --derivation-path: Set the derivation path of the child key to be derived (default: m/44’/60’/0’/0/).\n        * --hardfork: Choose the EVM hardfork to use (default: latest).\n        * --init: Initialize the genesis block with the given genesis.json file.\n        * --mnemonic: BIP39 mnemonic phrase used for generating accounts.\n        * --no-mining: Disable auto and interval mining, and mine on demand instead.\n        * --order: How transactions are sorted in the mempool (default: fees).\n        * --port: Port number to listen on (default: 8545).\n        * --steps-tracing: Enable steps tracing used for debug calls returning geth-style traces.\n        * --ipc: Starts an IPC endpoint at the given PATH argument or the default path.\n        * --silent: Don’t print anything on startup.\n        * --timestamp: Set the timestamp of the genesis block.\n        * --disable-default-create2-deployer: Disables deploying the default CREATE2 factory when running Anvil without forking.\n        * --fork-url: Fetch state over a remote endpoint instead of starting from an empty state.\n        * --fork-block-number: Fetch state from a specific block number over a remote endpoint.\n        * --fork-transaction-hash: Fetch state from a specific transaction hash over a remote endpoint.\n        * --retries: Number of retry requests for spurious networks (default: 5).\n        * --timeout: Timeout in ms for requests sent to remote JSON-RPC server in forking mode (default: 45000).\n        * --compute-units-per-second: Sets the number of assumed available compute units per second for this provider (default: 330).\n        * --no-rate-limit: Disables rate limiting for this node’s provider.\n        * --no-storage-caching: Disables RPC caching; all storage slots are read from the endpoint.\n        * --base-fee: The base fee in a block.\n        * --chain-id: The chain ID (default: 31337).\n        * --code-size-limit: EIP-170: Contract code size limit in bytes (default: ~25kb).\n        * --gas-limit: The block gas limit.\n        * --gas-price: The gas price.\n        * --allow-origin: Set the CORS allow_origin (default: *).\n        * --no-cors: Disable CORS.\n        * --host: The IP address the server will listen on.\n        * --config-out: Writes output of anvil as JSON to a user-specified file.\n        * --prune-history: Don’t keep full chain history.\n\n    Returns:\n    - str: The output of the `anvil` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "start_anvil_with_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "start_chisel_with_options",
+          "description": "\n    Starts the Chisel Solidity REPL with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `chisel` command. Possible values include:\n        * list: Displays all cached sessions stored in ~/.foundry/cache/chisel.\n        * load <id>: Launches the REPL and loads the corresponding session if a cached session with id = <id> exists.\n        * view <id>: Displays the source code of the session’s REPL contract if a cached session with id = <id> exists.\n        * clear-cache: Deletes all cache files within the ~/.foundry/cache/chisel directory. These sessions are unrecoverable.\n\n    Returns:\n    - str: The output of the `chisel` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "start_chisel_with_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "inspect_contract",
+          "description": "\n    Inspects a smart contract and retrieves specialized information based on the specified field.\n\n    Parameters:\n    - contract_name (str): The name of the contract to inspect.\n    - field (str): The field to inspect. Possible values include:\n        * abi\n        * bytecode (b/bytes/bytecode)\n        * deployedBytecode (deployedBytecode/deployed_bytecode/deployed-bytecode/deployedbytecode/deployed)\n        * assembly (assembly/asm)\n        * asmOptimized (asmOptimized/assemblyOptimized/assemblyoptimized/assembly_optimized/asmopt/assembly-optimized/asmo/asm-optimized/asmoptimized/asm_optimized)\n        * methods (methods/methodidentifiers/methodIdentifiers/method_identifiers/method-identifiers/mi)\n        * gasEstimates (gasEstimates/gas/gas_estimates/gas-estimates/gasestimates)\n        * storageLayout (storageLayout/storage_layout/storage-layout/storagelayout/storage)\n        * devdoc (devdoc/dev-doc/devDoc)\n        * ir\n        * ir-optimized (ir-optimized/irOptimized/iroptimized/iro/iropt)\n        * metadata (metadata/meta)\n        * userdoc (userdoc/userDoc/user-doc)\n        * ewasm (ewasm/e-wasm)\n        * errors\n        * events\n    - options (str): Additional options for the `forge inspect` command. Possible values include:\n        * --json: Format output as JSON.\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n\n    Returns:\n    - str: The output of the `forge inspect` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "contract_name": {
+                "title": "Contract Name",
+                "type": "string"
+              },
+              "field": {
+                "title": "Field",
+                "type": "string"
+              },
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "required": [
+              "contract_name",
+              "field"
+            ],
+            "title": "inspect_contractArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "snapshot_project",
+          "description": "\n    Creates a snapshot of each test's gas usage with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `forge snapshot` command. Possible values include:\n        * --asc: Sort results by gas used (ascending).\n        * --desc: Sort results by gas used (descending).\n        * --min: Only include tests that used more gas than the given amount.\n        * --max: Only include tests that used less gas than the given amount.\n        * --tolerance: Tolerates gas deviations up to the specified percentage (0-100).\n        * --diff: Output a diff against a pre-existing snapshot.\n        * --check: Compare against a pre-existing snapshot, exiting with code 1 if they do not match.\n        * --snap: Specify the output file for the snapshot. Default: .gas-snapshot.\n        * --match-test: Only run test functions matching the specified regex pattern.\n        * --no-match-test: Only run test functions that do not match the specified regex pattern.\n        * --match-contract: Only run tests in contracts matching the specified regex pattern.\n        * --no-match-contract: Only run tests in contracts that do not match the specified regex pattern.\n        * --match-path: Only run tests in source files matching the specified glob pattern.\n        * --no-match-path: Only run tests in source files that do not match the specified glob pattern.\n        * --debug: Run a test in the debugger.\n        * --gas-report: Print a gas report.\n        * --allow-failure: Exit with code 0 even if a test fails.\n        * --fail-fast: Stop running tests after the first failure.\n        * --etherscan-api-key: Use Etherscan for trace decoding when --fork-url is set.\n        * --fork-url: Fetch state over a remote endpoint instead of starting from an empty state.\n        * --fork-block-number: Fetch state from a specific block number over a remote endpoint.\n        * --no-storage-caching: Disable the use of RPC caching.\n        * --verbosity: Set verbosity levels (e.g., -v, -vv, -vvv).\n        * --sender: Specify the address executing tests.\n        * --initial-balance: Set the initial balance of deployed contracts.\n        * --ffi: Enable the FFI cheatcode.\n        * --base-fee: Set the base fee in a block (in wei).\n        * --block-base-fee-per-gas: Set the base fee per gas in a block.\n        * --block-coinbase: Set the coinbase of the block.\n        * --block-difficulty: Set the block difficulty.\n        * --block-gas-limit: Set the block gas limit.\n        * --block-number: Set the block number.\n        * --block-timestamp: Set the block timestamp (in seconds).\n        * --chain-id: Set the chain ID.\n        * --gas-limit: Set the block gas limit.\n        * --gas-price: Set the gas price (in wei).\n        * --tx-origin: Set the transaction origin.\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n\n    Returns:\n    - str: The output of the `forge snapshot` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "snapshot_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "coverage_project",
+          "description": "\n    Displays which parts of your code are covered by tests with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `forge coverage` command. Possible values include:\n        * --report: Specify the report type for coverage. Can be used multiple times. Options include:\n            - summary: Outputs a chart showing the percentage of code covered by tests (default).\n            - lcov: Creates a lcov.info file containing coverage data in the root of the project.\n            - debug: Outputs lines describing the location of uncovered code.\n        * --ir-minimum: Run the coverage with via-ir enabled for the minimum amount of optimization necessary.\n        * --no-match-coverage: Exclude paths and contracts from the coverage report. Example: \"(script|Foo|Bar)\".\n\n    Returns:\n    - str: The output of the `forge coverage` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "coverage_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_script_with_options",
+          "description": "\n    Runs a smart contract as a script, building transactions that can be sent on-chain with optional parameters.\n\n    Parameters:\n    - path (str): The path to the script to run.\n    - options (str): Additional options for the `forge script` command. Possible values include:\n        * --broadcast: Broadcasts the transactions.\n        * --debug: Open the script in the debugger. Takes precedence over broadcast.\n        * --gas-estimate-multiplier: Multiply all gas estimates by a relative percentage (default: 130).\n        * --json: Output results in JSON format.\n        * --legacy: Use legacy transactions instead of EIP1559 ones.\n        * --resume: Resume submitting transactions that failed or timed-out previously.\n        * --sig: Specify the function signature to call in the contract (default: run()).\n        * --skip-simulation: Skip on-chain simulation.\n        * --skip: Skip compilation of non-essential contract directories like test or script.\n        * --non-interactive: Remove interactive prompts for contracts near the EIP-170 size limit.\n        * --slow: Ensure a transaction is sent only after the previous one is confirmed.\n        * --target-contract: Specify the name of the contract to run.\n        * --priority-gas-price: Set the priority gas price for EIP1559 transactions.\n        * --with-gas-price: Set the gas price for broadcasted transactions.\n        * --chain: Specify the Etherscan chain.\n        * --etherscan-api-key: Provide the Etherscan API key.\n        * --verify: Verify contracts found in the receipts.\n        * --verifier: Specify the verification provider (default: etherscan).\n        * --verifier-url: Provide the verifier URL for submitting verification requests.\n        * --delay: Set a timeout between attempts (default: 3 seconds).\n        * --retries: Set the number of retry attempts (default: 15).\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n        * Wallet Options: Includes options for raw, keystore, hardware, and remote wallets.\n        * EVM Options: Includes options for RPC URL, fork URL, verbosity, sender, initial balance, and more.\n\n    Returns:\n    - str: The output of the `forge script` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "run_script_with_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "create_project",
+        "build_project",
+        "test_project",
+        "clone_contract",
+        "run_script",
+        "run_cast_command_with_options",
+        "start_anvil_with_options",
+        "start_chisel_with_options",
+        "inspect_contract",
+        "snapshot_project",
+        "coverage_project",
+        "run_script_with_options"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 954,
+      "name": "Foundry MCP Server",
+      "author": "@lhemerly/foundry-mcp",
+      "overview": "Manage your Foundry projects effortlessly. Create, build, and test Solidity contracts while inspecting metadata and executing scripts with ease. Streamline your Ethereum development workflow with powerful tools at your fingertips.",
+      "repository_url": "https://github.com/lhemerly/foundry-mcp",
+      "homepage": "https://smithery.ai/server/@lhemerly/foundry-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "3",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@lhemerly_foundry-mcp.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "create_project",
+          "description": "Creates a new Foundry project.",
+          "input_schema": {
+            "properties": {
+              "project_name": {
+                "title": "Project Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "project_name"
+            ],
+            "title": "create_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "build_project",
+          "description": "\n    Builds the current Foundry project with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `forge build` command. Possible values include:\n        * --names: Print compiled contract names.\n        * --sizes: Print compiled non-test contract sizes, exiting with code 1 if any of them are above the size limit.\n        * --skip: Skip compilation of non-essential contract directories like test or script (usage --skip test).\n        * [PATHS]...: Build source files from specified paths.\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n\n    Returns:\n    - str: The output of the `forge build` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "build_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "test_project",
+          "description": "\n    Runs the project's tests with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `forge test` command. Possible values include:\n        * --match-test: Only run test functions matching the specified regex pattern.\n        * --no-match-test: Only run test functions that do not match the specified regex pattern.\n        * --match-contract: Only run tests in contracts matching the specified regex pattern.\n        * --no-match-contract: Only run tests in contracts that do not match the specified regex pattern.\n        * --match-path: Only run tests in source files matching the specified glob pattern.\n        * --no-match-path: Only run tests in source files that do not match the specified glob pattern.\n        * --debug: Run a test in the debugger.\n        * --gas-report: Print a gas report.\n        * --allow-failure: Exit with code 0 even if a test fails.\n        * --fail-fast: Stop running tests after the first failure.\n        * --etherscan-api-key: Use Etherscan for trace decoding when --fork-url is set.\n        * --fork-url: Fetch state over a remote endpoint instead of starting from an empty state.\n        * --fork-block-number: Fetch state from a specific block number over a remote endpoint.\n        * --no-storage-caching: Disable the use of RPC caching.\n        * --verbosity: Set verbosity levels (e.g., -v, -vv, -vvv).\n        * --sender: Specify the address executing tests.\n        * --initial-balance: Set the initial balance of deployed contracts.\n        * --ffi: Enable the FFI cheatcode.\n        * --base-fee: Set the base fee in a block (in wei).\n        * --block-base-fee-per-gas: Set the base fee per gas in a block.\n        * --block-coinbase: Set the coinbase of the block.\n        * --block-difficulty: Set the block difficulty.\n        * --block-gas-limit: Set the block gas limit.\n        * --block-number: Set the block number.\n        * --block-timestamp: Set the block timestamp (in seconds).\n        * --chain-id: Set the chain ID.\n        * --gas-limit: Set the block gas limit.\n        * --gas-price: Set the gas price (in wei).\n        * --tx-origin: Set the transaction origin.\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n        * --list: List tests instead of running them.\n        * --json: Print the deployment information as JSON.\n\n    Returns:\n    - str: The output of the `forge test` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "test_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clone_contract",
+          "description": "Clones a contract from Etherscan with specified options.",
+          "input_schema": {
+            "properties": {
+              "contract_address": {
+                "title": "Contract Address",
+                "type": "string"
+              },
+              "root": {
+                "default": "",
+                "title": "Root",
+                "type": "string"
+              },
+              "chain_id": {
+                "default": "",
+                "title": "Chain Id",
+                "type": "string"
+              },
+              "etherscan_api_key": {
+                "default": "",
+                "title": "Etherscan Api Key",
+                "type": "string"
+              },
+              "no_remappings_txt": {
+                "default": false,
+                "title": "No Remappings Txt",
+                "type": "boolean"
+              },
+              "no_commit": {
+                "default": false,
+                "title": "No Commit",
+                "type": "boolean"
+              },
+              "no_git": {
+                "default": false,
+                "title": "No Git",
+                "type": "boolean"
+              },
+              "quiet": {
+                "default": false,
+                "title": "Quiet",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "contract_address"
+            ],
+            "title": "clone_contractArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_script",
+          "description": "Runs a script in the current Foundry project.",
+          "input_schema": {
+            "properties": {
+              "script_name": {
+                "title": "Script Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "script_name"
+            ],
+            "title": "run_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_cast_command_with_options",
+          "description": "\n    Executes a Cast command with optional parameters.\n\n    Parameters:\n    - command (str): The Cast command to execute. Possible commands include:\n        * General Commands: help, completions\n        * Chain Commands: chain-id, chain, client\n        * Transaction Commands: publish, receipt, send, call, rpc, tx, run, estimate, access-list, logs\n        * Block Commands: find-block, gas-price, block-number, basefee, block, age\n        * Account Commands: balance, storage, proof, nonce, code, codesize\n        * ENS Commands: lookup-address, resolve-name, namehash\n        * Etherscan Commands: etherscan-source\n        * ABI Commands: abi-encode, 4byte, 4byte-calldata, 4byte-event, calldata, decode-abi, decode-calldata, pretty-calldata, selectors, upload-signature\n        * Conversion Commands: format-bytes32-string, from-bin, from-fixed-point, from-utf8, from-wei, parse-bytes32-address, parse-bytes32-string, to-ascii, to-base, to-bytes32, to-dec, to-fixed-point, to-hex, to-hexdata, to-int256, to-rlp, to-uint256, to-unit, to-wei, shl, shr\n        * Utility Commands: address-zero, sig, sig-event, keccak, compute-address, create2, interface, index, concat-hex, max-int, min-int, max-uint, to-check-sum-address\n        * Wallet Commands: wallet, wallet new, wallet address, wallet sign, wallet vanity, wallet verify\n    - options (str): Additional options for the Cast command. Possible options include:\n        * -V, --version: Print version info and exit.\n        * -h, --help: Prints help information.\n\n    Returns:\n    - str: The output of the Cast command.\n    ",
+          "input_schema": {
+            "properties": {
+              "command": {
+                "title": "Command",
+                "type": "string"
+              },
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "required": [
+              "command"
+            ],
+            "title": "run_cast_command_with_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "start_anvil_with_options",
+          "description": "\n    Starts the Anvil local Ethereum node with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `anvil` command. Possible values include:\n        * --accounts: Set the number of accounts (default: 10).\n        * --auto-impersonate: Enable autoImpersonate on startup.\n        * --block-time: Block time in seconds for interval mining.\n        * --balance: Set the balance of the accounts (default: 10000).\n        * --derivation-path: Set the derivation path of the child key to be derived (default: m/44’/60’/0’/0/).\n        * --hardfork: Choose the EVM hardfork to use (default: latest).\n        * --init: Initialize the genesis block with the given genesis.json file.\n        * --mnemonic: BIP39 mnemonic phrase used for generating accounts.\n        * --no-mining: Disable auto and interval mining, and mine on demand instead.\n        * --order: How transactions are sorted in the mempool (default: fees).\n        * --port: Port number to listen on (default: 8545).\n        * --steps-tracing: Enable steps tracing used for debug calls returning geth-style traces.\n        * --ipc: Starts an IPC endpoint at the given PATH argument or the default path.\n        * --silent: Don’t print anything on startup.\n        * --timestamp: Set the timestamp of the genesis block.\n        * --disable-default-create2-deployer: Disables deploying the default CREATE2 factory when running Anvil without forking.\n        * --fork-url: Fetch state over a remote endpoint instead of starting from an empty state.\n        * --fork-block-number: Fetch state from a specific block number over a remote endpoint.\n        * --fork-transaction-hash: Fetch state from a specific transaction hash over a remote endpoint.\n        * --retries: Number of retry requests for spurious networks (default: 5).\n        * --timeout: Timeout in ms for requests sent to remote JSON-RPC server in forking mode (default: 45000).\n        * --compute-units-per-second: Sets the number of assumed available compute units per second for this provider (default: 330).\n        * --no-rate-limit: Disables rate limiting for this node’s provider.\n        * --no-storage-caching: Disables RPC caching; all storage slots are read from the endpoint.\n        * --base-fee: The base fee in a block.\n        * --chain-id: The chain ID (default: 31337).\n        * --code-size-limit: EIP-170: Contract code size limit in bytes (default: ~25kb).\n        * --gas-limit: The block gas limit.\n        * --gas-price: The gas price.\n        * --allow-origin: Set the CORS allow_origin (default: *).\n        * --no-cors: Disable CORS.\n        * --host: The IP address the server will listen on.\n        * --config-out: Writes output of anvil as JSON to a user-specified file.\n        * --prune-history: Don’t keep full chain history.\n\n    Returns:\n    - str: The output of the `anvil` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "start_anvil_with_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "start_chisel_with_options",
+          "description": "\n    Starts the Chisel Solidity REPL with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `chisel` command. Possible values include:\n        * list: Displays all cached sessions stored in ~/.foundry/cache/chisel.\n        * load <id>: Launches the REPL and loads the corresponding session if a cached session with id = <id> exists.\n        * view <id>: Displays the source code of the session’s REPL contract if a cached session with id = <id> exists.\n        * clear-cache: Deletes all cache files within the ~/.foundry/cache/chisel directory. These sessions are unrecoverable.\n\n    Returns:\n    - str: The output of the `chisel` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "start_chisel_with_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "inspect_contract",
+          "description": "\n    Inspects a smart contract and retrieves specialized information based on the specified field.\n\n    Parameters:\n    - contract_name (str): The name of the contract to inspect.\n    - field (str): The field to inspect. Possible values include:\n        * abi\n        * bytecode (b/bytes/bytecode)\n        * deployedBytecode (deployedBytecode/deployed_bytecode/deployed-bytecode/deployedbytecode/deployed)\n        * assembly (assembly/asm)\n        * asmOptimized (asmOptimized/assemblyOptimized/assemblyoptimized/assembly_optimized/asmopt/assembly-optimized/asmo/asm-optimized/asmoptimized/asm_optimized)\n        * methods (methods/methodidentifiers/methodIdentifiers/method_identifiers/method-identifiers/mi)\n        * gasEstimates (gasEstimates/gas/gas_estimates/gas-estimates/gasestimates)\n        * storageLayout (storageLayout/storage_layout/storage-layout/storagelayout/storage)\n        * devdoc (devdoc/dev-doc/devDoc)\n        * ir\n        * ir-optimized (ir-optimized/irOptimized/iroptimized/iro/iropt)\n        * metadata (metadata/meta)\n        * userdoc (userdoc/userDoc/user-doc)\n        * ewasm (ewasm/e-wasm)\n        * errors\n        * events\n    - options (str): Additional options for the `forge inspect` command. Possible values include:\n        * --json: Format output as JSON.\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n\n    Returns:\n    - str: The output of the `forge inspect` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "contract_name": {
+                "title": "Contract Name",
+                "type": "string"
+              },
+              "field": {
+                "title": "Field",
+                "type": "string"
+              },
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "required": [
+              "contract_name",
+              "field"
+            ],
+            "title": "inspect_contractArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "snapshot_project",
+          "description": "\n    Creates a snapshot of each test's gas usage with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `forge snapshot` command. Possible values include:\n        * --asc: Sort results by gas used (ascending).\n        * --desc: Sort results by gas used (descending).\n        * --min: Only include tests that used more gas than the given amount.\n        * --max: Only include tests that used less gas than the given amount.\n        * --tolerance: Tolerates gas deviations up to the specified percentage (0-100).\n        * --diff: Output a diff against a pre-existing snapshot.\n        * --check: Compare against a pre-existing snapshot, exiting with code 1 if they do not match.\n        * --snap: Specify the output file for the snapshot. Default: .gas-snapshot.\n        * --match-test: Only run test functions matching the specified regex pattern.\n        * --no-match-test: Only run test functions that do not match the specified regex pattern.\n        * --match-contract: Only run tests in contracts matching the specified regex pattern.\n        * --no-match-contract: Only run tests in contracts that do not match the specified regex pattern.\n        * --match-path: Only run tests in source files matching the specified glob pattern.\n        * --no-match-path: Only run tests in source files that do not match the specified glob pattern.\n        * --debug: Run a test in the debugger.\n        * --gas-report: Print a gas report.\n        * --allow-failure: Exit with code 0 even if a test fails.\n        * --fail-fast: Stop running tests after the first failure.\n        * --etherscan-api-key: Use Etherscan for trace decoding when --fork-url is set.\n        * --fork-url: Fetch state over a remote endpoint instead of starting from an empty state.\n        * --fork-block-number: Fetch state from a specific block number over a remote endpoint.\n        * --no-storage-caching: Disable the use of RPC caching.\n        * --verbosity: Set verbosity levels (e.g., -v, -vv, -vvv).\n        * --sender: Specify the address executing tests.\n        * --initial-balance: Set the initial balance of deployed contracts.\n        * --ffi: Enable the FFI cheatcode.\n        * --base-fee: Set the base fee in a block (in wei).\n        * --block-base-fee-per-gas: Set the base fee per gas in a block.\n        * --block-coinbase: Set the coinbase of the block.\n        * --block-difficulty: Set the block difficulty.\n        * --block-gas-limit: Set the block gas limit.\n        * --block-number: Set the block number.\n        * --block-timestamp: Set the block timestamp (in seconds).\n        * --chain-id: Set the chain ID.\n        * --gas-limit: Set the block gas limit.\n        * --gas-price: Set the gas price (in wei).\n        * --tx-origin: Set the transaction origin.\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n\n    Returns:\n    - str: The output of the `forge snapshot` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "snapshot_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "coverage_project",
+          "description": "\n    Displays which parts of your code are covered by tests with optional parameters.\n\n    Parameters:\n    - options (str): Additional options for the `forge coverage` command. Possible values include:\n        * --report: Specify the report type for coverage. Can be used multiple times. Options include:\n            - summary: Outputs a chart showing the percentage of code covered by tests (default).\n            - lcov: Creates a lcov.info file containing coverage data in the root of the project.\n            - debug: Outputs lines describing the location of uncovered code.\n        * --ir-minimum: Run the coverage with via-ir enabled for the minimum amount of optimization necessary.\n        * --no-match-coverage: Exclude paths and contracts from the coverage report. Example: \"(script|Foo|Bar)\".\n\n    Returns:\n    - str: The output of the `forge coverage` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "title": "coverage_projectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_script_with_options",
+          "description": "\n    Runs a smart contract as a script, building transactions that can be sent on-chain with optional parameters.\n\n    Parameters:\n    - path (str): The path to the script to run.\n    - options (str): Additional options for the `forge script` command. Possible values include:\n        * --broadcast: Broadcasts the transactions.\n        * --debug: Open the script in the debugger. Takes precedence over broadcast.\n        * --gas-estimate-multiplier: Multiply all gas estimates by a relative percentage (default: 130).\n        * --json: Output results in JSON format.\n        * --legacy: Use legacy transactions instead of EIP1559 ones.\n        * --resume: Resume submitting transactions that failed or timed-out previously.\n        * --sig: Specify the function signature to call in the contract (default: run()).\n        * --skip-simulation: Skip on-chain simulation.\n        * --skip: Skip compilation of non-essential contract directories like test or script.\n        * --non-interactive: Remove interactive prompts for contracts near the EIP-170 size limit.\n        * --slow: Ensure a transaction is sent only after the previous one is confirmed.\n        * --target-contract: Specify the name of the contract to run.\n        * --priority-gas-price: Set the priority gas price for EIP1559 transactions.\n        * --with-gas-price: Set the gas price for broadcasted transactions.\n        * --chain: Specify the Etherscan chain.\n        * --etherscan-api-key: Provide the Etherscan API key.\n        * --verify: Verify contracts found in the receipts.\n        * --verifier: Specify the verification provider (default: etherscan).\n        * --verifier-url: Provide the verifier URL for submitting verification requests.\n        * --delay: Set a timeout between attempts (default: 3 seconds).\n        * --retries: Set the number of retry attempts (default: 15).\n        * --force: Clear the cache and artifacts folder and recompile.\n        * --libraries: Set pre-linked libraries in the format <remapped path to lib>:<library name>:<address>.\n        * --optimize: Activate the Solidity optimizer.\n        * --optimizer-runs: Specify the number of optimizer runs.\n        * --via-ir: Use the Yul intermediate representation compilation pipeline.\n        * --revert-strings: Specify how to treat revert and require reason strings.\n        * --use: Specify the solc version or path to a local solc.\n        * --offline: Do not access the network.\n        * --no-auto-detect: Do not auto-detect solc.\n        * --ignored-error-codes: Ignore solc warnings by error code.\n        * --extra-output: Include extra output in the contract's artifact.\n        * --extra-output-files: Write extra output to separate files.\n        * --evm-version: Specify the target EVM version.\n        * --build-info: Generate build info files.\n        * --build-info-path: Specify the output path for build info files.\n        * --root: Specify the project's root path.\n        * --contracts: Specify the contracts source directory.\n        * --lib-paths: Specify the path to the library folder.\n        * --remappings: Specify the project's remappings.\n        * --cache-path: Specify the path to the compiler cache.\n        * --config-path: Specify the path to the config file.\n        * --hh/--hardhat: Convenience flag equivalent to passing --contracts contracts --lib-paths node-modules.\n        * --out: Specify the project's artifacts directory.\n        * --silent: Suppress all output.\n        * --watch: Watch specific file(s) or folder(s) for changes.\n        * --delay: Specify file update debounce delay.\n        * --no-restart: Do not restart the command while it's running.\n        * --run-all: Explicitly re-run the command on all files when a change is made.\n        * Wallet Options: Includes options for raw, keystore, hardware, and remote wallets.\n        * EVM Options: Includes options for RPC URL, fork URL, verbosity, sender, initial balance, and more.\n\n    Returns:\n    - str: The output of the `forge script` command.\n    ",
+          "input_schema": {
+            "properties": {
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "options": {
+                "default": "",
+                "title": "Options",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "title": "run_script_with_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@lhemerly/foundry-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@lhemerly/foundry-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0955.@lhemerly_foundry-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 933
+  }
+}

@@ -1,0 +1,977 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to integrate with Figma's API, enabling users to manage files, comments, components, and other design assets programmatically. Its core functionality revolves around design collaboration, project management, and API-driven interactions with Figma's ecosystem. The tools provided allow for retrieval, modification, and management of design-related data, making it particularly useful for teams working with Figma in their workflows.",
+    "reasoning": "The primary label \"Design & Prototyping\" is chosen because the server's functionality is centered around Figma, a design and prototyping tool. The secondary label \"API Integration\" reflects the server's role as a bridge between AI workflows and Figma's API. \"Collaboration Tools\" is also relevant due to the server's ability to manage comments and team projects, which are key aspects of collaborative design work. No custom label is needed as the predefined categories cover the server's functionality well.",
+    "primary_label": "Others",
+    "secondary_labels": [
+      "API Integration",
+      "Communication Tools"
+    ],
+    "custom_label": "Design & Prototyping",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 89,
+    "server_name": "Figma API Integration",
+    "rank_by_usage": 90,
+    "usage_count": "880",
+    "original_file": "../crawler/smithery/@ai-zerolab_mcp-figma.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ai-zerolab/mcp-figma/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "set_api_key",
+          "description": "Set your Figma API personal access token (will be saved to ~/.mcp-figma/config.json)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "api_key": {
+                "type": "string",
+                "description": "Your Figma API personal access token"
+              }
+            },
+            "required": [
+              "api_key"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_api_key",
+          "description": "Check if a Figma API key is already configured",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file",
+          "description": "Get a Figma file by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get"
+              },
+              "version": {
+                "type": "string",
+                "description": "Optional. A specific version ID to get"
+              },
+              "depth": {
+                "type": "number",
+                "description": "Optional. Depth of nodes to return (1-4)"
+              },
+              "branch_data": {
+                "type": "boolean",
+                "description": "Optional. Include branch data if true"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_nodes",
+          "description": "Get specific nodes from a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get nodes from"
+              },
+              "node_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of node IDs to get"
+              },
+              "depth": {
+                "type": "number",
+                "description": "Optional. Depth of nodes to return (1-4)"
+              },
+              "version": {
+                "type": "string",
+                "description": "Optional. A specific version ID to get"
+              }
+            },
+            "required": [
+              "fileKey",
+              "node_ids"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_image",
+          "description": "Get images for nodes in a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get images from"
+              },
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of node IDs to render"
+              },
+              "scale": {
+                "type": "number",
+                "description": "Optional. Scale factor to render at (0.01-4)"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "jpg",
+                  "png",
+                  "svg",
+                  "pdf"
+                ],
+                "description": "Optional. Image format"
+              },
+              "svg_include_id": {
+                "type": "boolean",
+                "description": "Optional. Include IDs in SVG output"
+              },
+              "svg_simplify_stroke": {
+                "type": "boolean",
+                "description": "Optional. Simplify strokes in SVG output"
+              },
+              "use_absolute_bounds": {
+                "type": "boolean",
+                "description": "Optional. Use absolute bounds"
+              }
+            },
+            "required": [
+              "fileKey",
+              "ids"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_image_fills",
+          "description": "Get URLs for images used in a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get image fills from"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_comments",
+          "description": "Get comments on a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get comments from"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "post_comment",
+          "description": "Post a comment on a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to comment on"
+              },
+              "message": {
+                "type": "string",
+                "description": "Comment message text"
+              },
+              "client_meta": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "node_id": {
+                    "type": "string"
+                  },
+                  "node_offset": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "description": "Optional. Position of the comment"
+              },
+              "comment_id": {
+                "type": "string",
+                "description": "Optional. ID of comment to reply to"
+              }
+            },
+            "required": [
+              "fileKey",
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_comment",
+          "description": "Delete a comment from a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to delete a comment from"
+              },
+              "comment_id": {
+                "type": "string",
+                "description": "ID of the comment to delete"
+              }
+            },
+            "required": [
+              "fileKey",
+              "comment_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_projects",
+          "description": "Get projects for a team",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "team_id": {
+                "type": "string",
+                "description": "The team ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              }
+            },
+            "required": [
+              "team_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_project_files",
+          "description": "Get files for a project",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "description": "The project ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              },
+              "branch_data": {
+                "type": "boolean",
+                "description": "Optional. Include branch data if true"
+              }
+            },
+            "required": [
+              "project_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_components",
+          "description": "Get components for a team",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "team_id": {
+                "type": "string",
+                "description": "The team ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              }
+            },
+            "required": [
+              "team_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_components",
+          "description": "Get components from a file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get components from"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_component",
+          "description": "Get a component by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The component key"
+              }
+            },
+            "required": [
+              "key"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_component_sets",
+          "description": "Get component sets for a team",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "team_id": {
+                "type": "string",
+                "description": "The team ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              }
+            },
+            "required": [
+              "team_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_styles",
+          "description": "Get styles for a team",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "team_id": {
+                "type": "string",
+                "description": "The team ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              }
+            },
+            "required": [
+              "team_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_styles",
+          "description": "Get styles from a file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get styles from"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_style",
+          "description": "Get a style by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The style key"
+              }
+            },
+            "required": [
+              "key"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 18,
+      "tool_names": [
+        "set_api_key",
+        "check_api_key",
+        "get_file",
+        "get_file_nodes",
+        "get_image",
+        "get_image_fills",
+        "get_comments",
+        "post_comment",
+        "delete_comment",
+        "get_team_projects",
+        "get_project_files",
+        "get_team_components",
+        "get_file_components",
+        "get_component",
+        "get_team_component_sets",
+        "get_team_styles",
+        "get_file_styles",
+        "get_style"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 89,
+      "name": "Figma API Integration",
+      "author": "@ai-zerolab/mcp-figma",
+      "overview": "Access Figma's powerful API to manage files, comments, and components seamlessly. Enhance your AI assistant's capabilities by integrating Figma functionalities directly into your workflows. Simplify your design collaboration and project management with easy API access.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@ai-zerolab/mcp-figma",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "880",
+      "success_rate": "74.22%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ai-zerolab_mcp-figma.json",
+      "tools_count": 18,
+      "tools": [
+        {
+          "name": "set_api_key",
+          "description": "Set your Figma API personal access token (will be saved to ~/.mcp-figma/config.json)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "api_key": {
+                "type": "string",
+                "description": "Your Figma API personal access token"
+              }
+            },
+            "required": [
+              "api_key"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "check_api_key",
+          "description": "Check if a Figma API key is already configured",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file",
+          "description": "Get a Figma file by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get"
+              },
+              "version": {
+                "type": "string",
+                "description": "Optional. A specific version ID to get"
+              },
+              "depth": {
+                "type": "number",
+                "description": "Optional. Depth of nodes to return (1-4)"
+              },
+              "branch_data": {
+                "type": "boolean",
+                "description": "Optional. Include branch data if true"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_nodes",
+          "description": "Get specific nodes from a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get nodes from"
+              },
+              "node_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of node IDs to get"
+              },
+              "depth": {
+                "type": "number",
+                "description": "Optional. Depth of nodes to return (1-4)"
+              },
+              "version": {
+                "type": "string",
+                "description": "Optional. A specific version ID to get"
+              }
+            },
+            "required": [
+              "fileKey",
+              "node_ids"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_image",
+          "description": "Get images for nodes in a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get images from"
+              },
+              "ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of node IDs to render"
+              },
+              "scale": {
+                "type": "number",
+                "description": "Optional. Scale factor to render at (0.01-4)"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "jpg",
+                  "png",
+                  "svg",
+                  "pdf"
+                ],
+                "description": "Optional. Image format"
+              },
+              "svg_include_id": {
+                "type": "boolean",
+                "description": "Optional. Include IDs in SVG output"
+              },
+              "svg_simplify_stroke": {
+                "type": "boolean",
+                "description": "Optional. Simplify strokes in SVG output"
+              },
+              "use_absolute_bounds": {
+                "type": "boolean",
+                "description": "Optional. Use absolute bounds"
+              }
+            },
+            "required": [
+              "fileKey",
+              "ids"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_image_fills",
+          "description": "Get URLs for images used in a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get image fills from"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_comments",
+          "description": "Get comments on a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get comments from"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "post_comment",
+          "description": "Post a comment on a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to comment on"
+              },
+              "message": {
+                "type": "string",
+                "description": "Comment message text"
+              },
+              "client_meta": {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "node_id": {
+                    "type": "string"
+                  },
+                  "node_offset": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "description": "Optional. Position of the comment"
+              },
+              "comment_id": {
+                "type": "string",
+                "description": "Optional. ID of comment to reply to"
+              }
+            },
+            "required": [
+              "fileKey",
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_comment",
+          "description": "Delete a comment from a Figma file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to delete a comment from"
+              },
+              "comment_id": {
+                "type": "string",
+                "description": "ID of the comment to delete"
+              }
+            },
+            "required": [
+              "fileKey",
+              "comment_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_projects",
+          "description": "Get projects for a team",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "team_id": {
+                "type": "string",
+                "description": "The team ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              }
+            },
+            "required": [
+              "team_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_project_files",
+          "description": "Get files for a project",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "project_id": {
+                "type": "string",
+                "description": "The project ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              },
+              "branch_data": {
+                "type": "boolean",
+                "description": "Optional. Include branch data if true"
+              }
+            },
+            "required": [
+              "project_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_components",
+          "description": "Get components for a team",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "team_id": {
+                "type": "string",
+                "description": "The team ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              }
+            },
+            "required": [
+              "team_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_components",
+          "description": "Get components from a file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get components from"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_component",
+          "description": "Get a component by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The component key"
+              }
+            },
+            "required": [
+              "key"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_component_sets",
+          "description": "Get component sets for a team",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "team_id": {
+                "type": "string",
+                "description": "The team ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              }
+            },
+            "required": [
+              "team_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_styles",
+          "description": "Get styles for a team",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "team_id": {
+                "type": "string",
+                "description": "The team ID"
+              },
+              "page_size": {
+                "type": "number",
+                "description": "Optional. Number of items per page"
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Optional. Cursor for pagination"
+              }
+            },
+            "required": [
+              "team_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_styles",
+          "description": "Get styles from a file",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileKey": {
+                "type": "string",
+                "description": "The key of the file to get styles from"
+              }
+            },
+            "required": [
+              "fileKey"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_style",
+          "description": "Get a style by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "The style key"
+              }
+            },
+            "required": [
+              "key"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ai-zerolab/mcp-figma/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ai-zerolab/mcp-figma/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0090.@ai-zerolab_mcp-figma_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 88
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "labels": {
+    "analysis": "The JDBCX MCP Server is designed to facilitate data communication between various data sources including databases, web services, and scripts via a JDBCX server. Its primary functionality revolves around database operations, allowing users to list available database servers, inspect their structure, and execute SQL queries. The tools provided handle structured and semi-structured data retrieval, metadata inspection, and query execution, making it a powerful tool for database interaction and data analytics.",
+    "reasoning": "The primary functionality of the server centers around database operations including querying and metadata retrieval, which aligns with the Database Operations category. The ability to list and inspect database servers also relates to data analysis and processing, though this is a secondary aspect. No custom labels are needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1170,
+    "server_name": "JDBCX MCP Server",
+    "rank_by_usage": 1171,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@jdbcx_pydbcx-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jdbcx/pydbcx-mcp/mcp?config=eyJtYXhSb3dzTGltaXQiOiAxMDAwLCAibWNwVHJhbnNwb3J0IjogInN0ZGlvIiwgImpkYmN4TG9nTGV2ZWwiOiAiREVCVUciLCAibWNwU2VydmVySG9zdCI6ICIwLjAuMC4wIiwgIm1jcFNlcnZlclBvcnQiOiA4MDgwLCAiamRiY3hTZXJ2ZXJVcmwiOiAiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwgImRlZmF1bHRSb3dzTGltaXQiOiAxMDAsICJqZGJjeFNlcnZlclRva2VuIjogIiIsICJkZWZhdWx0RGF0YUZvcm1hdCI6ICJjc3YiLCAiZGVmYXVsdFF1ZXJ5VGltZW91dFNlY29uZHMiOiAxMH0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "Connection timeout (20 seconds)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1170,
+      "name": "JDBCX MCP Server",
+      "author": "@jdbcx/pydbcx-mcp",
+      "overview": "Python implementation of MCP server for enabling data communication (databases, web services, scripts) via JDBCX server.",
+      "repository_url": "https://github.com/jdbcx/pydbcx-mcp",
+      "homepage": "https://smithery.ai/server/@jdbcx/pydbcx-mcp",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jdbcx_pydbcx-mcp.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "list_database_servers",
+          "description": "Deploy Server JDBCX MCP Server @jdbcx/pydbcx-mcp Try in Playground list_database_servers",
+          "parameters": []
+        },
+        {
+          "name": "inspect_database_server",
+          "description": "Get structural metadata for a specific database server, including its catalogs, schemas, and tables. May take minutes for large servers. Args: database_server (str): The name of the database server to inspect query_timeout_seconds (int, optional): Maximum time to wait for the request in seconds. Defaults to DEFAULT_QUERY_TIMEOUT_SECONDS. Returns: str: JSON string containing the structural metadata of the specified database server, including its catalogs, schemas, and tables",
+          "parameters": []
+        },
+        {
+          "name": "query_database",
+          "description": "Execute a SQL query against a specified database server and return formatted results. Maybe slow for complex queries. Args: database_server (str): The name of the database server to query (must be registered) sql_query (str): The SQL query to execute (will be wrapped in a SELECT statement) query_timeout_seconds (int, optional): Maximum time in seconds to wait for query execution. Defaults to DEFAULT_QUERY_TIMEOUT_SECONDS. data_format (str, optional): Output format for results. Options: \"md\" - Markdown table format \"jsonl\" - JSON Lines format (one JSON object per row) \"csv\" - Comma-separated values with header row Defaults to DEFAULT_DATA_FORMAT. rows_limit (int, optional): Maximum number of rows to return. Defaults to DEFAULT_ROWS_LIMIT. Returns: str: Query results as a string in the specified format",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"maxRowsLimit\": 1000,\n  \"mcpTransport\": \"stdio\",\n  \"jdbcxLogLevel\": \"DEBUG\",\n  \"mcpServerHost\": \"0.0.0.0\",\n  \"mcpServerPort\": 8080,\n  \"jdbcxServerUrl\": \"http://localhost:8080\",\n  \"defaultRowsLimit\": 100,\n  \"jdbcxServerToken\": \"\",\n  \"defaultDataFormat\": \"csv\",\n  \"defaultQueryTimeoutSeconds\": 10\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@jdbcx/pydbcx-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"maxRowsLimit\": 1000,\n  \"mcpTransport\": \"stdio\",\n  \"jdbcxLogLevel\": \"DEBUG\",\n  \"mcpServerHost\": \"0.0.0.0\",\n  \"mcpServerPort\": 8080,\n  \"jdbcxServerUrl\": \"http://localhost:8080\",\n  \"defaultRowsLimit\": 100,\n  \"jdbcxServerToken\": \"\",\n  \"defaultDataFormat\": \"csv\",\n  \"defaultQueryTimeoutSeconds\": 10\n}",
+      "python_sdk_url": "https://server.smithery.ai/@jdbcx/pydbcx-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1171.@jdbcx_pydbcx-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1139
+  }
+}

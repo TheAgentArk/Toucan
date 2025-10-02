@@ -1,0 +1,170 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described specializes in executing and validating SQL queries specifically for Google BigQuery. It provides tools to ensure queries are syntactically correct and safe to run, including checks for data modification statements (DML) and processing limits (1 TB). It emphasizes read-only operations and returns structured JSON results. This server primarily serves data analysis and querying needs while ensuring compliance with BigQuery's operational constraints.",
+    "reasoning": "The primary label \"Data Analysis & Processing\" is chosen because the server's core functionality revolves around executing analytical queries on BigQuery data. The secondary label \"Database Operations\" is selected due to the server's focus on SQL query execution and validation, which are fundamental database interactions. The server does not have unique functionality beyond these predefined categories, so no custom label is necessary.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1476,
+    "server_name": "BigQuery Analysis Server",
+    "rank_by_usage": 1477,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@gotalab_bigquery-analysis-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@gotalab/bigquery-analysis-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "dry_run_query",
+          "description": "Perform a dry run of a BigQuery query to check if it's valid and estimate its size",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The SQL query to dry run"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "Google Cloud project ID (optional, uses default if not provided)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_query_with_validation",
+          "description": "Run a BigQuery query with dry run validation (fails if query exceeds 1 TB or contains DML statements)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The SQL query to run (only SELECT queries are allowed)"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "Google Cloud project ID (optional, uses default if not provided)"
+              },
+              "maxResults": {
+                "type": "number",
+                "description": "Maximum number of results to return (default: 100)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "dry_run_query",
+        "run_query_with_validation"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1476,
+      "name": "BigQuery Analysis Server",
+      "author": "@gotalab/bigquery-analysis-mcp-server",
+      "overview": "Execute SQL queries against Google BigQuery with validation and safety checks. Ensure your queries are valid and run safely without modifying data or exceeding processing limits. Get structured JSON results for your analytics needs.",
+      "repository_url": "https://github.com/gotalab/bigquery-analysis-mcp-server",
+      "homepage": "https://smithery.ai/server/@gotalab/bigquery-analysis-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@gotalab_bigquery-analysis-mcp-server.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "dry_run_query",
+          "description": "Perform a dry run of a BigQuery query to check if it's valid and estimate its size",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The SQL query to dry run"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "Google Cloud project ID (optional, uses default if not provided)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "run_query_with_validation",
+          "description": "Run a BigQuery query with dry run validation (fails if query exceeds 1 TB or contains DML statements)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The SQL query to run (only SELECT queries are allowed)"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "Google Cloud project ID (optional, uses default if not provided)"
+              },
+              "maxResults": {
+                "type": "number",
+                "description": "Maximum number of results to return (default: 100)"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@gotalab/bigquery-analysis-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@gotalab/bigquery-analysis-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1477.@gotalab_bigquery-analysis-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1366
+  }
+}

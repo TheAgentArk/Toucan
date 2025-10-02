@@ -1,0 +1,2719 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is specifically designed for comprehensive PostgreSQL database management. It provides a wide range of tools for database analysis, schema management, query execution, data manipulation, user permissions, and performance monitoring. The primary focus is on enabling users to efficiently manage, debug, and optimize PostgreSQL databases with operations that span from basic querying to advanced performance tuning and security management.",
+    "reasoning": "The primary label \"Database Operations\" is chosen because the server's core functionality revolves around PostgreSQL database management, including schema, functions, triggers, indexes, constraints, and security. The secondary labels of \"Data Analysis & Processing\" and \"Operating System\" are included because the server offers tools for performance analysis (explain plans, slow queries, statistics) and system-level operations (user permissions, data copying). The custom label \"PostgreSQL Management\" is added to specifically highlight the specialized nature of the tools.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Operating System"
+    ],
+    "custom_label": "PostgreSQL Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 48,
+    "server_name": "PostgreSQL Database Management Server",
+    "rank_by_usage": 49,
+    "usage_count": "2,310",
+    "original_file": "../crawler/smithery/@HenkDz_postgresql-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@HenkDz/postgresql-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "pg_analyze_database",
+          "description": "Analyze PostgreSQL database configuration and performance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional if POSTGRES_CONNECTION_STRING environment variable or --connection-string CLI option is set)"
+              },
+              "analysisType": {
+                "type": "string",
+                "enum": [
+                  "configuration",
+                  "performance",
+                  "security"
+                ],
+                "description": "Type of analysis to perform"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_debug_database",
+          "description": "Debug common PostgreSQL issues",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string"
+              },
+              "issue": {
+                "type": "string",
+                "enum": [
+                  "connection",
+                  "performance",
+                  "locks",
+                  "replication"
+                ]
+              },
+              "logLevel": {
+                "type": "string",
+                "enum": [
+                  "info",
+                  "debug",
+                  "trace"
+                ],
+                "default": "info"
+              }
+            },
+            "required": [
+              "issue"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_schema",
+          "description": "Manage PostgreSQL schema - get schema info, create/alter tables, manage enums. Examples: operation=\"get_info\" for table lists, operation=\"create_table\" with tableName and columns, operation=\"get_enums\" to list enums, operation=\"create_enum\" with enumName and values",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get_info",
+                  "create_table",
+                  "alter_table",
+                  "get_enums",
+                  "create_enum"
+                ],
+                "description": "Operation: get_info (schema/table info), create_table (new table), alter_table (modify table), get_enums (list ENUMs), create_enum (new ENUM)"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (optional for get_info to get specific table info, required for create_table/alter_table)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "PostgreSQL data type"
+                    },
+                    "nullable": {
+                      "type": "boolean"
+                    },
+                    "default": {
+                      "type": "string",
+                      "description": "Default value expression"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Column definitions (required for create_table)"
+              },
+              "operations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "add",
+                        "alter",
+                        "drop"
+                      ]
+                    },
+                    "columnName": {
+                      "type": "string"
+                    },
+                    "dataType": {
+                      "type": "string",
+                      "description": "PostgreSQL data type (for add/alter)"
+                    },
+                    "nullable": {
+                      "type": "boolean",
+                      "description": "Whether the column can be NULL (for add/alter)"
+                    },
+                    "default": {
+                      "type": "string",
+                      "description": "Default value expression (for add/alter)"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "columnName"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Alter operations (required for alter_table)"
+              },
+              "enumName": {
+                "type": "string",
+                "description": "ENUM name (optional for get_enums to filter, required for create_enum)"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "ENUM values (required for create_enum)"
+              },
+              "ifNotExists": {
+                "type": "boolean",
+                "description": "Include IF NOT EXISTS clause (for create_enum)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_functions",
+          "description": "Manage PostgreSQL functions - get, create, or drop functions with a single tool. Examples: operation=\"get\" to list functions, operation=\"create\" with functionName=\"test_func\", parameters=\"\" (empty for no params), returnType=\"TEXT\", functionBody=\"SELECT 'Hello'\"",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "create",
+                  "drop"
+                ],
+                "description": "Operation to perform: get (list/info), create (new function), or drop (remove function)"
+              },
+              "functionName": {
+                "type": "string",
+                "description": "Name of the function (required for create/drop, optional for get to filter)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "parameters": {
+                "type": "string",
+                "description": "Function parameters - required for create operation, required for drop when function is overloaded. Use empty string \"\" for functions with no parameters"
+              },
+              "returnType": {
+                "type": "string",
+                "description": "Return type of the function (required for create operation)"
+              },
+              "functionBody": {
+                "type": "string",
+                "description": "Function body code (required for create operation)"
+              },
+              "language": {
+                "type": "string",
+                "enum": [
+                  "sql",
+                  "plpgsql",
+                  "plpython3u"
+                ],
+                "description": "Function language (defaults to plpgsql for create)"
+              },
+              "volatility": {
+                "type": "string",
+                "enum": [
+                  "VOLATILE",
+                  "STABLE",
+                  "IMMUTABLE"
+                ],
+                "description": "Function volatility (defaults to VOLATILE for create)"
+              },
+              "security": {
+                "type": "string",
+                "enum": [
+                  "INVOKER",
+                  "DEFINER"
+                ],
+                "description": "Function security context (defaults to INVOKER for create)"
+              },
+              "replace": {
+                "type": "boolean",
+                "description": "Whether to replace the function if it exists (for create operation)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Whether to include IF EXISTS clause (for drop operation)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Whether to include CASCADE clause (for drop operation)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_triggers",
+          "description": "Manage PostgreSQL triggers - get, create, drop, and enable/disable triggers. Examples: operation=\"get\" to list triggers, operation=\"create\" with triggerName, tableName, functionName, operation=\"drop\" with triggerName and tableName, operation=\"set_state\" with triggerName, tableName, enable",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "create",
+                  "drop",
+                  "set_state"
+                ],
+                "description": "Operation: get (list triggers), create (new trigger), drop (remove trigger), set_state (enable/disable trigger)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (optional filter for get, required for create/drop/set_state)"
+              },
+              "triggerName": {
+                "type": "string",
+                "description": "Trigger name (required for create/drop/set_state)"
+              },
+              "functionName": {
+                "type": "string",
+                "description": "Function name (required for create operation)"
+              },
+              "timing": {
+                "type": "string",
+                "enum": [
+                  "BEFORE",
+                  "AFTER",
+                  "INSTEAD OF"
+                ],
+                "description": "Trigger timing (for create operation, defaults to AFTER)"
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "INSERT",
+                    "UPDATE",
+                    "DELETE",
+                    "TRUNCATE"
+                  ]
+                },
+                "description": "Trigger events (for create operation, defaults to [\"INSERT\"])"
+              },
+              "forEach": {
+                "type": "string",
+                "enum": [
+                  "ROW",
+                  "STATEMENT"
+                ],
+                "description": "FOR EACH ROW or STATEMENT (for create operation, defaults to ROW)"
+              },
+              "when": {
+                "type": "string",
+                "description": "WHEN clause condition (for create operation)"
+              },
+              "replace": {
+                "type": "boolean",
+                "description": "Whether to replace trigger if exists (for create operation)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop operation)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Include CASCADE clause (for drop operation)"
+              },
+              "enable": {
+                "type": "boolean",
+                "description": "Whether to enable the trigger (required for set_state operation)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_indexes",
+          "description": "Manage PostgreSQL indexes - get, create, drop, reindex, and analyze usage with a single tool. Examples: operation=\"get\" to list indexes, operation=\"create\" with indexName, tableName, columns, operation=\"analyze_usage\" for performance analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "create",
+                  "drop",
+                  "reindex",
+                  "analyze_usage"
+                ],
+                "description": "Operation: get (list indexes), create (new index), drop (remove index), reindex (rebuild), analyze_usage (find unused/duplicate)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (optional for get/analyze_usage, required for create)"
+              },
+              "indexName": {
+                "type": "string",
+                "description": "Index name (required for create/drop)"
+              },
+              "includeStats": {
+                "type": "boolean",
+                "description": "Include usage statistics (for get operation)"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Column names for the index (required for create operation)"
+              },
+              "unique": {
+                "type": "boolean",
+                "description": "Create unique index (for create operation)"
+              },
+              "concurrent": {
+                "type": "boolean",
+                "description": "Create/drop index concurrently (for create/drop operations)"
+              },
+              "method": {
+                "type": "string",
+                "enum": [
+                  "btree",
+                  "hash",
+                  "gist",
+                  "spgist",
+                  "gin",
+                  "brin"
+                ],
+                "description": "Index method (for create operation, defaults to btree)"
+              },
+              "where": {
+                "type": "string",
+                "description": "WHERE clause for partial index (for create operation)"
+              },
+              "ifNotExists": {
+                "type": "boolean",
+                "description": "Include IF NOT EXISTS clause (for create operation)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop operation)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Include CASCADE clause (for drop operation)"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target name for reindex (required for reindex operation)"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "index",
+                  "table",
+                  "schema",
+                  "database"
+                ],
+                "description": "Type of target for reindex (required for reindex operation)"
+              },
+              "minSizeBytes": {
+                "type": "number",
+                "description": "Minimum index size in bytes (for analyze_usage operation)"
+              },
+              "showUnused": {
+                "type": "boolean",
+                "description": "Include unused indexes (for analyze_usage operation)"
+              },
+              "showDuplicates": {
+                "type": "boolean",
+                "description": "Detect duplicate indexes (for analyze_usage operation)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_constraints",
+          "description": "Manage PostgreSQL constraints - get, create foreign keys, drop foreign keys, create constraints, drop constraints. Examples: operation=\"get\" to list constraints, operation=\"create_fk\" with constraintName, tableName, columnNames, referencedTable, referencedColumns",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "create_fk",
+                  "drop_fk",
+                  "create",
+                  "drop"
+                ],
+                "description": "Operation: get (list constraints), create_fk (foreign key), drop_fk (drop foreign key), create (constraint), drop (constraint)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "constraintName": {
+                "type": "string",
+                "description": "Constraint name (required for create_fk/drop_fk/create/drop)"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (optional filter for get, required for create_fk/drop_fk/create/drop)"
+              },
+              "constraintType": {
+                "type": "string",
+                "enum": [
+                  "PRIMARY KEY",
+                  "FOREIGN KEY",
+                  "UNIQUE",
+                  "CHECK"
+                ],
+                "description": "Filter by constraint type (for get operation)"
+              },
+              "columnNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Column names in the table (required for create_fk)"
+              },
+              "referencedTable": {
+                "type": "string",
+                "description": "Referenced table name (required for create_fk)"
+              },
+              "referencedColumns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Referenced column names (required for create_fk)"
+              },
+              "referencedSchema": {
+                "type": "string",
+                "description": "Referenced table schema (for create_fk, defaults to same as table schema)"
+              },
+              "onUpdate": {
+                "type": "string",
+                "enum": [
+                  "NO ACTION",
+                  "RESTRICT",
+                  "CASCADE",
+                  "SET NULL",
+                  "SET DEFAULT"
+                ],
+                "description": "ON UPDATE action (for create_fk)"
+              },
+              "onDelete": {
+                "type": "string",
+                "enum": [
+                  "NO ACTION",
+                  "RESTRICT",
+                  "CASCADE",
+                  "SET NULL",
+                  "SET DEFAULT"
+                ],
+                "description": "ON DELETE action (for create_fk)"
+              },
+              "constraintTypeCreate": {
+                "type": "string",
+                "enum": [
+                  "unique",
+                  "check",
+                  "primary_key"
+                ],
+                "description": "Type of constraint to create (for create operation)"
+              },
+              "checkExpression": {
+                "type": "string",
+                "description": "Check expression (for create operation with check constraints)"
+              },
+              "deferrable": {
+                "type": "boolean",
+                "description": "Make constraint deferrable (for create_fk/create operations)"
+              },
+              "initiallyDeferred": {
+                "type": "boolean",
+                "description": "Initially deferred (for create_fk/create operations)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop_fk/drop operations)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Include CASCADE clause (for drop_fk/drop operations)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_rls",
+          "description": "Manage PostgreSQL Row-Level Security - enable/disable RLS and manage policies. Examples: operation=\"enable\" with tableName=\"users\", operation=\"create_policy\" with tableName, policyName, using, check",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "enable",
+                  "disable",
+                  "create_policy",
+                  "edit_policy",
+                  "drop_policy",
+                  "get_policies"
+                ],
+                "description": "Operation: enable/disable RLS, create_policy, edit_policy, drop_policy, get_policies"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (required for enable/disable/create_policy/edit_policy/drop_policy, optional filter for get_policies)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "policyName": {
+                "type": "string",
+                "description": "Policy name (required for create_policy/edit_policy/drop_policy)"
+              },
+              "using": {
+                "type": "string",
+                "description": "USING expression for policy (required for create_policy, optional for edit_policy)"
+              },
+              "check": {
+                "type": "string",
+                "description": "WITH CHECK expression for policy (optional for create_policy/edit_policy)"
+              },
+              "command": {
+                "type": "string",
+                "enum": [
+                  "ALL",
+                  "SELECT",
+                  "INSERT",
+                  "UPDATE",
+                  "DELETE"
+                ],
+                "description": "Command the policy applies to (for create_policy)"
+              },
+              "role": {
+                "type": "string",
+                "description": "Role the policy applies to (for create_policy)"
+              },
+              "replace": {
+                "type": "boolean",
+                "description": "Whether to replace policy if exists (for create_policy)"
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of roles for policy (for edit_policy)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop_policy)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_users",
+          "description": "Manage PostgreSQL users and permissions - create, drop, alter users, grant/revoke permissions. Examples: operation=\"create\" with username=\"testuser\", operation=\"grant\" with username, permissions, target, targetType",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "create",
+                  "drop",
+                  "alter",
+                  "grant",
+                  "revoke",
+                  "get_permissions",
+                  "list"
+                ],
+                "description": "Operation: create (new user), drop (remove user), alter (modify user), grant (permissions), revoke (permissions), get_permissions (view permissions), list (all users)"
+              },
+              "username": {
+                "type": "string",
+                "description": "Username (required for create/drop/alter/grant/revoke/get_permissions, optional filter for list)"
+              },
+              "password": {
+                "type": "string",
+                "description": "Password for the user (for create operation)"
+              },
+              "superuser": {
+                "type": "boolean",
+                "description": "Grant superuser privileges (for create/alter operations)"
+              },
+              "createdb": {
+                "type": "boolean",
+                "description": "Allow user to create databases (for create/alter operations)"
+              },
+              "createrole": {
+                "type": "boolean",
+                "description": "Allow user to create roles (for create/alter operations)"
+              },
+              "login": {
+                "type": "boolean",
+                "description": "Allow user to login (for create/alter operations)"
+              },
+              "replication": {
+                "type": "boolean",
+                "description": "Allow replication privileges (for create/alter operations)"
+              },
+              "connectionLimit": {
+                "type": "number",
+                "description": "Maximum number of connections (for create/alter operations)"
+              },
+              "validUntil": {
+                "type": "string",
+                "description": "Password expiration date YYYY-MM-DD (for create/alter operations)"
+              },
+              "inherit": {
+                "type": "boolean",
+                "description": "Inherit privileges from parent roles (for create/alter operations)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop operation)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Include CASCADE to drop owned objects (for drop/revoke operations)"
+              },
+              "permissions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "SELECT",
+                    "INSERT",
+                    "UPDATE",
+                    "DELETE",
+                    "TRUNCATE",
+                    "REFERENCES",
+                    "TRIGGER",
+                    "ALL"
+                  ]
+                },
+                "description": "Permissions to grant/revoke: [\"SELECT\", \"INSERT\", \"UPDATE\", \"DELETE\", \"TRUNCATE\", \"REFERENCES\", \"TRIGGER\", \"ALL\"]"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target object name (for grant/revoke operations)"
+              },
+              "targetType": {
+                "type": "string",
+                "enum": [
+                  "table",
+                  "schema",
+                  "database",
+                  "sequence",
+                  "function"
+                ],
+                "description": "Type of target object (for grant/revoke operations)"
+              },
+              "withGrantOption": {
+                "type": "boolean",
+                "description": "Allow user to grant these permissions to others (for grant operation)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Filter by schema (for get_permissions operation)"
+              },
+              "includeSystemRoles": {
+                "type": "boolean",
+                "description": "Include system roles (for list operation)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_query",
+          "description": "Manage PostgreSQL query analysis and performance - operation=\"explain\" for EXPLAIN plans, operation=\"get_slow_queries\" for slow query analysis, operation=\"get_stats\" for query statistics, operation=\"reset_stats\" for clearing statistics",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "explain",
+                  "get_slow_queries",
+                  "get_stats",
+                  "reset_stats"
+                ],
+                "description": "Operation: explain (EXPLAIN/EXPLAIN ANALYZE query), get_slow_queries (find slow queries from pg_stat_statements), get_stats (query statistics with cache hit ratios), reset_stats (reset pg_stat_statements)"
+              },
+              "connectionString": {
+                "type": "string"
+              },
+              "query": {
+                "type": "string",
+                "description": "SQL query to explain (required for explain operation)"
+              },
+              "analyze": {
+                "type": "boolean",
+                "default": false,
+                "description": "Use EXPLAIN ANALYZE - actually executes the query (for explain operation)"
+              },
+              "buffers": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include buffer usage information (for explain operation)"
+              },
+              "verbose": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include verbose output (for explain operation)"
+              },
+              "costs": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include cost estimates (for explain operation)"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json",
+                  "xml",
+                  "yaml"
+                ],
+                "default": "json",
+                "description": "Output format (for explain operation)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of slow queries to return (for get_slow_queries operation)"
+              },
+              "minDuration": {
+                "type": "number",
+                "description": "Minimum average duration in milliseconds (for get_slow_queries operation)"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "mean_time",
+                  "total_time",
+                  "calls",
+                  "cache_hit_ratio"
+                ],
+                "default": "mean_time",
+                "description": "Sort order (for get_slow_queries and get_stats operations)"
+              },
+              "includeNormalized": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include normalized query text (for get_slow_queries operation)"
+              },
+              "minCalls": {
+                "type": "number",
+                "description": "Minimum number of calls (for get_stats operation)"
+              },
+              "queryPattern": {
+                "type": "string",
+                "description": "Filter queries containing this pattern (for get_stats operation)"
+              },
+              "queryId": {
+                "type": "string",
+                "description": "Specific query ID to reset (for reset_stats operation, resets all if not provided)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_execute_query",
+          "description": "Execute SELECT queries and data retrieval operations - operation=\"select/count/exists\" with query and optional parameters. Examples: operation=\"select\", query=\"SELECT * FROM users WHERE created_at > $1\", parameters=[\"2024-01-01\"]",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "select",
+                  "count",
+                  "exists"
+                ],
+                "description": "Query operation: select (fetch rows), count (count rows), exists (check existence)"
+              },
+              "query": {
+                "type": "string",
+                "description": "SQL SELECT query to execute"
+              },
+              "parameters": {
+                "type": "array",
+                "items": {},
+                "default": [],
+                "description": "Parameter values for prepared statement placeholders ($1, $2, etc.)"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of rows to return (safety limit)"
+              },
+              "timeout": {
+                "type": "number",
+                "description": "Query timeout in milliseconds"
+              }
+            },
+            "required": [
+              "operation",
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_execute_mutation",
+          "description": "Execute data modification operations (INSERT/UPDATE/DELETE/UPSERT) - operation=\"insert/update/delete/upsert\" with table and data. Examples: operation=\"insert\", table=\"users\", data={\"name\":\"John\",\"email\":\"john@example.com\"}",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "insert",
+                  "update",
+                  "delete",
+                  "upsert"
+                ],
+                "description": "Mutation operation: insert (add rows), update (modify rows), delete (remove rows), upsert (insert or update)"
+              },
+              "table": {
+                "type": "string",
+                "description": "Table name for the operation"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Data object with column-value pairs (required for insert/update/upsert)"
+              },
+              "where": {
+                "type": "string",
+                "description": "WHERE clause for update/delete operations (without WHERE keyword)"
+              },
+              "conflictColumns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Columns for conflict resolution in upsert (ON CONFLICT)"
+              },
+              "returning": {
+                "type": "string",
+                "description": "RETURNING clause to get back inserted/updated data"
+              },
+              "schema": {
+                "type": "string",
+                "default": "public",
+                "description": "Schema name (defaults to public)"
+              }
+            },
+            "required": [
+              "operation",
+              "table"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_execute_sql",
+          "description": "Execute arbitrary SQL statements - sql=\"ANY_VALID_SQL\" with optional parameters and transaction support. Examples: sql=\"CREATE INDEX ...\", sql=\"WITH complex_cte AS (...) SELECT ...\", transactional=true",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "sql": {
+                "type": "string",
+                "description": "SQL statement to execute (can be any valid PostgreSQL SQL)"
+              },
+              "parameters": {
+                "type": "array",
+                "items": {},
+                "default": [],
+                "description": "Parameter values for prepared statement placeholders ($1, $2, etc.)"
+              },
+              "expectRows": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to expect rows back (false for statements like CREATE, DROP, etc.)"
+              },
+              "timeout": {
+                "type": "number",
+                "description": "Query timeout in milliseconds"
+              },
+              "transactional": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to wrap in a transaction"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_comments",
+          "description": "Manage PostgreSQL object comments - get, set, remove comments on tables, columns, functions, and other database objects. Examples: operation=\"get\" with objectType=\"table\", objectName=\"users\", operation=\"set\" with comment text, operation=\"bulk_get\" for discovery",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "set",
+                  "remove",
+                  "bulk_get"
+                ],
+                "description": "Operation: get (retrieve comments), set (add/update comment), remove (delete comment), bulk_get (discovery mode)"
+              },
+              "objectType": {
+                "type": "string",
+                "enum": [
+                  "table",
+                  "column",
+                  "index",
+                  "constraint",
+                  "function",
+                  "trigger",
+                  "view",
+                  "sequence",
+                  "schema",
+                  "database"
+                ],
+                "description": "Type of database object (required for get/set/remove)"
+              },
+              "objectName": {
+                "type": "string",
+                "description": "Name of the object (required for get/set/remove)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public, required for most object types)"
+              },
+              "columnName": {
+                "type": "string",
+                "description": "Column name (required when objectType is \"column\")"
+              },
+              "comment": {
+                "type": "string",
+                "description": "Comment text (required for set operation)"
+              },
+              "includeSystemObjects": {
+                "type": "boolean",
+                "description": "Include system objects in bulk_get (defaults to false)"
+              },
+              "filterObjectType": {
+                "type": "string",
+                "enum": [
+                  "table",
+                  "column",
+                  "index",
+                  "constraint",
+                  "function",
+                  "trigger",
+                  "view",
+                  "sequence",
+                  "schema",
+                  "database"
+                ],
+                "description": "Filter by object type in bulk_get operation"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_export_table_data",
+          "description": "Export table data to JSON or CSV format",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string"
+              },
+              "tableName": {
+                "type": "string"
+              },
+              "outputPath": {
+                "type": "string",
+                "description": "absolute path to save the exported data"
+              },
+              "where": {
+                "type": "string"
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "csv"
+                ],
+                "default": "json"
+              }
+            },
+            "required": [
+              "tableName",
+              "outputPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_import_table_data",
+          "description": "Import data from JSON or CSV file into a table",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string"
+              },
+              "tableName": {
+                "type": "string"
+              },
+              "inputPath": {
+                "type": "string",
+                "description": "absolute path to the file to import"
+              },
+              "truncateFirst": {
+                "type": "boolean",
+                "default": false
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "csv"
+                ],
+                "default": "json"
+              },
+              "delimiter": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "tableName",
+              "inputPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_copy_between_databases",
+          "description": "Copy data between two databases",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sourceConnectionString": {
+                "type": "string"
+              },
+              "targetConnectionString": {
+                "type": "string"
+              },
+              "tableName": {
+                "type": "string"
+              },
+              "where": {
+                "type": "string"
+              },
+              "truncateTarget": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "sourceConnectionString",
+              "targetConnectionString",
+              "tableName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_monitor_database",
+          "description": "Get real-time monitoring information for a PostgreSQL database",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string"
+              },
+              "includeTables": {
+                "type": "boolean",
+                "default": false
+              },
+              "includeQueries": {
+                "type": "boolean",
+                "default": false
+              },
+              "includeLocks": {
+                "type": "boolean",
+                "default": false
+              },
+              "includeReplication": {
+                "type": "boolean",
+                "default": false
+              },
+              "alertThresholds": {
+                "type": "object",
+                "properties": {
+                  "connectionPercentage": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Connection usage percentage threshold"
+                  },
+                  "longRunningQuerySeconds": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Long-running query threshold in seconds"
+                  },
+                  "cacheHitRatio": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Cache hit ratio threshold"
+                  },
+                  "deadTuplesPercentage": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Dead tuples percentage threshold"
+                  },
+                  "vacuumAge": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "description": "Vacuum age threshold in days"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Alert thresholds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 18,
+      "tool_names": [
+        "pg_analyze_database",
+        "pg_debug_database",
+        "pg_manage_schema",
+        "pg_manage_functions",
+        "pg_manage_triggers",
+        "pg_manage_indexes",
+        "pg_manage_constraints",
+        "pg_manage_rls",
+        "pg_manage_users",
+        "pg_manage_query",
+        "pg_execute_query",
+        "pg_execute_mutation",
+        "pg_execute_sql",
+        "pg_manage_comments",
+        "pg_export_table_data",
+        "pg_import_table_data",
+        "pg_copy_between_databases",
+        "pg_monitor_database"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 48,
+      "name": "PostgreSQL Database Management Server",
+      "author": "@HenkDz/postgresql-mcp-server",
+      "overview": "Analyze, manage, and optimize your PostgreSQL databases effortlessly. Streamline your database operations with powerful tools for debugging, schema management, and data migration. Enhance performance monitoring and ensure your database runs smoothly with real-time insights and recommendations.",
+      "repository_url": "https://github.com/HenkDz/postgresql-mcp-server",
+      "homepage": "https://smithery.ai/server/@HenkDz/postgresql-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "AGPL-3.0",
+      "usage_count": "2,310",
+      "success_rate": "99.74%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@HenkDz_postgresql-mcp-server.json",
+      "tools_count": 18,
+      "tools": [
+        {
+          "name": "pg_analyze_database",
+          "description": "Analyze PostgreSQL database configuration and performance",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional if POSTGRES_CONNECTION_STRING environment variable or --connection-string CLI option is set)"
+              },
+              "analysisType": {
+                "type": "string",
+                "enum": [
+                  "configuration",
+                  "performance",
+                  "security"
+                ],
+                "description": "Type of analysis to perform"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_debug_database",
+          "description": "Debug common PostgreSQL issues",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string"
+              },
+              "issue": {
+                "type": "string",
+                "enum": [
+                  "connection",
+                  "performance",
+                  "locks",
+                  "replication"
+                ]
+              },
+              "logLevel": {
+                "type": "string",
+                "enum": [
+                  "info",
+                  "debug",
+                  "trace"
+                ],
+                "default": "info"
+              }
+            },
+            "required": [
+              "issue"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_schema",
+          "description": "Manage PostgreSQL schema - get schema info, create/alter tables, manage enums. Examples: operation=\"get_info\" for table lists, operation=\"create_table\" with tableName and columns, operation=\"get_enums\" to list enums, operation=\"create_enum\" with enumName and values",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get_info",
+                  "create_table",
+                  "alter_table",
+                  "get_enums",
+                  "create_enum"
+                ],
+                "description": "Operation: get_info (schema/table info), create_table (new table), alter_table (modify table), get_enums (list ENUMs), create_enum (new ENUM)"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (optional for get_info to get specific table info, required for create_table/alter_table)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "PostgreSQL data type"
+                    },
+                    "nullable": {
+                      "type": "boolean"
+                    },
+                    "default": {
+                      "type": "string",
+                      "description": "Default value expression"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Column definitions (required for create_table)"
+              },
+              "operations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "add",
+                        "alter",
+                        "drop"
+                      ]
+                    },
+                    "columnName": {
+                      "type": "string"
+                    },
+                    "dataType": {
+                      "type": "string",
+                      "description": "PostgreSQL data type (for add/alter)"
+                    },
+                    "nullable": {
+                      "type": "boolean",
+                      "description": "Whether the column can be NULL (for add/alter)"
+                    },
+                    "default": {
+                      "type": "string",
+                      "description": "Default value expression (for add/alter)"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "columnName"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Alter operations (required for alter_table)"
+              },
+              "enumName": {
+                "type": "string",
+                "description": "ENUM name (optional for get_enums to filter, required for create_enum)"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "ENUM values (required for create_enum)"
+              },
+              "ifNotExists": {
+                "type": "boolean",
+                "description": "Include IF NOT EXISTS clause (for create_enum)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_functions",
+          "description": "Manage PostgreSQL functions - get, create, or drop functions with a single tool. Examples: operation=\"get\" to list functions, operation=\"create\" with functionName=\"test_func\", parameters=\"\" (empty for no params), returnType=\"TEXT\", functionBody=\"SELECT 'Hello'\"",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "create",
+                  "drop"
+                ],
+                "description": "Operation to perform: get (list/info), create (new function), or drop (remove function)"
+              },
+              "functionName": {
+                "type": "string",
+                "description": "Name of the function (required for create/drop, optional for get to filter)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "parameters": {
+                "type": "string",
+                "description": "Function parameters - required for create operation, required for drop when function is overloaded. Use empty string \"\" for functions with no parameters"
+              },
+              "returnType": {
+                "type": "string",
+                "description": "Return type of the function (required for create operation)"
+              },
+              "functionBody": {
+                "type": "string",
+                "description": "Function body code (required for create operation)"
+              },
+              "language": {
+                "type": "string",
+                "enum": [
+                  "sql",
+                  "plpgsql",
+                  "plpython3u"
+                ],
+                "description": "Function language (defaults to plpgsql for create)"
+              },
+              "volatility": {
+                "type": "string",
+                "enum": [
+                  "VOLATILE",
+                  "STABLE",
+                  "IMMUTABLE"
+                ],
+                "description": "Function volatility (defaults to VOLATILE for create)"
+              },
+              "security": {
+                "type": "string",
+                "enum": [
+                  "INVOKER",
+                  "DEFINER"
+                ],
+                "description": "Function security context (defaults to INVOKER for create)"
+              },
+              "replace": {
+                "type": "boolean",
+                "description": "Whether to replace the function if it exists (for create operation)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Whether to include IF EXISTS clause (for drop operation)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Whether to include CASCADE clause (for drop operation)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_triggers",
+          "description": "Manage PostgreSQL triggers - get, create, drop, and enable/disable triggers. Examples: operation=\"get\" to list triggers, operation=\"create\" with triggerName, tableName, functionName, operation=\"drop\" with triggerName and tableName, operation=\"set_state\" with triggerName, tableName, enable",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "create",
+                  "drop",
+                  "set_state"
+                ],
+                "description": "Operation: get (list triggers), create (new trigger), drop (remove trigger), set_state (enable/disable trigger)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (optional filter for get, required for create/drop/set_state)"
+              },
+              "triggerName": {
+                "type": "string",
+                "description": "Trigger name (required for create/drop/set_state)"
+              },
+              "functionName": {
+                "type": "string",
+                "description": "Function name (required for create operation)"
+              },
+              "timing": {
+                "type": "string",
+                "enum": [
+                  "BEFORE",
+                  "AFTER",
+                  "INSTEAD OF"
+                ],
+                "description": "Trigger timing (for create operation, defaults to AFTER)"
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "INSERT",
+                    "UPDATE",
+                    "DELETE",
+                    "TRUNCATE"
+                  ]
+                },
+                "description": "Trigger events (for create operation, defaults to [\"INSERT\"])"
+              },
+              "forEach": {
+                "type": "string",
+                "enum": [
+                  "ROW",
+                  "STATEMENT"
+                ],
+                "description": "FOR EACH ROW or STATEMENT (for create operation, defaults to ROW)"
+              },
+              "when": {
+                "type": "string",
+                "description": "WHEN clause condition (for create operation)"
+              },
+              "replace": {
+                "type": "boolean",
+                "description": "Whether to replace trigger if exists (for create operation)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop operation)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Include CASCADE clause (for drop operation)"
+              },
+              "enable": {
+                "type": "boolean",
+                "description": "Whether to enable the trigger (required for set_state operation)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_indexes",
+          "description": "Manage PostgreSQL indexes - get, create, drop, reindex, and analyze usage with a single tool. Examples: operation=\"get\" to list indexes, operation=\"create\" with indexName, tableName, columns, operation=\"analyze_usage\" for performance analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "create",
+                  "drop",
+                  "reindex",
+                  "analyze_usage"
+                ],
+                "description": "Operation: get (list indexes), create (new index), drop (remove index), reindex (rebuild), analyze_usage (find unused/duplicate)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (optional for get/analyze_usage, required for create)"
+              },
+              "indexName": {
+                "type": "string",
+                "description": "Index name (required for create/drop)"
+              },
+              "includeStats": {
+                "type": "boolean",
+                "description": "Include usage statistics (for get operation)"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Column names for the index (required for create operation)"
+              },
+              "unique": {
+                "type": "boolean",
+                "description": "Create unique index (for create operation)"
+              },
+              "concurrent": {
+                "type": "boolean",
+                "description": "Create/drop index concurrently (for create/drop operations)"
+              },
+              "method": {
+                "type": "string",
+                "enum": [
+                  "btree",
+                  "hash",
+                  "gist",
+                  "spgist",
+                  "gin",
+                  "brin"
+                ],
+                "description": "Index method (for create operation, defaults to btree)"
+              },
+              "where": {
+                "type": "string",
+                "description": "WHERE clause for partial index (for create operation)"
+              },
+              "ifNotExists": {
+                "type": "boolean",
+                "description": "Include IF NOT EXISTS clause (for create operation)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop operation)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Include CASCADE clause (for drop operation)"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target name for reindex (required for reindex operation)"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "index",
+                  "table",
+                  "schema",
+                  "database"
+                ],
+                "description": "Type of target for reindex (required for reindex operation)"
+              },
+              "minSizeBytes": {
+                "type": "number",
+                "description": "Minimum index size in bytes (for analyze_usage operation)"
+              },
+              "showUnused": {
+                "type": "boolean",
+                "description": "Include unused indexes (for analyze_usage operation)"
+              },
+              "showDuplicates": {
+                "type": "boolean",
+                "description": "Detect duplicate indexes (for analyze_usage operation)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_constraints",
+          "description": "Manage PostgreSQL constraints - get, create foreign keys, drop foreign keys, create constraints, drop constraints. Examples: operation=\"get\" to list constraints, operation=\"create_fk\" with constraintName, tableName, columnNames, referencedTable, referencedColumns",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "create_fk",
+                  "drop_fk",
+                  "create",
+                  "drop"
+                ],
+                "description": "Operation: get (list constraints), create_fk (foreign key), drop_fk (drop foreign key), create (constraint), drop (constraint)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "constraintName": {
+                "type": "string",
+                "description": "Constraint name (required for create_fk/drop_fk/create/drop)"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (optional filter for get, required for create_fk/drop_fk/create/drop)"
+              },
+              "constraintType": {
+                "type": "string",
+                "enum": [
+                  "PRIMARY KEY",
+                  "FOREIGN KEY",
+                  "UNIQUE",
+                  "CHECK"
+                ],
+                "description": "Filter by constraint type (for get operation)"
+              },
+              "columnNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Column names in the table (required for create_fk)"
+              },
+              "referencedTable": {
+                "type": "string",
+                "description": "Referenced table name (required for create_fk)"
+              },
+              "referencedColumns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Referenced column names (required for create_fk)"
+              },
+              "referencedSchema": {
+                "type": "string",
+                "description": "Referenced table schema (for create_fk, defaults to same as table schema)"
+              },
+              "onUpdate": {
+                "type": "string",
+                "enum": [
+                  "NO ACTION",
+                  "RESTRICT",
+                  "CASCADE",
+                  "SET NULL",
+                  "SET DEFAULT"
+                ],
+                "description": "ON UPDATE action (for create_fk)"
+              },
+              "onDelete": {
+                "type": "string",
+                "enum": [
+                  "NO ACTION",
+                  "RESTRICT",
+                  "CASCADE",
+                  "SET NULL",
+                  "SET DEFAULT"
+                ],
+                "description": "ON DELETE action (for create_fk)"
+              },
+              "constraintTypeCreate": {
+                "type": "string",
+                "enum": [
+                  "unique",
+                  "check",
+                  "primary_key"
+                ],
+                "description": "Type of constraint to create (for create operation)"
+              },
+              "checkExpression": {
+                "type": "string",
+                "description": "Check expression (for create operation with check constraints)"
+              },
+              "deferrable": {
+                "type": "boolean",
+                "description": "Make constraint deferrable (for create_fk/create operations)"
+              },
+              "initiallyDeferred": {
+                "type": "boolean",
+                "description": "Initially deferred (for create_fk/create operations)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop_fk/drop operations)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Include CASCADE clause (for drop_fk/drop operations)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_rls",
+          "description": "Manage PostgreSQL Row-Level Security - enable/disable RLS and manage policies. Examples: operation=\"enable\" with tableName=\"users\", operation=\"create_policy\" with tableName, policyName, using, check",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "enable",
+                  "disable",
+                  "create_policy",
+                  "edit_policy",
+                  "drop_policy",
+                  "get_policies"
+                ],
+                "description": "Operation: enable/disable RLS, create_policy, edit_policy, drop_policy, get_policies"
+              },
+              "tableName": {
+                "type": "string",
+                "description": "Table name (required for enable/disable/create_policy/edit_policy/drop_policy, optional filter for get_policies)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public)"
+              },
+              "policyName": {
+                "type": "string",
+                "description": "Policy name (required for create_policy/edit_policy/drop_policy)"
+              },
+              "using": {
+                "type": "string",
+                "description": "USING expression for policy (required for create_policy, optional for edit_policy)"
+              },
+              "check": {
+                "type": "string",
+                "description": "WITH CHECK expression for policy (optional for create_policy/edit_policy)"
+              },
+              "command": {
+                "type": "string",
+                "enum": [
+                  "ALL",
+                  "SELECT",
+                  "INSERT",
+                  "UPDATE",
+                  "DELETE"
+                ],
+                "description": "Command the policy applies to (for create_policy)"
+              },
+              "role": {
+                "type": "string",
+                "description": "Role the policy applies to (for create_policy)"
+              },
+              "replace": {
+                "type": "boolean",
+                "description": "Whether to replace policy if exists (for create_policy)"
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of roles for policy (for edit_policy)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop_policy)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_users",
+          "description": "Manage PostgreSQL users and permissions - create, drop, alter users, grant/revoke permissions. Examples: operation=\"create\" with username=\"testuser\", operation=\"grant\" with username, permissions, target, targetType",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "create",
+                  "drop",
+                  "alter",
+                  "grant",
+                  "revoke",
+                  "get_permissions",
+                  "list"
+                ],
+                "description": "Operation: create (new user), drop (remove user), alter (modify user), grant (permissions), revoke (permissions), get_permissions (view permissions), list (all users)"
+              },
+              "username": {
+                "type": "string",
+                "description": "Username (required for create/drop/alter/grant/revoke/get_permissions, optional filter for list)"
+              },
+              "password": {
+                "type": "string",
+                "description": "Password for the user (for create operation)"
+              },
+              "superuser": {
+                "type": "boolean",
+                "description": "Grant superuser privileges (for create/alter operations)"
+              },
+              "createdb": {
+                "type": "boolean",
+                "description": "Allow user to create databases (for create/alter operations)"
+              },
+              "createrole": {
+                "type": "boolean",
+                "description": "Allow user to create roles (for create/alter operations)"
+              },
+              "login": {
+                "type": "boolean",
+                "description": "Allow user to login (for create/alter operations)"
+              },
+              "replication": {
+                "type": "boolean",
+                "description": "Allow replication privileges (for create/alter operations)"
+              },
+              "connectionLimit": {
+                "type": "number",
+                "description": "Maximum number of connections (for create/alter operations)"
+              },
+              "validUntil": {
+                "type": "string",
+                "description": "Password expiration date YYYY-MM-DD (for create/alter operations)"
+              },
+              "inherit": {
+                "type": "boolean",
+                "description": "Inherit privileges from parent roles (for create/alter operations)"
+              },
+              "ifExists": {
+                "type": "boolean",
+                "description": "Include IF EXISTS clause (for drop operation)"
+              },
+              "cascade": {
+                "type": "boolean",
+                "description": "Include CASCADE to drop owned objects (for drop/revoke operations)"
+              },
+              "permissions": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "SELECT",
+                    "INSERT",
+                    "UPDATE",
+                    "DELETE",
+                    "TRUNCATE",
+                    "REFERENCES",
+                    "TRIGGER",
+                    "ALL"
+                  ]
+                },
+                "description": "Permissions to grant/revoke: [\"SELECT\", \"INSERT\", \"UPDATE\", \"DELETE\", \"TRUNCATE\", \"REFERENCES\", \"TRIGGER\", \"ALL\"]"
+              },
+              "target": {
+                "type": "string",
+                "description": "Target object name (for grant/revoke operations)"
+              },
+              "targetType": {
+                "type": "string",
+                "enum": [
+                  "table",
+                  "schema",
+                  "database",
+                  "sequence",
+                  "function"
+                ],
+                "description": "Type of target object (for grant/revoke operations)"
+              },
+              "withGrantOption": {
+                "type": "boolean",
+                "description": "Allow user to grant these permissions to others (for grant operation)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Filter by schema (for get_permissions operation)"
+              },
+              "includeSystemRoles": {
+                "type": "boolean",
+                "description": "Include system roles (for list operation)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_query",
+          "description": "Manage PostgreSQL query analysis and performance - operation=\"explain\" for EXPLAIN plans, operation=\"get_slow_queries\" for slow query analysis, operation=\"get_stats\" for query statistics, operation=\"reset_stats\" for clearing statistics",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "explain",
+                  "get_slow_queries",
+                  "get_stats",
+                  "reset_stats"
+                ],
+                "description": "Operation: explain (EXPLAIN/EXPLAIN ANALYZE query), get_slow_queries (find slow queries from pg_stat_statements), get_stats (query statistics with cache hit ratios), reset_stats (reset pg_stat_statements)"
+              },
+              "connectionString": {
+                "type": "string"
+              },
+              "query": {
+                "type": "string",
+                "description": "SQL query to explain (required for explain operation)"
+              },
+              "analyze": {
+                "type": "boolean",
+                "default": false,
+                "description": "Use EXPLAIN ANALYZE - actually executes the query (for explain operation)"
+              },
+              "buffers": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include buffer usage information (for explain operation)"
+              },
+              "verbose": {
+                "type": "boolean",
+                "default": false,
+                "description": "Include verbose output (for explain operation)"
+              },
+              "costs": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include cost estimates (for explain operation)"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "text",
+                  "json",
+                  "xml",
+                  "yaml"
+                ],
+                "default": "json",
+                "description": "Output format (for explain operation)"
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of slow queries to return (for get_slow_queries operation)"
+              },
+              "minDuration": {
+                "type": "number",
+                "description": "Minimum average duration in milliseconds (for get_slow_queries operation)"
+              },
+              "orderBy": {
+                "type": "string",
+                "enum": [
+                  "mean_time",
+                  "total_time",
+                  "calls",
+                  "cache_hit_ratio"
+                ],
+                "default": "mean_time",
+                "description": "Sort order (for get_slow_queries and get_stats operations)"
+              },
+              "includeNormalized": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include normalized query text (for get_slow_queries operation)"
+              },
+              "minCalls": {
+                "type": "number",
+                "description": "Minimum number of calls (for get_stats operation)"
+              },
+              "queryPattern": {
+                "type": "string",
+                "description": "Filter queries containing this pattern (for get_stats operation)"
+              },
+              "queryId": {
+                "type": "string",
+                "description": "Specific query ID to reset (for reset_stats operation, resets all if not provided)"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_execute_query",
+          "description": "Execute SELECT queries and data retrieval operations - operation=\"select/count/exists\" with query and optional parameters. Examples: operation=\"select\", query=\"SELECT * FROM users WHERE created_at > $1\", parameters=[\"2024-01-01\"]",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "select",
+                  "count",
+                  "exists"
+                ],
+                "description": "Query operation: select (fetch rows), count (count rows), exists (check existence)"
+              },
+              "query": {
+                "type": "string",
+                "description": "SQL SELECT query to execute"
+              },
+              "parameters": {
+                "type": "array",
+                "items": {},
+                "default": [],
+                "description": "Parameter values for prepared statement placeholders ($1, $2, etc.)"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of rows to return (safety limit)"
+              },
+              "timeout": {
+                "type": "number",
+                "description": "Query timeout in milliseconds"
+              }
+            },
+            "required": [
+              "operation",
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_execute_mutation",
+          "description": "Execute data modification operations (INSERT/UPDATE/DELETE/UPSERT) - operation=\"insert/update/delete/upsert\" with table and data. Examples: operation=\"insert\", table=\"users\", data={\"name\":\"John\",\"email\":\"john@example.com\"}",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "insert",
+                  "update",
+                  "delete",
+                  "upsert"
+                ],
+                "description": "Mutation operation: insert (add rows), update (modify rows), delete (remove rows), upsert (insert or update)"
+              },
+              "table": {
+                "type": "string",
+                "description": "Table name for the operation"
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Data object with column-value pairs (required for insert/update/upsert)"
+              },
+              "where": {
+                "type": "string",
+                "description": "WHERE clause for update/delete operations (without WHERE keyword)"
+              },
+              "conflictColumns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Columns for conflict resolution in upsert (ON CONFLICT)"
+              },
+              "returning": {
+                "type": "string",
+                "description": "RETURNING clause to get back inserted/updated data"
+              },
+              "schema": {
+                "type": "string",
+                "default": "public",
+                "description": "Schema name (defaults to public)"
+              }
+            },
+            "required": [
+              "operation",
+              "table"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_execute_sql",
+          "description": "Execute arbitrary SQL statements - sql=\"ANY_VALID_SQL\" with optional parameters and transaction support. Examples: sql=\"CREATE INDEX ...\", sql=\"WITH complex_cte AS (...) SELECT ...\", transactional=true",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "sql": {
+                "type": "string",
+                "description": "SQL statement to execute (can be any valid PostgreSQL SQL)"
+              },
+              "parameters": {
+                "type": "array",
+                "items": {},
+                "default": [],
+                "description": "Parameter values for prepared statement placeholders ($1, $2, etc.)"
+              },
+              "expectRows": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to expect rows back (false for statements like CREATE, DROP, etc.)"
+              },
+              "timeout": {
+                "type": "number",
+                "description": "Query timeout in milliseconds"
+              },
+              "transactional": {
+                "type": "boolean",
+                "default": false,
+                "description": "Whether to wrap in a transaction"
+              }
+            },
+            "required": [
+              "sql"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_manage_comments",
+          "description": "Manage PostgreSQL object comments - get, set, remove comments on tables, columns, functions, and other database objects. Examples: operation=\"get\" with objectType=\"table\", objectName=\"users\", operation=\"set\" with comment text, operation=\"bulk_get\" for discovery",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string",
+                "description": "PostgreSQL connection string (optional)"
+              },
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "set",
+                  "remove",
+                  "bulk_get"
+                ],
+                "description": "Operation: get (retrieve comments), set (add/update comment), remove (delete comment), bulk_get (discovery mode)"
+              },
+              "objectType": {
+                "type": "string",
+                "enum": [
+                  "table",
+                  "column",
+                  "index",
+                  "constraint",
+                  "function",
+                  "trigger",
+                  "view",
+                  "sequence",
+                  "schema",
+                  "database"
+                ],
+                "description": "Type of database object (required for get/set/remove)"
+              },
+              "objectName": {
+                "type": "string",
+                "description": "Name of the object (required for get/set/remove)"
+              },
+              "schema": {
+                "type": "string",
+                "description": "Schema name (defaults to public, required for most object types)"
+              },
+              "columnName": {
+                "type": "string",
+                "description": "Column name (required when objectType is \"column\")"
+              },
+              "comment": {
+                "type": "string",
+                "description": "Comment text (required for set operation)"
+              },
+              "includeSystemObjects": {
+                "type": "boolean",
+                "description": "Include system objects in bulk_get (defaults to false)"
+              },
+              "filterObjectType": {
+                "type": "string",
+                "enum": [
+                  "table",
+                  "column",
+                  "index",
+                  "constraint",
+                  "function",
+                  "trigger",
+                  "view",
+                  "sequence",
+                  "schema",
+                  "database"
+                ],
+                "description": "Filter by object type in bulk_get operation"
+              }
+            },
+            "required": [
+              "operation"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_export_table_data",
+          "description": "Export table data to JSON or CSV format",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string"
+              },
+              "tableName": {
+                "type": "string"
+              },
+              "outputPath": {
+                "type": "string",
+                "description": "absolute path to save the exported data"
+              },
+              "where": {
+                "type": "string"
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "csv"
+                ],
+                "default": "json"
+              }
+            },
+            "required": [
+              "tableName",
+              "outputPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_import_table_data",
+          "description": "Import data from JSON or CSV file into a table",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string"
+              },
+              "tableName": {
+                "type": "string"
+              },
+              "inputPath": {
+                "type": "string",
+                "description": "absolute path to the file to import"
+              },
+              "truncateFirst": {
+                "type": "boolean",
+                "default": false
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "csv"
+                ],
+                "default": "json"
+              },
+              "delimiter": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "tableName",
+              "inputPath"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_copy_between_databases",
+          "description": "Copy data between two databases",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sourceConnectionString": {
+                "type": "string"
+              },
+              "targetConnectionString": {
+                "type": "string"
+              },
+              "tableName": {
+                "type": "string"
+              },
+              "where": {
+                "type": "string"
+              },
+              "truncateTarget": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "sourceConnectionString",
+              "targetConnectionString",
+              "tableName"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pg_monitor_database",
+          "description": "Get real-time monitoring information for a PostgreSQL database",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "connectionString": {
+                "type": "string"
+              },
+              "includeTables": {
+                "type": "boolean",
+                "default": false
+              },
+              "includeQueries": {
+                "type": "boolean",
+                "default": false
+              },
+              "includeLocks": {
+                "type": "boolean",
+                "default": false
+              },
+              "includeReplication": {
+                "type": "boolean",
+                "default": false
+              },
+              "alertThresholds": {
+                "type": "object",
+                "properties": {
+                  "connectionPercentage": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Connection usage percentage threshold"
+                  },
+                  "longRunningQuerySeconds": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "Long-running query threshold in seconds"
+                  },
+                  "cacheHitRatio": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Cache hit ratio threshold"
+                  },
+                  "deadTuplesPercentage": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "description": "Dead tuples percentage threshold"
+                  },
+                  "vacuumAge": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "description": "Vacuum age threshold in days"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Alert thresholds"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@HenkDz/postgresql-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@HenkDz/postgresql-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0049.@HenkDz_postgresql-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 48
+  }
+}

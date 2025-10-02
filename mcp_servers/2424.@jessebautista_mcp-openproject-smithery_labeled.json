@@ -1,0 +1,610 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to integrate with self-hosted OpenProject instances, providing tools for creating, retrieving, updating, and deleting projects and tasks within the OpenProject system. It facilitates project management automation through a serverless interface deployed on Netlify, with tools for secure remote client connections using Server-Sent Events (SSE) bridging for real-time operations. The core functionality revolves around programmatic interaction with OpenProject, enabling AI agents to automate project management tasks.",
+    "reasoning": "The primary label should be \"Operating System\" because the server's tools (file operations, system commands, process management equivalent for project/task CRUD operations) align closely with streamlined interaction with a project management system, similar to managing system resources. The secondary labels \"API Integration\" reflects the SSR bridging for real-time operations infrastructure, and \"Development Tools\" due to the fact that this server seems intended for AI-agent development.",
+    "primary_label": "Operating System",
+    "secondary_labels": [
+      "API Integration",
+      "Development Tools"
+    ],
+    "custom_label": "OpenProject Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2423,
+    "server_name": "OpenProject Integration Server",
+    "rank_by_usage": 2424,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@jessebautista_mcp-openproject-smithery.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jessebautista/mcp-openproject-smithery/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "start-notification-stream",
+          "description": "Starts sending periodic notifications for testing resumability",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interval": {
+                "type": "number",
+                "description": "Interval in milliseconds between notifications",
+                "default": 100
+              },
+              "count": {
+                "type": "number",
+                "description": "Number of notifications to send (0 for 100)",
+                "default": 10
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-create-project",
+          "description": "Creates a new project in OpenProject",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the project"
+              },
+              "identifier": {
+                "type": "string",
+                "description": "Identifier of the project (unique)"
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description for the project"
+              }
+            },
+            "required": [
+              "name",
+              "identifier"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-create-task",
+          "description": "Creates a new task (work package) in an OpenProject project",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID or identifier of the project to add the task to"
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject/title of the task"
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description for the task"
+              },
+              "type": {
+                "type": "string",
+                "default": "/api/v3/types/1",
+                "description": "Type of the work package (e.g., /api/v3/types/1 for Task)"
+              }
+            },
+            "required": [
+              "projectId",
+              "subject"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-get-project",
+          "description": "Gets a specific project by its ID from OpenProject",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to retrieve"
+              }
+            },
+            "required": [
+              "projectId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-list-projects",
+          "description": "Lists all projects in OpenProject",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pageSize": {
+                "type": "number",
+                "description": "Number of projects per page"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Page number to retrieve (1-indexed)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-get-task",
+          "description": "Gets a specific task (work package) by its ID from OpenProject",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to retrieve"
+              }
+            },
+            "required": [
+              "taskId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-list-tasks",
+          "description": "Lists tasks (work packages) in OpenProject, optionally filtered by project ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Optional ID of the project to filter tasks by"
+              },
+              "pageSize": {
+                "type": "number",
+                "description": "Number of tasks per page"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Page number to retrieve (1-indexed)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-update-project",
+          "description": "Updates an existing project in OpenProject. Only include fields to be changed.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to update"
+              },
+              "name": {
+                "type": "string",
+                "description": "New name for the project"
+              },
+              "description": {
+                "type": "string",
+                "description": "New description for the project"
+              }
+            },
+            "required": [
+              "projectId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-update-task",
+          "description": "Updates an existing task (work package) in OpenProject. Only include fields to be changed.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to update"
+              },
+              "lockVersion": {
+                "type": "number",
+                "description": "The lockVersion of the task (obtained from a GET request)"
+              },
+              "subject": {
+                "type": "string",
+                "description": "New subject/title for the task"
+              },
+              "description": {
+                "type": "string",
+                "description": "New description for the task (provide as raw text)"
+              }
+            },
+            "required": [
+              "taskId",
+              "lockVersion"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-delete-project",
+          "description": "Deletes a project from OpenProject. This action is irreversible.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to delete"
+              }
+            },
+            "required": [
+              "projectId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-delete-task",
+          "description": "Deletes a task (work package) from OpenProject. This action is irreversible.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to delete"
+              }
+            },
+            "required": [
+              "taskId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 11,
+      "tool_names": [
+        "start-notification-stream",
+        "openproject-create-project",
+        "openproject-create-task",
+        "openproject-get-project",
+        "openproject-list-projects",
+        "openproject-get-task",
+        "openproject-list-tasks",
+        "openproject-update-project",
+        "openproject-update-task",
+        "openproject-delete-project",
+        "openproject-delete-task"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2423,
+      "name": "OpenProject Integration Server",
+      "author": "@jessebautista/mcp-openproject-smithery",
+      "overview": "Enable AI agents to interact seamlessly with your self-hosted OpenProject instance by creating, retrieving, updating, and deleting projects and tasks. Facilitate project management automation through a serverless MCP interface deployed on Netlify. Connect remote clients securely using SSE bridging tools for real-time operations.",
+      "repository_url": "https://github.com/jessebautista/mcp-openproject-smithery",
+      "homepage": "https://smithery.ai/server/@jessebautista/mcp-openproject-smithery",
+      "remote_or_local": "Remote",
+      "license": "@jessebautista/mcp-openproject-smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jessebautista_mcp-openproject-smithery.json",
+      "tools_count": 11,
+      "tools": [
+        {
+          "name": "start-notification-stream",
+          "description": "Starts sending periodic notifications for testing resumability",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "interval": {
+                "type": "number",
+                "description": "Interval in milliseconds between notifications",
+                "default": 100
+              },
+              "count": {
+                "type": "number",
+                "description": "Number of notifications to send (0 for 100)",
+                "default": 10
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-create-project",
+          "description": "Creates a new project in OpenProject",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the project"
+              },
+              "identifier": {
+                "type": "string",
+                "description": "Identifier of the project (unique)"
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description for the project"
+              }
+            },
+            "required": [
+              "name",
+              "identifier"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-create-task",
+          "description": "Creates a new task (work package) in an OpenProject project",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID or identifier of the project to add the task to"
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject/title of the task"
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description for the task"
+              },
+              "type": {
+                "type": "string",
+                "default": "/api/v3/types/1",
+                "description": "Type of the work package (e.g., /api/v3/types/1 for Task)"
+              }
+            },
+            "required": [
+              "projectId",
+              "subject"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-get-project",
+          "description": "Gets a specific project by its ID from OpenProject",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to retrieve"
+              }
+            },
+            "required": [
+              "projectId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-list-projects",
+          "description": "Lists all projects in OpenProject",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pageSize": {
+                "type": "number",
+                "description": "Number of projects per page"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Page number to retrieve (1-indexed)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-get-task",
+          "description": "Gets a specific task (work package) by its ID from OpenProject",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to retrieve"
+              }
+            },
+            "required": [
+              "taskId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-list-tasks",
+          "description": "Lists tasks (work packages) in OpenProject, optionally filtered by project ID",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Optional ID of the project to filter tasks by"
+              },
+              "pageSize": {
+                "type": "number",
+                "description": "Number of tasks per page"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Page number to retrieve (1-indexed)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-update-project",
+          "description": "Updates an existing project in OpenProject. Only include fields to be changed.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to update"
+              },
+              "name": {
+                "type": "string",
+                "description": "New name for the project"
+              },
+              "description": {
+                "type": "string",
+                "description": "New description for the project"
+              }
+            },
+            "required": [
+              "projectId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-update-task",
+          "description": "Updates an existing task (work package) in OpenProject. Only include fields to be changed.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to update"
+              },
+              "lockVersion": {
+                "type": "number",
+                "description": "The lockVersion of the task (obtained from a GET request)"
+              },
+              "subject": {
+                "type": "string",
+                "description": "New subject/title for the task"
+              },
+              "description": {
+                "type": "string",
+                "description": "New description for the task (provide as raw text)"
+              }
+            },
+            "required": [
+              "taskId",
+              "lockVersion"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-delete-project",
+          "description": "Deletes a project from OpenProject. This action is irreversible.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to delete"
+              }
+            },
+            "required": [
+              "projectId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "openproject-delete-task",
+          "description": "Deletes a task (work package) from OpenProject. This action is irreversible.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to delete"
+              }
+            },
+            "required": [
+              "taskId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jessebautista/mcp-openproject-smithery/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "OPENPROJECT_API_KEY",
+          "required": true,
+          "description": "Your OpenProject API key"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jessebautista/mcp-openproject-smithery/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2424.@jessebautista_mcp-openproject-smithery_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2070
+  }
+}

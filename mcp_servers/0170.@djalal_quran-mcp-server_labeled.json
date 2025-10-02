@@ -1,0 +1,1440 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides a comprehensive API for interacting with Quranic content from Quran.com. It allows users to access, search, and retrieve various Quran-related data including chapters, verses, translations, tafsirs, and recitations. The tools are organized around Islamic textual structures (juzs, hizbs, rubs) and support random verse retrieval and language-specific operations. The primary purpose is to facilitate easy and standardized access to Quranic information for integration into applications, research, or personal study.",
+    "reasoning": "The primary label is \"Education\" as the server's core functionality revolves around providing access to Islamic religious text and scholarly resources, which aligns with learning and study purposes. \"Content Creation\" is a secondary label because the API enables developers to integrate Quranic content into their applications or platforms. A custom label is included to specifically highlight the server's religious text focus.",
+    "primary_label": "Education",
+    "secondary_labels": [
+      "Content Creation"
+    ],
+    "custom_label": "Religious Text Management",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 169,
+    "server_name": "Quran.com API Server",
+    "rank_by_usage": 170,
+    "usage_count": "282",
+    "original_file": "../crawler/smithery/@djalal_quran-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@djalal/quran-mcp-server/mcp?config=eyJ2ZXJib3NlTW9kZSI6IGZhbHNlfQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list-chapters",
+          "description": "List Chapters",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 10,
+                "pattern": "^[a-zA-Z-]+$",
+                "description": "Parameter language (e.g., 'en', 'ar', 'fr-CA')"
+              }
+            },
+            "required": [
+              "language"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "GET-chapter",
+          "description": "Get Chapter",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 10,
+                "pattern": "^[a-zA-Z-]+$",
+                "description": "Parameter language (e.g., 'en', 'ar', 'fr-CA')"
+              },
+              "id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  }
+                ],
+                "description": "Chapter ID (1-114)"
+              }
+            },
+            "required": [
+              "language"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "info",
+          "description": "Get Chapter Info",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 10,
+                "pattern": "^[a-zA-Z-]+$",
+                "description": "Parameter language (e.g., 'en', 'ar', 'fr-CA')"
+              },
+              "chapter_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  }
+                ],
+                "description": "Chapter ID (1-114)"
+              }
+            },
+            "required": [
+              "language"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_chapter_number",
+          "description": "Get verses by Chapter / Surah number",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chapter_number": {
+                "type": "string",
+                "description": "Chapter number (1-114)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              },
+              "page": {
+                "type": "string",
+                "description": "For paginating within the result"
+              },
+              "per_page": {
+                "type": "string",
+                "description": "Records per api call"
+              }
+            },
+            "required": [
+              "chapter_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_page_number",
+          "description": "Get all verses of a specific Madani Mushaf page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page_number": {
+                "type": "string",
+                "description": "Madani Mushaf page number (1-604)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              },
+              "page": {
+                "type": "string",
+                "description": "For paginating within the result"
+              },
+              "per_page": {
+                "type": "string",
+                "description": "Records per api call"
+              }
+            },
+            "required": [
+              "page_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_juz_number",
+          "description": "Get verses by Juz number",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "juz_number": {
+                "type": "string",
+                "description": "Juz number (1-30)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              },
+              "page": {
+                "type": "string",
+                "description": "For paginating within the result"
+              },
+              "per_page": {
+                "type": "string",
+                "description": "Records per api call"
+              }
+            },
+            "required": [
+              "juz_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_hizb_number",
+          "description": "Get verses by Hizb number",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "hizb_number": {
+                "type": "string",
+                "description": "Hizb number (1-60)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              },
+              "page": {
+                "type": "string",
+                "description": "For paginating within the result"
+              },
+              "per_page": {
+                "type": "string",
+                "description": "Records per api call"
+              }
+            },
+            "required": [
+              "hizb_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_rub_el_hizb_number",
+          "description": "Get verses by Rub el Hizb number",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "rub_el_hizb_number": {
+                "type": "string",
+                "description": "Rub el Hizb number (1-240)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              }
+            },
+            "required": [
+              "rub_el_hizb_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_verse_key",
+          "description": "Get verse by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "verse_key": {
+                "type": "string",
+                "description": "Verse key (chapter:verse)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              }
+            },
+            "required": [
+              "verse_key"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "random_verse",
+          "description": "Get a random verse",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "juzs",
+          "description": "Get list of all juzs",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search the Quran for specific terms",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "q": {
+                "type": "string",
+                "description": "Search query, you can use *query* as well"
+              },
+              "size": {
+                "type": "string",
+                "description": "Results per page. *s* is also valid parameter."
+              },
+              "page": {
+                "type": "string",
+                "description": "Page number, well for pagination. You can use *p* as well"
+              },
+              "language": {
+                "type": "string",
+                "description": "ISO code of language, use this query params if you want to boost translations for specific language."
+              }
+            },
+            "required": [
+              "q"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "translations",
+          "description": "Get list of available translations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "translation-info",
+          "description": "Get information of a specific translation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "translation_id": {
+                "type": "string",
+                "description": "Translation id"
+              }
+            },
+            "required": [
+              "translation_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "tafsirs",
+          "description": "Get list of available tafsirs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "tafsir-info",
+          "description": "Get the information of a specific tafsir",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tafsir_id": {
+                "type": "string",
+                "description": "Tafsir id"
+              }
+            },
+            "required": [
+              "tafsir_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "tafsir",
+          "description": "Get a single tafsir",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tafsir_id": {
+                "type": "string",
+                "description": "Tafsir id"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated fields of tafsir"
+              },
+              "chapter_number": {
+                "type": "string",
+                "description": "Chapter number"
+              },
+              "juz_number": {
+                "type": "string",
+                "description": "Juz number"
+              },
+              "page_number": {
+                "type": "string",
+                "description": "Page number"
+              },
+              "hizb_number": {
+                "type": "string",
+                "description": "Hizb number"
+              },
+              "rub_el_hizb_number": {
+                "type": "string",
+                "description": "Rub el Hizb number"
+              },
+              "verse_key": {
+                "type": "string",
+                "description": "Verse key"
+              }
+            },
+            "required": [
+              "tafsir_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "chapter-reciters",
+          "description": "List of Chapter Reciters",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Name of reciters in specific language"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "recitation-styles",
+          "description": "Get the available recitation styles",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "languages",
+          "description": "Get all languages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 20,
+      "tool_names": [
+        "list-chapters",
+        "GET-chapter",
+        "info",
+        "verses-by_chapter_number",
+        "verses-by_page_number",
+        "verses-by_juz_number",
+        "verses-by_hizb_number",
+        "verses-by_rub_el_hizb_number",
+        "verses-by_verse_key",
+        "random_verse",
+        "juzs",
+        "search",
+        "translations",
+        "translation-info",
+        "tafsirs",
+        "tafsir-info",
+        "tafsir",
+        "chapter-reciters",
+        "recitation-styles",
+        "languages"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 169,
+      "name": "Quran.com API Server",
+      "author": "@djalal/quran-mcp-server",
+      "overview": "Interact with the Quran.com corpus seamlessly. Access chapters, verses, translations, and tafsirs through a standardized API. Enhance your applications with rich Quranic content effortlessly.",
+      "repository_url": "https://github.com/djalal/quran-mcp-server",
+      "homepage": "https://smithery.ai/server/@djalal/quran-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "282",
+      "success_rate": "99.67%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@djalal_quran-mcp-server.json",
+      "tools_count": 20,
+      "tools": [
+        {
+          "name": "list-chapters",
+          "description": "List Chapters",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 10,
+                "pattern": "^[a-zA-Z-]+$",
+                "description": "Parameter language (e.g., 'en', 'ar', 'fr-CA')"
+              }
+            },
+            "required": [
+              "language"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "GET-chapter",
+          "description": "Get Chapter",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 10,
+                "pattern": "^[a-zA-Z-]+$",
+                "description": "Parameter language (e.g., 'en', 'ar', 'fr-CA')"
+              },
+              "id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  }
+                ],
+                "description": "Chapter ID (1-114)"
+              }
+            },
+            "required": [
+              "language"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "info",
+          "description": "Get Chapter Info",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 10,
+                "pattern": "^[a-zA-Z-]+$",
+                "description": "Parameter language (e.g., 'en', 'ar', 'fr-CA')"
+              },
+              "chapter_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0
+                  }
+                ],
+                "description": "Chapter ID (1-114)"
+              }
+            },
+            "required": [
+              "language"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_chapter_number",
+          "description": "Get verses by Chapter / Surah number",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "chapter_number": {
+                "type": "string",
+                "description": "Chapter number (1-114)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              },
+              "page": {
+                "type": "string",
+                "description": "For paginating within the result"
+              },
+              "per_page": {
+                "type": "string",
+                "description": "Records per api call"
+              }
+            },
+            "required": [
+              "chapter_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_page_number",
+          "description": "Get all verses of a specific Madani Mushaf page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page_number": {
+                "type": "string",
+                "description": "Madani Mushaf page number (1-604)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              },
+              "page": {
+                "type": "string",
+                "description": "For paginating within the result"
+              },
+              "per_page": {
+                "type": "string",
+                "description": "Records per api call"
+              }
+            },
+            "required": [
+              "page_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_juz_number",
+          "description": "Get verses by Juz number",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "juz_number": {
+                "type": "string",
+                "description": "Juz number (1-30)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              },
+              "page": {
+                "type": "string",
+                "description": "For paginating within the result"
+              },
+              "per_page": {
+                "type": "string",
+                "description": "Records per api call"
+              }
+            },
+            "required": [
+              "juz_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_hizb_number",
+          "description": "Get verses by Hizb number",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "hizb_number": {
+                "type": "string",
+                "description": "Hizb number (1-60)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              },
+              "page": {
+                "type": "string",
+                "description": "For paginating within the result"
+              },
+              "per_page": {
+                "type": "string",
+                "description": "Records per api call"
+              }
+            },
+            "required": [
+              "hizb_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_rub_el_hizb_number",
+          "description": "Get verses by Rub el Hizb number",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "rub_el_hizb_number": {
+                "type": "string",
+                "description": "Rub el Hizb number (1-240)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              }
+            },
+            "required": [
+              "rub_el_hizb_number"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "verses-by_verse_key",
+          "description": "Get verse by key",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "verse_key": {
+                "type": "string",
+                "description": "Verse key (chapter:verse)"
+              },
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              }
+            },
+            "required": [
+              "verse_key"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "random_verse",
+          "description": "Get a random verse",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language to fetch word translation"
+              },
+              "words": {
+                "type": "string",
+                "description": "Include words of each ayah"
+              },
+              "translations": {
+                "type": "string",
+                "description": "Comma separated ids of translations"
+              },
+              "audio": {
+                "type": "string",
+                "description": "Id of recitation"
+              },
+              "tafsirs": {
+                "type": "string",
+                "description": "Comma separated ids of tafsirs"
+              },
+              "word_fields": {
+                "type": "string",
+                "description": "Comma separated list of word fields"
+              },
+              "translation_fields": {
+                "type": "string",
+                "description": "Comma separated list of translation fields"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated list of ayah fields"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "juzs",
+          "description": "Get list of all juzs",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search the Quran for specific terms",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "q": {
+                "type": "string",
+                "description": "Search query, you can use *query* as well"
+              },
+              "size": {
+                "type": "string",
+                "description": "Results per page. *s* is also valid parameter."
+              },
+              "page": {
+                "type": "string",
+                "description": "Page number, well for pagination. You can use *p* as well"
+              },
+              "language": {
+                "type": "string",
+                "description": "ISO code of language, use this query params if you want to boost translations for specific language."
+              }
+            },
+            "required": [
+              "q"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "translations",
+          "description": "Get list of available translations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "translation-info",
+          "description": "Get information of a specific translation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "translation_id": {
+                "type": "string",
+                "description": "Translation id"
+              }
+            },
+            "required": [
+              "translation_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "tafsirs",
+          "description": "Get list of available tafsirs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "tafsir-info",
+          "description": "Get the information of a specific tafsir",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tafsir_id": {
+                "type": "string",
+                "description": "Tafsir id"
+              }
+            },
+            "required": [
+              "tafsir_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "tafsir",
+          "description": "Get a single tafsir",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tafsir_id": {
+                "type": "string",
+                "description": "Tafsir id"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma separated fields of tafsir"
+              },
+              "chapter_number": {
+                "type": "string",
+                "description": "Chapter number"
+              },
+              "juz_number": {
+                "type": "string",
+                "description": "Juz number"
+              },
+              "page_number": {
+                "type": "string",
+                "description": "Page number"
+              },
+              "hizb_number": {
+                "type": "string",
+                "description": "Hizb number"
+              },
+              "rub_el_hizb_number": {
+                "type": "string",
+                "description": "Rub el Hizb number"
+              },
+              "verse_key": {
+                "type": "string",
+                "description": "Verse key"
+              }
+            },
+            "required": [
+              "tafsir_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "chapter-reciters",
+          "description": "List of Chapter Reciters",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Name of reciters in specific language"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "recitation-styles",
+          "description": "Get the available recitation styles",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "languages",
+          "description": "Get all languages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "description": "Language"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"verboseMode\": false\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@djalal/quran-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"verboseMode\": false\n}",
+      "python_sdk_url": "https://server.smithery.ai/@djalal/quran-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0170.@djalal_quran-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 166
+  }
+}

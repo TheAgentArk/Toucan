@@ -1,0 +1,745 @@
+{
+  "labels": {
+    "analysis": "The MCP-NixOS server specializes in providing accurate, up-to-date information about NixOS and related configurations. It offers a suite of tools focused on searching, querying, and managing NixOS packages, options, Home Manager configurations, and nix-darwin configurations. The core function is to prevent AI hallucinations about NixOS by providing direct access to official documentation, package searches, version histories, and configuration management tools. The tools are designed for developers and system administrators who work with NixOS, Home Manager, or nix-darwin, helping them accurately configure systems and find specific package versions.",
+    "reasoning": "The primary label selected is \"Database Operations\" because the server primarily acts as a database and search engine for NixOS-related information. Tools like package searching, option querying, and version history retrieval align with database management and data querying functionalities. The secondary labels of \"Web Search & Research\" and \"Development Tools\" were chosen because the server aids in technical research and is heavily used by developers for system configuration. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Development Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 915,
+    "server_name": "mcp-nixos",
+    "rank_by_usage": 916,
+    "usage_count": "4",
+    "original_file": "../crawler/smithery/@utensils_mcp-nixos.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@utensils/mcp-nixos/mcp?config=eyJNQ1BfTklYT1NfTE9HX0xFVkVMIjogIklORk8ifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "nixos_search",
+          "description": "Search NixOS packages, options, or programs.\n\n    Args:\n        query: Search term to look for\n        search_type: Type of search - \"packages\", \"options\", \"programs\", or \"flakes\"\n        limit: Maximum number of results to return (1-100)\n        channel: NixOS channel to search in (e.g., \"unstable\", \"stable\", \"25.05\")\n\n    Returns:\n        Plain text results with bullet points or error message\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "search_type": {
+                "default": "packages",
+                "title": "Search Type",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "channel": {
+                "default": "unstable",
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "nixos_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_info",
+          "description": "Get detailed info about a NixOS package or option.\n\n    Args:\n        name: Name of the package or option to look up\n        type: Type of lookup - \"package\" or \"option\"\n        channel: NixOS channel to search in (e.g., \"unstable\", \"stable\", \"25.05\")\n\n    Returns:\n        Plain text details about the package/option or error message\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "type": {
+                "default": "package",
+                "title": "Type",
+                "type": "string"
+              },
+              "channel": {
+                "default": "unstable",
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "nixos_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_channels",
+          "description": "List available NixOS channels with their status.\n\n    Returns:\n        Plain text list showing channel names, versions, and availability\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "nixos_channelsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_stats",
+          "description": "Get NixOS statistics for a channel.\n\n    Args:\n        channel: NixOS channel to get stats for (e.g., \"unstable\", \"stable\", \"25.05\")\n\n    Returns:\n        Plain text statistics including package/option counts\n    ",
+          "input_schema": {
+            "properties": {
+              "channel": {
+                "default": "unstable",
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "title": "nixos_statsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_search",
+          "description": "Search Home Manager configuration options.\n\n    Searches through available Home Manager options by name and description.\n\n    Args:\n        query: The search query string to match against option names and descriptions\n        limit: Maximum number of results to return (default: 20, max: 100)\n\n    Returns:\n        Plain text list of matching options with name, type, and description\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "home_manager_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_info",
+          "description": "Get detailed information about a specific Home Manager option.\n\n    Requires an exact option name match. If not found, suggests similar options.\n\n    Args:\n        name: The exact option name (e.g., 'programs.git.enable')\n\n    Returns:\n        Plain text with option details (name, type, description) or error with suggestions\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "home_manager_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_stats",
+          "description": "Get statistics about Home Manager options.\n\n    Retrieves overall statistics including total options, categories, and top categories.\n\n    Returns:\n        Plain text summary with total options, category count, and top 5 categories\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "home_manager_statsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_list_options",
+          "description": "List all Home Manager option categories.\n\n    Enumerates all top-level categories with their option counts.\n\n    Returns:\n        Plain text list of categories sorted alphabetically with option counts\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "home_manager_list_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_options_by_prefix",
+          "description": "Get Home Manager options matching a specific prefix.\n\n    Useful for browsing options under a category or finding exact option names.\n\n    Args:\n        option_prefix: The prefix to match (e.g., 'programs.git' or 'services')\n\n    Returns:\n        Plain text list of options with the given prefix, including descriptions\n    ",
+          "input_schema": {
+            "properties": {
+              "option_prefix": {
+                "title": "Option Prefix",
+                "type": "string"
+              }
+            },
+            "required": [
+              "option_prefix"
+            ],
+            "title": "home_manager_options_by_prefixArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_search",
+          "description": "Search nix-darwin (macOS) configuration options.\n\n    Searches through available nix-darwin options by name and description.\n\n    Args:\n        query: The search query string to match against option names and descriptions\n        limit: Maximum number of results to return (default: 20, max: 100)\n\n    Returns:\n        Plain text list of matching options with name, type, and description\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "darwin_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_info",
+          "description": "Get detailed information about a specific nix-darwin option.\n\n    Requires an exact option name match. If not found, suggests similar options.\n\n    Args:\n        name: The exact option name (e.g., 'system.defaults.dock.autohide')\n\n    Returns:\n        Plain text with option details (name, type, description) or error with suggestions\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "darwin_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_stats",
+          "description": "Get statistics about nix-darwin options.\n\n    Retrieves overall statistics including total options, categories, and top categories.\n\n    Returns:\n        Plain text summary with total options, category count, and top 5 categories\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "darwin_statsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_list_options",
+          "description": "List all nix-darwin option categories.\n\n    Enumerates all top-level categories with their option counts.\n\n    Returns:\n        Plain text list of categories sorted alphabetically with option counts\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "darwin_list_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_options_by_prefix",
+          "description": "Get nix-darwin options matching a specific prefix.\n\n    Useful for browsing options under a category or finding exact option names.\n\n    Args:\n        option_prefix: The prefix to match (e.g., 'system.defaults' or 'services')\n\n    Returns:\n        Plain text list of options with the given prefix, including descriptions\n    ",
+          "input_schema": {
+            "properties": {
+              "option_prefix": {
+                "title": "Option Prefix",
+                "type": "string"
+              }
+            },
+            "required": [
+              "option_prefix"
+            ],
+            "title": "darwin_options_by_prefixArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_flakes_stats",
+          "description": "Get statistics about available NixOS flakes.\n\n    Retrieves statistics from the flake search index including total packages,\n    unique repositories, flake types, and top contributors.\n\n    Returns:\n        Plain text summary with flake statistics and top contributors\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "nixos_flakes_statsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_flakes_search",
+          "description": "Search NixOS flakes by name, description, owner, or repository.\n\n    Searches the flake index for community-contributed packages and configurations.\n    Flakes are indexed separately from official packages.\n\n    Args:\n        query: The search query (flake name, description, owner, or repository)\n        limit: Maximum number of results to return (default: 20, max: 100)\n        channel: Ignored - flakes use a separate indexing system\n\n    Returns:\n        Plain text list of unique flakes with their packages and metadata\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "channel": {
+                "default": "unstable",
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "nixos_flakes_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixhub_package_versions",
+          "description": "Get version history and nixpkgs commit hashes for a specific package from NixHub.io.\n\n    Use this tool when users need specific package versions or commit hashes for reproducible builds.\n\n    Args:\n        package_name: Name of the package to query (e.g., \"firefox\", \"python\")\n        limit: Maximum number of versions to return (default: 10, max: 50)\n\n    Returns:\n        Plain text with package info and version history including commit hashes\n    ",
+          "input_schema": {
+            "properties": {
+              "package_name": {
+                "title": "Package Name",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "package_name"
+            ],
+            "title": "nixhub_package_versionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixhub_find_version",
+          "description": "Find a specific version of a package in NixHub with smart search.\n\n    Automatically searches with increasing limits to find the requested version.\n\n    Args:\n        package_name: Name of the package to query (e.g., \"ruby\", \"python\")\n        version: Specific version to find (e.g., \"2.6.7\", \"3.5.9\")\n\n    Returns:\n        Plain text with version info and commit hash if found, or helpful message if not\n    ",
+          "input_schema": {
+            "properties": {
+              "package_name": {
+                "title": "Package Name",
+                "type": "string"
+              },
+              "version": {
+                "title": "Version",
+                "type": "string"
+              }
+            },
+            "required": [
+              "package_name",
+              "version"
+            ],
+            "title": "nixhub_find_versionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 18,
+      "tool_names": [
+        "nixos_search",
+        "nixos_info",
+        "nixos_channels",
+        "nixos_stats",
+        "home_manager_search",
+        "home_manager_info",
+        "home_manager_stats",
+        "home_manager_list_options",
+        "home_manager_options_by_prefix",
+        "darwin_search",
+        "darwin_info",
+        "darwin_stats",
+        "darwin_list_options",
+        "darwin_options_by_prefix",
+        "nixos_flakes_stats",
+        "nixos_flakes_search",
+        "nixhub_package_versions",
+        "nixhub_find_version"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 915,
+      "name": "mcp-nixos",
+      "author": "@utensils/mcp-nixos",
+      "overview": "MCP-NixOS is a Model Context Protocol server that stops your AI assistant from making stuff up about NixOS. Because let's face it—the only thing worse than confusing NixOS documentation is an AI confidently hallucinating about it.",
+      "repository_url": "https://github.com/utensils/mcp-nixos",
+      "homepage": "https://smithery.ai/server/@utensils/mcp-nixos",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "4",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@utensils_mcp-nixos.json",
+      "tools_count": 18,
+      "tools": [
+        {
+          "name": "nixos_search",
+          "description": "Search NixOS packages, options, or programs.\n\n    Args:\n        query: Search term to look for\n        search_type: Type of search - \"packages\", \"options\", \"programs\", or \"flakes\"\n        limit: Maximum number of results to return (1-100)\n        channel: NixOS channel to search in (e.g., \"unstable\", \"stable\", \"25.05\")\n\n    Returns:\n        Plain text results with bullet points or error message\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "search_type": {
+                "default": "packages",
+                "title": "Search Type",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "channel": {
+                "default": "unstable",
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "nixos_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_info",
+          "description": "Get detailed info about a NixOS package or option.\n\n    Args:\n        name: Name of the package or option to look up\n        type: Type of lookup - \"package\" or \"option\"\n        channel: NixOS channel to search in (e.g., \"unstable\", \"stable\", \"25.05\")\n\n    Returns:\n        Plain text details about the package/option or error message\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "type": {
+                "default": "package",
+                "title": "Type",
+                "type": "string"
+              },
+              "channel": {
+                "default": "unstable",
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "nixos_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_channels",
+          "description": "List available NixOS channels with their status.\n\n    Returns:\n        Plain text list showing channel names, versions, and availability\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "nixos_channelsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_stats",
+          "description": "Get NixOS statistics for a channel.\n\n    Args:\n        channel: NixOS channel to get stats for (e.g., \"unstable\", \"stable\", \"25.05\")\n\n    Returns:\n        Plain text statistics including package/option counts\n    ",
+          "input_schema": {
+            "properties": {
+              "channel": {
+                "default": "unstable",
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "title": "nixos_statsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_search",
+          "description": "Search Home Manager configuration options.\n\n    Searches through available Home Manager options by name and description.\n\n    Args:\n        query: The search query string to match against option names and descriptions\n        limit: Maximum number of results to return (default: 20, max: 100)\n\n    Returns:\n        Plain text list of matching options with name, type, and description\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "home_manager_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_info",
+          "description": "Get detailed information about a specific Home Manager option.\n\n    Requires an exact option name match. If not found, suggests similar options.\n\n    Args:\n        name: The exact option name (e.g., 'programs.git.enable')\n\n    Returns:\n        Plain text with option details (name, type, description) or error with suggestions\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "home_manager_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_stats",
+          "description": "Get statistics about Home Manager options.\n\n    Retrieves overall statistics including total options, categories, and top categories.\n\n    Returns:\n        Plain text summary with total options, category count, and top 5 categories\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "home_manager_statsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_list_options",
+          "description": "List all Home Manager option categories.\n\n    Enumerates all top-level categories with their option counts.\n\n    Returns:\n        Plain text list of categories sorted alphabetically with option counts\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "home_manager_list_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "home_manager_options_by_prefix",
+          "description": "Get Home Manager options matching a specific prefix.\n\n    Useful for browsing options under a category or finding exact option names.\n\n    Args:\n        option_prefix: The prefix to match (e.g., 'programs.git' or 'services')\n\n    Returns:\n        Plain text list of options with the given prefix, including descriptions\n    ",
+          "input_schema": {
+            "properties": {
+              "option_prefix": {
+                "title": "Option Prefix",
+                "type": "string"
+              }
+            },
+            "required": [
+              "option_prefix"
+            ],
+            "title": "home_manager_options_by_prefixArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_search",
+          "description": "Search nix-darwin (macOS) configuration options.\n\n    Searches through available nix-darwin options by name and description.\n\n    Args:\n        query: The search query string to match against option names and descriptions\n        limit: Maximum number of results to return (default: 20, max: 100)\n\n    Returns:\n        Plain text list of matching options with name, type, and description\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "darwin_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_info",
+          "description": "Get detailed information about a specific nix-darwin option.\n\n    Requires an exact option name match. If not found, suggests similar options.\n\n    Args:\n        name: The exact option name (e.g., 'system.defaults.dock.autohide')\n\n    Returns:\n        Plain text with option details (name, type, description) or error with suggestions\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "darwin_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_stats",
+          "description": "Get statistics about nix-darwin options.\n\n    Retrieves overall statistics including total options, categories, and top categories.\n\n    Returns:\n        Plain text summary with total options, category count, and top 5 categories\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "darwin_statsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_list_options",
+          "description": "List all nix-darwin option categories.\n\n    Enumerates all top-level categories with their option counts.\n\n    Returns:\n        Plain text list of categories sorted alphabetically with option counts\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "darwin_list_optionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "darwin_options_by_prefix",
+          "description": "Get nix-darwin options matching a specific prefix.\n\n    Useful for browsing options under a category or finding exact option names.\n\n    Args:\n        option_prefix: The prefix to match (e.g., 'system.defaults' or 'services')\n\n    Returns:\n        Plain text list of options with the given prefix, including descriptions\n    ",
+          "input_schema": {
+            "properties": {
+              "option_prefix": {
+                "title": "Option Prefix",
+                "type": "string"
+              }
+            },
+            "required": [
+              "option_prefix"
+            ],
+            "title": "darwin_options_by_prefixArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_flakes_stats",
+          "description": "Get statistics about available NixOS flakes.\n\n    Retrieves statistics from the flake search index including total packages,\n    unique repositories, flake types, and top contributors.\n\n    Returns:\n        Plain text summary with flake statistics and top contributors\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "nixos_flakes_statsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixos_flakes_search",
+          "description": "Search NixOS flakes by name, description, owner, or repository.\n\n    Searches the flake index for community-contributed packages and configurations.\n    Flakes are indexed separately from official packages.\n\n    Args:\n        query: The search query (flake name, description, owner, or repository)\n        limit: Maximum number of results to return (default: 20, max: 100)\n        channel: Ignored - flakes use a separate indexing system\n\n    Returns:\n        Plain text list of unique flakes with their packages and metadata\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "channel": {
+                "default": "unstable",
+                "title": "Channel",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "nixos_flakes_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixhub_package_versions",
+          "description": "Get version history and nixpkgs commit hashes for a specific package from NixHub.io.\n\n    Use this tool when users need specific package versions or commit hashes for reproducible builds.\n\n    Args:\n        package_name: Name of the package to query (e.g., \"firefox\", \"python\")\n        limit: Maximum number of versions to return (default: 10, max: 50)\n\n    Returns:\n        Plain text with package info and version history including commit hashes\n    ",
+          "input_schema": {
+            "properties": {
+              "package_name": {
+                "title": "Package Name",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "package_name"
+            ],
+            "title": "nixhub_package_versionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "nixhub_find_version",
+          "description": "Find a specific version of a package in NixHub with smart search.\n\n    Automatically searches with increasing limits to find the requested version.\n\n    Args:\n        package_name: Name of the package to query (e.g., \"ruby\", \"python\")\n        version: Specific version to find (e.g., \"2.6.7\", \"3.5.9\")\n\n    Returns:\n        Plain text with version info and commit hash if found, or helpful message if not\n    ",
+          "input_schema": {
+            "properties": {
+              "package_name": {
+                "title": "Package Name",
+                "type": "string"
+              },
+              "version": {
+                "title": "Version",
+                "type": "string"
+              }
+            },
+            "required": [
+              "package_name",
+              "version"
+            ],
+            "title": "nixhub_find_versionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"MCP_NIXOS_LOG_LEVEL\": \"INFO\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@utensils/mcp-nixos/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"MCP_NIXOS_LOG_LEVEL\": \"INFO\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@utensils/mcp-nixos/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0916.@utensils_mcp-nixos_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 896
+  }
+}

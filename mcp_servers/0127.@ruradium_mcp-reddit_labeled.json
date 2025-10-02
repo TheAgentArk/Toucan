@@ -1,0 +1,172 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to fetch, analyze, and process Reddit content, specifically targeting hot threads, detailed posts, and comment trees from any subreddit. It supports various post types (text, link, gallery) and provides comprehensive insights into Reddit data. The tools enable real-time data retrieval and structured analysis of Reddit interactions, making it useful for applications requiring social media monitoring, content aggregation, or community analysis.",
+    "reasoning": "The primary label \"Social Media\" is chosen because the server's core functionality revolves around interacting with Reddit, which is a social media platform. The secondary label \"Web Search & Research\" is included because the tools enable data gathering and analysis that could support research or content aggregation. No custom label is needed as the functionality is well-covered by predefined categories.",
+    "primary_label": "Social Media",
+    "secondary_labels": [
+      "Web Search & Research"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 126,
+    "server_name": "Reddit Content Fetcher",
+    "rank_by_usage": 127,
+    "usage_count": "479",
+    "original_file": "../crawler/smithery/@ruradium_mcp-reddit.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ruradium/mcp-reddit/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "fetch_reddit_hot_threads",
+          "description": "\n    Fetch hot threads from a subreddit\n    \n    Args:\n        subreddit: Name of the subreddit\n        limit: Number of posts to fetch (default: 10)\n        \n    Returns:\n        Human readable string containing list of post information\n    ",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "subreddit": {
+                "title": "Subreddit",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "subreddit"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "fetch_reddit_post_content",
+          "description": "\n    Fetch detailed content of a specific post\n    \n    Args:\n        post_id: Reddit post ID\n        comment_limit: Number of top level comments to fetch\n        comment_depth: Maximum depth of comment tree to traverse\n\n    Returns:\n        Human readable string containing post content and comments tree\n    ",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "post_id": {
+                "title": "Post Id",
+                "type": "string"
+              },
+              "comment_limit": {
+                "default": 20,
+                "title": "Comment Limit",
+                "type": "integer"
+              },
+              "comment_depth": {
+                "default": 3,
+                "title": "Comment Depth",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "post_id"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "fetch_reddit_hot_threads",
+        "fetch_reddit_post_content"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 126,
+      "name": "Reddit Content Fetcher",
+      "author": "@ruradium/mcp-reddit",
+      "overview": "Fetch and analyze Reddit content including hot threads, detailed posts, and comments from any subreddit. Support various post types such as text, link, and gallery to provide comprehensive Reddit insights. Enhance your applications with real-time Reddit data and analysis tools.",
+      "repository_url": "https://github.com/ruradium/mcp-reddit",
+      "homepage": "https://smithery.ai/server/@ruradium/mcp-reddit",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "479",
+      "success_rate": "99.66%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ruradium_mcp-reddit.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "fetch_reddit_hot_threads",
+          "description": "\n    Fetch hot threads from a subreddit\n    \n    Args:\n        subreddit: Name of the subreddit\n        limit: Number of posts to fetch (default: 10)\n        \n    Returns:\n        Human readable string containing list of post information\n    ",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "subreddit": {
+                "title": "Subreddit",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "subreddit"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "fetch_reddit_post_content",
+          "description": "\n    Fetch detailed content of a specific post\n    \n    Args:\n        post_id: Reddit post ID\n        comment_limit: Number of top level comments to fetch\n        comment_depth: Maximum depth of comment tree to traverse\n\n    Returns:\n        Human readable string containing post content and comments tree\n    ",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "post_id": {
+                "title": "Post Id",
+                "type": "string"
+              },
+              "comment_limit": {
+                "default": 20,
+                "title": "Comment Limit",
+                "type": "integer"
+              },
+              "comment_depth": {
+                "default": 3,
+                "title": "Comment Depth",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "post_id"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ruradium/mcp-reddit/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ruradium/mcp-reddit/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0127.@ruradium_mcp-reddit_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 124
+  }
+}

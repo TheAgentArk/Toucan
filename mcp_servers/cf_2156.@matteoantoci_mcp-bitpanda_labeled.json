@@ -1,0 +1,166 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides programmatic access to Bitpanda's features, enabling users to manage trades, wallets, and transactions via an API. Its tools focus on retrieving financial data (asset info, OHLC data), retrieving and managing wallets, and listing transactions for different asset types (fiat, crypto, commodities). The primary use case revolves around cryptocurrency and financial services automation.",
+    "reasoning": "The primary label \"Cryptocurrency & Blockchain\" was chosen because the server's core functionality revolves around interacting with Bitpanda's cryptocurrency and trading services. The secondary label \"Financial Services\" was added because it also deals with fiat transactions and broader financial data management. The secondary label \"API Integration\" was added because the server is designed to facilitate interaction with Bitpanda's API, which is its primary purpose.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "Financial Services",
+      "API Integration"
+    ],
+    "custom_label": "Bitpanda Wallet Management",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2155,
+    "server_name": "Bitpanda API Integration Server",
+    "rank_by_usage": 2156,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@matteoantoci_mcp-bitpanda.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@matteoantoci/mcp-bitpanda/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 2155,
+      "name": "Bitpanda API Integration Server",
+      "author": "@matteoantoci/mcp-bitpanda",
+      "overview": "Provide programmatic access to Bitpanda features such as trades, wallets, and transactions through a standardized protocol. Enable users to retrieve detailed asset information, OHLC data, and manage their Bitpanda account data efficiently. Facilitate seamless interaction with Bitpanda's API via MCP tools for enhanced automation and data retrieval.",
+      "repository_url": "https://github.com/matteoantoci/mcp-bitpanda",
+      "homepage": "https://smithery.ai/server/@matteoantoci/mcp-bitpanda",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@matteoantoci_mcp-bitpanda.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "list_trades",
+          "description": "Deploy Server Bitpanda API Integration Server Claim Server @matteoantoci/mcp-bitpanda Try in Playground list_trades",
+          "parameters": [
+            {
+              "name": "list_trades",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_asset_wallets",
+          "description": "Lists all user's asset wallets grouped by asset type from the Bitpanda API.",
+          "parameters": [
+            {
+              "name": "list_asset_wallets",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_fiat_wallets",
+          "description": "Lists all user's fiat wallets from the Bitpanda API.",
+          "parameters": [
+            {
+              "name": "list_fiat_wallets",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_fiat_transactions",
+          "description": "Lists all user's fiat transactions from the Bitpanda API. Newest fiat transactions come first. Response is cursor paginated.",
+          "parameters": [
+            {
+              "name": "list_fiat_transactions",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_crypto_wallets",
+          "description": "Lists all user's crypto wallets from the Bitpanda API.",
+          "parameters": [
+            {
+              "name": "list_crypto_wallets",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_crypto_transactions",
+          "description": "Lists all user's crypto transactions from the Bitpanda API. Newest crypto transactions come first. Response is cursor paginated.",
+          "parameters": [
+            {
+              "name": "list_crypto_transactions",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_commodity_transactions",
+          "description": "Lists all user's commodity transactions from the Bitpanda API. Newest commodity transactions come first. Response is cursor paginated.",
+          "parameters": [
+            {
+              "name": "list_commodity_transactions",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_asset_info",
+          "description": "Retrieves detailed information for a specific asset by its symbol.",
+          "parameters": [
+            {
+              "name": "get_asset_info",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "symbol",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@matteoantoci/mcp-bitpanda/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "bitpandaApiKey",
+          "required": true,
+          "description": "Bitpanda API key for authenticating requests"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@matteoantoci/mcp-bitpanda/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_2156.@matteoantoci_mcp-bitpanda_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1864
+  }
+}

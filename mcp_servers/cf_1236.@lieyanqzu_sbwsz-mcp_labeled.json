@@ -1,0 +1,152 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides dedicated tools for querying and managing Magic: The Gathering (MTG) Chinese card data. Its core functionality includes searching cards by complex criteria, retrieving card sets, and getting detailed card information. Additionally, it offers a unique \"活字乱刷\" (hzls) tool that creates images by assembling MTG card images to form sentences. This server serves both as a database for MTG card information and as a quirky content creation tool for MTG enthusiasts.",
+    "reasoning": "The primary functionality revolves around database operations for MTG cards, justifying the \"Database Operations\" label. The search capabilities align well with \"Web Search & Research,\" and the image creation tool introduces a creative aspect, matching \"Content Creation.\" No custom label is needed as the predefined categories adequately cover all functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Content Creation"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1235,
+    "server_name": "MTG Chinese Card Database - 大学院废墟(sbwsz.com)",
+    "rank_by_usage": 1236,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@lieyanqzu_sbwsz-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@lieyanqzu/sbwsz-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "Connection timeout (20 seconds)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1235,
+      "name": "MTG Chinese Card Database - 大学院废墟(sbwsz.com)",
+      "author": "@lieyanqzu/sbwsz-mcp",
+      "overview": "Provide seamless access to Magic: The Gathering Chinese card data through a set of powerful query tools. Search cards by complex criteria, retrieve card sets, and get detailed card information to enhance your applications or workflows. Easily integrate via stdio or Streamable HTTP modes for flexible usage.",
+      "repository_url": "https://github.com/lieyanqzu/sbwsz-mcp",
+      "homepage": "https://smithery.ai/server/@lieyanqzu/sbwsz-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@lieyanqzu_sbwsz-mcp.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "get_card_by_set_and_number",
+          "description": "Deploy Server MTG Chinese Card Database - 大学院废墟(sbwsz.com) @lieyanqzu/sbwsz-mcp Try in Playground get_card_by_set_and_number",
+          "parameters": [
+            {
+              "name": "set",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "collector_number",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "search_cards",
+          "description": "通过查询字符串搜索卡牌，支持分页和排序。 **查询语法示例:** - `t:creature c:r` (红色生物) - `pow>=5 or mv<2` (力量大于等于5或法术力值小于2) - `o:\"draw a card\" -c:u` (包含\"抓一张牌\"的非蓝色牌) - `(t:instant or t:sorcery) mv<=3` (3费或以下的瞬间或法术) **分页参数:** - `page`: 页码 (整数, 默认 1) - `page_size`: 每页数量 (整数, 默认 20, 最大 100) **排序参数:** - `order`: 按字段排序，逗号分隔。前缀 `-` 表示降序 (例如: `name`, `-mv`, `name,-rarity`) 默认排序: `name` **其他参数:** - `unique`: 去重方式 (id, oracle_id, illustration_id) - `priority_chinese`: 是否优先显示中文卡牌",
+          "parameters": []
+        },
+        {
+          "name": "get_sets",
+          "description": "返回所有MTG卡牌系列的完整数据，按发布日期降序排列",
+          "parameters": [
+            {
+              "name": "get_sets",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_set",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "get_sets",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_set_cards",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "set_code",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "page_size",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "priority_chinese",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "True",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "False",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "hzls",
+          "description": "活字乱刷（使用卡牌图像拼接句子），将输入的文本使用魔法卡牌图像拼接成图片",
+          "parameters": [
+            {
+              "name": "hzls",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@lieyanqzu/sbwsz-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@lieyanqzu/sbwsz-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1236.@lieyanqzu_sbwsz-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1185
+  }
+}

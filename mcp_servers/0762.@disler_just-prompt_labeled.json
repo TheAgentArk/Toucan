@@ -1,0 +1,449 @@
+{
+  "labels": {
+    "analysis": "The MCP Server acts as an intermediary layer that unifies interactions with multiple large language model (LLM) providers through a single, simplified API. It allows users to send prompts (either directly or from files), receive responses in a standardized markdown format, and manage multiple AI models in parallel. The tools provided enable efficient prompting across different models, batch processing, and even simulated decision-making workflows (e.g., the 'CEO and Board' feature, which aggregates multiple model responses and synthesizes a final decision). This server solves the problem of fragmented LLM access by consolidating disparate APIs into a coherent workflow, improving productivity for developers or researchers working with multiple AI models.",
+    "reasoning": "The primary label of \"AI/ML Tools\" is chosen because the server's core functionality revolves around interacting with and managing multiple AI models. The secondary label of \"Development Tools\" is relevant as the server simplifies the integration of LLMs into applications or workflows, aiding developers. The \"API Integration\" label is included because the server abstracts complexity by unifying multiple LLM APIs under one interface. A custom label (\"Multi-LLM Orchestration\") is also added to describe the unique aspect of parallel model management and decision-making workflows not explicitly covered by predefined categories.",
+    "primary_label": "AI/ML Tools",
+    "secondary_labels": [
+      "Development Tools",
+      "API Integration"
+    ],
+    "custom_label": "Multi-LLM Orchestration",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 761,
+    "server_name": "Just Prompt",
+    "rank_by_usage": 762,
+    "usage_count": "8",
+    "original_file": "../crawler/smithery/@disler_just-prompt.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@disler/just-prompt/mcp?config=eyJkZWZhdWx0TW9kZWxzIjogImFudGhyb3BpYzpjbGF1ZGUtMy03LXNvbm5ldC0yMDI1MDIxOSxvcGVuYWk6bzMtbWluaSxnZW1pbmk6Z2VtaW5pLTIuNS1wcm8tZXhwLTAzLTI1In0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "prompt",
+          "description": "Send a prompt to multiple LLM models",
+          "input_schema": {
+            "properties": {
+              "text": {
+                "description": "The prompt text",
+                "title": "Text",
+                "type": "string"
+              },
+              "models_prefixed_by_provider": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "List of models with provider prefixes (e.g., 'openai:gpt-4o' or 'o:gpt-4o'). If not provided, uses default models.",
+                "title": "Models Prefixed By Provider"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "title": "PromptSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "prompt_from_file",
+          "description": "Send a prompt from a file to multiple LLM models",
+          "input_schema": {
+            "properties": {
+              "file": {
+                "description": "Path to the file containing the prompt",
+                "title": "File",
+                "type": "string"
+              },
+              "models_prefixed_by_provider": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "List of models with provider prefixes (e.g., 'openai:gpt-4o' or 'o:gpt-4o'). If not provided, uses default models.",
+                "title": "Models Prefixed By Provider"
+              }
+            },
+            "required": [
+              "file"
+            ],
+            "title": "PromptFromFileSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "prompt_from_file_to_file",
+          "description": "Send a prompt from a file to multiple LLM models and save responses to files",
+          "input_schema": {
+            "properties": {
+              "file": {
+                "description": "Path to the file containing the prompt",
+                "title": "File",
+                "type": "string"
+              },
+              "models_prefixed_by_provider": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "List of models with provider prefixes (e.g., 'openai:gpt-4o' or 'o:gpt-4o'). If not provided, uses default models.",
+                "title": "Models Prefixed By Provider"
+              },
+              "output_dir": {
+                "default": ".",
+                "description": "Directory to save the response files to (default: current directory)",
+                "title": "Output Dir",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file"
+            ],
+            "title": "PromptFromFileToFileSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ceo_and_board",
+          "description": "Send a prompt to multiple 'board member' models and have a 'CEO' model make a decision based on their responses",
+          "input_schema": {
+            "properties": {
+              "file": {
+                "description": "Path to the file containing the prompt",
+                "title": "File",
+                "type": "string"
+              },
+              "models_prefixed_by_provider": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "List of models with provider prefixes to act as board members. If not provided, uses default models.",
+                "title": "Models Prefixed By Provider"
+              },
+              "output_dir": {
+                "default": ".",
+                "description": "Directory to save the response files and CEO decision",
+                "title": "Output Dir",
+                "type": "string"
+              },
+              "ceo_model": {
+                "default": "openai:o3",
+                "description": "Model to use for the CEO decision in format 'provider:model'",
+                "title": "Ceo Model",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file"
+            ],
+            "title": "CEOAndBoardSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_providers",
+          "description": "List all available LLM providers",
+          "input_schema": {
+            "properties": {},
+            "title": "ListProvidersSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_models",
+          "description": "List all available models for a specific LLM provider",
+          "input_schema": {
+            "properties": {
+              "provider": {
+                "description": "Provider to list models for (e.g., 'openai' or 'o')",
+                "title": "Provider",
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider"
+            ],
+            "title": "ListModelsSchema",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "prompt",
+        "prompt_from_file",
+        "prompt_from_file_to_file",
+        "ceo_and_board",
+        "list_providers",
+        "list_models"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 761,
+      "name": "Just Prompt",
+      "author": "@disler/just-prompt",
+      "overview": "Unify your interactions with multiple LLM providers through a single API. Send prompts from strings or files, and receive responses in markdown format, all while managing multiple models in parallel. Simplify your workflow and enhance productivity with seamless integration of various AI models.",
+      "repository_url": "https://github.com/disler/just-prompt",
+      "homepage": "https://smithery.ai/server/@disler/just-prompt",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "8",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@disler_just-prompt.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "prompt",
+          "description": "Send a prompt to multiple LLM models",
+          "input_schema": {
+            "properties": {
+              "text": {
+                "description": "The prompt text",
+                "title": "Text",
+                "type": "string"
+              },
+              "models_prefixed_by_provider": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "List of models with provider prefixes (e.g., 'openai:gpt-4o' or 'o:gpt-4o'). If not provided, uses default models.",
+                "title": "Models Prefixed By Provider"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "title": "PromptSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "prompt_from_file",
+          "description": "Send a prompt from a file to multiple LLM models",
+          "input_schema": {
+            "properties": {
+              "file": {
+                "description": "Path to the file containing the prompt",
+                "title": "File",
+                "type": "string"
+              },
+              "models_prefixed_by_provider": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "List of models with provider prefixes (e.g., 'openai:gpt-4o' or 'o:gpt-4o'). If not provided, uses default models.",
+                "title": "Models Prefixed By Provider"
+              }
+            },
+            "required": [
+              "file"
+            ],
+            "title": "PromptFromFileSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "prompt_from_file_to_file",
+          "description": "Send a prompt from a file to multiple LLM models and save responses to files",
+          "input_schema": {
+            "properties": {
+              "file": {
+                "description": "Path to the file containing the prompt",
+                "title": "File",
+                "type": "string"
+              },
+              "models_prefixed_by_provider": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "List of models with provider prefixes (e.g., 'openai:gpt-4o' or 'o:gpt-4o'). If not provided, uses default models.",
+                "title": "Models Prefixed By Provider"
+              },
+              "output_dir": {
+                "default": ".",
+                "description": "Directory to save the response files to (default: current directory)",
+                "title": "Output Dir",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file"
+            ],
+            "title": "PromptFromFileToFileSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ceo_and_board",
+          "description": "Send a prompt to multiple 'board member' models and have a 'CEO' model make a decision based on their responses",
+          "input_schema": {
+            "properties": {
+              "file": {
+                "description": "Path to the file containing the prompt",
+                "title": "File",
+                "type": "string"
+              },
+              "models_prefixed_by_provider": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "List of models with provider prefixes to act as board members. If not provided, uses default models.",
+                "title": "Models Prefixed By Provider"
+              },
+              "output_dir": {
+                "default": ".",
+                "description": "Directory to save the response files and CEO decision",
+                "title": "Output Dir",
+                "type": "string"
+              },
+              "ceo_model": {
+                "default": "openai:o3",
+                "description": "Model to use for the CEO decision in format 'provider:model'",
+                "title": "Ceo Model",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file"
+            ],
+            "title": "CEOAndBoardSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_providers",
+          "description": "List all available LLM providers",
+          "input_schema": {
+            "properties": {},
+            "title": "ListProvidersSchema",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_models",
+          "description": "List all available models for a specific LLM provider",
+          "input_schema": {
+            "properties": {
+              "provider": {
+                "description": "Provider to list models for (e.g., 'openai' or 'o')",
+                "title": "Provider",
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider"
+            ],
+            "title": "ListModelsSchema",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"defaultModels\": \"anthropic:claude-3-7-sonnet-20250219,openai:o3-mini,gemini:gemini-2.5-pro-exp-03-25\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@disler/just-prompt/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"defaultModels\": \"anthropic:claude-3-7-sonnet-20250219,openai:o3-mini,gemini:gemini-2.5-pro-exp-03-25\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@disler/just-prompt/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0762.@disler_just-prompt_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 744
+  }
+}

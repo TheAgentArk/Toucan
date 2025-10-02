@@ -1,0 +1,761 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to automate and streamline workflows specifically for the tusclasesparticulares.com platform, which is focused on educational tutoring services. Its core functionality includes logging in, managing messaging, purchasing leads, editing and creating teaching advertisements, and performing bulk operations. The server also provides tools for error handling, debugging, and extracting contact information from conversations. This Makes it highly specialized for managing lead-based interactions and advertisement workflows in an educational tutoring context.",
+    "reasoning": "The primary label \"Browser Automation\" is chosen because the server heavily focuses on automating browsing tasks such as logging in, navigating messaging, sending messages, and creating/editing publications. \"Daily Productivity\" is selected as a secondary label because the server enhances user efficiency in managing daily tasks related to tutoring. \"API Integration\" is another relevant secondary label due to the server's use of programmatic interactions with the tusclasesparticulares.com platform.",
+    "primary_label": "Browser Automation",
+    "secondary_labels": [
+      "Daily Productivity",
+      "API Integration"
+    ],
+    "custom_label": "Educational Tutoring Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 518,
+    "server_name": "TusClasesParticulares Automation Server",
+    "rank_by_usage": 519,
+    "usage_count": "29",
+    "original_file": "../crawler/smithery/@samihalawa_tusclasesparticulares-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@samihalawa/tusclasesparticulares-mcp/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAidGltZW91dCI6IDMwMDAwLCAiaGVhZGxlc3MiOiB0cnVlfQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "tusclasesparticulares_login",
+          "description": "Login to tusclasesparticulares.com with credentials",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "Login email address"
+              },
+              "password": {
+                "type": "string",
+                "description": "Login password"
+              },
+              "keepSession": {
+                "type": "boolean",
+                "description": "Keep session active",
+                "default": true
+              }
+            },
+            "required": [
+              "email",
+              "password"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_navigate_messaging",
+          "description": "Navigate to the messaging area and view conversations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "autoLogin": {
+                "type": "boolean",
+                "description": "Auto login if not authenticated",
+                "default": true
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_send_message",
+          "description": "Send a message to a student or in response to a lead",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Message content to send"
+              },
+              "conversationIndex": {
+                "type": "number",
+                "description": "Index of conversation to reply to (0-based)",
+                "default": 0
+              },
+              "template": {
+                "type": "string",
+                "description": "Use predefined template: \"intro\", \"followup\", \"custom\"",
+                "default": "custom"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_buy_lead",
+          "description": "Purchase a student lead from the potential students section",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "subject": {
+                "type": "string",
+                "description": "Subject filter (e.g., \"21\" for IA)",
+                "default": "21"
+              },
+              "leadIndex": {
+                "type": "number",
+                "description": "Index of lead to purchase (0-based)",
+                "default": 0
+              },
+              "message": {
+                "type": "string",
+                "description": "Initial message to send to the student"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_edit_publication",
+          "description": "Edit an existing publication/advertisement",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "publicationIndex": {
+                "type": "number",
+                "description": "Index of publication to edit (0-based)",
+                "default": 0
+              },
+              "title": {
+                "type": "string",
+                "description": "New title for the publication"
+              },
+              "description": {
+                "type": "string",
+                "description": "New description for the publication"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_create_publication",
+          "description": "Create a new publication/advertisement for teaching services",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Publication title"
+              },
+              "description": {
+                "type": "string",
+                "description": "Detailed description of services"
+              },
+              "subject": {
+                "type": "string",
+                "description": "Main subject (e.g., \"Inteligencia artificial\")",
+                "default": "Inteligencia artificial"
+              },
+              "location": {
+                "type": "string",
+                "description": "Location (e.g., \"Madrid\")",
+                "default": "Madrid"
+              },
+              "onlineClasses": {
+                "type": "boolean",
+                "description": "Offer online classes",
+                "default": true
+              }
+            },
+            "required": [
+              "title",
+              "description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_get_conversations",
+          "description": "Get list of active conversations and their details",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of conversations to retrieve",
+                "default": 10
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_get_publications",
+          "description": "Get list of current publications/advertisements",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_get_leads",
+          "description": "Get available student leads for purchase",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "subject": {
+                "type": "string",
+                "description": "Subject filter",
+                "default": "21"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of leads to retrieve",
+                "default": 5
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_screenshot",
+          "description": "Take a screenshot of the current page for debugging",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filename": {
+                "type": "string",
+                "description": "Optional filename for screenshot"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_extract_contact_info",
+          "description": "Extract contact information (phone numbers, emails) from conversations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "conversationIndex": {
+                "type": "number",
+                "description": "Index of conversation to extract from (0-based)",
+                "default": 0
+              },
+              "extractEmails": {
+                "type": "boolean",
+                "description": "Extract email addresses",
+                "default": true
+              },
+              "extractPhones": {
+                "type": "boolean",
+                "description": "Extract phone numbers",
+                "default": true
+              },
+              "saveToFile": {
+                "type": "boolean",
+                "description": "Save extracted contacts to file",
+                "default": false
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_handle_subscription_limits",
+          "description": "Handle subscription limits and payment workflows",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "autoUpgrade": {
+                "type": "boolean",
+                "description": "Automatically proceed with upgrade",
+                "default": false
+              },
+              "notifyOnly": {
+                "type": "boolean",
+                "description": "Only notify about limits, do not upgrade",
+                "default": true
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_advanced_filtering",
+          "description": "Apply advanced filters for leads and searches",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "subjects": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Subject codes to filter by (e.g., [\"21\", \"22\"])"
+              },
+              "location": {
+                "type": "string",
+                "description": "Location filter (e.g., \"Madrid\")"
+              },
+              "onlineOnly": {
+                "type": "boolean",
+                "description": "Filter for online classes only",
+                "default": false
+              },
+              "priceRange": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number",
+                    "description": "Minimum price per hour"
+                  },
+                  "max": {
+                    "type": "number",
+                    "description": "Maximum price per hour"
+                  }
+                }
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_bulk_operations",
+          "description": "Perform bulk operations on multiple items",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "bulk_message",
+                  "bulk_buy_leads",
+                  "bulk_update_publications"
+                ],
+                "description": "Type of bulk operation to perform"
+              },
+              "message": {
+                "type": "string",
+                "description": "Message template for bulk messaging"
+              },
+              "count": {
+                "type": "number",
+                "description": "Number of items to process",
+                "default": 5
+              },
+              "delayBetween": {
+                "type": "number",
+                "description": "Delay between operations in seconds",
+                "default": 2
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 14,
+      "tool_names": [
+        "tusclasesparticulares_login",
+        "tusclasesparticulares_navigate_messaging",
+        "tusclasesparticulares_send_message",
+        "tusclasesparticulares_buy_lead",
+        "tusclasesparticulares_edit_publication",
+        "tusclasesparticulares_create_publication",
+        "tusclasesparticulares_get_conversations",
+        "tusclasesparticulares_get_publications",
+        "tusclasesparticulares_get_leads",
+        "tusclasesparticulares_screenshot",
+        "tusclasesparticulares_extract_contact_info",
+        "tusclasesparticulares_handle_subscription_limits",
+        "tusclasesparticulares_advanced_filtering",
+        "tusclasesparticulares_bulk_operations"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 518,
+      "name": "TusClasesParticulares Automation Server",
+      "author": "@samihalawa/tusclasesparticulares-mcp",
+      "overview": "Automate tusclasesparticulares.com workflows including login, messaging, lead management, profile editing, and publication creation. Streamline daily tasks such as purchasing leads, sending messages, and managing teaching advertisements with secure session handling and debugging support. Enhance productivity with pre-configured message templates and robust error handling.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@samihalawa/tusclasesparticulares-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "29",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@samihalawa_tusclasesparticulares-mcp.json",
+      "tools_count": 14,
+      "tools": [
+        {
+          "name": "tusclasesparticulares_login",
+          "description": "Login to tusclasesparticulares.com with credentials",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "Login email address"
+              },
+              "password": {
+                "type": "string",
+                "description": "Login password"
+              },
+              "keepSession": {
+                "type": "boolean",
+                "description": "Keep session active",
+                "default": true
+              }
+            },
+            "required": [
+              "email",
+              "password"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_navigate_messaging",
+          "description": "Navigate to the messaging area and view conversations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "autoLogin": {
+                "type": "boolean",
+                "description": "Auto login if not authenticated",
+                "default": true
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_send_message",
+          "description": "Send a message to a student or in response to a lead",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Message content to send"
+              },
+              "conversationIndex": {
+                "type": "number",
+                "description": "Index of conversation to reply to (0-based)",
+                "default": 0
+              },
+              "template": {
+                "type": "string",
+                "description": "Use predefined template: \"intro\", \"followup\", \"custom\"",
+                "default": "custom"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_buy_lead",
+          "description": "Purchase a student lead from the potential students section",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "subject": {
+                "type": "string",
+                "description": "Subject filter (e.g., \"21\" for IA)",
+                "default": "21"
+              },
+              "leadIndex": {
+                "type": "number",
+                "description": "Index of lead to purchase (0-based)",
+                "default": 0
+              },
+              "message": {
+                "type": "string",
+                "description": "Initial message to send to the student"
+              }
+            },
+            "required": [
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_edit_publication",
+          "description": "Edit an existing publication/advertisement",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "publicationIndex": {
+                "type": "number",
+                "description": "Index of publication to edit (0-based)",
+                "default": 0
+              },
+              "title": {
+                "type": "string",
+                "description": "New title for the publication"
+              },
+              "description": {
+                "type": "string",
+                "description": "New description for the publication"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_create_publication",
+          "description": "Create a new publication/advertisement for teaching services",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Publication title"
+              },
+              "description": {
+                "type": "string",
+                "description": "Detailed description of services"
+              },
+              "subject": {
+                "type": "string",
+                "description": "Main subject (e.g., \"Inteligencia artificial\")",
+                "default": "Inteligencia artificial"
+              },
+              "location": {
+                "type": "string",
+                "description": "Location (e.g., \"Madrid\")",
+                "default": "Madrid"
+              },
+              "onlineClasses": {
+                "type": "boolean",
+                "description": "Offer online classes",
+                "default": true
+              }
+            },
+            "required": [
+              "title",
+              "description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_get_conversations",
+          "description": "Get list of active conversations and their details",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of conversations to retrieve",
+                "default": 10
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_get_publications",
+          "description": "Get list of current publications/advertisements",
+          "input_schema": {
+            "type": "object",
+            "properties": {}
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_get_leads",
+          "description": "Get available student leads for purchase",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "subject": {
+                "type": "string",
+                "description": "Subject filter",
+                "default": "21"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of leads to retrieve",
+                "default": 5
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_screenshot",
+          "description": "Take a screenshot of the current page for debugging",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filename": {
+                "type": "string",
+                "description": "Optional filename for screenshot"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_extract_contact_info",
+          "description": "Extract contact information (phone numbers, emails) from conversations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "conversationIndex": {
+                "type": "number",
+                "description": "Index of conversation to extract from (0-based)",
+                "default": 0
+              },
+              "extractEmails": {
+                "type": "boolean",
+                "description": "Extract email addresses",
+                "default": true
+              },
+              "extractPhones": {
+                "type": "boolean",
+                "description": "Extract phone numbers",
+                "default": true
+              },
+              "saveToFile": {
+                "type": "boolean",
+                "description": "Save extracted contacts to file",
+                "default": false
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_handle_subscription_limits",
+          "description": "Handle subscription limits and payment workflows",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "autoUpgrade": {
+                "type": "boolean",
+                "description": "Automatically proceed with upgrade",
+                "default": false
+              },
+              "notifyOnly": {
+                "type": "boolean",
+                "description": "Only notify about limits, do not upgrade",
+                "default": true
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_advanced_filtering",
+          "description": "Apply advanced filters for leads and searches",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "subjects": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Subject codes to filter by (e.g., [\"21\", \"22\"])"
+              },
+              "location": {
+                "type": "string",
+                "description": "Location filter (e.g., \"Madrid\")"
+              },
+              "onlineOnly": {
+                "type": "boolean",
+                "description": "Filter for online classes only",
+                "default": false
+              },
+              "priceRange": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number",
+                    "description": "Minimum price per hour"
+                  },
+                  "max": {
+                    "type": "number",
+                    "description": "Maximum price per hour"
+                  }
+                }
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "tusclasesparticulares_bulk_operations",
+          "description": "Perform bulk operations on multiple items",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "bulk_message",
+                  "bulk_buy_leads",
+                  "bulk_update_publications"
+                ],
+                "description": "Type of bulk operation to perform"
+              },
+              "message": {
+                "type": "string",
+                "description": "Message template for bulk messaging"
+              },
+              "count": {
+                "type": "number",
+                "description": "Number of items to process",
+                "default": 5
+              },
+              "delayBetween": {
+                "type": "number",
+                "description": "Delay between operations in seconds",
+                "default": 2
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"timeout\": 30000,\n  \"headless\": true\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@samihalawa/tusclasesparticulares-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"timeout\": 30000,\n  \"headless\": true\n}",
+      "python_sdk_url": "https://server.smithery.ai/@samihalawa/tusclasesparticulares-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0519.@samihalawa_tusclasesparticulares-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 508
+  }
+}

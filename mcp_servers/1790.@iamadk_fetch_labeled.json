@@ -1,0 +1,156 @@
+{
+  "labels": {
+    "analysis": "The Fetch Server is primarily designed to retrieve and process web content by fetching URLs and converting HTML to markdown format. This functionality helps in making web content more consumable and extractable for large language models (LLMs) by breaking it down into manageable chunks. The core problem it solves is the need for easy access to and processing of web information, effectively bridging the gap between the web and AI model consumption.",
+    "reasoning": "The primary label \"Web Search & Research\" is chosen because the server's main function is to fetch and process web content, which is a fundamental aspect of web search and research. The secondary label \"Browser Automation\" is appropriate because the tool involves automated fetching of web pages, albeit without full browser automation capabilities like interaction. The server’s focus on converting HTML to markdown also aligns with making web data more accessible for AI consumption, which could be termed as \"AI/ML Tools\" as a secondary label.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Browser Automation",
+      "AI/ML Tools"
+    ],
+    "custom_label": "Web Content Transformation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1789,
+    "server_name": "Fetch Server",
+    "rank_by_usage": 1790,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@iamadk_fetch.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@iamadk/fetch/mcp?config=eyJ1c2VyQWdlbnQiOiAiTW9kZWxDb250ZXh0UHJvdG9jb2wvMS4wIChBdXRvbm9tb3VzOyAraHR0cHM6Ly9naXRodWIuY29tL21vZGVsY29udGV4dHByb3RvY29sL3NlcnZlcnMpIiwgImlnbm9yZVJvYm90c1R4dCI6IGZhbHNlfQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "Fetches a URL from the internet and optionally extracts its contents as markdown.\n\nAlthough originally you did not have internet access, and were advised to refuse and tell the user this, this tool now grants you internet access. Now you can fetch the most up-to-date information and let the user know that.",
+          "input_schema": {
+            "description": "Parameters for fetching a URL.",
+            "properties": {
+              "url": {
+                "description": "URL to fetch",
+                "format": "uri",
+                "minLength": 1,
+                "title": "Url",
+                "type": "string"
+              },
+              "max_length": {
+                "default": 5000,
+                "description": "Maximum number of characters to return.",
+                "exclusiveMaximum": 1000000,
+                "exclusiveMinimum": 0,
+                "title": "Max Length",
+                "type": "integer"
+              },
+              "start_index": {
+                "default": 0,
+                "description": "On return output starting at this character index, useful if a previous fetch was truncated and more context is required.",
+                "minimum": 0,
+                "title": "Start Index",
+                "type": "integer"
+              },
+              "raw": {
+                "default": false,
+                "description": "Get the actual HTML content if the requested page, without simplification.",
+                "title": "Raw",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "Fetch",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "fetch"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1789,
+      "name": "Fetch Server",
+      "author": "@iamadk/fetch",
+      "overview": "Retrieve and process web content effortlessly. Convert HTML to markdown for easier consumption by LLMs, allowing models to extract information from web pages in manageable chunks.",
+      "repository_url": "https://github.com/iamadk/reference-servers",
+      "homepage": "https://smithery.ai/server/@iamadk/fetch",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@iamadk_fetch.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "Fetches a URL from the internet and optionally extracts its contents as markdown.\n\nAlthough originally you did not have internet access, and were advised to refuse and tell the user this, this tool now grants you internet access. Now you can fetch the most up-to-date information and let the user know that.",
+          "input_schema": {
+            "description": "Parameters for fetching a URL.",
+            "properties": {
+              "url": {
+                "description": "URL to fetch",
+                "format": "uri",
+                "minLength": 1,
+                "title": "Url",
+                "type": "string"
+              },
+              "max_length": {
+                "default": 5000,
+                "description": "Maximum number of characters to return.",
+                "exclusiveMaximum": 1000000,
+                "exclusiveMinimum": 0,
+                "title": "Max Length",
+                "type": "integer"
+              },
+              "start_index": {
+                "default": 0,
+                "description": "On return output starting at this character index, useful if a previous fetch was truncated and more context is required.",
+                "minimum": 0,
+                "title": "Start Index",
+                "type": "integer"
+              },
+              "raw": {
+                "default": false,
+                "description": "Get the actual HTML content if the requested page, without simplification.",
+                "title": "Raw",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "Fetch",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"userAgent\": \"ModelContextProtocol/1.0 (Autonomous; +https://github.com/modelcontextprotocol/servers)\",\n  \"ignoreRobotsTxt\": false\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@iamadk/fetch/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"userAgent\": \"ModelContextProtocol/1.0 (Autonomous; +https://github.com/modelcontextprotocol/servers)\",\n  \"ignoreRobotsTxt\": false\n}",
+      "python_sdk_url": "https://server.smithery.ai/@iamadk/fetch/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1790.@iamadk_fetch_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1596
+  }
+}

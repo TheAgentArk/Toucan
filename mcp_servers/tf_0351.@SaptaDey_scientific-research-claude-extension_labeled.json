@@ -1,0 +1,657 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed for advanced scientific research, specifically in immunology, dermatology, and computational biology. It employs an 8-stage graph-based methodology to facilitate systematic scientific reasoning, hypothesis generation, evidence integration, and causal inference. The available tools support structured research workflows, bias mitigation, interdisciplinary collaboration, and rigorous statistical analysis. The server's primary focus is on enabling reliable and comprehensive scientific research with features like multi-dimensional confidence tracking and resilience against query failures.",
+    "reasoning": "The primary label \"Web Search & Research\" is chosen because the server's core functionality revolves around advanced research capabilities, hypothesis generation, and evidence integration, which align with research-oriented tools. The secondary label \"Data Analysis & Processing\" is included due to the statistical rigor and analytical features described. The secondary label \"AI/ML Tools\" is considered because the graph-based methodology and hypothesis generation suggest the use of algorithmic intelligence, though it is not explicit. A custom label is added to highlight the unique graph-based scientific reasoning methodology specific to this server.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "AI/ML Tools"
+    ],
+    "custom_label": "Graph-Based Scientific Reasoning",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 350,
+    "server_name": "Scientific Research Extension",
+    "rank_by_usage": 351,
+    "usage_count": "85",
+    "original_file": "../crawler/smithery/@SaptaDey_scientific-research-claude-extension.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@SaptaDey/scientific-research-claude-extension/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "initialize_asr_got_graph",
+          "description": "P1.1: Initialize ASR-GoT graph with root node n₀ label=\"Task Understanding\" and complete P1.12 metadata schema",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "task_description": {
+                "type": "string",
+                "description": "Detailed description of the research task or question - stored verbatim in metadata per P1.6"
+              },
+              "initial_confidence": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "description": "P1.5 multi-dimensional confidence vector [empirical_support, theoretical_basis, methodological_rigor, consensus_alignment]",
+                "default": [
+                  0.8,
+                  0.8,
+                  0.8,
+                  0.8
+                ]
+              },
+              "config": {
+                "type": "object",
+                "description": "Configuration for P1.23 multi-layer networks and other parameters",
+                "properties": {
+                  "enable_multi_layer": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "disciplinary_tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "P1.8 disciplinary provenance tags"
+                  },
+                  "attribution": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "P1.29 collaboration attribution"
+                  }
+                }
+              }
+            },
+            "required": [
+              "task_description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "decompose_research_task",
+          "description": "P1.2: Decompose task into dimension nodes 2.1-2.7 with mandatory Potential Biases and Knowledge Gaps dimensions",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "dimensions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "P1.2 task dimensions (default: Scope, Objectives, Constraints, Data Needs, Use Cases, Potential Biases, Knowledge Gaps)",
+                "default": [
+                  "Scope",
+                  "Objectives",
+                  "Constraints",
+                  "Data Needs",
+                  "Use Cases",
+                  "Potential Biases",
+                  "Knowledge Gaps"
+                ]
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_hypotheses",
+          "description": "P1.3: Generate k=3-5 hypotheses per dimension with explicit plans and complete P1.8,P1.16,P1.17,P1.28 metadata",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "dimension_node_id": {
+                "type": "string",
+                "description": "ID of dimension node (format: 2.X) to generate hypotheses for"
+              },
+              "hypotheses": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "description": "Hypothesis content"
+                    },
+                    "confidence": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "description": "P1.5 confidence vector [empirical_support, theoretical_basis, methodological_rigor, consensus_alignment]",
+                      "default": [
+                        0.5,
+                        0.5,
+                        0.5,
+                        0.5
+                      ]
+                    },
+                    "falsification_criteria": {
+                      "type": "string",
+                      "description": "P1.16 explicit falsifiability criteria - REQUIRED for hypotheses"
+                    },
+                    "impact_score": {
+                      "type": "number",
+                      "description": "P1.28 impact estimation (0-1 scale)",
+                      "default": 0.6
+                    },
+                    "disciplinary_tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "P1.8 disciplinary provenance tags"
+                    },
+                    "plan": {
+                      "type": "object",
+                      "description": "P1.3 explicit plan (search/tool/experiment) - REQUIRED",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "tools": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "timeline": {
+                          "type": "string"
+                        },
+                        "resources_needed": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "attribution": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "P1.29 collaboration attribution"
+                    }
+                  },
+                  "required": [
+                    "content"
+                  ]
+                },
+                "minItems": 3,
+                "maxItems": 5
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "max_hypotheses": {
+                    "type": "number",
+                    "default": 5,
+                    "maximum": 5,
+                    "description": "P1.3: k=3-5 limit"
+                  }
+                }
+              }
+            },
+            "required": [
+              "dimension_node_id",
+              "hypotheses"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_graph_summary",
+          "description": "Get comprehensive graph summary with P1.11 formalism state, P1.22 topology metrics, and all parameter status",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "include_topology": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include P1.22 topology metrics"
+              },
+              "include_layers": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include P1.23 layer analysis"
+              },
+              "include_parameters": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include all P1.0-P1.29 parameter status"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "export_graph_data",
+          "description": "P1.6: Export complete graph with reasoning traces, topology insights, and Vancouver citations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "yaml"
+                ],
+                "default": "json",
+                "description": "Export format with complete P1.11 formalism and P1.6 requirements"
+              },
+              "include_reasoning_trace": {
+                "type": "boolean",
+                "default": true,
+                "description": "P1.6 reasoning trace appendix"
+              },
+              "include_topology_insights": {
+                "type": "boolean",
+                "default": true,
+                "description": "P1.22 topology metrics for visualization"
+              },
+              "include_parameter_status": {
+                "type": "boolean",
+                "default": true,
+                "description": "Complete P1.0-P1.29 parameter status"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_resilient_query",
+          "description": "Execute a scientific research query with built-in fallback mechanisms that ensure successful completion even if individual stages fail. This is the most reliable way to process queries.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The research question or task to analyze"
+              },
+              "config": {
+                "type": "object",
+                "description": "Configuration options for query execution",
+                "properties": {
+                  "max_hypotheses": {
+                    "type": "number",
+                    "default": 5,
+                    "description": "Maximum hypotheses per dimension"
+                  },
+                  "initial_confidence": {
+                    "type": "array",
+                    "description": "Initial confidence distribution [0-1]"
+                  },
+                  "dimensions": {
+                    "type": "array",
+                    "description": "Custom dimensions for task decomposition"
+                  },
+                  "enable_fallbacks": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable fallback mechanisms"
+                  }
+                }
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "initialize_asr_got_graph",
+        "decompose_research_task",
+        "generate_hypotheses",
+        "get_graph_summary",
+        "export_graph_data",
+        "execute_resilient_query"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 350,
+      "name": "Scientific Research Extension",
+      "author": "@SaptaDey/scientific-research-claude-extension",
+      "overview": "Enable systematic scientific reasoning through an 8-stage graph-based methodology tailored for advanced research in immunology, dermatology, and computational biology. Facilitate hypothesis generation, evidence integration, causal inference, and collaborative research with statistical rigor and bias mitigation. Streamline complex scientific workflows with multi-dimensional confidence tracking and interdisciplinary support.",
+      "repository_url": "https://github.com/SaptaDey/scientific-research-claude-extension",
+      "homepage": "https://smithery.ai/server/@SaptaDey/scientific-research-claude-extension",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "85",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@SaptaDey_scientific-research-claude-extension.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "initialize_asr_got_graph",
+          "description": "P1.1: Initialize ASR-GoT graph with root node n₀ label=\"Task Understanding\" and complete P1.12 metadata schema",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "task_description": {
+                "type": "string",
+                "description": "Detailed description of the research task or question - stored verbatim in metadata per P1.6"
+              },
+              "initial_confidence": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "description": "P1.5 multi-dimensional confidence vector [empirical_support, theoretical_basis, methodological_rigor, consensus_alignment]",
+                "default": [
+                  0.8,
+                  0.8,
+                  0.8,
+                  0.8
+                ]
+              },
+              "config": {
+                "type": "object",
+                "description": "Configuration for P1.23 multi-layer networks and other parameters",
+                "properties": {
+                  "enable_multi_layer": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "disciplinary_tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "P1.8 disciplinary provenance tags"
+                  },
+                  "attribution": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "P1.29 collaboration attribution"
+                  }
+                }
+              }
+            },
+            "required": [
+              "task_description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "decompose_research_task",
+          "description": "P1.2: Decompose task into dimension nodes 2.1-2.7 with mandatory Potential Biases and Knowledge Gaps dimensions",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "dimensions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "P1.2 task dimensions (default: Scope, Objectives, Constraints, Data Needs, Use Cases, Potential Biases, Knowledge Gaps)",
+                "default": [
+                  "Scope",
+                  "Objectives",
+                  "Constraints",
+                  "Data Needs",
+                  "Use Cases",
+                  "Potential Biases",
+                  "Knowledge Gaps"
+                ]
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_hypotheses",
+          "description": "P1.3: Generate k=3-5 hypotheses per dimension with explicit plans and complete P1.8,P1.16,P1.17,P1.28 metadata",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "dimension_node_id": {
+                "type": "string",
+                "description": "ID of dimension node (format: 2.X) to generate hypotheses for"
+              },
+              "hypotheses": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "description": "Hypothesis content"
+                    },
+                    "confidence": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "description": "P1.5 confidence vector [empirical_support, theoretical_basis, methodological_rigor, consensus_alignment]",
+                      "default": [
+                        0.5,
+                        0.5,
+                        0.5,
+                        0.5
+                      ]
+                    },
+                    "falsification_criteria": {
+                      "type": "string",
+                      "description": "P1.16 explicit falsifiability criteria - REQUIRED for hypotheses"
+                    },
+                    "impact_score": {
+                      "type": "number",
+                      "description": "P1.28 impact estimation (0-1 scale)",
+                      "default": 0.6
+                    },
+                    "disciplinary_tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "P1.8 disciplinary provenance tags"
+                    },
+                    "plan": {
+                      "type": "object",
+                      "description": "P1.3 explicit plan (search/tool/experiment) - REQUIRED",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "tools": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "timeline": {
+                          "type": "string"
+                        },
+                        "resources_needed": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "attribution": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "P1.29 collaboration attribution"
+                    }
+                  },
+                  "required": [
+                    "content"
+                  ]
+                },
+                "minItems": 3,
+                "maxItems": 5
+              },
+              "config": {
+                "type": "object",
+                "properties": {
+                  "max_hypotheses": {
+                    "type": "number",
+                    "default": 5,
+                    "maximum": 5,
+                    "description": "P1.3: k=3-5 limit"
+                  }
+                }
+              }
+            },
+            "required": [
+              "dimension_node_id",
+              "hypotheses"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_graph_summary",
+          "description": "Get comprehensive graph summary with P1.11 formalism state, P1.22 topology metrics, and all parameter status",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "include_topology": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include P1.22 topology metrics"
+              },
+              "include_layers": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include P1.23 layer analysis"
+              },
+              "include_parameters": {
+                "type": "boolean",
+                "default": true,
+                "description": "Include all P1.0-P1.29 parameter status"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "export_graph_data",
+          "description": "P1.6: Export complete graph with reasoning traces, topology insights, and Vancouver citations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "format": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "yaml"
+                ],
+                "default": "json",
+                "description": "Export format with complete P1.11 formalism and P1.6 requirements"
+              },
+              "include_reasoning_trace": {
+                "type": "boolean",
+                "default": true,
+                "description": "P1.6 reasoning trace appendix"
+              },
+              "include_topology_insights": {
+                "type": "boolean",
+                "default": true,
+                "description": "P1.22 topology metrics for visualization"
+              },
+              "include_parameter_status": {
+                "type": "boolean",
+                "default": true,
+                "description": "Complete P1.0-P1.29 parameter status"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_resilient_query",
+          "description": "Execute a scientific research query with built-in fallback mechanisms that ensure successful completion even if individual stages fail. This is the most reliable way to process queries.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The research question or task to analyze"
+              },
+              "config": {
+                "type": "object",
+                "description": "Configuration options for query execution",
+                "properties": {
+                  "max_hypotheses": {
+                    "type": "number",
+                    "default": 5,
+                    "description": "Maximum hypotheses per dimension"
+                  },
+                  "initial_confidence": {
+                    "type": "array",
+                    "description": "Initial confidence distribution [0-1]"
+                  },
+                  "dimensions": {
+                    "type": "array",
+                    "description": "Custom dimensions for task decomposition"
+                  },
+                  "enable_fallbacks": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable fallback mechanisms"
+                  }
+                }
+              }
+            },
+            "required": [
+              "query"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@SaptaDey/scientific-research-claude-extension/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@SaptaDey/scientific-research-claude-extension/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0351.@SaptaDey_scientific-research-claude-extension_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 347
+  }
+}

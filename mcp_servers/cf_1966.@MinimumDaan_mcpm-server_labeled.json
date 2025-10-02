@@ -1,0 +1,146 @@
+{
+  "labels": {
+    "analysis": "The MCPM Server is designed as a flexible middleware between language models and external tools, enabling dynamic interactions with real-world data and actions. Its core functionality revolves around managing research workflows, generating actionable suggestions, and creating automated task pipelines for product management. The available tools focus on structuring research processes, creating and managing task configurations, generating strategic questions, and interacting with various platforms (like Slack, Linear, etc.) through standardized MCP servers.",
+    "reasoning": "The server's primary functionality aligns closely with \"Daily Productivity\" as it helps organize and automate research workflows, task management, and process optimization for product managers. Additionally, the tools are heavily integrated with external platforms, making \"API Integration\" a relevant secondary label. The server also facilitates structured research and decision-making, which touches on \"Education\" or \"Content Creation\" in a professional/flexible work context.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": "Product Management Automation",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1965,
+    "server_name": "MCPM Server",
+    "rank_by_usage": 1966,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@MinimumDaan_mcpm-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@MinimumDaan/mcpm-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1965,
+      "name": "MCPM Server",
+      "author": "@MinimumDaan/mcpm-server",
+      "overview": "Provide a flexible and extensible MCP server implementation to enable integration of LLMs with external tools, resources, and prompts. Facilitate dynamic interaction between language models and real-world data or actions through a standardized protocol. Enhance your applications by bridging LLM capabilities with custom context and operations securely and efficiently.",
+      "repository_url": "https://github.com/MinimumDaan/mcpm-server#readme",
+      "homepage": "https://smithery.ai/server/@MinimumDaan/mcpm-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@MinimumDaan_mcpm-server.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "getPMInfoForProductManager",
+          "description": "Deploy Server MCPM Server @MinimumDaan/mcpm-server Try in Playground getPMInfoForProductManager",
+          "parameters": [
+            {
+              "name": "This",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "updateManagerForProductManager",
+          "description": "Tool to update the current manager details in the mcpm_managers table. Allows for full or partial updates of fields.",
+          "parameters": [
+            {
+              "name": "updateManagerForProductManager",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "createTaskForProductManager",
+          "description": "A simple tool to create a research task that can flow through the research -> questions -> suggestions workflow. This tool creates a new task record and establishes the foundation for a structured research process. Create a task when you want to: - Begin a formal research process on a specific topic - Track questions and suggestions through a complete workflow - Associate research findings with a structured task - Enable review and execution of suggestions Each task represents a complete workflow that will progress through: 1. RESEARCH phase - gathering context and information 2. QUESTIONS phase - identifying strategic questions based on research 3. SUGGESTIONS phase - proposing concrete actions based on insights Key parameters: - title: Clear, concise description of the research objective - description: Detailed explanation of what should be investigated - trigger_type: How this task originated (manual, scheduled, event) - task_config_id: Optional ID of a task configuration to use (created with CreateTaskConfig tool) - trigger_config_id: Optional ID of a trigger configuration to use (created with CreateTriggerConfig tool) Using task and trigger configurations provides more structure and consistency across multiple tasks. Each task can be associated with: - A task configuration that defines its structure and tools - A trigger configuration (either directly or via the task config) Once created, the task ID can be used with the Research tool to begin gathering information.",
+          "parameters": []
+        },
+        {
+          "name": "SuggestionGeneratorForProductManager",
+          "description": "A sophisticated sequential thinking tool that generates actionable suggestions based on task details, research findings, and conversation context. Focus specifically on \"write\" tools - those that create, modify, or send content: - CREATE tools: Generate documents, tickets, media, or other resources - SEND tools: Post messages to channels or notify stakeholders - MODIFY tools: Update existing data, change settings, or edit content - SCHEDULE tools: Set up automations or future actions - ADD tools: Contribute information to existing systems This tool employs a structured multi-step thinking process: 1. Context Analysis: Examines task requirements, research data, and project needs 2. Iterative Refinement: Builds and refines suggestions through sequential thinking 3. Impact Assessment: Evaluates each suggestion for relevance, effectiveness, and feasibility 4. Finalization: Prepares well-formed, actionable suggestions ready for implementation 5. Storage: Persists suggestions in the database for PM review and execution REQUIRED FIELDS FOR EACH SUGGESTION: 1. mcpServerName: The platform or service name (e.g., \"Slack\", \"Loom\", \"Figjam\") - This identifies where the action will be performed - Must match one of the available configured tools 2. toolName: The specific function to call (e.g., \"slack_post_message\", \"getLoomTranscript\") - Each tool has specific functions with unique capabilities - Use the exact function name as defined in the tool's API 3. toolInput: JSON string containing all parameters required by the function - Must be valid JSON format - Include all required parameters for the specified function - Must be the actual parameters for the function, not a description of what to do - Always make sure give the actual input of the tool/function, if you're suggesting a tool that creates something, make sure to give the actual input for the tool. If you're suggesting a tool that sends a message, make sure to give the actual message to send. - Example: \"{\\\"channel_id\\\":\\\"C0123456789\\\",\\\"text\\\":\\\"Hey team, here's a new wireframe for the new feature request\\\"}\" 4. reasoning: Clear explanation of why this action is valuable - Connect to specific project goals or requirements - Explain the expected outcome and benefit 5. priority & estimatedImpact: Help prioritize execution - Both fields accept \"high\", \"medium\", or \"low\" values - Used to sort and prioritize the execution of suggestions Example Suggestion: \"mcpServerName\": \"Slack\", \"toolName\": \"slack_post_message\", \"toolInput\": \"{\\\"channel_id\\\":\\\"C0123456789\\\",\\\"text\\\":\\\"Hey team, here's a new wireframe for the new feature request\\\"}\", \"reasoning\": \"The design team needs to be notified about the new wireframe requirements\", \"priority\": \"high\", \"estimatedImpact\": \"medium\" WORKFLOW FOR USING THIS TOOL: 1. Initialize with your taskId and relevant context 2. Process iteratively through a series of thoughts, building a coherent set of suggestions 3. Each thought should evaluate current suggestions and identify potential new ones 4. When your suggestions are complete and well-formed, set shouldFinalize to true 5. The system will validate, store, and prepare your suggestions for PM review RESEARCH INTEGRATION GUIDELINES: Research phases dictate when to generate suggestions: - initializing: Too early for action suggestions - researching: Focus on research-enhancing suggestions only - analyzing: Begin suggesting preliminary actions based on early findings - completed: Provide comprehensive action suggestions based on complete research Only suggest final actions when research is in the 'completed' phase.",
+          "parameters": []
+        },
+        {
+          "name": "generateQuestionsForProductManager",
+          "description": "A strategic question tool that analyzes research findings to identify knowledge gaps and generate product-focused questions. This tool bridges the gap between research and action by identifying knowledge gaps and creating targeted questions that help: 1. Clarify user needs and priorities 2. Resolve ambiguities in requirements 3. Surface potential issues early 4. Guide further research if needed 5. Connect tactical findings to strategic product vision Key Features: - Creates questions directly tied to research findings - Provides reasoning for each question's importance - Prioritizes questions based on impact and urgency - Maintains clear context chains between research and questions - Ensures comprehensive understanding before moving to the suggestion phase Each question generated will include: - The specific question text - Reasoning why this question is important - Priority level (high/medium/low) - Reference to the specific research finding that triggered it The tool follows PM best practices by: - Asking open-ended questions to reveal unexpected insights - Creating targeted questions to validate assumptions - Focusing on user value and business impact - Considering technical feasibility questions - Structuring questions to reveal priorities How it works: 1. Analyzes the research context provided 2. Identifies ambiguities, gaps, and potential misalignments 3. Formulates clear, specific questions to address these issues 4. Prioritizes questions based on blocking/critical nature 5. Stores questions in a structured format for review STRATEGIC QUESTION CATEGORIES: 1. User Value Questions - What specific problems does this feature solve for our users? - How does this capability align with our users' primary workflows? - Which user segments would benefit most from this capability? 2. Market & Competitive Questions - How do similar features in competitive products differ from our approach? - What unique advantage could this feature provide in the market? - Are there partnership opportunities related to this capability? 3. Product Strategy Questions - How does this feature align with our broader product vision? - What dependencies exist between this feature and our product roadmap? - What technical constraints might impact our implementation approach? 4. Implementation Questions - What are the technical feasibility concerns for this approach? - What are potential integration points with existing systems? - What timeline considerations should we be aware of? 5. Business Impact Questions - What metrics would be impacted by implementing this feature? - Are there revenue or cost implications we should consider? - How might this feature affect customer retention or expansion? The questions will be stored in a database with connections to both: - The original research findings that prompted them - Any future suggestions that depend on their answers When used with a task ID, questions will be properly associated with that task for streamlined workflow management. This creates a complete audit trail of the product decision process.",
+          "parameters": []
+        },
+        {
+          "name": "createTaskConfigForProductManager",
+          "description": "A powerful tool for creating reusable task templates that define how tasks are executed and structured. Task configurations serve as templates that standardize task execution across your workflow. They define the instructions, default tools, and structure that should be used when tasks are created, either manually or via triggers. TASK CONFIG COMPONENTS: - Name and description: For easy identification in the system - Instructions: Detailed guidance for the AI when executing this task type - Default tools: Pre-selected tools that should be used with this task type - Trigger association: Links this task template to specific trigger events BEST PRACTICES: - Write clear, specific instructions for consistent task execution - Include all relevant default tools needed for the task type - Create different task configs for different research needs - Use descriptive names that indicate the purpose of the config Available MCP servers: - No tools configured yet Inside of the MCP servers, you have access to individual tools and functions. These aren't listed but you can look at yourself and see what you can use as we're basically talking about you and your available tools and functions. Use these individual tools and functions to create your task configs and fill in the default tools field.",
+          "parameters": []
+        },
+        {
+          "name": "updateTaskConfigForProductManager",
+          "description": "A powerful tool for updating reusable task templates that define how tasks are executed and structured. Task configurations serve as templates that standardize task execution across your workflow. They define the instructions, default tools, and structure that should be used when tasks are created, either manually or via triggers. TASK CONFIG COMPONENTS: - Name and description: For easy identification in the system - Instructions: Detailed guidance for the AI when executing this task type - Default tools: Pre-selected tools that should be used with this task type - Trigger association: Links this task template to specific trigger events BEST PRACTICES: - Write clear, specific instructions for consistent task execution - Include all relevant default tools needed for the task type - Create different task configs for different research needs - Use descriptive names that indicate the purpose of the config Available MCP servers: - No tools configured yet Inside of the MCP servers, you have access to individual tools and functions. These aren't listed but you can look at yourself and see what you can use as we're basically talking about you and your available tools and functions. Use these individual tools and functions to create your task configs and fill in the default tools field.",
+          "parameters": []
+        },
+        {
+          "name": "createTriggerConfigForProductManager",
+          "description": "A comprehensive tool for creating trigger configurations that define when and how tasks are automatically created. Trigger configurations serve as the entry point for task creation in the automation workflow. They define the conditions and events that initiate tasks, connecting your MCP servers (like Slack, Linear, Loom, Figjam) with automated task generation. TRIGGER TYPES ARE LIKE FUNCTIONS OF MCP SERVERS: Each MCP server offers different trigger capabilities that you can configure: - 'incoming_slack_message': Slack's function to monitor and react to specific messages - 'new_linear_ticket': Linear's capability to detect and process new tickets - 'scheduled': System-level function for time-based automation - 'manual': Direct user-initiated triggers TRIGGER CATEGORIES: - MONITORING triggers: Detect specific content or events in platforms (messages, comments, status changes) - CREATION triggers: React when new items are added to connected platforms - TEMPORAL triggers: Execute based on time patterns (daily, weekly, monthly) - MANUAL triggers: Allow direct user control when needed CONFIGURATION OPTIONS: Each trigger type requires specific configuration details: - For 'incoming_slack_message': Specify channels, keywords, or user roles - For 'new_linear_ticket': Define ticket properties or labels - For 'scheduled': Set frequency, time, and days of execution - For 'manual': No additional configuration required WORKFLOW FOR USING TRIGGERS: 1. Identify which MCP server contains the data or events you want to monitor 2. Select the appropriate trigger type from that server's capabilities 3. Configure the trigger with specific parameters 4. Associate this trigger with task configurations to define what happens when triggered 5. Activate the trigger to begin automation RECOMMENDED USE CASES: - Set up automated research for regular product team meetings - Create triggers for customer feedback monitoring in specific channels - Configure scheduled competitive analysis or market research - Establish triggers for specific project milestone events",
+          "parameters": []
+        },
+        {
+          "name": "imageDescriptionForProductManager",
+          "description": "Given an image URL, this tool uses OpenAI's responses endpoint to generate a description of the image. If the image is a Slack image (private), set 'is_slack_image' to true and provide the 'url_private_download' from Slack. The tool will fetch the image using the Slack bot token before sending it to OpenAI.",
+          "parameters": [
+            {
+              "name": "imageDescriptionForProductManager",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "fileDescriptionForProductManager",
+          "description": "Given a file URL, this tool uses OpenAI's responses endpoint to generate a description or answer questions about the file. Supports any file type that OpenAI accepts (e.g., PDF, DOCX, TXT). If the file is a Slack file (private), set 'is_slack_file' to true and provide the 'url_private_download' from Slack. The tool will fetch the file using the Slack bot token before sending it to OpenAI.",
+          "parameters": [
+            {
+              "name": "fileDescriptionForProductManager",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@MinimumDaan/mcpm-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "supabaseServiceRoleKey",
+          "required": true,
+          "description": "Supabase service role key"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@MinimumDaan/mcpm-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1966.@MinimumDaan_mcpm-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1724
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is specifically designed to provide real-time AWS EC2 pricing and specifications, allowing users to query and compare various instance types based on detailed criteria. It enables finding the most cost-effective instances matching specific hardware and software requirements, complete with sorting options and pagination for large result sets. The server also integrates with third-party solutions like RightSpend to offer flexible cost management for AWS resources.",
+    "reasoning": "The primary label \"Cloud Services\" was chosen because the server's core functionality revolves around AWS cloud resource management, particularly EC2 instances. The secondary label \"Data Analysis & Processing\" is relevant due to its filtering and sorting capabilities for comparing instance specifications and pricing. \"Financial Services\" is also relevant given its focus on cost optimization and pricing analysis.",
+    "primary_label": "Cloud Services",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Financial Services"
+    ],
+    "custom_label": "AWS EC2 Cost Optimization",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2401,
+    "server_name": "AWS EC2 Pricing",
+    "rank_by_usage": 2402,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@trilogy-group_aws-pricing-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@trilogy-group/aws-pricing-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "find_instances",
+          "description": "\nFind AWS EC2 instances based on specified criteria.\n\nFilter Parameters:\n- region: AWS region (default: us-east-1)\n- platform: OS platform (one of: Linux/UNIX, Red Hat Enterprise Linux, Red Hat Enterprise Linux with HA, Red Hat Enterprise Linux with SQL Server Standard and HA, Red Hat Enterprise Linux with SQL Server Enterprise and HA, Red Hat Enterprise Linux with SQL Server Standard, Red Hat Enterprise Linux with SQL Server Web, Linux with SQL Server Enterprise, Linux with SQL Server Standard, Linux with SQL Server Web, SUSE Linux, Windows, Windows BYOL, Windows with SQL Server Enterprise, Windows with SQL Server Standard, Windows with SQL Server Web; default: Linux/UNIX)\n- tenancy: Instance tenancy (one of: Shared, Dedicated; default: Shared)\n- pricing_model: Pricing model (one of: On Demand, 1-yr No Upfront, 1-yr Partial Upfront, 1-yr All Upfront, 3-yr No Upfront, 3-yr Partial Upfront, 3-yr All Upfront; default: On Demand)\n- min_vcpu: Minimum number of vCPUs (default: 0)\n- min_ram: Minimum amount of RAM in GB (default: 0)\n- min_gpu: Minimum number of GPUs (default: 0)\n- min_gpu_memory: Minimum GPU memory in GB (default: 0)\n- min_cpu_ghz: Minimum CPU clock speed in GHz (default: 0)\n- min_network_performance: Minimum network performance in Mbps (default: 0)\n- min_ebs_throughput: Minimum dedicated EBS throughput in Mbps (default: 0)\n- max_price_per_hour: Maximum price per hour in USD (default: no limit)\n- sort_by: Field to sort by (one of: Price, Clock Speed GHz, vCPU cores, Memory GB, Ephemeral Storage GB, Network Performance Mbps, Dedicated EBS Throughput Mbps, GPU cores, GPU Memory GB; default: Price)\n- sort_order: Sort order (one of: Ascending, Descending; default: Descending)\n- family: Filter by instance family (e.g., \"m5\", \"c6g\"; default: \"\" for all families)\n- size: Filter by instance size (e.g., \"large\", \"2xlarge\"; default: \"\" for all sizes)\n- processor: Filter by physical processor (e.g., \"Graviton\", \"Xeon\", \"AMD\"; default: \"\" for all processors)\n- page_num: Page number for pagination (default: 0)\n\nReturns:\n- List of instances matching the criteria (5 per page). CloudFix RightSpend pricing is provided when using the flexible cRIs provided by RightSpend (a third-party solution). The benefit of RightSpend is that it 1) eliminates the need for complex forecasting or frequent consultations with engineering about usage fluctuations 2) removes the risk of unused reservations 3) provides 3-yr All Upfront discounts without the need for prepayment.\n\n",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "filter_region": {
+                "default": "us-east-1",
+                "title": "Filter Region",
+                "type": "string"
+              },
+              "filter_platform": {
+                "default": "Linux/UNIX",
+                "title": "Filter Platform",
+                "type": "string"
+              },
+              "filter_tenancy": {
+                "default": "Shared",
+                "title": "Filter Tenancy",
+                "type": "string"
+              },
+              "filter_pricing_model": {
+                "default": "On Demand",
+                "title": "Filter Pricing Model",
+                "type": "string"
+              },
+              "filter_min_vcpu": {
+                "default": 0,
+                "title": "Filter Min Vcpu",
+                "type": "integer"
+              },
+              "filter_min_ram": {
+                "default": 0,
+                "title": "Filter Min Ram",
+                "type": "number"
+              },
+              "filter_min_gpu": {
+                "default": 0,
+                "title": "Filter Min Gpu",
+                "type": "integer"
+              },
+              "filter_min_gpu_memory": {
+                "default": 0,
+                "title": "Filter Min Gpu Memory",
+                "type": "integer"
+              },
+              "filter_min_cpu_ghz": {
+                "default": 0,
+                "title": "Filter Min Cpu Ghz",
+                "type": "number"
+              },
+              "filter_min_network_performance": {
+                "default": 0,
+                "title": "Filter Min Network Performance",
+                "type": "integer"
+              },
+              "filter_min_ebs_throughput": {
+                "default": 0,
+                "title": "Filter Min Ebs Throughput",
+                "type": "integer"
+              },
+              "filter_max_price_per_hour": {
+                "default": null,
+                "title": "Filter Max Price Per Hour",
+                "type": "number"
+              },
+              "filter_family": {
+                "default": "",
+                "title": "Filter Family",
+                "type": "string"
+              },
+              "filter_size": {
+                "default": "",
+                "title": "Filter Size",
+                "type": "string"
+              },
+              "filter_processor": {
+                "default": "",
+                "title": "Filter Processor",
+                "type": "string"
+              },
+              "sort_by": {
+                "default": "Price",
+                "title": "Sort By",
+                "type": "string"
+              },
+              "sort_order": {
+                "default": "Descending",
+                "title": "Sort Order",
+                "type": "string"
+              },
+              "page_num": {
+                "default": 0,
+                "title": "Page Num",
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "find_instances"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2401,
+      "name": "AWS EC2 Pricing",
+      "author": "@trilogy-group/aws-pricing-mcp",
+      "overview": "Query real-time AWS EC2 instance pricing and specifications with a single call. Find the cheapest instances matching specific criteria, compare CPU speeds, discounts, and software options effortlessly. Enable LLMs or automation scripts to access up-to-date EC2 pricing data instantly.",
+      "repository_url": "https://github.com/trilogy-group/aws-pricing-mcp",
+      "homepage": "https://smithery.ai/server/@trilogy-group/aws-pricing-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@trilogy-group_aws-pricing-mcp.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "find_instances",
+          "description": "\nFind AWS EC2 instances based on specified criteria.\n\nFilter Parameters:\n- region: AWS region (default: us-east-1)\n- platform: OS platform (one of: Linux/UNIX, Red Hat Enterprise Linux, Red Hat Enterprise Linux with HA, Red Hat Enterprise Linux with SQL Server Standard and HA, Red Hat Enterprise Linux with SQL Server Enterprise and HA, Red Hat Enterprise Linux with SQL Server Standard, Red Hat Enterprise Linux with SQL Server Web, Linux with SQL Server Enterprise, Linux with SQL Server Standard, Linux with SQL Server Web, SUSE Linux, Windows, Windows BYOL, Windows with SQL Server Enterprise, Windows with SQL Server Standard, Windows with SQL Server Web; default: Linux/UNIX)\n- tenancy: Instance tenancy (one of: Shared, Dedicated; default: Shared)\n- pricing_model: Pricing model (one of: On Demand, 1-yr No Upfront, 1-yr Partial Upfront, 1-yr All Upfront, 3-yr No Upfront, 3-yr Partial Upfront, 3-yr All Upfront; default: On Demand)\n- min_vcpu: Minimum number of vCPUs (default: 0)\n- min_ram: Minimum amount of RAM in GB (default: 0)\n- min_gpu: Minimum number of GPUs (default: 0)\n- min_gpu_memory: Minimum GPU memory in GB (default: 0)\n- min_cpu_ghz: Minimum CPU clock speed in GHz (default: 0)\n- min_network_performance: Minimum network performance in Mbps (default: 0)\n- min_ebs_throughput: Minimum dedicated EBS throughput in Mbps (default: 0)\n- max_price_per_hour: Maximum price per hour in USD (default: no limit)\n- sort_by: Field to sort by (one of: Price, Clock Speed GHz, vCPU cores, Memory GB, Ephemeral Storage GB, Network Performance Mbps, Dedicated EBS Throughput Mbps, GPU cores, GPU Memory GB; default: Price)\n- sort_order: Sort order (one of: Ascending, Descending; default: Descending)\n- family: Filter by instance family (e.g., \"m5\", \"c6g\"; default: \"\" for all families)\n- size: Filter by instance size (e.g., \"large\", \"2xlarge\"; default: \"\" for all sizes)\n- processor: Filter by physical processor (e.g., \"Graviton\", \"Xeon\", \"AMD\"; default: \"\" for all processors)\n- page_num: Page number for pagination (default: 0)\n\nReturns:\n- List of instances matching the criteria (5 per page). CloudFix RightSpend pricing is provided when using the flexible cRIs provided by RightSpend (a third-party solution). The benefit of RightSpend is that it 1) eliminates the need for complex forecasting or frequent consultations with engineering about usage fluctuations 2) removes the risk of unused reservations 3) provides 3-yr All Upfront discounts without the need for prepayment.\n\n",
+          "input_schema": {
+            "additionalProperties": false,
+            "properties": {
+              "filter_region": {
+                "default": "us-east-1",
+                "title": "Filter Region",
+                "type": "string"
+              },
+              "filter_platform": {
+                "default": "Linux/UNIX",
+                "title": "Filter Platform",
+                "type": "string"
+              },
+              "filter_tenancy": {
+                "default": "Shared",
+                "title": "Filter Tenancy",
+                "type": "string"
+              },
+              "filter_pricing_model": {
+                "default": "On Demand",
+                "title": "Filter Pricing Model",
+                "type": "string"
+              },
+              "filter_min_vcpu": {
+                "default": 0,
+                "title": "Filter Min Vcpu",
+                "type": "integer"
+              },
+              "filter_min_ram": {
+                "default": 0,
+                "title": "Filter Min Ram",
+                "type": "number"
+              },
+              "filter_min_gpu": {
+                "default": 0,
+                "title": "Filter Min Gpu",
+                "type": "integer"
+              },
+              "filter_min_gpu_memory": {
+                "default": 0,
+                "title": "Filter Min Gpu Memory",
+                "type": "integer"
+              },
+              "filter_min_cpu_ghz": {
+                "default": 0,
+                "title": "Filter Min Cpu Ghz",
+                "type": "number"
+              },
+              "filter_min_network_performance": {
+                "default": 0,
+                "title": "Filter Min Network Performance",
+                "type": "integer"
+              },
+              "filter_min_ebs_throughput": {
+                "default": 0,
+                "title": "Filter Min Ebs Throughput",
+                "type": "integer"
+              },
+              "filter_max_price_per_hour": {
+                "default": null,
+                "title": "Filter Max Price Per Hour",
+                "type": "number"
+              },
+              "filter_family": {
+                "default": "",
+                "title": "Filter Family",
+                "type": "string"
+              },
+              "filter_size": {
+                "default": "",
+                "title": "Filter Size",
+                "type": "string"
+              },
+              "filter_processor": {
+                "default": "",
+                "title": "Filter Processor",
+                "type": "string"
+              },
+              "sort_by": {
+                "default": "Price",
+                "title": "Sort By",
+                "type": "string"
+              },
+              "sort_order": {
+                "default": "Descending",
+                "title": "Sort Order",
+                "type": "string"
+              },
+              "page_num": {
+                "default": 0,
+                "title": "Page Num",
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@trilogy-group/aws-pricing-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@trilogy-group/aws-pricing-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2402.@trilogy-group_aws-pricing-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 2055
+  }
+}

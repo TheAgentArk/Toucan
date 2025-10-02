@@ -1,0 +1,200 @@
+{
+  "labels": {
+    "analysis": "The BrowserCat MCP Server provides a cloud-based browser automation service, allowing users to navigate websites, take screenshots, interact with web elements (e.g., clicking, filling forms), and execute JavaScript in a real browser environment without requiring local installations. Its core functionality revolves around automating web interactions, which is primarily useful for web scraping, browser testing, and enhancing LLM capabilities with real-time web data.",
+    "reasoning": "The primary label \"Browser Automation\" is chosen because the server's main tools (navigation, clicking, filling forms, etc.) are designed for automated web interactions. The secondary label \"Web Search & Research\" is included because the ability to navigate and extract data from websites is valuable for research and data gathering. The tools also enable \"API Integration\" if used to fetch data from websites for other applications.",
+    "primary_label": "Browser Automation",
+    "secondary_labels": [
+      "Web Search & Research",
+      "API Integration"
+    ],
+    "custom_label": "Cloud Browser Automation",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1816,
+    "server_name": "BrowserCat MCP Server",
+    "rank_by_usage": 1817,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@browsercat_browsercat-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@browsercat/browsercat-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1816,
+      "name": "BrowserCat MCP Server",
+      "author": "@browsercat/browsercat-mcp-server",
+      "overview": "Automate web interactions effortlessly with our cloud-based browser service. Navigate, take screenshots, and execute JavaScript in a real browser environment without any local installations. Enhance your LLM capabilities with seamless browser automation.",
+      "repository_url": "https://github.com/browsercat/browsercat-mcp-server",
+      "homepage": "https://smithery.ai/server/@browsercat/browsercat-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@browsercat_browsercat-mcp-server.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "browsercat_navigate",
+          "description": "Deploy Server BrowserCat MCP Server Claim Server @browsercat/browsercat-mcp-server Try in Playground browsercat_navigate",
+          "parameters": [
+            {
+              "name": "browsercat_navigate",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Navigate",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "to",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "a",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "URL",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "url",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "browsercat_screenshot",
+          "description": "Take a screenshot of the current page or a specific element",
+          "parameters": [
+            {
+              "name": "browsercat_screenshot",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "browsercat_click",
+          "description": "Click an element on the page",
+          "parameters": [
+            {
+              "name": "browsercat_click",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "selector",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "browsercat_fill",
+          "description": "Fill out an input field",
+          "parameters": [
+            {
+              "name": "value",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "selector",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "browsercat_select",
+          "description": "Select an option from a dropdown menu",
+          "parameters": [
+            {
+              "name": "value",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "selector",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "browsercat_hover",
+          "description": "Hover over an element on the page",
+          "parameters": [
+            {
+              "name": "browsercat_hover",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "selector",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "browsercat_evaluate",
+          "description": "Execute JavaScript in the browser console",
+          "parameters": [
+            {
+              "name": "browsercat_evaluate",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "script",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@browsercat/browsercat-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "browsercatApiKey",
+          "required": true,
+          "description": "Your BrowserCat API key to access the BrowserCat cloud browser service."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@browsercat/browsercat-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1817.@browsercat_browsercat-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1615
+  }
+}

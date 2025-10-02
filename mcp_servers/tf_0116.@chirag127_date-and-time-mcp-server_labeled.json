@@ -1,0 +1,154 @@
+{
+  "labels": {
+    "analysis": "The MCP Server primarily functions as a Date and Time Server, providing accurate current date and time information across multiple formats and timezones. It includes tools for timezone conversions and customized date formatting, with capabilities for robust error handling. This makes it essential for AI applications that require real-time temporal data integration to function correctly and efficiently.",
+    "reasoning": "The primary label \"Time & Calendar\" was chosen because the server's core functionality revolves around providing and managing date and time information, which aligns closely with time-related tools. No secondary labels are needed as the predefined categories sufficiently cover all the server's functionalities without overlaps.",
+    "primary_label": "Time & Calendar",
+    "secondary_labels": [],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 115,
+    "server_name": "Date and Time Server",
+    "rank_by_usage": 116,
+    "usage_count": "586",
+    "original_file": "../crawler/smithery/@chirag127_date-and-time-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@chirag127/date-and-time-mcp-server/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAiZGVmYXVsdEZvcm1hdCI6ICJJU08iLCAiZGVmYXVsdExvY2FsZSI6ICJlbi1VUyIsICJkZWZhdWx0VGltZXpvbmUiOiAiVVRDIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "getCurrentDateTime",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "format": {
+                "type": "string",
+                "description": "Format to return the date/time in (ISO, UNIX, RFC2822, HTTP, SQL, or a custom format string)"
+              },
+              "timezone": {
+                "type": "string",
+                "description": "Timezone to convert to (IANA timezone identifier)"
+              },
+              "locale": {
+                "type": "string",
+                "description": "Locale to use for formatting"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getTimezoneInfo",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "timezone": {
+                "type": "string",
+                "description": "Timezone to get information about (IANA timezone identifier)"
+              }
+            },
+            "required": [
+              "timezone"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "getCurrentDateTime",
+        "getTimezoneInfo"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 115,
+      "name": "Date and Time Server",
+      "author": "@chirag127/date-and-time-mcp-server",
+      "overview": "Provide AI agents with accurate current date and time information in multiple formats and timezones. Enable timezone conversions and customized date formatting with robust error handling. Enhance AI applications by integrating real-time temporal data effortlessly.",
+      "repository_url": "https://github.com/chirag127/date-and-time-mcp-server",
+      "homepage": "https://smithery.ai/server/@chirag127/date-and-time-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "586",
+      "success_rate": "99.84%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@chirag127_date-and-time-mcp-server.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "getCurrentDateTime",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "format": {
+                "type": "string",
+                "description": "Format to return the date/time in (ISO, UNIX, RFC2822, HTTP, SQL, or a custom format string)"
+              },
+              "timezone": {
+                "type": "string",
+                "description": "Timezone to convert to (IANA timezone identifier)"
+              },
+              "locale": {
+                "type": "string",
+                "description": "Locale to use for formatting"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getTimezoneInfo",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "timezone": {
+                "type": "string",
+                "description": "Timezone to get information about (IANA timezone identifier)"
+              }
+            },
+            "required": [
+              "timezone"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"defaultFormat\": \"ISO\",\n  \"defaultLocale\": \"en-US\",\n  \"defaultTimezone\": \"UTC\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@chirag127/date-and-time-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"defaultFormat\": \"ISO\",\n  \"defaultLocale\": \"en-US\",\n  \"defaultTimezone\": \"UTC\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@chirag127/date-and-time-mcp-server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0116.@chirag127_date-and-time-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 113
+  }
+}

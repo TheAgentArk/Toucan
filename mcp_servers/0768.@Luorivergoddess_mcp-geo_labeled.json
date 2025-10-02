@@ -1,0 +1,146 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is specifically designed to generate precise geometric images from Asymptote code, a programming language used for vector graphics. Its primary function is to render mathematical and geometric diagrams in either SVG or PNG formats, with customizable quality settings. The server integrates with MCP-compatible AI clients, making it particularly useful for visualizing complex concepts in fields like mathematics, engineering, or data science.",
+    "reasoning": "The primary label is selected based on the server's core functionality of generating and rendering diagrams, which falls under Content Creation. The secondary labels include \"Education\" due to its applications in teaching mathematics and geometry, and \"AI/ML Tools\" because it integrates with AI clients to enhance visualization capabilities. No custom label is needed as the functionality is well-covered by the predefined categories.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "Education",
+      "AI/ML Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 767,
+    "server_name": "Geometric Image Generator",
+    "rank_by_usage": 768,
+    "usage_count": "8",
+    "original_file": "../crawler/smithery/@Luorivergoddess_mcp-geo.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Luorivergoddess/mcp-geo/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "renderGeometricImage",
+          "description": "Renders an image from Asymptote code.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "asyCode": {
+                "type": "string",
+                "description": "A string containing complete and valid Asymptote code to be compiled. The server executes this code directly. Ensure necessary `import` statements (e.g., `import graph;`) and settings (e.g., `unitsize(1cm);`) are included within this code block if needed."
+              },
+              "outputParams": {
+                "type": "object",
+                "description": "Optional parameters to control the output image.",
+                "properties": {
+                  "format": {
+                    "type": "string",
+                    "enum": [
+                      "svg",
+                      "png"
+                    ],
+                    "description": "The desired output image format. \"svg\" (default) produces scalable vector graphics, ideal for high-quality diagrams and plots. \"png\" produces raster graphics, which have broader compatibility with clients that may not support SVG directly (e.g., some versions of Cherry Studio). If targeting such clients, explicitly specify \"png\"."
+                  },
+                  "renderLevel": {
+                    "type": "number",
+                    "description": "For PNG output only. Specifies the rendering quality (supersampling level for antialiasing). Higher values (e.g., 4 or 8) produce smoother images but take longer to render and result in larger files. Asymptote's own default is 2. This server defaults to 4 if \"png\" format is chosen and renderLevel is not specified. Ignored for SVG output."
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "asyCode"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "renderGeometricImage"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 767,
+      "name": "Geometric Image Generator",
+      "author": "@Luorivergoddess/mcp-geo",
+      "overview": "Generate precise geometric images by providing Asymptote code. Render images in SVG or PNG formats with customizable quality settings. Integrate seamlessly with MCP-compatible AI clients to visualize mathematical and geometric diagrams.",
+      "repository_url": "https://github.com/Luorivergoddess/mcp-geo",
+      "homepage": "https://smithery.ai/server/@Luorivergoddess/mcp-geo",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "8",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Luorivergoddess_mcp-geo.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "renderGeometricImage",
+          "description": "Renders an image from Asymptote code.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "asyCode": {
+                "type": "string",
+                "description": "A string containing complete and valid Asymptote code to be compiled. The server executes this code directly. Ensure necessary `import` statements (e.g., `import graph;`) and settings (e.g., `unitsize(1cm);`) are included within this code block if needed."
+              },
+              "outputParams": {
+                "type": "object",
+                "description": "Optional parameters to control the output image.",
+                "properties": {
+                  "format": {
+                    "type": "string",
+                    "enum": [
+                      "svg",
+                      "png"
+                    ],
+                    "description": "The desired output image format. \"svg\" (default) produces scalable vector graphics, ideal for high-quality diagrams and plots. \"png\" produces raster graphics, which have broader compatibility with clients that may not support SVG directly (e.g., some versions of Cherry Studio). If targeting such clients, explicitly specify \"png\"."
+                  },
+                  "renderLevel": {
+                    "type": "number",
+                    "description": "For PNG output only. Specifies the rendering quality (supersampling level for antialiasing). Higher values (e.g., 4 or 8) produce smoother images but take longer to render and result in larger files. Asymptote's own default is 2. This server defaults to 4 if \"png\" format is chosen and renderLevel is not specified. Ignored for SVG output."
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "asyCode"
+            ],
+            "additionalProperties": false
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Luorivergoddess/mcp-geo/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Luorivergoddess/mcp-geo/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0768.@Luorivergoddess_mcp-geo_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 750
+  }
+}

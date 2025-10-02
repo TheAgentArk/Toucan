@@ -1,0 +1,1257 @@
+{
+  "labels": {
+    "analysis": "The Comexstat Data Server specializes in providing access to Brazilian foreign trade statistics. It allows querying detailed export and import data, municipal statistics, historical records, and auxiliary tables. The tools enable interactions with various levels of geographic and economic classifications (states, cities, countries, economic blocks, etc.), harmonized system codes, and trade-specific metrics. The server is designed to empower AI models for trade data analysis, making it a valuable resource for economic research, business intelligence, and policy decision-making.",
+    "reasoning": "The primary label \"Data Analysis & Processing\" is chosen because the server's core functionality involves querying, analyzing, and processing foreign trade data. Secondary labels \"Financial Services\" and \"E-con-omic for Analysis\" are added since the data is heavily tied to trade economics and financial metrics. A custom label is used to highlight the server's specific focus on Brazilian trade statistics.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [
+      "Financial Services",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Brazilian Foreign Trade Database",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2090,
+    "server_name": "Comexstat Data Server (Brazilian foreign trade statistics)",
+    "rank_by_usage": 2091,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@luizzzvictor_mcp-comexstat.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@luizzzvictor/mcp-comexstat/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "getLastUpdate",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAvailableYears",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAvailableFilters",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getFilterValues",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "filter"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAvailableFields",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAvailableMetrics",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "queryData",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "flow": {
+                "type": "string",
+                "enum": [
+                  "export",
+                  "import"
+                ]
+              },
+              "monthDetail": {
+                "type": "boolean"
+              },
+              "period": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  },
+                  "to": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "filter": {
+                      "type": "string",
+                      "enum": [
+                        "country",
+                        "state",
+                        "economicBlock",
+                        "section",
+                        "chapter",
+                        "position",
+                        "subposition",
+                        "ncm"
+                      ]
+                    },
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "required": [
+                    "filter",
+                    "values"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "country",
+                    "state",
+                    "economicBlock",
+                    "section",
+                    "chapter",
+                    "position",
+                    "subposition",
+                    "ncm"
+                  ]
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "metricFOB",
+                    "metricKG",
+                    "metricStatistic",
+                    "metricFreight",
+                    "metricInsurance",
+                    "metricCIF"
+                  ]
+                }
+              },
+              "language": {
+                "type": "string",
+                "default": "pt"
+              }
+            },
+            "required": [
+              "flow",
+              "monthDetail",
+              "period",
+              "details",
+              "metrics"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "queryMunicipalitiesData",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "flow": {
+                "type": "string",
+                "enum": [
+                  "export",
+                  "import"
+                ]
+              },
+              "period": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  },
+                  "to": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              },
+              "monthDetail": {
+                "type": "boolean",
+                "default": false
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "filter": {
+                      "type": "string"
+                    },
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "required": [
+                    "filter",
+                    "values"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "language": {
+                "type": "string",
+                "default": "pt"
+              }
+            },
+            "required": [
+              "flow",
+              "period",
+              "details",
+              "metrics"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "queryHistoricalData",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "flow": {
+                "type": "string",
+                "enum": [
+                  "export",
+                  "import"
+                ]
+              },
+              "period": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  },
+                  "to": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              },
+              "monthDetail": {
+                "type": "boolean",
+                "default": false
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "filter": {
+                      "type": "string"
+                    },
+                    "values": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "number"
+                          }
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "filter",
+                    "values"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "language": {
+                "type": "string",
+                "default": "pt"
+              }
+            },
+            "required": [
+              "flow",
+              "period",
+              "details",
+              "metrics"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAuxiliaryTable",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string"
+              },
+              "search": {
+                "type": "string"
+              },
+              "page": {
+                "type": "number"
+              },
+              "pageSize": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "table"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStates",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStateDetails",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ufId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "ufId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCities",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCityDetails",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cityId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "cityId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCountries",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "search": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCountryDetails",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "countryId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "countryId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getEconomicBlocks",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "default": "pt"
+              },
+              "add": {
+                "type": "string"
+              },
+              "search": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getHarmonizedSystem",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "default": "pt"
+              },
+              "page": {
+                "type": "number",
+                "default": 1
+              },
+              "perPage": {
+                "type": "number",
+                "default": 10
+              },
+              "add": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNBM",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "default": "pt"
+              },
+              "page": {
+                "type": "number",
+                "default": 1
+              },
+              "perPage": {
+                "type": "number",
+                "default": 5
+              },
+              "add": {
+                "type": "string"
+              },
+              "search": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNBMDetails",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "coNbm": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "coNbm"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 20,
+      "tool_names": [
+        "getLastUpdate",
+        "getAvailableYears",
+        "getAvailableFilters",
+        "getFilterValues",
+        "getAvailableFields",
+        "getAvailableMetrics",
+        "queryData",
+        "queryMunicipalitiesData",
+        "queryHistoricalData",
+        "getAuxiliaryTable",
+        "getStates",
+        "getStateDetails",
+        "getCities",
+        "getCityDetails",
+        "getCountries",
+        "getCountryDetails",
+        "getEconomicBlocks",
+        "getHarmonizedSystem",
+        "getNBM",
+        "getNBMDetails"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2090,
+      "name": "Comexstat Data Server (Brazilian foreign trade statistics)",
+      "author": "@luizzzvictor/mcp-comexstat",
+      "overview": "Provide direct access to Brazilian foreign trade statistics through a comprehensive MCP server. Query detailed export and import data, municipal statistics, historical records, and auxiliary tables with ease. Empower AI models to interact seamlessly with up-to-date trade data for insightful analysis and decision-making.",
+      "repository_url": "https://github.com/luizzzvictor/mcp-comexstat",
+      "homepage": "https://smithery.ai/server/@luizzzvictor/mcp-comexstat",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@luizzzvictor_mcp-comexstat.json",
+      "tools_count": 20,
+      "tools": [
+        {
+          "name": "getLastUpdate",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAvailableYears",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAvailableFilters",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getFilterValues",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "filter": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "filter"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAvailableFields",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAvailableMetrics",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "queryData",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "flow": {
+                "type": "string",
+                "enum": [
+                  "export",
+                  "import"
+                ]
+              },
+              "monthDetail": {
+                "type": "boolean"
+              },
+              "period": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  },
+                  "to": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "filter": {
+                      "type": "string",
+                      "enum": [
+                        "country",
+                        "state",
+                        "economicBlock",
+                        "section",
+                        "chapter",
+                        "position",
+                        "subposition",
+                        "ncm"
+                      ]
+                    },
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "required": [
+                    "filter",
+                    "values"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "country",
+                    "state",
+                    "economicBlock",
+                    "section",
+                    "chapter",
+                    "position",
+                    "subposition",
+                    "ncm"
+                  ]
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "metricFOB",
+                    "metricKG",
+                    "metricStatistic",
+                    "metricFreight",
+                    "metricInsurance",
+                    "metricCIF"
+                  ]
+                }
+              },
+              "language": {
+                "type": "string",
+                "default": "pt"
+              }
+            },
+            "required": [
+              "flow",
+              "monthDetail",
+              "period",
+              "details",
+              "metrics"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "queryMunicipalitiesData",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "flow": {
+                "type": "string",
+                "enum": [
+                  "export",
+                  "import"
+                ]
+              },
+              "period": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  },
+                  "to": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              },
+              "monthDetail": {
+                "type": "boolean",
+                "default": false
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "filter": {
+                      "type": "string"
+                    },
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "required": [
+                    "filter",
+                    "values"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "language": {
+                "type": "string",
+                "default": "pt"
+              }
+            },
+            "required": [
+              "flow",
+              "period",
+              "details",
+              "metrics"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "queryHistoricalData",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "flow": {
+                "type": "string",
+                "enum": [
+                  "export",
+                  "import"
+                ]
+              },
+              "period": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  },
+                  "to": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}$"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              },
+              "monthDetail": {
+                "type": "boolean",
+                "default": false
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "filter": {
+                      "type": "string"
+                    },
+                    "values": {
+                      "anyOf": [
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "number"
+                          }
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "filter",
+                    "values"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "details": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "language": {
+                "type": "string",
+                "default": "pt"
+              }
+            },
+            "required": [
+              "flow",
+              "period",
+              "details",
+              "metrics"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getAuxiliaryTable",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string"
+              },
+              "search": {
+                "type": "string"
+              },
+              "page": {
+                "type": "number"
+              },
+              "pageSize": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "table"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStates",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getStateDetails",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "ufId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "ufId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCities",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCityDetails",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cityId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "cityId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCountries",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "search": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getCountryDetails",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "countryId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "countryId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getEconomicBlocks",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "default": "pt"
+              },
+              "add": {
+                "type": "string"
+              },
+              "search": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getHarmonizedSystem",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "default": "pt"
+              },
+              "page": {
+                "type": "number",
+                "default": 1
+              },
+              "perPage": {
+                "type": "number",
+                "default": 10
+              },
+              "add": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNBM",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "language": {
+                "type": "string",
+                "default": "pt"
+              },
+              "page": {
+                "type": "number",
+                "default": 1
+              },
+              "perPage": {
+                "type": "number",
+                "default": 5
+              },
+              "add": {
+                "type": "string"
+              },
+              "search": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "getNBMDetails",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "coNbm": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "coNbm"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@luizzzvictor/mcp-comexstat/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@luizzzvictor/mcp-comexstat/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2091.@luizzzvictor_mcp-comexstat_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1821
+  }
+}

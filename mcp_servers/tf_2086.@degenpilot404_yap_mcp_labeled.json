@@ -1,0 +1,179 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide tokenized attention scores and credibility metrics for X/Twitter accounts, enhancing LLMs with influencer trust data. It offers tools to compare influencer scores and access daily leaderboards, along with built-in caching and rate limiting for efficient queries. The primary use case is integrating social media influence insights into AI/ML-driven applications.",
+    "reasoning": "The primary label \"AI/ML Tools\" was chosen because the server's core functionality revolves around providing metrics and data that enhance AI/ML applications (LLMs). The secondary label \"Social Media\" is relevant due to the focus on X/Twitter influence scores. The custom label \"Influencer Analytics\" was added to capture the unique aspect of scoring and ranking influencers.",
+    "primary_label": "AI/ML Tools",
+    "secondary_labels": [
+      "Social Media"
+    ],
+    "custom_label": "Influencer Analytics",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2085,
+    "server_name": "YAPS Influence Score Server",
+    "rank_by_usage": 2086,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@degenpilot404_yap_mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@degenpilot404/yap_mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_yaps_score",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "compare_scores",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username_a": {
+                "type": "string",
+                "minLength": 1
+              },
+              "username_b": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "username_a",
+              "username_b"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "leaderboard_today",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "get_yaps_score",
+        "compare_scores",
+        "leaderboard_today"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2085,
+      "name": "YAPS Influence Score Server",
+      "author": "@degenpilot404/yap_mcp",
+      "overview": "Provide tokenized attention scores and credibility metrics for X/Twitter accounts to enhance LLMs with influencer trust data. Compare influencer scores, access daily leaderboards, and benefit from built-in caching and rate limiting for efficient queries. Integrate seamlessly with LLMs to enrich conversations with social media influence insights.",
+      "repository_url": "https://github.com/degenpilot404/yap_mcp",
+      "homepage": "https://smithery.ai/server/@degenpilot404/yap_mcp",
+      "remote_or_local": "Remote",
+      "license": "Not specified",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@degenpilot404_yap_mcp.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "get_yaps_score",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "username"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "compare_scores",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "username_a": {
+                "type": "string",
+                "minLength": 1
+              },
+              "username_b": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "username_a",
+              "username_b"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "leaderboard_today",
+          "description": null,
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@degenpilot404/yap_mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@degenpilot404/yap_mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2086.@degenpilot404_yap_mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1816
+  }
+}

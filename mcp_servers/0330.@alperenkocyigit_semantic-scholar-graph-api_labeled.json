@@ -1,0 +1,597 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is specifically designed to provide AI assistants with access to Semantic Scholar's academic database. Its core functionality revolves around academic research, paper discovery, author research, citation analysis, and content exploration. The available tools enable natural language search, bulk data processing, and detailed academic insights, making it particularly valuable for research workflows. The server allows users to efficiently explore millions of research papers and citation networks.",
+    "reasoning": "The primary label \"Web Search & Research\" was chosen because the server's main functionality is centered around searching and researching academic papers and authors. The secondary label \"Data Analysis & Processing\" was selected due to the tool's capability for citation analysis and bulk data processing. The secondary label \"Database Operations\" was chosen because of the server's ability to query and retrieve detailed information from the Semantic Scholar database. No custom label was needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 329,
+    "server_name": "Semantic Scholar Academic Research MCP",
+    "rank_by_usage": 330,
+    "usage_count": "96",
+    "original_file": "../crawler/smithery/@alperenkocyigit_semantic-scholar-graph-api.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@alperenkocyigit/semantic-scholar-graph-api/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_semantic_scholar",
+          "description": "\n    Search for papers on Semantic Scholar using a query string.\n\n    Args:\n        query: Search query string\n        num_results: Number of results to return (default: 10)\n\n    Returns:\n        List of dictionaries containing paper information\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "num_results": {
+                "default": 10,
+                "title": "Num Results",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_semantic_scholarArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_details",
+          "description": "\n    Get details of a specific paper on Semantic Scholar.\n\n    Args:\n        paper_id: ID of the paper\n\n    Returns:\n        Dictionary containing paper details\n    ",
+          "input_schema": {
+            "properties": {
+              "paper_id": {
+                "title": "Paper Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "paper_id"
+            ],
+            "title": "get_semantic_scholar_paper_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_author_details",
+          "description": "\n    Get details of a specific author on Semantic Scholar.\n\n    Args:\n        author_id: ID of the author\n\n    Returns:\n        Dictionary containing author details\n    ",
+          "input_schema": {
+            "properties": {
+              "author_id": {
+                "title": "Author Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "author_id"
+            ],
+            "title": "get_semantic_scholar_author_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_citations_and_references",
+          "description": "\n    Get citations and references for a specific paper on Semantic Scholar.\n\n    Args:\n        paper_id: ID of the paper\n\n    Returns:\n        Dictionary containing lists of citations and references\n    ",
+          "input_schema": {
+            "properties": {
+              "paper_id": {
+                "title": "Paper Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "paper_id"
+            ],
+            "title": "get_semantic_scholar_citations_and_referencesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_semantic_scholar_authors",
+          "description": "\n    Search for authors on Semantic Scholar using a query string.\n\n    Args:\n        query: Search query string for author names\n        limit: Number of results to return (default: 10, max: 100)\n\n    Returns:\n        List of dictionaries containing author information\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_semantic_scholar_authorsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_match",
+          "description": "\n    Find the best matching paper on Semantic Scholar using title-based search.\n\n    Args:\n        query: Paper title or partial title to match\n\n    Returns:\n        Dictionary containing the best matching paper with match score\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "get_semantic_scholar_paper_matchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_autocomplete",
+          "description": "\n    Get paper title autocompletion suggestions for a partial query.\n\n    Args:\n        query: Partial paper title query (will be truncated to 100 characters)\n\n    Returns:\n        List of dictionaries containing autocomplete suggestions\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "get_semantic_scholar_paper_autocompleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_papers_batch",
+          "description": "\n    Get details for multiple papers at once using batch API.\n\n    Args:\n        paper_ids: List of paper IDs (max 500)\n\n    Returns:\n        List of dictionaries containing paper details\n    ",
+          "input_schema": {
+            "properties": {
+              "paper_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Paper Ids",
+                "type": "array"
+              }
+            },
+            "required": [
+              "paper_ids"
+            ],
+            "title": "get_semantic_scholar_papers_batchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_authors_batch",
+          "description": "\n    Get details for multiple authors at once using batch API.\n\n    Args:\n        author_ids: List of author IDs (max 1000)\n\n    Returns:\n        List of dictionaries containing author details\n    ",
+          "input_schema": {
+            "properties": {
+              "author_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Author Ids",
+                "type": "array"
+              }
+            },
+            "required": [
+              "author_ids"
+            ],
+            "title": "get_semantic_scholar_authors_batchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_semantic_scholar_snippets",
+          "description": "\n    Search for text snippets from papers that match the query.\n\n    Args:\n        query: Plain-text search query\n        limit: Number of results to return (default: 10, max: 1000)\n\n    Returns:\n        List of dictionaries containing snippet matches with paper info\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_semantic_scholar_snippetsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_recommendations_from_lists",
+          "description": "\n    Get recommended papers based on lists of positive and negative example papers.\n\n    Args:\n        positive_paper_ids: List of paper IDs that represent positive examples (papers you like/want similar to)\n        negative_paper_ids: Optional list of paper IDs that represent negative examples (papers you don't want similar to)\n        limit: Number of recommendations to return (default: 10, max: 500)\n\n    Returns:\n        List of dictionaries containing recommended papers with relevance scores\n    ",
+          "input_schema": {
+            "properties": {
+              "positive_paper_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Positive Paper Ids",
+                "type": "array"
+              },
+              "negative_paper_ids": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Negative Paper Ids",
+                "type": "array"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "positive_paper_ids"
+            ],
+            "title": "get_semantic_scholar_paper_recommendations_from_listsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_recommendations",
+          "description": "\n    Get recommended papers for a single positive example paper.\n\n    Args:\n        paper_id: ID of the paper to get recommendations for (positive example)\n        limit: Number of recommendations to return (default: 10, max: 500)\n\n    Returns:\n        List of dictionaries containing recommended papers similar to the input paper\n    ",
+          "input_schema": {
+            "properties": {
+              "paper_id": {
+                "title": "Paper Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "paper_id"
+            ],
+            "title": "get_semantic_scholar_paper_recommendationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "search_semantic_scholar",
+        "get_semantic_scholar_paper_details",
+        "get_semantic_scholar_author_details",
+        "get_semantic_scholar_citations_and_references",
+        "search_semantic_scholar_authors",
+        "get_semantic_scholar_paper_match",
+        "get_semantic_scholar_paper_autocomplete",
+        "get_semantic_scholar_papers_batch",
+        "get_semantic_scholar_authors_batch",
+        "search_semantic_scholar_snippets",
+        "get_semantic_scholar_paper_recommendations_from_lists",
+        "get_semantic_scholar_paper_recommendations"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 329,
+      "name": "Semantic Scholar Academic Research MCP",
+      "author": "@alperenkocyigit/semantic-scholar-graph-api",
+      "overview": "Provide AI assistants with seamless access to Semantic Scholar's extensive academic database for advanced paper discovery, author research, citation analysis, and content exploration. Enable natural language search, bulk data processing, and detailed academic insights to enhance research workflows. Empower users to efficiently explore millions of research papers and citation networks.",
+      "repository_url": "https://github.com/alperenkocyigit/semantic-scholar-graph-api",
+      "homepage": "https://smithery.ai/server/@alperenkocyigit/semantic-scholar-graph-api",
+      "remote_or_local": "Remote",
+      "license": "https://smithery.ai/server/@alperenkocyigit/semantic-scholar-graph-api",
+      "usage_count": "96",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@alperenkocyigit_semantic-scholar-graph-api.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "search_semantic_scholar",
+          "description": "\n    Search for papers on Semantic Scholar using a query string.\n\n    Args:\n        query: Search query string\n        num_results: Number of results to return (default: 10)\n\n    Returns:\n        List of dictionaries containing paper information\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "num_results": {
+                "default": 10,
+                "title": "Num Results",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_semantic_scholarArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_details",
+          "description": "\n    Get details of a specific paper on Semantic Scholar.\n\n    Args:\n        paper_id: ID of the paper\n\n    Returns:\n        Dictionary containing paper details\n    ",
+          "input_schema": {
+            "properties": {
+              "paper_id": {
+                "title": "Paper Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "paper_id"
+            ],
+            "title": "get_semantic_scholar_paper_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_author_details",
+          "description": "\n    Get details of a specific author on Semantic Scholar.\n\n    Args:\n        author_id: ID of the author\n\n    Returns:\n        Dictionary containing author details\n    ",
+          "input_schema": {
+            "properties": {
+              "author_id": {
+                "title": "Author Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "author_id"
+            ],
+            "title": "get_semantic_scholar_author_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_citations_and_references",
+          "description": "\n    Get citations and references for a specific paper on Semantic Scholar.\n\n    Args:\n        paper_id: ID of the paper\n\n    Returns:\n        Dictionary containing lists of citations and references\n    ",
+          "input_schema": {
+            "properties": {
+              "paper_id": {
+                "title": "Paper Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "paper_id"
+            ],
+            "title": "get_semantic_scholar_citations_and_referencesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_semantic_scholar_authors",
+          "description": "\n    Search for authors on Semantic Scholar using a query string.\n\n    Args:\n        query: Search query string for author names\n        limit: Number of results to return (default: 10, max: 100)\n\n    Returns:\n        List of dictionaries containing author information\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_semantic_scholar_authorsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_match",
+          "description": "\n    Find the best matching paper on Semantic Scholar using title-based search.\n\n    Args:\n        query: Paper title or partial title to match\n\n    Returns:\n        Dictionary containing the best matching paper with match score\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "get_semantic_scholar_paper_matchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_autocomplete",
+          "description": "\n    Get paper title autocompletion suggestions for a partial query.\n\n    Args:\n        query: Partial paper title query (will be truncated to 100 characters)\n\n    Returns:\n        List of dictionaries containing autocomplete suggestions\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "get_semantic_scholar_paper_autocompleteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_papers_batch",
+          "description": "\n    Get details for multiple papers at once using batch API.\n\n    Args:\n        paper_ids: List of paper IDs (max 500)\n\n    Returns:\n        List of dictionaries containing paper details\n    ",
+          "input_schema": {
+            "properties": {
+              "paper_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Paper Ids",
+                "type": "array"
+              }
+            },
+            "required": [
+              "paper_ids"
+            ],
+            "title": "get_semantic_scholar_papers_batchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_authors_batch",
+          "description": "\n    Get details for multiple authors at once using batch API.\n\n    Args:\n        author_ids: List of author IDs (max 1000)\n\n    Returns:\n        List of dictionaries containing author details\n    ",
+          "input_schema": {
+            "properties": {
+              "author_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Author Ids",
+                "type": "array"
+              }
+            },
+            "required": [
+              "author_ids"
+            ],
+            "title": "get_semantic_scholar_authors_batchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_semantic_scholar_snippets",
+          "description": "\n    Search for text snippets from papers that match the query.\n\n    Args:\n        query: Plain-text search query\n        limit: Number of results to return (default: 10, max: 1000)\n\n    Returns:\n        List of dictionaries containing snippet matches with paper info\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_semantic_scholar_snippetsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_recommendations_from_lists",
+          "description": "\n    Get recommended papers based on lists of positive and negative example papers.\n\n    Args:\n        positive_paper_ids: List of paper IDs that represent positive examples (papers you like/want similar to)\n        negative_paper_ids: Optional list of paper IDs that represent negative examples (papers you don't want similar to)\n        limit: Number of recommendations to return (default: 10, max: 500)\n\n    Returns:\n        List of dictionaries containing recommended papers with relevance scores\n    ",
+          "input_schema": {
+            "properties": {
+              "positive_paper_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Positive Paper Ids",
+                "type": "array"
+              },
+              "negative_paper_ids": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Negative Paper Ids",
+                "type": "array"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "positive_paper_ids"
+            ],
+            "title": "get_semantic_scholar_paper_recommendations_from_listsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_semantic_scholar_paper_recommendations",
+          "description": "\n    Get recommended papers for a single positive example paper.\n\n    Args:\n        paper_id: ID of the paper to get recommendations for (positive example)\n        limit: Number of recommendations to return (default: 10, max: 500)\n\n    Returns:\n        List of dictionaries containing recommended papers similar to the input paper\n    ",
+          "input_schema": {
+            "properties": {
+              "paper_id": {
+                "title": "Paper Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "paper_id"
+            ],
+            "title": "get_semantic_scholar_paper_recommendationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@alperenkocyigit/semantic-scholar-graph-api/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@alperenkocyigit/semantic-scholar-graph-api/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0330.@alperenkocyigit_semantic-scholar-graph-api_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 326
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides a comprehensive set of tools for interacting with YouTube, including searching, retrieving detailed video/channel information, analyzing comments, extracting and processing transcripts, and discovering trending content. The primary focus is on enabling AI assistants to access, analyze, and summarize YouTube data efficiently.",
+    "reasoning": "The primary label is chosen because the server's core functionality revolves around extracting and processing information from YouTube, which is a form of web interaction. Secondary labels are added as the server also enables analysis of video content and metadata, making it relevant for data analysis. No custom label is needed as the predefined categories adequately cover the functionality.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 148,
+    "server_name": "YouTube Toolbox",
+    "rank_by_usage": 149,
+    "usage_count": "386",
+    "original_file": "../crawler/smithery/@jikime_py-mcp-youtube-toolbox.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jikime/py-mcp-youtube-toolbox/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 148,
+      "name": "YouTube Toolbox",
+      "author": "@jikime/py-mcp-youtube-toolbox",
+      "overview": "Provide AI assistants with powerful tools to interact with YouTube, including video searching, transcript extraction, comment retrieval, and more. Enable advanced filtering, detailed video and channel information, trending video discovery, and transcript analysis. Enhance AI capabilities with comprehensive YouTube data access and summarization features.",
+      "repository_url": "https://github.com/jikime/py-mcp-youtube-toolbox",
+      "homepage": "https://smithery.ai/server/@jikime/py-mcp-youtube-toolbox",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "386",
+      "success_rate": "99.87%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jikime_py-mcp-youtube-toolbox.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "search_videos",
+          "description": "Deploy Server YouTube Toolbox @jikime/py-mcp-youtube-toolbox Try in Playground search_videos",
+          "parameters": [
+            {
+              "name": "search_videos",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_video_details",
+          "description": "Get detailed information about a YouTube video",
+          "parameters": [
+            {
+              "name": "get_video_details",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "video_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_channel_details",
+          "description": "Get detailed information about a YouTube channel",
+          "parameters": [
+            {
+              "name": "get_channel_details",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "channel_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_video_comments",
+          "description": "Get comments for a YouTube video",
+          "parameters": [
+            {
+              "name": "get_video_comments",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_video_transcript",
+          "description": "Get transcript/captions for a YouTube video",
+          "parameters": [
+            {
+              "name": "language",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "video_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_related_videos",
+          "description": "Get videos related to a specific YouTube video",
+          "parameters": [
+            {
+              "name": "video_id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "max_results",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_trending_videos",
+          "description": "Get trending videos on YouTube by region",
+          "parameters": [
+            {
+              "name": "max_results",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "region_code",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_video_enhanced_transcript",
+          "description": "Advanced transcript extraction tool with filtering, search, and multi-video capabilities. Provides rich transcript data for detailed analysis and processing. Features: 1) Extract transcripts from multiple videos; 2) Filter by time ranges; 3) Search within transcripts; 4) Segment transcripts; 5) Format output in different ways; 6) Include video metadata.",
+          "parameters": [
+            {
+              "name": "get_video_enhanced_transcript",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jikime/py-mcp-youtube-toolbox/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "youtubeApiKey",
+          "required": true,
+          "description": "YouTube API Key"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jikime/py-mcp-youtube-toolbox/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0149.@jikime_py-mcp-youtube-toolbox_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 146
+  }
+}

@@ -1,0 +1,535 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed primarily as a note-taking and knowledge management tool. It enables users to capture, organize, and synthesize their thoughts and insights into structured, searchable, and actionable knowledge. The available tools focus on logging daily notes, evaluating the long-term value of insights, rolling up important notes, and managing the notes directory with search, read, and write capabilities. The core functionality revolves around enhancing productivity and knowledge organization through automation and categorization.",
+    "reasoning": "The primary label of <strong>Memory Management</strong> is chosen because the server's main function is to store, organize, and retrieve notes and insights, effectively serving as a knowledge base. The secondary label of <strong>Daily Productivity</strong> is included because the tools help users synthesize notes into actionable insights, which directly aids productivity. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Memory Management",
+    "secondary_labels": [
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1762,
+    "server_name": "MCP Notes",
+    "rank_by_usage": 1763,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@markacianfrani_mcp-notes.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@markacianfrani/mcp-notes/mcp?config=eyJub3Rlc1BhdGgiOiAiIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "log",
+          "description": "Create or update today's daily log file. Optionally add notes to the log.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "notes": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags must follow these rules:\n- Can contain letters, numbers, underscore (_), hyphen (-), and forward slash (/)\n- Must contain at least one non-numerical character\n- Cannot contain spaces (use camelCase, PascalCase, snake_case, or kebab-case)\n- Are case-insensitive (stored as lowercase)\n\n              Analyze the note's content and identify key themes, concepts, and categories that connect it to other notes.\n              Consider:\n              - Core topics and themes present in the note\n              - Broader domains or areas of knowledge\n              - Types of information (decisions, ideas, research, etc.)\n              - Projects or contexts that might want to reference this later\n              Do not force tags - only add ones that naturally emerge from the content and would help build meaningful connections between notes."
+              }
+            },
+            "required": [
+              "notes",
+              "tags"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "evaluateInsight",
+          "description": "\n      Evaluate the long-term value and significance of an insight or thought based on the following criteria: \n      1. Actionability (1-10): Can this be applied to future work? Is there any information that can be used to apply this thought to future work in different contexts? Is the problem it solves clear?\n      2. Longevity (1-10): Will this be relevant months or years from now?\n      3. Findability (1-10): Would this be hard to rediscover if forgotten?\n      4. Future Reference Value (1-10): How likely are you to need this again?\n      \n      Insights to ignore: \n      1. Trivial syntax details\n      2. Redundant information\n      ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "thought": {
+                "type": "string"
+              },
+              "evaluationStep": {
+                "type": "number"
+              },
+              "totalSteps": {
+                "type": "number"
+              },
+              "nextStepNeeded": {
+                "type": "boolean"
+              },
+              "actionability": {
+                "type": "number"
+              },
+              "longevity": {
+                "type": "number"
+              },
+              "findability": {
+                "type": "number"
+              },
+              "futureReferenceValue": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "thought",
+              "evaluationStep",
+              "totalSteps",
+              "nextStepNeeded",
+              "actionability",
+              "longevity",
+              "findability",
+              "futureReferenceValue"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "rollup",
+          "description": "\n       Synthesize my daily note to create an organized rollup of the most important notes with clear categories, connections, and action items. Optionally specify a date (YYYY-MM-DD).\n       Only include notes that actually add long-term value. If you are unsure, call the /evaluateInsight tool to evaluate the long-term value of the thought.\n       If you do not have enough information, stop and ask the user for more information.\n       It is better to not log anything than log something that is not useful.\n      ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string"
+              },
+              "accomplishments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of accomplishments. Each accomplishment should be a short description of the work done in the day so that it can answer the question 'what did you do all day?'"
+              },
+              "insights": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of insights. Each insight should be a long-term storage. Things like new knowledge gained. Do not force insights - only add ones that naturally emerge from the content and would help build meaningful connections between notes."
+              },
+              "todos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of todos. Each todo should be a short description of the task to be done. A todo should be actionable."
+              }
+            },
+            "required": [
+              "accomplishments",
+              "insights"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "write_note",
+          "description": "Create a new note or overwrite an existing note with content. Path should be relative to your notes directory. Optionally include tags that will be merged with any existing tags in the note.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path where the note should be saved, relative to notes directory"
+              },
+              "content": {
+                "type": "string",
+                "description": "Content to write to the note"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags must follow these rules:\n- Can contain letters, numbers, underscore (_), hyphen (-), and forward slash (/)\n- Must contain at least one non-numerical character\n- Cannot contain spaces (use camelCase, PascalCase, snake_case, or kebab-case)\n- Are case-insensitive (stored as lowercase)\n            \n            Tags to add to the note's frontmatter. Will be merged with existing tags if present."
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_files",
+          "description": "Recursively search for files and directories matching a pattern in your notes directory. The search is case-insensitive and matches partial names. Returns full paths to all matching items. Great for finding notes when you don't know their exact location.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pattern": {
+                "type": "string",
+                "description": "The pattern to search for in file and directory names"
+              },
+              "excludePatterns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Glob patterns to exclude from search results",
+                "default": []
+              }
+            },
+            "required": [
+              "pattern"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_note",
+          "description": "Read the complete contents of a note file from your notes directory. Specify the path relative to your notes directory (e.g., 'Log/2023-01-01.md'). Returns the full text content of the note file.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "The path to the note file, relative to your notes directory"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_multiple_notes",
+          "description": "Read the contents of multiple note files simultaneously. Specify paths relative to your notes directory (e.g., ['Log/2023-01-01.md', 'Rollups/2023-01-01-rollup.md']). Returns each file's content with its path as a reference.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of paths to note files, relative to your notes directory"
+              }
+            },
+            "required": [
+              "paths"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_directory",
+          "description": "List the contents of a directory in your notes. Shows all files and directories with clear labels. Specify path relative to your notes directory (e.g., 'Log' or 'Rollups').",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Directory path relative to notes directory (defaults to root notes directory if not provided)",
+                "default": ""
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_directory",
+          "description": "Create a new directory in your notes. Can create nested directories in one operation. Path should be relative to your notes directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Directory path to create, relative to notes directory"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "log",
+        "evaluateInsight",
+        "rollup",
+        "write_note",
+        "search_files",
+        "read_note",
+        "read_multiple_notes",
+        "list_directory",
+        "create_directory"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1762,
+      "name": "MCP Notes",
+      "author": "@markacianfrani/mcp-notes",
+      "overview": "Capture and organize your daily thoughts and insights effortlessly. Transform fragmented knowledge into structured, searchable information with automatic summaries and categorization. Enhance your productivity by synthesizing your notes into actionable insights.",
+      "repository_url": "https://github.com/markacianfrani/mcp-notes",
+      "homepage": "https://smithery.ai/server/@markacianfrani/mcp-notes",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@markacianfrani_mcp-notes.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "log",
+          "description": "Create or update today's daily log file. Optionally add notes to the log.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "notes": {
+                "type": "string"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags must follow these rules:\n- Can contain letters, numbers, underscore (_), hyphen (-), and forward slash (/)\n- Must contain at least one non-numerical character\n- Cannot contain spaces (use camelCase, PascalCase, snake_case, or kebab-case)\n- Are case-insensitive (stored as lowercase)\n\n              Analyze the note's content and identify key themes, concepts, and categories that connect it to other notes.\n              Consider:\n              - Core topics and themes present in the note\n              - Broader domains or areas of knowledge\n              - Types of information (decisions, ideas, research, etc.)\n              - Projects or contexts that might want to reference this later\n              Do not force tags - only add ones that naturally emerge from the content and would help build meaningful connections between notes."
+              }
+            },
+            "required": [
+              "notes",
+              "tags"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "evaluateInsight",
+          "description": "\n      Evaluate the long-term value and significance of an insight or thought based on the following criteria: \n      1. Actionability (1-10): Can this be applied to future work? Is there any information that can be used to apply this thought to future work in different contexts? Is the problem it solves clear?\n      2. Longevity (1-10): Will this be relevant months or years from now?\n      3. Findability (1-10): Would this be hard to rediscover if forgotten?\n      4. Future Reference Value (1-10): How likely are you to need this again?\n      \n      Insights to ignore: \n      1. Trivial syntax details\n      2. Redundant information\n      ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "thought": {
+                "type": "string"
+              },
+              "evaluationStep": {
+                "type": "number"
+              },
+              "totalSteps": {
+                "type": "number"
+              },
+              "nextStepNeeded": {
+                "type": "boolean"
+              },
+              "actionability": {
+                "type": "number"
+              },
+              "longevity": {
+                "type": "number"
+              },
+              "findability": {
+                "type": "number"
+              },
+              "futureReferenceValue": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "thought",
+              "evaluationStep",
+              "totalSteps",
+              "nextStepNeeded",
+              "actionability",
+              "longevity",
+              "findability",
+              "futureReferenceValue"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "rollup",
+          "description": "\n       Synthesize my daily note to create an organized rollup of the most important notes with clear categories, connections, and action items. Optionally specify a date (YYYY-MM-DD).\n       Only include notes that actually add long-term value. If you are unsure, call the /evaluateInsight tool to evaluate the long-term value of the thought.\n       If you do not have enough information, stop and ask the user for more information.\n       It is better to not log anything than log something that is not useful.\n      ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string"
+              },
+              "accomplishments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of accomplishments. Each accomplishment should be a short description of the work done in the day so that it can answer the question 'what did you do all day?'"
+              },
+              "insights": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of insights. Each insight should be a long-term storage. Things like new knowledge gained. Do not force insights - only add ones that naturally emerge from the content and would help build meaningful connections between notes."
+              },
+              "todos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of todos. Each todo should be a short description of the task to be done. A todo should be actionable."
+              }
+            },
+            "required": [
+              "accomplishments",
+              "insights"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "write_note",
+          "description": "Create a new note or overwrite an existing note with content. Path should be relative to your notes directory. Optionally include tags that will be merged with any existing tags in the note.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path where the note should be saved, relative to notes directory"
+              },
+              "content": {
+                "type": "string",
+                "description": "Content to write to the note"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags must follow these rules:\n- Can contain letters, numbers, underscore (_), hyphen (-), and forward slash (/)\n- Must contain at least one non-numerical character\n- Cannot contain spaces (use camelCase, PascalCase, snake_case, or kebab-case)\n- Are case-insensitive (stored as lowercase)\n            \n            Tags to add to the note's frontmatter. Will be merged with existing tags if present."
+              }
+            },
+            "required": [
+              "path",
+              "content"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_files",
+          "description": "Recursively search for files and directories matching a pattern in your notes directory. The search is case-insensitive and matches partial names. Returns full paths to all matching items. Great for finding notes when you don't know their exact location.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pattern": {
+                "type": "string",
+                "description": "The pattern to search for in file and directory names"
+              },
+              "excludePatterns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Glob patterns to exclude from search results",
+                "default": []
+              }
+            },
+            "required": [
+              "pattern"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_note",
+          "description": "Read the complete contents of a note file from your notes directory. Specify the path relative to your notes directory (e.g., 'Log/2023-01-01.md'). Returns the full text content of the note file.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "The path to the note file, relative to your notes directory"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_multiple_notes",
+          "description": "Read the contents of multiple note files simultaneously. Specify paths relative to your notes directory (e.g., ['Log/2023-01-01.md', 'Rollups/2023-01-01-rollup.md']). Returns each file's content with its path as a reference.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of paths to note files, relative to your notes directory"
+              }
+            },
+            "required": [
+              "paths"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_directory",
+          "description": "List the contents of a directory in your notes. Shows all files and directories with clear labels. Specify path relative to your notes directory (e.g., 'Log' or 'Rollups').",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Directory path relative to notes directory (defaults to root notes directory if not provided)",
+                "default": ""
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_directory",
+          "description": "Create a new directory in your notes. Can create nested directories in one operation. Path should be relative to your notes directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Directory path to create, relative to notes directory"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"notesPath\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@markacianfrani/mcp-notes/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"notesPath\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@markacianfrani/mcp-notes/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1763.@markacianfrani_mcp-notes_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1579
+  }
+}

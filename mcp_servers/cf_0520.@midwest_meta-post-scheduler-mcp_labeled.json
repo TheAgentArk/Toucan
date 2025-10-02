@@ -1,0 +1,201 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in scheduling and managing social media posts across Facebook and Instagram, including standard posts and Reel videos. It integrates with the Facebook Graph API to automate content publishing, offering both immediate and scheduled post functionality. Tools include posting schedules, post validation, and retrieval of scheduled/posted content details. The server is designed for social media managers, marketers, and content creators who need automated, scalable content management.",
+    "reasoning": "The primary label is derived from the server's core functionality around Social Media post scheduling and management. Secondary labels are selected due to the API integration needed for social media automation, and the custom label is included to highlight the server's specific Facebook/Instagram focus as it's a common need with specialized tools.",
+    "primary_label": "Social Media",
+    "secondary_labels": [
+      "API Integration",
+      "Daily Productivity"
+    ],
+    "custom_label": "Facebook & Instagram Automation",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 519,
+    "server_name": "Meta Post Scheduler",
+    "rank_by_usage": 520,
+    "usage_count": "29",
+    "original_file": "../crawler/smithery/@midwest_meta-post-scheduler-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@midwest/meta-post-scheduler-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 519,
+      "name": "Meta Post Scheduler",
+      "author": "@midwest/meta-post-scheduler-mcp",
+      "overview": "Schedule and manage Facebook and Instagram posts, including Reels and feed posts, with support for immediate or scheduled publishing. Integrate seamlessly with Facebook Graph API to automate social media content management across multiple pages and accounts. Utilize both stdio and SSE transports for flexible integration options.",
+      "repository_url": "https://github.com/smithery-ai",
+      "homepage": "https://smithery.ai/server/@midwest/meta-post-scheduler-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "29",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@midwest_meta-post-scheduler-mcp.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "list_pages",
+          "description": "Deploy Server Meta Post Scheduler @midwest/meta-post-scheduler-mcp Try in Playground",
+          "parameters": [
+            {
+              "name": "list_pages",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "schedule_facebook_post",
+          "description": "Schedule a post to a Facebook page",
+          "parameters": [
+            {
+              "name": "schedule_facebook_post",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "schedule_instagram_post",
+          "description": "Schedule a post to Instagram",
+          "parameters": [
+            {
+              "name": "pageId",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "caption",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "mediaPath",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "scheduledTime",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "schedule_facebook_reel",
+          "description": "Schedule a video reel to Facebook",
+          "parameters": [
+            {
+              "name": "schedule_facebook_reel",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "schedule_instagram_reel",
+          "description": "Schedule a video reel to Instagram",
+          "parameters": [
+            {
+              "name": "pageId",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "caption",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "videoPath",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "scheduledTime",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_scheduled_posts",
+          "description": "List scheduled posts for a Facebook page",
+          "parameters": [
+            {
+              "name": "after",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "pageId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_post_details",
+          "description": "Get detailed information for one or more Facebook/Instagram posts",
+          "parameters": [
+            {
+              "name": "get_post_details",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "validate_scheduled_posts",
+          "description": "Validate scheduled posts for potential issues before publishing",
+          "parameters": [
+            {
+              "name": "validate_scheduled_posts",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@midwest/meta-post-scheduler-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "facebookAccessToken",
+          "required": true,
+          "description": "User access token for Facebook Graph API"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@midwest/meta-post-scheduler-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0520.@midwest_meta-post-scheduler-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 509
+  }
+}

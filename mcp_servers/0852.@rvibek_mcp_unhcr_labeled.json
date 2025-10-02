@@ -1,0 +1,431 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides tools to access and query UNHCR refugee and asylum data. It allows users to filter data by country of origin, country of asylum, year, and other parameters to gain insights into refugee trends, asylum applications, and refugee status determinations. The primary functionality revolves around retrieving and processing humanitarian and demographic data for analysis, reporting, or integration into AI applications.",
+    "reasoning": "The server's primary function is centered around data retrieval and analysis related to refugee populations, making it a strong fit for the \"Data Analysis & Processing\" category. It also aligns with \"Database Operations\" due to its structured querying of UNHCR's standardized data. The focus on refugee and asylum data suggests a unique custom label for humanitarian and migration data analysis.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [
+      "Database Operations"
+    ],
+    "custom_label": "Humanitarian & Migration Data",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 851,
+    "server_name": "UNHCR Population Data Server",
+    "rank_by_usage": 852,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@rvibek_mcp_unhcr.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@rvibek/mcp_unhcr/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_population_data",
+          "description": "\n    Get refugee population data from UNHCR.\n    \n    Args:\n        coo: Country of origin (ISO3 code) - Use for questions about refugees FROM a specific country\n        coa: Country of asylum (ISO3 code) - Use for questions about refugees IN a specific country\n        year: Year to filter by (defaults to 2024)\n        coo_all: Set to True when breaking down results by ORIGIN country\n        coa_all: Set to True when breaking down results by ASYLUM country\n    \n    Important:\n        - For \"Where are refugees from COUNTRY living?\" use coo=\"COUNTRY\" and coa_all=True\n        - For \"How many refugees are living in COUNTRY?\" use coa=\"COUNTRY\"\n        - For \"What countries do refugees in COUNTRY come from?\" use coa=\"COUNTRY\" and coo_all=True\n        \n    Returns:\n        Population data from UNHCR\n    ",
+          "input_schema": {
+            "properties": {
+              "coo": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coo"
+              },
+              "coa": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coa"
+              },
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Year"
+              },
+              "coo_all": {
+                "default": false,
+                "title": "Coo All",
+                "type": "boolean"
+              },
+              "coa_all": {
+                "default": false,
+                "title": "Coa All",
+                "type": "boolean"
+              }
+            },
+            "title": "get_population_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_rsd_applications",
+          "description": "\n    Get RSD application data from UNHCR.\n    \n    Args:\n        coo: Country of origin filter (ISO3 code, comma-separated for multiple) - Use for questions about asylum seekers FROM a specific country\n        coa: Country of asylum filter (ISO3 code, comma-separated for multiple) - Use for questions about asylum applications IN a specific country\n        year: Year filter (comma-separated for multiple years) - defaults to 2024 if not provided\n        coo_all:  Set to True when analyzing the ORIGIN COUNTRIES of asylum seekers\n            - Use when answering: \"Which nationalities applied for asylum in Germany?\"\n        coa_all: Set to True when analyzing the ASYLUM COUNTRIES where applications were filed\n            - Use when answering: \"Where did Syrians apply for asylum?\" (breakdown by country)\n            - Do NOT use when answering: \"How many asylum applications were filed in Germany?\"\n        \n        Important query patterns:\n        - \"How many [nationality] people applied for asylum in [country]?\"\n            → Use coo=\"[nationality code]\" and coa=\"[country code]\"\n        \n        - \"Where did [nationality] people apply for asylum?\"\n            → Use coo=\"[nationality code]\" and coa_all=True\n        \n        - \"Who applied for asylum in [country]?\"\n            → Use coa=\"[country code]\" and coo_all=True\n        \n        - \"How many asylum applications were there in [year]?\"\n            → Use year=\"[year]\" with appropriate coo/coa filters if needed\n        \n    Returns:\n        UNHCR RSD Applications data in a country of asylum\n    ",
+          "input_schema": {
+            "properties": {
+              "coo": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coo"
+              },
+              "coa": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coa"
+              },
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Year"
+              },
+              "coo_all": {
+                "default": false,
+                "title": "Coo All",
+                "type": "boolean"
+              },
+              "coa_all": {
+                "default": false,
+                "title": "Coa All",
+                "type": "boolean"
+              }
+            },
+            "title": "get_rsd_applicationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_rsd_decisions",
+          "description": "\n    Get Refugee Status Determination (RSD) decision data from UNHCR.\n    \n    Args:\n        coo: Country of origin filter (ISO3 code, comma-separated for multiple) - Use for questions about asylum decisions FOR people FROM a specific country\n             Example: \"SYR\" for Syria, \"AFG,IRQ\" for Afghanistan and Iraq\n        \n        coa: Country of asylum filter (ISO3 code, comma-separated for multiple) - Use for questions about asylum decisions MADE IN a specific country\n             Example: \"DEU\" for Germany, \"FRA,ITA\" for France and Italy\n        \n        year: Year filter (comma-separated for multiple years) - defaults to 2024 if not provided\n             Example: \"2023\" or \"2022,2023,2024\" for multiple years\n        \n        coo_all: Set to True when analyzing decisions breakdown BY NATIONALITY of asylum seekers\n            - Use when answering: \"Which nationalities received asylum decisions in Germany?\"\n            - Use when answering: \"What was the approval rate for different nationalities in France?\"\n        \n        coa_all: Set to True when analyzing decisions breakdown BY COUNTRY where decisions were made\n            - Use when answering: \"Where did Syrians receive asylum decisions?\" (breakdown by country)\n            - Use when answering: \"Which countries approved/rejected the most Eritrean asylum claims?\"\n        \n    Important query patterns:\n        - \"How many [nationality] people were granted/rejected asylum in [country]?\"\n            → Use coo=\"[nationality code]\" and coa=\"[country code]\"\n        \n        - \"Where did [nationality] people receive positive/negative asylum decisions?\"\n            → Use coo=\"[nationality code]\" and coa_all=True\n        \n        - \"What was the asylum approval rate for different nationalities in [country]?\"\n            → Use coa=\"[country code]\" and coo_all=True\n        \n        - \"How many asylum decisions were made in [year]?\"\n            → Use year=\"[year]\" with appropriate coo/coa filters if needed\n        \n        - \"What was the recognition rate for [nationality] refugees in [country]?\"\n            → Use coo=\"[nationality code]\" and coa=\"[country code]\"\n        \n    Returns:\n        UNHCR RSD Decision data including counts of recognized, rejected, and otherwise closed cases\n        with statistics on recognition rates and processing efficiency\n    ",
+          "input_schema": {
+            "properties": {
+              "coo": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coo"
+              },
+              "coa": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coa"
+              },
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Year"
+              },
+              "coo_all": {
+                "default": false,
+                "title": "Coo All",
+                "type": "boolean"
+              },
+              "coa_all": {
+                "default": false,
+                "title": "Coa All",
+                "type": "boolean"
+              }
+            },
+            "title": "get_rsd_decisionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "get_population_data",
+        "get_rsd_applications",
+        "get_rsd_decisions"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 851,
+      "name": "UNHCR Population Data Server",
+      "author": "@rvibek/mcp_unhcr",
+      "overview": "Access and query UNHCR refugee statistics effortlessly. Filter data by country of origin, country of asylum, and year to gain insights into global refugee trends. Utilize a standardized interface to enhance your AI applications with real-world population data.",
+      "repository_url": "https://github.com/rvibek/mcp_unhcr",
+      "homepage": "https://smithery.ai/server/@rvibek/mcp_unhcr",
+      "remote_or_local": "Remote",
+      "license": "https://smithery.ai/",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@rvibek_mcp_unhcr.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "get_population_data",
+          "description": "\n    Get refugee population data from UNHCR.\n    \n    Args:\n        coo: Country of origin (ISO3 code) - Use for questions about refugees FROM a specific country\n        coa: Country of asylum (ISO3 code) - Use for questions about refugees IN a specific country\n        year: Year to filter by (defaults to 2024)\n        coo_all: Set to True when breaking down results by ORIGIN country\n        coa_all: Set to True when breaking down results by ASYLUM country\n    \n    Important:\n        - For \"Where are refugees from COUNTRY living?\" use coo=\"COUNTRY\" and coa_all=True\n        - For \"How many refugees are living in COUNTRY?\" use coa=\"COUNTRY\"\n        - For \"What countries do refugees in COUNTRY come from?\" use coa=\"COUNTRY\" and coo_all=True\n        \n    Returns:\n        Population data from UNHCR\n    ",
+          "input_schema": {
+            "properties": {
+              "coo": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coo"
+              },
+              "coa": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coa"
+              },
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Year"
+              },
+              "coo_all": {
+                "default": false,
+                "title": "Coo All",
+                "type": "boolean"
+              },
+              "coa_all": {
+                "default": false,
+                "title": "Coa All",
+                "type": "boolean"
+              }
+            },
+            "title": "get_population_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_rsd_applications",
+          "description": "\n    Get RSD application data from UNHCR.\n    \n    Args:\n        coo: Country of origin filter (ISO3 code, comma-separated for multiple) - Use for questions about asylum seekers FROM a specific country\n        coa: Country of asylum filter (ISO3 code, comma-separated for multiple) - Use for questions about asylum applications IN a specific country\n        year: Year filter (comma-separated for multiple years) - defaults to 2024 if not provided\n        coo_all:  Set to True when analyzing the ORIGIN COUNTRIES of asylum seekers\n            - Use when answering: \"Which nationalities applied for asylum in Germany?\"\n        coa_all: Set to True when analyzing the ASYLUM COUNTRIES where applications were filed\n            - Use when answering: \"Where did Syrians apply for asylum?\" (breakdown by country)\n            - Do NOT use when answering: \"How many asylum applications were filed in Germany?\"\n        \n        Important query patterns:\n        - \"How many [nationality] people applied for asylum in [country]?\"\n            → Use coo=\"[nationality code]\" and coa=\"[country code]\"\n        \n        - \"Where did [nationality] people apply for asylum?\"\n            → Use coo=\"[nationality code]\" and coa_all=True\n        \n        - \"Who applied for asylum in [country]?\"\n            → Use coa=\"[country code]\" and coo_all=True\n        \n        - \"How many asylum applications were there in [year]?\"\n            → Use year=\"[year]\" with appropriate coo/coa filters if needed\n        \n    Returns:\n        UNHCR RSD Applications data in a country of asylum\n    ",
+          "input_schema": {
+            "properties": {
+              "coo": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coo"
+              },
+              "coa": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coa"
+              },
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Year"
+              },
+              "coo_all": {
+                "default": false,
+                "title": "Coo All",
+                "type": "boolean"
+              },
+              "coa_all": {
+                "default": false,
+                "title": "Coa All",
+                "type": "boolean"
+              }
+            },
+            "title": "get_rsd_applicationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_rsd_decisions",
+          "description": "\n    Get Refugee Status Determination (RSD) decision data from UNHCR.\n    \n    Args:\n        coo: Country of origin filter (ISO3 code, comma-separated for multiple) - Use for questions about asylum decisions FOR people FROM a specific country\n             Example: \"SYR\" for Syria, \"AFG,IRQ\" for Afghanistan and Iraq\n        \n        coa: Country of asylum filter (ISO3 code, comma-separated for multiple) - Use for questions about asylum decisions MADE IN a specific country\n             Example: \"DEU\" for Germany, \"FRA,ITA\" for France and Italy\n        \n        year: Year filter (comma-separated for multiple years) - defaults to 2024 if not provided\n             Example: \"2023\" or \"2022,2023,2024\" for multiple years\n        \n        coo_all: Set to True when analyzing decisions breakdown BY NATIONALITY of asylum seekers\n            - Use when answering: \"Which nationalities received asylum decisions in Germany?\"\n            - Use when answering: \"What was the approval rate for different nationalities in France?\"\n        \n        coa_all: Set to True when analyzing decisions breakdown BY COUNTRY where decisions were made\n            - Use when answering: \"Where did Syrians receive asylum decisions?\" (breakdown by country)\n            - Use when answering: \"Which countries approved/rejected the most Eritrean asylum claims?\"\n        \n    Important query patterns:\n        - \"How many [nationality] people were granted/rejected asylum in [country]?\"\n            → Use coo=\"[nationality code]\" and coa=\"[country code]\"\n        \n        - \"Where did [nationality] people receive positive/negative asylum decisions?\"\n            → Use coo=\"[nationality code]\" and coa_all=True\n        \n        - \"What was the asylum approval rate for different nationalities in [country]?\"\n            → Use coa=\"[country code]\" and coo_all=True\n        \n        - \"How many asylum decisions were made in [year]?\"\n            → Use year=\"[year]\" with appropriate coo/coa filters if needed\n        \n        - \"What was the recognition rate for [nationality] refugees in [country]?\"\n            → Use coo=\"[nationality code]\" and coa=\"[country code]\"\n        \n    Returns:\n        UNHCR RSD Decision data including counts of recognized, rejected, and otherwise closed cases\n        with statistics on recognition rates and processing efficiency\n    ",
+          "input_schema": {
+            "properties": {
+              "coo": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coo"
+              },
+              "coa": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Coa"
+              },
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Year"
+              },
+              "coo_all": {
+                "default": false,
+                "title": "Coo All",
+                "type": "boolean"
+              },
+              "coa_all": {
+                "default": false,
+                "title": "Coa All",
+                "type": "boolean"
+              }
+            },
+            "title": "get_rsd_decisionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@rvibek/mcp_unhcr/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@rvibek/mcp_unhcr/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0852.@rvibek_mcp_unhcr_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 833
+  }
+}

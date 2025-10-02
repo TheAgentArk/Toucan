@@ -1,0 +1,354 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide comprehensive weather information for locations across the United States. It leverages government-sourced data to offer real-time weather conditions, detailed forecasts (both daily and hourly), weather alerts, and information about nearby weather stations. The tools are optimized for natural language queries, making weather data accessible without requiring API keys or technical expertise. The server primarily serves users who need reliable weather information for personal, travel, or emergency planning purposes.",
+    "reasoning": "The \"Weather\" predefined category is the most relevant as it directly aligns with the server's core functionality of providing weather-related data. Since the server focuses specifically on US weather and does not fit into broader categories like \"Travel & Maps\" or \"News & Media\" as its primary purpose, no secondary labels are needed. The custom label emphasizes the server's unique focus on authoritative US weather data.",
+    "primary_label": "Weather",
+    "secondary_labels": [],
+    "custom_label": "US Government Weather Data Provider",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": true
+  },
+  "metadata": {
+    "server_id": 58,
+    "server_name": "United States Weather",
+    "rank_by_usage": 59,
+    "usage_count": "1,546",
+    "original_file": "../crawler/smithery/@smithery-ai_national-weather-service.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@smithery-ai/national-weather-service/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_current_weather",
+          "description": "Get current weather conditions for a location in the United States. Perfect for 'What's the weather like in [US location]?' questions. Covers all US states, territories, and coastal waters.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City. Must be within US boundaries including states, territories (PR, VI, AS, GU, MP), and coastal waters."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_weather_forecast",
+          "description": "Get multi-day weather forecast for a location in the United States. Perfect for 'What's the forecast for [US location]?' questions. Provides detailed day/night forecasts for up to 7 days.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City. Must be within US boundaries including states, territories (PR, VI, AS, GU, MP), and coastal waters."
+              },
+              "days": {
+                "type": "number",
+                "default": 7,
+                "description": "Number of days to forecast (1-7, default 7). Each day includes both day and night periods."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_hourly_forecast",
+          "description": "Get hour-by-hour weather forecast for a location in the United States. Perfect for 'What's the hourly forecast?' or 'Will it rain this afternoon in [US location]?' questions. Provides detailed hourly conditions for up to 48 hours.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City. Must be within US boundaries including states, territories (PR, VI, AS, GU, MP), and coastal waters."
+              },
+              "hours": {
+                "type": "number",
+                "default": 24,
+                "description": "Number of hours to forecast (1-48, default 24). Provides temperature, conditions, and precipitation probability for each hour."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_weather_alerts",
+          "description": "Get active weather alerts, warnings, watches, and advisories for locations in the United States. Perfect for 'Are there any weather alerts in [US location]?' questions. Covers severe weather, winter storms, heat warnings, flood alerts, and more.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees OR 2-letter state/territory code. Examples: '40.7128,-74.0060' for New York City, 'CA' for California, 'PR' for Puerto Rico. Valid state codes: AL, AK, AS, AR, AZ, CA, CO, CT, DE, DC, FL, GA, GU, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, PR, RI, SC, SD, TN, TX, UT, VT, VI, VA, WA, WV, WI, WY, MP, PW, FM, MH."
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "extreme",
+                  "severe",
+                  "moderate",
+                  "minor"
+                ],
+                "default": "all",
+                "description": "Filter by alert severity: 'extreme' (life-threatening), 'severe' (significant threat), 'moderate' (possible threat), 'minor' (minimal threat), or 'all' (default - shows all active alerts)."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find_weather_stations",
+          "description": "Find weather observation stations near a location in the United States. Useful for getting station-specific data, finding data sources, or understanding which stations provide weather data for an area. Includes ASOS, AWOS, and other automated weather stations.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City. Must be within US boundaries including states, territories (PR, VI, AS, GU, MP), and coastal waters."
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of stations to return (1-20, default 10). Stations are returned ordered by distance from the specified location."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_local_time",
+          "description": "Get the current local time for a US location. Shows what time it is right now at the specified location.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "get_current_weather",
+        "get_weather_forecast",
+        "get_hourly_forecast",
+        "get_weather_alerts",
+        "find_weather_stations",
+        "get_local_time"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 58,
+      "name": "United States Weather",
+      "author": "@smithery-ai/national-weather-service",
+      "overview": "Provide real-time and forecast weather information for locations in the United States using natural language queries. Access current conditions, multi-day and hourly forecasts, weather alerts, and nearby weather stations without requiring an API key. Enable users to get official, government-sourced weather data easily through intuitive tools.",
+      "repository_url": "https://github.com/smithery-ai/mcp-servers",
+      "homepage": "https://smithery.ai/server/@smithery-ai/national-weather-service",
+      "remote_or_local": "Remote",
+      "license": "Not specified",
+      "usage_count": "1,546",
+      "success_rate": "87.43%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@smithery-ai_national-weather-service.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "get_current_weather",
+          "description": "Get current weather conditions for a location in the United States. Perfect for 'What's the weather like in [US location]?' questions. Covers all US states, territories, and coastal waters.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City. Must be within US boundaries including states, territories (PR, VI, AS, GU, MP), and coastal waters."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_weather_forecast",
+          "description": "Get multi-day weather forecast for a location in the United States. Perfect for 'What's the forecast for [US location]?' questions. Provides detailed day/night forecasts for up to 7 days.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City. Must be within US boundaries including states, territories (PR, VI, AS, GU, MP), and coastal waters."
+              },
+              "days": {
+                "type": "number",
+                "default": 7,
+                "description": "Number of days to forecast (1-7, default 7). Each day includes both day and night periods."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_hourly_forecast",
+          "description": "Get hour-by-hour weather forecast for a location in the United States. Perfect for 'What's the hourly forecast?' or 'Will it rain this afternoon in [US location]?' questions. Provides detailed hourly conditions for up to 48 hours.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City. Must be within US boundaries including states, territories (PR, VI, AS, GU, MP), and coastal waters."
+              },
+              "hours": {
+                "type": "number",
+                "default": 24,
+                "description": "Number of hours to forecast (1-48, default 24). Provides temperature, conditions, and precipitation probability for each hour."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_weather_alerts",
+          "description": "Get active weather alerts, warnings, watches, and advisories for locations in the United States. Perfect for 'Are there any weather alerts in [US location]?' questions. Covers severe weather, winter storms, heat warnings, flood alerts, and more.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees OR 2-letter state/territory code. Examples: '40.7128,-74.0060' for New York City, 'CA' for California, 'PR' for Puerto Rico. Valid state codes: AL, AK, AS, AR, AZ, CA, CO, CT, DE, DC, FL, GA, GU, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, PR, RI, SC, SD, TN, TX, UT, VT, VI, VA, WA, WV, WI, WY, MP, PW, FM, MH."
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "extreme",
+                  "severe",
+                  "moderate",
+                  "minor"
+                ],
+                "default": "all",
+                "description": "Filter by alert severity: 'extreme' (life-threatening), 'severe' (significant threat), 'moderate' (possible threat), 'minor' (minimal threat), or 'all' (default - shows all active alerts)."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "find_weather_stations",
+          "description": "Find weather observation stations near a location in the United States. Useful for getting station-specific data, finding data sources, or understanding which stations provide weather data for an area. Includes ASOS, AWOS, and other automated weather stations.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City. Must be within US boundaries including states, territories (PR, VI, AS, GU, MP), and coastal waters."
+              },
+              "limit": {
+                "type": "number",
+                "default": 10,
+                "description": "Maximum number of stations to return (1-20, default 10). Stations are returned ordered by distance from the specified location."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_local_time",
+          "description": "Get the current local time for a US location. Shows what time it is right now at the specified location.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "US location as coordinates (lat,lng) in decimal degrees. Example: '40.7128,-74.0060' for New York City."
+              }
+            },
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@smithery-ai/national-weather-service/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@smithery-ai/national-weather-service/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0059.@smithery-ai_national-weather-service_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 58
+  }
+}

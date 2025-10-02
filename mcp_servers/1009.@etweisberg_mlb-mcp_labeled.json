@@ -1,0 +1,3787 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"MLB Stats Server\" is specialized in providing comprehensive access to Major League Baseball (MLB) statistics, game data, and player information. Its primary functionality revolves around interrogating and retrieving detailed baseball statistics from sources like Statcast, Fangraphs, and Baseball Reference. The server includes tools for querying schedules, player stats, game metrics, and visualizing data through plots like strike zone charts, spraycharts, and batting profiles. It also supports player lookups, team performance analysis, and data filtering to handle large datasets efficiently.",
+    "reasoning": "The primary label \"Sports Analytics\" was chosen because the server's core functionality is centered around baseball statistics and performance analysis, which is a specialized subset of broader sports analytics. Given the predefined categories, \"Database Operations\" is a relevant secondary label given the extensive querying capabilities. \"Data Analysis & Processing\" is also applicable considering the tools for generating visualizations and handling large datasets.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [
+      "Database Operations",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1008,
+    "server_name": "MLB Stats Server",
+    "rank_by_usage": 1009,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@etweisberg_mlb-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@etweisberg/mlb-mcp/mcp?config=eyJsb2dGaWxlIjogIiIsICJsb2dMZXZlbCI6ICJJTkZPIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_stats",
+          "description": "",
+          "input_schema": {
+            "properties": {
+              "endpoint": {
+                "title": "Endpoint",
+                "type": "string"
+              },
+              "params": {
+                "additionalProperties": true,
+                "title": "Params",
+                "type": "object"
+              }
+            },
+            "required": [
+              "endpoint",
+              "params"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_schedule",
+          "description": "\n    Get list of games for a given date/range and/or team/opponent.\n    ",
+          "input_schema": {
+            "properties": {
+              "date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Date"
+              },
+              "start_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Date"
+              },
+              "end_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Date"
+              },
+              "team_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Team Id"
+              },
+              "opponent_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Opponent Id"
+              },
+              "sport_id": {
+                "default": 1,
+                "title": "Sport Id",
+                "type": "integer"
+              },
+              "game_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Game Id"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "include_series_status": {
+                "default": true,
+                "title": "Include Series Status",
+                "type": "boolean"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_player_stats",
+          "description": "\n    Returns a list of current season or career stat data for a given player.\n    ",
+          "input_schema": {
+            "properties": {
+              "player_id": {
+                "title": "Player Id",
+                "type": "integer"
+              },
+              "group": {
+                "default": "hitting",
+                "title": "Group",
+                "type": "string"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "stats": {
+                "default": "season",
+                "title": "Stats",
+                "type": "string"
+              }
+            },
+            "required": [
+              "player_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_standings",
+          "description": "\n    Returns a dict of standings data for a given league/division and season.\n    ",
+          "input_schema": {
+            "properties": {
+              "league_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "League Id"
+              },
+              "division_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Division Id"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "standings_types": {
+                "default": "regularSeason",
+                "title": "Standings Types",
+                "type": "string"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_leaders",
+          "description": "\n    Returns a python list of stat leader data for a given team\n    ",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              },
+              "leader_category": {
+                "default": "homeRuns",
+                "title": "Leader Category",
+                "type": "string"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "leader_game_type": {
+                "default": "R",
+                "title": "Leader Game Type",
+                "type": "string"
+              },
+              "limit": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Limit"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "lookup_player",
+          "description": "Get data about players based on first, last, or full name.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_boxscore",
+          "description": "Get a formatted boxscore for a given game.",
+          "input_schema": {
+            "properties": {
+              "game_id": {
+                "title": "Game Id",
+                "type": "integer"
+              },
+              "timecode": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Timecode"
+              }
+            },
+            "required": [
+              "game_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_roster",
+          "description": "Get the roster for a given team.",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              },
+              "roster_type": {
+                "default": "active",
+                "title": "Roster Type",
+                "type": "string"
+              },
+              "season": {
+                "default": 2025,
+                "title": "Season",
+                "type": "integer"
+              },
+              "date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Date"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_game_pace",
+          "description": "Returns data about pace of game for a given season (back to 1999).",
+          "input_schema": {
+            "properties": {
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_meta",
+          "description": "Get available values from StatsAPI for use in other queries,\n    or look up descriptions for values found in API results.\n\n    For example, to get a list of leader categories to use when calling team_leaders():\n    statsapi.meta('leagueLeaderTypes')\n    ",
+          "input_schema": {
+            "properties": {
+              "type_name": {
+                "title": "Type Name",
+                "type": "string"
+              },
+              "fields": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Fields"
+              }
+            },
+            "required": [
+              "type_name"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_available_endpoints",
+          "description": "Get MLB StatsAPI endpoints directly",
+          "input_schema": {
+            "properties": {},
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_notes",
+          "description": "Get additional notes on an endpoint",
+          "input_schema": {
+            "properties": {
+              "endpoint": {
+                "title": "Endpoint",
+                "type": "string"
+              }
+            },
+            "required": [
+              "endpoint"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_game_scoring_play_data",
+          "description": "Returns a dictionary of scoring plays for a given game containing 3 keys:\n\n    * home - home team data\n    * away - away team data\n    * plays - sorted list of scoring play data\n    ",
+          "input_schema": {
+            "properties": {
+              "game_id": {
+                "title": "Game Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "game_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_last_game",
+          "description": "Get the gamePk (game_id) for the given team's most recent completed game.",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_league_leader_data",
+          "description": "Returns a list of stat leaders overall or for a given league (103=AL, 104=NL).",
+          "input_schema": {
+            "properties": {
+              "leader_categories": {
+                "title": "Leader Categories",
+                "type": "string"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "limit": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Limit"
+              },
+              "stat_group": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Stat Group"
+              },
+              "league_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "League Id"
+              },
+              "game_types": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Game Types"
+              }
+            },
+            "required": [
+              "leader_categories"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_linescore",
+          "description": "Get formatted linescore data for a specific MLB game.",
+          "input_schema": {
+            "properties": {
+              "game_id": {
+                "title": "Game Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "game_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_next_game",
+          "description": "Get the game ID for a team's next scheduled game.",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_game_highlight_data",
+          "description": "Returns a list of highlight data for a given game.",
+          "input_schema": {
+            "properties": {
+              "game_id": {
+                "title": "Game Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "game_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_data",
+          "description": "Pulls statcast play-level data from Baseball Savant for a given date range.\n\n    INPUTS:\n    start_dt: YYYY-MM-DD : the first date for which you want statcast data\n    end_dt: YYYY-MM-DD : the last date for which you want statcast data\n    team: optional (defaults to None) :\n        city abbreviation of the team you want data for (e.g. SEA or BOS)\n    verbose: bool (defaults to True) :\n        whether to print updates on query progress\n    parallel: bool (defaults to True) :\n        whether to parallelize HTTP requests in large queries\n    start_row: optional (defaults to None) :\n        starting row index for truncating large results (0-based, inclusive)\n    end_row: optional (defaults to None) :\n        ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    If no arguments are provided, this will return yesterday's statcast data.\n    If one date is provided, it will return that date's statcast data.",
+          "input_schema": {
+            "properties": {
+              "start_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Dt"
+              },
+              "end_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Dt"
+              },
+              "team": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Team"
+              },
+              "verbose": {
+                "default": true,
+                "title": "Verbose",
+                "type": "boolean"
+              },
+              "parallel": {
+                "default": true,
+                "title": "Parallel",
+                "type": "boolean"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_data",
+          "description": "\n    Pulls statcast pitch-level data from Baseball Savant for a given batter.\n\n    ARGUMENTS\n        start_dt : YYYY-MM-DD :\n            the first date for which you want a player's statcast data\n        end_dt : YYYY-MM-DD : the final date for which you want data\n        player_id : INT :\n            the player's MLBAM ID.\n            Find this by via the get_playerid_lookup tool,\n            finding the correct player, and selecting their key_mlbam.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "player_id": {
+                "title": "Player Id",
+                "type": "integer"
+              },
+              "start_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Dt"
+              },
+              "end_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Dt"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "player_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_data",
+          "description": "\n    Pulls statcast pitch-level data from Baseball Savant for a given pitcher.\n\n    ARGUMENTS\n        start_dt : YYYY-MM-DD :\n            the first date for which you want a player's statcast data\n        end_dt : YYYY-MM-DD : the final date for which you want data\n        player_id : INT :\n            the player's MLBAM ID.\n            Find this by calling pthe get_playerid_lookup tool,\n            finding the correct player, and selecting their key_mlbam.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "player_id": {
+                "title": "Player Id",
+                "type": "integer"
+              },
+              "start_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Dt"
+              },
+              "end_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Dt"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "player_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_exitvelo_barrels",
+          "description": "\n    Retrieves batted ball data for all batters in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve batted ball data. Format: YYYY.\n        minBBE:\n            The minimum number of batted ball events for each player.\n            If a player falls below this threshold, they will be excluded from the results.\n            If no value is specified, only qualified batters will be returned.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minBBE": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minbbe"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_exitvelo_barrels",
+          "description": "\n    Retrieves batted ball against data for all qualified pitchers in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve batted ball against data. Format: YYYY.\n        minBBE:\n            The minimum number of batted ball against events for each pitcher.\n            If a player falls below this threshold, they will be excluded from the results.\n            If no value is specified, only qualified pitchers will be returned.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minBBE": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minbbe"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_expected_stats",
+          "description": "\n    Retrieves expected stats based on quality of batted ball contact in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve expected stats data. Format: YYYY.\n        minPA: The minimum number of plate appearances for each player.\n            If a player falls below this threshold, they will be excluded from the results.\n            If no value is specified, only qualified batters will be returned.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minPA": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minpa"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_expected_stats",
+          "description": "\n    Retrieves expected stats based on quality of batted ball contact against in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve expected stats data. Format: YYYY.\n        minPA: The minimum number of plate appearances against for each pitcher.\n            If a player falls below this\n            threshold, they will be excluded from the results.\n            If no value is specified, only qualified pitchers\n            will be returned.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minPA": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minpa"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_percentile_ranks",
+          "description": "\n    Retrieves percentile ranks for batters in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve percentile data. Format: YYYY.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_percentile_ranks",
+          "description": "\n    Retrieves percentile ranks for each player in a given year,\n    including batters with 2.1 PA per team game and 1.25\n    for pitchers. It includes percentiles on expected stats,\n    batted ball data, and spin rates, among others.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve percentile data. Format: YYYY.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_pitch_arsenal",
+          "description": "\n    Retrieves outcome data for batters split by the pitch type in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve pitch arsenal data. Format: YYYY.\n        minPA: The minimum number of plate appearances for each player.\n            If a player falls below this threshold,\n                they will be excluded from the results.\n            If no value is specified, the default number of plate appearances is 25.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minPA": {
+                "default": 25,
+                "title": "Minpa",
+                "type": "integer"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_pitch_arsenal",
+          "description": "\n    Retrieves high level stats on each pitcher's arsenal in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve expected stats data. Format: YYYY.\n        minP: The minimum number of pitches thrown.\n            If a player falls below this threshold, they will be excluded\n            from the results. If no value is specified, only qualified pitchers will be returned.\n        arsenal_type:\n            The type of stat to retrieve for the pitchers' arsenals.\n            Options include [\"average_speed\", \"n_\", \"average_spin\"],\n                where \"n_\" corresponds to the percentage share for each pitch.\n            If no value is specified, it will default to average speed.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minP": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minp"
+              },
+              "arsenal_type": {
+                "default": "average_speed",
+                "title": "Arsenal Type",
+                "type": "string"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_single_game",
+          "description": "\n    Pulls statcast play-level data from Baseball Savant for a single game,\n    identified by its MLB game ID (game_pk in statcast data)\n\n    INPUTS:\n    game_pk : 6-digit integer MLB game ID to retrieve\n    start_row: optional (defaults to None) :\n        starting row index for truncating large results (0-based, inclusive)\n    end_row: optional (defaults to None) :\n        ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "game_pk": {
+                "title": "Game Pk",
+                "type": "integer"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "game_pk"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_strike_zone_plot",
+          "description": "\n    Produces a pitches overlaid on a strike zone using StatCast data\n\n    Args:\n        data: (pandas.DataFrame)\n            StatCast pandas.DataFrame of StatCast pitcher data\n        title: (str), default = ''\n            Optional: Title of plot\n        colorby: (str), default = 'pitch_type'\n            Optional: Which category to color the mark with.\n            'pitch_type', 'pitcher', 'description' or a column within data\n        legend_title: (str), default = based on colorby\n            Optional: Title for the legend\n        annotation: (str), default = 'pitch_type'\n            Optional: What to annotate in the marker.\n            'pitch_type', 'release_speed', 'effective_speed',\n              'launch_speed', or something else in the data\n    ",
+          "input_schema": {
+            "properties": {
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              },
+              "title": {
+                "default": "",
+                "title": "Title",
+                "type": "string"
+              },
+              "colorby": {
+                "default": "pitch_type",
+                "title": "Colorby",
+                "type": "string"
+              },
+              "legend_title": {
+                "default": "",
+                "title": "Legend Title",
+                "type": "string"
+              },
+              "annotation": {
+                "default": "pitch_type",
+                "title": "Annotation",
+                "type": "string"
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_spraychart_plot",
+          "description": "\n    Produces a spraychart using statcast data overlayed on specified stadium\n\n\n    Args:\n        data: (pandas.DataFrame)\n            StatCast pandas.DataFrame of StatCast batter data\n        team_stadium: (str)\n            Team whose stadium the hits will be overlaid on\n        title: (str), default = ''\n            Optional: Title of plot\n        size: (int), default = 100\n            Optional: Size of hit circles on plot\n        colorby: (str), default = 'events'\n            Optional: Which category to color the mark with.\n                'events','player', or a column within data\n        legend_title: (str), default = based on colorby\n            Optional: Title for the legend\n        width: (int), default = 500\n            Optional: Width of plot (not counting the legend)\n        height: (int), default = 500\n            Optional: Height of plot\n    ",
+          "input_schema": {
+            "properties": {
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              },
+              "team_stadium": {
+                "default": "generic",
+                "title": "Team Stadium",
+                "type": "string"
+              },
+              "title": {
+                "default": "",
+                "title": "Title",
+                "type": "string"
+              },
+              "colorby": {
+                "default": "events",
+                "title": "Colorby",
+                "type": "string"
+              },
+              "legend_title": {
+                "default": "",
+                "title": "Legend Title",
+                "type": "string"
+              },
+              "size": {
+                "default": 100,
+                "title": "Size",
+                "type": "integer"
+              },
+              "width": {
+                "default": 500,
+                "title": "Width",
+                "type": "integer"
+              },
+              "height": {
+                "default": 500,
+                "title": "Height",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_bb_profile_plot",
+          "description": "Plots a given StatCast parameter split by bb_type\n\n    Args:\n        df: (pandas.DataFrame)\n            pandas.DataFrame of StatCast batter data\n            (retrieved through statcast, statcast_batter, etc)\n        parameter: (str), default = 'launch_angle'\n            Optional: Parameter to plot\n    ",
+          "input_schema": {
+            "properties": {
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              },
+              "parameter": {
+                "default": "launch_angle",
+                "title": "Parameter",
+                "type": "string"
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_teams_plot",
+          "description": "Plots a scatter plot with each MLB team\n\n    Args:\n        data: (pandas.DataFrame)\n            pandas.DataFrame of Fangraphs team data\n                (retrieved through team_batting or team_pitching)\n        x_axis: (str)\n            Stat name to be plotted as the x_axis of the chart\n        y_axis: (str)\n            Stat name to be plotted as the y_axis of the chart\n        title: (str), default = None\n            Optional: Title of the plot\n    ",
+          "input_schema": {
+            "properties": {
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              },
+              "x_axis": {
+                "title": "X Axis",
+                "type": "string"
+              },
+              "y_axis": {
+                "title": "Y Axis",
+                "type": "string"
+              },
+              "title": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Title"
+              }
+            },
+            "required": [
+              "data",
+              "x_axis",
+              "y_axis"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pitching_stats_bref",
+          "description": "\n    Get all pitching stats for a set season. If no argument is supplied, gives stats for\n    current season to date.\n    ",
+          "input_schema": {
+            "properties": {
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pitching_stats_range",
+          "description": "\n    Get all pitching stats for a set time range. This can be the past week, the\n    month of August, anything. Just supply the start and end date in YYYY-MM-DD\n    format.\n    ",
+          "input_schema": {
+            "properties": {
+              "start_dt": {
+                "title": "Start Dt",
+                "type": "string"
+              },
+              "end_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Dt"
+              }
+            },
+            "required": [
+              "start_dt"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pitching_stats",
+          "description": "\n    Get season-level pitching data from FanGraphs.\n\n    Args:\n        start_season: First season to retrieve data from\n        end_season: Final season to retrieve data from.\n        If None, returns only start_season.\n        league: Either \"all\", \"nl\", \"al\", or \"mnl\"\n        qual: Minimum number of plate appearances to be included\n        ind: 1 for individual season level, 0 for aggregate data\n\n    Returns:\n        Dictionary containing pitching stats from FanGraphs\n    ",
+          "input_schema": {
+            "properties": {
+              "start_season": {
+                "title": "Start Season",
+                "type": "integer"
+              },
+              "end_season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Season"
+              },
+              "league": {
+                "default": "all",
+                "title": "League",
+                "type": "string"
+              },
+              "qual": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Qual"
+              },
+              "ind": {
+                "default": 1,
+                "title": "Ind",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_season"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_playerid_lookup",
+          "description": "Lookup playerIDs (MLB AM, bbref, retrosheet, FG) for a given player\n\n    Args:\n        last (str, required): Player's last name.\n        first (str, optional): Player's first name. Defaults to None.\n        fuzzy (bool, optional): In case of typos, returns players with names close to input.\n            Defaults to False.\n\n    Returns:\n        pd.DataFrame: DataFrame of playerIDs, name, years played\n    ",
+          "input_schema": {
+            "properties": {
+              "last": {
+                "title": "Last",
+                "type": "string"
+              },
+              "first": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "First"
+              },
+              "fuzzy": {
+                "default": false,
+                "title": "Fuzzy",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "last"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "reverse_lookup_player",
+          "description": "Retrieve a table of player information given a list of player ids\n\n    :param player_ids: list of player ids\n    :type player_ids: list\n    :param key_type: name of the key type being looked up\n        (one of \"mlbam\", \"retro\", \"bbref\", or \"fangraphs\")\n    :type key_type: str\n\n    :rtype: :class:`pandas.core.frame.DataFrame`\n    ",
+          "input_schema": {
+            "properties": {
+              "player_ids": {
+                "items": {
+                  "type": "integer"
+                },
+                "title": "Player Ids",
+                "type": "array"
+              },
+              "key_type": {
+                "default": "mlbam",
+                "title": "Key Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "player_ids"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_schedule_and_record",
+          "description": "\n    Retrieve a team's game-level results for a given season,\n        including win/loss/tie result, score, attendance,\n    and winning/losing/saving pitcher. If the season is incomplete,\n        it will provide scheduling information for\n    future games.\n\n    ARGUMENTS\n        season: Integer. The season for which you want a team's record data.\n        team: String.\n        The abbreviation of the team for which you are requesting data (e.g. \"PHI\", \"BOS\", \"LAD\").\n    ",
+          "input_schema": {
+            "properties": {
+              "season": {
+                "title": "Season",
+                "type": "integer"
+              },
+              "team": {
+                "title": "Team",
+                "type": "string"
+              }
+            },
+            "required": [
+              "season",
+              "team"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_player_splits",
+          "description": "\n    Returns a dataframe of all split stats for a given player.\n    If player_info is True, this will also return a dictionary that includes player position,\n        handedness, height, weight, position, and team\n    ",
+          "input_schema": {
+            "properties": {
+              "playerid": {
+                "title": "Playerid",
+                "type": "string"
+              },
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Year"
+              },
+              "player_info": {
+                "default": false,
+                "title": "Player Info",
+                "type": "boolean"
+              },
+              "pitching_splits": {
+                "default": false,
+                "title": "Pitching Splits",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "playerid"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pybaseball_standings",
+          "description": "\n    Returns a pandas DataFrame of the standings for a given MLB season, or the most recent standings\n    if the date is not specified.\n\n    ARGUMENTS\n        season (int): the year of the season\n    ",
+          "input_schema": {
+            "properties": {
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_batting",
+          "description": "\n    Get season-level Batting Statistics for Specific Team (from Baseball-Reference)\n\n    ARGUMENTS:\n    team : str : The Team Abbreviation (i.e. 'NYY' for Yankees) of the Team you want data for\n    start_season : int : first season you want data for\n        (or the only season if you do not specify an end_season)\n    end_season : int : final season you want data for\n    ",
+          "input_schema": {
+            "properties": {
+              "start_season": {
+                "title": "Start Season",
+                "type": "integer"
+              },
+              "end_season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Season"
+              },
+              "league": {
+                "default": "all",
+                "title": "League",
+                "type": "string"
+              },
+              "ind": {
+                "default": 1,
+                "title": "Ind",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_season"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_fielding",
+          "description": "\n    Get season-level Fielding Statistics for Specific Team (from Baseball-Reference)\n\n    ARGUMENTS:\n    team            : str : The Team Abbreviation (i.e., 'NYY' for Yankees) of the\n        Team you want data for\n    start_season    : int : first season you want data for\n        (or the only season if you do not specify an end_season)\n    end_season      : int : final season you want data for\n    ",
+          "input_schema": {
+            "properties": {
+              "start_season": {
+                "title": "Start Season",
+                "type": "integer"
+              },
+              "end_season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Season"
+              },
+              "league": {
+                "default": "all",
+                "title": "League",
+                "type": "string"
+              },
+              "ind": {
+                "default": 1,
+                "title": "Ind",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_season"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_pitching",
+          "description": "\n    Get season-level Pitching Statistics for Specific Team (from Baseball-Reference)\n\n    ARGUMENTS:\n    team : str : The Team Abbreviation (i.e. 'NYY' for Yankees) of the Team you want data for\n    start_season : int : first season you want data for\n        (or the only season if you do not specify an end_season)\n    end_season : int : final season you want data for\n    ",
+          "input_schema": {
+            "properties": {
+              "start_season": {
+                "title": "Start Season",
+                "type": "integer"
+              },
+              "end_season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Season"
+              },
+              "league": {
+                "default": "all",
+                "title": "League",
+                "type": "string"
+              },
+              "ind": {
+                "default": 1,
+                "title": "Ind",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_season"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_top_prospects",
+          "description": "\n    Retrieves the top prospects by team or leaguewide.\n        It can return top prospect pitchers, batters, or both.\n\n    ARGUMENTS\n    team: The team name for which you wish to retrieve top prospects. If not specified,\n        the function will return leaguewide top prospects.\n    playerType: Either \"pitchers\" or \"batters\".\n        If not specified, the function will return top prospects for both\n        pitchers and batters.\n    ",
+          "input_schema": {
+            "properties": {
+              "team": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Team"
+              },
+              "player_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Player Type"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 46,
+      "tool_names": [
+        "get_stats",
+        "get_schedule",
+        "get_player_stats",
+        "get_standings",
+        "get_team_leaders",
+        "lookup_player",
+        "get_boxscore",
+        "get_team_roster",
+        "get_game_pace",
+        "get_meta",
+        "get_available_endpoints",
+        "get_notes",
+        "get_game_scoring_play_data",
+        "get_last_game",
+        "get_league_leader_data",
+        "get_linescore",
+        "get_next_game",
+        "get_game_highlight_data",
+        "get_statcast_data",
+        "get_statcast_batter_data",
+        "get_statcast_pitcher_data",
+        "get_statcast_batter_exitvelo_barrels",
+        "get_statcast_pitcher_exitvelo_barrels",
+        "get_statcast_batter_expected_stats",
+        "get_statcast_pitcher_expected_stats",
+        "get_statcast_batter_percentile_ranks",
+        "get_statcast_pitcher_percentile_ranks",
+        "get_statcast_batter_pitch_arsenal",
+        "get_statcast_pitcher_pitch_arsenal",
+        "get_statcast_single_game",
+        "create_strike_zone_plot",
+        "create_spraychart_plot",
+        "create_bb_profile_plot",
+        "create_teams_plot",
+        "get_pitching_stats_bref",
+        "get_pitching_stats_range",
+        "get_pitching_stats",
+        "get_playerid_lookup",
+        "reverse_lookup_player",
+        "get_schedule_and_record",
+        "get_player_splits",
+        "get_pybaseball_standings",
+        "get_team_batting",
+        "get_team_fielding",
+        "get_team_pitching",
+        "get_top_prospects"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1008,
+      "name": "MLB Stats Server",
+      "author": "@etweisberg/mlb-mcp",
+      "overview": "Provide structured access to Major League Baseball statistics through an MCP server. Query and retrieve detailed baseball data including statcast, fangraphs, and baseball reference stats. Generate visualizations and integrate seamlessly with MCP-compatible clients for enhanced baseball analytics.",
+      "repository_url": "https://github.com/etweisberg/mlb-mcp",
+      "homepage": "https://smithery.ai/server/@etweisberg/mlb-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@etweisberg_mlb-mcp.json",
+      "tools_count": 46,
+      "tools": [
+        {
+          "name": "get_stats",
+          "description": "",
+          "input_schema": {
+            "properties": {
+              "endpoint": {
+                "title": "Endpoint",
+                "type": "string"
+              },
+              "params": {
+                "additionalProperties": true,
+                "title": "Params",
+                "type": "object"
+              }
+            },
+            "required": [
+              "endpoint",
+              "params"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_schedule",
+          "description": "\n    Get list of games for a given date/range and/or team/opponent.\n    ",
+          "input_schema": {
+            "properties": {
+              "date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Date"
+              },
+              "start_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Date"
+              },
+              "end_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Date"
+              },
+              "team_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Team Id"
+              },
+              "opponent_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Opponent Id"
+              },
+              "sport_id": {
+                "default": 1,
+                "title": "Sport Id",
+                "type": "integer"
+              },
+              "game_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Game Id"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "include_series_status": {
+                "default": true,
+                "title": "Include Series Status",
+                "type": "boolean"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_player_stats",
+          "description": "\n    Returns a list of current season or career stat data for a given player.\n    ",
+          "input_schema": {
+            "properties": {
+              "player_id": {
+                "title": "Player Id",
+                "type": "integer"
+              },
+              "group": {
+                "default": "hitting",
+                "title": "Group",
+                "type": "string"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "stats": {
+                "default": "season",
+                "title": "Stats",
+                "type": "string"
+              }
+            },
+            "required": [
+              "player_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_standings",
+          "description": "\n    Returns a dict of standings data for a given league/division and season.\n    ",
+          "input_schema": {
+            "properties": {
+              "league_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "League Id"
+              },
+              "division_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Division Id"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "standings_types": {
+                "default": "regularSeason",
+                "title": "Standings Types",
+                "type": "string"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_leaders",
+          "description": "\n    Returns a python list of stat leader data for a given team\n    ",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              },
+              "leader_category": {
+                "default": "homeRuns",
+                "title": "Leader Category",
+                "type": "string"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "leader_game_type": {
+                "default": "R",
+                "title": "Leader Game Type",
+                "type": "string"
+              },
+              "limit": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Limit"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "lookup_player",
+          "description": "Get data about players based on first, last, or full name.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_boxscore",
+          "description": "Get a formatted boxscore for a given game.",
+          "input_schema": {
+            "properties": {
+              "game_id": {
+                "title": "Game Id",
+                "type": "integer"
+              },
+              "timecode": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Timecode"
+              }
+            },
+            "required": [
+              "game_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_roster",
+          "description": "Get the roster for a given team.",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              },
+              "roster_type": {
+                "default": "active",
+                "title": "Roster Type",
+                "type": "string"
+              },
+              "season": {
+                "default": 2025,
+                "title": "Season",
+                "type": "integer"
+              },
+              "date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Date"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_game_pace",
+          "description": "Returns data about pace of game for a given season (back to 1999).",
+          "input_schema": {
+            "properties": {
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_meta",
+          "description": "Get available values from StatsAPI for use in other queries,\n    or look up descriptions for values found in API results.\n\n    For example, to get a list of leader categories to use when calling team_leaders():\n    statsapi.meta('leagueLeaderTypes')\n    ",
+          "input_schema": {
+            "properties": {
+              "type_name": {
+                "title": "Type Name",
+                "type": "string"
+              },
+              "fields": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Fields"
+              }
+            },
+            "required": [
+              "type_name"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_available_endpoints",
+          "description": "Get MLB StatsAPI endpoints directly",
+          "input_schema": {
+            "properties": {},
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_notes",
+          "description": "Get additional notes on an endpoint",
+          "input_schema": {
+            "properties": {
+              "endpoint": {
+                "title": "Endpoint",
+                "type": "string"
+              }
+            },
+            "required": [
+              "endpoint"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_game_scoring_play_data",
+          "description": "Returns a dictionary of scoring plays for a given game containing 3 keys:\n\n    * home - home team data\n    * away - away team data\n    * plays - sorted list of scoring play data\n    ",
+          "input_schema": {
+            "properties": {
+              "game_id": {
+                "title": "Game Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "game_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_last_game",
+          "description": "Get the gamePk (game_id) for the given team's most recent completed game.",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_league_leader_data",
+          "description": "Returns a list of stat leaders overall or for a given league (103=AL, 104=NL).",
+          "input_schema": {
+            "properties": {
+              "leader_categories": {
+                "title": "Leader Categories",
+                "type": "string"
+              },
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              },
+              "limit": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Limit"
+              },
+              "stat_group": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Stat Group"
+              },
+              "league_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "League Id"
+              },
+              "game_types": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Game Types"
+              }
+            },
+            "required": [
+              "leader_categories"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_linescore",
+          "description": "Get formatted linescore data for a specific MLB game.",
+          "input_schema": {
+            "properties": {
+              "game_id": {
+                "title": "Game Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "game_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_next_game",
+          "description": "Get the game ID for a team's next scheduled game.",
+          "input_schema": {
+            "properties": {
+              "team_id": {
+                "title": "Team Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "team_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_game_highlight_data",
+          "description": "Returns a list of highlight data for a given game.",
+          "input_schema": {
+            "properties": {
+              "game_id": {
+                "title": "Game Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "game_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_data",
+          "description": "Pulls statcast play-level data from Baseball Savant for a given date range.\n\n    INPUTS:\n    start_dt: YYYY-MM-DD : the first date for which you want statcast data\n    end_dt: YYYY-MM-DD : the last date for which you want statcast data\n    team: optional (defaults to None) :\n        city abbreviation of the team you want data for (e.g. SEA or BOS)\n    verbose: bool (defaults to True) :\n        whether to print updates on query progress\n    parallel: bool (defaults to True) :\n        whether to parallelize HTTP requests in large queries\n    start_row: optional (defaults to None) :\n        starting row index for truncating large results (0-based, inclusive)\n    end_row: optional (defaults to None) :\n        ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    If no arguments are provided, this will return yesterday's statcast data.\n    If one date is provided, it will return that date's statcast data.",
+          "input_schema": {
+            "properties": {
+              "start_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Dt"
+              },
+              "end_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Dt"
+              },
+              "team": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Team"
+              },
+              "verbose": {
+                "default": true,
+                "title": "Verbose",
+                "type": "boolean"
+              },
+              "parallel": {
+                "default": true,
+                "title": "Parallel",
+                "type": "boolean"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_data",
+          "description": "\n    Pulls statcast pitch-level data from Baseball Savant for a given batter.\n\n    ARGUMENTS\n        start_dt : YYYY-MM-DD :\n            the first date for which you want a player's statcast data\n        end_dt : YYYY-MM-DD : the final date for which you want data\n        player_id : INT :\n            the player's MLBAM ID.\n            Find this by via the get_playerid_lookup tool,\n            finding the correct player, and selecting their key_mlbam.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "player_id": {
+                "title": "Player Id",
+                "type": "integer"
+              },
+              "start_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Dt"
+              },
+              "end_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Dt"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "player_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_data",
+          "description": "\n    Pulls statcast pitch-level data from Baseball Savant for a given pitcher.\n\n    ARGUMENTS\n        start_dt : YYYY-MM-DD :\n            the first date for which you want a player's statcast data\n        end_dt : YYYY-MM-DD : the final date for which you want data\n        player_id : INT :\n            the player's MLBAM ID.\n            Find this by calling pthe get_playerid_lookup tool,\n            finding the correct player, and selecting their key_mlbam.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "player_id": {
+                "title": "Player Id",
+                "type": "integer"
+              },
+              "start_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Dt"
+              },
+              "end_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Dt"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "player_id"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_exitvelo_barrels",
+          "description": "\n    Retrieves batted ball data for all batters in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve batted ball data. Format: YYYY.\n        minBBE:\n            The minimum number of batted ball events for each player.\n            If a player falls below this threshold, they will be excluded from the results.\n            If no value is specified, only qualified batters will be returned.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minBBE": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minbbe"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_exitvelo_barrels",
+          "description": "\n    Retrieves batted ball against data for all qualified pitchers in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve batted ball against data. Format: YYYY.\n        minBBE:\n            The minimum number of batted ball against events for each pitcher.\n            If a player falls below this threshold, they will be excluded from the results.\n            If no value is specified, only qualified pitchers will be returned.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minBBE": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minbbe"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_expected_stats",
+          "description": "\n    Retrieves expected stats based on quality of batted ball contact in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve expected stats data. Format: YYYY.\n        minPA: The minimum number of plate appearances for each player.\n            If a player falls below this threshold, they will be excluded from the results.\n            If no value is specified, only qualified batters will be returned.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minPA": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minpa"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_expected_stats",
+          "description": "\n    Retrieves expected stats based on quality of batted ball contact against in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve expected stats data. Format: YYYY.\n        minPA: The minimum number of plate appearances against for each pitcher.\n            If a player falls below this\n            threshold, they will be excluded from the results.\n            If no value is specified, only qualified pitchers\n            will be returned.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minPA": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minpa"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_percentile_ranks",
+          "description": "\n    Retrieves percentile ranks for batters in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve percentile data. Format: YYYY.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_percentile_ranks",
+          "description": "\n    Retrieves percentile ranks for each player in a given year,\n    including batters with 2.1 PA per team game and 1.25\n    for pitchers. It includes percentiles on expected stats,\n    batted ball data, and spin rates, among others.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve percentile data. Format: YYYY.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_batter_pitch_arsenal",
+          "description": "\n    Retrieves outcome data for batters split by the pitch type in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve pitch arsenal data. Format: YYYY.\n        minPA: The minimum number of plate appearances for each player.\n            If a player falls below this threshold,\n                they will be excluded from the results.\n            If no value is specified, the default number of plate appearances is 25.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minPA": {
+                "default": 25,
+                "title": "Minpa",
+                "type": "integer"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_pitcher_pitch_arsenal",
+          "description": "\n    Retrieves high level stats on each pitcher's arsenal in a given year.\n\n    ARGUMENTS\n        year: The year for which you wish to retrieve expected stats data. Format: YYYY.\n        minP: The minimum number of pitches thrown.\n            If a player falls below this threshold, they will be excluded\n            from the results. If no value is specified, only qualified pitchers will be returned.\n        arsenal_type:\n            The type of stat to retrieve for the pitchers' arsenals.\n            Options include [\"average_speed\", \"n_\", \"average_spin\"],\n                where \"n_\" corresponds to the percentage share for each pitch.\n            If no value is specified, it will default to average speed.\n        start_row: optional (defaults to None) :\n            starting row index for truncating large results (0-based, inclusive)\n        end_row: optional (defaults to None) :\n            ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "year": {
+                "title": "Year",
+                "type": "integer"
+              },
+              "minP": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Minp"
+              },
+              "arsenal_type": {
+                "default": "average_speed",
+                "title": "Arsenal Type",
+                "type": "string"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "year"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_statcast_single_game",
+          "description": "\n    Pulls statcast play-level data from Baseball Savant for a single game,\n    identified by its MLB game ID (game_pk in statcast data)\n\n    INPUTS:\n    game_pk : 6-digit integer MLB game ID to retrieve\n    start_row: optional (defaults to None) :\n        starting row index for truncating large results (0-based, inclusive)\n    end_row: optional (defaults to None) :\n        ending row index for truncating large results (0-based, exclusive)\n\n    Use start_row and end_row to limit response size when dealing with large datasets.\n    ",
+          "input_schema": {
+            "properties": {
+              "game_pk": {
+                "title": "Game Pk",
+                "type": "integer"
+              },
+              "start_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Start Row"
+              },
+              "end_row": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Row"
+              }
+            },
+            "required": [
+              "game_pk"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_strike_zone_plot",
+          "description": "\n    Produces a pitches overlaid on a strike zone using StatCast data\n\n    Args:\n        data: (pandas.DataFrame)\n            StatCast pandas.DataFrame of StatCast pitcher data\n        title: (str), default = ''\n            Optional: Title of plot\n        colorby: (str), default = 'pitch_type'\n            Optional: Which category to color the mark with.\n            'pitch_type', 'pitcher', 'description' or a column within data\n        legend_title: (str), default = based on colorby\n            Optional: Title for the legend\n        annotation: (str), default = 'pitch_type'\n            Optional: What to annotate in the marker.\n            'pitch_type', 'release_speed', 'effective_speed',\n              'launch_speed', or something else in the data\n    ",
+          "input_schema": {
+            "properties": {
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              },
+              "title": {
+                "default": "",
+                "title": "Title",
+                "type": "string"
+              },
+              "colorby": {
+                "default": "pitch_type",
+                "title": "Colorby",
+                "type": "string"
+              },
+              "legend_title": {
+                "default": "",
+                "title": "Legend Title",
+                "type": "string"
+              },
+              "annotation": {
+                "default": "pitch_type",
+                "title": "Annotation",
+                "type": "string"
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_spraychart_plot",
+          "description": "\n    Produces a spraychart using statcast data overlayed on specified stadium\n\n\n    Args:\n        data: (pandas.DataFrame)\n            StatCast pandas.DataFrame of StatCast batter data\n        team_stadium: (str)\n            Team whose stadium the hits will be overlaid on\n        title: (str), default = ''\n            Optional: Title of plot\n        size: (int), default = 100\n            Optional: Size of hit circles on plot\n        colorby: (str), default = 'events'\n            Optional: Which category to color the mark with.\n                'events','player', or a column within data\n        legend_title: (str), default = based on colorby\n            Optional: Title for the legend\n        width: (int), default = 500\n            Optional: Width of plot (not counting the legend)\n        height: (int), default = 500\n            Optional: Height of plot\n    ",
+          "input_schema": {
+            "properties": {
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              },
+              "team_stadium": {
+                "default": "generic",
+                "title": "Team Stadium",
+                "type": "string"
+              },
+              "title": {
+                "default": "",
+                "title": "Title",
+                "type": "string"
+              },
+              "colorby": {
+                "default": "events",
+                "title": "Colorby",
+                "type": "string"
+              },
+              "legend_title": {
+                "default": "",
+                "title": "Legend Title",
+                "type": "string"
+              },
+              "size": {
+                "default": 100,
+                "title": "Size",
+                "type": "integer"
+              },
+              "width": {
+                "default": 500,
+                "title": "Width",
+                "type": "integer"
+              },
+              "height": {
+                "default": 500,
+                "title": "Height",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_bb_profile_plot",
+          "description": "Plots a given StatCast parameter split by bb_type\n\n    Args:\n        df: (pandas.DataFrame)\n            pandas.DataFrame of StatCast batter data\n            (retrieved through statcast, statcast_batter, etc)\n        parameter: (str), default = 'launch_angle'\n            Optional: Parameter to plot\n    ",
+          "input_schema": {
+            "properties": {
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              },
+              "parameter": {
+                "default": "launch_angle",
+                "title": "Parameter",
+                "type": "string"
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_teams_plot",
+          "description": "Plots a scatter plot with each MLB team\n\n    Args:\n        data: (pandas.DataFrame)\n            pandas.DataFrame of Fangraphs team data\n                (retrieved through team_batting or team_pitching)\n        x_axis: (str)\n            Stat name to be plotted as the x_axis of the chart\n        y_axis: (str)\n            Stat name to be plotted as the y_axis of the chart\n        title: (str), default = None\n            Optional: Title of the plot\n    ",
+          "input_schema": {
+            "properties": {
+              "data": {
+                "additionalProperties": true,
+                "title": "Data",
+                "type": "object"
+              },
+              "x_axis": {
+                "title": "X Axis",
+                "type": "string"
+              },
+              "y_axis": {
+                "title": "Y Axis",
+                "type": "string"
+              },
+              "title": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Title"
+              }
+            },
+            "required": [
+              "data",
+              "x_axis",
+              "y_axis"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pitching_stats_bref",
+          "description": "\n    Get all pitching stats for a set season. If no argument is supplied, gives stats for\n    current season to date.\n    ",
+          "input_schema": {
+            "properties": {
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pitching_stats_range",
+          "description": "\n    Get all pitching stats for a set time range. This can be the past week, the\n    month of August, anything. Just supply the start and end date in YYYY-MM-DD\n    format.\n    ",
+          "input_schema": {
+            "properties": {
+              "start_dt": {
+                "title": "Start Dt",
+                "type": "string"
+              },
+              "end_dt": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Dt"
+              }
+            },
+            "required": [
+              "start_dt"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pitching_stats",
+          "description": "\n    Get season-level pitching data from FanGraphs.\n\n    Args:\n        start_season: First season to retrieve data from\n        end_season: Final season to retrieve data from.\n        If None, returns only start_season.\n        league: Either \"all\", \"nl\", \"al\", or \"mnl\"\n        qual: Minimum number of plate appearances to be included\n        ind: 1 for individual season level, 0 for aggregate data\n\n    Returns:\n        Dictionary containing pitching stats from FanGraphs\n    ",
+          "input_schema": {
+            "properties": {
+              "start_season": {
+                "title": "Start Season",
+                "type": "integer"
+              },
+              "end_season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Season"
+              },
+              "league": {
+                "default": "all",
+                "title": "League",
+                "type": "string"
+              },
+              "qual": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Qual"
+              },
+              "ind": {
+                "default": 1,
+                "title": "Ind",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_season"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_playerid_lookup",
+          "description": "Lookup playerIDs (MLB AM, bbref, retrosheet, FG) for a given player\n\n    Args:\n        last (str, required): Player's last name.\n        first (str, optional): Player's first name. Defaults to None.\n        fuzzy (bool, optional): In case of typos, returns players with names close to input.\n            Defaults to False.\n\n    Returns:\n        pd.DataFrame: DataFrame of playerIDs, name, years played\n    ",
+          "input_schema": {
+            "properties": {
+              "last": {
+                "title": "Last",
+                "type": "string"
+              },
+              "first": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "First"
+              },
+              "fuzzy": {
+                "default": false,
+                "title": "Fuzzy",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "last"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "reverse_lookup_player",
+          "description": "Retrieve a table of player information given a list of player ids\n\n    :param player_ids: list of player ids\n    :type player_ids: list\n    :param key_type: name of the key type being looked up\n        (one of \"mlbam\", \"retro\", \"bbref\", or \"fangraphs\")\n    :type key_type: str\n\n    :rtype: :class:`pandas.core.frame.DataFrame`\n    ",
+          "input_schema": {
+            "properties": {
+              "player_ids": {
+                "items": {
+                  "type": "integer"
+                },
+                "title": "Player Ids",
+                "type": "array"
+              },
+              "key_type": {
+                "default": "mlbam",
+                "title": "Key Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "player_ids"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_schedule_and_record",
+          "description": "\n    Retrieve a team's game-level results for a given season,\n        including win/loss/tie result, score, attendance,\n    and winning/losing/saving pitcher. If the season is incomplete,\n        it will provide scheduling information for\n    future games.\n\n    ARGUMENTS\n        season: Integer. The season for which you want a team's record data.\n        team: String.\n        The abbreviation of the team for which you are requesting data (e.g. \"PHI\", \"BOS\", \"LAD\").\n    ",
+          "input_schema": {
+            "properties": {
+              "season": {
+                "title": "Season",
+                "type": "integer"
+              },
+              "team": {
+                "title": "Team",
+                "type": "string"
+              }
+            },
+            "required": [
+              "season",
+              "team"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_player_splits",
+          "description": "\n    Returns a dataframe of all split stats for a given player.\n    If player_info is True, this will also return a dictionary that includes player position,\n        handedness, height, weight, position, and team\n    ",
+          "input_schema": {
+            "properties": {
+              "playerid": {
+                "title": "Playerid",
+                "type": "string"
+              },
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Year"
+              },
+              "player_info": {
+                "default": false,
+                "title": "Player Info",
+                "type": "boolean"
+              },
+              "pitching_splits": {
+                "default": false,
+                "title": "Pitching Splits",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "playerid"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pybaseball_standings",
+          "description": "\n    Returns a pandas DataFrame of the standings for a given MLB season, or the most recent standings\n    if the date is not specified.\n\n    ARGUMENTS\n        season (int): the year of the season\n    ",
+          "input_schema": {
+            "properties": {
+              "season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Season"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_batting",
+          "description": "\n    Get season-level Batting Statistics for Specific Team (from Baseball-Reference)\n\n    ARGUMENTS:\n    team : str : The Team Abbreviation (i.e. 'NYY' for Yankees) of the Team you want data for\n    start_season : int : first season you want data for\n        (or the only season if you do not specify an end_season)\n    end_season : int : final season you want data for\n    ",
+          "input_schema": {
+            "properties": {
+              "start_season": {
+                "title": "Start Season",
+                "type": "integer"
+              },
+              "end_season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Season"
+              },
+              "league": {
+                "default": "all",
+                "title": "League",
+                "type": "string"
+              },
+              "ind": {
+                "default": 1,
+                "title": "Ind",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_season"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_fielding",
+          "description": "\n    Get season-level Fielding Statistics for Specific Team (from Baseball-Reference)\n\n    ARGUMENTS:\n    team            : str : The Team Abbreviation (i.e., 'NYY' for Yankees) of the\n        Team you want data for\n    start_season    : int : first season you want data for\n        (or the only season if you do not specify an end_season)\n    end_season      : int : final season you want data for\n    ",
+          "input_schema": {
+            "properties": {
+              "start_season": {
+                "title": "Start Season",
+                "type": "integer"
+              },
+              "end_season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Season"
+              },
+              "league": {
+                "default": "all",
+                "title": "League",
+                "type": "string"
+              },
+              "ind": {
+                "default": 1,
+                "title": "Ind",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_season"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_team_pitching",
+          "description": "\n    Get season-level Pitching Statistics for Specific Team (from Baseball-Reference)\n\n    ARGUMENTS:\n    team : str : The Team Abbreviation (i.e. 'NYY' for Yankees) of the Team you want data for\n    start_season : int : first season you want data for\n        (or the only season if you do not specify an end_season)\n    end_season : int : final season you want data for\n    ",
+          "input_schema": {
+            "properties": {
+              "start_season": {
+                "title": "Start Season",
+                "type": "integer"
+              },
+              "end_season": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "End Season"
+              },
+              "league": {
+                "default": "all",
+                "title": "League",
+                "type": "string"
+              },
+              "ind": {
+                "default": 1,
+                "title": "Ind",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_season"
+            ],
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_top_prospects",
+          "description": "\n    Retrieves the top prospects by team or leaguewide.\n        It can return top prospect pitchers, batters, or both.\n\n    ARGUMENTS\n    team: The team name for which you wish to retrieve top prospects. If not specified,\n        the function will return leaguewide top prospects.\n    playerType: Either \"pitchers\" or \"batters\".\n        If not specified, the function will return top prospects for both\n        pitchers and batters.\n    ",
+          "input_schema": {
+            "properties": {
+              "team": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Team"
+              },
+              "player_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Player Type"
+              }
+            },
+            "title": "wrapperArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"logFile\": \"\",\n  \"logLevel\": \"INFO\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@etweisberg/mlb-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"logFile\": \"\",\n  \"logLevel\": \"INFO\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@etweisberg/mlb-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1009.@etweisberg_mlb-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 987
+  }
+}

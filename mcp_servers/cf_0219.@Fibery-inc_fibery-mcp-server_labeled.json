@@ -1,0 +1,126 @@
+{
+  "labels": {
+    "analysis": "The Fibery MCP Server is designed to integrate Fibery workspaces with LLM providers, enabling natural language interactions with Fibery data. Its core functionality revolves around querying, creating, and updating Fibery entities through conversational interfaces. The available tools provide extensive database operations, including listing databases, describing their schemas, running complex queries, and modifying entities. The server enhances productivity by allowing users to interact with their data without deep technical knowledge of the Fibery API.",
+    "reasoning": "The primary label is chosen based on the server's core function of enabling interactions with a custom database system (Fibery) through natural language and API operations. The secondary labels reflect additional capabilities like managing structured data and performing operations akin to a CRUD system. Custom labeling is not needed as the functionality is well covered by predefined categories.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "Operating System",
+      "Development Tools"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 218,
+    "server_name": "Fibery MCP Server",
+    "rank_by_usage": 219,
+    "usage_count": "204",
+    "original_file": "../crawler/smithery/@Fibery-inc_fibery-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Fibery-inc/fibery-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 218,
+      "name": "Fibery MCP Server",
+      "author": "@Fibery-inc/fibery-mcp-server",
+      "overview": "Integrate your Fibery workspace with any LLM provider using natural language. Query, create, and update Fibery entities seamlessly through conversational interfaces. Enhance your productivity by interacting with your data effortlessly.",
+      "repository_url": "https://github.com/Fibery-inc/fibery-mcp-server",
+      "homepage": "https://smithery.ai/server/@Fibery-inc/fibery-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "204",
+      "success_rate": "99.77%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Fibery-inc_fibery-mcp-server.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "current_date",
+          "description": "Deploy Server Fibery MCP Server Claim Server @Fibery-inc/fibery-mcp-server Try in Playground current_date",
+          "parameters": [
+            {
+              "name": "current_date",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_databases",
+          "description": "Get list of all databases (their names) in user's Fibery workspace (schema)",
+          "parameters": [
+            {
+              "name": "list_databases",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "describe_database",
+          "description": "Get list of all fields (in format of 'Title [name]: type') in the selected Fibery database and for all related databases.",
+          "parameters": [
+            {
+              "name": "describe_database",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "database_name",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "query_database",
+          "description": "Run any Fibery API command. This gives tremendous flexibility, but requires a bit of experience with the low-level Fibery API. In case query succeeded, return value contains a list of records with fields you specified in select. If request failed, will return detailed error message. Examples (note, that these databases are non-existent, use databases only from user's schema!): Query: What newly created Features do we have for the past 2 months? Tool use: \"q_from\": \"Dev/Feature\", \"q_select\": { \"Name\": [\"Dev/Name\"], \"Public Id\": [\"fibery/public-id\"], \"Creation Date\": [\"fibery/creation-date\"] \"q_where\": [\">\", [\"fibery/creation-date\"], \"$twoMonthsAgo\"], \"q_order_by\": {\"fibery/creation-date\": \"q/desc\"}, \"q_limit\": 100, \"q_offset\": 0, \"q_params\": { $twoMonthsAgo: \"2025-01-16T00:00:00.000Z\" Query: What Admin Tasks for the past week are Approval or Done? Tool use: \"q_from\": \"Administrative/Admin Task\", \"q_select\": { \"Name\": [\"Administrative/Name\"], \"Public Id\": [\"fibery/public-id\"], \"Creation Date\": [\"fibery/creation-date\"], \"State\": [\"workflow/state\", \"enum/name\"] \"q_where\": [ \"q/and\", # satisfy time AND states condition [\">\", [\"fibery/creation-date\"], \"$oneWeekAgo\"], \"q/or\", # nested or, since entity can be in either of these states [\"=\", [\"workflow/state\", \"enum/name\"], \"$state1\"], [\"=\", [\"workflow/state\", \"enum/name\"], \"$state2\"] \"q_order_by\": {\"fibery/creation-date\": \"q/desc\"}, \"q_limit\": 100, \"q_offset\": 0, \"q_params\": { # notice that parameters used in \"where\" are always passed in params! $oneWeekAgo: \"2025-03-07T00:00:00.000Z\", $state1: \"Approval\", $state2: \"Done\" Query: What Admin Tasks for the past week are Approval or Done? Tool use: \"q_from\": \"Administrative/Admin Task\", \"q_select\": { \"State\": [\"workflow/state\", \"enum/name\"], \"Public Id\": [\"fibery/public-id\"], \"Creation Date\": [\"fibery/creation-date\"], \"Modification Date\": [\"fibery/modification-date\"], \"Deadline\": [\"Administrative/Deadline\"], \"Group\": [\"Administrative/Group\", \"Administrative/name\"], \"Name\": [\"Administrative/Name\"], \"Priority\": [\"Administrative/Priority_Administrative/Admin Task\", \"enum/name\"] \"q_where\": [\"!=\", [\"workflow/state\", \"workflow/Final\"], \"$stateType\"], # Administrative/Admin Task is not \"Finished\" yet \"q_order_by\": {\"fibery/creation-date\": \"q/desc\"}, \"q_limit\": 100, \"q_offset\": 0, \"q_params: { \"$stateType\": true Query: Summarize acc contacts with public id 1. Tool use: \"q_from\": \"Accounting/Acc Contacts\", \"q_select\": { \"Name\": [\"Accounting/Name\"], \"Public Id\": [\"fibery/public-id\"], \"Creation Date\": [\"fibery/creation-date\"], \"Description\": [\"Accounting/Description\"] \"q_where\": [\"=\", [\"fibery/public-id\"], \"$publicId\"], \"q_limit\": 1, \"q_params\": { $publicId: \"1\",",
+          "parameters": []
+        },
+        {
+          "name": "create_entity",
+          "description": "Create Fibery entity with specified fields. Examples (note, that these databases are non-existent, use databases only from user's schema!): Query: Create a feature Tool use: \"database\": \"Product Management/Feature\", \"entity\": { \"Product Management/Name\": \"New Feature\", \"Product Management/Description\": \"Description of the new feature\", \"workflow/state\": \"To Do\" In case of successful execution, you will get a link to created entity. Make sure to give that link to the user.",
+          "parameters": []
+        },
+        {
+          "name": "update_entity",
+          "description": "Update Fibery entity with specified fields. Examples (note, that these databases are non-existent, use databases only from user's schema!): Query: Update a feature we talked about Tool use: \"database\": \"Product Management/Feature\", \"entity\": { \"fibery/id\": \"12345678-1234-5678-1234-567812345678\", \"Product Management/Name\": \"New Feature 2\", \"Product Management/Description\": {\"append\": true, \"content\": \"Notes: some notes\"}, \"workflow/state\": \"In Progress\" In case of successful execution, you will get a link to updated entity. Make sure to give that link to the user.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Fibery-inc/fibery-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "fiberyApiToken",
+          "required": true,
+          "description": "Your Fibery API token."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Fibery-inc/fibery-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0219.@Fibery-inc_fibery-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 215
+  }
+}

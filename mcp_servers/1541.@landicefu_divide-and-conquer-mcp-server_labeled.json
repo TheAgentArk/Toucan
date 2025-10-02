@@ -1,0 +1,804 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Divide and Conquer Server\" is designed to break down complex tasks into structured, manageable parts using a JSON format. It allows for detailed tracking, context maintenance, and organization of tasks across multiple conversations. The available tools focus on task management, checklist operations, context updates, and resource tracking, making it a powerful tool for organizing and completing intricate workflows.",
+    "reasoning": "The primary label \"Task Management\" (categorized under Daily Productivity) was chosen because the server's core functionality revolves around organizing and managing tasks, track progress, and maintain context. Secondary labels \"Memory Management\" and \"Organization Tools\" were added because the server also helps in storing context and maintaining structured notes and resources, which are key aspects of knowledge management and organization.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "Memory Management",
+      "Daily Productivity"
+    ],
+    "custom_label": "Task Breakdown Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1540,
+    "server_name": "Divide and Conquer Server",
+    "rank_by_usage": 1541,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@landicefu_divide-and-conquer-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@landicefu/divide-and-conquer-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "initialize_task",
+          "description": "Creates a new task with the specified description and optional initial checklist items.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "task_description": {
+                "type": "string",
+                "description": "A medium-level detailed description about the whole task"
+              },
+              "context_for_all_tasks": {
+                "type": "string",
+                "description": "Information that all tasks in the checklist should include"
+              },
+              "initial_checklist": {
+                "type": "array",
+                "description": "Optional initial checklist items",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "type": "string",
+                      "description": "A short yet comprehensive name for the task"
+                    },
+                    "detailed_description": {
+                      "type": "string",
+                      "description": "A longer description about what we want to achieve with this task"
+                    },
+                    "context_and_plan": {
+                      "type": "string",
+                      "description": "Related information, files the agent should read, and more details from other tasks, as well as a detailed plan for this task"
+                    },
+                    "done": {
+                      "type": "boolean",
+                      "description": "Whether the task is already completed",
+                      "default": false
+                    }
+                  },
+                  "required": [
+                    "task",
+                    "detailed_description"
+                  ]
+                }
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Optional metadata for the task",
+                "properties": {
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Tags to categorize the task"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "high",
+                      "medium",
+                      "low"
+                    ],
+                    "description": "Priority level of the task"
+                  },
+                  "estimated_completion_time": {
+                    "type": "string",
+                    "description": "Estimated completion time (ISO timestamp or duration)"
+                  }
+                }
+              }
+            },
+            "required": [
+              "task_description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_task_description",
+          "description": "Updates the main task description.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "task_description": {
+                "type": "string",
+                "description": "The new task description"
+              }
+            },
+            "required": [
+              "task_description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_context",
+          "description": "Updates the context information for all tasks.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "context_for_all_tasks": {
+                "type": "string",
+                "description": "The new context information for all tasks"
+              }
+            },
+            "required": [
+              "context_for_all_tasks"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_checklist_item",
+          "description": "Adds a new item to the checklist.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "A short yet comprehensive name for the task"
+              },
+              "detailed_description": {
+                "type": "string",
+                "description": "A longer description about what we want to achieve with this task"
+              },
+              "context_and_plan": {
+                "type": "string",
+                "description": "Related information, files the agent should read, and more details from other tasks, as well as a detailed plan for this task"
+              },
+              "done": {
+                "type": "boolean",
+                "description": "Whether the task is already completed",
+                "default": false
+              },
+              "position": {
+                "type": "number",
+                "description": "Optional position to insert the task (0-based index). If not provided, the task will be added at the end."
+              }
+            },
+            "required": [
+              "task",
+              "detailed_description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_checklist_item",
+          "description": "Updates an existing checklist item.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "The index of the checklist item to update (0-based)"
+              },
+              "task": {
+                "type": "string",
+                "description": "A short yet comprehensive name for the task"
+              },
+              "detailed_description": {
+                "type": "string",
+                "description": "A longer description about what we want to achieve with this task"
+              },
+              "context_and_plan": {
+                "type": "string",
+                "description": "Related information, files the agent should read, and more details from other tasks, as well as a detailed plan for this task"
+              },
+              "done": {
+                "type": "boolean",
+                "description": "Whether the task is completed"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "mark_task_done",
+          "description": "Marks a checklist item as done.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "The index of the checklist item to mark as done (0-based)"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "mark_task_undone",
+          "description": "Marks a checklist item as not done.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "The index of the checklist item to mark as not done (0-based)"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "remove_checklist_item",
+          "description": "Removes a checklist item.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "The index of the checklist item to remove (0-based)"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "reorder_checklist_item",
+          "description": "Moves a checklist item to a new position.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "from_index": {
+                "type": "number",
+                "description": "The current index of the checklist item (0-based)"
+              },
+              "to_index": {
+                "type": "number",
+                "description": "The new index for the checklist item (0-based)"
+              }
+            },
+            "required": [
+              "from_index",
+              "to_index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_note",
+          "description": "Adds a note to the task.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "The content of the note"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_resource",
+          "description": "Adds a resource to the task.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the resource"
+              },
+              "url": {
+                "type": "string",
+                "description": "URL or file path of the resource"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the resource"
+              }
+            },
+            "required": [
+              "name",
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_metadata",
+          "description": "Updates the task metadata.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags to categorize the task"
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ],
+                "description": "Priority level of the task"
+              },
+              "estimated_completion_time": {
+                "type": "string",
+                "description": "Estimated completion time (ISO timestamp or duration)"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "clear_task",
+          "description": "Clears the current task data.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_checklist_summary",
+          "description": "Returns a summary of the checklist with completion status.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "include_descriptions": {
+                "type": "boolean",
+                "description": "Whether to include detailed descriptions in the summary",
+                "default": false
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_task_details",
+          "description": "Retrieves details of the current task (first uncompleted task) with full context. This is the recommended tool to use when working with tasks.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 15,
+      "tool_names": [
+        "initialize_task",
+        "update_task_description",
+        "update_context",
+        "add_checklist_item",
+        "update_checklist_item",
+        "mark_task_done",
+        "mark_task_undone",
+        "remove_checklist_item",
+        "reorder_checklist_item",
+        "add_note",
+        "add_resource",
+        "update_metadata",
+        "clear_task",
+        "get_checklist_summary",
+        "get_current_task_details"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1540,
+      "name": "Divide and Conquer Server",
+      "author": "@landicefu/divide-and-conquer-mcp-server",
+      "overview": "Break down complex tasks into manageable pieces using a structured JSON format. Track progress, maintain context, and organize tasks efficiently across multiple conversations.",
+      "repository_url": "https://github.com/landicefu/divide-and-conquer-mcp-server",
+      "homepage": "https://smithery.ai/server/@landicefu/divide-and-conquer-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@landicefu_divide-and-conquer-mcp-server.json",
+      "tools_count": 15,
+      "tools": [
+        {
+          "name": "initialize_task",
+          "description": "Creates a new task with the specified description and optional initial checklist items.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "task_description": {
+                "type": "string",
+                "description": "A medium-level detailed description about the whole task"
+              },
+              "context_for_all_tasks": {
+                "type": "string",
+                "description": "Information that all tasks in the checklist should include"
+              },
+              "initial_checklist": {
+                "type": "array",
+                "description": "Optional initial checklist items",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "type": "string",
+                      "description": "A short yet comprehensive name for the task"
+                    },
+                    "detailed_description": {
+                      "type": "string",
+                      "description": "A longer description about what we want to achieve with this task"
+                    },
+                    "context_and_plan": {
+                      "type": "string",
+                      "description": "Related information, files the agent should read, and more details from other tasks, as well as a detailed plan for this task"
+                    },
+                    "done": {
+                      "type": "boolean",
+                      "description": "Whether the task is already completed",
+                      "default": false
+                    }
+                  },
+                  "required": [
+                    "task",
+                    "detailed_description"
+                  ]
+                }
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Optional metadata for the task",
+                "properties": {
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Tags to categorize the task"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "high",
+                      "medium",
+                      "low"
+                    ],
+                    "description": "Priority level of the task"
+                  },
+                  "estimated_completion_time": {
+                    "type": "string",
+                    "description": "Estimated completion time (ISO timestamp or duration)"
+                  }
+                }
+              }
+            },
+            "required": [
+              "task_description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_task_description",
+          "description": "Updates the main task description.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "task_description": {
+                "type": "string",
+                "description": "The new task description"
+              }
+            },
+            "required": [
+              "task_description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_context",
+          "description": "Updates the context information for all tasks.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "context_for_all_tasks": {
+                "type": "string",
+                "description": "The new context information for all tasks"
+              }
+            },
+            "required": [
+              "context_for_all_tasks"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_checklist_item",
+          "description": "Adds a new item to the checklist.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "description": "A short yet comprehensive name for the task"
+              },
+              "detailed_description": {
+                "type": "string",
+                "description": "A longer description about what we want to achieve with this task"
+              },
+              "context_and_plan": {
+                "type": "string",
+                "description": "Related information, files the agent should read, and more details from other tasks, as well as a detailed plan for this task"
+              },
+              "done": {
+                "type": "boolean",
+                "description": "Whether the task is already completed",
+                "default": false
+              },
+              "position": {
+                "type": "number",
+                "description": "Optional position to insert the task (0-based index). If not provided, the task will be added at the end."
+              }
+            },
+            "required": [
+              "task",
+              "detailed_description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_checklist_item",
+          "description": "Updates an existing checklist item.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "The index of the checklist item to update (0-based)"
+              },
+              "task": {
+                "type": "string",
+                "description": "A short yet comprehensive name for the task"
+              },
+              "detailed_description": {
+                "type": "string",
+                "description": "A longer description about what we want to achieve with this task"
+              },
+              "context_and_plan": {
+                "type": "string",
+                "description": "Related information, files the agent should read, and more details from other tasks, as well as a detailed plan for this task"
+              },
+              "done": {
+                "type": "boolean",
+                "description": "Whether the task is completed"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "mark_task_done",
+          "description": "Marks a checklist item as done.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "The index of the checklist item to mark as done (0-based)"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "mark_task_undone",
+          "description": "Marks a checklist item as not done.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "The index of the checklist item to mark as not done (0-based)"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "remove_checklist_item",
+          "description": "Removes a checklist item.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "index": {
+                "type": "number",
+                "description": "The index of the checklist item to remove (0-based)"
+              }
+            },
+            "required": [
+              "index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "reorder_checklist_item",
+          "description": "Moves a checklist item to a new position.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "from_index": {
+                "type": "number",
+                "description": "The current index of the checklist item (0-based)"
+              },
+              "to_index": {
+                "type": "number",
+                "description": "The new index for the checklist item (0-based)"
+              }
+            },
+            "required": [
+              "from_index",
+              "to_index"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_note",
+          "description": "Adds a note to the task.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "The content of the note"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_resource",
+          "description": "Adds a resource to the task.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the resource"
+              },
+              "url": {
+                "type": "string",
+                "description": "URL or file path of the resource"
+              },
+              "description": {
+                "type": "string",
+                "description": "Description of the resource"
+              }
+            },
+            "required": [
+              "name",
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_metadata",
+          "description": "Updates the task metadata.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Tags to categorize the task"
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ],
+                "description": "Priority level of the task"
+              },
+              "estimated_completion_time": {
+                "type": "string",
+                "description": "Estimated completion time (ISO timestamp or duration)"
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "clear_task",
+          "description": "Clears the current task data.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_checklist_summary",
+          "description": "Returns a summary of the checklist with completion status.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "include_descriptions": {
+                "type": "boolean",
+                "description": "Whether to include detailed descriptions in the summary",
+                "default": false
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_task_details",
+          "description": "Retrieves details of the current task (first uncompleted task) with full context. This is the recommended tool to use when working with tasks.",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@landicefu/divide-and-conquer-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@landicefu/divide-and-conquer-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1541.@landicefu_divide-and-conquer-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1415
+  }
+}

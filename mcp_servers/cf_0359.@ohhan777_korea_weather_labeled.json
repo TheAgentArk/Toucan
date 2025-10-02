@@ -1,0 +1,98 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on gathering and providing weather data from South Korea's Meteorological Administration through its public API. It converts this data into MCP format for client applications like Claude or Cursor. The server specializes in delivering real-time and short-term weather forecasts based on specific geographic coordinates. Its core functionality revolves around weather data retrieval and processing, making it a dedicated tool for weather information applications.",
+    "reasoning": "The primary label \"Weather\" is chosen because the server's main purpose is to provide weather data services. The secondary label \"API Integration\" is selected because the server interacts with an external weather API. The \"Korea Meteorological Data\" custom label is used to emphasize the server's specific focus on Korean weather information, which isn't covered by the predefined categories.",
+    "primary_label": "Weather",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": "Korea Meteorological Data",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 358,
+    "server_name": "Korea Weather",
+    "rank_by_usage": 359,
+    "usage_count": "81",
+    "original_file": "../crawler/smithery/@ohhan777_korea_weather.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@ohhan777/korea_weather/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 358,
+      "name": "Korea Weather",
+      "author": "@ohhan777/korea_weather",
+      "overview": "Korea Weather MCP Server는 대한민국 기상청의 단기 예보 API를 활용하여 날씨 정보를 수집하고, 이를 MCP 형식으로 변환하여 제공하는 서버입니다. 이 서버는 Claude, Cursor 등과 같은 MCP 클라이언트(호스트)에게 실시간 또는 요청 기반의 기상 데이터를 전달하는 용도로 사용됩니다. 다양한 기상 응용 서비스의 백엔드로 활용될 수 있도록 설계되었습니다.\n\n이 서버의 주요 기능은 기상청의 단기 예보 API와 연동하여 데이터를 수신하고, 해당 정보를 MCP 프로토콜 형식으로 가공하여 클라이언트에게 제공하는 것입니다.\n\n서버를 사용하기 위해서는 먼저 대한민국 공공데이터 포털(data.go.kr)에서 기상청 단기 예보 API 활용 신청을 한 뒤, API 키를 발급받아야 합니다. 이후 서버 설정 파일에서 MCP 서버 관련 항목을 등록하고, 발급받은 API 키는 환경변수로 설정하여 시스템에 반영합니다.\n\n본 서버는 Python 3.x 기반으로 개발되었으며, 외부 패키지로는 requests 등을 사용합니다. 보다 상세한 의존성 목록은 pyproject.toml 파일에서 확인할 수 있습니다.\n\n이 프로젝트는 내부 시험용으로 개발되었으며, 별도의 라이선스 제한 없이 자유롭게 사용, 수정, 배포가 가능합니다.\n\n서버 관련 문의는 한국항공우주연구원의 오한(ohhan@kari.re.kr)에게 연락 주시기 바랍니다.",
+      "repository_url": "https://github.com/ohhan777/korea_weather",
+      "homepage": "https://smithery.ai/server/@ohhan777/korea_weather",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "81",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@ohhan777_korea_weather.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "get_nowcast_observation",
+          "description": "Deploy Server Korea Weather @ohhan777/korea_weather Try in Playground get_nowcast_observation",
+          "parameters": [
+            {
+              "name": "lon",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "lat",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_short_term_forecast",
+          "description": "특정 위경도의 단기 예보 (3일~5일) 정보를 가져옵니다. Args: lon (float): 경도 값 lat (float): 위도 값 Returns: str: 단기 예보 정보 문자열 (최대 3일 예보)",
+          "parameters": []
+        },
+        {
+          "name": "get_nowcast_forecast",
+          "description": "특정 위경도의 초단기 (6시간 이내) 예보 정보를 가져옵니다. Args: lon (float): 경도 값 lat (float): 위도 값 Returns: str: 초단기 (6시간 이내) 예보 정보 문자열",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@ohhan777/korea_weather/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "koreaWeatherApiKey",
+          "required": true,
+          "description": "API key for accessing the Korea Weather API from data.go.kr"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@ohhan777/korea_weather/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0359.@ohhan777_korea_weather_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 355
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on providing real-time Brazilian vehicle price information by leveraging the official FIPE API. Its core functionality includes retrieving car brands, searching for models and prices by brand, and categorizing vehicles by type (cars, motorcycles, trucks). The tools enable users to access comprehensive vehicle details such as production years, fuel types, and current market prices, facilitating informed decisions on vehicle pricing.",
+    "reasoning": "The primary label \"Financial Services\" is chosen because the server deals with market pricing and financial data about vehicles, which aligns with the category's focus on financial information. The secondary label \"E-commerce\" is relevant due to the price comparison and vehicle information needs that are common in the e-commerce space, particularly for automotive sales or rentals. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Financial Services",
+    "secondary_labels": [
+      "E-commerce"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 611,
+    "server_name": "Car Price Server",
+    "rank_by_usage": 612,
+    "usage_count": "17",
+    "original_file": "../crawler/smithery/@yusaaztrk_car-price-mcp-main.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@yusaaztrk/car-price-mcp-main/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_car_brands",
+          "description": "\n    Get all available car brands from FIPE API.\n    \n    Returns:\n        List of car brands with their codes and names\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_car_brandsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_car_price",
+          "description": "\n    Search for car models and prices by brand name.\n    \n    Args:\n        brand_name: The car brand name to search for (e.g., \"Toyota\", \"Honda\", \"Ford\")\n    \n    Returns:\n        Car models with current market prices from FIPE database\n    ",
+          "input_schema": {
+            "properties": {
+              "brand_name": {
+                "title": "Brand Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "brand_name"
+            ],
+            "title": "search_car_priceArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_vehicles_by_type",
+          "description": "\n    Get vehicles by type (cars, motorcycles, trucks).\n    \n    Args:\n        vehicle_type: Type of vehicles to fetch (\"carros\"/\"cars\", \"motos\"/\"motorcycles\", \"caminhoes\"/\"trucks\")\n    \n    Returns:\n        List of vehicle brands for the specified type\n    ",
+          "input_schema": {
+            "properties": {
+              "vehicle_type": {
+                "default": "carros",
+                "title": "Vehicle Type",
+                "type": "string"
+              }
+            },
+            "title": "get_vehicles_by_typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "get_car_brands",
+        "search_car_price",
+        "get_vehicles_by_type"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 611,
+      "name": "Car Price Server",
+      "author": "@yusaaztrk/car-price-mcp-main",
+      "overview": "Provide real-time Brazilian vehicle price information using the official FIPE API. Retrieve car brands, search models and prices by brand, and get vehicles by type including cars, motorcycles, and trucks. Access comprehensive vehicle details such as production years, fuel types, and current market prices to assist in informed vehicle pricing queries.",
+      "repository_url": "https://github.com/yusaaztrk/car-price-mcp-main",
+      "homepage": "https://smithery.ai/server/@yusaaztrk/car-price-mcp-main",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "17",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@yusaaztrk_car-price-mcp-main.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "get_car_brands",
+          "description": "\n    Get all available car brands from FIPE API.\n    \n    Returns:\n        List of car brands with their codes and names\n    ",
+          "input_schema": {
+            "properties": {},
+            "title": "get_car_brandsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_car_price",
+          "description": "\n    Search for car models and prices by brand name.\n    \n    Args:\n        brand_name: The car brand name to search for (e.g., \"Toyota\", \"Honda\", \"Ford\")\n    \n    Returns:\n        Car models with current market prices from FIPE database\n    ",
+          "input_schema": {
+            "properties": {
+              "brand_name": {
+                "title": "Brand Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "brand_name"
+            ],
+            "title": "search_car_priceArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_vehicles_by_type",
+          "description": "\n    Get vehicles by type (cars, motorcycles, trucks).\n    \n    Args:\n        vehicle_type: Type of vehicles to fetch (\"carros\"/\"cars\", \"motos\"/\"motorcycles\", \"caminhoes\"/\"trucks\")\n    \n    Returns:\n        List of vehicle brands for the specified type\n    ",
+          "input_schema": {
+            "properties": {
+              "vehicle_type": {
+                "default": "carros",
+                "title": "Vehicle Type",
+                "type": "string"
+              }
+            },
+            "title": "get_vehicles_by_typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@yusaaztrk/car-price-mcp-main/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@yusaaztrk/car-price-mcp-main/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0612.@yusaaztrk_car-price-mcp-main_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 597
+  }
+}

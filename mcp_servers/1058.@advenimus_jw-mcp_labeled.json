@@ -1,0 +1,296 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on providing access to JW.org content, including video captions, meeting workbooks (Christian Life and Ministry), and Watchtower articles. Its primary function is to facilitate religious study and research through automated retrieval of specific content types. The tools handle both current and historical content, allowing users to access RTF document downloads and video subtitles efficiently.",
+    "reasoning": "The primary label \"Content Creation\" was chosen because the server enables the retrieval and downloading of organized religious content for study purposes. Secondary labels \"Web Search & Research\" and \"Education\" are relevant due to the server's role in accessing browsing, retrieving, and organizing academic/religious materials.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Education"
+    ],
+    "custom_label": "JW.org Content Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1057,
+    "server_name": "JW.org Content Tools",
+    "rank_by_usage": 1058,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@advenimus_jw-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@advenimus/jw-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_jw_captions",
+          "description": "Fetches video captions from JW.org by video ID or URL. Accepts either a direct video ID (e.g., \"pub-jwbvod25_17_VIDEO\") or a JW.org URL (e.g., \"https://www.jw.org/finder?srcid=jwlshare&wtlocale=E&lank=pub-jwbvod25_17_VIDEO\")",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "video_id": {
+                "type": "string",
+                "description": "The JW.org video ID or a JW.org URL containing the video ID. If a URL is provided, the video ID will be automatically extracted."
+              }
+            },
+            "required": [
+              "video_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getWorkbookLinks",
+          "description": "STEP 1: Get JW.org \"Our Christian Life and Ministry\" (CLM) meeting workbook weeks. When a user asks for CLM workbook content, use this tool FIRST to show them available weeks. Returns weekly titles like \"May 5-11 (Proverbs 12)\" with their RTF download URLs. Automatically uses current month/year for the issue.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pub": {
+                "type": "string",
+                "description": "Publication code: \"mwb\" for Meeting Workbook (CLM workbook)",
+                "default": "mwb"
+              },
+              "langwritten": {
+                "type": "string",
+                "description": "Language code: \"E\" for English, \"S\" for Spanish, etc.",
+                "default": "E"
+              },
+              "issue": {
+                "type": "string",
+                "description": "Issue in YYYYMM00 format. Leave empty to use current month/year automatically (e.g., \"20250500\" for May 2025)"
+              },
+              "fileformat": {
+                "type": "string",
+                "description": "File format: \"RTF\" for Rich Text Format",
+                "default": "RTF"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "getWorkbookContent",
+          "description": "STEP 2: Get the actual CLM workbook content after user chooses a week. Use this tool AFTER getWorkbookLinks when user specifies which week they want (e.g., \"May 5-11\" or \"June 30-July 6\"). Takes the RTF URL from Step 1 results and returns the full workbook text content for that specific week.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The RTF file URL from getWorkbookLinks results (e.g., \"https://cfp2.jw-cdn.org/a/...\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getWatchtowerLinks",
+          "description": "STEP 1: Get JW.org Watchtower study articles. When a user asks for current/this week's Watchtower content, use this tool FIRST without any parameters - it automatically gets the correct issue for current study articles (Watchtower publications are 2 months ahead, so May 2025 studies come from March 2025 issue). Returns article titles like \"Imitate the Faithful Angels (July 14-20)\" with their RTF download URLs. Just use defaults for current articles.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pub": {
+                "type": "string",
+                "description": "Publication code: \"w\" for Watchtower (Study edition)",
+                "default": "w"
+              },
+              "langwritten": {
+                "type": "string",
+                "description": "Language code: \"E\" for English, \"S\" for Spanish, etc.",
+                "default": "E"
+              },
+              "issue": {
+                "type": "string",
+                "description": "Issue in YYYYMM00 format. Leave empty for current study articles (server automatically calculates correct issue - Watchtower studies are 2 months ahead of publication)"
+              },
+              "fileformat": {
+                "type": "string",
+                "description": "File format: \"RTF\" for Rich Text Format",
+                "default": "RTF"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "getWatchtowerContent",
+          "description": "STEP 2: Get the actual Watchtower article content after user chooses an article. Use this tool AFTER getWatchtowerLinks when user specifies which article they want (e.g., \"Imitate the Faithful Angels\" or \"Look to Jehovah for Comfort\"). Takes the RTF URL from Step 1 results and returns the full article text content.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The RTF file URL from getWatchtowerLinks results (e.g., \"https://cfp2.jw-cdn.org/a/...\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "get_jw_captions",
+        "getWorkbookLinks",
+        "getWorkbookContent",
+        "getWatchtowerLinks",
+        "getWatchtowerContent"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1057,
+      "name": "JW.org Content Tools",
+      "author": "@advenimus/jw-mcp",
+      "overview": "Provide seamless access to JW.org content including Christian Life and Ministry workbooks, Watchtower articles, and video captions. Automatically handle current and past issues for accurate content retrieval. Enable easy downloading of RTF content and video subtitles to enhance study and research workflows.",
+      "repository_url": "https://github.com/advenimus/jw-mcp",
+      "homepage": "https://smithery.ai/server/@advenimus/jw-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@advenimus_jw-mcp.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "get_jw_captions",
+          "description": "Fetches video captions from JW.org by video ID or URL. Accepts either a direct video ID (e.g., \"pub-jwbvod25_17_VIDEO\") or a JW.org URL (e.g., \"https://www.jw.org/finder?srcid=jwlshare&wtlocale=E&lank=pub-jwbvod25_17_VIDEO\")",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "video_id": {
+                "type": "string",
+                "description": "The JW.org video ID or a JW.org URL containing the video ID. If a URL is provided, the video ID will be automatically extracted."
+              }
+            },
+            "required": [
+              "video_id"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getWorkbookLinks",
+          "description": "STEP 1: Get JW.org \"Our Christian Life and Ministry\" (CLM) meeting workbook weeks. When a user asks for CLM workbook content, use this tool FIRST to show them available weeks. Returns weekly titles like \"May 5-11 (Proverbs 12)\" with their RTF download URLs. Automatically uses current month/year for the issue.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pub": {
+                "type": "string",
+                "description": "Publication code: \"mwb\" for Meeting Workbook (CLM workbook)",
+                "default": "mwb"
+              },
+              "langwritten": {
+                "type": "string",
+                "description": "Language code: \"E\" for English, \"S\" for Spanish, etc.",
+                "default": "E"
+              },
+              "issue": {
+                "type": "string",
+                "description": "Issue in YYYYMM00 format. Leave empty to use current month/year automatically (e.g., \"20250500\" for May 2025)"
+              },
+              "fileformat": {
+                "type": "string",
+                "description": "File format: \"RTF\" for Rich Text Format",
+                "default": "RTF"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "getWorkbookContent",
+          "description": "STEP 2: Get the actual CLM workbook content after user chooses a week. Use this tool AFTER getWorkbookLinks when user specifies which week they want (e.g., \"May 5-11\" or \"June 30-July 6\"). Takes the RTF URL from Step 1 results and returns the full workbook text content for that specific week.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The RTF file URL from getWorkbookLinks results (e.g., \"https://cfp2.jw-cdn.org/a/...\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "getWatchtowerLinks",
+          "description": "STEP 1: Get JW.org Watchtower study articles. When a user asks for current/this week's Watchtower content, use this tool FIRST without any parameters - it automatically gets the correct issue for current study articles (Watchtower publications are 2 months ahead, so May 2025 studies come from March 2025 issue). Returns article titles like \"Imitate the Faithful Angels (July 14-20)\" with their RTF download URLs. Just use defaults for current articles.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pub": {
+                "type": "string",
+                "description": "Publication code: \"w\" for Watchtower (Study edition)",
+                "default": "w"
+              },
+              "langwritten": {
+                "type": "string",
+                "description": "Language code: \"E\" for English, \"S\" for Spanish, etc.",
+                "default": "E"
+              },
+              "issue": {
+                "type": "string",
+                "description": "Issue in YYYYMM00 format. Leave empty for current study articles (server automatically calculates correct issue - Watchtower studies are 2 months ahead of publication)"
+              },
+              "fileformat": {
+                "type": "string",
+                "description": "File format: \"RTF\" for Rich Text Format",
+                "default": "RTF"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "getWatchtowerContent",
+          "description": "STEP 2: Get the actual Watchtower article content after user chooses an article. Use this tool AFTER getWatchtowerLinks when user specifies which article they want (e.g., \"Imitate the Faithful Angels\" or \"Look to Jehovah for Comfort\"). Takes the RTF URL from Step 1 results and returns the full article text content.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "The RTF file URL from getWatchtowerLinks results (e.g., \"https://cfp2.jw-cdn.org/a/...\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@advenimus/jw-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@advenimus/jw-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1058.@advenimus_jw-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1036
+  }
+}

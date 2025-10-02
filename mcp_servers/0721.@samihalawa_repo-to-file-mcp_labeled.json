@@ -1,0 +1,396 @@
+{
+  "labels": {
+    "analysis": "The MCP Server, Repomix, focuses on optimizing codebases for AI analysis and interaction. Its core functionality revolves around packaging code repositories into a single, AI-friendly format, which helps streamline code review and automation workflows. Key use cases include:\n    - Consolidating code for AI analysis (e.g., large language models)\n    - Supporting remote and local repository packaging for AI integration\n    - Enabling secure file reading and directory listing in restricted environments\n    This server bridges the gap between code management and AI-assisted development.",
+    "reasoning": "The primary label \"Development Tools\" is chosen because the server's tools (e.g., packing codebases) directly support software development workflows, particularly for AI-assisted coding. \"File Management\" is a secondary label due to its tools for reading files/directories. \"AI/ML Tools\" is also relevant as the server is explicitly designed to optimize code for AI analysis.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "File Management",
+      "AI/ML Tools"
+    ],
+    "custom_label": "Codebase Optimization for AI",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 720,
+    "server_name": "Repomix",
+    "rank_by_usage": 721,
+    "usage_count": "10",
+    "original_file": "../crawler/smithery/@samihalawa_repo-to-file-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@samihalawa/repo-to-file-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "pack_codebase",
+          "description": "Package local code directory into a consolidated file for AI analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "directory": {
+                "type": "string",
+                "description": "Directory to pack (Absolute path)"
+              },
+              "compress": {
+                "type": "boolean",
+                "default": true,
+                "description": "Utilize Tree-sitter to intelligently extract essential code signatures and structure while removing implementation details, significantly reducing token usage (default: true)"
+              },
+              "includePatterns": {
+                "type": "string",
+                "description": "Specify which files to include using fast-glob compatible patterns (e.g., \"**/*.js,src/**\"). Only files matching these patterns will be processed. It is recommended to pack only necessary files."
+              },
+              "ignorePatterns": {
+                "type": "string",
+                "description": "Specify additional files to exclude using fast-glob compatible patterns (e.g., \"test/**,*.spec.js\"). These patterns complement .gitignore and default ignores. It is recommended to pack only necessary files."
+              },
+              "topFilesLength": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of top files to display in the metrics (default: 10)"
+              }
+            },
+            "required": [
+              "directory"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Pack Local Codebase",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "pack_remote_repository",
+          "description": "Fetch, clone and package a GitHub repository into a consolidated file for AI analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "remote": {
+                "type": "string",
+                "description": "GitHub repository URL or user/repo (e.g., yamadashy/repomix)"
+              },
+              "compress": {
+                "type": "boolean",
+                "default": true,
+                "description": "Utilize Tree-sitter to intelligently extract essential code signatures and structure while removing implementation details, significantly reducing token usage (default: true)"
+              },
+              "includePatterns": {
+                "type": "string",
+                "description": "Specify which files to include using fast-glob compatible patterns (e.g., \"**/*.js,src/**\"). Only files matching these patterns will be processed. It is recommended to pack only necessary files."
+              },
+              "ignorePatterns": {
+                "type": "string",
+                "description": "Specify additional files to exclude using fast-glob compatible patterns (e.g., \"test/**,*.spec.js\"). These patterns complement .gitignore and default ignores. It is recommended to pack only necessary files."
+              },
+              "topFilesLength": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of top files to display in the metrics (default: 10)"
+              }
+            },
+            "required": [
+              "remote"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Pack Remote Repository",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "read_repomix_output",
+          "description": "Read the contents of a Repomix output file in environments where direct file access is not possible. This tool is specifically intended for cases where the client cannot access the file system directly, such as in web-based environments or sandboxed applications. For systems with direct file access, use standard file operations instead.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "outputId": {
+                "type": "string",
+                "description": "ID of the Repomix output file to read"
+              }
+            },
+            "required": [
+              "outputId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Read Repomix Output",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "file_system_read_file",
+          "description": "Read a file using an absolute path with security validation.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Absolute path to the file to read"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Read File",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "file_system_read_directory",
+          "description": "List contents of a directory using an absolute path.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Absolute path to the directory to list"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Read Directory",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "pack_codebase",
+        "pack_remote_repository",
+        "read_repomix_output",
+        "file_system_read_file",
+        "file_system_read_directory"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 720,
+      "name": "Repomix",
+      "author": "@samihalawa/repo-to-file-mcp",
+      "overview": "Pack your entire codebase into a single, AI-friendly file optimized for large language models and AI tools. Easily generate comprehensive, token-counted, and optionally compressed representations of your repository for efficient AI analysis and code review. Integrate seamlessly with AI assistants via MCP to automate codebase packaging and inspection workflows.",
+      "repository_url": "https://github.com/samihalawa/repo-to-file-mcp",
+      "homepage": "https://smithery.ai/server/@samihalawa/repo-to-file-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "10",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@samihalawa_repo-to-file-mcp.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "pack_codebase",
+          "description": "Package local code directory into a consolidated file for AI analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "directory": {
+                "type": "string",
+                "description": "Directory to pack (Absolute path)"
+              },
+              "compress": {
+                "type": "boolean",
+                "default": true,
+                "description": "Utilize Tree-sitter to intelligently extract essential code signatures and structure while removing implementation details, significantly reducing token usage (default: true)"
+              },
+              "includePatterns": {
+                "type": "string",
+                "description": "Specify which files to include using fast-glob compatible patterns (e.g., \"**/*.js,src/**\"). Only files matching these patterns will be processed. It is recommended to pack only necessary files."
+              },
+              "ignorePatterns": {
+                "type": "string",
+                "description": "Specify additional files to exclude using fast-glob compatible patterns (e.g., \"test/**,*.spec.js\"). These patterns complement .gitignore and default ignores. It is recommended to pack only necessary files."
+              },
+              "topFilesLength": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of top files to display in the metrics (default: 10)"
+              }
+            },
+            "required": [
+              "directory"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Pack Local Codebase",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "pack_remote_repository",
+          "description": "Fetch, clone and package a GitHub repository into a consolidated file for AI analysis",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "remote": {
+                "type": "string",
+                "description": "GitHub repository URL or user/repo (e.g., yamadashy/repomix)"
+              },
+              "compress": {
+                "type": "boolean",
+                "default": true,
+                "description": "Utilize Tree-sitter to intelligently extract essential code signatures and structure while removing implementation details, significantly reducing token usage (default: true)"
+              },
+              "includePatterns": {
+                "type": "string",
+                "description": "Specify which files to include using fast-glob compatible patterns (e.g., \"**/*.js,src/**\"). Only files matching these patterns will be processed. It is recommended to pack only necessary files."
+              },
+              "ignorePatterns": {
+                "type": "string",
+                "description": "Specify additional files to exclude using fast-glob compatible patterns (e.g., \"test/**,*.spec.js\"). These patterns complement .gitignore and default ignores. It is recommended to pack only necessary files."
+              },
+              "topFilesLength": {
+                "type": "number",
+                "default": 10,
+                "description": "Number of top files to display in the metrics (default: 10)"
+              }
+            },
+            "required": [
+              "remote"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Pack Remote Repository",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": false,
+            "openWorldHint": true
+          }
+        },
+        {
+          "name": "read_repomix_output",
+          "description": "Read the contents of a Repomix output file in environments where direct file access is not possible. This tool is specifically intended for cases where the client cannot access the file system directly, such as in web-based environments or sandboxed applications. For systems with direct file access, use standard file operations instead.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "outputId": {
+                "type": "string",
+                "description": "ID of the Repomix output file to read"
+              }
+            },
+            "required": [
+              "outputId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Read Repomix Output",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "file_system_read_file",
+          "description": "Read a file using an absolute path with security validation.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Absolute path to the file to read"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Read File",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        },
+        {
+          "name": "file_system_read_directory",
+          "description": "List contents of a directory using an absolute path.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Absolute path to the directory to list"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Read Directory",
+            "readOnlyHint": true,
+            "destructiveHint": false,
+            "idempotentHint": true,
+            "openWorldHint": false
+          }
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@samihalawa/repo-to-file-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@samihalawa/repo-to-file-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0721.@samihalawa_repo-to-file-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 704
+  }
+}

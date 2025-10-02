@@ -1,0 +1,897 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is a dedicated task and project management system designed to streamline workflows by breaking down multi-step tasks into manageable components. It features user approval checkpoints, task sequencing, and detailed project tracking, making it suitable for complex workflow orchestration. The server includes tools for generating project plans, managing task statuses, and enforcing workflow rules, which collectively enable efficient project execution and monitoring.",
+    "reasoning": "The primary functionality aligns with workflow management and task orchestration, which falls under Daily Productivity. Secondary labels include API Integration (for task management operations) and Development Tools (given the structured approach to task completion with recommendations). No custom label is needed as the server fits well into existing categories.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "API Integration",
+      "Development Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1940,
+    "server_name": "Task Manager",
+    "rank_by_usage": 1941,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@chriscarrollsmith_taskqueue-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@chriscarrollsmith/taskqueue-mcp/mcp?config=eyJvcGVuYWlBcGlLZXkiOiAiIiwgImRlZXBzZWVrQXBpS2V5IjogIiIsICJ0YXNrTWFuYWdlckZpbGVQYXRoIjogIiIsICJnb29nbGVHZW5lcmF0aXZlQWlBcGlLZXkiOiAiIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list_projects",
+          "description": "List all projects in the system and their basic information (ID, initial prompt, task counts), optionally filtered by state (open, pending_approval, completed, all).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "pending_approval",
+                  "completed",
+                  "all"
+                ],
+                "description": "Filter projects by state. 'open' (any incomplete task), 'pending_approval' (any tasks awaiting approval), 'completed' (all tasks done and approved), or 'all' to skip filtering."
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_project",
+          "description": "Read all information for a given project, by its ID, including its tasks' statuses.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to read (e.g., proj-1)."
+              }
+            },
+            "required": [
+              "projectId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_project",
+          "description": "Create a new project with an initial prompt and a list of tasks. This is typically the first step in any workflow.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "initialPrompt": {
+                "type": "string",
+                "description": "The initial prompt or goal for the project."
+              },
+              "projectPlan": {
+                "type": "string",
+                "description": "A more detailed plan for the project. If not provided, the initial prompt will be used."
+              },
+              "tasks": {
+                "type": "array",
+                "description": "An array of task objects.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the task."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A detailed description of the task."
+                    },
+                    "toolRecommendations": {
+                      "type": "string",
+                      "description": "Recommendations for tools to use to complete the task."
+                    },
+                    "ruleRecommendations": {
+                      "type": "string",
+                      "description": "Recommendations for relevant rules to review when completing the task."
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "description"
+                  ]
+                }
+              },
+              "autoApprove": {
+                "type": "boolean",
+                "description": "If true, tasks will be automatically approved when marked as done. If false or not provided, tasks require manual approval."
+              }
+            },
+            "required": [
+              "initialPrompt",
+              "tasks"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_project",
+          "description": "Delete a project and all its associated tasks.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to delete (e.g., proj-1)."
+              }
+            },
+            "required": [
+              "projectId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_tasks_to_project",
+          "description": "Add new tasks to an existing project.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to add tasks to (e.g., proj-1)."
+              },
+              "tasks": {
+                "type": "array",
+                "description": "An array of task objects to add.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the task."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A detailed description of the task."
+                    },
+                    "toolRecommendations": {
+                      "type": "string",
+                      "description": "Recommendations for tools to use to complete the task."
+                    },
+                    "ruleRecommendations": {
+                      "type": "string",
+                      "description": "Recommendations for relevant rules to review when completing the task."
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "description"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "projectId",
+              "tasks"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "finalize_project",
+          "description": "Mark a project as complete. Can only be called when all tasks are both done and approved. This is typically the last step in a project workflow.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to finalize (e.g., proj-1)."
+              }
+            },
+            "required": [
+              "projectId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_project_plan",
+          "description": "Use an LLM to generate a project plan and tasks from a prompt. The LLM will analyze the prompt and any attached files to create a structured project plan.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The prompt text or file path to use for generating the project plan."
+              },
+              "provider": {
+                "type": "string",
+                "enum": [
+                  "openai",
+                  "google",
+                  "deepseek"
+                ],
+                "description": "The LLM provider to use (requires corresponding API key to be set)."
+              },
+              "model": {
+                "type": "string",
+                "description": "The specific model to use (e.g., 'gpt-4-turbo' for OpenAI)."
+              },
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional array of paths to files to attach as context. There is no need to read the files before calling this tool!"
+              }
+            },
+            "required": [
+              "prompt",
+              "provider",
+              "model"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_tasks",
+          "description": "List all tasks, optionally filtered by project ID and/or state (open, pending_approval, completed, all). Tasks may include tool and rule recommendations to guide their completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to list tasks from. If omitted, list all tasks."
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "pending_approval",
+                  "completed",
+                  "all"
+                ],
+                "description": "Filter tasks by state. 'open' (not started/in progress), 'pending_approval', 'completed', or 'all' to skip filtering."
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_task",
+          "description": "Get details of a specific task by its ID. The task may include toolRecommendations and ruleRecommendations fields that should be used to guide task completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project containing the task (e.g., proj-1)."
+              },
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to read (e.g., task-1)."
+              }
+            },
+            "required": [
+              "projectId",
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_task",
+          "description": "Create a new task within an existing project. You can optionally include tool and rule recommendations to guide task completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to add the task to (e.g., proj-1)."
+              },
+              "title": {
+                "type": "string",
+                "description": "The title of the task."
+              },
+              "description": {
+                "type": "string",
+                "description": "A detailed description of the task."
+              },
+              "toolRecommendations": {
+                "type": "string",
+                "description": "Recommendations for tools to use to complete the task."
+              },
+              "ruleRecommendations": {
+                "type": "string",
+                "description": "Recommendations for relevant rules to review when completing the task."
+              }
+            },
+            "required": [
+              "projectId",
+              "title",
+              "description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_task",
+          "description": "Modify a task's properties. Note: (1) completedDetails are required when setting status to 'done', (2) approved tasks cannot be modified, (3) status must follow valid transitions: not started → in progress → done. You can also update tool and rule recommendations to guide task completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project containing the task (e.g., proj-1)."
+              },
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to update (e.g., task-1)."
+              },
+              "title": {
+                "type": "string",
+                "description": "The new title for the task (optional)."
+              },
+              "description": {
+                "type": "string",
+                "description": "The new description for the task (optional)."
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "not started",
+                  "in progress",
+                  "done"
+                ],
+                "description": "The new status for the task (optional)."
+              },
+              "completedDetails": {
+                "type": "string",
+                "description": "Details about the task completion (required if status is set to 'done')."
+              },
+              "toolRecommendations": {
+                "type": "string",
+                "description": "Recommendations for tools to use to complete the task."
+              },
+              "ruleRecommendations": {
+                "type": "string",
+                "description": "Recommendations for relevant rules to review when completing the task."
+              }
+            },
+            "required": [
+              "projectId",
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_task",
+          "description": "Remove a task from a project.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project containing the task (e.g., proj-1)."
+              },
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to delete (e.g., task-1)."
+              }
+            },
+            "required": [
+              "projectId",
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "approve_task",
+          "description": "Approve a completed task. Tasks must be marked as 'done' with completedDetails before approval. Note: This is a CLI-only operation that requires human intervention.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project containing the task (e.g., proj-1)."
+              },
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to approve (e.g., task-1)."
+              }
+            },
+            "required": [
+              "projectId",
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_next_task",
+          "description": "Get the next task to be done in a project. Returns the first non-approved task in sequence, regardless of status. The task may include toolRecommendations and ruleRecommendations fields that should be used to guide task completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to get the next task from (e.g., proj-1)."
+              }
+            },
+            "required": [
+              "projectId"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 14,
+      "tool_names": [
+        "list_projects",
+        "read_project",
+        "create_project",
+        "delete_project",
+        "add_tasks_to_project",
+        "finalize_project",
+        "generate_project_plan",
+        "list_tasks",
+        "read_task",
+        "create_task",
+        "update_task",
+        "delete_task",
+        "approve_task",
+        "get_next_task"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1940,
+      "name": "Task Manager",
+      "author": "@chriscarrollsmith/taskqueue-mcp",
+      "overview": "Manage multi-step tasks efficiently with user approval checkpoints. Streamline your project workflows and track progress seamlessly with this powerful task management tool.",
+      "repository_url": "https://github.com/chriscarrollsmith/taskqueue-mcp",
+      "homepage": "https://smithery.ai/server/@chriscarrollsmith/taskqueue-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@chriscarrollsmith_taskqueue-mcp.json",
+      "tools_count": 14,
+      "tools": [
+        {
+          "name": "list_projects",
+          "description": "List all projects in the system and their basic information (ID, initial prompt, task counts), optionally filtered by state (open, pending_approval, completed, all).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "pending_approval",
+                  "completed",
+                  "all"
+                ],
+                "description": "Filter projects by state. 'open' (any incomplete task), 'pending_approval' (any tasks awaiting approval), 'completed' (all tasks done and approved), or 'all' to skip filtering."
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_project",
+          "description": "Read all information for a given project, by its ID, including its tasks' statuses.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to read (e.g., proj-1)."
+              }
+            },
+            "required": [
+              "projectId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_project",
+          "description": "Create a new project with an initial prompt and a list of tasks. This is typically the first step in any workflow.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "initialPrompt": {
+                "type": "string",
+                "description": "The initial prompt or goal for the project."
+              },
+              "projectPlan": {
+                "type": "string",
+                "description": "A more detailed plan for the project. If not provided, the initial prompt will be used."
+              },
+              "tasks": {
+                "type": "array",
+                "description": "An array of task objects.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the task."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A detailed description of the task."
+                    },
+                    "toolRecommendations": {
+                      "type": "string",
+                      "description": "Recommendations for tools to use to complete the task."
+                    },
+                    "ruleRecommendations": {
+                      "type": "string",
+                      "description": "Recommendations for relevant rules to review when completing the task."
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "description"
+                  ]
+                }
+              },
+              "autoApprove": {
+                "type": "boolean",
+                "description": "If true, tasks will be automatically approved when marked as done. If false or not provided, tasks require manual approval."
+              }
+            },
+            "required": [
+              "initialPrompt",
+              "tasks"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_project",
+          "description": "Delete a project and all its associated tasks.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to delete (e.g., proj-1)."
+              }
+            },
+            "required": [
+              "projectId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_tasks_to_project",
+          "description": "Add new tasks to an existing project.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to add tasks to (e.g., proj-1)."
+              },
+              "tasks": {
+                "type": "array",
+                "description": "An array of task objects to add.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the task."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "A detailed description of the task."
+                    },
+                    "toolRecommendations": {
+                      "type": "string",
+                      "description": "Recommendations for tools to use to complete the task."
+                    },
+                    "ruleRecommendations": {
+                      "type": "string",
+                      "description": "Recommendations for relevant rules to review when completing the task."
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "description"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "projectId",
+              "tasks"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "finalize_project",
+          "description": "Mark a project as complete. Can only be called when all tasks are both done and approved. This is typically the last step in a project workflow.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to finalize (e.g., proj-1)."
+              }
+            },
+            "required": [
+              "projectId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_project_plan",
+          "description": "Use an LLM to generate a project plan and tasks from a prompt. The LLM will analyze the prompt and any attached files to create a structured project plan.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "prompt": {
+                "type": "string",
+                "description": "The prompt text or file path to use for generating the project plan."
+              },
+              "provider": {
+                "type": "string",
+                "enum": [
+                  "openai",
+                  "google",
+                  "deepseek"
+                ],
+                "description": "The LLM provider to use (requires corresponding API key to be set)."
+              },
+              "model": {
+                "type": "string",
+                "description": "The specific model to use (e.g., 'gpt-4-turbo' for OpenAI)."
+              },
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional array of paths to files to attach as context. There is no need to read the files before calling this tool!"
+              }
+            },
+            "required": [
+              "prompt",
+              "provider",
+              "model"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_tasks",
+          "description": "List all tasks, optionally filtered by project ID and/or state (open, pending_approval, completed, all). Tasks may include tool and rule recommendations to guide their completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to list tasks from. If omitted, list all tasks."
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "pending_approval",
+                  "completed",
+                  "all"
+                ],
+                "description": "Filter tasks by state. 'open' (not started/in progress), 'pending_approval', 'completed', or 'all' to skip filtering."
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_task",
+          "description": "Get details of a specific task by its ID. The task may include toolRecommendations and ruleRecommendations fields that should be used to guide task completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project containing the task (e.g., proj-1)."
+              },
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to read (e.g., task-1)."
+              }
+            },
+            "required": [
+              "projectId",
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_task",
+          "description": "Create a new task within an existing project. You can optionally include tool and rule recommendations to guide task completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to add the task to (e.g., proj-1)."
+              },
+              "title": {
+                "type": "string",
+                "description": "The title of the task."
+              },
+              "description": {
+                "type": "string",
+                "description": "A detailed description of the task."
+              },
+              "toolRecommendations": {
+                "type": "string",
+                "description": "Recommendations for tools to use to complete the task."
+              },
+              "ruleRecommendations": {
+                "type": "string",
+                "description": "Recommendations for relevant rules to review when completing the task."
+              }
+            },
+            "required": [
+              "projectId",
+              "title",
+              "description"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "update_task",
+          "description": "Modify a task's properties. Note: (1) completedDetails are required when setting status to 'done', (2) approved tasks cannot be modified, (3) status must follow valid transitions: not started → in progress → done. You can also update tool and rule recommendations to guide task completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project containing the task (e.g., proj-1)."
+              },
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to update (e.g., task-1)."
+              },
+              "title": {
+                "type": "string",
+                "description": "The new title for the task (optional)."
+              },
+              "description": {
+                "type": "string",
+                "description": "The new description for the task (optional)."
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "not started",
+                  "in progress",
+                  "done"
+                ],
+                "description": "The new status for the task (optional)."
+              },
+              "completedDetails": {
+                "type": "string",
+                "description": "Details about the task completion (required if status is set to 'done')."
+              },
+              "toolRecommendations": {
+                "type": "string",
+                "description": "Recommendations for tools to use to complete the task."
+              },
+              "ruleRecommendations": {
+                "type": "string",
+                "description": "Recommendations for relevant rules to review when completing the task."
+              }
+            },
+            "required": [
+              "projectId",
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "delete_task",
+          "description": "Remove a task from a project.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project containing the task (e.g., proj-1)."
+              },
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to delete (e.g., task-1)."
+              }
+            },
+            "required": [
+              "projectId",
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "approve_task",
+          "description": "Approve a completed task. Tasks must be marked as 'done' with completedDetails before approval. Note: This is a CLI-only operation that requires human intervention.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project containing the task (e.g., proj-1)."
+              },
+              "taskId": {
+                "type": "string",
+                "description": "The ID of the task to approve (e.g., task-1)."
+              }
+            },
+            "required": [
+              "projectId",
+              "taskId"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_next_task",
+          "description": "Get the next task to be done in a project. Returns the first non-approved task in sequence, regardless of status. The task may include toolRecommendations and ruleRecommendations fields that should be used to guide task completion.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "The ID of the project to get the next task from (e.g., proj-1)."
+              }
+            },
+            "required": [
+              "projectId"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"openaiApiKey\": \"\",\n  \"deepseekApiKey\": \"\",\n  \"taskManagerFilePath\": \"\",\n  \"googleGenerativeAiApiKey\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@chriscarrollsmith/taskqueue-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"openaiApiKey\": \"\",\n  \"deepseekApiKey\": \"\",\n  \"taskManagerFilePath\": \"\",\n  \"googleGenerativeAiApiKey\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@chriscarrollsmith/taskqueue-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1941.@chriscarrollsmith_taskqueue-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1707
+  }
+}

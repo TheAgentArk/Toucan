@@ -1,0 +1,969 @@
+{
+  "labels": {
+    "analysis": "The Prefect MCP Server is designed to interact with the Prefect API, a workflow orchestration tool. Its core functionality revolves around managing Prefect flows, flow runs, and deployments. The tools provided allow users to query, filter, and manipulate these workflow components, making it ideal for developers who need to monitor, debug, and execute Prefect workflows efficiently. The server simplifies the development process by offering a centralized interface to Prefect's API, particularly tailored for use within the Cursor IDE environment.",
+    "reasoning": "The primary label, Workflow Orchestration, is chosen because the server's core functionality is centered around managing and interacting with Prefect workflows, flows, and deployments. The secondary label, API Integration, is selected because the server primarily acts as an interface to the Prefect API, facilitating programmatic interaction with Prefect's workflow orchestration features. A custom label is not necessary as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1364,
+    "server_name": "Prefect MCP Server",
+    "rank_by_usage": 1365,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@fortunto2_prefect-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@fortunto2/prefect-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_flow_by_id",
+          "description": "Get a flow by its ID.\n\n    Args:\n        flow_id: ID of the flow to retrieve.\n    ",
+          "input_schema": {
+            "properties": {
+              "flow_id": {
+                "title": "Flow Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "flow_id"
+            ],
+            "title": "get_flow_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_flow_by_name",
+          "description": "Get a flow by its name.\n\n    Args:\n        name: Name of the flow to retrieve.\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "get_flow_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_flows",
+          "description": "Get a list of flows from the Prefect API.\n\n    Args:\n        limit: Maximum number of flows to return (default 20).\n        offset: Number of flows to skip (default 0).\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "integer"
+              }
+            },
+            "title": "list_flowsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_flows",
+          "description": "Search for flows by name and/or tags.\n\n    Args:\n        name: Optional name to search for (case-insensitive contains match).\n        tags: Optional list of tags to filter by.\n        limit: Maximum number of flows to return (default 20).\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "tags": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Tags"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "search_flowsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_flow_run_by_id",
+          "description": "Get a flow run by its ID.\n\n    Args:\n        flow_run_id: ID of the flow run to retrieve.\n    ",
+          "input_schema": {
+            "properties": {
+              "flow_run_id": {
+                "title": "Flow Run Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "flow_run_id"
+            ],
+            "title": "get_flow_run_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_flow_runs",
+          "description": "Get a list of flow runs from the Prefect API.\n\n    Args:\n        limit: Maximum number of flow runs to return (default 20).\n        offset: Number of flow runs to skip (default 0).\n        flow_id: Optional ID of the flow to filter runs by.\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "integer"
+              },
+              "flow_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Flow Id"
+              }
+            },
+            "title": "list_flow_runsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_flow_runs_by_state",
+          "description": "Search for flow runs by state.\n\n    Args:\n        state_type: Optional state type (e.g., \"COMPLETED\", \"FAILED\", \"CRASHED\").\n        state_name: Optional state name (e.g., \"Completed\", \"Failed\").\n        limit: Maximum number of flow runs to return (default 20).\n    ",
+          "input_schema": {
+            "properties": {
+              "state_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "State Type"
+              },
+              "state_name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "State Name"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "search_flow_runs_by_stateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cancel_flow_run",
+          "description": "Cancel a flow run.\n\n    Args:\n        flow_run_id: ID of the flow run to cancel.\n    ",
+          "input_schema": {
+            "properties": {
+              "flow_run_id": {
+                "title": "Flow Run Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "flow_run_id"
+            ],
+            "title": "cancel_flow_runArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_deployment_by_id",
+          "description": "Get a deployment by its ID.\n\n    Args:\n        deployment_id: ID of the deployment to retrieve.\n    ",
+          "input_schema": {
+            "properties": {
+              "deployment_id": {
+                "title": "Deployment Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "deployment_id"
+            ],
+            "title": "get_deployment_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_deployment_by_name",
+          "description": "Get a deployment by its name.\n\n    Args:\n        name: Name of the deployment to retrieve, in format \"flow_name/deployment_name\".\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "get_deployment_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_deployments",
+          "description": "Get a list of deployments from the Prefect API.\n\n    Args:\n        limit: Maximum number of deployments to return (default 20).\n        offset: Number of deployments to skip (default 0).\n        flow_id: Optional ID of the flow to filter deployments by.\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "integer"
+              },
+              "flow_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Flow Id"
+              }
+            },
+            "title": "list_deploymentsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_deployments_by_status",
+          "description": "Search for deployments by schedule status.\n\n    Args:\n        is_schedule_active: Filter deployments by whether their schedule is active.\n        limit: Maximum number of deployments to return (default 20).\n    ",
+          "input_schema": {
+            "properties": {
+              "is_schedule_active": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Is Schedule Active"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "search_deployments_by_statusArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_flow_run_from_deployment",
+          "description": "Create a new flow run for the specified deployment.\n\n    Args:\n        deployment_id: ID of the deployment or name in format 'flow_name/deployment_name'.\n        parameters: Dictionary with parameters for the flow run (optional).\n        name: Optional name for the flow run.\n        timeout: Timeout in seconds, 0 means no waiting for completion (default 0).\n    ",
+          "input_schema": {
+            "properties": {
+              "deployment_id": {
+                "title": "Deployment Id",
+                "type": "string"
+              },
+              "parameters": {
+                "anyOf": [
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Parameters"
+              },
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "timeout": {
+                "default": 0,
+                "title": "Timeout",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "deployment_id"
+            ],
+            "title": "create_flow_run_from_deploymentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_flows",
+          "description": "Filter flows based on specified criteria.\n\n    Args:\n        filter_criteria: Dictionary with filter criteria according to Prefect API.\n                         Example: {\"flows\": {\"tags\": {\"all_\": [\"production\"]}}}\n    ",
+          "input_schema": {
+            "properties": {
+              "filter_criteria": {
+                "additionalProperties": true,
+                "title": "Filter Criteria",
+                "type": "object"
+              }
+            },
+            "required": [
+              "filter_criteria"
+            ],
+            "title": "filter_flowsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_flow_runs",
+          "description": "Filter flow runs based on specified criteria.\n\n    Args:\n        filter_criteria: Dictionary with filter criteria according to Prefect API.\n                         Example: {\"flow_runs\": {\"state\": {\"type\": {\"any_\": [\"FAILED\", \"CRASHED\"]}}}}\n    ",
+          "input_schema": {
+            "properties": {
+              "filter_criteria": {
+                "additionalProperties": true,
+                "title": "Filter Criteria",
+                "type": "object"
+              }
+            },
+            "required": [
+              "filter_criteria"
+            ],
+            "title": "filter_flow_runsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_deployments",
+          "description": "Filter deployments based on specified criteria.\n\n    Args:\n        filter_criteria: Dictionary with filter criteria according to Prefect API.\n                         Example: {\"deployments\": {\"is_schedule_active\": {\"eq_\": true}}}\n    ",
+          "input_schema": {
+            "properties": {
+              "filter_criteria": {
+                "additionalProperties": true,
+                "title": "Filter Criteria",
+                "type": "object"
+              }
+            },
+            "required": [
+              "filter_criteria"
+            ],
+            "title": "filter_deploymentsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_flow_run",
+          "description": "Create a new flow run for the specified deployment (Legacy).\n\n    Args:\n        deployment_id: ID of the deployment to create a run for.\n        parameters: Dictionary with parameters for the flow run (optional).\n    ",
+          "input_schema": {
+            "properties": {
+              "deployment_id": {
+                "title": "Deployment Id",
+                "type": "string"
+              },
+              "parameters": {
+                "anyOf": [
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Parameters"
+              }
+            },
+            "required": [
+              "deployment_id"
+            ],
+            "title": "create_flow_runArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 17,
+      "tool_names": [
+        "get_flow_by_id",
+        "get_flow_by_name",
+        "list_flows",
+        "search_flows",
+        "get_flow_run_by_id",
+        "list_flow_runs",
+        "search_flow_runs_by_state",
+        "cancel_flow_run",
+        "get_deployment_by_id",
+        "get_deployment_by_name",
+        "list_deployments",
+        "search_deployments_by_status",
+        "create_flow_run_from_deployment",
+        "filter_flows",
+        "filter_flow_runs",
+        "filter_deployments",
+        "create_flow_run"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1364,
+      "name": "Prefect MCP Server",
+      "author": "@fortunto2/prefect-mcp-server",
+      "overview": "Interact seamlessly with the Prefect API to enhance your workflow. Set up a reliable server configuration tailored for the Cursor IDE, enabling efficient management of your Prefect tasks and resources. Simplify your development process with easy installation and configuration steps.",
+      "repository_url": "https://github.com/fortunto2/prefect-mcp-server",
+      "homepage": "https://smithery.ai/server/@fortunto2/prefect-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@fortunto2_prefect-mcp-server.json",
+      "tools_count": 17,
+      "tools": [
+        {
+          "name": "get_flow_by_id",
+          "description": "Get a flow by its ID.\n\n    Args:\n        flow_id: ID of the flow to retrieve.\n    ",
+          "input_schema": {
+            "properties": {
+              "flow_id": {
+                "title": "Flow Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "flow_id"
+            ],
+            "title": "get_flow_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_flow_by_name",
+          "description": "Get a flow by its name.\n\n    Args:\n        name: Name of the flow to retrieve.\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "get_flow_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_flows",
+          "description": "Get a list of flows from the Prefect API.\n\n    Args:\n        limit: Maximum number of flows to return (default 20).\n        offset: Number of flows to skip (default 0).\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "integer"
+              }
+            },
+            "title": "list_flowsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_flows",
+          "description": "Search for flows by name and/or tags.\n\n    Args:\n        name: Optional name to search for (case-insensitive contains match).\n        tags: Optional list of tags to filter by.\n        limit: Maximum number of flows to return (default 20).\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "tags": {
+                "anyOf": [
+                  {
+                    "items": {
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Tags"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "search_flowsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_flow_run_by_id",
+          "description": "Get a flow run by its ID.\n\n    Args:\n        flow_run_id: ID of the flow run to retrieve.\n    ",
+          "input_schema": {
+            "properties": {
+              "flow_run_id": {
+                "title": "Flow Run Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "flow_run_id"
+            ],
+            "title": "get_flow_run_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_flow_runs",
+          "description": "Get a list of flow runs from the Prefect API.\n\n    Args:\n        limit: Maximum number of flow runs to return (default 20).\n        offset: Number of flow runs to skip (default 0).\n        flow_id: Optional ID of the flow to filter runs by.\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "integer"
+              },
+              "flow_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Flow Id"
+              }
+            },
+            "title": "list_flow_runsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_flow_runs_by_state",
+          "description": "Search for flow runs by state.\n\n    Args:\n        state_type: Optional state type (e.g., \"COMPLETED\", \"FAILED\", \"CRASHED\").\n        state_name: Optional state name (e.g., \"Completed\", \"Failed\").\n        limit: Maximum number of flow runs to return (default 20).\n    ",
+          "input_schema": {
+            "properties": {
+              "state_type": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "State Type"
+              },
+              "state_name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "State Name"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "search_flow_runs_by_stateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cancel_flow_run",
+          "description": "Cancel a flow run.\n\n    Args:\n        flow_run_id: ID of the flow run to cancel.\n    ",
+          "input_schema": {
+            "properties": {
+              "flow_run_id": {
+                "title": "Flow Run Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "flow_run_id"
+            ],
+            "title": "cancel_flow_runArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_deployment_by_id",
+          "description": "Get a deployment by its ID.\n\n    Args:\n        deployment_id: ID of the deployment to retrieve.\n    ",
+          "input_schema": {
+            "properties": {
+              "deployment_id": {
+                "title": "Deployment Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "deployment_id"
+            ],
+            "title": "get_deployment_by_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_deployment_by_name",
+          "description": "Get a deployment by its name.\n\n    Args:\n        name: Name of the deployment to retrieve, in format \"flow_name/deployment_name\".\n    ",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "get_deployment_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_deployments",
+          "description": "Get a list of deployments from the Prefect API.\n\n    Args:\n        limit: Maximum number of deployments to return (default 20).\n        offset: Number of deployments to skip (default 0).\n        flow_id: Optional ID of the flow to filter deployments by.\n    ",
+          "input_schema": {
+            "properties": {
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "offset": {
+                "default": 0,
+                "title": "Offset",
+                "type": "integer"
+              },
+              "flow_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Flow Id"
+              }
+            },
+            "title": "list_deploymentsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_deployments_by_status",
+          "description": "Search for deployments by schedule status.\n\n    Args:\n        is_schedule_active: Filter deployments by whether their schedule is active.\n        limit: Maximum number of deployments to return (default 20).\n    ",
+          "input_schema": {
+            "properties": {
+              "is_schedule_active": {
+                "anyOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Is Schedule Active"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "title": "search_deployments_by_statusArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_flow_run_from_deployment",
+          "description": "Create a new flow run for the specified deployment.\n\n    Args:\n        deployment_id: ID of the deployment or name in format 'flow_name/deployment_name'.\n        parameters: Dictionary with parameters for the flow run (optional).\n        name: Optional name for the flow run.\n        timeout: Timeout in seconds, 0 means no waiting for completion (default 0).\n    ",
+          "input_schema": {
+            "properties": {
+              "deployment_id": {
+                "title": "Deployment Id",
+                "type": "string"
+              },
+              "parameters": {
+                "anyOf": [
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Parameters"
+              },
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              },
+              "timeout": {
+                "default": 0,
+                "title": "Timeout",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "deployment_id"
+            ],
+            "title": "create_flow_run_from_deploymentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_flows",
+          "description": "Filter flows based on specified criteria.\n\n    Args:\n        filter_criteria: Dictionary with filter criteria according to Prefect API.\n                         Example: {\"flows\": {\"tags\": {\"all_\": [\"production\"]}}}\n    ",
+          "input_schema": {
+            "properties": {
+              "filter_criteria": {
+                "additionalProperties": true,
+                "title": "Filter Criteria",
+                "type": "object"
+              }
+            },
+            "required": [
+              "filter_criteria"
+            ],
+            "title": "filter_flowsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_flow_runs",
+          "description": "Filter flow runs based on specified criteria.\n\n    Args:\n        filter_criteria: Dictionary with filter criteria according to Prefect API.\n                         Example: {\"flow_runs\": {\"state\": {\"type\": {\"any_\": [\"FAILED\", \"CRASHED\"]}}}}\n    ",
+          "input_schema": {
+            "properties": {
+              "filter_criteria": {
+                "additionalProperties": true,
+                "title": "Filter Criteria",
+                "type": "object"
+              }
+            },
+            "required": [
+              "filter_criteria"
+            ],
+            "title": "filter_flow_runsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "filter_deployments",
+          "description": "Filter deployments based on specified criteria.\n\n    Args:\n        filter_criteria: Dictionary with filter criteria according to Prefect API.\n                         Example: {\"deployments\": {\"is_schedule_active\": {\"eq_\": true}}}\n    ",
+          "input_schema": {
+            "properties": {
+              "filter_criteria": {
+                "additionalProperties": true,
+                "title": "Filter Criteria",
+                "type": "object"
+              }
+            },
+            "required": [
+              "filter_criteria"
+            ],
+            "title": "filter_deploymentsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_flow_run",
+          "description": "Create a new flow run for the specified deployment (Legacy).\n\n    Args:\n        deployment_id: ID of the deployment to create a run for.\n        parameters: Dictionary with parameters for the flow run (optional).\n    ",
+          "input_schema": {
+            "properties": {
+              "deployment_id": {
+                "title": "Deployment Id",
+                "type": "string"
+              },
+              "parameters": {
+                "anyOf": [
+                  {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Parameters"
+              }
+            },
+            "required": [
+              "deployment_id"
+            ],
+            "title": "create_flow_runArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@fortunto2/prefect-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@fortunto2/prefect-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1365.@fortunto2_prefect-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1284
+  }
+}

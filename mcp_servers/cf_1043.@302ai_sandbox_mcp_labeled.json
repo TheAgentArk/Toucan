@@ -1,0 +1,170 @@
+{
+  "labels": {
+    "analysis": "The 302AI Sandbox Server is a Linux-based environment that allows for the remote execution of code, running of command-line commands, and file operations (upload/download). It provides temporary, isolated sandbox environments that can be created, used, and destroyed dynamically. Key features include runtime code execution, command execution, file management within the sandbox, and sandbox lifecycle management (creation, listing, destruction). This server is particularly useful for scenarios requiring secure, temporary, and isolated computational environments, such as testing code snippets, running system commands without affecting local systems, or handling sensitive data in a controlled manner.",
+    "reasoning": "The primary label \"Operating System\" is chosen because the server's core functionality revolves around executing command-line operations and file management akin to a Linux system. The secondary labels \"Development Tools\" and \"File Management\" are selected because the server supports code execution (useful for development/testing) and file operations (upload/download). A custom label is not needed as the server's functionality is well-covered by the predefined categories.",
+    "primary_label": "Operating System",
+    "secondary_labels": [
+      "Development Tools",
+      "File Management"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1042,
+    "server_name": "302AI Sandbox Server",
+    "rank_by_usage": 1043,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@302ai_sandbox_mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@302ai/sandbox_mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1042,
+      "name": "302AI Sandbox Server",
+      "author": "@302ai/sandbox_mcp",
+      "overview": "Create a remote linux sandbox that can execute code/run commands/upload and download files.",
+      "repository_url": "https://github.com/302ai/302_sandbox_mcp",
+      "homepage": "https://smithery.ai/server/@302ai/sandbox_mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@302ai_sandbox_mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "writeSandboxFiles",
+          "description": "Deploy Server 302AI Sandbox Server @302ai/sandbox_mcp Try in Playground writeSandboxFiles",
+          "parameters": [
+            {
+              "name": "writeSandboxFiles",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "directRunCode",
+          "description": "Automatically creates a sandbox, executes code, and immediately destroys the sandbox after execution. Optionally exports sandbox files (compresses multiple files into a zip archive if there are multiple files in the specified path, or exports a single file directly). Recommended for use cases that don't require continuous sandbox operations.",
+          "parameters": [
+            {
+              "name": "directRunCode",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "listSandboxFiles",
+          "description": "List files and directories at specified paths within a sandbox. Supports batch queries with multiple paths. This operation can be used before downloadSandboxFiles to check if the file exists.",
+          "parameters": [
+            {
+              "name": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "sandbox_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "downloadSandboxFiles",
+          "description": "Export files from a sandbox directory or file path to downloadable urls. Supports batch export of multiple directories or files. When exporting directories, only common file formats are included (documents, images, audio, video, compressed files, web files, and programming language files).",
+          "parameters": []
+        },
+        {
+          "name": "runCode",
+          "description": "Run code on a specific sandbox. This returns text output only. For operations that generate files, you'll need to use separate file viewing and export endpoints. Default file saving path is /home/user.",
+          "parameters": [
+            {
+              "name": "runCode",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "runCommand",
+          "description": "Run a command line command on a specific linux sandbox. This returns text output only. For operations that generate files, you'll need to use separate file viewing and download endpoints.",
+          "parameters": [
+            {
+              "name": "runCommand",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "listSandboxes",
+          "description": "Query the list of sandboxes associated with the current API key. If no parameters are passed, all current sandboxes will be returned.",
+          "parameters": [
+            {
+              "name": "listSandboxes",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "killSandbox",
+          "description": "Destroy a sandbox by its ID.",
+          "parameters": [
+            {
+              "name": "killSandbox",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "sandbox_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "createSandbox",
+          "description": "Create a Linux sandbox that can execute code, run commands, upload and download files, and has complete Linux functionality. After successful creation, a sandbox_id will be returned, and all subsequent operations will need to include this sandbox_id to specify the corresponding sandbox. After successful creation, the sandbox will automatically pause. When calling other sandbox operation interfaces later, it will automatically reconnect and pause again after execution to avoid generating extra costs.",
+          "parameters": [
+            {
+              "name": "createSandbox",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@302ai/sandbox_mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@302ai/sandbox_mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1043.@302ai_sandbox_mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1021
+  }
+}

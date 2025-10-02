@@ -1,0 +1,314 @@
+{
+  "labels": {
+    "analysis": "The MCP Server named \"Atlassian Jira Integration Server\" is designed to facilitate seamless interaction between AI systems and Atlassian Jira. The primary purpose of this server is to enable users to retrieve and manage Jira projects and issues directly from AI assistants, thereby enhancing productivity and streamlining workflows. The available tools allow users to list projects, retrieve detailed project information, search for issues using Jira Query Language (JQL), and fetch comprehensive details about specific issues. These functionalities are tailored towards project management, issue tracking, and collaboration within the Jira ecosystem.",
+    "reasoning": "The core functionality of this server revolves around managing and interacting with Jira projects and issues. The server's primary label is chosen based on its ability to handle project and issue management within Jira, which directly ties to productivity and workflow management. Secondary labels highlight additional relevant aspects such as the use of powerful search capabilities (JQL) and integration with a specific tool ecosystem (Atlassian Jira). The custom label \"Jira Operations\" is added to emphasize the server's focused functionality on Jira-specific operations.",
+    "primary_label": "Daily Productivity",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "API Integration"
+    ],
+    "custom_label": "Jira Operations",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1605,
+    "server_name": "Atlassian Jira Integration Server",
+    "rank_by_usage": 1606,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@aashari_mcp-server-atlassian-jira.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@aashari/mcp-server-atlassian-jira/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAiYXRsYXNzaWFuQXBpVG9rZW4iOiAiIiwgImF0bGFzc2lhblNpdGVOYW1lIjogIiIsICJhdGxhc3NpYW5Vc2VyRW1haWwiOiAiIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list_projects",
+          "description": "List Jira projects accessible to the authenticated user, with optional filtering by name/key and pagination.\n\n        PURPOSE: Discover available projects and retrieve their keys, names, and basic metadata. Essential for finding the correct project key needed as input for the 'get_project' tool or for filtering issues using JQL in the 'list_issues' tool (e.g., \"project = KEY\").\n\n        WHEN TO USE:\n        - To find the project key for a known project name.\n        - To explore all projects you have access to.\n        - To get a high-level overview before diving into specific projects or issues.\n        - When you don't know the exact key required by other tools.\n\n        WHEN NOT TO USE:\n        - When you already have the project key and need full details (use 'get_project').\n        - When you need to list *issues* (use 'list_issues').\n\n        RETURNS: Formatted list of projects including name, key, ID, type, style, lead, and URL. Includes pagination details if applicable (Jira uses offset-based pagination, so the 'cursor' represents the 'startAt' index).\n        \n        SORTING: By default, projects are sorted by 'lastIssueUpdatedTime', showing the most recently active projects first. This can be changed by providing a different value in the 'orderBy' parameter.\n\n        EXAMPLES:\n        - List all accessible projects (first page): {}\n        - Filter by name/key fragment: { name: \"platform\" }\n        - Paginate results (get next page starting from index 50): { limit: 50, cursor: \"50\" }\n        - Sort by key: { orderBy: \"key\" }\n\n        ERRORS:\n        - Authentication failures: Check Jira credentials.\n        - No projects found: You may not have access to any projects, or the name filter is too restrictive.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Filter projects by name or key (case-insensitive). Use this to find specific projects by their display name or project key."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              },
+              "orderBy": {
+                "type": "string",
+                "description": "Field to sort projects by (e.g., \"name\", \"key\", \"lastIssueUpdatedTime\"). Default is \"lastIssueUpdatedTime\", which shows the most recently active projects first."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_project",
+          "description": "Get detailed information about a specific Jira project using its key or ID. Requires 'projectKeyOrId'.\n\n        PURPOSE: Retrieves comprehensive metadata for a *known* project, including its full description, lead, components, versions, style, and links.\n\n        WHEN TO USE:\n        - When you need full details about a *specific* project and you know its key ('PROJ') or ID ('10001').\n        - After using 'list_projects' to identify the target project key or ID.\n        - To get project metadata, components, or versions before analyzing its issues.\n\n        WHEN NOT TO USE:\n        - When you don't know the project key or ID (use 'list_projects' first).\n        - When you only need a list of projects (use 'list_projects').\n        - When you need issue information (use issue tools).\n\n        RETURNS: Detailed project information including key, name, description, lead, components, versions, and links. Fetches all available details (components, versions) by default.\n\n        EXAMPLES:\n        - Get project by Key: { projectKeyOrId: \"DEV\" }\n        - Get project by ID: { projectKeyOrId: \"10001\" }\n\n        ERRORS:\n        - Project not found: Verify the 'projectKeyOrId' is correct and exists.\n        - Permission errors: Ensure you have access to view the specified project.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectKeyOrId": {
+                "type": "string",
+                "description": "The key or numeric ID of the Jira project to retrieve (e.g., \"PROJ\" or \"10001\"). This is required and must be a valid project key or ID from your Jira instance."
+              }
+            },
+            "required": [
+              "projectKeyOrId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_issues",
+          "description": "Search for Jira issues using JQL (Jira Query Language), with pagination.\n\n        PURPOSE: Find and explore issues across one or more projects using the powerful JQL syntax. Essential for locating specific issues or groups of issues based on criteria like project, status, assignee, text content, labels, dates, etc. Provides issue keys/IDs needed for the 'get_issue' tool.\n\n        WHEN TO USE:\n        - To find issues matching specific criteria (status, assignee, project, keywords, labels, priority, dates).\n        - To get an overview of issues in a project or filter.\n        - To find issue keys/IDs for use with the 'get_issue' tool.\n        - Requires formulating a valid JQL query (refer to Jira JQL documentation if unsure).\n\n        WHEN NOT TO USE:\n        - When you already know the specific issue key/ID (use 'get_issue').\n        - When you only need project information (use 'list_projects' or 'get_project').\n        - If the search is very broad (might hit limits or be slow; refine JQL).\n\n        RETURNS: Formatted list of issues matching the JQL query, including key, summary, type, status, priority, project, assignee, reporter, creation/update dates, and URL. Includes pagination details if applicable (Jira uses offset-based pagination, so the 'cursor' represents the 'startAt' index).\n        \n        SORTING: By default, issues are sorted by updated date in descending order (most recently updated first). This behavior can be overridden by including an explicit ORDER BY clause in your JQL query.\n\n        EXAMPLES:\n        - Find open issues in project TEAM: { jql: \"project = TEAM AND status = Open\" }\n        - Find issues assigned to me: { jql: \"assignee = currentUser() AND resolution = Unresolved\" }\n        - Find high priority bugs updated recently: { jql: \"type = Bug AND priority = High AND updated >= -7d\" }\n        - Paginate results (get page 3, assuming limit 25): { jql: \"project = TEAM\", limit: 25, cursor: \"50\" }\n        - Simple issue retrieval with default sorting: { }  # Returns all accessible issues, sorted by most recently updated first\n\n        ERRORS:\n        - Invalid JQL: Check the syntax of your JQL query. Ensure field names and values are correct.\n        - Authentication failures: Verify Jira credentials.\n        - No results: The JQL query returned no matching issues, or you lack permission to view them.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "jql": {
+                "type": "string",
+                "description": "Filter issues using JQL syntax. Use this for complex queries like \"project = TEAM AND status = 'In Progress'\" or \"assignee = currentUser()\". If omitted, returns issues according to your Jira default search."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_issue",
+          "description": "Get detailed information about a specific Jira issue using its ID or key. Requires 'issueIdOrKey'.\n\n        PURPOSE: Retrieves comprehensive details for a *known* issue, including its summary, description (in Markdown), status, priority, assignee, reporter, comments, attachments, linked issues, worklogs, and all standard fields. Also retrieves related development information like commits, branches, and pull requests if available.\n\n        WHEN TO USE:\n        - When you need the full content, comments, or metadata of a *specific* issue.\n        - When you need to see Git/Bitbucket commits, branches, or pull requests linked to the issue.\n        - After using 'list_issues' to identify the target issue key/ID.\n        - To get all context associated with an issue for analysis or summarization.\n        - Requires a known 'issueIdOrKey' (e.g., \"PROJ-123\" or \"10001\").\n\n        WHEN NOT TO USE:\n        - When you don't know the issue key/ID (use 'list_issues' with JQL first).\n        - When you only need a list of issues (use 'list_issues').\n        - When you need project-level information (use project tools).\n\n        RETURNS: Detailed issue information including key, summary, description (converted to Markdown), status, priority, assignee, reporter, dates, time tracking, attachments, comments (converted to Markdown), linked issues, worklogs, and related development information (commits, branches, pull requests). Fetches all available standard details by default.\n\n        EXAMPLES:\n        - Get issue by Key: { issueIdOrKey: \"PROJ-123\" }\n        - Get issue by ID: { issueIdOrKey: \"10001\" }\n\n        ERRORS:\n        - Issue not found: Verify the 'issueIdOrKey' is correct and exists.\n        - Permission errors: Ensure you have access to view the specified issue.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "issueIdOrKey": {
+                "type": "string",
+                "description": "The ID or key of the Jira issue to retrieve (e.g., \"10001\" or \"PROJ-123\"). This is required and must be a valid issue ID or key from your Jira instance."
+              }
+            },
+            "required": [
+              "issueIdOrKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search Jira content using JQL (Jira Query Language) for precise results.\n\n        PURPOSE: Performs advanced content searches across Jira using JQL queries, allowing for complex search patterns, issue filtering, and targeted results. This is the most powerful search tool for Jira, supporting complex filtering and sorting.\n\n        WHEN TO USE:\n        - When you need to search for specific issues across projects or find issues matching complex criteria.\n        - When you need to combine multiple search criteria (e.g., project + status + assignee + text).\n        - When you need to search using complex logical operators (AND, OR, NOT).\n        - When you need to search across all issues with custom fields, dates, or specific values.\n        - When you need fine-grained sorting control over search results.\n\n        WHEN NOT TO USE:\n        - When you already know the issue key/ID (use 'get_issue' instead).\n        - When you only need to list issues from a specific project with simple filtering (use 'list_issues').\n        - When you need project information rather than issues (use project-related tools).\n\n        RETURNS: Formatted search results including:\n        - Issue key, summary, type, and status\n        - Project, priority, assignee, and reporter information\n        - Creation and update dates\n        - Links to view issues in the browser\n        \n        Results can be paginated using the 'limit' and 'cursor' parameters.\n\n        JQL EXAMPLES:\n        - Basic text search: { jql: \"text ~ 'login issue'\" }\n        - Combined criteria: { jql: \"project = PROJ AND status = 'In Progress' AND assignee = currentUser()\" }\n        - Date filtering: { jql: \"created >= '2023-01-01' AND created <= '2023-12-31'\" }\n        - Issues by specific user: { jql: \"reporter = jsmith\" }\n        - High priority bugs: { jql: \"type = Bug AND priority = High\" }\n        \n        Common JQL fields:\n        - text: Full-text content search\n        - summary: Issue summary search\n        - description: Issue description search\n        - project: Project key\n        - type: Issue type (Bug, Task, Story, etc.)\n        - status: Issue status\n        - assignee/reporter: User references\n        - created/updated: Date criteria\n        - priority: Issue priority\n        - resolution: Issue resolution status\n\n        ERRORS:\n        - Invalid JQL syntax: Check query format against JQL documentation.\n        - No results: Try broadening search criteria.\n        - Authentication/permission failures: Ensure proper credentials.\n        - Rate limiting: For large result sets, use pagination.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "jql": {
+                "type": "string",
+                "description": "Filter issues using Jira Query Language (JQL) syntax. Use this for complex queries like \"project = TEAM AND status = 'In Progress'\" or \"assignee = currentUser()\". If omitted, returns issues according to your Jira default search."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "list_projects",
+        "get_project",
+        "list_issues",
+        "get_issue",
+        "search"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1605,
+      "name": "Atlassian Jira Integration Server",
+      "author": "@aashari/mcp-server-atlassian-jira",
+      "overview": "Connect your AI systems to Atlassian Jira effortlessly. Retrieve and manage Jira projects and issues directly from your AI assistant, enhancing productivity and streamlining workflows.",
+      "repository_url": "https://github.com/aashari/mcp-server-atlassian-jira",
+      "homepage": "https://smithery.ai/server/@aashari/mcp-server-atlassian-jira",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@aashari_mcp-server-atlassian-jira.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "list_projects",
+          "description": "List Jira projects accessible to the authenticated user, with optional filtering by name/key and pagination.\n\n        PURPOSE: Discover available projects and retrieve their keys, names, and basic metadata. Essential for finding the correct project key needed as input for the 'get_project' tool or for filtering issues using JQL in the 'list_issues' tool (e.g., \"project = KEY\").\n\n        WHEN TO USE:\n        - To find the project key for a known project name.\n        - To explore all projects you have access to.\n        - To get a high-level overview before diving into specific projects or issues.\n        - When you don't know the exact key required by other tools.\n\n        WHEN NOT TO USE:\n        - When you already have the project key and need full details (use 'get_project').\n        - When you need to list *issues* (use 'list_issues').\n\n        RETURNS: Formatted list of projects including name, key, ID, type, style, lead, and URL. Includes pagination details if applicable (Jira uses offset-based pagination, so the 'cursor' represents the 'startAt' index).\n        \n        SORTING: By default, projects are sorted by 'lastIssueUpdatedTime', showing the most recently active projects first. This can be changed by providing a different value in the 'orderBy' parameter.\n\n        EXAMPLES:\n        - List all accessible projects (first page): {}\n        - Filter by name/key fragment: { name: \"platform\" }\n        - Paginate results (get next page starting from index 50): { limit: 50, cursor: \"50\" }\n        - Sort by key: { orderBy: \"key\" }\n\n        ERRORS:\n        - Authentication failures: Check Jira credentials.\n        - No projects found: You may not have access to any projects, or the name filter is too restrictive.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Filter projects by name or key (case-insensitive). Use this to find specific projects by their display name or project key."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              },
+              "orderBy": {
+                "type": "string",
+                "description": "Field to sort projects by (e.g., \"name\", \"key\", \"lastIssueUpdatedTime\"). Default is \"lastIssueUpdatedTime\", which shows the most recently active projects first."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_project",
+          "description": "Get detailed information about a specific Jira project using its key or ID. Requires 'projectKeyOrId'.\n\n        PURPOSE: Retrieves comprehensive metadata for a *known* project, including its full description, lead, components, versions, style, and links.\n\n        WHEN TO USE:\n        - When you need full details about a *specific* project and you know its key ('PROJ') or ID ('10001').\n        - After using 'list_projects' to identify the target project key or ID.\n        - To get project metadata, components, or versions before analyzing its issues.\n\n        WHEN NOT TO USE:\n        - When you don't know the project key or ID (use 'list_projects' first).\n        - When you only need a list of projects (use 'list_projects').\n        - When you need issue information (use issue tools).\n\n        RETURNS: Detailed project information including key, name, description, lead, components, versions, and links. Fetches all available details (components, versions) by default.\n\n        EXAMPLES:\n        - Get project by Key: { projectKeyOrId: \"DEV\" }\n        - Get project by ID: { projectKeyOrId: \"10001\" }\n\n        ERRORS:\n        - Project not found: Verify the 'projectKeyOrId' is correct and exists.\n        - Permission errors: Ensure you have access to view the specified project.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectKeyOrId": {
+                "type": "string",
+                "description": "The key or numeric ID of the Jira project to retrieve (e.g., \"PROJ\" or \"10001\"). This is required and must be a valid project key or ID from your Jira instance."
+              }
+            },
+            "required": [
+              "projectKeyOrId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_issues",
+          "description": "Search for Jira issues using JQL (Jira Query Language), with pagination.\n\n        PURPOSE: Find and explore issues across one or more projects using the powerful JQL syntax. Essential for locating specific issues or groups of issues based on criteria like project, status, assignee, text content, labels, dates, etc. Provides issue keys/IDs needed for the 'get_issue' tool.\n\n        WHEN TO USE:\n        - To find issues matching specific criteria (status, assignee, project, keywords, labels, priority, dates).\n        - To get an overview of issues in a project or filter.\n        - To find issue keys/IDs for use with the 'get_issue' tool.\n        - Requires formulating a valid JQL query (refer to Jira JQL documentation if unsure).\n\n        WHEN NOT TO USE:\n        - When you already know the specific issue key/ID (use 'get_issue').\n        - When you only need project information (use 'list_projects' or 'get_project').\n        - If the search is very broad (might hit limits or be slow; refine JQL).\n\n        RETURNS: Formatted list of issues matching the JQL query, including key, summary, type, status, priority, project, assignee, reporter, creation/update dates, and URL. Includes pagination details if applicable (Jira uses offset-based pagination, so the 'cursor' represents the 'startAt' index).\n        \n        SORTING: By default, issues are sorted by updated date in descending order (most recently updated first). This behavior can be overridden by including an explicit ORDER BY clause in your JQL query.\n\n        EXAMPLES:\n        - Find open issues in project TEAM: { jql: \"project = TEAM AND status = Open\" }\n        - Find issues assigned to me: { jql: \"assignee = currentUser() AND resolution = Unresolved\" }\n        - Find high priority bugs updated recently: { jql: \"type = Bug AND priority = High AND updated >= -7d\" }\n        - Paginate results (get page 3, assuming limit 25): { jql: \"project = TEAM\", limit: 25, cursor: \"50\" }\n        - Simple issue retrieval with default sorting: { }  # Returns all accessible issues, sorted by most recently updated first\n\n        ERRORS:\n        - Invalid JQL: Check the syntax of your JQL query. Ensure field names and values are correct.\n        - Authentication failures: Verify Jira credentials.\n        - No results: The JQL query returned no matching issues, or you lack permission to view them.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "jql": {
+                "type": "string",
+                "description": "Filter issues using JQL syntax. Use this for complex queries like \"project = TEAM AND status = 'In Progress'\" or \"assignee = currentUser()\". If omitted, returns issues according to your Jira default search."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_issue",
+          "description": "Get detailed information about a specific Jira issue using its ID or key. Requires 'issueIdOrKey'.\n\n        PURPOSE: Retrieves comprehensive details for a *known* issue, including its summary, description (in Markdown), status, priority, assignee, reporter, comments, attachments, linked issues, worklogs, and all standard fields. Also retrieves related development information like commits, branches, and pull requests if available.\n\n        WHEN TO USE:\n        - When you need the full content, comments, or metadata of a *specific* issue.\n        - When you need to see Git/Bitbucket commits, branches, or pull requests linked to the issue.\n        - After using 'list_issues' to identify the target issue key/ID.\n        - To get all context associated with an issue for analysis or summarization.\n        - Requires a known 'issueIdOrKey' (e.g., \"PROJ-123\" or \"10001\").\n\n        WHEN NOT TO USE:\n        - When you don't know the issue key/ID (use 'list_issues' with JQL first).\n        - When you only need a list of issues (use 'list_issues').\n        - When you need project-level information (use project tools).\n\n        RETURNS: Detailed issue information including key, summary, description (converted to Markdown), status, priority, assignee, reporter, dates, time tracking, attachments, comments (converted to Markdown), linked issues, worklogs, and related development information (commits, branches, pull requests). Fetches all available standard details by default.\n\n        EXAMPLES:\n        - Get issue by Key: { issueIdOrKey: \"PROJ-123\" }\n        - Get issue by ID: { issueIdOrKey: \"10001\" }\n\n        ERRORS:\n        - Issue not found: Verify the 'issueIdOrKey' is correct and exists.\n        - Permission errors: Ensure you have access to view the specified issue.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "issueIdOrKey": {
+                "type": "string",
+                "description": "The ID or key of the Jira issue to retrieve (e.g., \"10001\" or \"PROJ-123\"). This is required and must be a valid issue ID or key from your Jira instance."
+              }
+            },
+            "required": [
+              "issueIdOrKey"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search Jira content using JQL (Jira Query Language) for precise results.\n\n        PURPOSE: Performs advanced content searches across Jira using JQL queries, allowing for complex search patterns, issue filtering, and targeted results. This is the most powerful search tool for Jira, supporting complex filtering and sorting.\n\n        WHEN TO USE:\n        - When you need to search for specific issues across projects or find issues matching complex criteria.\n        - When you need to combine multiple search criteria (e.g., project + status + assignee + text).\n        - When you need to search using complex logical operators (AND, OR, NOT).\n        - When you need to search across all issues with custom fields, dates, or specific values.\n        - When you need fine-grained sorting control over search results.\n\n        WHEN NOT TO USE:\n        - When you already know the issue key/ID (use 'get_issue' instead).\n        - When you only need to list issues from a specific project with simple filtering (use 'list_issues').\n        - When you need project information rather than issues (use project-related tools).\n\n        RETURNS: Formatted search results including:\n        - Issue key, summary, type, and status\n        - Project, priority, assignee, and reporter information\n        - Creation and update dates\n        - Links to view issues in the browser\n        \n        Results can be paginated using the 'limit' and 'cursor' parameters.\n\n        JQL EXAMPLES:\n        - Basic text search: { jql: \"text ~ 'login issue'\" }\n        - Combined criteria: { jql: \"project = PROJ AND status = 'In Progress' AND assignee = currentUser()\" }\n        - Date filtering: { jql: \"created >= '2023-01-01' AND created <= '2023-12-31'\" }\n        - Issues by specific user: { jql: \"reporter = jsmith\" }\n        - High priority bugs: { jql: \"type = Bug AND priority = High\" }\n        \n        Common JQL fields:\n        - text: Full-text content search\n        - summary: Issue summary search\n        - description: Issue description search\n        - project: Project key\n        - type: Issue type (Bug, Task, Story, etc.)\n        - status: Issue status\n        - assignee/reporter: User references\n        - created/updated: Date criteria\n        - priority: Issue priority\n        - resolution: Issue resolution status\n\n        ERRORS:\n        - Invalid JQL syntax: Check query format against JQL documentation.\n        - No results: Try broadening search criteria.\n        - Authentication/permission failures: Ensure proper credentials.\n        - Rate limiting: For large result sets, use pagination.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "jql": {
+                "type": "string",
+                "description": "Filter issues using Jira Query Language (JQL) syntax. Use this for complex queries like \"project = TEAM AND status = 'In Progress'\" or \"assignee = currentUser()\". If omitted, returns issues according to your Jira default search."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Use this to navigate through large result sets. The cursor value can be obtained from the pagination information in a previous response."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"atlassianApiToken\": \"\",\n  \"atlassianSiteName\": \"\",\n  \"atlassianUserEmail\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@aashari/mcp-server-atlassian-jira/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"atlassianApiToken\": \"\",\n  \"atlassianSiteName\": \"\",\n  \"atlassianUserEmail\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@aashari/mcp-server-atlassian-jira/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "1606.@aashari_mcp-server-atlassian-jira_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1461
+  }
+}

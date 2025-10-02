@@ -1,0 +1,649 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to support structured decision-making processes across various domains such as personal, business, risk management, and policy. It emphasizes systematic analysis of options, criteria, probabilities, and uncertainties to provide transparent and personalized recommendations. The primary tool, \"decisionFramework,\" enables multi-criteria decision analysis, expected utility calculations, and visual decision support, making it suitable for complex decisions under uncertainty.",
+    "reasoning": "The primary label \"Decision Support\" is chosen because the server's core functionality revolves around aiding decision-making by providing structured analysis and recommendations. Secondary labels \"Risk Management\" and \"Business Intelligence\" are selected because the tool is highly applicable to these domains, particularly for evaluating trade-offs and managing uncertainties. No custom label is needed as predefined categories adequately cover the server's functionality.",
+    "primary_label": "Others",
+    "secondary_labels": [],
+    "custom_label": "Decision Support",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 407,
+    "server_name": "Decision Framework Server",
+    "rank_by_usage": 408,
+    "usage_count": "56",
+    "original_file": "../crawler/smithery/@waldzellai_decision-framework.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@waldzellai/decision-framework/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "decisionFramework",
+          "description": "A detailed tool for structured decision analysis and rational choice.\nThis tool helps models systematically evaluate options, criteria, and outcomes.\nIt supports multiple decision frameworks, probability estimates, and value judgments.\n\nWhen to use this tool:\n- Complex decisions with multiple options\n- Decisions requiring systematic evaluation of trade-offs\n- Decisions under uncertainty with probability estimates\n- Multi-stakeholder decisions with different criteria\n- Risk analysis and management\n\nKey features:\n- Structured option evaluation\n- Multi-criteria decision analysis\n- Expected utility calculations\n- Information value analysis\n- Visual decision support",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "decisionStatement": {
+                "type": "string",
+                "description": "Clear statement of the decision to be made"
+              },
+              "options": {
+                "type": "array",
+                "description": "Available options or alternatives",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the option"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the option"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the option"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description"
+                  ]
+                }
+              },
+              "criteria": {
+                "type": "array",
+                "description": "Criteria for evaluating options",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the criterion"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the criterion"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the criterion"
+                    },
+                    "weight": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Weight of the criterion (0.0-1.0)"
+                    },
+                    "evaluationMethod": {
+                      "type": "string",
+                      "enum": [
+                        "quantitative",
+                        "qualitative",
+                        "boolean"
+                      ],
+                      "description": "Method for evaluating options against this criterion"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "weight",
+                    "evaluationMethod"
+                  ]
+                }
+              },
+              "criteriaEvaluations": {
+                "type": "array",
+                "description": "Evaluations of options against criteria",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "criterionId": {
+                      "type": "string",
+                      "description": "ID of the criterion"
+                    },
+                    "optionId": {
+                      "type": "string",
+                      "description": "ID of the option"
+                    },
+                    "score": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Score of the option on this criterion (0.0-1.0)"
+                    },
+                    "justification": {
+                      "type": "string",
+                      "description": "Justification for the score"
+                    }
+                  },
+                  "required": [
+                    "criterionId",
+                    "optionId",
+                    "score",
+                    "justification"
+                  ]
+                }
+              },
+              "possibleOutcomes": {
+                "type": "array",
+                "description": "Possible outcomes and their probabilities",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the outcome"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the outcome"
+                    },
+                    "probability": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Probability of the outcome (0.0-1.0)"
+                    },
+                    "optionId": {
+                      "type": "string",
+                      "description": "ID of the option this outcome is associated with"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "Utility value of the outcome (can be positive or negative)"
+                    },
+                    "confidenceInEstimate": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Confidence in the probability and value estimates (0.0-1.0)"
+                    }
+                  },
+                  "required": [
+                    "description",
+                    "probability",
+                    "optionId",
+                    "value",
+                    "confidenceInEstimate"
+                  ]
+                }
+              },
+              "informationGaps": {
+                "type": "array",
+                "description": "Gaps in information that affect the decision",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the information gap"
+                    },
+                    "impact": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Impact of the information gap on the decision (0.0-1.0)"
+                    },
+                    "researchMethod": {
+                      "type": "string",
+                      "description": "Method for filling the information gap"
+                    }
+                  },
+                  "required": [
+                    "description",
+                    "impact",
+                    "researchMethod"
+                  ]
+                }
+              },
+              "stakeholders": {
+                "type": "array",
+                "description": "People or groups affected by the decision",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "constraints": {
+                "type": "array",
+                "description": "Constraints on the decision",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "timeHorizon": {
+                "type": "string",
+                "description": "Time frame for the decision"
+              },
+              "riskTolerance": {
+                "type": "string",
+                "enum": [
+                  "risk-averse",
+                  "risk-neutral",
+                  "risk-seeking"
+                ],
+                "description": "Risk tolerance for the decision"
+              },
+              "expectedValues": {
+                "type": "object",
+                "description": "Expected values for each option",
+                "additionalProperties": {
+                  "type": "number"
+                }
+              },
+              "multiCriteriaScores": {
+                "type": "object",
+                "description": "Multi-criteria scores for each option",
+                "additionalProperties": {
+                  "type": "number"
+                }
+              },
+              "sensitivityInsights": {
+                "type": "array",
+                "description": "Insights from sensitivity analysis",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "recommendation": {
+                "type": "string",
+                "description": "Recommendation based on the analysis"
+              },
+              "decisionId": {
+                "type": "string",
+                "description": "Unique identifier for this decision"
+              },
+              "analysisType": {
+                "type": "string",
+                "enum": [
+                  "expected-utility",
+                  "multi-criteria",
+                  "maximin",
+                  "minimax-regret",
+                  "satisficing"
+                ],
+                "description": "Type of decision analysis"
+              },
+              "stage": {
+                "type": "string",
+                "enum": [
+                  "problem-definition",
+                  "options",
+                  "criteria",
+                  "evaluation",
+                  "analysis",
+                  "recommendation"
+                ],
+                "description": "Current stage of the decision process"
+              },
+              "iteration": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Current iteration of the decision analysis"
+              },
+              "nextStageNeeded": {
+                "type": "boolean",
+                "description": "Whether another stage is needed"
+              },
+              "suggestedNextStage": {
+                "type": "string",
+                "description": "Suggested next stage of the decision process"
+              }
+            },
+            "required": [
+              "decisionStatement",
+              "options",
+              "stakeholders",
+              "constraints",
+              "timeHorizon",
+              "riskTolerance",
+              "decisionId",
+              "analysisType",
+              "stage",
+              "iteration",
+              "nextStageNeeded"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "decisionFramework"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 407,
+      "name": "Decision Framework Server",
+      "author": "@waldzellai/decision-framework",
+      "overview": "Provide structured decision support by externalizing complex decision-making processes. Enable models to systematically analyze options, criteria, probabilities, and uncertainties for transparent and personalized recommendations. Enhance decision quality across personal, business, risk management, and policy domains.",
+      "repository_url": "https://github.com/waldzellai/model-enhancement-servers",
+      "homepage": "https://smithery.ai/server/@waldzellai/decision-framework",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "56",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@waldzellai_decision-framework.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "decisionFramework",
+          "description": "A detailed tool for structured decision analysis and rational choice.\nThis tool helps models systematically evaluate options, criteria, and outcomes.\nIt supports multiple decision frameworks, probability estimates, and value judgments.\n\nWhen to use this tool:\n- Complex decisions with multiple options\n- Decisions requiring systematic evaluation of trade-offs\n- Decisions under uncertainty with probability estimates\n- Multi-stakeholder decisions with different criteria\n- Risk analysis and management\n\nKey features:\n- Structured option evaluation\n- Multi-criteria decision analysis\n- Expected utility calculations\n- Information value analysis\n- Visual decision support",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "decisionStatement": {
+                "type": "string",
+                "description": "Clear statement of the decision to be made"
+              },
+              "options": {
+                "type": "array",
+                "description": "Available options or alternatives",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the option"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the option"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the option"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description"
+                  ]
+                }
+              },
+              "criteria": {
+                "type": "array",
+                "description": "Criteria for evaluating options",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the criterion"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the criterion"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the criterion"
+                    },
+                    "weight": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Weight of the criterion (0.0-1.0)"
+                    },
+                    "evaluationMethod": {
+                      "type": "string",
+                      "enum": [
+                        "quantitative",
+                        "qualitative",
+                        "boolean"
+                      ],
+                      "description": "Method for evaluating options against this criterion"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "description",
+                    "weight",
+                    "evaluationMethod"
+                  ]
+                }
+              },
+              "criteriaEvaluations": {
+                "type": "array",
+                "description": "Evaluations of options against criteria",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "criterionId": {
+                      "type": "string",
+                      "description": "ID of the criterion"
+                    },
+                    "optionId": {
+                      "type": "string",
+                      "description": "ID of the option"
+                    },
+                    "score": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Score of the option on this criterion (0.0-1.0)"
+                    },
+                    "justification": {
+                      "type": "string",
+                      "description": "Justification for the score"
+                    }
+                  },
+                  "required": [
+                    "criterionId",
+                    "optionId",
+                    "score",
+                    "justification"
+                  ]
+                }
+              },
+              "possibleOutcomes": {
+                "type": "array",
+                "description": "Possible outcomes and their probabilities",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the outcome"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the outcome"
+                    },
+                    "probability": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Probability of the outcome (0.0-1.0)"
+                    },
+                    "optionId": {
+                      "type": "string",
+                      "description": "ID of the option this outcome is associated with"
+                    },
+                    "value": {
+                      "type": "number",
+                      "description": "Utility value of the outcome (can be positive or negative)"
+                    },
+                    "confidenceInEstimate": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Confidence in the probability and value estimates (0.0-1.0)"
+                    }
+                  },
+                  "required": [
+                    "description",
+                    "probability",
+                    "optionId",
+                    "value",
+                    "confidenceInEstimate"
+                  ]
+                }
+              },
+              "informationGaps": {
+                "type": "array",
+                "description": "Gaps in information that affect the decision",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the information gap"
+                    },
+                    "impact": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "description": "Impact of the information gap on the decision (0.0-1.0)"
+                    },
+                    "researchMethod": {
+                      "type": "string",
+                      "description": "Method for filling the information gap"
+                    }
+                  },
+                  "required": [
+                    "description",
+                    "impact",
+                    "researchMethod"
+                  ]
+                }
+              },
+              "stakeholders": {
+                "type": "array",
+                "description": "People or groups affected by the decision",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "constraints": {
+                "type": "array",
+                "description": "Constraints on the decision",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "timeHorizon": {
+                "type": "string",
+                "description": "Time frame for the decision"
+              },
+              "riskTolerance": {
+                "type": "string",
+                "enum": [
+                  "risk-averse",
+                  "risk-neutral",
+                  "risk-seeking"
+                ],
+                "description": "Risk tolerance for the decision"
+              },
+              "expectedValues": {
+                "type": "object",
+                "description": "Expected values for each option",
+                "additionalProperties": {
+                  "type": "number"
+                }
+              },
+              "multiCriteriaScores": {
+                "type": "object",
+                "description": "Multi-criteria scores for each option",
+                "additionalProperties": {
+                  "type": "number"
+                }
+              },
+              "sensitivityInsights": {
+                "type": "array",
+                "description": "Insights from sensitivity analysis",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "recommendation": {
+                "type": "string",
+                "description": "Recommendation based on the analysis"
+              },
+              "decisionId": {
+                "type": "string",
+                "description": "Unique identifier for this decision"
+              },
+              "analysisType": {
+                "type": "string",
+                "enum": [
+                  "expected-utility",
+                  "multi-criteria",
+                  "maximin",
+                  "minimax-regret",
+                  "satisficing"
+                ],
+                "description": "Type of decision analysis"
+              },
+              "stage": {
+                "type": "string",
+                "enum": [
+                  "problem-definition",
+                  "options",
+                  "criteria",
+                  "evaluation",
+                  "analysis",
+                  "recommendation"
+                ],
+                "description": "Current stage of the decision process"
+              },
+              "iteration": {
+                "type": "number",
+                "minimum": 0,
+                "description": "Current iteration of the decision analysis"
+              },
+              "nextStageNeeded": {
+                "type": "boolean",
+                "description": "Whether another stage is needed"
+              },
+              "suggestedNextStage": {
+                "type": "string",
+                "description": "Suggested next stage of the decision process"
+              }
+            },
+            "required": [
+              "decisionStatement",
+              "options",
+              "stakeholders",
+              "constraints",
+              "timeHorizon",
+              "riskTolerance",
+              "decisionId",
+              "analysisType",
+              "stage",
+              "iteration",
+              "nextStageNeeded"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@waldzellai/decision-framework/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@waldzellai/decision-framework/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0408.@waldzellai_decision-framework_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 402
+  }
+}

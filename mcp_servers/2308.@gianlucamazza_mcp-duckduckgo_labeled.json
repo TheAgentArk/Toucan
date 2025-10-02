@@ -1,0 +1,330 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on web search and content exploration using DuckDuckGo as the primary search engine. It offers three main tools:\n    1. Performing web searches with advanced filtering options (time period, site limitation, etc.)\n    2. Retrieving detailed information about specific search results by scraping and analyzing web pages\n    3. Finding related search queries to broaden research topics\n    This server is primarily designed for information retrieval, research, and content discovery through web searches with enhanced features for deeper exploration of search results.",
+    "reasoning": "The primary functionality clearly falls under \"Web Search & Research\" as the core purpose is performing enhanced web searches. Additional relevant functionality includes \"Content Creation\" since it allows extraction of rich content from webpages, and \"Browser Automation\" due to its webpage scraping capabilities (spider_depth parameter).",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Content Creation",
+      "Browser Automation"
+    ],
+    "custom_label": "Enhanced Content Extraction",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2307,
+    "server_name": "DuckDuckGo Search Plugin",
+    "rank_by_usage": 2308,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@gianlucamazza_mcp-duckduckgo.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@gianlucamazza/mcp-duckduckgo/mcp?config=eyJob3N0IjogIjEyNy4wLjAuMSIsICJwb3J0IjogODAwMH0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "duckduckgo_web_search",
+          "description": "\n    Perform a web search using the DuckDuckGo search engine.\n    \n    This tool searches the web using DuckDuckGo and returns relevant results.\n    It's ideal for finding current information, news, articles, and general web content.\n    \n    Args:\n        query: The search query (max 400 chars, 50 words)\n        count: Number of results per page (1-20, default 10)\n        page: Page number for pagination (default 1)\n        site: Limit results to a specific site (e.g., 'site:example.com')\n        time_period: Filter results by time period ('day', 'week', 'month', 'year')\n        ctx: MCP context object (automatically injected)\n        \n    Returns:\n        A SearchResponse object containing search results and pagination metadata\n    \n    Example:\n        duckduckgo_web_search(query=\"latest AI developments\", count=5, page=1)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "description": "Search query (max 400 chars, 50 words)",
+                "maxLength": 400,
+                "title": "Query",
+                "type": "string"
+              },
+              "count": {
+                "default": 10,
+                "description": "Number of results per page (1-20, default 10)",
+                "maximum": 20,
+                "minimum": 1,
+                "title": "Count",
+                "type": "integer"
+              },
+              "page": {
+                "default": 1,
+                "description": "Page number (default 1)",
+                "minimum": 1,
+                "title": "Page",
+                "type": "integer"
+              },
+              "site": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Limit results to a specific site (e.g., 'site:example.com')",
+                "title": "Site"
+              },
+              "time_period": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Time period for results ('day', 'week', 'month', 'year')",
+                "title": "Time Period"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "duckduckgo_web_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "duckduckgo_get_details",
+          "description": "\n    Get detailed information about a search result.\n    \n    This tool retrieves additional details about a search result,\n    such as the domain, title, description, and content snippet\n    by fetching and parsing the actual web page. It can also \n    follow links to gather more comprehensive content.\n    \n    Args:\n        url: The URL of the result to get details for\n        spider_depth: Number of links to follow (0-3, default 0)\n        max_links_per_page: Maximum number of links to follow per page (1-5, default 3)\n        same_domain_only: Only follow links to the same domain\n        ctx: MCP context object (automatically injected)\n        \n    Returns:\n        A DetailedResult object with additional information\n        \n    Example:\n        duckduckgo_get_details(url=\"https://example.com/article\", spider_depth=1)\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              },
+              "spider_depth": {
+                "default": 0,
+                "description": "Number of links to follow from the page (0-3, default 0)",
+                "maximum": 3,
+                "minimum": 0,
+                "title": "Spider Depth",
+                "type": "integer"
+              },
+              "max_links_per_page": {
+                "default": 3,
+                "description": "Maximum number of links to follow per page (1-5, default 3)",
+                "maximum": 5,
+                "minimum": 1,
+                "title": "Max Links Per Page",
+                "type": "integer"
+              },
+              "same_domain_only": {
+                "default": true,
+                "description": "Only follow links to the same domain",
+                "title": "Same Domain Only",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "duckduckgo_get_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "duckduckgo_related_searches",
+          "description": "\n    Get related search queries for a given query.\n    \n    This tool suggests alternative search queries related to\n    the original query, which can help explore a topic more broadly.\n    \n    Args:\n        query: The original search query\n        count: Number of related searches to return (1-10, default 5)\n        ctx: MCP context object (automatically injected)\n        \n    Returns:\n        A list of related search queries\n        \n    Example:\n        duckduckgo_related_searches(query=\"artificial intelligence\", count=5)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "description": "Original search query",
+                "maxLength": 400,
+                "title": "Query",
+                "type": "string"
+              },
+              "count": {
+                "default": 5,
+                "description": "Number of related searches to return (1-10, default 5)",
+                "maximum": 10,
+                "minimum": 1,
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "duckduckgo_related_searchesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "duckduckgo_web_search",
+        "duckduckgo_get_details",
+        "duckduckgo_related_searches"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2307,
+      "name": "DuckDuckGo Search Plugin",
+      "author": "@gianlucamazza/mcp-duckduckgo",
+      "overview": "Perform web searches and explore content with advanced navigation features. Enhance your search experience by retrieving detailed results, related queries, and rich content extraction from webpages.",
+      "repository_url": "https://github.com/gianlucamazza/mcp-duckduckgo",
+      "homepage": "https://smithery.ai/server/@gianlucamazza/mcp-duckduckgo",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@gianlucamazza_mcp-duckduckgo.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "duckduckgo_web_search",
+          "description": "\n    Perform a web search using the DuckDuckGo search engine.\n    \n    This tool searches the web using DuckDuckGo and returns relevant results.\n    It's ideal for finding current information, news, articles, and general web content.\n    \n    Args:\n        query: The search query (max 400 chars, 50 words)\n        count: Number of results per page (1-20, default 10)\n        page: Page number for pagination (default 1)\n        site: Limit results to a specific site (e.g., 'site:example.com')\n        time_period: Filter results by time period ('day', 'week', 'month', 'year')\n        ctx: MCP context object (automatically injected)\n        \n    Returns:\n        A SearchResponse object containing search results and pagination metadata\n    \n    Example:\n        duckduckgo_web_search(query=\"latest AI developments\", count=5, page=1)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "description": "Search query (max 400 chars, 50 words)",
+                "maxLength": 400,
+                "title": "Query",
+                "type": "string"
+              },
+              "count": {
+                "default": 10,
+                "description": "Number of results per page (1-20, default 10)",
+                "maximum": 20,
+                "minimum": 1,
+                "title": "Count",
+                "type": "integer"
+              },
+              "page": {
+                "default": 1,
+                "description": "Page number (default 1)",
+                "minimum": 1,
+                "title": "Page",
+                "type": "integer"
+              },
+              "site": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Limit results to a specific site (e.g., 'site:example.com')",
+                "title": "Site"
+              },
+              "time_period": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Time period for results ('day', 'week', 'month', 'year')",
+                "title": "Time Period"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "duckduckgo_web_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "duckduckgo_get_details",
+          "description": "\n    Get detailed information about a search result.\n    \n    This tool retrieves additional details about a search result,\n    such as the domain, title, description, and content snippet\n    by fetching and parsing the actual web page. It can also \n    follow links to gather more comprehensive content.\n    \n    Args:\n        url: The URL of the result to get details for\n        spider_depth: Number of links to follow (0-3, default 0)\n        max_links_per_page: Maximum number of links to follow per page (1-5, default 3)\n        same_domain_only: Only follow links to the same domain\n        ctx: MCP context object (automatically injected)\n        \n    Returns:\n        A DetailedResult object with additional information\n        \n    Example:\n        duckduckgo_get_details(url=\"https://example.com/article\", spider_depth=1)\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              },
+              "spider_depth": {
+                "default": 0,
+                "description": "Number of links to follow from the page (0-3, default 0)",
+                "maximum": 3,
+                "minimum": 0,
+                "title": "Spider Depth",
+                "type": "integer"
+              },
+              "max_links_per_page": {
+                "default": 3,
+                "description": "Maximum number of links to follow per page (1-5, default 3)",
+                "maximum": 5,
+                "minimum": 1,
+                "title": "Max Links Per Page",
+                "type": "integer"
+              },
+              "same_domain_only": {
+                "default": true,
+                "description": "Only follow links to the same domain",
+                "title": "Same Domain Only",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "duckduckgo_get_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "duckduckgo_related_searches",
+          "description": "\n    Get related search queries for a given query.\n    \n    This tool suggests alternative search queries related to\n    the original query, which can help explore a topic more broadly.\n    \n    Args:\n        query: The original search query\n        count: Number of related searches to return (1-10, default 5)\n        ctx: MCP context object (automatically injected)\n        \n    Returns:\n        A list of related search queries\n        \n    Example:\n        duckduckgo_related_searches(query=\"artificial intelligence\", count=5)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "description": "Original search query",
+                "maxLength": 400,
+                "title": "Query",
+                "type": "string"
+              },
+              "count": {
+                "default": 5,
+                "description": "Number of related searches to return (1-10, default 5)",
+                "maximum": 10,
+                "minimum": 1,
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "duckduckgo_related_searchesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"host\": \"127.0.0.1\",\n  \"port\": 8000\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@gianlucamazza/mcp-duckduckgo/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"host\": \"127.0.0.1\",\n  \"port\": 8000\n}",
+      "python_sdk_url": "https://server.smithery.ai/@gianlucamazza/mcp-duckduckgo/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "2308.@gianlucamazza_mcp-duckduckgo_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1984
+  }
+}

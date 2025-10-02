@@ -1,0 +1,639 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Vizro\" is primarily focused on data visualization and dashboard creation using a low-code Python toolkit. Its core functionality revolves around enabling users to quickly build, customize, and deploy interactive data visualization applications with minimal technical expertise. The available tools support the entire workflow, from data loading and analysis to chart creation, validation, and deployment. Vizro emphasizes rapid prototyping and scalable deployment, with built-in design best practices and flexible dependencies.",
+    "reasoning": "The primary label \"Data Analysis & Processing\" is chosen because the server's main functionality centers around processing and visualizing data. Secondary labels \"Development Tools\" and \"AI/ML Tools\" are added because of the server's Python-based low-code approach and potential integration with machine learning models for enhanced visualization. No custom label is needed as the functionality is well-covered by the predefined categories.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [
+      "Development Tools",
+      "AI/ML Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 700,
+    "server_name": "Vizro",
+    "rank_by_usage": 701,
+    "usage_count": "11",
+    "original_file": "../crawler/smithery/@mckinsey_vizro.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@mckinsey/vizro/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_sample_data_info",
+          "description": "If user provides no data, use this tool to get sample data information.\n\n    Use the following data for the below purposes:\n        - iris: mostly numerical with one categorical column, good for scatter, histogram, boxplot, etc.\n        - tips: contains mix of numerical and categorical columns, good for bar, pie, etc.\n        - stocks: stock prices, good for line, scatter, generally things that change over time\n        - gapminder: demographic data, good for line, scatter, generally things with maps or many categories\n\n    Args:\n        data_name: Name of the dataset to get sample data for\n\n    Returns:\n        Data info object containing information about the dataset.\n    ",
+          "input_schema": {
+            "properties": {
+              "data_name": {
+                "enum": [
+                  "iris",
+                  "tips",
+                  "stocks",
+                  "gapminder"
+                ],
+                "title": "Data Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "data_name"
+            ],
+            "title": "get_sample_data_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "validate_model_config",
+          "description": "Validate Vizro model configuration. Run ALWAYS when you have a complete dashboard configuration.\n\n    If successful, the tool will return the python code and, if it is a remote file, the py.cafe link to the chart.\n    The PyCafe link will be automatically opened in your default browser if auto_open is True.\n\n    Args:\n        dashboard_config: Either a JSON string or a dictionary representing a Vizro dashboard model configuration\n        data_infos: List of DFMetaData objects containing information about the data files\n        auto_open: Whether to automatically open the PyCafe link in a browser\n\n    Returns:\n        ValidationResults object with status and dashboard details\n    ",
+          "input_schema": {
+            "$defs": {
+              "DFMetaData": {
+                "properties": {
+                  "file_name": {
+                    "title": "File Name",
+                    "type": "string"
+                  },
+                  "file_path_or_url": {
+                    "title": "File Path Or Url",
+                    "type": "string"
+                  },
+                  "file_location_type": {
+                    "enum": [
+                      "local",
+                      "remote"
+                    ],
+                    "title": "File Location Type",
+                    "type": "string"
+                  },
+                  "read_function_string": {
+                    "enum": [
+                      "pd.read_csv",
+                      "pd.read_json",
+                      "pd.read_html",
+                      "pd.read_parquet",
+                      "pd.read_excel"
+                    ],
+                    "title": "Read Function String",
+                    "type": "string"
+                  },
+                  "column_names_types": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Column Names Types"
+                  }
+                },
+                "required": [
+                  "file_name",
+                  "file_path_or_url",
+                  "file_location_type",
+                  "read_function_string"
+                ],
+                "title": "DFMetaData",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "dashboard_config": {
+                "additionalProperties": true,
+                "title": "Dashboard Config",
+                "type": "object"
+              },
+              "data_infos": {
+                "items": {
+                  "$ref": "#/$defs/DFMetaData"
+                },
+                "title": "Data Infos",
+                "type": "array"
+              },
+              "auto_open": {
+                "default": true,
+                "title": "Auto Open",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "dashboard_config",
+              "data_infos"
+            ],
+            "title": "validate_model_configArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_model_json_schema",
+          "description": "Get the JSON schema for the specified Vizro model.\n\n    Args:\n        model_name: Name of the Vizro model to get schema for (e.g., 'Card', 'Dashboard', 'Page')\n\n    Returns:\n        JSON schema of the requested Vizro model\n    ",
+          "input_schema": {
+            "properties": {
+              "model_name": {
+                "title": "Model Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "model_name"
+            ],
+            "title": "get_model_json_schemaArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_vizro_chart_or_dashboard_plan",
+          "description": "Get instructions for creating a Vizro chart or dashboard. Call FIRST when asked to create Vizro things.",
+          "input_schema": {
+            "properties": {
+              "user_plan": {
+                "enum": [
+                  "chart",
+                  "dashboard"
+                ],
+                "title": "User Plan",
+                "type": "string"
+              }
+            },
+            "required": [
+              "user_plan"
+            ],
+            "title": "get_vizro_chart_or_dashboard_planArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "load_and_analyze_data",
+          "description": "Load data from various file formats into a pandas DataFrame and analyze its structure.\n\n    Supported formats:\n    - CSV (.csv)\n    - JSON (.json)\n    - HTML (.html, .htm)\n    - Excel (.xls, .xlsx)\n    - OpenDocument Spreadsheet (.ods)\n    - Parquet (.parquet)\n\n    Args:\n        path_or_url: Local file path or URL to a data file\n\n    Returns:\n        DataAnalysisResults object containing DataFrame information and metadata\n    ",
+          "input_schema": {
+            "properties": {
+              "path_or_url": {
+                "title": "Path Or Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_or_url"
+            ],
+            "title": "load_and_analyze_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "validate_chart_code",
+          "description": "Validate the chart code created by the user and optionally open the PyCafe link in a browser.\n\n    Args:\n        chart_config: A ChartPlan object with the chart configuration\n        data_info: Metadata for the dataset to be used in the chart\n        auto_open: Whether to automatically open the PyCafe link in a browser\n\n    Returns:\n        ValidationResults object with status and dashboard details\n    ",
+          "input_schema": {
+            "$defs": {
+              "ChartPlan": {
+                "description": "Base chart plan used to generate chart code based on user visualization requirements.",
+                "properties": {
+                  "chart_type": {
+                    "description": "\n        Describes the chart type that best reflects the user request.\n        ",
+                    "title": "Chart Type",
+                    "type": "string"
+                  },
+                  "imports": {
+                    "description": "\n        List of import statements required to render the chart defined by the `chart_code` field. Ensure that every\n        import statement is a separate list/array entry: An example of valid list of import statements would be:\n\n        [\"import pandas as pd\",\n        \"import plotly.express as px\"]\n        ",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Imports",
+                    "type": "array"
+                  },
+                  "chart_code": {
+                    "description": "\n        Python code that generates a generates a plotly go.Figure object. It must fulfill the following criteria:\n        1. Must be wrapped in a function name\n        2. Must accept a single argument `data_frame` which is a pandas DataFrame\n        3. Must return a plotly go.Figure object\n        4. All data used in the chart must be derived from the data_frame argument, all data manipulations\n        must be done within the function.\n        ",
+                    "title": "Chart Code",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "chart_type",
+                  "imports",
+                  "chart_code"
+                ],
+                "title": "ChartPlan",
+                "type": "object"
+              },
+              "DFMetaData": {
+                "properties": {
+                  "file_name": {
+                    "title": "File Name",
+                    "type": "string"
+                  },
+                  "file_path_or_url": {
+                    "title": "File Path Or Url",
+                    "type": "string"
+                  },
+                  "file_location_type": {
+                    "enum": [
+                      "local",
+                      "remote"
+                    ],
+                    "title": "File Location Type",
+                    "type": "string"
+                  },
+                  "read_function_string": {
+                    "enum": [
+                      "pd.read_csv",
+                      "pd.read_json",
+                      "pd.read_html",
+                      "pd.read_parquet",
+                      "pd.read_excel"
+                    ],
+                    "title": "Read Function String",
+                    "type": "string"
+                  },
+                  "column_names_types": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Column Names Types"
+                  }
+                },
+                "required": [
+                  "file_name",
+                  "file_path_or_url",
+                  "file_location_type",
+                  "read_function_string"
+                ],
+                "title": "DFMetaData",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "chart_config": {
+                "$ref": "#/$defs/ChartPlan"
+              },
+              "data_info": {
+                "$ref": "#/$defs/DFMetaData"
+              },
+              "auto_open": {
+                "default": true,
+                "title": "Auto Open",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "chart_config",
+              "data_info"
+            ],
+            "title": "validate_chart_codeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "get_sample_data_info",
+        "validate_model_config",
+        "get_model_json_schema",
+        "get_vizro_chart_or_dashboard_plan",
+        "load_and_analyze_data",
+        "validate_chart_code"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 700,
+      "name": "Vizro",
+      "author": "@mckinsey/vizro",
+      "overview": "Build beautiful and powerful data visualization apps quickly and easily using a low-code Python toolkit. Customize and deploy your apps to production at scale with minimal engineering or design expertise. Leverage built-in visual design best practices and flexible open-source dependencies for rapid prototyping and scalable deployment.",
+      "repository_url": "https://github.com/mckinsey/vizro",
+      "homepage": "https://smithery.ai/server/@mckinsey/vizro",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "11",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@mckinsey_vizro.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "get_sample_data_info",
+          "description": "If user provides no data, use this tool to get sample data information.\n\n    Use the following data for the below purposes:\n        - iris: mostly numerical with one categorical column, good for scatter, histogram, boxplot, etc.\n        - tips: contains mix of numerical and categorical columns, good for bar, pie, etc.\n        - stocks: stock prices, good for line, scatter, generally things that change over time\n        - gapminder: demographic data, good for line, scatter, generally things with maps or many categories\n\n    Args:\n        data_name: Name of the dataset to get sample data for\n\n    Returns:\n        Data info object containing information about the dataset.\n    ",
+          "input_schema": {
+            "properties": {
+              "data_name": {
+                "enum": [
+                  "iris",
+                  "tips",
+                  "stocks",
+                  "gapminder"
+                ],
+                "title": "Data Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "data_name"
+            ],
+            "title": "get_sample_data_infoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "validate_model_config",
+          "description": "Validate Vizro model configuration. Run ALWAYS when you have a complete dashboard configuration.\n\n    If successful, the tool will return the python code and, if it is a remote file, the py.cafe link to the chart.\n    The PyCafe link will be automatically opened in your default browser if auto_open is True.\n\n    Args:\n        dashboard_config: Either a JSON string or a dictionary representing a Vizro dashboard model configuration\n        data_infos: List of DFMetaData objects containing information about the data files\n        auto_open: Whether to automatically open the PyCafe link in a browser\n\n    Returns:\n        ValidationResults object with status and dashboard details\n    ",
+          "input_schema": {
+            "$defs": {
+              "DFMetaData": {
+                "properties": {
+                  "file_name": {
+                    "title": "File Name",
+                    "type": "string"
+                  },
+                  "file_path_or_url": {
+                    "title": "File Path Or Url",
+                    "type": "string"
+                  },
+                  "file_location_type": {
+                    "enum": [
+                      "local",
+                      "remote"
+                    ],
+                    "title": "File Location Type",
+                    "type": "string"
+                  },
+                  "read_function_string": {
+                    "enum": [
+                      "pd.read_csv",
+                      "pd.read_json",
+                      "pd.read_html",
+                      "pd.read_parquet",
+                      "pd.read_excel"
+                    ],
+                    "title": "Read Function String",
+                    "type": "string"
+                  },
+                  "column_names_types": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Column Names Types"
+                  }
+                },
+                "required": [
+                  "file_name",
+                  "file_path_or_url",
+                  "file_location_type",
+                  "read_function_string"
+                ],
+                "title": "DFMetaData",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "dashboard_config": {
+                "additionalProperties": true,
+                "title": "Dashboard Config",
+                "type": "object"
+              },
+              "data_infos": {
+                "items": {
+                  "$ref": "#/$defs/DFMetaData"
+                },
+                "title": "Data Infos",
+                "type": "array"
+              },
+              "auto_open": {
+                "default": true,
+                "title": "Auto Open",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "dashboard_config",
+              "data_infos"
+            ],
+            "title": "validate_model_configArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_model_json_schema",
+          "description": "Get the JSON schema for the specified Vizro model.\n\n    Args:\n        model_name: Name of the Vizro model to get schema for (e.g., 'Card', 'Dashboard', 'Page')\n\n    Returns:\n        JSON schema of the requested Vizro model\n    ",
+          "input_schema": {
+            "properties": {
+              "model_name": {
+                "title": "Model Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "model_name"
+            ],
+            "title": "get_model_json_schemaArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_vizro_chart_or_dashboard_plan",
+          "description": "Get instructions for creating a Vizro chart or dashboard. Call FIRST when asked to create Vizro things.",
+          "input_schema": {
+            "properties": {
+              "user_plan": {
+                "enum": [
+                  "chart",
+                  "dashboard"
+                ],
+                "title": "User Plan",
+                "type": "string"
+              }
+            },
+            "required": [
+              "user_plan"
+            ],
+            "title": "get_vizro_chart_or_dashboard_planArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "load_and_analyze_data",
+          "description": "Load data from various file formats into a pandas DataFrame and analyze its structure.\n\n    Supported formats:\n    - CSV (.csv)\n    - JSON (.json)\n    - HTML (.html, .htm)\n    - Excel (.xls, .xlsx)\n    - OpenDocument Spreadsheet (.ods)\n    - Parquet (.parquet)\n\n    Args:\n        path_or_url: Local file path or URL to a data file\n\n    Returns:\n        DataAnalysisResults object containing DataFrame information and metadata\n    ",
+          "input_schema": {
+            "properties": {
+              "path_or_url": {
+                "title": "Path Or Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path_or_url"
+            ],
+            "title": "load_and_analyze_dataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "validate_chart_code",
+          "description": "Validate the chart code created by the user and optionally open the PyCafe link in a browser.\n\n    Args:\n        chart_config: A ChartPlan object with the chart configuration\n        data_info: Metadata for the dataset to be used in the chart\n        auto_open: Whether to automatically open the PyCafe link in a browser\n\n    Returns:\n        ValidationResults object with status and dashboard details\n    ",
+          "input_schema": {
+            "$defs": {
+              "ChartPlan": {
+                "description": "Base chart plan used to generate chart code based on user visualization requirements.",
+                "properties": {
+                  "chart_type": {
+                    "description": "\n        Describes the chart type that best reflects the user request.\n        ",
+                    "title": "Chart Type",
+                    "type": "string"
+                  },
+                  "imports": {
+                    "description": "\n        List of import statements required to render the chart defined by the `chart_code` field. Ensure that every\n        import statement is a separate list/array entry: An example of valid list of import statements would be:\n\n        [\"import pandas as pd\",\n        \"import plotly.express as px\"]\n        ",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Imports",
+                    "type": "array"
+                  },
+                  "chart_code": {
+                    "description": "\n        Python code that generates a generates a plotly go.Figure object. It must fulfill the following criteria:\n        1. Must be wrapped in a function name\n        2. Must accept a single argument `data_frame` which is a pandas DataFrame\n        3. Must return a plotly go.Figure object\n        4. All data used in the chart must be derived from the data_frame argument, all data manipulations\n        must be done within the function.\n        ",
+                    "title": "Chart Code",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "chart_type",
+                  "imports",
+                  "chart_code"
+                ],
+                "title": "ChartPlan",
+                "type": "object"
+              },
+              "DFMetaData": {
+                "properties": {
+                  "file_name": {
+                    "title": "File Name",
+                    "type": "string"
+                  },
+                  "file_path_or_url": {
+                    "title": "File Path Or Url",
+                    "type": "string"
+                  },
+                  "file_location_type": {
+                    "enum": [
+                      "local",
+                      "remote"
+                    ],
+                    "title": "File Location Type",
+                    "type": "string"
+                  },
+                  "read_function_string": {
+                    "enum": [
+                      "pd.read_csv",
+                      "pd.read_json",
+                      "pd.read_html",
+                      "pd.read_parquet",
+                      "pd.read_excel"
+                    ],
+                    "title": "Read Function String",
+                    "type": "string"
+                  },
+                  "column_names_types": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Column Names Types"
+                  }
+                },
+                "required": [
+                  "file_name",
+                  "file_path_or_url",
+                  "file_location_type",
+                  "read_function_string"
+                ],
+                "title": "DFMetaData",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "chart_config": {
+                "$ref": "#/$defs/ChartPlan"
+              },
+              "data_info": {
+                "$ref": "#/$defs/DFMetaData"
+              },
+              "auto_open": {
+                "default": true,
+                "title": "Auto Open",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "chart_config",
+              "data_info"
+            ],
+            "title": "validate_chart_codeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@mckinsey/vizro/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@mckinsey/vizro/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0701.@mckinsey_vizro_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 684
+  }
+}

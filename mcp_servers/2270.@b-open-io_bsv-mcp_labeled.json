@@ -1,0 +1,1068 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on providing AI assistants with comprehensive Bitcoin SV (BSV) blockchain functionality. It encompasses tools for querying blockchain data, managing wallet operations, interacting with NFT ordinals and tokens, and converting data formats. The server enables users to explore blockchain statistics, decode transactions, search for inscriptions, and interact with NFT marketplaces, all through natural language interfaces. Its primary goal is to bridge the complex blockchain environment with simpler, AI-driven interactions.",
+    "reasoning": "The **primary label** \"Cryptocurrency & Blockchain\" is chosen because the server's core functionality revolves around Bitcoin SV blockchain operations, including transactions, NFTs, tokens, and marketplaces. The **secondary labels** \"AI/ML Tools\" and \"Database Operations\" are included because the server enhances AI capabilities and provides extensive querying of blockchain data. No custom label is needed as the predefined categories sufficiently cover the server's features.",
+    "primary_label": "Cryptocurrency & Blockchain",
+    "secondary_labels": [
+      "AI/ML Tools",
+      "Database Operations"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2269,
+    "server_name": "Bitcoin SV Tools Server",
+    "rank_by_usage": 2270,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@b-open-io_bsv-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@b-open-io/bsv-mcp/mcp?config=eyJkaXNhYmxlVG9vbHMiOiBmYWxzZSwgImRpc2FibGVQcm9tcHRzIjogZmFsc2UsICJkaXNhYmxlQnN2VG9vbHMiOiBmYWxzZSwgImRpc2FibGVNbmVlVG9vbHMiOiBmYWxzZSwgImRpc2FibGVSZXNvdXJjZXMiOiBmYWxzZSwgImRpc2FibGVVdGlsc1Rvb2xzIjogZmFsc2UsICJkaXNhYmxlV2FsbGV0VG9vbHMiOiBmYWxzZSwgImRpc2FibGVPcmRpbmFsc1Rvb2xzIjogZmFsc2V9&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "bsv_getPrice",
+          "description": "Retrieves the current price of Bitcoin SV (BSV) in USD from a reliable exchange API. This tool provides real-time market data that can be used for calculating transaction values, monitoring market conditions, or converting between BSV and fiat currencies.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false,
+                "description": "No parameters required - simply returns the current BSV price in USD"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bsv_decodeTransaction",
+          "description": "Decodes and analyzes Bitcoin SV transactions to provide detailed insights. This powerful tool accepts either a transaction ID or raw transaction data and returns comprehensive information including inputs, outputs, fee calculations, script details, and blockchain context. Supports both hex and base64 encoded transactions and automatically fetches additional on-chain data when available.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "tx": {
+                    "type": "string",
+                    "description": "Transaction data or txid"
+                  },
+                  "encoding": {
+                    "type": "string",
+                    "enum": [
+                      "hex",
+                      "base64"
+                    ],
+                    "default": "hex",
+                    "description": "Encoding of the input data"
+                  }
+                },
+                "required": [
+                  "tx"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bsv_explore",
+          "description": "Explore Bitcoin SV blockchain data using the WhatsOnChain API. Access multiple data types:\n\nCHAIN DATA:\n- chain_info: Network stats, difficulty, and chain work\n- chain_tips: Current chain tips including heights and states\n- circulating_supply: Current BSV circulating supply\n- peer_info: Connected peer statistics\n\nBLOCK DATA:\n- block_by_hash: Complete block data via hash (requires blockHash parameter)\n- block_by_height: Complete block data via height (requires blockHeight parameter)\n- tag_count_by_height: Stats on tag count for a specific block via height (requires blockHeight parameter)\n- block_headers: Retrieves the last 10 block headers\n- block_pages: Retrieves pages of transaction IDs for large blocks (requires blockHash and optional pageNumber)\n\nSTATS DATA:\n- block_stats_by_height: Block statistics for a specific height (requires blockHeight parameter)\n- block_miner_stats: Block mining statistics for a time period (optional days parameter, default 7)\n- miner_summary_stats: Summary of mining statistics (optional days parameter, default 7)\n\nTRANSACTION DATA:\n- tx_by_hash: Detailed transaction data (requires txHash parameter)\n- tx_raw: Raw transaction hex data (requires txHash parameter)\n- tx_receipt: Transaction receipt (requires txHash parameter)\n- bulk_tx_details: Bulk transaction details (requires txids parameter as array of transaction hashes)\n\nADDRESS DATA:\n- address_history: Transaction history for address (requires address parameter, optional limit)\n- address_utxos: Unspent outputs for address (requires address parameter)\n\nNETWORK:\n- health: API health check\n\nUse the appropriate parameters for each endpoint type and specify 'main' or 'test' network.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "endpoint": {
+                    "type": "string",
+                    "enum": [
+                      "chain_info",
+                      "chain_tips",
+                      "circulating_supply",
+                      "peer_info",
+                      "block_by_hash",
+                      "block_by_height",
+                      "block_headers",
+                      "block_pages",
+                      "tag_count_by_height",
+                      "block_stats_by_height",
+                      "block_miner_stats",
+                      "miner_summary_stats",
+                      "tx_by_hash",
+                      "tx_raw",
+                      "tx_receipt",
+                      "bulk_tx_details",
+                      "address_history",
+                      "address_utxos",
+                      "health"
+                    ],
+                    "description": "WhatsOnChain API endpoint to call"
+                  },
+                  "network": {
+                    "type": "string",
+                    "enum": [
+                      "main",
+                      "test"
+                    ],
+                    "default": "main",
+                    "description": "Network to use (main or test)"
+                  },
+                  "blockHash": {
+                    "type": "string",
+                    "description": "Block hash (required for block_by_hash endpoint)"
+                  },
+                  "blockHeight": {
+                    "type": "number",
+                    "description": "Block height (required for block_by_height and block_stats_by_height endpoints)"
+                  },
+                  "txHash": {
+                    "type": "string",
+                    "description": "Transaction hash (required for tx_by_hash, tx_raw, and tx_receipt endpoints)"
+                  },
+                  "txids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Array of transaction IDs for bulk_tx_details endpoint"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Bitcoin address (required for address_history and address_utxos endpoints)"
+                  },
+                  "limit": {
+                    "type": "number",
+                    "description": "Limit for paginated results (optional for address_history)"
+                  },
+                  "pageNumber": {
+                    "type": "number",
+                    "description": "Page number for block_pages endpoint (defaults to 1)"
+                  },
+                  "days": {
+                    "type": "number",
+                    "description": "Number of days for miner stats endpoints (defaults to 7)"
+                  }
+                },
+                "required": [
+                  "endpoint"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_getInscription",
+          "description": "Retrieves detailed information about a specific ordinal inscription by its outpoint. Returns complete inscription data including content type, file information, inscription origin, and current status. Useful for verifying NFT authenticity or retrieving metadata about digital artifacts.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "outpoint": {
+                    "type": "string",
+                    "description": "Outpoint in format 'txid_vout'"
+                  }
+                },
+                "required": [
+                  "outpoint"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_searchInscriptions",
+          "description": "Searches for Bitcoin SV ordinal inscriptions using flexible criteria. This powerful search tool supports filtering by address, inscription content, MIME type, MAP fields, and other parameters. Results include detailed information about each matched inscription. Ideal for discovering NFTs and exploring the ordinals ecosystem.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 20,
+                    "description": "Number of results (1-100, default 20)"
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 0,
+                    "description": "Pagination offset"
+                  },
+                  "dir": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "default": "desc",
+                    "description": "Sort direction (asc or desc)"
+                  },
+                  "num": {
+                    "type": "string",
+                    "description": "Inscription number"
+                  },
+                  "origin": {
+                    "type": "string",
+                    "description": "Origin outpoint"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Bitcoin address"
+                  },
+                  "map": {
+                    "type": "string",
+                    "description": "Map field"
+                  },
+                  "terms": {
+                    "type": "string",
+                    "description": "Search terms"
+                  },
+                  "mime": {
+                    "type": "string",
+                    "description": "MIME type filter"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_marketListings",
+          "description": "Retrieves current marketplace listings for Bitcoin SV ordinals with flexible filtering. Supports multiple asset types (NFTs, BSV-20 tokens, BSV-21 tokens) through a unified interface. Results include listing prices, details about the assets, and seller information.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 20,
+                    "description": "Number of results (1-100, default 20)"
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 0,
+                    "description": "Pagination offset"
+                  },
+                  "dir": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "default": "desc",
+                    "description": "Sort direction (asc or desc)"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Bitcoin address"
+                  },
+                  "origin": {
+                    "type": "string",
+                    "description": "Origin outpoint"
+                  },
+                  "mime": {
+                    "type": "string",
+                    "description": "MIME type filter"
+                  },
+                  "num": {
+                    "type": "string",
+                    "description": "Inscription number"
+                  },
+                  "minPrice": {
+                    "type": "number",
+                    "description": "Minimum price in satoshis"
+                  },
+                  "maxPrice": {
+                    "type": "number",
+                    "description": "Maximum price in satoshis"
+                  },
+                  "tokenType": {
+                    "type": "string",
+                    "enum": [
+                      "nft",
+                      "bsv20",
+                      "bsv21",
+                      "all"
+                    ],
+                    "default": "all",
+                    "description": "Type of token to search for (nft, bsv20, bsv21, or all)"
+                  },
+                  "sort": {
+                    "type": "string",
+                    "enum": [
+                      "recent",
+                      "price",
+                      "num",
+                      "height",
+                      "price_per_token"
+                    ],
+                    "default": "recent",
+                    "description": "Sort method (recent, price, num, height, price_per_token)"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Token ID in outpoint format"
+                  },
+                  "tick": {
+                    "type": "string",
+                    "description": "Token ticker symbol"
+                  },
+                  "pending": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Include pending sales"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_marketSales",
+          "description": "Retrieves recent sales data for BSV-20 and BSV-21 tokens on the ordinals marketplace. This tool provides insights into market activity, including sale prices, transaction details, and token information. Supports filtering by token ID, ticker symbol, or seller address to help analyze market trends and track specific token sales.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 20,
+                    "description": "Number of results (1-100, default 20)"
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 0,
+                    "description": "Pagination offset"
+                  },
+                  "dir": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "default": "desc",
+                    "description": "Sort direction (asc or desc)"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Bitcoin address"
+                  },
+                  "tokenType": {
+                    "type": "string",
+                    "enum": [
+                      "bsv20",
+                      "bsv21",
+                      "all"
+                    ],
+                    "default": "bsv20",
+                    "description": "Type of token to search for (bsv20, bsv21, or all)"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Token ID in outpoint format"
+                  },
+                  "tick": {
+                    "type": "string",
+                    "description": "Token ticker symbol"
+                  },
+                  "pending": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Include pending sales"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_getTokenByIdOrTicker",
+          "description": "Retrieves detailed information about a specific BSV-20 token by its ID or ticker symbol. Returns complete token data including ticker symbol, supply information, decimals, and current status. This tool is useful for verifying token authenticity or checking supply metrics.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "BSV20 token ID in outpoint format (txid_vout)"
+                  },
+                  "tick": {
+                    "type": "string",
+                    "description": "BSV20 token ticker symbol"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "utils_convertData",
+          "description": "Converts data between different encodings (utf8, hex, base64, binary). Useful for transforming data formats when working with blockchain data, encryption, or file processing.\n\nParameters:\n- data (required): The string to convert\n- from (required): Source encoding format (utf8, hex, base64, or binary)\n- to (required): Target encoding format (utf8, hex, base64, or binary)\n\nExample usage:\n- UTF-8 to hex: {\"data\": \"hello world\", \"from\": \"utf8\", \"to\": \"hex\"} → 68656c6c6f20776f726c64\n- UTF-8 to base64: {\"data\": \"Hello World\", \"from\": \"utf8\", \"to\": \"base64\"} → SGVsbG8gV29ybGQ=\n- base64 to UTF-8: {\"data\": \"SGVsbG8gV29ybGQ=\", \"from\": \"base64\", \"to\": \"utf8\"} → Hello World\n- hex to base64: {\"data\": \"68656c6c6f20776f726c64\", \"from\": \"hex\", \"to\": \"base64\"} → aGVsbG8gd29ybGQ=\n\nNotes:\n- All parameters are required\n- The tool returns the converted data as a string\n- For binary conversion, data is represented as an array of byte values",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "description": "The data string to be converted"
+                  },
+                  "from": {
+                    "type": "string",
+                    "enum": [
+                      "utf8",
+                      "hex",
+                      "base64",
+                      "binary"
+                    ],
+                    "description": "Source encoding format (utf8, hex, base64, or binary)"
+                  },
+                  "to": {
+                    "type": "string",
+                    "enum": [
+                      "utf8",
+                      "hex",
+                      "base64",
+                      "binary"
+                    ],
+                    "description": "Target encoding format to convert to (utf8, hex, base64, or binary)"
+                  }
+                },
+                "required": [
+                  "data",
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 9,
+      "tool_names": [
+        "bsv_getPrice",
+        "bsv_decodeTransaction",
+        "bsv_explore",
+        "ordinals_getInscription",
+        "ordinals_searchInscriptions",
+        "ordinals_marketListings",
+        "ordinals_marketSales",
+        "ordinals_getTokenByIdOrTicker",
+        "utils_convertData"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2269,
+      "name": "Bitcoin SV Tools Server",
+      "author": "@b-open-io/bsv-mcp",
+      "overview": "Provide AI assistants with seamless access to Bitcoin SV blockchain functionalities including wallet operations, NFT ordinals, token marketplace interactions, and data conversions. Enable natural language interactions to manage BSV addresses, send transactions, purchase NFTs and tokens, and query blockchain data. Enhance AI capabilities with a comprehensive suite of Bitcoin SV tools accessible via the Model Context Protocol.",
+      "repository_url": "https://github.com/b-open-io/bsv-mcp",
+      "homepage": "https://smithery.ai/server/@b-open-io/bsv-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@b-open-io_bsv-mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "bsv_getPrice",
+          "description": "Retrieves the current price of Bitcoin SV (BSV) in USD from a reliable exchange API. This tool provides real-time market data that can be used for calculating transaction values, monitoring market conditions, or converting between BSV and fiat currencies.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false,
+                "description": "No parameters required - simply returns the current BSV price in USD"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bsv_decodeTransaction",
+          "description": "Decodes and analyzes Bitcoin SV transactions to provide detailed insights. This powerful tool accepts either a transaction ID or raw transaction data and returns comprehensive information including inputs, outputs, fee calculations, script details, and blockchain context. Supports both hex and base64 encoded transactions and automatically fetches additional on-chain data when available.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "tx": {
+                    "type": "string",
+                    "description": "Transaction data or txid"
+                  },
+                  "encoding": {
+                    "type": "string",
+                    "enum": [
+                      "hex",
+                      "base64"
+                    ],
+                    "default": "hex",
+                    "description": "Encoding of the input data"
+                  }
+                },
+                "required": [
+                  "tx"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "bsv_explore",
+          "description": "Explore Bitcoin SV blockchain data using the WhatsOnChain API. Access multiple data types:\n\nCHAIN DATA:\n- chain_info: Network stats, difficulty, and chain work\n- chain_tips: Current chain tips including heights and states\n- circulating_supply: Current BSV circulating supply\n- peer_info: Connected peer statistics\n\nBLOCK DATA:\n- block_by_hash: Complete block data via hash (requires blockHash parameter)\n- block_by_height: Complete block data via height (requires blockHeight parameter)\n- tag_count_by_height: Stats on tag count for a specific block via height (requires blockHeight parameter)\n- block_headers: Retrieves the last 10 block headers\n- block_pages: Retrieves pages of transaction IDs for large blocks (requires blockHash and optional pageNumber)\n\nSTATS DATA:\n- block_stats_by_height: Block statistics for a specific height (requires blockHeight parameter)\n- block_miner_stats: Block mining statistics for a time period (optional days parameter, default 7)\n- miner_summary_stats: Summary of mining statistics (optional days parameter, default 7)\n\nTRANSACTION DATA:\n- tx_by_hash: Detailed transaction data (requires txHash parameter)\n- tx_raw: Raw transaction hex data (requires txHash parameter)\n- tx_receipt: Transaction receipt (requires txHash parameter)\n- bulk_tx_details: Bulk transaction details (requires txids parameter as array of transaction hashes)\n\nADDRESS DATA:\n- address_history: Transaction history for address (requires address parameter, optional limit)\n- address_utxos: Unspent outputs for address (requires address parameter)\n\nNETWORK:\n- health: API health check\n\nUse the appropriate parameters for each endpoint type and specify 'main' or 'test' network.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "endpoint": {
+                    "type": "string",
+                    "enum": [
+                      "chain_info",
+                      "chain_tips",
+                      "circulating_supply",
+                      "peer_info",
+                      "block_by_hash",
+                      "block_by_height",
+                      "block_headers",
+                      "block_pages",
+                      "tag_count_by_height",
+                      "block_stats_by_height",
+                      "block_miner_stats",
+                      "miner_summary_stats",
+                      "tx_by_hash",
+                      "tx_raw",
+                      "tx_receipt",
+                      "bulk_tx_details",
+                      "address_history",
+                      "address_utxos",
+                      "health"
+                    ],
+                    "description": "WhatsOnChain API endpoint to call"
+                  },
+                  "network": {
+                    "type": "string",
+                    "enum": [
+                      "main",
+                      "test"
+                    ],
+                    "default": "main",
+                    "description": "Network to use (main or test)"
+                  },
+                  "blockHash": {
+                    "type": "string",
+                    "description": "Block hash (required for block_by_hash endpoint)"
+                  },
+                  "blockHeight": {
+                    "type": "number",
+                    "description": "Block height (required for block_by_height and block_stats_by_height endpoints)"
+                  },
+                  "txHash": {
+                    "type": "string",
+                    "description": "Transaction hash (required for tx_by_hash, tx_raw, and tx_receipt endpoints)"
+                  },
+                  "txids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Array of transaction IDs for bulk_tx_details endpoint"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Bitcoin address (required for address_history and address_utxos endpoints)"
+                  },
+                  "limit": {
+                    "type": "number",
+                    "description": "Limit for paginated results (optional for address_history)"
+                  },
+                  "pageNumber": {
+                    "type": "number",
+                    "description": "Page number for block_pages endpoint (defaults to 1)"
+                  },
+                  "days": {
+                    "type": "number",
+                    "description": "Number of days for miner stats endpoints (defaults to 7)"
+                  }
+                },
+                "required": [
+                  "endpoint"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_getInscription",
+          "description": "Retrieves detailed information about a specific ordinal inscription by its outpoint. Returns complete inscription data including content type, file information, inscription origin, and current status. Useful for verifying NFT authenticity or retrieving metadata about digital artifacts.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "outpoint": {
+                    "type": "string",
+                    "description": "Outpoint in format 'txid_vout'"
+                  }
+                },
+                "required": [
+                  "outpoint"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_searchInscriptions",
+          "description": "Searches for Bitcoin SV ordinal inscriptions using flexible criteria. This powerful search tool supports filtering by address, inscription content, MIME type, MAP fields, and other parameters. Results include detailed information about each matched inscription. Ideal for discovering NFTs and exploring the ordinals ecosystem.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 20,
+                    "description": "Number of results (1-100, default 20)"
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 0,
+                    "description": "Pagination offset"
+                  },
+                  "dir": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "default": "desc",
+                    "description": "Sort direction (asc or desc)"
+                  },
+                  "num": {
+                    "type": "string",
+                    "description": "Inscription number"
+                  },
+                  "origin": {
+                    "type": "string",
+                    "description": "Origin outpoint"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Bitcoin address"
+                  },
+                  "map": {
+                    "type": "string",
+                    "description": "Map field"
+                  },
+                  "terms": {
+                    "type": "string",
+                    "description": "Search terms"
+                  },
+                  "mime": {
+                    "type": "string",
+                    "description": "MIME type filter"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_marketListings",
+          "description": "Retrieves current marketplace listings for Bitcoin SV ordinals with flexible filtering. Supports multiple asset types (NFTs, BSV-20 tokens, BSV-21 tokens) through a unified interface. Results include listing prices, details about the assets, and seller information.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 20,
+                    "description": "Number of results (1-100, default 20)"
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 0,
+                    "description": "Pagination offset"
+                  },
+                  "dir": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "default": "desc",
+                    "description": "Sort direction (asc or desc)"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Bitcoin address"
+                  },
+                  "origin": {
+                    "type": "string",
+                    "description": "Origin outpoint"
+                  },
+                  "mime": {
+                    "type": "string",
+                    "description": "MIME type filter"
+                  },
+                  "num": {
+                    "type": "string",
+                    "description": "Inscription number"
+                  },
+                  "minPrice": {
+                    "type": "number",
+                    "description": "Minimum price in satoshis"
+                  },
+                  "maxPrice": {
+                    "type": "number",
+                    "description": "Maximum price in satoshis"
+                  },
+                  "tokenType": {
+                    "type": "string",
+                    "enum": [
+                      "nft",
+                      "bsv20",
+                      "bsv21",
+                      "all"
+                    ],
+                    "default": "all",
+                    "description": "Type of token to search for (nft, bsv20, bsv21, or all)"
+                  },
+                  "sort": {
+                    "type": "string",
+                    "enum": [
+                      "recent",
+                      "price",
+                      "num",
+                      "height",
+                      "price_per_token"
+                    ],
+                    "default": "recent",
+                    "description": "Sort method (recent, price, num, height, price_per_token)"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Token ID in outpoint format"
+                  },
+                  "tick": {
+                    "type": "string",
+                    "description": "Token ticker symbol"
+                  },
+                  "pending": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Include pending sales"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_marketSales",
+          "description": "Retrieves recent sales data for BSV-20 and BSV-21 tokens on the ordinals marketplace. This tool provides insights into market activity, including sale prices, transaction details, and token information. Supports filtering by token ID, ticker symbol, or seller address to help analyze market trends and track specific token sales.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100,
+                    "default": 20,
+                    "description": "Number of results (1-100, default 20)"
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 0,
+                    "description": "Pagination offset"
+                  },
+                  "dir": {
+                    "type": "string",
+                    "enum": [
+                      "asc",
+                      "desc"
+                    ],
+                    "default": "desc",
+                    "description": "Sort direction (asc or desc)"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "Bitcoin address"
+                  },
+                  "tokenType": {
+                    "type": "string",
+                    "enum": [
+                      "bsv20",
+                      "bsv21",
+                      "all"
+                    ],
+                    "default": "bsv20",
+                    "description": "Type of token to search for (bsv20, bsv21, or all)"
+                  },
+                  "id": {
+                    "type": "string",
+                    "description": "Token ID in outpoint format"
+                  },
+                  "tick": {
+                    "type": "string",
+                    "description": "Token ticker symbol"
+                  },
+                  "pending": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Include pending sales"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "ordinals_getTokenByIdOrTicker",
+          "description": "Retrieves detailed information about a specific BSV-20 token by its ID or ticker symbol. Returns complete token data including ticker symbol, supply information, decimals, and current status. This tool is useful for verifying token authenticity or checking supply metrics.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "BSV20 token ID in outpoint format (txid_vout)"
+                  },
+                  "tick": {
+                    "type": "string",
+                    "description": "BSV20 token ticker symbol"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "utils_convertData",
+          "description": "Converts data between different encodings (utf8, hex, base64, binary). Useful for transforming data formats when working with blockchain data, encryption, or file processing.\n\nParameters:\n- data (required): The string to convert\n- from (required): Source encoding format (utf8, hex, base64, or binary)\n- to (required): Target encoding format (utf8, hex, base64, or binary)\n\nExample usage:\n- UTF-8 to hex: {\"data\": \"hello world\", \"from\": \"utf8\", \"to\": \"hex\"} → 68656c6c6f20776f726c64\n- UTF-8 to base64: {\"data\": \"Hello World\", \"from\": \"utf8\", \"to\": \"base64\"} → SGVsbG8gV29ybGQ=\n- base64 to UTF-8: {\"data\": \"SGVsbG8gV29ybGQ=\", \"from\": \"base64\", \"to\": \"utf8\"} → Hello World\n- hex to base64: {\"data\": \"68656c6c6f20776f726c64\", \"from\": \"hex\", \"to\": \"base64\"} → aGVsbG8gd29ybGQ=\n\nNotes:\n- All parameters are required\n- The tool returns the converted data as a string\n- For binary conversion, data is represented as an array of byte values",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "args": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "string",
+                    "description": "The data string to be converted"
+                  },
+                  "from": {
+                    "type": "string",
+                    "enum": [
+                      "utf8",
+                      "hex",
+                      "base64",
+                      "binary"
+                    ],
+                    "description": "Source encoding format (utf8, hex, base64, or binary)"
+                  },
+                  "to": {
+                    "type": "string",
+                    "enum": [
+                      "utf8",
+                      "hex",
+                      "base64",
+                      "binary"
+                    ],
+                    "description": "Target encoding format to convert to (utf8, hex, base64, or binary)"
+                  }
+                },
+                "required": [
+                  "data",
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "args"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"disableTools\": false,\n  \"disablePrompts\": false,\n  \"disableBsvTools\": false,\n  \"disableMneeTools\": false,\n  \"disableResources\": false,\n  \"disableUtilsTools\": false,\n  \"disableWalletTools\": false,\n  \"disableOrdinalsTools\": false\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@b-open-io/bsv-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"disableTools\": false,\n  \"disablePrompts\": false,\n  \"disableBsvTools\": false,\n  \"disableMneeTools\": false,\n  \"disableResources\": false,\n  \"disableUtilsTools\": false,\n  \"disableWalletTools\": false,\n  \"disableOrdinalsTools\": false\n}",
+      "python_sdk_url": "https://server.smithery.ai/@b-open-io/bsv-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "2270.@b-open-io_bsv-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1953
+  }
+}

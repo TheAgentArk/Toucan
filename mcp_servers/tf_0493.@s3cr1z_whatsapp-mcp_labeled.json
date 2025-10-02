@@ -1,0 +1,808 @@
+{
+  "labels": {
+    "analysis": "The WhatsApp MCP Server is designed to provide secure, local access to WhatsApp functionalities through an LLM interface. It enables querying and managing WhatsApp messages, contacts, and media directly from a local environment (Python/Go). The primary use cases revolve around retrieving, organizing, and interacting with WhatsApp data (messages, contacts, media) while keeping all operations strictly on-device, ensuring privacy.",
+    "reasoning": "The primary label \"Communication Tools\" is chosen because the server's core functionality revolves around WhatsApp messaging and interaction. The secondary label \"Memory Management\" is added due to its extensive capabilities for querying, searching, and organizing chat history, contacts, and media. Neither predefined nor custom labels are needed beyond these.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "Memory Management"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 492,
+    "server_name": "WhatsApp MCP - QR only",
+    "rank_by_usage": 493,
+    "usage_count": "33",
+    "original_file": "../crawler/smithery/@s3cr1z_whatsapp-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@s3cr1z/whatsapp-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_contacts",
+          "description": "Search WhatsApp contacts by name or phone number.\n    \n    Args:\n        query: Search term to match against contact names or phone numbers\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_contactsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_messages",
+          "description": "Get WhatsApp messages matching specified criteria with optional context.\n    \n    Args:\n        after: Optional ISO-8601 formatted string to only return messages after this date\n        before: Optional ISO-8601 formatted string to only return messages before this date\n        sender_phone_number: Optional phone number to filter messages by sender\n        chat_jid: Optional chat JID to filter messages by chat\n        query: Optional search term to filter messages by content\n        limit: Maximum number of messages to return (default 20)\n        page: Page number for pagination (default 0)\n        include_context: Whether to include messages before and after matches (default True)\n        context_before: Number of messages to include before each match (default 1)\n        context_after: Number of messages to include after each match (default 1)\n    ",
+          "input_schema": {
+            "properties": {
+              "after": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "After"
+              },
+              "before": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Before"
+              },
+              "sender_phone_number": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sender Phone Number"
+              },
+              "chat_jid": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Chat Jid"
+              },
+              "query": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Query"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "page": {
+                "default": 0,
+                "title": "Page",
+                "type": "integer"
+              },
+              "include_context": {
+                "default": true,
+                "title": "Include Context",
+                "type": "boolean"
+              },
+              "context_before": {
+                "default": 1,
+                "title": "Context Before",
+                "type": "integer"
+              },
+              "context_after": {
+                "default": 1,
+                "title": "Context After",
+                "type": "integer"
+              }
+            },
+            "title": "list_messagesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_chats",
+          "description": "Get WhatsApp chats matching specified criteria.\n    \n    Args:\n        query: Optional search term to filter chats by name or JID\n        limit: Maximum number of chats to return (default 20)\n        page: Page number for pagination (default 0)\n        include_last_message: Whether to include the last message in each chat (default True)\n        sort_by: Field to sort results by, either \"last_active\" or \"name\" (default \"last_active\")\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Query"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "page": {
+                "default": 0,
+                "title": "Page",
+                "type": "integer"
+              },
+              "include_last_message": {
+                "default": true,
+                "title": "Include Last Message",
+                "type": "boolean"
+              },
+              "sort_by": {
+                "default": "last_active",
+                "title": "Sort By",
+                "type": "string"
+              }
+            },
+            "title": "list_chatsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_chat",
+          "description": "Get WhatsApp chat metadata by JID.\n    \n    Args:\n        chat_jid: The JID of the chat to retrieve\n        include_last_message: Whether to include the last message (default True)\n    ",
+          "input_schema": {
+            "properties": {
+              "chat_jid": {
+                "title": "Chat Jid",
+                "type": "string"
+              },
+              "include_last_message": {
+                "default": true,
+                "title": "Include Last Message",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "chat_jid"
+            ],
+            "title": "get_chatArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_direct_chat_by_contact",
+          "description": "Get WhatsApp chat metadata by sender phone number.\n    \n    Args:\n        sender_phone_number: The phone number to search for\n    ",
+          "input_schema": {
+            "properties": {
+              "sender_phone_number": {
+                "title": "Sender Phone Number",
+                "type": "string"
+              }
+            },
+            "required": [
+              "sender_phone_number"
+            ],
+            "title": "get_direct_chat_by_contactArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_contact_chats",
+          "description": "Get all WhatsApp chats involving the contact.\n    \n    Args:\n        jid: The contact's JID to search for\n        limit: Maximum number of chats to return (default 20)\n        page: Page number for pagination (default 0)\n    ",
+          "input_schema": {
+            "properties": {
+              "jid": {
+                "title": "Jid",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "page": {
+                "default": 0,
+                "title": "Page",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "jid"
+            ],
+            "title": "get_contact_chatsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_last_interaction",
+          "description": "Get most recent WhatsApp message involving the contact.\n    \n    Args:\n        jid: The JID of the contact to search for\n    ",
+          "input_schema": {
+            "properties": {
+              "jid": {
+                "title": "Jid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "jid"
+            ],
+            "title": "get_last_interactionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_message_context",
+          "description": "Get context around a specific WhatsApp message.\n    \n    Args:\n        message_id: The ID of the message to get context for\n        before: Number of messages to include before the target message (default 5)\n        after: Number of messages to include after the target message (default 5)\n    ",
+          "input_schema": {
+            "properties": {
+              "message_id": {
+                "title": "Message Id",
+                "type": "string"
+              },
+              "before": {
+                "default": 5,
+                "title": "Before",
+                "type": "integer"
+              },
+              "after": {
+                "default": 5,
+                "title": "After",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "message_id"
+            ],
+            "title": "get_message_contextArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message",
+          "description": "Send a WhatsApp message to a person or group. For group chats use the JID.\n\n    Args:\n        recipient: The recipient - either a phone number with country code but no + or other symbols,\n                 or a JID (e.g., \"123456789@s.whatsapp.net\" or a group JID like \"123456789@g.us\")\n        message: The message text to send\n    \n    Returns:\n        A dictionary containing success status and a status message\n    ",
+          "input_schema": {
+            "properties": {
+              "recipient": {
+                "title": "Recipient",
+                "type": "string"
+              },
+              "message": {
+                "title": "Message",
+                "type": "string"
+              }
+            },
+            "required": [
+              "recipient",
+              "message"
+            ],
+            "title": "send_messageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_file",
+          "description": "Send a file such as a picture, raw audio, video or document via WhatsApp to the specified recipient. For group messages use the JID.\n    \n    Args:\n        recipient: The recipient - either a phone number with country code but no + or other symbols,\n                 or a JID (e.g., \"123456789@s.whatsapp.net\" or a group JID like \"123456789@g.us\")\n        media_path: The absolute path to the media file to send (image, video, document)\n    \n    Returns:\n        A dictionary containing success status and a status message\n    ",
+          "input_schema": {
+            "properties": {
+              "recipient": {
+                "title": "Recipient",
+                "type": "string"
+              },
+              "media_path": {
+                "title": "Media Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "recipient",
+              "media_path"
+            ],
+            "title": "send_fileArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_audio_message",
+          "description": "Send any audio file as a WhatsApp audio message to the specified recipient. For group messages use the JID. If it errors due to ffmpeg not being installed, use send_file instead.\n    \n    Args:\n        recipient: The recipient - either a phone number with country code but no + or other symbols,\n                 or a JID (e.g., \"123456789@s.whatsapp.net\" or a group JID like \"123456789@g.us\")\n        media_path: The absolute path to the audio file to send (will be converted to Opus .ogg if it's not a .ogg file)\n    \n    Returns:\n        A dictionary containing success status and a status message\n    ",
+          "input_schema": {
+            "properties": {
+              "recipient": {
+                "title": "Recipient",
+                "type": "string"
+              },
+              "media_path": {
+                "title": "Media Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "recipient",
+              "media_path"
+            ],
+            "title": "send_audio_messageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "download_media",
+          "description": "Download media from a WhatsApp message and get the local file path.\n    \n    Args:\n        message_id: The ID of the message containing the media\n        chat_jid: The JID of the chat containing the message\n    \n    Returns:\n        A dictionary containing success status, a status message, and the file path if successful\n    ",
+          "input_schema": {
+            "properties": {
+              "message_id": {
+                "title": "Message Id",
+                "type": "string"
+              },
+              "chat_jid": {
+                "title": "Chat Jid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "message_id",
+              "chat_jid"
+            ],
+            "title": "download_mediaArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 12,
+      "tool_names": [
+        "search_contacts",
+        "list_messages",
+        "list_chats",
+        "get_chat",
+        "get_direct_chat_by_contact",
+        "get_contact_chats",
+        "get_last_interaction",
+        "get_message_context",
+        "send_message",
+        "send_file",
+        "send_audio_message",
+        "download_media"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 492,
+      "name": "WhatsApp MCP - QR only",
+      "author": "@s3cr1z/whatsapp-mcp",
+      "overview": "WhatsApp MCP Server is a fully local Model Context Protocol bridge that lets you tap into your WhatsApp messages, contacts and media from any LLM (e.g., Claude or Cursor) without ever sending your data to the cloud. Built with Go and Python, it provides simple commands for searching contacts, sending messages or files, browsing history and downloading media—all while keeping your conversations private and on-device. Integrate in minutes and start automating or querying your chat history with familiar Python/Go tooling.",
+      "repository_url": "https://github.com/s3cr1z/whatsapp-mcp",
+      "homepage": "https://smithery.ai/server/@s3cr1z/whatsapp-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "33",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@s3cr1z_whatsapp-mcp.json",
+      "tools_count": 12,
+      "tools": [
+        {
+          "name": "search_contacts",
+          "description": "Search WhatsApp contacts by name or phone number.\n    \n    Args:\n        query: Search term to match against contact names or phone numbers\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_contactsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_messages",
+          "description": "Get WhatsApp messages matching specified criteria with optional context.\n    \n    Args:\n        after: Optional ISO-8601 formatted string to only return messages after this date\n        before: Optional ISO-8601 formatted string to only return messages before this date\n        sender_phone_number: Optional phone number to filter messages by sender\n        chat_jid: Optional chat JID to filter messages by chat\n        query: Optional search term to filter messages by content\n        limit: Maximum number of messages to return (default 20)\n        page: Page number for pagination (default 0)\n        include_context: Whether to include messages before and after matches (default True)\n        context_before: Number of messages to include before each match (default 1)\n        context_after: Number of messages to include after each match (default 1)\n    ",
+          "input_schema": {
+            "properties": {
+              "after": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "After"
+              },
+              "before": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Before"
+              },
+              "sender_phone_number": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Sender Phone Number"
+              },
+              "chat_jid": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Chat Jid"
+              },
+              "query": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Query"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "page": {
+                "default": 0,
+                "title": "Page",
+                "type": "integer"
+              },
+              "include_context": {
+                "default": true,
+                "title": "Include Context",
+                "type": "boolean"
+              },
+              "context_before": {
+                "default": 1,
+                "title": "Context Before",
+                "type": "integer"
+              },
+              "context_after": {
+                "default": 1,
+                "title": "Context After",
+                "type": "integer"
+              }
+            },
+            "title": "list_messagesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_chats",
+          "description": "Get WhatsApp chats matching specified criteria.\n    \n    Args:\n        query: Optional search term to filter chats by name or JID\n        limit: Maximum number of chats to return (default 20)\n        page: Page number for pagination (default 0)\n        include_last_message: Whether to include the last message in each chat (default True)\n        sort_by: Field to sort results by, either \"last_active\" or \"name\" (default \"last_active\")\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Query"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "page": {
+                "default": 0,
+                "title": "Page",
+                "type": "integer"
+              },
+              "include_last_message": {
+                "default": true,
+                "title": "Include Last Message",
+                "type": "boolean"
+              },
+              "sort_by": {
+                "default": "last_active",
+                "title": "Sort By",
+                "type": "string"
+              }
+            },
+            "title": "list_chatsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_chat",
+          "description": "Get WhatsApp chat metadata by JID.\n    \n    Args:\n        chat_jid: The JID of the chat to retrieve\n        include_last_message: Whether to include the last message (default True)\n    ",
+          "input_schema": {
+            "properties": {
+              "chat_jid": {
+                "title": "Chat Jid",
+                "type": "string"
+              },
+              "include_last_message": {
+                "default": true,
+                "title": "Include Last Message",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "chat_jid"
+            ],
+            "title": "get_chatArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_direct_chat_by_contact",
+          "description": "Get WhatsApp chat metadata by sender phone number.\n    \n    Args:\n        sender_phone_number: The phone number to search for\n    ",
+          "input_schema": {
+            "properties": {
+              "sender_phone_number": {
+                "title": "Sender Phone Number",
+                "type": "string"
+              }
+            },
+            "required": [
+              "sender_phone_number"
+            ],
+            "title": "get_direct_chat_by_contactArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_contact_chats",
+          "description": "Get all WhatsApp chats involving the contact.\n    \n    Args:\n        jid: The contact's JID to search for\n        limit: Maximum number of chats to return (default 20)\n        page: Page number for pagination (default 0)\n    ",
+          "input_schema": {
+            "properties": {
+              "jid": {
+                "title": "Jid",
+                "type": "string"
+              },
+              "limit": {
+                "default": 20,
+                "title": "Limit",
+                "type": "integer"
+              },
+              "page": {
+                "default": 0,
+                "title": "Page",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "jid"
+            ],
+            "title": "get_contact_chatsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_last_interaction",
+          "description": "Get most recent WhatsApp message involving the contact.\n    \n    Args:\n        jid: The JID of the contact to search for\n    ",
+          "input_schema": {
+            "properties": {
+              "jid": {
+                "title": "Jid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "jid"
+            ],
+            "title": "get_last_interactionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_message_context",
+          "description": "Get context around a specific WhatsApp message.\n    \n    Args:\n        message_id: The ID of the message to get context for\n        before: Number of messages to include before the target message (default 5)\n        after: Number of messages to include after the target message (default 5)\n    ",
+          "input_schema": {
+            "properties": {
+              "message_id": {
+                "title": "Message Id",
+                "type": "string"
+              },
+              "before": {
+                "default": 5,
+                "title": "Before",
+                "type": "integer"
+              },
+              "after": {
+                "default": 5,
+                "title": "After",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "message_id"
+            ],
+            "title": "get_message_contextArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message",
+          "description": "Send a WhatsApp message to a person or group. For group chats use the JID.\n\n    Args:\n        recipient: The recipient - either a phone number with country code but no + or other symbols,\n                 or a JID (e.g., \"123456789@s.whatsapp.net\" or a group JID like \"123456789@g.us\")\n        message: The message text to send\n    \n    Returns:\n        A dictionary containing success status and a status message\n    ",
+          "input_schema": {
+            "properties": {
+              "recipient": {
+                "title": "Recipient",
+                "type": "string"
+              },
+              "message": {
+                "title": "Message",
+                "type": "string"
+              }
+            },
+            "required": [
+              "recipient",
+              "message"
+            ],
+            "title": "send_messageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_file",
+          "description": "Send a file such as a picture, raw audio, video or document via WhatsApp to the specified recipient. For group messages use the JID.\n    \n    Args:\n        recipient: The recipient - either a phone number with country code but no + or other symbols,\n                 or a JID (e.g., \"123456789@s.whatsapp.net\" or a group JID like \"123456789@g.us\")\n        media_path: The absolute path to the media file to send (image, video, document)\n    \n    Returns:\n        A dictionary containing success status and a status message\n    ",
+          "input_schema": {
+            "properties": {
+              "recipient": {
+                "title": "Recipient",
+                "type": "string"
+              },
+              "media_path": {
+                "title": "Media Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "recipient",
+              "media_path"
+            ],
+            "title": "send_fileArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_audio_message",
+          "description": "Send any audio file as a WhatsApp audio message to the specified recipient. For group messages use the JID. If it errors due to ffmpeg not being installed, use send_file instead.\n    \n    Args:\n        recipient: The recipient - either a phone number with country code but no + or other symbols,\n                 or a JID (e.g., \"123456789@s.whatsapp.net\" or a group JID like \"123456789@g.us\")\n        media_path: The absolute path to the audio file to send (will be converted to Opus .ogg if it's not a .ogg file)\n    \n    Returns:\n        A dictionary containing success status and a status message\n    ",
+          "input_schema": {
+            "properties": {
+              "recipient": {
+                "title": "Recipient",
+                "type": "string"
+              },
+              "media_path": {
+                "title": "Media Path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "recipient",
+              "media_path"
+            ],
+            "title": "send_audio_messageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "download_media",
+          "description": "Download media from a WhatsApp message and get the local file path.\n    \n    Args:\n        message_id: The ID of the message containing the media\n        chat_jid: The JID of the chat containing the message\n    \n    Returns:\n        A dictionary containing success status, a status message, and the file path if successful\n    ",
+          "input_schema": {
+            "properties": {
+              "message_id": {
+                "title": "Message Id",
+                "type": "string"
+              },
+              "chat_jid": {
+                "title": "Chat Jid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "message_id",
+              "chat_jid"
+            ],
+            "title": "download_mediaArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@s3cr1z/whatsapp-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@s3cr1z/whatsapp-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0493.@s3cr1z_whatsapp-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 483
+  }
+}

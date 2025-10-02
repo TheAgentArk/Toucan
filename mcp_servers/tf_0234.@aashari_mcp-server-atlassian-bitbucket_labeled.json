@@ -1,0 +1,863 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides comprehensive integration with Atlassian Bitbucket, enabling users to interact with repositories, pull requests, comments, and other Bitbucket features programmatically through AI assistants. The core functionality revolves around version control management, code collaboration, and software development workflows. It offers tools for listing, retrieving, and manipulating workspaces, repositories, pull requests, and comments, making it possible to manage Git operations without manual UI interaction.",
+    "reasoning": "The primary label \"Development Tools\" is chosen because the server's primary functionality aligns with software development lifecycle management, particularly around Git, repositories, and pull requests. Secondary labels \"Version Control\" and \"Code Collaboration\" are selected because the tools are specifically designed for Git operations and team-based code review processes. No custom label is needed as the predefined labels adequately cover the server's functionality.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Development Tools",
+      "Communication Tools"
+    ],
+    "custom_label": "Bitbucket Integration",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 233,
+    "server_name": "Atlassian Bitbucket Integration",
+    "rank_by_usage": 234,
+    "usage_count": "185",
+    "original_file": "../crawler/smithery/@aashari_mcp-server-atlassian-bitbucket.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@aashari/mcp-server-atlassian-bitbucket/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAiYXRsYXNzaWFuQXBpVG9rZW4iOiAiIiwgImF0bGFzc2lhblNpdGVOYW1lIjogIiIsICJhdGxhc3NpYW5Vc2VyRW1haWwiOiAiIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list_workspaces",
+          "description": "List Bitbucket workspaces accessible to the authenticated user, with optional pagination.\n\n        PURPOSE: Discover available workspaces and retrieve their slugs, names, and basic metadata. Essential for finding the correct 'workspaceSlug' needed as input for repository-related tools (list_repositories, get_repository, list_pull_requests, get_pull_request).\n\n        WHEN TO USE:\n        - To find the 'workspaceSlug' for a known workspace name.\n        - To explore all workspaces you have access to.\n        - To get a high-level overview before diving into specific repositories.\n        - When you don't know the exact slug required by other tools.\n\n        WHEN NOT TO USE:\n        - When you already have the 'workspaceSlug'.\n        - When you need detailed information about a *single* workspace (use 'get_workspace').\n        - When you need repository or pull request information (use repository/pull_request tools with a known 'workspaceSlug').\n\n        RETURNS: Formatted list of workspace memberships, including workspace name, slug, UUID, your permission level, and access dates. Includes pagination details if applicable.\n\n        EXAMPLES:\n        - List all accessible workspaces: {}\n        - Paginate results: { limit: 10, cursor: \"some-cursor-value\" }\n\n        ERRORS:\n        - Authentication failures: Check Bitbucket credentials.\n        - No workspaces found: You may not have access to any workspaces.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Controls the response size. Defaults to 25 if omitted."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Obtained from previous response when more results are available."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_workspace",
+          "description": "Get detailed information about a specific Bitbucket workspace using its slug.\n\n        PURPOSE: Retrieves comprehensive metadata for a *known* workspace, including UUID, name, type, creation date, and links to related resources like repositories and projects.\n\n        WHEN TO USE:\n        - When you need full details about a *specific* workspace and you already know its 'workspaceSlug'.\n        - After using 'list_workspaces' to identify the target workspace slug.\n        - To get quick links to a workspace's repositories, projects, or members page.\n\n        WHEN NOT TO USE:\n        - When you don't know the workspace slug (use 'list_workspaces' first).\n        - When you only need a list of workspaces (use 'list_workspaces').\n        - When you need information about repositories *within* the workspace (use repository tools).\n\n        RETURNS: Detailed workspace information including slug, name, UUID, type, creation date, and links. Fetches all available details by default.\n\n        EXAMPLES:\n        - Get details for a workspace: { workspaceSlug: \"my-dev-team\" }\n\n        ERRORS:\n        - Workspace not found: Verify the 'workspaceSlug' is correct and exists.\n        - Permission errors: Ensure you have access to view the specified workspace.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug to retrieve detailed information for. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              }
+            },
+            "required": [
+              "workspaceSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_repositories",
+          "description": "List repositories within a specific Bitbucket workspace, with optional filtering and pagination. Requires 'workspaceSlug'.\n\n        PURPOSE: Discover repositories within a given workspace and retrieve their slugs, names, owners, and basic metadata. Essential for finding the 'repoSlug' needed for repository or pull request details tools.\n\n        WHEN TO USE:\n        - To find the 'repoSlug' for a known repository name within a specific workspace.\n        - To explore all repositories within a known workspace ('workspaceSlug' is required).\n        - To filter repositories based on name ('query'), your role ('role'), or sort them ('sort').\n        - Before using 'get_repository' or pull request tools if the 'repoSlug' is unknown.\n\n        WHEN NOT TO USE:\n        - When you don't know the 'workspaceSlug' (use 'list_workspaces' first).\n        - When you already have the 'repoSlug' and need full details (use 'get_repository').\n        - When you need pull request information (use pull request tools).\n\n        RETURNS: Formatted list of repositories including name, full name, owner, description, privacy status, dates, and URL. Includes pagination details if applicable.\n\n        EXAMPLES:\n        - List repositories in a workspace: { workspaceSlug: \"my-team\" }\n        - Filter by name fragment: { workspaceSlug: \"my-team\", query: \"backend-api\" }\n        - Filter by your role: { workspaceSlug: \"my-team\", role: \"contributor\" }\n        - Sort by last update (descending): { workspaceSlug: \"my-team\", sort: \"-updated_on\" }\n        - Paginate results: { workspaceSlug: \"my-team\", limit: 10, cursor: \"next-page-token\" }\n\n        ERRORS:\n        - Workspace not found: Verify the 'workspaceSlug' is correct.\n        - Authentication failures: Check Bitbucket credentials.\n        - No repositories found: Workspace might be empty, filters too restrictive, or permissions lacking.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repositories. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "query": {
+                "type": "string",
+                "description": "Query string to filter repositories by name or other properties (text search). Example: \"api\" for repositories with \"api\" in the name/description. If omitted, returns all repositories."
+              },
+              "sort": {
+                "type": "string",
+                "description": "Field to sort results by. Common values: \"name\", \"created_on\", \"updated_on\". Prefix with \"-\" for descending order. Example: \"-updated_on\" for most recently updated first."
+              },
+              "role": {
+                "type": "string",
+                "description": "Filter repositories by the authenticated user's role. Common values: \"owner\", \"admin\", \"contributor\", \"member\". If omitted, returns repositories of all roles."
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Controls the response size. Defaults to 25 if omitted."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Obtained from previous response when more results are available."
+              }
+            },
+            "required": [
+              "workspaceSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_repository",
+          "description": "Get detailed information about a specific Bitbucket repository using its workspace and repository slugs. Requires 'workspaceSlug' and 'repoSlug'.\n\n        PURPOSE: Retrieves comprehensive metadata for a *known* repository, including UUID, owner, description, language, size, creation/update dates, and links.\n\n        WHEN TO USE:\n        - When you need full details about a *specific* repository and you know its 'workspaceSlug' and 'repoSlug'.\n        - After using 'list_repositories' to identify the target repository slugs.\n        - To get repository metadata before analyzing its pull requests or content.\n\n        WHEN NOT TO USE:\n        - When you don't know the 'workspaceSlug' or 'repoSlug' (use 'list_workspaces' and/or 'list_repositories' first).\n        - When you only need a list of repositories (use 'list_repositories').\n        - When you need pull request information (use pull request tools).\n\n        RETURNS: Detailed repository information including name, full name, UUID, description, language, size, owner, dates, and links. Fetches all available details by default.\n\n        EXAMPLES:\n        - Get details for a repository: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\" }\n\n        ERRORS:\n        - Repository not found: Verify the 'workspaceSlug' and 'repoSlug' are correct and the repository exists.\n        - Permission errors: Ensure you have access to view the specified repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug to retrieve. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_pull_requests",
+          "description": "List pull requests for a specific Bitbucket repository, with optional filtering by state or query text. Requires 'workspaceSlug' and 'repoSlug'.\n\n        PURPOSE: Discover pull requests within a given repository and retrieve their IDs, titles, states, authors, and branches. Essential for finding the 'prId' needed for the 'get_pull_request' tool.\n\n        WHEN TO USE:\n        - To find open, merged, declined, or superseded pull requests within a specific repository.\n        - To get a list of recent PR activity for a repository.\n        - To search for PRs containing specific text in their title or description ('query' parameter).\n        - To obtain 'prId' values for use with 'get_pull_request'.\n        - Requires known 'workspaceSlug' and 'repoSlug'.\n\n        WHEN NOT TO USE:\n        - When you don't know the 'workspaceSlug' or 'repoSlug' (use workspace/repository listing tools first).\n        - When you already have the 'prId' and need full details (use 'get_pull_request').\n        - When you need repository information (use repository tools).\n\n        RETURNS: Formatted list of pull requests including ID, title, state, author, source/destination branches, a snippet of the description, and URL. Includes pagination details if applicable.\n\n        EXAMPLES:\n        - List open PRs: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", state: \"OPEN\" }\n        - List merged PRs: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", state: \"MERGED\" }\n        - Search PR titles/descriptions: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", query: \"bugfix\" }\n        - Paginate results: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", limit: 10, cursor: \"next-page-token\" }\n\n        ERRORS:\n        - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n        - Permission errors: Ensure access to the repository's pull requests.\n        - Invalid state: Ensure 'state' is one of OPEN, MERGED, DECLINED, SUPERSEDED.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug containing the pull requests. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "OPEN",
+                  "MERGED",
+                  "DECLINED",
+                  "SUPERSEDED"
+                ],
+                "description": "Filter pull requests by state. Options: \"OPEN\" (active PRs), \"MERGED\" (completed PRs), \"DECLINED\" (rejected PRs), or \"SUPERSEDED\" (replaced PRs). If omitted, defaults to showing all states."
+              },
+              "query": {
+                "type": "string",
+                "description": "Filter pull requests by title, description, or author (text search). Uses Bitbucket query syntax."
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Controls the response size. Defaults to 25 if omitted."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Obtained from previous response when more results are available."
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pull_request",
+          "description": "Get detailed information about a specific Bitbucket pull request using its workspace slug, repository slug, and pull request ID. Requires 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        PURPOSE: Retrieves comprehensive details for a *known* pull request, including its full description, state, author, reviewers, source/destination branches, and links to related resources like commits and diffs.\n\n        WHEN TO USE:\n        - When you need the full context, description, or reviewer list for a *specific* pull request.\n        - After using 'list_pull_requests' to identify the target 'prId'.\n        - To get links to view the PR diff, commits, or comments in the browser.\n        - Requires known 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        WHEN NOT TO USE:\n        - When you don't know the 'prId' (use 'list_pull_requests' first).\n        - When you only need a list of pull requests (use 'list_pull_requests').\n        - When you need repository information (use repository tools).\n\n        RETURNS: Detailed pull request information including title, full description, state, author, reviewers, branches, and links. Fetches all available details by default.\n\n        EXAMPLES:\n        - Get details for a specific PR: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\" }\n\n        ERRORS:\n        - Pull Request not found: Verify 'workspaceSlug', 'repoSlug', and 'prId' are correct.\n        - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n        - Permission errors: Ensure access to view the specified pull request.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug containing the pull request. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "prId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Numeric ID of the pull request to retrieve as a string. Must be a valid pull request ID in the specified repository. Example: \"42\""
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug",
+              "prId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_pr_comments",
+          "description": "List comments on a specific Bitbucket pull request using its workspace slug, repository slug, and pull request ID. Requires 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        PURPOSE: View all review feedback, discussions, and task comments on a pull request to understand code review context without accessing the web UI.\n\n        WHEN TO USE:\n        - To see what reviewers have said about a pull request.\n        - To find inline code comments and their context (file, line number).\n        - After identifying a PR of interest via 'list_pull_requests'.\n        - When you need to understand review history, discussions, and decisions.\n        - Requires known 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        WHEN NOT TO USE:\n        - When you don't know the pull request ID (use 'list_pull_requests' first).\n        - When you need the PR's metadata but not comments (use 'get_pull_request').\n        - When you need to post new comments (not supported).\n\n        RETURNS: Formatted list of comments with author, date, content, and for inline comments: the file path and line numbers. General and inline comments are included.\n\n        EXAMPLES:\n        - List all comments on a PR: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\" }\n        - Paginate results: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\", limit: 25, cursor: \"next-page-token\" }\n\n        ERRORS:\n        - Pull Request not found: Verify 'workspaceSlug', 'repoSlug', and 'prId' are correct.\n        - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n        - Permission errors: Ensure access to view the specified pull request comments.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug containing the pull request. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "prId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Numeric ID of the pull request to retrieve comments from as a string. Must be a valid pull request ID in the specified repository. Example: \"42\""
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Controls the response size. Defaults to 25 if omitted."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Obtained from previous response when more results are available."
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug",
+              "prId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_pr_comment",
+          "description": "Add a comment to a specific Bitbucket pull request. Requires 'workspaceSlug', 'repoSlug', 'prId', and 'content'.\n\n        PURPOSE: Create comments on a pull request to provide feedback, ask questions, or communicate with other reviewers/developers. Supports both general PR comments and inline code comments.\n\n        WHEN TO USE:\n        - To provide feedback on a specific pull request.\n        - To add inline comments on specific lines of code.\n        - To respond to review feedback or discussions.\n        - When you need to add comments programmatically through the API.\n        - Requires known 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        WHEN NOT TO USE:\n        - When you don't know the pull request ID (use 'list_pull_requests' first).\n        - When you need to read existing comments (use 'list_pr_comments').\n        - When you need to modify or delete existing comments (not supported).\n\n        RETURNS: Confirmation message indicating the comment was added successfully.\n\n        EXAMPLES:\n        - Add a general comment: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\", content: \"This looks good! Ready to merge.\" }\n        - Add an inline code comment: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\", content: \"Consider using a constant here.\", inline: { path: \"src/main.js\", line: 42 } }\n\n        ERRORS:\n        - Pull Request not found: Verify 'workspaceSlug', 'repoSlug', and 'prId' are correct.\n        - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n        - Permission errors: Ensure access to comment on the specified pull request.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug containing the pull request. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "prId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Numeric ID of the pull request to add a comment to as a string. Must be a valid pull request ID in the specified repository. Example: \"42\""
+              },
+              "content": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The content of the comment to add to the pull request. Can include markdown formatting."
+              },
+              "inline": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The file path to add the comment to."
+                  },
+                  "line": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "description": "The line number to add the comment to."
+                  }
+                },
+                "required": [
+                  "path",
+                  "line"
+                ],
+                "additionalProperties": false,
+                "description": "Optional inline location for the comment. If provided, this will create a comment on a specific line in a file."
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug",
+              "prId",
+              "content"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pull_requests_create",
+          "description": "Create a new pull request in a Bitbucket repository.\n\n    PURPOSE: Create a new pull request from one branch to another within a repository.\n\n    WHEN TO USE:\n    - When you need to initiate a code review for a completed feature or bug fix.\n    - When you want to merge changes from a feature branch into a main branch.\n    - When you've completed work in your branch and want to propose the changes.\n\n    RETURNS: Formatted details of the newly created pull request including ID, title, source/destination branches, and URL.\n\n    EXAMPLES:\n    - Create a basic PR: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", title: \"Add user authentication\", sourceBranch: \"feature/auth\" }\n    - Create PR with description: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", title: \"Fix login bug\", sourceBranch: \"bugfix/login\", description: \"This fixes the login issue #123\" }\n    - Close source branch after merge: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", title: \"Update docs\", sourceBranch: \"docs/update\", destinationBranch: \"develop\", closeSourceBranch: true }\n\n    ERRORS:\n    - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n    - Branch not found: Verify the source and destination branches exist.\n    - Permission errors: Ensure you have permission to create pull requests in the repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug to create the pull request in. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Title for the pull request. Example: \"Add new feature\""
+              },
+              "sourceBranch": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Source branch name (the branch containing your changes). Example: \"feature/new-login\""
+              },
+              "destinationBranch": {
+                "type": "string",
+                "description": "Destination branch name (the branch you want to merge into, defaults to main). Example: \"develop\""
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description for the pull request."
+              },
+              "closeSourceBranch": {
+                "type": "boolean",
+                "description": "Whether to close the source branch after the pull request is merged. Default: false"
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug",
+              "title",
+              "sourceBranch"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search Bitbucket content across repositories, pull requests, commits, and code.\n\n        PURPOSE: Provides a unified search interface for Bitbucket workspaces, searching across repository names/descriptions, pull request titles/descriptions, commit messages, and code content to help locate resources.\n\n        WHEN TO USE:\n        - When you need to find repositories containing specific text in their name or description.\n        - When you need to find pull requests containing specific text in their title or description.\n        - When you need to find commits containing specific text in their message.\n        - When you need to search for specific code patterns or text within repository files.\n        - When you want to search across multiple types of Bitbucket content in a single operation.\n        - When you need to quickly locate resources within a workspace.\n\n        WHEN NOT TO USE:\n        - When you already know the exact repository and need its details (use 'get_repository' instead).\n        - When you already know the exact pull request and need its details (use 'get_pull_request' instead).\n        - When you need to list all repositories or pull requests without filtering (use respective list tools).\n\n        RETURNS: Formatted search results including:\n        - Repository results with name, description, and update information\n        - Pull request results with title, state, and branch information\n        - Commit results with hash, author, date, and message\n        - Code search results with file path, line numbers, and matching snippets\n        - Summary information and links to relevant resources\n        \n        Results can be paginated using the 'limit' and 'cursor' parameters.\n\n        EXAMPLES:\n        - Search repositories in a workspace: { workspaceSlug: \"my-team\", query: \"api\", scope: \"repositories\" }\n        - Search pull requests in a repository: { workspaceSlug: \"my-team\", repoSlug: \"backend\", query: \"fix\", scope: \"pullrequests\" }\n        - Search commits in a repository: { workspaceSlug: \"my-team\", repoSlug: \"backend\", query: \"update\", scope: \"commits\" }\n        - Search code in a workspace: { workspaceSlug: \"my-team\", query: \"function getUser\", scope: \"code\" }\n        - Search code in a specific repo: { workspaceSlug: \"my-team\", repoSlug: \"backend\", query: \"class User\", scope: \"code\" }\n        - Search both repositories and pull requests: { workspaceSlug: \"my-team\", repoSlug: \"backend\", query: \"feature\", scope: \"all\" }\n        \n        LIMITATIONS:\n        - Pull request search requires both workspace and repository slugs\n        - Commit search requires both workspace and repository slugs\n        - The repository and pull request search is limited to text matching in metadata, not semantic search\n        - Code search results are presented with line context but may not show the full file\n        - Pagination mechanisms differ between metadata search (cursor-based) and code search (page-based)\n\n        ERRORS:\n        - Missing workspace slug: The workspaceSlug parameter is required.\n        - Missing repository slug: The repoSlug parameter is required when scope is \"pullrequests\" or \"commits\".\n        - Missing query for code search: The query parameter is required when scope is \"code\".\n        - Repository not found: When searching pull requests or commits with an invalid repoSlug.\n        - Authentication failures: Check Bitbucket credentials.\n        - No results: Try broadening search criteria or different search terms.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the content to search. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "description": "Repository slug to search within. Required for pull requests search. Optional for code search (limits search to the specified repo). Example: \"backend-api\""
+              },
+              "query": {
+                "type": "string",
+                "description": "Search query to filter results by name, description, or code content. Required for code search. Use this to find specific content matching certain terms."
+              },
+              "scope": {
+                "type": "string",
+                "enum": [
+                  "repositories",
+                  "pullrequests",
+                  "commits",
+                  "code",
+                  "all"
+                ],
+                "description": "Scope of the search. Options include: \"repositories\" (search only repositories), \"pullrequests\" (search only pull requests), \"commits\" (search only commits), \"code\" (search file content), or \"all\" (search both repositories and pull requests). Defaults to \"all\" if not specified."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. For repositories and pull requests, this is a cursor string. For code search, this is a page number. Use this to navigate through large result sets."
+              }
+            },
+            "required": [
+              "workspaceSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 10,
+      "tool_names": [
+        "list_workspaces",
+        "get_workspace",
+        "list_repositories",
+        "get_repository",
+        "list_pull_requests",
+        "get_pull_request",
+        "list_pr_comments",
+        "add_pr_comment",
+        "pull_requests_create",
+        "search"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 233,
+      "name": "Atlassian Bitbucket Integration",
+      "author": "@aashari/mcp-server-atlassian-bitbucket",
+      "overview": "Access and manage your Bitbucket repositories, pull requests, and commits directly from AI assistants. Enhance your workflow by integrating Bitbucket data seamlessly into your AI interactions. Utilize a customizable server to connect your AI systems with Atlassian Bitbucket securely and efficiently.",
+      "repository_url": "https://github.com/aashari/mcp-server-atlassian-bitbucket",
+      "homepage": "https://smithery.ai/server/@aashari/mcp-server-atlassian-bitbucket",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "185",
+      "success_rate": "96.82%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@aashari_mcp-server-atlassian-bitbucket.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "list_workspaces",
+          "description": "List Bitbucket workspaces accessible to the authenticated user, with optional pagination.\n\n        PURPOSE: Discover available workspaces and retrieve their slugs, names, and basic metadata. Essential for finding the correct 'workspaceSlug' needed as input for repository-related tools (list_repositories, get_repository, list_pull_requests, get_pull_request).\n\n        WHEN TO USE:\n        - To find the 'workspaceSlug' for a known workspace name.\n        - To explore all workspaces you have access to.\n        - To get a high-level overview before diving into specific repositories.\n        - When you don't know the exact slug required by other tools.\n\n        WHEN NOT TO USE:\n        - When you already have the 'workspaceSlug'.\n        - When you need detailed information about a *single* workspace (use 'get_workspace').\n        - When you need repository or pull request information (use repository/pull_request tools with a known 'workspaceSlug').\n\n        RETURNS: Formatted list of workspace memberships, including workspace name, slug, UUID, your permission level, and access dates. Includes pagination details if applicable.\n\n        EXAMPLES:\n        - List all accessible workspaces: {}\n        - Paginate results: { limit: 10, cursor: \"some-cursor-value\" }\n\n        ERRORS:\n        - Authentication failures: Check Bitbucket credentials.\n        - No workspaces found: You may not have access to any workspaces.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Controls the response size. Defaults to 25 if omitted."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Obtained from previous response when more results are available."
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_workspace",
+          "description": "Get detailed information about a specific Bitbucket workspace using its slug.\n\n        PURPOSE: Retrieves comprehensive metadata for a *known* workspace, including UUID, name, type, creation date, and links to related resources like repositories and projects.\n\n        WHEN TO USE:\n        - When you need full details about a *specific* workspace and you already know its 'workspaceSlug'.\n        - After using 'list_workspaces' to identify the target workspace slug.\n        - To get quick links to a workspace's repositories, projects, or members page.\n\n        WHEN NOT TO USE:\n        - When you don't know the workspace slug (use 'list_workspaces' first).\n        - When you only need a list of workspaces (use 'list_workspaces').\n        - When you need information about repositories *within* the workspace (use repository tools).\n\n        RETURNS: Detailed workspace information including slug, name, UUID, type, creation date, and links. Fetches all available details by default.\n\n        EXAMPLES:\n        - Get details for a workspace: { workspaceSlug: \"my-dev-team\" }\n\n        ERRORS:\n        - Workspace not found: Verify the 'workspaceSlug' is correct and exists.\n        - Permission errors: Ensure you have access to view the specified workspace.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug to retrieve detailed information for. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              }
+            },
+            "required": [
+              "workspaceSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_repositories",
+          "description": "List repositories within a specific Bitbucket workspace, with optional filtering and pagination. Requires 'workspaceSlug'.\n\n        PURPOSE: Discover repositories within a given workspace and retrieve their slugs, names, owners, and basic metadata. Essential for finding the 'repoSlug' needed for repository or pull request details tools.\n\n        WHEN TO USE:\n        - To find the 'repoSlug' for a known repository name within a specific workspace.\n        - To explore all repositories within a known workspace ('workspaceSlug' is required).\n        - To filter repositories based on name ('query'), your role ('role'), or sort them ('sort').\n        - Before using 'get_repository' or pull request tools if the 'repoSlug' is unknown.\n\n        WHEN NOT TO USE:\n        - When you don't know the 'workspaceSlug' (use 'list_workspaces' first).\n        - When you already have the 'repoSlug' and need full details (use 'get_repository').\n        - When you need pull request information (use pull request tools).\n\n        RETURNS: Formatted list of repositories including name, full name, owner, description, privacy status, dates, and URL. Includes pagination details if applicable.\n\n        EXAMPLES:\n        - List repositories in a workspace: { workspaceSlug: \"my-team\" }\n        - Filter by name fragment: { workspaceSlug: \"my-team\", query: \"backend-api\" }\n        - Filter by your role: { workspaceSlug: \"my-team\", role: \"contributor\" }\n        - Sort by last update (descending): { workspaceSlug: \"my-team\", sort: \"-updated_on\" }\n        - Paginate results: { workspaceSlug: \"my-team\", limit: 10, cursor: \"next-page-token\" }\n\n        ERRORS:\n        - Workspace not found: Verify the 'workspaceSlug' is correct.\n        - Authentication failures: Check Bitbucket credentials.\n        - No repositories found: Workspace might be empty, filters too restrictive, or permissions lacking.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repositories. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "query": {
+                "type": "string",
+                "description": "Query string to filter repositories by name or other properties (text search). Example: \"api\" for repositories with \"api\" in the name/description. If omitted, returns all repositories."
+              },
+              "sort": {
+                "type": "string",
+                "description": "Field to sort results by. Common values: \"name\", \"created_on\", \"updated_on\". Prefix with \"-\" for descending order. Example: \"-updated_on\" for most recently updated first."
+              },
+              "role": {
+                "type": "string",
+                "description": "Filter repositories by the authenticated user's role. Common values: \"owner\", \"admin\", \"contributor\", \"member\". If omitted, returns repositories of all roles."
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Controls the response size. Defaults to 25 if omitted."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Obtained from previous response when more results are available."
+              }
+            },
+            "required": [
+              "workspaceSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_repository",
+          "description": "Get detailed information about a specific Bitbucket repository using its workspace and repository slugs. Requires 'workspaceSlug' and 'repoSlug'.\n\n        PURPOSE: Retrieves comprehensive metadata for a *known* repository, including UUID, owner, description, language, size, creation/update dates, and links.\n\n        WHEN TO USE:\n        - When you need full details about a *specific* repository and you know its 'workspaceSlug' and 'repoSlug'.\n        - After using 'list_repositories' to identify the target repository slugs.\n        - To get repository metadata before analyzing its pull requests or content.\n\n        WHEN NOT TO USE:\n        - When you don't know the 'workspaceSlug' or 'repoSlug' (use 'list_workspaces' and/or 'list_repositories' first).\n        - When you only need a list of repositories (use 'list_repositories').\n        - When you need pull request information (use pull request tools).\n\n        RETURNS: Detailed repository information including name, full name, UUID, description, language, size, owner, dates, and links. Fetches all available details by default.\n\n        EXAMPLES:\n        - Get details for a repository: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\" }\n\n        ERRORS:\n        - Repository not found: Verify the 'workspaceSlug' and 'repoSlug' are correct and the repository exists.\n        - Permission errors: Ensure you have access to view the specified repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug to retrieve. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_pull_requests",
+          "description": "List pull requests for a specific Bitbucket repository, with optional filtering by state or query text. Requires 'workspaceSlug' and 'repoSlug'.\n\n        PURPOSE: Discover pull requests within a given repository and retrieve their IDs, titles, states, authors, and branches. Essential for finding the 'prId' needed for the 'get_pull_request' tool.\n\n        WHEN TO USE:\n        - To find open, merged, declined, or superseded pull requests within a specific repository.\n        - To get a list of recent PR activity for a repository.\n        - To search for PRs containing specific text in their title or description ('query' parameter).\n        - To obtain 'prId' values for use with 'get_pull_request'.\n        - Requires known 'workspaceSlug' and 'repoSlug'.\n\n        WHEN NOT TO USE:\n        - When you don't know the 'workspaceSlug' or 'repoSlug' (use workspace/repository listing tools first).\n        - When you already have the 'prId' and need full details (use 'get_pull_request').\n        - When you need repository information (use repository tools).\n\n        RETURNS: Formatted list of pull requests including ID, title, state, author, source/destination branches, a snippet of the description, and URL. Includes pagination details if applicable.\n\n        EXAMPLES:\n        - List open PRs: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", state: \"OPEN\" }\n        - List merged PRs: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", state: \"MERGED\" }\n        - Search PR titles/descriptions: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", query: \"bugfix\" }\n        - Paginate results: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", limit: 10, cursor: \"next-page-token\" }\n\n        ERRORS:\n        - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n        - Permission errors: Ensure access to the repository's pull requests.\n        - Invalid state: Ensure 'state' is one of OPEN, MERGED, DECLINED, SUPERSEDED.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug containing the pull requests. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "OPEN",
+                  "MERGED",
+                  "DECLINED",
+                  "SUPERSEDED"
+                ],
+                "description": "Filter pull requests by state. Options: \"OPEN\" (active PRs), \"MERGED\" (completed PRs), \"DECLINED\" (rejected PRs), or \"SUPERSEDED\" (replaced PRs). If omitted, defaults to showing all states."
+              },
+              "query": {
+                "type": "string",
+                "description": "Filter pull requests by title, description, or author (text search). Uses Bitbucket query syntax."
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Controls the response size. Defaults to 25 if omitted."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Obtained from previous response when more results are available."
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pull_request",
+          "description": "Get detailed information about a specific Bitbucket pull request using its workspace slug, repository slug, and pull request ID. Requires 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        PURPOSE: Retrieves comprehensive details for a *known* pull request, including its full description, state, author, reviewers, source/destination branches, and links to related resources like commits and diffs.\n\n        WHEN TO USE:\n        - When you need the full context, description, or reviewer list for a *specific* pull request.\n        - After using 'list_pull_requests' to identify the target 'prId'.\n        - To get links to view the PR diff, commits, or comments in the browser.\n        - Requires known 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        WHEN NOT TO USE:\n        - When you don't know the 'prId' (use 'list_pull_requests' first).\n        - When you only need a list of pull requests (use 'list_pull_requests').\n        - When you need repository information (use repository tools).\n\n        RETURNS: Detailed pull request information including title, full description, state, author, reviewers, branches, and links. Fetches all available details by default.\n\n        EXAMPLES:\n        - Get details for a specific PR: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\" }\n\n        ERRORS:\n        - Pull Request not found: Verify 'workspaceSlug', 'repoSlug', and 'prId' are correct.\n        - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n        - Permission errors: Ensure access to view the specified pull request.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug containing the pull request. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "prId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Numeric ID of the pull request to retrieve as a string. Must be a valid pull request ID in the specified repository. Example: \"42\""
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug",
+              "prId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_pr_comments",
+          "description": "List comments on a specific Bitbucket pull request using its workspace slug, repository slug, and pull request ID. Requires 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        PURPOSE: View all review feedback, discussions, and task comments on a pull request to understand code review context without accessing the web UI.\n\n        WHEN TO USE:\n        - To see what reviewers have said about a pull request.\n        - To find inline code comments and their context (file, line number).\n        - After identifying a PR of interest via 'list_pull_requests'.\n        - When you need to understand review history, discussions, and decisions.\n        - Requires known 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        WHEN NOT TO USE:\n        - When you don't know the pull request ID (use 'list_pull_requests' first).\n        - When you need the PR's metadata but not comments (use 'get_pull_request').\n        - When you need to post new comments (not supported).\n\n        RETURNS: Formatted list of comments with author, date, content, and for inline comments: the file path and line numbers. General and inline comments are included.\n\n        EXAMPLES:\n        - List all comments on a PR: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\" }\n        - Paginate results: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\", limit: 25, cursor: \"next-page-token\" }\n\n        ERRORS:\n        - Pull Request not found: Verify 'workspaceSlug', 'repoSlug', and 'prId' are correct.\n        - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n        - Permission errors: Ensure access to view the specified pull request comments.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug containing the pull request. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "prId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Numeric ID of the pull request to retrieve comments from as a string. Must be a valid pull request ID in the specified repository. Example: \"42\""
+              },
+              "limit": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Controls the response size. Defaults to 25 if omitted."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. Obtained from previous response when more results are available."
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug",
+              "prId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "add_pr_comment",
+          "description": "Add a comment to a specific Bitbucket pull request. Requires 'workspaceSlug', 'repoSlug', 'prId', and 'content'.\n\n        PURPOSE: Create comments on a pull request to provide feedback, ask questions, or communicate with other reviewers/developers. Supports both general PR comments and inline code comments.\n\n        WHEN TO USE:\n        - To provide feedback on a specific pull request.\n        - To add inline comments on specific lines of code.\n        - To respond to review feedback or discussions.\n        - When you need to add comments programmatically through the API.\n        - Requires known 'workspaceSlug', 'repoSlug', and 'prId'.\n\n        WHEN NOT TO USE:\n        - When you don't know the pull request ID (use 'list_pull_requests' first).\n        - When you need to read existing comments (use 'list_pr_comments').\n        - When you need to modify or delete existing comments (not supported).\n\n        RETURNS: Confirmation message indicating the comment was added successfully.\n\n        EXAMPLES:\n        - Add a general comment: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\", content: \"This looks good! Ready to merge.\" }\n        - Add an inline code comment: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", prId: \"42\", content: \"Consider using a constant here.\", inline: { path: \"src/main.js\", line: 42 } }\n\n        ERRORS:\n        - Pull Request not found: Verify 'workspaceSlug', 'repoSlug', and 'prId' are correct.\n        - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n        - Permission errors: Ensure access to comment on the specified pull request.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug containing the pull request. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "prId": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Numeric ID of the pull request to add a comment to as a string. Must be a valid pull request ID in the specified repository. Example: \"42\""
+              },
+              "content": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The content of the comment to add to the pull request. Can include markdown formatting."
+              },
+              "inline": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "The file path to add the comment to."
+                  },
+                  "line": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "description": "The line number to add the comment to."
+                  }
+                },
+                "required": [
+                  "path",
+                  "line"
+                ],
+                "additionalProperties": false,
+                "description": "Optional inline location for the comment. If provided, this will create a comment on a specific line in a file."
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug",
+              "prId",
+              "content"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pull_requests_create",
+          "description": "Create a new pull request in a Bitbucket repository.\n\n    PURPOSE: Create a new pull request from one branch to another within a repository.\n\n    WHEN TO USE:\n    - When you need to initiate a code review for a completed feature or bug fix.\n    - When you want to merge changes from a feature branch into a main branch.\n    - When you've completed work in your branch and want to propose the changes.\n\n    RETURNS: Formatted details of the newly created pull request including ID, title, source/destination branches, and URL.\n\n    EXAMPLES:\n    - Create a basic PR: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", title: \"Add user authentication\", sourceBranch: \"feature/auth\" }\n    - Create PR with description: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", title: \"Fix login bug\", sourceBranch: \"bugfix/login\", description: \"This fixes the login issue #123\" }\n    - Close source branch after merge: { workspaceSlug: \"my-team\", repoSlug: \"backend-api\", title: \"Update docs\", sourceBranch: \"docs/update\", destinationBranch: \"develop\", closeSourceBranch: true }\n\n    ERRORS:\n    - Repository not found: Verify 'workspaceSlug' and 'repoSlug'.\n    - Branch not found: Verify the source and destination branches exist.\n    - Permission errors: Ensure you have permission to create pull requests in the repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the repository. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Repository slug to create the pull request in. This must be a valid repository in the specified workspace. Example: \"project-api\""
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Title for the pull request. Example: \"Add new feature\""
+              },
+              "sourceBranch": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Source branch name (the branch containing your changes). Example: \"feature/new-login\""
+              },
+              "destinationBranch": {
+                "type": "string",
+                "description": "Destination branch name (the branch you want to merge into, defaults to main). Example: \"develop\""
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description for the pull request."
+              },
+              "closeSourceBranch": {
+                "type": "boolean",
+                "description": "Whether to close the source branch after the pull request is merged. Default: false"
+              }
+            },
+            "required": [
+              "workspaceSlug",
+              "repoSlug",
+              "title",
+              "sourceBranch"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search",
+          "description": "Search Bitbucket content across repositories, pull requests, commits, and code.\n\n        PURPOSE: Provides a unified search interface for Bitbucket workspaces, searching across repository names/descriptions, pull request titles/descriptions, commit messages, and code content to help locate resources.\n\n        WHEN TO USE:\n        - When you need to find repositories containing specific text in their name or description.\n        - When you need to find pull requests containing specific text in their title or description.\n        - When you need to find commits containing specific text in their message.\n        - When you need to search for specific code patterns or text within repository files.\n        - When you want to search across multiple types of Bitbucket content in a single operation.\n        - When you need to quickly locate resources within a workspace.\n\n        WHEN NOT TO USE:\n        - When you already know the exact repository and need its details (use 'get_repository' instead).\n        - When you already know the exact pull request and need its details (use 'get_pull_request' instead).\n        - When you need to list all repositories or pull requests without filtering (use respective list tools).\n\n        RETURNS: Formatted search results including:\n        - Repository results with name, description, and update information\n        - Pull request results with title, state, and branch information\n        - Commit results with hash, author, date, and message\n        - Code search results with file path, line numbers, and matching snippets\n        - Summary information and links to relevant resources\n        \n        Results can be paginated using the 'limit' and 'cursor' parameters.\n\n        EXAMPLES:\n        - Search repositories in a workspace: { workspaceSlug: \"my-team\", query: \"api\", scope: \"repositories\" }\n        - Search pull requests in a repository: { workspaceSlug: \"my-team\", repoSlug: \"backend\", query: \"fix\", scope: \"pullrequests\" }\n        - Search commits in a repository: { workspaceSlug: \"my-team\", repoSlug: \"backend\", query: \"update\", scope: \"commits\" }\n        - Search code in a workspace: { workspaceSlug: \"my-team\", query: \"function getUser\", scope: \"code\" }\n        - Search code in a specific repo: { workspaceSlug: \"my-team\", repoSlug: \"backend\", query: \"class User\", scope: \"code\" }\n        - Search both repositories and pull requests: { workspaceSlug: \"my-team\", repoSlug: \"backend\", query: \"feature\", scope: \"all\" }\n        \n        LIMITATIONS:\n        - Pull request search requires both workspace and repository slugs\n        - Commit search requires both workspace and repository slugs\n        - The repository and pull request search is limited to text matching in metadata, not semantic search\n        - Code search results are presented with line context but may not show the full file\n        - Pagination mechanisms differ between metadata search (cursor-based) and code search (page-based)\n\n        ERRORS:\n        - Missing workspace slug: The workspaceSlug parameter is required.\n        - Missing repository slug: The repoSlug parameter is required when scope is \"pullrequests\" or \"commits\".\n        - Missing query for code search: The query parameter is required when scope is \"code\".\n        - Repository not found: When searching pull requests or commits with an invalid repoSlug.\n        - Authentication failures: Check Bitbucket credentials.\n        - No results: Try broadening search criteria or different search terms.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "workspaceSlug": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Workspace slug containing the content to search. Must be a valid workspace slug from your Bitbucket account. Example: \"myteam\""
+              },
+              "repoSlug": {
+                "type": "string",
+                "description": "Repository slug to search within. Required for pull requests search. Optional for code search (limits search to the specified repo). Example: \"backend-api\""
+              },
+              "query": {
+                "type": "string",
+                "description": "Search query to filter results by name, description, or code content. Required for code search. Use this to find specific content matching certain terms."
+              },
+              "scope": {
+                "type": "string",
+                "enum": [
+                  "repositories",
+                  "pullrequests",
+                  "commits",
+                  "code",
+                  "all"
+                ],
+                "description": "Scope of the search. Options include: \"repositories\" (search only repositories), \"pullrequests\" (search only pull requests), \"commits\" (search only commits), \"code\" (search file content), or \"all\" (search both repositories and pull requests). Defaults to \"all\" if not specified."
+              },
+              "limit": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 100,
+                "description": "Maximum number of items to return (1-100). Use this to control the response size. Useful for pagination or when you only need a few results."
+              },
+              "cursor": {
+                "type": "string",
+                "description": "Pagination cursor for retrieving the next set of results. For repositories and pull requests, this is a cursor string. For code search, this is a page number. Use this to navigate through large result sets."
+              }
+            },
+            "required": [
+              "workspaceSlug"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"atlassianApiToken\": \"\",\n  \"atlassianSiteName\": \"\",\n  \"atlassianUserEmail\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@aashari/mcp-server-atlassian-bitbucket/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"atlassianApiToken\": \"\",\n  \"atlassianSiteName\": \"\",\n  \"atlassianUserEmail\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@aashari/mcp-server-atlassian-bitbucket/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0234.@aashari_mcp-server-atlassian-bitbucket_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 230
+  }
+}

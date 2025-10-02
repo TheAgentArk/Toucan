@@ -1,0 +1,162 @@
+{
+  "labels": {
+    "analysis": "The MCP Server functions as a registry for managing and accessing prompt templates within MLflow. Its core functionality revolves around retrieving and listing prompt templates that can be used in Claude Desktop for task automation and workflow management. The tools provided focus on prompt retrieval and listing, suggesting a specialization in managing and utilizing structured prompts for AI workflows.",
+    "reasoning": "The primary label \"AI/ML Tools\" is chosen because the server is directly integrated with MLflow and focuses on managing and retrieving prompt templates, which are commonly used in machine learning and AI workflows. The secondary label \"Development Tools\" is included because the server facilitates task automation and workflow management, which are relevant to development processes. No custom label is necessary as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "AI/ML Tools",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2254,
+    "server_name": "MLflow Prompt Registry Server",
+    "rank_by_usage": 2255,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@B-Step62_mcp-server-mlflow.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@B-Step62/mcp-server-mlflow/mcp?config=eyJtbGZsb3dUcmFja2luZ1VyaSI6ICJodHRwOi8vbG9jYWxob3N0OjUwMDAifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "list-prompts",
+          "description": "List prompts that are stored in MLflow",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cursor": {
+                "type": "string",
+                "description": "Cursor to paginate through prompts"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Filter to search for prompts"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-prompt",
+          "description": "Get a prompt that is stored in MLflow",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the prompt to retrieve, use list-prompts to get a list of prompts"
+              },
+              "arguments": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Arguments with prompt variables to pass to the prompt template, json object, e.g. {\"<name>\":\"<value>\"}"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "list-prompts",
+        "get-prompt"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2254,
+      "name": "MLflow Prompt Registry Server",
+      "author": "@B-Step62/mcp-server-mlflow",
+      "overview": "Access and manage prompt templates seamlessly from MLflow. Load and utilize prompt templates in Claude Desktop for efficient task automation and workflow management.",
+      "repository_url": "https://github.com/B-Step62/mcp-server-mlflow",
+      "homepage": "https://smithery.ai/server/@B-Step62/mcp-server-mlflow",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@B-Step62_mcp-server-mlflow.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "list-prompts",
+          "description": "List prompts that are stored in MLflow",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "cursor": {
+                "type": "string",
+                "description": "Cursor to paginate through prompts"
+              },
+              "filter": {
+                "type": "string",
+                "description": "Filter to search for prompts"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-prompt",
+          "description": "Get a prompt that is stored in MLflow",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the prompt to retrieve, use list-prompts to get a list of prompts"
+              },
+              "arguments": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Arguments with prompt variables to pass to the prompt template, json object, e.g. {\"<name>\":\"<value>\"}"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"mlflowTrackingUri\": \"http://localhost:5000\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@B-Step62/mcp-server-mlflow/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"mlflowTrackingUri\": \"http://localhost:5000\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@B-Step62/mcp-server-mlflow/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "2255.@B-Step62_mcp-server-mlflow_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1941
+  }
+}

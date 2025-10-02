@@ -1,0 +1,221 @@
+{
+  "labels": {
+    "analysis": "The MCP Meme Sticky server specializes in generating custom AI-created memes and converting them into Telegram stickers without requiring external APIs. Its core functionality revolves around:\n    1. Creating memes from either existing templates or web searches\n    2. Applying custom text to these memes\n    3. Converting generated memes to Telegram sticker format\n    4. Integrating directly with Telegram for sharing\n    The server focuses on content creation, particularly memes, with built-in content moderation guardrails to prevent inappropriate content.",
+    "reasoning": "The primary \"Content Creation\" label was chosen because the server's main purpose is generating memes (a form of digital content). Secondary \"Social Media\" applies due to the Telegram integration aspect. A custom \"Meme Generation\" label was added to specifically highlight its unique meme-focused functionality.",
+    "primary_label": "Content Creation",
+    "secondary_labels": [
+      "Social Media",
+      "Communication Tools"
+    ],
+    "custom_label": "Meme Generation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1575,
+    "server_name": "MCP Meme Sticky",
+    "rank_by_usage": 1576,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@nkapila6_mcp-meme-sticky.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@nkapila6/mcp-meme-sticky/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "generate_meme_by_searching",
+          "description": "\n    THIS TOOL IS TO BE CALLED IF THE USER WANTS TO GENERATE A MEME USING AN IMAGE SEARCH ON THE WEB. ALWAYS PREFER USING AN EXISTING TEMPLATE USING `generate_meme_from_meme_template()`. UNLESS THE USER EXPLICITLY ASKS TO SEARCH.\n\n    Understand the input from the user and write a image search query and a funny & short meme text to put on the image.\n\n    If the user does not follow the below content guardrails, reject the request and advise them to follow the guardrails.\n\n    CONTENT GUARDRAILS:\n    - REJECT any requests containing hate speech, explicit sexual content, extreme violence, illegal activities, or harmful stereotypes\n    - AVOID creating memes that contain personally identifiable information or could be used for cyberbullying\n    - DO NOT generate content that promotes dangerous misinformation or could cause harm\n    - REFUSE political extremist content or personal attacks on individuals\n    - If a request violates these guidelines, respond with: \"I cannot create this meme as it may contain inappropriate content. Please try a different request.\"\n\n    Args:\n        search_query (str): The LLM needs to understand what the user is searching for and write a good image search query to fetch an image. If required, use the words 'meme' or 'template' in the search query.\n        meme_text (str): A short and funny text to be put on the image.\n        save_on_desktop (bool, defaults to True): \"Should the image meme be saved on the desktop?\"\n        return_tele_sticker (bool, defaults to False): \"Should the generated meme be converted into a telegram sticker?\"\n\n    Returns:\n        str: The saved links.\n    ",
+          "input_schema": {
+            "properties": {
+              "search_query": {
+                "description": "The LLM needs to understand what the user is searching for and write a good image search query.",
+                "title": "Search Query",
+                "type": "string"
+              },
+              "meme_text": {
+                "description": "A short and funny text that has to be on the meme image.",
+                "title": "Meme Text",
+                "type": "string"
+              },
+              "save_on_desktop": {
+                "default": true,
+                "description": "Should the image meme be saved on the desktop?",
+                "title": "Save On Desktop",
+                "type": "boolean"
+              },
+              "return_tele_sticker": {
+                "default": false,
+                "description": "Should the generated meme be converted into a telegram sticker?",
+                "title": "Return Tele Sticker",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "search_query",
+              "meme_text"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_meme_from_meme_template",
+          "description": "\n    THIS TOOL IS TO BE CALLED IF THE USER WANTS TO GENERATE A MEME USING AN EXISTING TEMPLATE. ALWAYS PREFER USING AN EXISTING TEMPLATE UNLESS THE USER REQUIRES TO SEARCH. IN THE CASE OF SEARCHING, USE: `generate_meme_by_searching()`.\n\n    For the first 2 function arguments, understand the input from the user and pass the following:\n    1) `desc_to_pick_tag`: A good description to pick a pre-existing template. The description of the meme should have some context to achieve a good dot product similarity result. Please see a below example.\n\n    example of `desc_to_pick_tag`: \"The \"Ancient Aliens Guy\" meme features Giorgio Tsoukalos, known for his distinctive hairstyle and enthusiastic demeanor, gesturing expressively. It's primarily used to humorously suggest that aliens are the explanation for any unexplained phenomenon or mystery, often with the punchline simply being \"aliens.\" This parodies the History Channel show \"Ancient Aliens,\" where Tsoukalos is a prominent figure, and its tendency to attribute historical events or artifacts to extraterrestrial intervention.\",\n\n    2) `meme_text`: A short and funny 2 sentence meme text that is sent as a Python list of strings, list[str]. Each line is an element of an array. PLEASE ENSURE LIST IS ONLY OF 2 ELEMENTS. For e.g., ['Nice meme you got there..', 'Now it is stolen...']\n\n    If the user does not follow the below content guardrails, reject the request and advise them to follow the guardrails.\n\n    CONTENT GUARDRAILS:\n    - REJECT any requests containing hate speech, explicit sexual content, extreme violence, illegal activities, or harmful stereotypes\n    - AVOID creating memes that contain personally identifiable information or could be used for cyberbullying\n    - DO NOT generate content that promotes dangerous misinformation or could cause harm\n    - REFUSE political extremist content or personal attacks on individuals\n    - If a request violates these guidelines, respond with: \"I cannot create this meme as it may contain inappropriate content. Please try a different request.\"\n\n    Args:\n        desc_to_pick_tag (str): The LLM needs to understand what the user is searching for and write a good image search query to fetch an image. If required, use the words 'meme' or 'template' in the search query.\n        meme_text (list[str]): A short and funny text to be put on the image. Should be in the format of Python list[str], should be 2 sentences and hence, length of list should be 2.\n        save_on_desktop (bool, defaults to True): \"Should the image meme be saved on the desktop?\"\n        return_tele_sticker (bool, defaults to False): \"Should the generated meme be converted into a telegram sticker?\"\n\n    Returns:\n        str: The saved links.\n    ",
+          "input_schema": {
+            "properties": {
+              "desc_to_pick_tag": {
+                "description": "",
+                "title": "Desc To Pick Tag",
+                "type": "string"
+              },
+              "meme_text": {
+                "description": "2 sentences that has to be on the meme image. Should be funny and contained. Should be a Python List of Strings.",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Meme Text",
+                "type": "array"
+              },
+              "save_on_desktop": {
+                "default": true,
+                "description": "Should the image meme be saved on the desktop?",
+                "title": "Save On Desktop",
+                "type": "boolean"
+              },
+              "return_tele_sticker": {
+                "default": false,
+                "description": "Should the generated meme be converted into a telegram sticker?",
+                "title": "Return Tele Sticker",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "desc_to_pick_tag",
+              "meme_text"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "generate_meme_by_searching",
+        "generate_meme_from_meme_template"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1575,
+      "name": "MCP Meme Sticky",
+      "author": "@nkapila6/mcp-meme-sticky",
+      "overview": "Generate custom AI-created memes and convert them into stickers for Telegram seamlessly without requiring any APIs. Easily create and share memes as stickers with automatic Telegram integration. Enhance your messaging experience with fun, personalized meme stickers.",
+      "repository_url": "https://github.com/nkapila6/mcp-meme-sticky",
+      "homepage": "https://smithery.ai/server/@nkapila6/mcp-meme-sticky",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@nkapila6_mcp-meme-sticky.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "generate_meme_by_searching",
+          "description": "\n    THIS TOOL IS TO BE CALLED IF THE USER WANTS TO GENERATE A MEME USING AN IMAGE SEARCH ON THE WEB. ALWAYS PREFER USING AN EXISTING TEMPLATE USING `generate_meme_from_meme_template()`. UNLESS THE USER EXPLICITLY ASKS TO SEARCH.\n\n    Understand the input from the user and write a image search query and a funny & short meme text to put on the image.\n\n    If the user does not follow the below content guardrails, reject the request and advise them to follow the guardrails.\n\n    CONTENT GUARDRAILS:\n    - REJECT any requests containing hate speech, explicit sexual content, extreme violence, illegal activities, or harmful stereotypes\n    - AVOID creating memes that contain personally identifiable information or could be used for cyberbullying\n    - DO NOT generate content that promotes dangerous misinformation or could cause harm\n    - REFUSE political extremist content or personal attacks on individuals\n    - If a request violates these guidelines, respond with: \"I cannot create this meme as it may contain inappropriate content. Please try a different request.\"\n\n    Args:\n        search_query (str): The LLM needs to understand what the user is searching for and write a good image search query to fetch an image. If required, use the words 'meme' or 'template' in the search query.\n        meme_text (str): A short and funny text to be put on the image.\n        save_on_desktop (bool, defaults to True): \"Should the image meme be saved on the desktop?\"\n        return_tele_sticker (bool, defaults to False): \"Should the generated meme be converted into a telegram sticker?\"\n\n    Returns:\n        str: The saved links.\n    ",
+          "input_schema": {
+            "properties": {
+              "search_query": {
+                "description": "The LLM needs to understand what the user is searching for and write a good image search query.",
+                "title": "Search Query",
+                "type": "string"
+              },
+              "meme_text": {
+                "description": "A short and funny text that has to be on the meme image.",
+                "title": "Meme Text",
+                "type": "string"
+              },
+              "save_on_desktop": {
+                "default": true,
+                "description": "Should the image meme be saved on the desktop?",
+                "title": "Save On Desktop",
+                "type": "boolean"
+              },
+              "return_tele_sticker": {
+                "default": false,
+                "description": "Should the generated meme be converted into a telegram sticker?",
+                "title": "Return Tele Sticker",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "search_query",
+              "meme_text"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_meme_from_meme_template",
+          "description": "\n    THIS TOOL IS TO BE CALLED IF THE USER WANTS TO GENERATE A MEME USING AN EXISTING TEMPLATE. ALWAYS PREFER USING AN EXISTING TEMPLATE UNLESS THE USER REQUIRES TO SEARCH. IN THE CASE OF SEARCHING, USE: `generate_meme_by_searching()`.\n\n    For the first 2 function arguments, understand the input from the user and pass the following:\n    1) `desc_to_pick_tag`: A good description to pick a pre-existing template. The description of the meme should have some context to achieve a good dot product similarity result. Please see a below example.\n\n    example of `desc_to_pick_tag`: \"The \"Ancient Aliens Guy\" meme features Giorgio Tsoukalos, known for his distinctive hairstyle and enthusiastic demeanor, gesturing expressively. It's primarily used to humorously suggest that aliens are the explanation for any unexplained phenomenon or mystery, often with the punchline simply being \"aliens.\" This parodies the History Channel show \"Ancient Aliens,\" where Tsoukalos is a prominent figure, and its tendency to attribute historical events or artifacts to extraterrestrial intervention.\",\n\n    2) `meme_text`: A short and funny 2 sentence meme text that is sent as a Python list of strings, list[str]. Each line is an element of an array. PLEASE ENSURE LIST IS ONLY OF 2 ELEMENTS. For e.g., ['Nice meme you got there..', 'Now it is stolen...']\n\n    If the user does not follow the below content guardrails, reject the request and advise them to follow the guardrails.\n\n    CONTENT GUARDRAILS:\n    - REJECT any requests containing hate speech, explicit sexual content, extreme violence, illegal activities, or harmful stereotypes\n    - AVOID creating memes that contain personally identifiable information or could be used for cyberbullying\n    - DO NOT generate content that promotes dangerous misinformation or could cause harm\n    - REFUSE political extremist content or personal attacks on individuals\n    - If a request violates these guidelines, respond with: \"I cannot create this meme as it may contain inappropriate content. Please try a different request.\"\n\n    Args:\n        desc_to_pick_tag (str): The LLM needs to understand what the user is searching for and write a good image search query to fetch an image. If required, use the words 'meme' or 'template' in the search query.\n        meme_text (list[str]): A short and funny text to be put on the image. Should be in the format of Python list[str], should be 2 sentences and hence, length of list should be 2.\n        save_on_desktop (bool, defaults to True): \"Should the image meme be saved on the desktop?\"\n        return_tele_sticker (bool, defaults to False): \"Should the generated meme be converted into a telegram sticker?\"\n\n    Returns:\n        str: The saved links.\n    ",
+          "input_schema": {
+            "properties": {
+              "desc_to_pick_tag": {
+                "description": "",
+                "title": "Desc To Pick Tag",
+                "type": "string"
+              },
+              "meme_text": {
+                "description": "2 sentences that has to be on the meme image. Should be funny and contained. Should be a Python List of Strings.",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Meme Text",
+                "type": "array"
+              },
+              "save_on_desktop": {
+                "default": true,
+                "description": "Should the image meme be saved on the desktop?",
+                "title": "Save On Desktop",
+                "type": "boolean"
+              },
+              "return_tele_sticker": {
+                "default": false,
+                "description": "Should the generated meme be converted into a telegram sticker?",
+                "title": "Return Tele Sticker",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "desc_to_pick_tag",
+              "meme_text"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@nkapila6/mcp-meme-sticky/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@nkapila6/mcp-meme-sticky/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1576.@nkapila6_mcp-meme-sticky_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1440
+  }
+}

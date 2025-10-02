@@ -1,0 +1,88 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"CodeAlive\" primarily focuses on providing AI-powered code search and interaction capabilities based on a user's project's codebase. Its core functionality includes semantic code analysis, enriched context for AI agents, and intelligent code snippets retrieval. The available tools enable searching for code snippets, chatting about code with AI agents, and managing data sources (repositories) that have been indexed for use. The server solves problems related to code comprehension, developer efficiency, and AI-assisted coding by leveraging deep semantic understanding of code repositories.",
+    "reasoning": "The primary label \"Development Tools\" was chosen because the server's core functionality revolves around code analysis, search, and interaction - essential features for developer workflows. The secondary label \"Memory Management\" was selected due to its capabilities for storing and retrieving code-related knowledge. A custom label \"Code-Aware AI\" is included because the server's unique functionality focuses on AI agents' understanding and interaction with code, which is not fully encompassed by other predefined categories. The server also has some overlap with \"Data Analysis & Processing\" due to its semantic analysis capabilities.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Memory Management",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Code-Aware AI",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1918,
+    "server_name": "CodeAlive",
+    "rank_by_usage": 1919,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@CodeAlive-AI_codealive-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@CodeAlive-AI/codealive-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1918,
+      "name": "CodeAlive",
+      "author": "@CodeAlive-AI/codealive-mcp",
+      "overview": "Provide AI clients with enriched context from your project's codebase to enable faster, more intelligent code search and interaction. Enhance agent efficiency by delivering precise code snippets and comprehensive repository understanding. Reduce time and costs by leveraging deep semantic code analysis for improved developer workflows.",
+      "repository_url": "https://github.com/CodeAlive-AI/codealive-mcp",
+      "homepage": "https://smithery.ai/server/@CodeAlive-AI/codealive-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@CodeAlive-AI_codealive-mcp.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "chat_completions",
+          "description": "Streams chat completions from the CodeAlive API for code-aware conversations with knowledge of your codebase. Args:\n        messages: List of message objects with \"role\" and \"content\" fields\n                 Example: [\n                   {\"role\": \"system\", \"content\": \"Analyze the authentication flow\"},\n                   {\"role\": \"user\", \"content\": \"How does the login process work?\"}\n                 ]\n        \n        data_sources: List of data source objects to include in the context\n                     Can include workspace IDs (to chat about all repositories in the workspace)\n                     or specific repository IDs for more focused analysis.",
+          "parameters": []
+        },
+        {
+          "name": "get_data_sources",
+          "description": "Gets all available data sources (repositories and workspaces) for the user's account. A data source is a code repository or workspace that has been indexed by CodeAlive\n    and can be used for code search and chat completions. Args:\n        alive_only: If True (default), returns only data sources in \"Alive\" state ready for use with chat.",
+          "parameters": []
+        },
+        {
+          "name": "search_code",
+          "description": "Search for code snippets across the provided data sources using natural language or code patterns. Args:\n        query: The search query - can be natural language (\"find authentication code\") or code patterns (\"function getUserById\")\n              For best results, be specific and include relevant keywords or function/class names\n              Example: \"implement JWT token validation\"\n              \n        data_source_ids: List of data source IDs to search in (required)\n                        Can be workspace IDs (to search across all repositories in the workspace) \n                        or individual repository IDs for more targeted searches. Example: [\"67f664fd4c2a00698a52bb6f\", \"5e8f9a2c1d3b7e4a6c9d0f8e\"]\n                        \n        mode: Search mode (case-insensitive):\n              - \"auto\": (Default) RECOMMENDED - Intelligently adapts search depth based on query complexity\n              - \"fast\": Quick scan for exact matches, best for simple queries and large codebases\n              - \"fast_deeper\": Balanced search with moderate semantic analysis, good for general use\n              - \"deep\": Use SPARINGLY - Resource-intensive thorough semantic analysis, only for very complex\n                        conceptual queries when other modes fail to yield results\n              Example: \"auto\"\n                \n        include_content: Whether to include the full file content in results (default: true)\n                        Set to false for faster, more concise results when only locations are needed\n                        Example: true\n        \n    Returns:\n        Formatted search results including:\n        - Source repository/workspace name and type\n        - File path\n        - Line numbers\n        - Code snippet showing the matching section\n        - Full file content (if include_content=true)\n        \n    Examples:\n        1.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@CodeAlive-AI/codealive-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "apiKey",
+          "required": true,
+          "description": "CodeAlive API key for authentication"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@CodeAlive-AI/codealive-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1919.@CodeAlive-AI_codealive-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1693
+  }
+}

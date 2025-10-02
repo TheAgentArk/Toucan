@@ -1,0 +1,128 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to automate the extraction of codebase context for Large Language Models (LLMs). Its primary function is to scan project directories, respecting version control configurations (like .gitignore), and format the extracted code in a structured way that enhances LLM context. The available tool enables recursive file reading, binary file exclusion, and chunking capabilities to handle large codebases efficiently. This serves developers and AI researchers by providing a streamlined way to ingest and analyze codebases programmatically.",
+    "reasoning": "The primary label \"Development Tools\" is chosen because the MCP Server's key functionality revolves around codebase analysis, which is a core need for software development workflows. \"Operating System\" is selected as a secondary label due to its interaction with file systems and .gitignore rules. The third is \"API Integration\" because the structured output suggests compatibility with MCP clients for further processing. No custom label is needed, as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Operating System",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2308,
+    "server_name": "Codebase Context Dumper",
+    "rank_by_usage": 2309,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@lex-tools_codebase-context-dumper.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@lex-tools/codebase-context-dumper/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "dump_codebase_context",
+          "description": "Recursively reads text files from a specified directory, respecting .gitignore rules and skipping binary files. Concatenates content with file path headers/footers. Supports chunking the output for large codebases.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "base_path": {
+                "type": "string",
+                "description": "The absolute path to the project directory to scan."
+              },
+              "num_chunks": {
+                "type": "integer",
+                "description": "Optional total number of chunks to divide the output into (default: 1).",
+                "minimum": 1,
+                "default": 1
+              },
+              "chunk_index": {
+                "type": "integer",
+                "description": "Optional 1-based index of the chunk to return (default: 1). Requires num_chunks > 1.",
+                "minimum": 1,
+                "default": 1
+              }
+            },
+            "required": [
+              "base_path"
+            ]
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "dump_codebase_context"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2308,
+      "name": "Codebase Context Dumper",
+      "author": "@lex-tools/codebase-context-dumper",
+      "overview": "Automate the extraction of your codebase context for Large Language Models. This tool scans your project directory, respects .gitignore rules, and formats the output for seamless integration with MCP-compatible clients. Save time and enhance your LLM's context with structured codebase information.",
+      "repository_url": "https://github.com/lex-tools/codebase-context-dumper",
+      "homepage": "https://smithery.ai/server/@lex-tools/codebase-context-dumper",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@lex-tools_codebase-context-dumper.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "dump_codebase_context",
+          "description": "Recursively reads text files from a specified directory, respecting .gitignore rules and skipping binary files. Concatenates content with file path headers/footers. Supports chunking the output for large codebases.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "base_path": {
+                "type": "string",
+                "description": "The absolute path to the project directory to scan."
+              },
+              "num_chunks": {
+                "type": "integer",
+                "description": "Optional total number of chunks to divide the output into (default: 1).",
+                "minimum": 1,
+                "default": 1
+              },
+              "chunk_index": {
+                "type": "integer",
+                "description": "Optional 1-based index of the chunk to return (default: 1). Requires num_chunks > 1.",
+                "minimum": 1,
+                "default": 1
+              }
+            },
+            "required": [
+              "base_path"
+            ]
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@lex-tools/codebase-context-dumper/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@lex-tools/codebase-context-dumper/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2309.@lex-tools_codebase-context-dumper_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1985
+  }
+}

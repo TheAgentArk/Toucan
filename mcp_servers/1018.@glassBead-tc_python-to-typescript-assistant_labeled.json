@@ -1,0 +1,1164 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to facilitate the translation of Python code to TypeScript by providing structured tools and methodologies. Its core functionality revolves around code porting, type analysis, pattern conversion, and validation. The server supports developers with strategic planning, library mapping, and notebook documentation to streamline the migration process. It also offers ephemeral journals for experimental implementations and validation, emphasizing Python 3.9+ modern syntax and features.",
+    "reasoning": "The primary label is **Development Tools** as the server primarily assists in code porting and migration, which falls under developer productivity and code transformation. **Memory Management** is included as a secondary label due to the notebook and journal features for documentation and storage of migration steps. **API Integration** is also relevant for tools that may interact with third-party systems for library mapping or other migration-related operations.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Memory Management",
+      "API Integration"
+    ],
+    "custom_label": "Code Porting",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1017,
+    "server_name": "Python-to-TypeScript Porting",
+    "rank_by_usage": 1018,
+    "usage_count": "2",
+    "original_file": "../crawler/smithery/@glassBead-tc_python-to-typescript-assistant.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@glassBead-tc/python-to-typescript-assistant/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "porting-strategy",
+          "description": "Systematic framework for analyzing and planning Python-to-TypeScript porting projects. Provides strategic analysis, risk assessment, and phased migration planning.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Unique identifier for the porting project"
+              },
+              "projectName": {
+                "type": "string",
+                "description": "Human-readable name of the project being ported"
+              },
+              "stage": {
+                "type": "string",
+                "enum": [
+                  "analysis",
+                  "planning",
+                  "execution",
+                  "validation",
+                  "completion"
+                ],
+                "description": "Current stage of the porting project"
+              },
+              "iteration": {
+                "type": "number",
+                "minimum": 1,
+                "default": 1,
+                "description": "Current iteration of the analysis"
+              },
+              "components": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the component"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the component (file, class, function, etc.)"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "module",
+                        "class",
+                        "function",
+                        "variable",
+                        "import",
+                        "type"
+                      ],
+                      "description": "Type of component"
+                    },
+                    "complexity": {
+                      "type": "string",
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ],
+                      "description": "Complexity level for porting"
+                    },
+                    "dependencies": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "default": [],
+                      "description": "List of dependencies this component has"
+                    },
+                    "challenges": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "default": [],
+                      "description": "Specific challenges expected for this component"
+                    },
+                    "portingApproach": {
+                      "type": "string",
+                      "description": "Recommended approach for porting this component"
+                    },
+                    "estimatedEffort": {
+                      "type": "number",
+                      "minimum": 0,
+                      "description": "Estimated effort in hours"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type",
+                    "complexity",
+                    "portingApproach",
+                    "estimatedEffort"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Components to be ported with their analysis"
+              },
+              "currentPhase": {
+                "type": "number",
+                "minimum": 1,
+                "description": "Current phase number if in execution"
+              },
+              "riskFactors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Additional risk factors to consider"
+              },
+              "constraints": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Project constraints (timeline, resources, etc.)"
+              },
+              "preferences": {
+                "type": "object",
+                "properties": {
+                  "riskTolerance": {
+                    "type": "string",
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high"
+                    ],
+                    "default": "medium"
+                  },
+                  "timelinePreference": {
+                    "type": "string",
+                    "enum": [
+                      "fast",
+                      "balanced",
+                      "safe"
+                    ],
+                    "default": "balanced"
+                  },
+                  "teamExperience": {
+                    "type": "string",
+                    "enum": [
+                      "beginner",
+                      "intermediate",
+                      "expert"
+                    ],
+                    "default": "intermediate"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Project preferences and constraints"
+              }
+            },
+            "required": [
+              "projectId",
+              "projectName",
+              "stage"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Python-to-TypeScript Porting Strategy",
+            "readOnlyHint": false,
+            "destructiveHint": null,
+            "idempotentHint": false,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "type-analysis",
+          "description": "Analyzes Python types and provides TypeScript mappings with migration guidance, runtime considerations, and testing approaches. Optimized for Python 3.9+ syntax including union operators (|) and built-in generics (list[str], dict[str, int]).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pythonType": {
+                "type": "string",
+                "description": "Python type annotation as a string. Supports modern Python 3.9+ syntax: 'str | int', 'list[str]', 'dict[str, int]' as well as legacy 'Union[str, int]', 'List[str]', 'Dict[str, int]'"
+              },
+              "context": {
+                "type": "string",
+                "description": "Additional context about the type usage"
+              }
+            },
+            "required": [
+              "pythonType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Python-to-TypeScript Type Analysis (Python 3.9+ Optimized)",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "library-mapping",
+          "description": "Find TypeScript/JavaScript equivalents for Python libraries with installation commands and migration guidance.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pythonLibrary": {
+                "type": "string",
+                "description": "Name of the Python library to find TypeScript equivalents for"
+              }
+            },
+            "required": [
+              "pythonLibrary"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Python Library to TypeScript Mapping",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "pattern-mapping",
+          "description": "Convert Python language patterns and idioms to TypeScript equivalents with examples and caveats. Emphasizes Python 3.9+ modern patterns including union operators, dict merge operators, and built-in generics.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pattern": {
+                "type": "string",
+                "description": "Python pattern or idiom to convert. Supports Python 3.9+ patterns: 'union operator', 'dict merge', 'built-in generics', 'string prefix/suffix' as well as classic patterns: 'list comprehension', 'context manager', 'multiple assignment'"
+              }
+            },
+            "required": [
+              "pattern"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Python Pattern to TypeScript Mapping (Python 3.9+ Optimized)",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "validation-strategy",
+          "description": "Get validation strategies for ensuring correctness of Python-to-TypeScript conversions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "validationType": {
+                "type": "string",
+                "enum": [
+                  "type-safety",
+                  "behavioral",
+                  "performance"
+                ],
+                "description": "Type of validation strategy needed"
+              },
+              "context": {
+                "type": "string",
+                "description": "Additional context about the validation needs"
+              }
+            },
+            "required": [
+              "validationType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Porting Validation Strategy",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create-porting-notebook",
+          "description": "Create a new Srcbook notebook for documenting Python-to-TypeScript porting process",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title for the porting notebook"
+              },
+              "pythonCode": {
+                "type": "string",
+                "description": "Python code to be ported"
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description of the porting task"
+              },
+              "includeValidation": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include validation cells"
+              }
+            },
+            "required": [
+              "title",
+              "pythonCode"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "add-porting-step",
+          "description": "Add a documented porting step to an existing notebook with Python and TypeScript code examples",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "notebookPath": {
+                "type": "string",
+                "description": "Path to the notebook file"
+              },
+              "stepTitle": {
+                "type": "string",
+                "description": "Title for this porting step"
+              },
+              "explanation": {
+                "type": "string",
+                "description": "Markdown explanation of the porting step"
+              },
+              "typescriptCode": {
+                "type": "string",
+                "description": "Converted TypeScript code"
+              },
+              "pythonCode": {
+                "type": "string",
+                "description": "Original Python code for this step"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional notes about the conversion"
+              }
+            },
+            "required": [
+              "notebookPath",
+              "stepTitle",
+              "explanation",
+              "typescriptCode"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "execute-notebook-cell",
+          "description": "Execute a specific cell in a porting notebook to validate TypeScript code",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "notebookPath": {
+                "type": "string",
+                "description": "Path to the notebook file"
+              },
+              "cellId": {
+                "type": "string",
+                "description": "ID of the cell to execute"
+              }
+            },
+            "required": [
+              "notebookPath",
+              "cellId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "create-ephemeral-journal",
+          "description": "Create a new ephemeral Srcbook journal for sketching out porting implementations. These exist only during the connection and auto-cleanup on termination.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title for the ephemeral journal"
+              },
+              "purpose": {
+                "type": "string",
+                "description": "Purpose of this journal (e.g., 'FastAPI endpoints porting', 'NumPy array patterns')"
+              },
+              "initialNotes": {
+                "type": "string",
+                "description": "Initial notes or thoughts to include"
+              },
+              "includeTemplates": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include helpful templates for porting work"
+              }
+            },
+            "required": [
+              "title",
+              "purpose"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list-ephemeral-journals",
+          "description": "List all active ephemeral journals with their details",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "add-journal-entry",
+          "description": "Add a new entry to an ephemeral journal with code, notes, or experimental implementations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "journalId": {
+                "type": "string",
+                "description": "ID of the ephemeral journal"
+              },
+              "entryTitle": {
+                "type": "string",
+                "description": "Title for this journal entry"
+              },
+              "entryType": {
+                "type": "string",
+                "enum": [
+                  "experiment",
+                  "analysis",
+                  "implementation",
+                  "notes",
+                  "comparison"
+                ],
+                "description": "Type of entry"
+              },
+              "content": {
+                "type": "string",
+                "description": "Main content - can be markdown, code, or analysis"
+              },
+              "language": {
+                "type": "string",
+                "enum": [
+                  "typescript",
+                  "javascript",
+                  "markdown"
+                ],
+                "default": "typescript",
+                "description": "Language for code content"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional tags for organizing entries"
+              }
+            },
+            "required": [
+              "journalId",
+              "entryTitle",
+              "entryType",
+              "content"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get-journal-content",
+          "description": "Get the current content of an ephemeral journal in readable format",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "journalId": {
+                "type": "string",
+                "description": "ID of the ephemeral journal"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "summary",
+                  "full",
+                  "code-only"
+                ],
+                "default": "summary",
+                "description": "Format for the content"
+              }
+            },
+            "required": [
+              "journalId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "save-journal-snapshot",
+          "description": "Save a permanent snapshot of an ephemeral journal to the persistent notebooks directory",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "journalId": {
+                "type": "string",
+                "description": "ID of the ephemeral journal"
+              },
+              "snapshotName": {
+                "type": "string",
+                "description": "Optional name for the snapshot (defaults to journal title)"
+              }
+            },
+            "required": [
+              "journalId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 13,
+      "tool_names": [
+        "porting-strategy",
+        "type-analysis",
+        "library-mapping",
+        "pattern-mapping",
+        "validation-strategy",
+        "create-porting-notebook",
+        "add-porting-step",
+        "execute-notebook-cell",
+        "create-ephemeral-journal",
+        "list-ephemeral-journals",
+        "add-journal-entry",
+        "get-journal-content",
+        "save-journal-snapshot"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1017,
+      "name": "Python-to-TypeScript Porting",
+      "author": "@glassBead-tc/python-to-typescript-assistant",
+      "overview": "Provide systematic tools and references to assist in porting Python code to TypeScript. Enable strategic planning, type analysis, library mapping, pattern conversion, and validation strategies to improve migration success rates. Facilitate developers with practical resources and prompts for efficient and accurate code translation.",
+      "repository_url": "https://github.com/glassBead-tc/python-to-typescript-assistant",
+      "homepage": "https://smithery.ai/server/@glassBead-tc/python-to-typescript-assistant",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "2",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@glassBead-tc_python-to-typescript-assistant.json",
+      "tools_count": 13,
+      "tools": [
+        {
+          "name": "porting-strategy",
+          "description": "Systematic framework for analyzing and planning Python-to-TypeScript porting projects. Provides strategic analysis, risk assessment, and phased migration planning.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "projectId": {
+                "type": "string",
+                "description": "Unique identifier for the porting project"
+              },
+              "projectName": {
+                "type": "string",
+                "description": "Human-readable name of the project being ported"
+              },
+              "stage": {
+                "type": "string",
+                "enum": [
+                  "analysis",
+                  "planning",
+                  "execution",
+                  "validation",
+                  "completion"
+                ],
+                "description": "Current stage of the porting project"
+              },
+              "iteration": {
+                "type": "number",
+                "minimum": 1,
+                "default": 1,
+                "description": "Current iteration of the analysis"
+              },
+              "components": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Unique identifier for the component"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the component (file, class, function, etc.)"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "module",
+                        "class",
+                        "function",
+                        "variable",
+                        "import",
+                        "type"
+                      ],
+                      "description": "Type of component"
+                    },
+                    "complexity": {
+                      "type": "string",
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ],
+                      "description": "Complexity level for porting"
+                    },
+                    "dependencies": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "default": [],
+                      "description": "List of dependencies this component has"
+                    },
+                    "challenges": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "default": [],
+                      "description": "Specific challenges expected for this component"
+                    },
+                    "portingApproach": {
+                      "type": "string",
+                      "description": "Recommended approach for porting this component"
+                    },
+                    "estimatedEffort": {
+                      "type": "number",
+                      "minimum": 0,
+                      "description": "Estimated effort in hours"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type",
+                    "complexity",
+                    "portingApproach",
+                    "estimatedEffort"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Components to be ported with their analysis"
+              },
+              "currentPhase": {
+                "type": "number",
+                "minimum": 1,
+                "description": "Current phase number if in execution"
+              },
+              "riskFactors": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Additional risk factors to consider"
+              },
+              "constraints": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": [],
+                "description": "Project constraints (timeline, resources, etc.)"
+              },
+              "preferences": {
+                "type": "object",
+                "properties": {
+                  "riskTolerance": {
+                    "type": "string",
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high"
+                    ],
+                    "default": "medium"
+                  },
+                  "timelinePreference": {
+                    "type": "string",
+                    "enum": [
+                      "fast",
+                      "balanced",
+                      "safe"
+                    ],
+                    "default": "balanced"
+                  },
+                  "teamExperience": {
+                    "type": "string",
+                    "enum": [
+                      "beginner",
+                      "intermediate",
+                      "expert"
+                    ],
+                    "default": "intermediate"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Project preferences and constraints"
+              }
+            },
+            "required": [
+              "projectId",
+              "projectName",
+              "stage"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Python-to-TypeScript Porting Strategy",
+            "readOnlyHint": false,
+            "destructiveHint": null,
+            "idempotentHint": false,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "type-analysis",
+          "description": "Analyzes Python types and provides TypeScript mappings with migration guidance, runtime considerations, and testing approaches. Optimized for Python 3.9+ syntax including union operators (|) and built-in generics (list[str], dict[str, int]).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pythonType": {
+                "type": "string",
+                "description": "Python type annotation as a string. Supports modern Python 3.9+ syntax: 'str | int', 'list[str]', 'dict[str, int]' as well as legacy 'Union[str, int]', 'List[str]', 'Dict[str, int]'"
+              },
+              "context": {
+                "type": "string",
+                "description": "Additional context about the type usage"
+              }
+            },
+            "required": [
+              "pythonType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Python-to-TypeScript Type Analysis (Python 3.9+ Optimized)",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "library-mapping",
+          "description": "Find TypeScript/JavaScript equivalents for Python libraries with installation commands and migration guidance.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pythonLibrary": {
+                "type": "string",
+                "description": "Name of the Python library to find TypeScript equivalents for"
+              }
+            },
+            "required": [
+              "pythonLibrary"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Python Library to TypeScript Mapping",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "pattern-mapping",
+          "description": "Convert Python language patterns and idioms to TypeScript equivalents with examples and caveats. Emphasizes Python 3.9+ modern patterns including union operators, dict merge operators, and built-in generics.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "pattern": {
+                "type": "string",
+                "description": "Python pattern or idiom to convert. Supports Python 3.9+ patterns: 'union operator', 'dict merge', 'built-in generics', 'string prefix/suffix' as well as classic patterns: 'list comprehension', 'context manager', 'multiple assignment'"
+              }
+            },
+            "required": [
+              "pattern"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Python Pattern to TypeScript Mapping (Python 3.9+ Optimized)",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "validation-strategy",
+          "description": "Get validation strategies for ensuring correctness of Python-to-TypeScript conversions.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "validationType": {
+                "type": "string",
+                "enum": [
+                  "type-safety",
+                  "behavioral",
+                  "performance"
+                ],
+                "description": "Type of validation strategy needed"
+              },
+              "context": {
+                "type": "string",
+                "description": "Additional context about the validation needs"
+              }
+            },
+            "required": [
+              "validationType"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {
+            "title": "Porting Validation Strategy",
+            "readOnlyHint": true,
+            "destructiveHint": null,
+            "idempotentHint": true,
+            "openWorldHint": null
+          }
+        },
+        {
+          "name": "create-porting-notebook",
+          "description": "Create a new Srcbook notebook for documenting Python-to-TypeScript porting process",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title for the porting notebook"
+              },
+              "pythonCode": {
+                "type": "string",
+                "description": "Python code to be ported"
+              },
+              "description": {
+                "type": "string",
+                "description": "Optional description of the porting task"
+              },
+              "includeValidation": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include validation cells"
+              }
+            },
+            "required": [
+              "title",
+              "pythonCode"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "add-porting-step",
+          "description": "Add a documented porting step to an existing notebook with Python and TypeScript code examples",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "notebookPath": {
+                "type": "string",
+                "description": "Path to the notebook file"
+              },
+              "stepTitle": {
+                "type": "string",
+                "description": "Title for this porting step"
+              },
+              "explanation": {
+                "type": "string",
+                "description": "Markdown explanation of the porting step"
+              },
+              "typescriptCode": {
+                "type": "string",
+                "description": "Converted TypeScript code"
+              },
+              "pythonCode": {
+                "type": "string",
+                "description": "Original Python code for this step"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional notes about the conversion"
+              }
+            },
+            "required": [
+              "notebookPath",
+              "stepTitle",
+              "explanation",
+              "typescriptCode"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "execute-notebook-cell",
+          "description": "Execute a specific cell in a porting notebook to validate TypeScript code",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "notebookPath": {
+                "type": "string",
+                "description": "Path to the notebook file"
+              },
+              "cellId": {
+                "type": "string",
+                "description": "ID of the cell to execute"
+              }
+            },
+            "required": [
+              "notebookPath",
+              "cellId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "create-ephemeral-journal",
+          "description": "Create a new ephemeral Srcbook journal for sketching out porting implementations. These exist only during the connection and auto-cleanup on termination.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "Title for the ephemeral journal"
+              },
+              "purpose": {
+                "type": "string",
+                "description": "Purpose of this journal (e.g., 'FastAPI endpoints porting', 'NumPy array patterns')"
+              },
+              "initialNotes": {
+                "type": "string",
+                "description": "Initial notes or thoughts to include"
+              },
+              "includeTemplates": {
+                "type": "boolean",
+                "default": true,
+                "description": "Whether to include helpful templates for porting work"
+              }
+            },
+            "required": [
+              "title",
+              "purpose"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "list-ephemeral-journals",
+          "description": "List all active ephemeral journals with their details",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "add-journal-entry",
+          "description": "Add a new entry to an ephemeral journal with code, notes, or experimental implementations",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "journalId": {
+                "type": "string",
+                "description": "ID of the ephemeral journal"
+              },
+              "entryTitle": {
+                "type": "string",
+                "description": "Title for this journal entry"
+              },
+              "entryType": {
+                "type": "string",
+                "enum": [
+                  "experiment",
+                  "analysis",
+                  "implementation",
+                  "notes",
+                  "comparison"
+                ],
+                "description": "Type of entry"
+              },
+              "content": {
+                "type": "string",
+                "description": "Main content - can be markdown, code, or analysis"
+              },
+              "language": {
+                "type": "string",
+                "enum": [
+                  "typescript",
+                  "javascript",
+                  "markdown"
+                ],
+                "default": "typescript",
+                "description": "Language for code content"
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional tags for organizing entries"
+              }
+            },
+            "required": [
+              "journalId",
+              "entryTitle",
+              "entryType",
+              "content"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "get-journal-content",
+          "description": "Get the current content of an ephemeral journal in readable format",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "journalId": {
+                "type": "string",
+                "description": "ID of the ephemeral journal"
+              },
+              "format": {
+                "type": "string",
+                "enum": [
+                  "summary",
+                  "full",
+                  "code-only"
+                ],
+                "default": "summary",
+                "description": "Format for the content"
+              }
+            },
+            "required": [
+              "journalId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "save-journal-snapshot",
+          "description": "Save a permanent snapshot of an ephemeral journal to the persistent notebooks directory",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "journalId": {
+                "type": "string",
+                "description": "ID of the ephemeral journal"
+              },
+              "snapshotName": {
+                "type": "string",
+                "description": "Optional name for the snapshot (defaults to journal title)"
+              }
+            },
+            "required": [
+              "journalId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@glassBead-tc/python-to-typescript-assistant/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@glassBead-tc/python-to-typescript-assistant/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1018.@glassBead-tc_python-to-typescript-assistant_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 996
+  }
+}

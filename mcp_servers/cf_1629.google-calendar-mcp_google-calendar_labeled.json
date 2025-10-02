@@ -1,0 +1,159 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described provides integration with Google Calendar, allowing users to manage events through a standardized interface. The available tools (list-calendars, list-events, create-event, update-event, delete-event) all revolve around calendar event management, making this server a specialized tool for scheduling and event organization.",
+    "reasoning": "The primary functionality of this server is time and event management, which aligns closely with the \"Time & Calendar\" category. The tools provided are all event-focused, reinforcing this label. While it could also fit under \"Daily Productivity\" as it helps with organization, the core functionality is more about calendar management specifically.",
+    "primary_label": "Time & Calendar",
+    "secondary_labels": [
+      "Daily Productivity"
+    ],
+    "custom_label": "Google Calendar Management",
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1628,
+    "server_name": "Google Calendar",
+    "rank_by_usage": 1629,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/google-calendar-mcp_google-calendar.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/google-calendar-mcp/mcp?config=eyJzYXZlZFRva2Vuc1BhdGgiOiAiLmdjcC1zYXZlZC10b2tlbnMuanNvbiIsICJvQXV0aENyZWRlbnRpYWxzUGF0aCI6ICJnY3Atb2F1dGgua2V5cy5qc29uIn0=&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1628,
+      "name": "Google Calendar",
+      "author": "google-calendar-mcp",
+      "overview": "Integration with Google Calendar to manage events through a standardized interface.",
+      "repository_url": "https://github.com/nspady/google-calendar-mcp",
+      "homepage": "https://smithery.ai/server/google-calendar-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/google-calendar-mcp_google-calendar.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "list-calendars",
+          "description": "Deploy Server Google Calendar Claim Server google-calendar-mcp Try in Playground list-calendars",
+          "parameters": [
+            {
+              "name": "List",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "all",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "available",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "calendars",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list-events",
+          "description": "List events from a calendar",
+          "parameters": [
+            {
+              "name": "timeMax",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "timeMin",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "calendarId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create-event",
+          "description": "Create a new calendar event",
+          "parameters": []
+        },
+        {
+          "name": "update-event",
+          "description": "Update an existing calendar event",
+          "parameters": []
+        },
+        {
+          "name": "delete-event",
+          "description": "Delete a calendar event",
+          "parameters": [
+            {
+              "name": "Delete",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "a",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "calendar",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "event",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "eventId",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "calendarId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"savedTokensPath\": \".gcp-saved-tokens.json\",\n  \"oAuthCredentialsPath\": \"gcp-oauth.keys.json\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/google-calendar-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"savedTokensPath\": \".gcp-saved-tokens.json\",\n  \"oAuthCredentialsPath\": \"gcp-oauth.keys.json\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/google-calendar-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1629.google-calendar-mcp_google-calendar_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1478
+  }
+}

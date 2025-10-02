@@ -1,0 +1,175 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to connect AI tools directly to Airtable, allowing users to perform various database operations such as querying, creating, updating, and deleting records through natural language commands. It provides tools for base management, table operations, schema manipulation, record filtering, and data migration. The server acts as an intermediary between AI interfaces (like Cursor, Claude Code, Cline, Zed) and Airtable databases, enabling seamless integration and automation of tasks that would otherwise require manual input or complex scripting.",
+    "reasoning": "The primary label is \"Database Operations\" because the core functionality revolves around interacting with Airtable databases (a no-code database tool). Secondary labels such as \"API Integration\" and \"Development Tools\" are relevant due to the server's role in connecting different systems (AI editors to Airtable) and the programmatic nature of its operations. No custom label is needed as the predefined categories sufficiently cover the functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "API Integration",
+      "Development Tools"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1952,
+    "server_name": "Airtable MCP",
+    "rank_by_usage": 1953,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@rashidazarang_airtable-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@rashidazarang/airtable-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1952,
+      "name": "Airtable MCP",
+      "author": "@rashidazarang/airtable-mcp",
+      "overview": "Connect your AI tools directly to Airtable. Query, create, update, and delete records using natural language. Features include base management, table operations, schema manipulation, record filtering, and data migration—all through a standardized MCP interface compatible with Cursor, Claude Code, Cline, Zed, and other Claude-powered editors.",
+      "repository_url": "https://github.com/rashidazarang/airtable-mcp",
+      "homepage": "https://smithery.ai/server/@rashidazarang/airtable-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@rashidazarang_airtable-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "list_bases",
+          "description": "Deploy Server Airtable MCP @rashidazarang/airtable-mcp Try in Playground",
+          "parameters": [
+            {
+              "name": "list_bases",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_tables",
+          "description": "List all tables in the specified base or the default base",
+          "parameters": [
+            {
+              "name": "list_tables",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "base_id_param",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_records",
+          "description": "List records from a table with optional filtering",
+          "parameters": [
+            {
+              "name": "list_records",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_record",
+          "description": "Get a specific record from a table",
+          "parameters": [
+            {
+              "name": "record_id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "table_name",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "create_records",
+          "description": "Create records in a table from JSON string",
+          "parameters": [
+            {
+              "name": "table_name",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "records_json",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "update_records",
+          "description": "Update records in a table from JSON string",
+          "parameters": [
+            {
+              "name": "table_name",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "records_json",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "set_base_id",
+          "description": "Set the current Airtable base ID",
+          "parameters": [
+            {
+              "name": "set_base_id",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "base_id_param",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@rashidazarang/airtable-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "airtable_token",
+          "required": true,
+          "description": "Your Airtable Personal Access Token"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@rashidazarang/airtable-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1953.@rashidazarang_airtable-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1714
+  }
+}

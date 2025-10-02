@@ -1,0 +1,1796 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described is designed to facilitate comprehensive Git repository operations through a standardized protocol interface. It provides tools for repository inspection, file manipulation, branch management, commit operations, and various other Git functions. This server enhances development workflows by enabling seamless integration of Git operations into MCP-enabled applications, effectively acting as a bridge between users and Git repositories.",
+    "reasoning": "The primary label \"Development Tools\" is chosen because the server's core functionality revolves around Git operations, which are fundamental to software development. Additional labels such as \"Version Control\" and \"Code Analysis\" are selected because the server's tools enable detailed inspection, management, and interaction with Git repositories, which are core aspects of code development and version control processes.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Development Tools",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": "Git Repository Management",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 857,
+    "server_name": "Git Repository Browser",
+    "rank_by_usage": 858,
+    "usage_count": "5",
+    "original_file": "../crawler/smithery/@bsreeram08_git-commands-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@bsreeram08/git-commands-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "git_directory_structure",
+          "description": "Clone a Git repository and return its directory structure in a tree format.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              }
+            },
+            "required": [
+              "repo_url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_read_files",
+          "description": "Read the contents of specified files in a given git repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "file_paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of file paths to read (relative to repository root)"
+              }
+            },
+            "required": [
+              "repo_url",
+              "file_paths"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_branch_diff",
+          "description": "Compare two branches and show files changed between them.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "source_branch": {
+                "type": "string",
+                "description": "The source branch name"
+              },
+              "target_branch": {
+                "type": "string",
+                "description": "The target branch name"
+              },
+              "show_patch": {
+                "type": "boolean",
+                "description": "Whether to include the actual diff patches",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_url",
+              "source_branch",
+              "target_branch"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_checkout_branch",
+          "description": "Create and/or checkout a branch.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "branch_name": {
+                "type": "string",
+                "description": "The name of the branch to checkout"
+              },
+              "start_point": {
+                "type": "string",
+                "description": "Starting point for the branch (optional)"
+              },
+              "create": {
+                "type": "boolean",
+                "description": "Whether to create a new branch",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path",
+              "branch_name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_delete_branch",
+          "description": "Delete a branch from the repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "branch_name": {
+                "type": "string",
+                "description": "The name of the branch to delete"
+              },
+              "force": {
+                "type": "boolean",
+                "description": "Whether to force deletion",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path",
+              "branch_name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_merge_branch",
+          "description": "Merge a source branch into the current or target branch.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "source_branch": {
+                "type": "string",
+                "description": "Branch to merge from"
+              },
+              "target_branch": {
+                "type": "string",
+                "description": "Branch to merge into (optional, uses current branch if not provided)"
+              },
+              "no_fast_forward": {
+                "type": "boolean",
+                "description": "Whether to create a merge commit even if fast-forward is possible",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path",
+              "source_branch"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_commit_history",
+          "description": "Get commit history for a branch with optional filtering.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "branch": {
+                "type": "string",
+                "description": "The branch to get history from",
+                "default": "main"
+              },
+              "max_count": {
+                "type": "integer",
+                "description": "Maximum number of commits to retrieve",
+                "default": 10
+              },
+              "author": {
+                "type": "string",
+                "description": "Filter by author (optional)"
+              },
+              "since": {
+                "type": "string",
+                "description": "Get commits after this date (e.g., \"1 week ago\", \"2023-01-01\")"
+              },
+              "until": {
+                "type": "string",
+                "description": "Get commits before this date (e.g., \"yesterday\", \"2023-12-31\")"
+              },
+              "grep": {
+                "type": "string",
+                "description": "Filter commits by message content (optional)"
+              }
+            },
+            "required": [
+              "repo_url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_commits_details",
+          "description": "Get detailed information about commits including full messages and diffs.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "branch": {
+                "type": "string",
+                "description": "The branch to get commits from",
+                "default": "main"
+              },
+              "max_count": {
+                "type": "integer",
+                "description": "Maximum number of commits to retrieve",
+                "default": 10
+              },
+              "include_diff": {
+                "type": "boolean",
+                "description": "Whether to include the commit diffs",
+                "default": false
+              },
+              "since": {
+                "type": "string",
+                "description": "Get commits after this date (e.g., \"1 week ago\", \"2023-01-01\")"
+              },
+              "until": {
+                "type": "string",
+                "description": "Get commits before this date (e.g., \"yesterday\", \"2023-12-31\")"
+              },
+              "author": {
+                "type": "string",
+                "description": "Filter by author (optional)"
+              },
+              "grep": {
+                "type": "string",
+                "description": "Filter commits by message content (optional)"
+              }
+            },
+            "required": [
+              "repo_url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_commit",
+          "description": "Create a commit with the specified message.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "message": {
+                "type": "string",
+                "description": "The commit message"
+              }
+            },
+            "required": [
+              "repo_path",
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_track",
+          "description": "Track (stage) specific files or all files.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of file paths to track/stage (use [\".\"] for all files)",
+                "default": [
+                  "."
+                ]
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_local_changes",
+          "description": "Get uncommitted changes in the working directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_search_code",
+          "description": "Search for patterns in repository code.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Search pattern (regex or string)"
+              },
+              "file_patterns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional file patterns to filter (e.g., \"*.js\")"
+              },
+              "case_sensitive": {
+                "type": "boolean",
+                "description": "Whether the search is case sensitive",
+                "default": false
+              },
+              "context_lines": {
+                "type": "integer",
+                "description": "Number of context lines to include",
+                "default": 2
+              }
+            },
+            "required": [
+              "repo_url",
+              "pattern"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_push",
+          "description": "Push changes to a remote repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "remote": {
+                "type": "string",
+                "description": "Remote name",
+                "default": "origin"
+              },
+              "branch": {
+                "type": "string",
+                "description": "Branch to push (default: current branch)"
+              },
+              "force": {
+                "type": "boolean",
+                "description": "Whether to force push",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_pull",
+          "description": "Pull changes from a remote repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "remote": {
+                "type": "string",
+                "description": "Remote name",
+                "default": "origin"
+              },
+              "branch": {
+                "type": "string",
+                "description": "Branch to pull (default: current branch)"
+              },
+              "rebase": {
+                "type": "boolean",
+                "description": "Whether to rebase instead of merge",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_stash",
+          "description": "Create or apply a stash.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "action": {
+                "type": "string",
+                "description": "Stash action (save, pop, apply, list, drop)",
+                "default": "save",
+                "enum": [
+                  "save",
+                  "pop",
+                  "apply",
+                  "list",
+                  "drop"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "description": "Stash message (for save action)",
+                "default": ""
+              },
+              "index": {
+                "type": "integer",
+                "description": "Stash index (for pop, apply, drop actions)",
+                "default": 0
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_create_tag",
+          "description": "Create a tag.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "tag_name": {
+                "type": "string",
+                "description": "Name of the tag"
+              },
+              "message": {
+                "type": "string",
+                "description": "Tag message (for annotated tags)",
+                "default": ""
+              },
+              "annotated": {
+                "type": "boolean",
+                "description": "Whether to create an annotated tag",
+                "default": true
+              }
+            },
+            "required": [
+              "repo_path",
+              "tag_name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_rebase",
+          "description": "Rebase the current branch onto another branch or commit.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "onto": {
+                "type": "string",
+                "description": "Branch or commit to rebase onto"
+              },
+              "interactive": {
+                "type": "boolean",
+                "description": "Whether to perform an interactive rebase",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path",
+              "onto"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_config",
+          "description": "Configure git settings for the repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "scope": {
+                "type": "string",
+                "description": "Configuration scope (local, global, system)",
+                "default": "local",
+                "enum": [
+                  "local",
+                  "global",
+                  "system"
+                ]
+              },
+              "key": {
+                "type": "string",
+                "description": "Configuration key"
+              },
+              "value": {
+                "type": "string",
+                "description": "Configuration value"
+              }
+            },
+            "required": [
+              "repo_path",
+              "key",
+              "value"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_reset",
+          "description": "Reset repository to specified commit or state.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "mode": {
+                "type": "string",
+                "description": "Reset mode (soft, mixed, hard)",
+                "default": "mixed",
+                "enum": [
+                  "soft",
+                  "mixed",
+                  "hard"
+                ]
+              },
+              "to": {
+                "type": "string",
+                "description": "Commit or reference to reset to",
+                "default": "HEAD"
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_archive",
+          "description": "Create a git archive (zip or tar).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "output_path": {
+                "type": "string",
+                "description": "Output path for the archive"
+              },
+              "format": {
+                "type": "string",
+                "description": "Archive format (zip or tar)",
+                "default": "zip",
+                "enum": [
+                  "zip",
+                  "tar"
+                ]
+              },
+              "prefix": {
+                "type": "string",
+                "description": "Prefix for files in the archive"
+              },
+              "treeish": {
+                "type": "string",
+                "description": "Tree-ish to archive (default: HEAD)",
+                "default": "HEAD"
+              }
+            },
+            "required": [
+              "repo_path",
+              "output_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_attributes",
+          "description": "Manage git attributes for files.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "action": {
+                "type": "string",
+                "description": "Action (get, set, list)",
+                "default": "list",
+                "enum": [
+                  "get",
+                  "set",
+                  "list"
+                ]
+              },
+              "pattern": {
+                "type": "string",
+                "description": "File pattern"
+              },
+              "attribute": {
+                "type": "string",
+                "description": "Attribute to set"
+              }
+            },
+            "required": [
+              "repo_path",
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_blame",
+          "description": "Get blame information for a file.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "file_path": {
+                "type": "string",
+                "description": "Path to the file"
+              },
+              "rev": {
+                "type": "string",
+                "description": "Revision to blame (default: HEAD)",
+                "default": "HEAD"
+              }
+            },
+            "required": [
+              "repo_path",
+              "file_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_clean",
+          "description": "Perform git clean operations.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "directories": {
+                "type": "boolean",
+                "description": "Whether to remove directories as well",
+                "default": false
+              },
+              "force": {
+                "type": "boolean",
+                "description": "Whether to force clean",
+                "default": false
+              },
+              "dry_run": {
+                "type": "boolean",
+                "description": "Whether to perform a dry run",
+                "default": true
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_hooks",
+          "description": "Manage git hooks in the repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "action": {
+                "type": "string",
+                "description": "Hook action (list, get, create, enable, disable)",
+                "default": "list",
+                "enum": [
+                  "list",
+                  "get",
+                  "create",
+                  "enable",
+                  "disable"
+                ]
+              },
+              "hook_name": {
+                "type": "string",
+                "description": "Name of the hook (e.g., 'pre-commit', 'post-merge')"
+              },
+              "script": {
+                "type": "string",
+                "description": "Script content for the hook (for create action)"
+              }
+            },
+            "required": [
+              "repo_path",
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_lfs",
+          "description": "Manage Git LFS (Large File Storage).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "action": {
+                "type": "string",
+                "description": "LFS action (install, track, untrack, list)",
+                "default": "list",
+                "enum": [
+                  "install",
+                  "track",
+                  "untrack",
+                  "list"
+                ]
+              },
+              "patterns": {
+                "type": "array",
+                "description": "File patterns for track/untrack",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "repo_path",
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_lfs_fetch",
+          "description": "Fetch LFS objects from the remote repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "dry_run": {
+                "type": "boolean",
+                "description": "Whether to perform a dry run",
+                "default": false
+              },
+              "pointers": {
+                "type": "boolean",
+                "description": "Whether to convert pointers to objects",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_revert",
+          "description": "Revert the current branch to a commit or state.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "commit": {
+                "type": "string",
+                "description": "Commit hash or reference to revert"
+              },
+              "no_commit": {
+                "type": "boolean",
+                "description": "Whether to stage changes without committing",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 27,
+      "tool_names": [
+        "git_directory_structure",
+        "git_read_files",
+        "git_branch_diff",
+        "git_checkout_branch",
+        "git_delete_branch",
+        "git_merge_branch",
+        "git_commit_history",
+        "git_commits_details",
+        "git_commit",
+        "git_track",
+        "git_local_changes",
+        "git_search_code",
+        "git_push",
+        "git_pull",
+        "git_stash",
+        "git_create_tag",
+        "git_rebase",
+        "git_config",
+        "git_reset",
+        "git_archive",
+        "git_attributes",
+        "git_blame",
+        "git_clean",
+        "git_hooks",
+        "git_lfs",
+        "git_lfs_fetch",
+        "git_revert"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 857,
+      "name": "Git Repository Browser",
+      "author": "@bsreeram08/git-commands-mcp",
+      "overview": "Browse and interact with Git repositories through a standardized protocol interface. Perform repository structure inspection, file reading, code searching, branch comparisons, and commit history retrieval seamlessly. Enhance your development workflow by integrating Git operations into your MCP-enabled applications.",
+      "repository_url": "https://github.com/bsreeram08/git-commands-mcp",
+      "homepage": "https://smithery.ai/server/@bsreeram08/git-commands-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "5",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@bsreeram08_git-commands-mcp.json",
+      "tools_count": 27,
+      "tools": [
+        {
+          "name": "git_directory_structure",
+          "description": "Clone a Git repository and return its directory structure in a tree format.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              }
+            },
+            "required": [
+              "repo_url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_read_files",
+          "description": "Read the contents of specified files in a given git repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "file_paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of file paths to read (relative to repository root)"
+              }
+            },
+            "required": [
+              "repo_url",
+              "file_paths"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_branch_diff",
+          "description": "Compare two branches and show files changed between them.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "source_branch": {
+                "type": "string",
+                "description": "The source branch name"
+              },
+              "target_branch": {
+                "type": "string",
+                "description": "The target branch name"
+              },
+              "show_patch": {
+                "type": "boolean",
+                "description": "Whether to include the actual diff patches",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_url",
+              "source_branch",
+              "target_branch"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_checkout_branch",
+          "description": "Create and/or checkout a branch.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "branch_name": {
+                "type": "string",
+                "description": "The name of the branch to checkout"
+              },
+              "start_point": {
+                "type": "string",
+                "description": "Starting point for the branch (optional)"
+              },
+              "create": {
+                "type": "boolean",
+                "description": "Whether to create a new branch",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path",
+              "branch_name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_delete_branch",
+          "description": "Delete a branch from the repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "branch_name": {
+                "type": "string",
+                "description": "The name of the branch to delete"
+              },
+              "force": {
+                "type": "boolean",
+                "description": "Whether to force deletion",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path",
+              "branch_name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_merge_branch",
+          "description": "Merge a source branch into the current or target branch.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "source_branch": {
+                "type": "string",
+                "description": "Branch to merge from"
+              },
+              "target_branch": {
+                "type": "string",
+                "description": "Branch to merge into (optional, uses current branch if not provided)"
+              },
+              "no_fast_forward": {
+                "type": "boolean",
+                "description": "Whether to create a merge commit even if fast-forward is possible",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path",
+              "source_branch"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_commit_history",
+          "description": "Get commit history for a branch with optional filtering.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "branch": {
+                "type": "string",
+                "description": "The branch to get history from",
+                "default": "main"
+              },
+              "max_count": {
+                "type": "integer",
+                "description": "Maximum number of commits to retrieve",
+                "default": 10
+              },
+              "author": {
+                "type": "string",
+                "description": "Filter by author (optional)"
+              },
+              "since": {
+                "type": "string",
+                "description": "Get commits after this date (e.g., \"1 week ago\", \"2023-01-01\")"
+              },
+              "until": {
+                "type": "string",
+                "description": "Get commits before this date (e.g., \"yesterday\", \"2023-12-31\")"
+              },
+              "grep": {
+                "type": "string",
+                "description": "Filter commits by message content (optional)"
+              }
+            },
+            "required": [
+              "repo_url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_commits_details",
+          "description": "Get detailed information about commits including full messages and diffs.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "branch": {
+                "type": "string",
+                "description": "The branch to get commits from",
+                "default": "main"
+              },
+              "max_count": {
+                "type": "integer",
+                "description": "Maximum number of commits to retrieve",
+                "default": 10
+              },
+              "include_diff": {
+                "type": "boolean",
+                "description": "Whether to include the commit diffs",
+                "default": false
+              },
+              "since": {
+                "type": "string",
+                "description": "Get commits after this date (e.g., \"1 week ago\", \"2023-01-01\")"
+              },
+              "until": {
+                "type": "string",
+                "description": "Get commits before this date (e.g., \"yesterday\", \"2023-12-31\")"
+              },
+              "author": {
+                "type": "string",
+                "description": "Filter by author (optional)"
+              },
+              "grep": {
+                "type": "string",
+                "description": "Filter commits by message content (optional)"
+              }
+            },
+            "required": [
+              "repo_url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_commit",
+          "description": "Create a commit with the specified message.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "message": {
+                "type": "string",
+                "description": "The commit message"
+              }
+            },
+            "required": [
+              "repo_path",
+              "message"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_track",
+          "description": "Track (stage) specific files or all files.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of file paths to track/stage (use [\".\"] for all files)",
+                "default": [
+                  "."
+                ]
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_local_changes",
+          "description": "Get uncommitted changes in the working directory.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_search_code",
+          "description": "Search for patterns in repository code.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_url": {
+                "type": "string",
+                "description": "The URL of the Git repository"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Search pattern (regex or string)"
+              },
+              "file_patterns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional file patterns to filter (e.g., \"*.js\")"
+              },
+              "case_sensitive": {
+                "type": "boolean",
+                "description": "Whether the search is case sensitive",
+                "default": false
+              },
+              "context_lines": {
+                "type": "integer",
+                "description": "Number of context lines to include",
+                "default": 2
+              }
+            },
+            "required": [
+              "repo_url",
+              "pattern"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_push",
+          "description": "Push changes to a remote repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "remote": {
+                "type": "string",
+                "description": "Remote name",
+                "default": "origin"
+              },
+              "branch": {
+                "type": "string",
+                "description": "Branch to push (default: current branch)"
+              },
+              "force": {
+                "type": "boolean",
+                "description": "Whether to force push",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_pull",
+          "description": "Pull changes from a remote repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "remote": {
+                "type": "string",
+                "description": "Remote name",
+                "default": "origin"
+              },
+              "branch": {
+                "type": "string",
+                "description": "Branch to pull (default: current branch)"
+              },
+              "rebase": {
+                "type": "boolean",
+                "description": "Whether to rebase instead of merge",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_stash",
+          "description": "Create or apply a stash.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "action": {
+                "type": "string",
+                "description": "Stash action (save, pop, apply, list, drop)",
+                "default": "save",
+                "enum": [
+                  "save",
+                  "pop",
+                  "apply",
+                  "list",
+                  "drop"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "description": "Stash message (for save action)",
+                "default": ""
+              },
+              "index": {
+                "type": "integer",
+                "description": "Stash index (for pop, apply, drop actions)",
+                "default": 0
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_create_tag",
+          "description": "Create a tag.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "tag_name": {
+                "type": "string",
+                "description": "Name of the tag"
+              },
+              "message": {
+                "type": "string",
+                "description": "Tag message (for annotated tags)",
+                "default": ""
+              },
+              "annotated": {
+                "type": "boolean",
+                "description": "Whether to create an annotated tag",
+                "default": true
+              }
+            },
+            "required": [
+              "repo_path",
+              "tag_name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_rebase",
+          "description": "Rebase the current branch onto another branch or commit.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "onto": {
+                "type": "string",
+                "description": "Branch or commit to rebase onto"
+              },
+              "interactive": {
+                "type": "boolean",
+                "description": "Whether to perform an interactive rebase",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path",
+              "onto"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_config",
+          "description": "Configure git settings for the repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "scope": {
+                "type": "string",
+                "description": "Configuration scope (local, global, system)",
+                "default": "local",
+                "enum": [
+                  "local",
+                  "global",
+                  "system"
+                ]
+              },
+              "key": {
+                "type": "string",
+                "description": "Configuration key"
+              },
+              "value": {
+                "type": "string",
+                "description": "Configuration value"
+              }
+            },
+            "required": [
+              "repo_path",
+              "key",
+              "value"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_reset",
+          "description": "Reset repository to specified commit or state.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "mode": {
+                "type": "string",
+                "description": "Reset mode (soft, mixed, hard)",
+                "default": "mixed",
+                "enum": [
+                  "soft",
+                  "mixed",
+                  "hard"
+                ]
+              },
+              "to": {
+                "type": "string",
+                "description": "Commit or reference to reset to",
+                "default": "HEAD"
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_archive",
+          "description": "Create a git archive (zip or tar).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "output_path": {
+                "type": "string",
+                "description": "Output path for the archive"
+              },
+              "format": {
+                "type": "string",
+                "description": "Archive format (zip or tar)",
+                "default": "zip",
+                "enum": [
+                  "zip",
+                  "tar"
+                ]
+              },
+              "prefix": {
+                "type": "string",
+                "description": "Prefix for files in the archive"
+              },
+              "treeish": {
+                "type": "string",
+                "description": "Tree-ish to archive (default: HEAD)",
+                "default": "HEAD"
+              }
+            },
+            "required": [
+              "repo_path",
+              "output_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_attributes",
+          "description": "Manage git attributes for files.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "action": {
+                "type": "string",
+                "description": "Action (get, set, list)",
+                "default": "list",
+                "enum": [
+                  "get",
+                  "set",
+                  "list"
+                ]
+              },
+              "pattern": {
+                "type": "string",
+                "description": "File pattern"
+              },
+              "attribute": {
+                "type": "string",
+                "description": "Attribute to set"
+              }
+            },
+            "required": [
+              "repo_path",
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_blame",
+          "description": "Get blame information for a file.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "file_path": {
+                "type": "string",
+                "description": "Path to the file"
+              },
+              "rev": {
+                "type": "string",
+                "description": "Revision to blame (default: HEAD)",
+                "default": "HEAD"
+              }
+            },
+            "required": [
+              "repo_path",
+              "file_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_clean",
+          "description": "Perform git clean operations.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "directories": {
+                "type": "boolean",
+                "description": "Whether to remove directories as well",
+                "default": false
+              },
+              "force": {
+                "type": "boolean",
+                "description": "Whether to force clean",
+                "default": false
+              },
+              "dry_run": {
+                "type": "boolean",
+                "description": "Whether to perform a dry run",
+                "default": true
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_hooks",
+          "description": "Manage git hooks in the repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "action": {
+                "type": "string",
+                "description": "Hook action (list, get, create, enable, disable)",
+                "default": "list",
+                "enum": [
+                  "list",
+                  "get",
+                  "create",
+                  "enable",
+                  "disable"
+                ]
+              },
+              "hook_name": {
+                "type": "string",
+                "description": "Name of the hook (e.g., 'pre-commit', 'post-merge')"
+              },
+              "script": {
+                "type": "string",
+                "description": "Script content for the hook (for create action)"
+              }
+            },
+            "required": [
+              "repo_path",
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_lfs",
+          "description": "Manage Git LFS (Large File Storage).",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "action": {
+                "type": "string",
+                "description": "LFS action (install, track, untrack, list)",
+                "default": "list",
+                "enum": [
+                  "install",
+                  "track",
+                  "untrack",
+                  "list"
+                ]
+              },
+              "patterns": {
+                "type": "array",
+                "description": "File patterns for track/untrack",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "repo_path",
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_lfs_fetch",
+          "description": "Fetch LFS objects from the remote repository.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "dry_run": {
+                "type": "boolean",
+                "description": "Whether to perform a dry run",
+                "default": false
+              },
+              "pointers": {
+                "type": "boolean",
+                "description": "Whether to convert pointers to objects",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "git_revert",
+          "description": "Revert the current branch to a commit or state.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "repo_path": {
+                "type": "string",
+                "description": "The path to the local Git repository"
+              },
+              "commit": {
+                "type": "string",
+                "description": "Commit hash or reference to revert"
+              },
+              "no_commit": {
+                "type": "boolean",
+                "description": "Whether to stage changes without committing",
+                "default": false
+              }
+            },
+            "required": [
+              "repo_path"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@bsreeram08/git-commands-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@bsreeram08/git-commands-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0858.@bsreeram08_git-commands-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 839
+  }
+}

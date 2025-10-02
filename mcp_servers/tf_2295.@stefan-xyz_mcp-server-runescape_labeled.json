@@ -1,0 +1,309 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides real-time and historical data for RuneScape and Old School RuneScape, focusing on player statistics, item pricing, and game stats. It offers tools for querying item details (prices, trends, descriptions), price histories, player rankings/hiscores, top player rankings, and online player counts. The primary purpose is to enhance the gaming experience by providing accurate, real-time, and historical data directly from official game sources.",
+    "reasoning": "The MCP Server's core functionality revolves around gaming data retrieval and analysis, making \"Gaming\" the most fitting primary label. Secondary labels like \"Data Analysis & Processing\" and \"Daily Productivity\" are applicable due to tool support for trend analysis and productivity-enhancing gaming data. No custom label is needed as the functionality aligns well with the predefined categories.",
+    "primary_label": "Gaming",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 2294,
+    "server_name": "Runescape MCP server (rs + osrs)",
+    "rank_by_usage": 2295,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@stefan-xyz_mcp-server-runescape.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@stefan-xyz/mcp-server-runescape/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_item_details",
+          "description": "\n    Returns the current price and price trends information on tradeable items in the Grand Exchange, the category, item image and examine for the given item.\n    Examples: \n    - Single: \"What is the price of a dragon scimitar?\"\n    - Multi comparison: \"Compare the price of a dragon scimitar and a rune scimitar\"     \n    - \"Torva full helm price\" \n    - \"Current price of a dragon pickaxe\"\n    - \"How much percentage has the price of a dragon pickaxe changed in the past 30 days?\"\n    - \"How much percentage has the price of a dragon pickaxe changed in the past 90 days?\"\n    - \"How much percentage has the price of a dragon pickaxe changed in the past 180 days?\"\n    - \"Give me the description of an armadyl godsword\"\n    - \"Give me the icon of a dragon scimitar\"\n    - \"What is the id of an abyssal whip?\"    \n    ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "itemName": {
+                "type": "string",
+                "description": "The name of the item you want to get the details for."
+              },
+              "gameMode": {
+                "type": "string",
+                "description": "The mode of the game, this can be \"osrs\" or \"rs\". osrs = old school runescape, rs = runescape",
+                "default": "osrs"
+              }
+            },
+            "required": [
+              "itemName",
+              "gameMode"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_item_price_history",
+          "description": "\n    Returns the prices each day of a given item for the previous 180 days. This is useful for seeing the price trends of an item over time. Usefull for when someone asks all price history of an item.\n    Examples:\n    - Single: \"Price history of a dragon scimitar?\"\n    - Multi comparison: \"Compare all price history of a dragon scimitar and a rune scimitar\"\n    - \"All prices for a dragon scimitar\"\n    - \"Rune scimitar price on 1 april 2025\"  \n    ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "itemName": {
+                "type": "string",
+                "description": "The name of the item you want to get the price history for."
+              },
+              "gameMode": {
+                "type": "string",
+                "description": "The mode of the game, this can be \"osrs\" or \"rs\". osrs = old school runescape, rs = runescape",
+                "default": "osrs"
+              }
+            },
+            "required": [
+              "itemName",
+              "gameMode"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_player_hiscore",
+          "description": "\n    Returns a player's rank, level and experience or score in an activity.\n    Examples:\n    - Single: \"What rank is Zezima?\"\n    - Multi comparison: \"Compare Zezima and Lynx Titan\"\n    - \"What rank is Zezima on runescape?\"\n    - \"How much experience does Lynx Titan have overall?\"\n    - \"Iron Hyger ironman?\"\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "playerName": {
+                "type": "string",
+                "description": "The name of the player you want to get the hiscore for."
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of game you want to get the hiscore for. Leave empty if no type is specified. Types: ironman, hardcore_ironman, ultimate, deadman, seasonal (leagues), tournament, fresh_start"
+              },
+              "gameMode": {
+                "type": "string",
+                "description": "The mode of the game, this can be \"osrs\" or \"rs\". osrs = old school runescape, rs = runescape",
+                "default": "osrs"
+              }
+            },
+            "required": [
+              "playerName",
+              "gameMode"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_top_rankings",
+          "description": "\n    Returns up to the top 50 players in a given skill or activity.\n    Examples:\n    - Single: \"Top 10 players overall?\"\n    - Multi comparison: \"Compare the top 10 defence and attack rankings\"\n    - \"Give me the top 50 attack rankings\"\n    - \"Number one agility on runescape?\"\n    - \"Most zulrah kills?\"\n    - \"Give me the top 5 jad rankings\"\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the skill or activity."
+              },
+              "size": {
+                "type": "number",
+                "description": "The number of rankings to return, this can be max 50.",
+                "default": 25
+              },
+              "gameMode": {
+                "type": "string",
+                "description": "The mode of the game, this can be \"osrs\" or \"rs\". osrs = old school runescape, rs = runescape",
+                "default": "osrs"
+              }
+            },
+            "required": [
+              "name",
+              "gameMode"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_player_count",
+          "description": "Returns the number of players currently online in RuneScape and Old School RuneScape.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_rsuser_total",
+          "description": "Returns the current amount of accounts created that can access any form of RuneScape. This includes accounts made on FunOrb or a particular version of RuneScape.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 6,
+      "tool_names": [
+        "get_item_details",
+        "get_item_price_history",
+        "get_player_hiscore",
+        "get_top_rankings",
+        "get_player_count",
+        "get_rsuser_total"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 2294,
+      "name": "Runescape MCP server (rs + osrs)",
+      "author": "@stefan-xyz/mcp-server-runescape",
+      "overview": "Provide real-time and historical RuneScape and Old School RuneScape data including item prices, player hiscores, top rankings, and player counts. Enable gamers to query accurate game data directly from official sources to enhance their gaming experience. Access comprehensive item details, price trends, player rankings, and more through easy-to-use tools.",
+      "repository_url": "https://github.com/stefan-xyz/mcp-server-runescape",
+      "homepage": "https://smithery.ai/server/@stefan-xyz/mcp-server-runescape",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@stefan-xyz_mcp-server-runescape.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "get_item_details",
+          "description": "\n    Returns the current price and price trends information on tradeable items in the Grand Exchange, the category, item image and examine for the given item.\n    Examples: \n    - Single: \"What is the price of a dragon scimitar?\"\n    - Multi comparison: \"Compare the price of a dragon scimitar and a rune scimitar\"     \n    - \"Torva full helm price\" \n    - \"Current price of a dragon pickaxe\"\n    - \"How much percentage has the price of a dragon pickaxe changed in the past 30 days?\"\n    - \"How much percentage has the price of a dragon pickaxe changed in the past 90 days?\"\n    - \"How much percentage has the price of a dragon pickaxe changed in the past 180 days?\"\n    - \"Give me the description of an armadyl godsword\"\n    - \"Give me the icon of a dragon scimitar\"\n    - \"What is the id of an abyssal whip?\"    \n    ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "itemName": {
+                "type": "string",
+                "description": "The name of the item you want to get the details for."
+              },
+              "gameMode": {
+                "type": "string",
+                "description": "The mode of the game, this can be \"osrs\" or \"rs\". osrs = old school runescape, rs = runescape",
+                "default": "osrs"
+              }
+            },
+            "required": [
+              "itemName",
+              "gameMode"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_item_price_history",
+          "description": "\n    Returns the prices each day of a given item for the previous 180 days. This is useful for seeing the price trends of an item over time. Usefull for when someone asks all price history of an item.\n    Examples:\n    - Single: \"Price history of a dragon scimitar?\"\n    - Multi comparison: \"Compare all price history of a dragon scimitar and a rune scimitar\"\n    - \"All prices for a dragon scimitar\"\n    - \"Rune scimitar price on 1 april 2025\"  \n    ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "itemName": {
+                "type": "string",
+                "description": "The name of the item you want to get the price history for."
+              },
+              "gameMode": {
+                "type": "string",
+                "description": "The mode of the game, this can be \"osrs\" or \"rs\". osrs = old school runescape, rs = runescape",
+                "default": "osrs"
+              }
+            },
+            "required": [
+              "itemName",
+              "gameMode"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_player_hiscore",
+          "description": "\n    Returns a player's rank, level and experience or score in an activity.\n    Examples:\n    - Single: \"What rank is Zezima?\"\n    - Multi comparison: \"Compare Zezima and Lynx Titan\"\n    - \"What rank is Zezima on runescape?\"\n    - \"How much experience does Lynx Titan have overall?\"\n    - \"Iron Hyger ironman?\"\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "playerName": {
+                "type": "string",
+                "description": "The name of the player you want to get the hiscore for."
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of game you want to get the hiscore for. Leave empty if no type is specified. Types: ironman, hardcore_ironman, ultimate, deadman, seasonal (leagues), tournament, fresh_start"
+              },
+              "gameMode": {
+                "type": "string",
+                "description": "The mode of the game, this can be \"osrs\" or \"rs\". osrs = old school runescape, rs = runescape",
+                "default": "osrs"
+              }
+            },
+            "required": [
+              "playerName",
+              "gameMode"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_top_rankings",
+          "description": "\n    Returns up to the top 50 players in a given skill or activity.\n    Examples:\n    - Single: \"Top 10 players overall?\"\n    - Multi comparison: \"Compare the top 10 defence and attack rankings\"\n    - \"Give me the top 50 attack rankings\"\n    - \"Number one agility on runescape?\"\n    - \"Most zulrah kills?\"\n    - \"Give me the top 5 jad rankings\"\n  ",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The name of the skill or activity."
+              },
+              "size": {
+                "type": "number",
+                "description": "The number of rankings to return, this can be max 50.",
+                "default": 25
+              },
+              "gameMode": {
+                "type": "string",
+                "description": "The mode of the game, this can be \"osrs\" or \"rs\". osrs = old school runescape, rs = runescape",
+                "default": "osrs"
+              }
+            },
+            "required": [
+              "name",
+              "gameMode"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_player_count",
+          "description": "Returns the number of players currently online in RuneScape and Old School RuneScape.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_rsuser_total",
+          "description": "Returns the current amount of accounts created that can access any form of RuneScape. This includes accounts made on FunOrb or a particular version of RuneScape.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@stefan-xyz/mcp-server-runescape/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@stefan-xyz/mcp-server-runescape/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "2295.@stefan-xyz_mcp-server-runescape_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1973
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is specialized for academic research, particularly in the medical and scientific domains. It provides enhanced tools to search and analyze the PubMed database, including MeSH term lookups, PICO-based evidence searches, and publication statistics. The server streamlines the research process by offering structured search capabilities and formatted results, making it particularly useful for researchers, medical professionals, and students.",
+    "reasoning": "The primary label is \"Web Search & Research\" because the server's core functionality revolves around searching and retrieving academic papers from PubMed. The secondary labels include \"Data Analysis & Processing\" due to the analytical capabilities like publication statistics and PICO searches, and \"Education\" as it supports educational research and tool integration. The custom label \"Medical Research Tools\" emphasizes the specialized focus on medical and scientific research beyond generic academic tools.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Education"
+    ],
+    "custom_label": "Medical Research Tools",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 661,
+    "server_name": "PubMed Enhanced Search Server",
+    "rank_by_usage": 662,
+    "usage_count": "13",
+    "original_file": "../crawler/smithery/@leescot_pubmed-mcp-smithery.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@leescot/pubmed-mcp-smithery/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_pubmed",
+          "description": "\n    Search the PubMed database using specified keywords and optional journal name.\n    \n    This function allows users to search the PubMed database by providing keywords\n    and an optional journal name. It returns a specified number of\n    results in a formatted dictionary.\n    \n    Parameters:\n    - keywords (List[str]): Keywords to search for in PubMed without field restrictions.\n    - journal (Optional[str]): Journal name to limit the search to a specific journal.\n    - num_results (int): Maximum number of results to return. Default is 10.\n    - sort_by (str): Sort order for results. Options: \"relevance\" (default), \"date_desc\" (newest first), \"date_asc\" (oldest first).\n    \n    Returns:\n    - Dict[str, Any]: A dictionary containing the success status, a list of results with PubMed IDs,\n      links, abstracts, and the total number of results found.\n    ",
+          "input_schema": {
+            "properties": {
+              "keywords": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Keywords",
+                "type": "array"
+              },
+              "journal": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Journal"
+              },
+              "num_results": {
+                "default": 10,
+                "title": "Num Results",
+                "type": "integer"
+              },
+              "sort_by": {
+                "default": "relevance",
+                "title": "Sort By",
+                "type": "string"
+              }
+            },
+            "title": "search_pubmedArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_mesh_terms",
+          "description": "\n    Get MeSH (Medical Subject Headings) terms related to a search word.\n    \n    This function queries the PubMed MeSH database to find relevant medical terminology\n    that matches the provided search term. Useful for finding standardized medical terms.\n    \n    Parameters:\n    - search_word (str): The word or phrase to search for in the MeSH database.\n    \n    Returns:\n    - Dict[str, Any]: A dictionary containing success status and a list of MeSH terms.\n    ",
+          "input_schema": {
+            "properties": {
+              "search_word": {
+                "title": "Search Word",
+                "type": "string"
+              }
+            },
+            "required": [
+              "search_word"
+            ],
+            "title": "get_mesh_termsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pubmed_count",
+          "description": "\n    Get the number of PubMed results for multiple search terms.\n    \n    This function queries PubMed and returns the count of results for each provided search term.\n    Useful for comparing the prevalence of different medical terms or concepts in the literature.\n    \n    Parameters:\n    - search_terms (List[str]): List of search terms to query in PubMed.\n    \n    Returns:\n    - Dict[str, Any]: A dictionary containing success status and counts for each search term.\n    ",
+          "input_schema": {
+            "properties": {
+              "search_terms": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Search Terms",
+                "type": "array"
+              }
+            },
+            "required": [
+              "search_terms"
+            ],
+            "title": "get_pubmed_countArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "format_paper_details",
+          "description": "\n    Fetch and format details of multiple PubMed articles.\n    \n    This function retrieves details for a list of PubMed IDs and formats them\n    into a list of dictionaries containing article information.\n    \n    Parameters:\n    - pubmed_ids (List[str]): A list of PubMed IDs to fetch details for.\n    \n    Returns:\n    - List[Dict[str, Any]]: A list of dictionaries, each containing details of a PubMed article.\n    ",
+          "input_schema": {
+            "properties": {
+              "pubmed_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Pubmed Ids",
+                "type": "array"
+              }
+            },
+            "required": [
+              "pubmed_ids"
+            ],
+            "title": "format_paper_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pico_search",
+          "description": "\n    Perform PICO (Population, Intervention, Comparison, Outcome) based PubMed search with synonyms.\n    \n    This function takes lists of terms for each PICO element, combines them with OR within each element,\n    and then performs various AND combinations between elements. Returns search queries and result counts.\n    \n    Parameters:\n    - p_terms (List[str]): Population terms/synonyms (at least 2 recommended)\n    - i_terms (List[str]): Intervention terms/synonyms (at least 2 recommended)\n    - c_terms (List[str]): Comparison terms/synonyms (optional, at least 2 recommended if provided)\n    - o_terms (List[str]): Outcome terms/synonyms (optional, at least 2 recommended if provided)\n    \n    Returns:\n    - Dict[str, Any]: A dictionary containing individual element searches and combination searches with queries and result counts\n    ",
+          "input_schema": {
+            "properties": {
+              "p_terms": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "P Terms",
+                "type": "array"
+              },
+              "i_terms": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "I Terms",
+                "type": "array"
+              },
+              "c_terms": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "C Terms",
+                "type": "array"
+              },
+              "o_terms": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "O Terms",
+                "type": "array"
+              }
+            },
+            "title": "pico_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "search_pubmed",
+        "get_mesh_terms",
+        "get_pubmed_count",
+        "format_paper_details",
+        "pico_search"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 661,
+      "name": "PubMed Enhanced Search Server",
+      "author": "@leescot/pubmed-mcp-smithery",
+      "overview": "Search and retrieve academic papers from the PubMed database with enhanced tools. Utilize features like MeSH term lookup, publication statistics, and structured PICO-based evidence searches to streamline your research process.",
+      "repository_url": "https://github.com/leescot/pubmed-mcp-smithery",
+      "homepage": "https://smithery.ai/server/@leescot/pubmed-mcp-smithery",
+      "remote_or_local": "Remote",
+      "license": "@leescot/pubmed-mcp-smithery",
+      "usage_count": "13",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@leescot_pubmed-mcp-smithery.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "search_pubmed",
+          "description": "\n    Search the PubMed database using specified keywords and optional journal name.\n    \n    This function allows users to search the PubMed database by providing keywords\n    and an optional journal name. It returns a specified number of\n    results in a formatted dictionary.\n    \n    Parameters:\n    - keywords (List[str]): Keywords to search for in PubMed without field restrictions.\n    - journal (Optional[str]): Journal name to limit the search to a specific journal.\n    - num_results (int): Maximum number of results to return. Default is 10.\n    - sort_by (str): Sort order for results. Options: \"relevance\" (default), \"date_desc\" (newest first), \"date_asc\" (oldest first).\n    \n    Returns:\n    - Dict[str, Any]: A dictionary containing the success status, a list of results with PubMed IDs,\n      links, abstracts, and the total number of results found.\n    ",
+          "input_schema": {
+            "properties": {
+              "keywords": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "Keywords",
+                "type": "array"
+              },
+              "journal": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Journal"
+              },
+              "num_results": {
+                "default": 10,
+                "title": "Num Results",
+                "type": "integer"
+              },
+              "sort_by": {
+                "default": "relevance",
+                "title": "Sort By",
+                "type": "string"
+              }
+            },
+            "title": "search_pubmedArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_mesh_terms",
+          "description": "\n    Get MeSH (Medical Subject Headings) terms related to a search word.\n    \n    This function queries the PubMed MeSH database to find relevant medical terminology\n    that matches the provided search term. Useful for finding standardized medical terms.\n    \n    Parameters:\n    - search_word (str): The word or phrase to search for in the MeSH database.\n    \n    Returns:\n    - Dict[str, Any]: A dictionary containing success status and a list of MeSH terms.\n    ",
+          "input_schema": {
+            "properties": {
+              "search_word": {
+                "title": "Search Word",
+                "type": "string"
+              }
+            },
+            "required": [
+              "search_word"
+            ],
+            "title": "get_mesh_termsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_pubmed_count",
+          "description": "\n    Get the number of PubMed results for multiple search terms.\n    \n    This function queries PubMed and returns the count of results for each provided search term.\n    Useful for comparing the prevalence of different medical terms or concepts in the literature.\n    \n    Parameters:\n    - search_terms (List[str]): List of search terms to query in PubMed.\n    \n    Returns:\n    - Dict[str, Any]: A dictionary containing success status and counts for each search term.\n    ",
+          "input_schema": {
+            "properties": {
+              "search_terms": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Search Terms",
+                "type": "array"
+              }
+            },
+            "required": [
+              "search_terms"
+            ],
+            "title": "get_pubmed_countArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "format_paper_details",
+          "description": "\n    Fetch and format details of multiple PubMed articles.\n    \n    This function retrieves details for a list of PubMed IDs and formats them\n    into a list of dictionaries containing article information.\n    \n    Parameters:\n    - pubmed_ids (List[str]): A list of PubMed IDs to fetch details for.\n    \n    Returns:\n    - List[Dict[str, Any]]: A list of dictionaries, each containing details of a PubMed article.\n    ",
+          "input_schema": {
+            "properties": {
+              "pubmed_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "title": "Pubmed Ids",
+                "type": "array"
+              }
+            },
+            "required": [
+              "pubmed_ids"
+            ],
+            "title": "format_paper_detailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "pico_search",
+          "description": "\n    Perform PICO (Population, Intervention, Comparison, Outcome) based PubMed search with synonyms.\n    \n    This function takes lists of terms for each PICO element, combines them with OR within each element,\n    and then performs various AND combinations between elements. Returns search queries and result counts.\n    \n    Parameters:\n    - p_terms (List[str]): Population terms/synonyms (at least 2 recommended)\n    - i_terms (List[str]): Intervention terms/synonyms (at least 2 recommended)\n    - c_terms (List[str]): Comparison terms/synonyms (optional, at least 2 recommended if provided)\n    - o_terms (List[str]): Outcome terms/synonyms (optional, at least 2 recommended if provided)\n    \n    Returns:\n    - Dict[str, Any]: A dictionary containing individual element searches and combination searches with queries and result counts\n    ",
+          "input_schema": {
+            "properties": {
+              "p_terms": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "P Terms",
+                "type": "array"
+              },
+              "i_terms": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "I Terms",
+                "type": "array"
+              },
+              "c_terms": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "C Terms",
+                "type": "array"
+              },
+              "o_terms": {
+                "default": [],
+                "items": {
+                  "type": "string"
+                },
+                "title": "O Terms",
+                "type": "array"
+              }
+            },
+            "title": "pico_searchArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@leescot/pubmed-mcp-smithery/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@leescot/pubmed-mcp-smithery/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0662.@leescot_pubmed-mcp-smithery_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 646
+  }
+}

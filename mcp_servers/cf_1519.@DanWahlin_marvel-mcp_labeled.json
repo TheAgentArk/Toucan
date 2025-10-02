@@ -1,0 +1,172 @@
+{
+  "labels": {
+    "analysis": "The Marvel MCP Server is designed to interact with Marvel's API, providing tools to fetch and display data related to Marvel characters and comics. Its core functionality revolves around accessing and processing Marvel's rich content, such as character details, comic information, and related data. The available tools allow users to retrieve specific data points (e.g., characters by ID, comics by character or ID) and even generate HTML pages with comic information. This suggests the server is primarily focused on API integration and content management related to Marvel's universe.",
+    "reasoning": "The **API Integration** label is chosen because the server's primary purpose is to interact with the Marvel Developer API, retrieving and processing structured data. The **Content Creation** label is added because the `generate_comics_html` tool allows users to create HTML pages with Marvel content, which aligns with content generation. No custom label is needed as the functionality is well-covered by the predefined categories.",
+    "primary_label": "API Integration",
+    "secondary_labels": [
+      "Content Creation"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1518,
+    "server_name": "Marvel MCP Server",
+    "rank_by_usage": 1519,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@DanWahlin_marvel-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@DanWahlin/marvel-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1518,
+      "name": "Marvel MCP Server",
+      "author": "@DanWahlin/marvel-mcp",
+      "overview": "Interact with Marvel characters and comics data seamlessly. Fetch character details, comics, and more using the Marvel Developer API. Enhance your applications with rich Marvel content effortlessly.",
+      "repository_url": "https://github.com/DanWahlin/marvel-mcp",
+      "homepage": "https://smithery.ai/server/@DanWahlin/marvel-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@DanWahlin_marvel-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "get_characters",
+          "description": "Deploy Server Marvel MCP Server @DanWahlin/marvel-mcp Try in Playground get_characters",
+          "parameters": [
+            {
+              "name": "get_characters",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_character_by_id",
+          "description": "Fetch a Marvel character by ID",
+          "parameters": [
+            {
+              "name": "get_character_by_id",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "characterId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_comics_for_character",
+          "description": "Fetch Marvel comics filtered by character ID and optional filters",
+          "parameters": []
+        },
+        {
+          "name": "get_comics",
+          "description": "characterId* diamondCode issueNumber collaborators modifiedSince dateDescriptor hasDigitalIssue titleStartsWith sharedAppearances",
+          "parameters": [
+            {
+              "name": "get_comics_for_character",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_comic_by_id",
+          "description": "Fetch a single Marvel comic by ID",
+          "parameters": [
+            {
+              "name": "get_comic_by_id",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "comicId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_characters_for_comic",
+          "description": "Fetch Marvel characters for a given comic",
+          "parameters": [
+            {
+              "name": "comicId",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "orderBy",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "stories",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "modifiedSince",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "nameStartsWith",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "generate_comics_html",
+          "description": "Create an HTML page displaying Marvel comics with their images",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@DanWahlin/marvel-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "marvelPublicKey",
+          "required": true,
+          "description": "Your Marvel API public key."
+        },
+        {
+          "name": "marvelPrivateKey",
+          "required": true,
+          "description": "Your Marvel API private key."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@DanWahlin/marvel-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1519.@DanWahlin_marvel-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1398
+  }
+}

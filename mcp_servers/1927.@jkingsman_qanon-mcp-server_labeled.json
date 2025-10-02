@@ -1,0 +1,471 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to provide access to and analysis of a dataset containing Q-Anon posts and drops. It offers tools for searching, filtering, and retrieving specific posts, as well as generating insights through analysis tools like word clouds and timeline summaries. The server's primary functionality revolves around facilitating research and exploration of sociological aspects related to this dataset. The available tools enable detailed queries, contextual analysis, and visual representations of the data, suggesting a focus on data exploration and research.",
+    "reasoning": "The primary label \"Web Search & Research\" is chosen because the server's main purpose is to allow users to search and analyze a specific dataset, enabling research and exploration. The secondary labels \"Data Analysis & Processing\" and \"Content Creation\" are selected because the server provides tools for generating insights and word clouds, which are data analysis functions, and its overall purpose includes creating summaries and visualizations of the data. No custom label is needed as the predefined labels adequately cover the server's functionality.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Content Creation"
+    ],
+    "custom_label": "Q-Anon Research Analysis",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1926,
+    "server_name": "Q-Anon Posts/Drops Server",
+    "rank_by_usage": 1927,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@jkingsman_qanon-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jkingsman/qanon-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_post_by_id_tool",
+          "description": "\n    Retrieve a specific post by its ID.\n\n    Args:\n        post_id: The ID of the post to retrieve\n    ",
+          "input_schema": {
+            "properties": {
+              "post_id": {
+                "title": "Post Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "post_id"
+            ],
+            "title": "get_post_by_id_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_posts",
+          "description": "\n    Search for posts/drops containing a specific keyword or phrase.\n\n    Args:\n        query: The keyword or phrase to search for\n        limit: Maximum number of results to return (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_postsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_posts_by_date",
+          "description": "\n    Get posts/drops within a specific date range.\n\n    Args:\n        start_date: Start date in YYYY-MM-DD format\n        end_date: End date in YYYY-MM-DD format (defaults to start_date if not provided)\n        limit: Maximum number of results to return (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "start_date": {
+                "title": "Start Date",
+                "type": "string"
+              },
+              "end_date": {
+                "default": null,
+                "title": "End Date",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_date"
+            ],
+            "title": "get_posts_by_dateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_posts_by_author_id",
+          "description": "\n    Get posts/drops by a specific author ID.\n\n    Args:\n        author_id: The author ID to search for\n        limit: Maximum number of results to return (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "author_id": {
+                "title": "Author Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "author_id"
+            ],
+            "title": "get_posts_by_author_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_post",
+          "description": "\n    Get detailed analysis of a specific post/drop including references and context.\n\n    Args:\n        post_id: The ID of the post to analyze\n    ",
+          "input_schema": {
+            "properties": {
+              "post_id": {
+                "title": "Post Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "post_id"
+            ],
+            "title": "analyze_postArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_timeline_summary",
+          "description": "\n    Get a timeline summary of posts/drops, optionally within a date range.\n\n    Args:\n        start_date: Optional start date in YYYY-MM-DD format\n        end_date: Optional end date in YYYY-MM-DD format\n    ",
+          "input_schema": {
+            "properties": {
+              "start_date": {
+                "default": null,
+                "title": "Start Date",
+                "type": "string"
+              },
+              "end_date": {
+                "default": null,
+                "title": "End Date",
+                "type": "string"
+              }
+            },
+            "title": "get_timeline_summaryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "word_cloud_by_post_ids",
+          "description": "\n    Generate a word cloud analysis showing the most common words used in posts within a specified ID range.\n\n    Args:\n        start_id: Starting post ID\n        end_id: Ending post ID\n        min_word_length: Minimum length of words to include (default: 3)\n        max_words: Maximum number of words to return (default: 100)\n    ",
+          "input_schema": {
+            "properties": {
+              "start_id": {
+                "title": "Start Id",
+                "type": "integer"
+              },
+              "end_id": {
+                "title": "End Id",
+                "type": "integer"
+              },
+              "min_word_length": {
+                "default": 3,
+                "title": "Min Word Length",
+                "type": "integer"
+              },
+              "max_words": {
+                "default": 100,
+                "title": "Max Words",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_id",
+              "end_id"
+            ],
+            "title": "word_cloud_by_post_idsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "word_cloud_by_date_range",
+          "description": "\n    Generate a word cloud analysis showing the most common words used in posts within a specified date range.\n\n    Args:\n        start_date: Start date in YYYY-MM-DD format\n        end_date: End date in YYYY-MM-DD format\n        min_word_length: Minimum length of words to include (default: 3)\n        max_words: Maximum number of words to return (default: 100)\n    ",
+          "input_schema": {
+            "properties": {
+              "start_date": {
+                "title": "Start Date",
+                "type": "string"
+              },
+              "end_date": {
+                "title": "End Date",
+                "type": "string"
+              },
+              "min_word_length": {
+                "default": 3,
+                "title": "Min Word Length",
+                "type": "integer"
+              },
+              "max_words": {
+                "default": 100,
+                "title": "Max Words",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_date",
+              "end_date"
+            ],
+            "title": "word_cloud_by_date_rangeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 8,
+      "tool_names": [
+        "get_post_by_id_tool",
+        "search_posts",
+        "get_posts_by_date",
+        "get_posts_by_author_id",
+        "analyze_post",
+        "get_timeline_summary",
+        "word_cloud_by_post_ids",
+        "word_cloud_by_date_range"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1926,
+      "name": "Q-Anon Posts/Drops Server",
+      "author": "@jkingsman/qanon-mcp-server",
+      "overview": "Access and analyze a dataset of Q-Anon posts for research purposes. Search, filter, and gain insights into the Q-Anon drops using AI assistants like Claude. Utilize this tool to explore sociological aspects of the dataset safely and responsibly.",
+      "repository_url": "https://github.com/jkingsman/qanon-mcp-server",
+      "homepage": "https://smithery.ai/server/@jkingsman/qanon-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jkingsman_qanon-mcp-server.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "get_post_by_id_tool",
+          "description": "\n    Retrieve a specific post by its ID.\n\n    Args:\n        post_id: The ID of the post to retrieve\n    ",
+          "input_schema": {
+            "properties": {
+              "post_id": {
+                "title": "Post Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "post_id"
+            ],
+            "title": "get_post_by_id_toolArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_posts",
+          "description": "\n    Search for posts/drops containing a specific keyword or phrase.\n\n    Args:\n        query: The keyword or phrase to search for\n        limit: Maximum number of results to return (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_postsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_posts_by_date",
+          "description": "\n    Get posts/drops within a specific date range.\n\n    Args:\n        start_date: Start date in YYYY-MM-DD format\n        end_date: End date in YYYY-MM-DD format (defaults to start_date if not provided)\n        limit: Maximum number of results to return (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "start_date": {
+                "title": "Start Date",
+                "type": "string"
+              },
+              "end_date": {
+                "default": null,
+                "title": "End Date",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_date"
+            ],
+            "title": "get_posts_by_dateArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_posts_by_author_id",
+          "description": "\n    Get posts/drops by a specific author ID.\n\n    Args:\n        author_id: The author ID to search for\n        limit: Maximum number of results to return (default: 10)\n    ",
+          "input_schema": {
+            "properties": {
+              "author_id": {
+                "title": "Author Id",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "author_id"
+            ],
+            "title": "get_posts_by_author_idArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "analyze_post",
+          "description": "\n    Get detailed analysis of a specific post/drop including references and context.\n\n    Args:\n        post_id: The ID of the post to analyze\n    ",
+          "input_schema": {
+            "properties": {
+              "post_id": {
+                "title": "Post Id",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "post_id"
+            ],
+            "title": "analyze_postArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_timeline_summary",
+          "description": "\n    Get a timeline summary of posts/drops, optionally within a date range.\n\n    Args:\n        start_date: Optional start date in YYYY-MM-DD format\n        end_date: Optional end date in YYYY-MM-DD format\n    ",
+          "input_schema": {
+            "properties": {
+              "start_date": {
+                "default": null,
+                "title": "Start Date",
+                "type": "string"
+              },
+              "end_date": {
+                "default": null,
+                "title": "End Date",
+                "type": "string"
+              }
+            },
+            "title": "get_timeline_summaryArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "word_cloud_by_post_ids",
+          "description": "\n    Generate a word cloud analysis showing the most common words used in posts within a specified ID range.\n\n    Args:\n        start_id: Starting post ID\n        end_id: Ending post ID\n        min_word_length: Minimum length of words to include (default: 3)\n        max_words: Maximum number of words to return (default: 100)\n    ",
+          "input_schema": {
+            "properties": {
+              "start_id": {
+                "title": "Start Id",
+                "type": "integer"
+              },
+              "end_id": {
+                "title": "End Id",
+                "type": "integer"
+              },
+              "min_word_length": {
+                "default": 3,
+                "title": "Min Word Length",
+                "type": "integer"
+              },
+              "max_words": {
+                "default": 100,
+                "title": "Max Words",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_id",
+              "end_id"
+            ],
+            "title": "word_cloud_by_post_idsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "word_cloud_by_date_range",
+          "description": "\n    Generate a word cloud analysis showing the most common words used in posts within a specified date range.\n\n    Args:\n        start_date: Start date in YYYY-MM-DD format\n        end_date: End date in YYYY-MM-DD format\n        min_word_length: Minimum length of words to include (default: 3)\n        max_words: Maximum number of words to return (default: 100)\n    ",
+          "input_schema": {
+            "properties": {
+              "start_date": {
+                "title": "Start Date",
+                "type": "string"
+              },
+              "end_date": {
+                "title": "End Date",
+                "type": "string"
+              },
+              "min_word_length": {
+                "default": 3,
+                "title": "Min Word Length",
+                "type": "integer"
+              },
+              "max_words": {
+                "default": 100,
+                "title": "Max Words",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "start_date",
+              "end_date"
+            ],
+            "title": "word_cloud_by_date_rangeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jkingsman/qanon-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jkingsman/qanon-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1927.@jkingsman_qanon-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1698
+  }
+}

@@ -1,0 +1,1204 @@
+{
+  "labels": {
+    "analysis": "The MCP Server for IDA Pro is designed to enhance reverse engineering workflows by providing programmatic access to IDA Pro's database through a server integration. Its tools enable querying functions, globals, strings, and types; disassembling and decompiling code; cross-reference analysis; and modifying metadata like comments, names, and types. This server essentially acts as a middleware layer between IDA Pro and external systems, facilitating automation and scripting of reverse engineering tasks.",
+    "reasoning": "The primary label \"Development Tools\" is chosen because the server aids in software reverse engineering, a core development-related task. \"Reverse Engineering\" is a custom label to specifically capture its niche functionality in this space. While it could fit under \"Database Operations,\" that label is too generic for its specialized use case.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Memory Management"
+    ],
+    "custom_label": "Reverse Engineering",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 536,
+    "server_name": "IDA Pro MCP",
+    "rank_by_usage": 537,
+    "usage_count": "25",
+    "original_file": "../crawler/smithery/@mrexodia_ida-pro-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@mrexodia/ida-pro-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "check_connection",
+          "description": "Check if the IDA plugin is running",
+          "input_schema": {
+            "properties": {},
+            "title": "check_connectionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_metadata",
+          "description": "Get metadata about the current IDB",
+          "input_schema": {
+            "properties": {},
+            "title": "get_metadataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_function_by_name",
+          "description": "Get a function by its name",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "description": "Name of the function to get",
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "get_function_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_function_by_address",
+          "description": "Get a function by its address",
+          "input_schema": {
+            "properties": {
+              "address": {
+                "description": "Address of the function to get",
+                "title": "Address",
+                "type": "string"
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "title": "get_function_by_addressArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_address",
+          "description": "Get the address currently selected by the user",
+          "input_schema": {
+            "properties": {},
+            "title": "get_current_addressArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_function",
+          "description": "Get the function currently selected by the user",
+          "input_schema": {
+            "properties": {},
+            "title": "get_current_functionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "convert_number",
+          "description": "Convert a number (decimal, hexadecimal) to different representations",
+          "input_schema": {
+            "properties": {
+              "text": {
+                "description": "Textual representation of the number to convert",
+                "title": "Text",
+                "type": "string"
+              },
+              "size": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Size of the variable in bytes",
+                "title": "Size"
+              }
+            },
+            "required": [
+              "text",
+              "size"
+            ],
+            "title": "convert_numberArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_functions",
+          "description": "List all functions in the database (paginated)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of functions to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "offset",
+              "count"
+            ],
+            "title": "list_functionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_globals_filter",
+          "description": "List matching globals in the database (paginated, filtered)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of globals to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              },
+              "filter": {
+                "description": "Filter to apply to the list (required parameter, empty string for no filter). Case-insensitive contains or /regex/ syntax",
+                "title": "Filter",
+                "type": "string"
+              }
+            },
+            "required": [
+              "offset",
+              "count",
+              "filter"
+            ],
+            "title": "list_globals_filterArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_globals",
+          "description": "List all globals in the database (paginated)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of globals to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "offset",
+              "count"
+            ],
+            "title": "list_globalsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_strings_filter",
+          "description": "List matching strings in the database (paginated, filtered)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of strings to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              },
+              "filter": {
+                "description": "Filter to apply to the list (required parameter, empty string for no filter). Case-insensitive contains or /regex/ syntax",
+                "title": "Filter",
+                "type": "string"
+              }
+            },
+            "required": [
+              "offset",
+              "count",
+              "filter"
+            ],
+            "title": "list_strings_filterArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_strings",
+          "description": "List all strings in the database (paginated)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of strings to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "offset",
+              "count"
+            ],
+            "title": "list_stringsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_local_types",
+          "description": "List all Local types in the database",
+          "input_schema": {
+            "properties": {},
+            "title": "list_local_typesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "decompile_function",
+          "description": "Decompile a function at the given address",
+          "input_schema": {
+            "properties": {
+              "address": {
+                "description": "Address of the function to decompile",
+                "title": "Address",
+                "type": "string"
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "title": "decompile_functionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "disassemble_function",
+          "description": "Get assembly code (address: instruction; comment) for a function",
+          "input_schema": {
+            "properties": {
+              "start_address": {
+                "description": "Address of the function to disassemble",
+                "title": "Start Address",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_address"
+            ],
+            "title": "disassemble_functionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_xrefs_to",
+          "description": "Get all cross references to the given address",
+          "input_schema": {
+            "properties": {
+              "address": {
+                "description": "Address to get cross references to",
+                "title": "Address",
+                "type": "string"
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "title": "get_xrefs_toArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_xrefs_to_field",
+          "description": "Get all cross references to a named struct field (member)",
+          "input_schema": {
+            "properties": {
+              "struct_name": {
+                "description": "Name of the struct (type) containing the field",
+                "title": "Struct Name",
+                "type": "string"
+              },
+              "field_name": {
+                "description": "Name of the field (member) to get xrefs to",
+                "title": "Field Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "struct_name",
+              "field_name"
+            ],
+            "title": "get_xrefs_to_fieldArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_entry_points",
+          "description": "Get all entry points in the database",
+          "input_schema": {
+            "properties": {},
+            "title": "get_entry_pointsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_comment",
+          "description": "Set a comment for a given address in the function disassembly and pseudocode",
+          "input_schema": {
+            "properties": {
+              "address": {
+                "description": "Address in the function to set the comment for",
+                "title": "Address",
+                "type": "string"
+              },
+              "comment": {
+                "description": "Comment text",
+                "title": "Comment",
+                "type": "string"
+              }
+            },
+            "required": [
+              "address",
+              "comment"
+            ],
+            "title": "set_commentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename_local_variable",
+          "description": "Rename a local variable in a function",
+          "input_schema": {
+            "properties": {
+              "function_address": {
+                "description": "Address of the function containing the variable",
+                "title": "Function Address",
+                "type": "string"
+              },
+              "old_name": {
+                "description": "Current name of the variable",
+                "title": "Old Name",
+                "type": "string"
+              },
+              "new_name": {
+                "description": "New name for the variable (empty for a default name)",
+                "title": "New Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "function_address",
+              "old_name",
+              "new_name"
+            ],
+            "title": "rename_local_variableArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename_global_variable",
+          "description": "Rename a global variable",
+          "input_schema": {
+            "properties": {
+              "old_name": {
+                "description": "Current name of the global variable",
+                "title": "Old Name",
+                "type": "string"
+              },
+              "new_name": {
+                "description": "New name for the global variable (empty for a default name)",
+                "title": "New Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "old_name",
+              "new_name"
+            ],
+            "title": "rename_global_variableArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_global_variable_type",
+          "description": "Set a global variable's type",
+          "input_schema": {
+            "properties": {
+              "variable_name": {
+                "description": "Name of the global variable",
+                "title": "Variable Name",
+                "type": "string"
+              },
+              "new_type": {
+                "description": "New type for the variable",
+                "title": "New Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "variable_name",
+              "new_type"
+            ],
+            "title": "set_global_variable_typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename_function",
+          "description": "Rename a function",
+          "input_schema": {
+            "properties": {
+              "function_address": {
+                "description": "Address of the function to rename",
+                "title": "Function Address",
+                "type": "string"
+              },
+              "new_name": {
+                "description": "New name for the function (empty for a default name)",
+                "title": "New Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "function_address",
+              "new_name"
+            ],
+            "title": "rename_functionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_function_prototype",
+          "description": "Set a function's prototype",
+          "input_schema": {
+            "properties": {
+              "function_address": {
+                "description": "Address of the function",
+                "title": "Function Address",
+                "type": "string"
+              },
+              "prototype": {
+                "description": "New function prototype",
+                "title": "Prototype",
+                "type": "string"
+              }
+            },
+            "required": [
+              "function_address",
+              "prototype"
+            ],
+            "title": "set_function_prototypeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "declare_c_type",
+          "description": "Create or update a local type from a C declaration",
+          "input_schema": {
+            "properties": {
+              "c_declaration": {
+                "description": "C declaration of the type. Examples include: typedef int foo_t; struct bar { int a; bool b; };",
+                "title": "C Declaration",
+                "type": "string"
+              }
+            },
+            "required": [
+              "c_declaration"
+            ],
+            "title": "declare_c_typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_local_variable_type",
+          "description": "Set a local variable's type",
+          "input_schema": {
+            "properties": {
+              "function_address": {
+                "description": "Address of the function containing the variable",
+                "title": "Function Address",
+                "type": "string"
+              },
+              "variable_name": {
+                "description": "Name of the variable",
+                "title": "Variable Name",
+                "type": "string"
+              },
+              "new_type": {
+                "description": "New type for the variable",
+                "title": "New Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "function_address",
+              "variable_name",
+              "new_type"
+            ],
+            "title": "set_local_variable_typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 26,
+      "tool_names": [
+        "check_connection",
+        "get_metadata",
+        "get_function_by_name",
+        "get_function_by_address",
+        "get_current_address",
+        "get_current_function",
+        "convert_number",
+        "list_functions",
+        "list_globals_filter",
+        "list_globals",
+        "list_strings_filter",
+        "list_strings",
+        "list_local_types",
+        "decompile_function",
+        "disassemble_function",
+        "get_xrefs_to",
+        "get_xrefs_to_field",
+        "get_entry_points",
+        "set_comment",
+        "rename_local_variable",
+        "rename_global_variable",
+        "set_global_variable_type",
+        "rename_function",
+        "set_function_prototype",
+        "declare_c_type",
+        "set_local_variable_type"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 536,
+      "name": "IDA Pro MCP",
+      "author": "@mrexodia/ida-pro-mcp",
+      "overview": "Enable vibe reversing in IDA Pro with a simple server integration. Start the server easily within IDA Pro and enhance your reverse engineering capabilities. Interact with MCP tools seamlessly for efficient analysis.",
+      "repository_url": "https://github.com/mrexodia/ida-pro-mcp",
+      "homepage": "https://smithery.ai/server/@mrexodia/ida-pro-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "25",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@mrexodia_ida-pro-mcp.json",
+      "tools_count": 26,
+      "tools": [
+        {
+          "name": "check_connection",
+          "description": "Check if the IDA plugin is running",
+          "input_schema": {
+            "properties": {},
+            "title": "check_connectionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_metadata",
+          "description": "Get metadata about the current IDB",
+          "input_schema": {
+            "properties": {},
+            "title": "get_metadataArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_function_by_name",
+          "description": "Get a function by its name",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "description": "Name of the function to get",
+                "title": "Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "title": "get_function_by_nameArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_function_by_address",
+          "description": "Get a function by its address",
+          "input_schema": {
+            "properties": {
+              "address": {
+                "description": "Address of the function to get",
+                "title": "Address",
+                "type": "string"
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "title": "get_function_by_addressArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_address",
+          "description": "Get the address currently selected by the user",
+          "input_schema": {
+            "properties": {},
+            "title": "get_current_addressArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_current_function",
+          "description": "Get the function currently selected by the user",
+          "input_schema": {
+            "properties": {},
+            "title": "get_current_functionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "convert_number",
+          "description": "Convert a number (decimal, hexadecimal) to different representations",
+          "input_schema": {
+            "properties": {
+              "text": {
+                "description": "Textual representation of the number to convert",
+                "title": "Text",
+                "type": "string"
+              },
+              "size": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "description": "Size of the variable in bytes",
+                "title": "Size"
+              }
+            },
+            "required": [
+              "text",
+              "size"
+            ],
+            "title": "convert_numberArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_functions",
+          "description": "List all functions in the database (paginated)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of functions to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "offset",
+              "count"
+            ],
+            "title": "list_functionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_globals_filter",
+          "description": "List matching globals in the database (paginated, filtered)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of globals to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              },
+              "filter": {
+                "description": "Filter to apply to the list (required parameter, empty string for no filter). Case-insensitive contains or /regex/ syntax",
+                "title": "Filter",
+                "type": "string"
+              }
+            },
+            "required": [
+              "offset",
+              "count",
+              "filter"
+            ],
+            "title": "list_globals_filterArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_globals",
+          "description": "List all globals in the database (paginated)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of globals to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "offset",
+              "count"
+            ],
+            "title": "list_globalsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_strings_filter",
+          "description": "List matching strings in the database (paginated, filtered)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of strings to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              },
+              "filter": {
+                "description": "Filter to apply to the list (required parameter, empty string for no filter). Case-insensitive contains or /regex/ syntax",
+                "title": "Filter",
+                "type": "string"
+              }
+            },
+            "required": [
+              "offset",
+              "count",
+              "filter"
+            ],
+            "title": "list_strings_filterArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_strings",
+          "description": "List all strings in the database (paginated)",
+          "input_schema": {
+            "properties": {
+              "offset": {
+                "description": "Offset to start listing from (start at 0)",
+                "title": "Offset",
+                "type": "integer"
+              },
+              "count": {
+                "description": "Number of strings to list (100 is a good default, 0 means remainder)",
+                "title": "Count",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "offset",
+              "count"
+            ],
+            "title": "list_stringsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_local_types",
+          "description": "List all Local types in the database",
+          "input_schema": {
+            "properties": {},
+            "title": "list_local_typesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "decompile_function",
+          "description": "Decompile a function at the given address",
+          "input_schema": {
+            "properties": {
+              "address": {
+                "description": "Address of the function to decompile",
+                "title": "Address",
+                "type": "string"
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "title": "decompile_functionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "disassemble_function",
+          "description": "Get assembly code (address: instruction; comment) for a function",
+          "input_schema": {
+            "properties": {
+              "start_address": {
+                "description": "Address of the function to disassemble",
+                "title": "Start Address",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_address"
+            ],
+            "title": "disassemble_functionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_xrefs_to",
+          "description": "Get all cross references to the given address",
+          "input_schema": {
+            "properties": {
+              "address": {
+                "description": "Address to get cross references to",
+                "title": "Address",
+                "type": "string"
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "title": "get_xrefs_toArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_xrefs_to_field",
+          "description": "Get all cross references to a named struct field (member)",
+          "input_schema": {
+            "properties": {
+              "struct_name": {
+                "description": "Name of the struct (type) containing the field",
+                "title": "Struct Name",
+                "type": "string"
+              },
+              "field_name": {
+                "description": "Name of the field (member) to get xrefs to",
+                "title": "Field Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "struct_name",
+              "field_name"
+            ],
+            "title": "get_xrefs_to_fieldArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_entry_points",
+          "description": "Get all entry points in the database",
+          "input_schema": {
+            "properties": {},
+            "title": "get_entry_pointsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_comment",
+          "description": "Set a comment for a given address in the function disassembly and pseudocode",
+          "input_schema": {
+            "properties": {
+              "address": {
+                "description": "Address in the function to set the comment for",
+                "title": "Address",
+                "type": "string"
+              },
+              "comment": {
+                "description": "Comment text",
+                "title": "Comment",
+                "type": "string"
+              }
+            },
+            "required": [
+              "address",
+              "comment"
+            ],
+            "title": "set_commentArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename_local_variable",
+          "description": "Rename a local variable in a function",
+          "input_schema": {
+            "properties": {
+              "function_address": {
+                "description": "Address of the function containing the variable",
+                "title": "Function Address",
+                "type": "string"
+              },
+              "old_name": {
+                "description": "Current name of the variable",
+                "title": "Old Name",
+                "type": "string"
+              },
+              "new_name": {
+                "description": "New name for the variable (empty for a default name)",
+                "title": "New Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "function_address",
+              "old_name",
+              "new_name"
+            ],
+            "title": "rename_local_variableArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename_global_variable",
+          "description": "Rename a global variable",
+          "input_schema": {
+            "properties": {
+              "old_name": {
+                "description": "Current name of the global variable",
+                "title": "Old Name",
+                "type": "string"
+              },
+              "new_name": {
+                "description": "New name for the global variable (empty for a default name)",
+                "title": "New Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "old_name",
+              "new_name"
+            ],
+            "title": "rename_global_variableArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_global_variable_type",
+          "description": "Set a global variable's type",
+          "input_schema": {
+            "properties": {
+              "variable_name": {
+                "description": "Name of the global variable",
+                "title": "Variable Name",
+                "type": "string"
+              },
+              "new_type": {
+                "description": "New type for the variable",
+                "title": "New Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "variable_name",
+              "new_type"
+            ],
+            "title": "set_global_variable_typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "rename_function",
+          "description": "Rename a function",
+          "input_schema": {
+            "properties": {
+              "function_address": {
+                "description": "Address of the function to rename",
+                "title": "Function Address",
+                "type": "string"
+              },
+              "new_name": {
+                "description": "New name for the function (empty for a default name)",
+                "title": "New Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "function_address",
+              "new_name"
+            ],
+            "title": "rename_functionArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_function_prototype",
+          "description": "Set a function's prototype",
+          "input_schema": {
+            "properties": {
+              "function_address": {
+                "description": "Address of the function",
+                "title": "Function Address",
+                "type": "string"
+              },
+              "prototype": {
+                "description": "New function prototype",
+                "title": "Prototype",
+                "type": "string"
+              }
+            },
+            "required": [
+              "function_address",
+              "prototype"
+            ],
+            "title": "set_function_prototypeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "declare_c_type",
+          "description": "Create or update a local type from a C declaration",
+          "input_schema": {
+            "properties": {
+              "c_declaration": {
+                "description": "C declaration of the type. Examples include: typedef int foo_t; struct bar { int a; bool b; };",
+                "title": "C Declaration",
+                "type": "string"
+              }
+            },
+            "required": [
+              "c_declaration"
+            ],
+            "title": "declare_c_typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_local_variable_type",
+          "description": "Set a local variable's type",
+          "input_schema": {
+            "properties": {
+              "function_address": {
+                "description": "Address of the function containing the variable",
+                "title": "Function Address",
+                "type": "string"
+              },
+              "variable_name": {
+                "description": "Name of the variable",
+                "title": "Variable Name",
+                "type": "string"
+              },
+              "new_type": {
+                "description": "New type for the variable",
+                "title": "New Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "function_address",
+              "variable_name",
+              "new_type"
+            ],
+            "title": "set_local_variable_typeArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@mrexodia/ida-pro-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@mrexodia/ida-pro-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0537.@mrexodia_ida-pro-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 525
+  }
+}

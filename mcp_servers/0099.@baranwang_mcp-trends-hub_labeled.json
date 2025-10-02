@@ -1,0 +1,1290 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"Trends Hub\" focuses on aggregating and providing real-time trending topics from a wide variety of sources including social platforms, news outlets, and specialized content sites. It provides tools to access hot lists, news, and rankings from platforms like Weibo, Douyin, Tencent News, 36氪, BBC, and many others. The core functionality revolves around gathering and presenting trending content across multiple domains such as technology, entertainment, business, gaming, and general news.",
+    "reasoning": "The primary label \"News & Media\" was chosen because the server's main functionality is to aggregate and present trending news and media content from various sources. Secondary labels \"Web Search & Research\" and \"Social Media\" were selected because the tools can be used for research purposes and many of the data sources are social media platforms. No custom label is needed as the predefined labels adequately cover the server's functionality.",
+    "primary_label": "News & Media",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Social Media"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": true
+  },
+  "metadata": {
+    "server_id": 98,
+    "server_name": "Trends Hub",
+    "rank_by_usage": 99,
+    "usage_count": "715",
+    "original_file": "../crawler/smithery/@baranwang_mcp-trends-hub.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@baranwang/mcp-trends-hub/mcp?config=eyJ0cmVuZHNIdWJDdXN0b21Sc3NVcmwiOiAiIiwgInRyZW5kc0h1YkhpZGRlbkZpZWxkcyI6ICIifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get-36kr-trending",
+          "description": "获取 36 氪热榜，提供创业、商业、科技领域的热门资讯，包含投融资动态、新兴产业分析和商业模式创新信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "hot",
+                    "description": "人气榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "video",
+                    "description": "视频榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "comment",
+                    "description": "热议榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "collect",
+                    "description": "收藏榜"
+                  }
+                ],
+                "default": "hot",
+                "description": "分类"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-9to5mac-news",
+          "description": "获取 9to5Mac 苹果相关新闻，包含苹果产品发布、iOS 更新、Mac 硬件、应用推荐及苹果公司动态的英文资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-bbc-news",
+          "description": "获取 BBC 新闻，提供全球新闻、英国新闻、商业、政治、健康、教育、科技、娱乐等资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "",
+                    "description": "热门新闻"
+                  },
+                  {
+                    "type": "string",
+                    "const": "world",
+                    "description": "国际"
+                  },
+                  {
+                    "type": "string",
+                    "const": "uk",
+                    "description": "英国"
+                  },
+                  {
+                    "type": "string",
+                    "const": "business",
+                    "description": "商业"
+                  },
+                  {
+                    "type": "string",
+                    "const": "politics",
+                    "description": "政治"
+                  },
+                  {
+                    "type": "string",
+                    "const": "health",
+                    "description": "健康"
+                  },
+                  {
+                    "type": "string",
+                    "const": "education",
+                    "description": "教育"
+                  },
+                  {
+                    "type": "string",
+                    "const": "science_and_environment",
+                    "description": "科学与环境"
+                  },
+                  {
+                    "type": "string",
+                    "const": "technology",
+                    "description": "科技"
+                  },
+                  {
+                    "type": "string",
+                    "const": "entertainment_and_arts",
+                    "description": "娱乐与艺术"
+                  }
+                ],
+                "default": ""
+              },
+              "edition": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": ""
+                  },
+                  {
+                    "type": "string",
+                    "const": "uk",
+                    "description": "UK"
+                  },
+                  {
+                    "type": "string",
+                    "const": "us",
+                    "description": "US & Canada"
+                  },
+                  {
+                    "type": "string",
+                    "const": "int",
+                    "description": "Rest of the world"
+                  }
+                ],
+                "default": "",
+                "description": "版本，仅对 `category` 为空有效"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-bilibili-rank",
+          "description": "获取哔哩哔哩视频排行榜，包含全站、动画、音乐、游戏等多个分区的热门视频，反映当下年轻人的内容消费趋势",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "const": 0,
+                    "description": "全站"
+                  },
+                  {
+                    "type": "number",
+                    "const": 1,
+                    "description": "动画"
+                  },
+                  {
+                    "type": "number",
+                    "const": 3,
+                    "description": "音乐"
+                  },
+                  {
+                    "type": "number",
+                    "const": 4,
+                    "description": "游戏"
+                  },
+                  {
+                    "type": "number",
+                    "const": 5,
+                    "description": "娱乐"
+                  },
+                  {
+                    "type": "number",
+                    "const": 188,
+                    "description": "科技"
+                  },
+                  {
+                    "type": "number",
+                    "const": 119,
+                    "description": "鬼畜"
+                  },
+                  {
+                    "type": "number",
+                    "const": 129,
+                    "description": "舞蹈"
+                  },
+                  {
+                    "type": "number",
+                    "const": 155,
+                    "description": "时尚"
+                  },
+                  {
+                    "type": "number",
+                    "const": 160,
+                    "description": "生活"
+                  },
+                  {
+                    "type": "number",
+                    "const": 168,
+                    "description": "国创相关"
+                  },
+                  {
+                    "type": "number",
+                    "const": 181,
+                    "description": "影视"
+                  }
+                ],
+                "default": 0,
+                "description": "排行榜分区"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-douban-rank",
+          "description": "获取豆瓣实时热门榜单，提供当前热门的图书、电影、电视剧、综艺等作品信息，包含评分和热度数据",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "subject",
+                    "description": "图书、电影、电视剧、综艺等"
+                  },
+                  {
+                    "type": "string",
+                    "const": "movie",
+                    "description": "电影"
+                  },
+                  {
+                    "type": "string",
+                    "const": "tv",
+                    "description": "电视剧"
+                  }
+                ],
+                "default": "subject"
+              },
+              "start": {
+                "type": "integer",
+                "default": 0
+              },
+              "count": {
+                "type": "integer",
+                "default": 10
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-douyin-trending",
+          "description": "获取抖音热搜榜单，展示当下最热门的社会话题、娱乐事件、网络热点和流行趋势",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-gcores-new",
+          "description": "获取机核网游戏相关资讯，包含电子游戏评测、玩家文化、游戏开发和游戏周边产品的深度内容",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-ifanr-news",
+          "description": "获取爱范儿科技快讯，包含最新的科技产品、数码设备、互联网动态等前沿科技资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer",
+                "default": 20
+              },
+              "offset": {
+                "type": "integer",
+                "default": 0
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-infoq-news",
+          "description": "获取 InfoQ 技术资讯，包含软件开发、架构设计、云计算、AI等企业级技术内容和前沿开发者动态",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "region": {
+                "type": "string",
+                "enum": [
+                  "cn",
+                  "global"
+                ],
+                "default": "cn"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-juejin-article-rank",
+          "description": "获取掘金文章榜，包含前端开发、后端技术、人工智能、移动开发及技术架构等领域的高质量中文技术文章和教程",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "6809637769959178254",
+                    "description": "后端"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637767543259144",
+                    "description": "前端"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809635626879549454",
+                    "description": "Android"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809635626661445640",
+                    "description": "iOS"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637773935378440",
+                    "description": "人工智能"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637771511070734",
+                    "description": "开发工具"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637776263217160",
+                    "description": "代码人生"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637772874219534",
+                    "description": "阅读"
+                  }
+                ],
+                "default": "6809637769959178254"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-netease-news-trending",
+          "description": "获取网易新闻热点榜，包含时政要闻、社会事件、财经资讯、科技动态及娱乐体育的全方位中文新闻资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-nytimes-news",
+          "description": "获取纽约时报新闻，包含国际政治、经济金融、社会文化、科学技术及艺术评论的高质量英文或中文国际新闻资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "region": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "cn",
+                    "description": "中文"
+                  },
+                  {
+                    "type": "string",
+                    "const": "global",
+                    "description": "全球"
+                  }
+                ],
+                "default": "cn"
+              },
+              "section": {
+                "type": "string",
+                "default": "HomePage",
+                "description": "分类，当 `region` 为 `cn` 时无效。可选值: Africa, Americas, ArtandDesign, Arts, AsiaPacific, Automobiles, Baseball, Books/Review, Business, Climate, CollegeBasketball, CollegeFootball, Dance, Dealbook, DiningandWine, Economy, Education, EnergyEnvironment, Europe, FashionandStyle, Golf, Health, Hockey, HomePage, Jobs, Lens, MediaandAdvertising, MiddleEast, MostEmailed, MostShared, MostViewed, Movies, Music, NYRegion, Obituaries, PersonalTech, Politics, ProBasketball, ProFootball, RealEstate, Science, SmallBusiness, Soccer, Space, Sports, SundayBookReview, Sunday-Review, Technology, Television, Tennis, Theater, TMagazine, Travel, Upshot, US, Weddings, Well, World, YourMoney"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-smzdm-rank",
+          "description": "获取什么值得买热门，包含商品推荐、优惠信息、购物攻略、产品评测及消费经验分享的实用中文消费类资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "unit": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "const": 1,
+                    "description": "今日热门"
+                  },
+                  {
+                    "type": "number",
+                    "const": 7,
+                    "description": "周热门"
+                  },
+                  {
+                    "type": "number",
+                    "const": 30,
+                    "description": "月热门"
+                  }
+                ],
+                "default": 1
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-sspai-rank",
+          "description": "获取少数派热榜，包含数码产品评测、软件应用推荐、生活方式指南及效率工作技巧的优质中文科技生活类内容",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tag": {
+                "type": "string",
+                "enum": [
+                  "热门文章",
+                  "应用推荐",
+                  "生活方式",
+                  "效率技巧",
+                  "少数派播客"
+                ],
+                "default": "热门文章",
+                "description": "分类"
+              },
+              "limit": {
+                "type": "integer",
+                "default": 40
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-tencent-news-trending",
+          "description": "获取腾讯新闻热点榜，包含国内外时事、社会热点、财经资讯、娱乐动态及体育赛事的综合性中文新闻资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page_size": {
+                "type": "integer",
+                "default": 20
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-thepaper-trending",
+          "description": "获取澎湃新闻热榜，包含时政要闻、财经动态、社会事件、文化教育及深度报道的高质量中文新闻资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-theverge-news",
+          "description": "获取 The Verge 新闻，包含科技创新、数码产品评测、互联网趋势及科技公司动态的英文科技资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-toutiao-trending",
+          "description": "获取今日头条热榜，包含时政要闻、社会事件、国际新闻、科技发展及娱乐八卦等多领域的热门中文资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-weibo-trending",
+          "description": "获取微博热搜榜，包含时事热点、社会现象、娱乐新闻、明星动态及网络热议话题的实时热门中文资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-weread-rank",
+          "description": "获取微信读书排行榜，包含热门小说、畅销书籍、新书推荐及各类文学作品的阅读数据和排名信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "rising",
+                    "description": "飙升榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "hot_search",
+                    "description": "热搜榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "newbook",
+                    "description": "新书榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "general_novel_rising",
+                    "description": "小说榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "all",
+                    "description": "总榜"
+                  }
+                ],
+                "default": "rising",
+                "description": "排行榜分区"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-zhihu-trending",
+          "description": "获取知乎热榜，包含时事热点、社会话题、科技动态、娱乐八卦等多领域的热门问答和讨论的中文资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "default": 50
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 21,
+      "tool_names": [
+        "get-36kr-trending",
+        "get-9to5mac-news",
+        "get-bbc-news",
+        "get-bilibili-rank",
+        "get-douban-rank",
+        "get-douyin-trending",
+        "get-gcores-new",
+        "get-ifanr-news",
+        "get-infoq-news",
+        "get-juejin-article-rank",
+        "get-netease-news-trending",
+        "get-nytimes-news",
+        "get-smzdm-rank",
+        "get-sspai-rank",
+        "get-tencent-news-trending",
+        "get-thepaper-trending",
+        "get-theverge-news",
+        "get-toutiao-trending",
+        "get-weibo-trending",
+        "get-weread-rank",
+        "get-zhihu-trending"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 98,
+      "name": "Trends Hub",
+      "author": "@baranwang/mcp-trends-hub",
+      "overview": "Aggregate trending topics from various platforms in one place. Access real-time hot lists from sources like Weibo, Douyin, and Tencent News effortlessly. Stay updated with the latest trends and insights at your fingertips.",
+      "repository_url": "https://github.com/baranwang/mcp-trends-hub",
+      "homepage": "https://smithery.ai/server/@baranwang/mcp-trends-hub",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "715",
+      "success_rate": "99.87%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@baranwang_mcp-trends-hub.json",
+      "tools_count": 21,
+      "tools": [
+        {
+          "name": "get-36kr-trending",
+          "description": "获取 36 氪热榜，提供创业、商业、科技领域的热门资讯，包含投融资动态、新兴产业分析和商业模式创新信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "hot",
+                    "description": "人气榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "video",
+                    "description": "视频榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "comment",
+                    "description": "热议榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "collect",
+                    "description": "收藏榜"
+                  }
+                ],
+                "default": "hot",
+                "description": "分类"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-9to5mac-news",
+          "description": "获取 9to5Mac 苹果相关新闻，包含苹果产品发布、iOS 更新、Mac 硬件、应用推荐及苹果公司动态的英文资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-bbc-news",
+          "description": "获取 BBC 新闻，提供全球新闻、英国新闻、商业、政治、健康、教育、科技、娱乐等资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "",
+                    "description": "热门新闻"
+                  },
+                  {
+                    "type": "string",
+                    "const": "world",
+                    "description": "国际"
+                  },
+                  {
+                    "type": "string",
+                    "const": "uk",
+                    "description": "英国"
+                  },
+                  {
+                    "type": "string",
+                    "const": "business",
+                    "description": "商业"
+                  },
+                  {
+                    "type": "string",
+                    "const": "politics",
+                    "description": "政治"
+                  },
+                  {
+                    "type": "string",
+                    "const": "health",
+                    "description": "健康"
+                  },
+                  {
+                    "type": "string",
+                    "const": "education",
+                    "description": "教育"
+                  },
+                  {
+                    "type": "string",
+                    "const": "science_and_environment",
+                    "description": "科学与环境"
+                  },
+                  {
+                    "type": "string",
+                    "const": "technology",
+                    "description": "科技"
+                  },
+                  {
+                    "type": "string",
+                    "const": "entertainment_and_arts",
+                    "description": "娱乐与艺术"
+                  }
+                ],
+                "default": ""
+              },
+              "edition": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": ""
+                  },
+                  {
+                    "type": "string",
+                    "const": "uk",
+                    "description": "UK"
+                  },
+                  {
+                    "type": "string",
+                    "const": "us",
+                    "description": "US & Canada"
+                  },
+                  {
+                    "type": "string",
+                    "const": "int",
+                    "description": "Rest of the world"
+                  }
+                ],
+                "default": "",
+                "description": "版本，仅对 `category` 为空有效"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-bilibili-rank",
+          "description": "获取哔哩哔哩视频排行榜，包含全站、动画、音乐、游戏等多个分区的热门视频，反映当下年轻人的内容消费趋势",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "const": 0,
+                    "description": "全站"
+                  },
+                  {
+                    "type": "number",
+                    "const": 1,
+                    "description": "动画"
+                  },
+                  {
+                    "type": "number",
+                    "const": 3,
+                    "description": "音乐"
+                  },
+                  {
+                    "type": "number",
+                    "const": 4,
+                    "description": "游戏"
+                  },
+                  {
+                    "type": "number",
+                    "const": 5,
+                    "description": "娱乐"
+                  },
+                  {
+                    "type": "number",
+                    "const": 188,
+                    "description": "科技"
+                  },
+                  {
+                    "type": "number",
+                    "const": 119,
+                    "description": "鬼畜"
+                  },
+                  {
+                    "type": "number",
+                    "const": 129,
+                    "description": "舞蹈"
+                  },
+                  {
+                    "type": "number",
+                    "const": 155,
+                    "description": "时尚"
+                  },
+                  {
+                    "type": "number",
+                    "const": 160,
+                    "description": "生活"
+                  },
+                  {
+                    "type": "number",
+                    "const": 168,
+                    "description": "国创相关"
+                  },
+                  {
+                    "type": "number",
+                    "const": 181,
+                    "description": "影视"
+                  }
+                ],
+                "default": 0,
+                "description": "排行榜分区"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-douban-rank",
+          "description": "获取豆瓣实时热门榜单，提供当前热门的图书、电影、电视剧、综艺等作品信息，包含评分和热度数据",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "subject",
+                    "description": "图书、电影、电视剧、综艺等"
+                  },
+                  {
+                    "type": "string",
+                    "const": "movie",
+                    "description": "电影"
+                  },
+                  {
+                    "type": "string",
+                    "const": "tv",
+                    "description": "电视剧"
+                  }
+                ],
+                "default": "subject"
+              },
+              "start": {
+                "type": "integer",
+                "default": 0
+              },
+              "count": {
+                "type": "integer",
+                "default": 10
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-douyin-trending",
+          "description": "获取抖音热搜榜单，展示当下最热门的社会话题、娱乐事件、网络热点和流行趋势",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-gcores-new",
+          "description": "获取机核网游戏相关资讯，包含电子游戏评测、玩家文化、游戏开发和游戏周边产品的深度内容",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-ifanr-news",
+          "description": "获取爱范儿科技快讯，包含最新的科技产品、数码设备、互联网动态等前沿科技资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "integer",
+                "default": 20
+              },
+              "offset": {
+                "type": "integer",
+                "default": 0
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-infoq-news",
+          "description": "获取 InfoQ 技术资讯，包含软件开发、架构设计、云计算、AI等企业级技术内容和前沿开发者动态",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "region": {
+                "type": "string",
+                "enum": [
+                  "cn",
+                  "global"
+                ],
+                "default": "cn"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-juejin-article-rank",
+          "description": "获取掘金文章榜，包含前端开发、后端技术、人工智能、移动开发及技术架构等领域的高质量中文技术文章和教程",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "6809637769959178254",
+                    "description": "后端"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637767543259144",
+                    "description": "前端"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809635626879549454",
+                    "description": "Android"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809635626661445640",
+                    "description": "iOS"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637773935378440",
+                    "description": "人工智能"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637771511070734",
+                    "description": "开发工具"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637776263217160",
+                    "description": "代码人生"
+                  },
+                  {
+                    "type": "string",
+                    "const": "6809637772874219534",
+                    "description": "阅读"
+                  }
+                ],
+                "default": "6809637769959178254"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-netease-news-trending",
+          "description": "获取网易新闻热点榜，包含时政要闻、社会事件、财经资讯、科技动态及娱乐体育的全方位中文新闻资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-nytimes-news",
+          "description": "获取纽约时报新闻，包含国际政治、经济金融、社会文化、科学技术及艺术评论的高质量英文或中文国际新闻资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "region": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "cn",
+                    "description": "中文"
+                  },
+                  {
+                    "type": "string",
+                    "const": "global",
+                    "description": "全球"
+                  }
+                ],
+                "default": "cn"
+              },
+              "section": {
+                "type": "string",
+                "default": "HomePage",
+                "description": "分类，当 `region` 为 `cn` 时无效。可选值: Africa, Americas, ArtandDesign, Arts, AsiaPacific, Automobiles, Baseball, Books/Review, Business, Climate, CollegeBasketball, CollegeFootball, Dance, Dealbook, DiningandWine, Economy, Education, EnergyEnvironment, Europe, FashionandStyle, Golf, Health, Hockey, HomePage, Jobs, Lens, MediaandAdvertising, MiddleEast, MostEmailed, MostShared, MostViewed, Movies, Music, NYRegion, Obituaries, PersonalTech, Politics, ProBasketball, ProFootball, RealEstate, Science, SmallBusiness, Soccer, Space, Sports, SundayBookReview, Sunday-Review, Technology, Television, Tennis, Theater, TMagazine, Travel, Upshot, US, Weddings, Well, World, YourMoney"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-smzdm-rank",
+          "description": "获取什么值得买热门，包含商品推荐、优惠信息、购物攻略、产品评测及消费经验分享的实用中文消费类资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "unit": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "const": 1,
+                    "description": "今日热门"
+                  },
+                  {
+                    "type": "number",
+                    "const": 7,
+                    "description": "周热门"
+                  },
+                  {
+                    "type": "number",
+                    "const": 30,
+                    "description": "月热门"
+                  }
+                ],
+                "default": 1
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-sspai-rank",
+          "description": "获取少数派热榜，包含数码产品评测、软件应用推荐、生活方式指南及效率工作技巧的优质中文科技生活类内容",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "tag": {
+                "type": "string",
+                "enum": [
+                  "热门文章",
+                  "应用推荐",
+                  "生活方式",
+                  "效率技巧",
+                  "少数派播客"
+                ],
+                "default": "热门文章",
+                "description": "分类"
+              },
+              "limit": {
+                "type": "integer",
+                "default": 40
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-tencent-news-trending",
+          "description": "获取腾讯新闻热点榜，包含国内外时事、社会热点、财经资讯、娱乐动态及体育赛事的综合性中文新闻资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page_size": {
+                "type": "integer",
+                "default": 20
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-thepaper-trending",
+          "description": "获取澎湃新闻热榜，包含时政要闻、财经动态、社会事件、文化教育及深度报道的高质量中文新闻资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-theverge-news",
+          "description": "获取 The Verge 新闻，包含科技创新、数码产品评测、互联网趋势及科技公司动态的英文科技资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-toutiao-trending",
+          "description": "获取今日头条热榜，包含时政要闻、社会事件、国际新闻、科技发展及娱乐八卦等多领域的热门中文资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-weibo-trending",
+          "description": "获取微博热搜榜，包含时事热点、社会现象、娱乐新闻、明星动态及网络热议话题的实时热门中文资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-weread-rank",
+          "description": "获取微信读书排行榜，包含热门小说、畅销书籍、新书推荐及各类文学作品的阅读数据和排名信息",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "rising",
+                    "description": "飙升榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "hot_search",
+                    "description": "热搜榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "newbook",
+                    "description": "新书榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "general_novel_rising",
+                    "description": "小说榜"
+                  },
+                  {
+                    "type": "string",
+                    "const": "all",
+                    "description": "总榜"
+                  }
+                ],
+                "default": "rising",
+                "description": "排行榜分区"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get-zhihu-trending",
+          "description": "获取知乎热榜，包含时事热点、社会话题、科技动态、娱乐八卦等多领域的热门问答和讨论的中文资讯",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": "number",
+                "default": 50
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"trendsHubCustomRssUrl\": \"\",\n  \"trendsHubHiddenFields\": \"\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@baranwang/mcp-trends-hub/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"trendsHubCustomRssUrl\": \"\",\n  \"trendsHubHiddenFields\": \"\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@baranwang/mcp-trends-hub/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0099.@baranwang_mcp-trends-hub_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 96
+  }
+}

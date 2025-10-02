@@ -1,0 +1,139 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to fetch job listings from Stepstone.de, a job portal, by allowing users to search based on keywords and location parameters. It outputs structured job results in JSON format for easy integration into automation workflows or autonomous agents. The core functionality revolves around web search for job listings and integration with other systems via stdin/stdout communication.",
+    "reasoning": "The primary label \"Web Search & Research\" fits well because the server's main purpose is to search and retrieve job listings from a specific website, which is a form of web research. The secondary label \"API Integration\" is relevant because the server allows integration into automation workflows using standard input/output communication, suggesting it can be used as part of a larger system. No custom label is needed as the predefined categories adequately describe the functionality.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1125,
+    "server_name": "Stepstone Job Listings Fetcher",
+    "rank_by_usage": 1126,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@kdkiss_mcp-stepstone.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@kdkiss/mcp-stepstone/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_jobs",
+          "description": "Search for job listings on Stepstone.de using multiple search terms",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "search_terms": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of job search terms to look for",
+                "default": [
+                  "fraud",
+                  "betrug",
+                  "compliance"
+                ]
+              },
+              "zip_code": {
+                "type": "string",
+                "description": "German postal code for location-based search",
+                "default": "40210"
+              },
+              "radius": {
+                "type": "integer",
+                "description": "Search radius in kilometers",
+                "default": 5,
+                "minimum": 1,
+                "maximum": 100
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "search_jobs"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1125,
+      "name": "Stepstone Job Listings Fetcher",
+      "author": "@kdkiss/mcp-stepstone",
+      "overview": "Fetch dynamic job listings from Stepstone.de based on keywords and location parameters. Integrate seamlessly into autonomous agents or automation workflows using stdin/stdout communication. Receive structured job results in JSON format for easy processing.",
+      "repository_url": "https://github.com/kdkiss/mcp-stepstone",
+      "homepage": "https://smithery.ai/server/@kdkiss/mcp-stepstone",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@kdkiss_mcp-stepstone.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "search_jobs",
+          "description": "Search for job listings on Stepstone.de using multiple search terms",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "search_terms": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of job search terms to look for",
+                "default": [
+                  "fraud",
+                  "betrug",
+                  "compliance"
+                ]
+              },
+              "zip_code": {
+                "type": "string",
+                "description": "German postal code for location-based search",
+                "default": "40210"
+              },
+              "radius": {
+                "type": "integer",
+                "description": "Search radius in kilometers",
+                "default": 5,
+                "minimum": 1,
+                "maximum": 100
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@kdkiss/mcp-stepstone/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@kdkiss/mcp-stepstone/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1126.@kdkiss_mcp-stepstone_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1103
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to enhance AI assistant responses by enabling semantic search and retrieval over multiple documentation sources. It provides tools for managing documentation sources, processing queues, and performing vector-based searches to augment LLM context with relevant information. The primary functionality revolves around documentation management, real-time processing, and knowledge base maintenance.",
+    "reasoning": "The primary label \"Documentation Management\" is chosen because the server's core functionality is centered around managing documentation sources, processing queues, and enabling semantic searches. The secondary labels \"Web Search & Research\" and \"Memory Management\" are selected because the server involves searching and retrieving information from documentation (research) and maintaining a knowledge base of indexed documents (memory management). No custom label is needed as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "File Management",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Memory Management"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1785,
+    "server_name": "RAG Documentation Server",
+    "rank_by_usage": 1786,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@jumasheff_mcp-ragdoc-fork.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jumasheff/mcp-ragdoc-fork/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1785,
+      "name": "RAG Documentation Server",
+      "author": "@jumasheff/mcp-ragdoc-fork",
+      "overview": "Enable AI assistants to enhance their responses with relevant documentation by performing semantic search and retrieval over multiple documentation sources. Seamlessly augment LLM context with vector-based search results and real-time documentation processing. Manage documentation sources and processing queues to keep your knowledge base up to date and comprehensive.",
+      "repository_url": "https://github.com/jumasheff/mcp-ragdoc-fork",
+      "homepage": "https://smithery.ai/server/@jumasheff/mcp-ragdoc-fork",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jumasheff_mcp-ragdoc-fork.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "search_documentation",
+          "description": "Deploy Server RAG Documentation Server Claim Server @jumasheff/mcp-ragdoc-fork Try in Playground search_documentation",
+          "parameters": [
+            {
+              "name": "search_documentation",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_sources",
+          "description": "List all documentation sources currently stored in the system. Returns a comprehensive list of all indexed documentation including source URLs, titles, and last update times. Use this to understand what documentation is available for searching or to verify if specific sources have been indexed.",
+          "parameters": [
+            {
+              "name": "list_sources",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "extract_urls",
+          "description": "Extract and analyze all URLs from a given web page. This tool crawls the specified webpage, identifies all hyperlinks, and optionally adds them to the processing queue. Useful for discovering related documentation pages, API references, or building a documentation graph. Handles various URL formats and validates links before extraction.",
+          "parameters": [
+            {
+              "name": "url",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "add_to_queue",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "True",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "False",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "remove_documentation",
+          "description": "Remove specific documentation sources from the system by their URLs. Use this tool to clean up outdated documentation, remove incorrect sources, or manage the documentation collection. The removal is permanent and will affect future search results. Supports removing multiple URLs in a single operation.",
+          "parameters": [
+            {
+              "name": "remove_documentation",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "list_queue",
+          "description": "List all URLs currently waiting in the documentation processing queue. Shows pending documentation sources that will be processed when run_queue is called. Use this to monitor queue status, verify URLs were added correctly, or check processing backlog. Returns URLs in the order they will be processed.",
+          "parameters": [
+            {
+              "name": "list_queue",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "run_queue",
+          "description": "Description not available",
+          "parameters": []
+        },
+        {
+          "name": "clear_queue",
+          "description": "Remove all pending URLs from the documentation processing queue. Use this to reset the queue when you want to start fresh, remove unwanted URLs, or cancel pending processing. This operation is immediate and permanent - URLs will need to be re-added if you want to process them later. Returns the number of URLs that were cleared from the queue.",
+          "parameters": [
+            {
+              "name": "clear_queue",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jumasheff/mcp-ragdoc-fork/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "qdrantApiKey",
+          "required": true,
+          "description": "API key for authenticating with Qdrant cloud"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jumasheff/mcp-ragdoc-fork/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1786.@jumasheff_mcp-ragdoc-fork_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1593
+  }
+}

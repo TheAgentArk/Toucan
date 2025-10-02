@@ -1,0 +1,891 @@
+{
+  "labels": {
+    "analysis": "The Unity MCP server is designed to bridge Unity game engine operations with Large Language Models, enabling automation of game development workflows. Its core functionality revolves around managing Unity assets, scenes, scripts, and editor functions programmatically. The tools provided allow for comprehensive control over Unity project elements, from script manipulation to scene management and game object operations. This serves developers who want to incorporate AI into their Unity workflow, streamlining repetitive tasks and enabling dynamic asset management.",
+    "reasoning": "The primary label \"Development Tools\" was chosen because the server's main purpose is to facilitate game development by automating Unity-specific tasks. Secondary labels include \"Game Development\" and \"Asset Management\" to highlight its specific domain and functionality. The custom label \"Unity Automation\" captures the unique aspect of bridging Unity with AI for workflow automation.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": "Unity Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 314,
+    "server_name": "Unity MCP",
+    "rank_by_usage": 315,
+    "usage_count": "103",
+    "original_file": "../crawler/smithery/@justinpbarnett_unity-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@justinpbarnett/unity-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "manage_script",
+          "description": "Manages C# scripts in Unity (create, read, update, delete).\n        Make reference variables public for easier access in the Unity Editor.\n\n        Args:\n            action: Operation ('create', 'read', 'update', 'delete').\n            name: Script name (no .cs extension).\n            path: Asset path (default: \"Assets/\").\n            contents: C# code for 'create'/'update'.\n            script_type: Type hint (e.g., 'MonoBehaviour').\n            namespace: Script namespace.\n\n        Returns:\n            Dictionary with results ('success', 'message', 'data').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "contents": {
+                "title": "Contents",
+                "type": "string"
+              },
+              "script_type": {
+                "title": "Script Type",
+                "type": "string"
+              },
+              "namespace": {
+                "title": "Namespace",
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "name",
+              "path",
+              "contents",
+              "script_type",
+              "namespace"
+            ],
+            "title": "manage_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_scene",
+          "description": "Manages Unity scenes (load, save, create, get hierarchy, etc.).\n\n        Args:\n            action: Operation (e.g., 'load', 'save', 'create', 'get_hierarchy').\n            name: Scene name (no extension) for create/load/save.\n            path: Asset path for scene operations (default: \"Assets/\").\n            build_index: Build index for load/build settings actions.\n            # Add other action-specific args as needed (e.g., for hierarchy depth)\n\n        Returns:\n            Dictionary with results ('success', 'message', 'data').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "build_index": {
+                "title": "Build Index",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "action",
+              "name",
+              "path",
+              "build_index"
+            ],
+            "title": "manage_sceneArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_editor",
+          "description": "Controls and queries the Unity editor's state and settings.\n\n        Args:\n            action: Operation (e.g., 'play', 'pause', 'get_state', 'set_active_tool', 'add_tag').\n            wait_for_completion: Optional. If True, waits for certain actions.\n            Action-specific arguments (e.g., tool_name, tag_name, layer_name).\n\n        Returns:\n            Dictionary with operation results ('success', 'message', 'data').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "wait_for_completion": {
+                "default": null,
+                "title": "Wait For Completion",
+                "type": "boolean"
+              },
+              "tool_name": {
+                "default": null,
+                "title": "Tool Name",
+                "type": "string"
+              },
+              "tag_name": {
+                "default": null,
+                "title": "Tag Name",
+                "type": "string"
+              },
+              "layer_name": {
+                "default": null,
+                "title": "Layer Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "title": "manage_editorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_gameobject",
+          "description": "Manages GameObjects: create, modify, delete, find, and component operations.\n\n        Args:\n            action: Operation (e.g., 'create', 'modify', 'find', 'add_component', 'remove_component', 'set_component_property').\n            target: GameObject identifier (name or path string) for modify/delete/component actions.\n            search_method: How to find objects ('by_name', 'by_id', 'by_path', etc.). Used with 'find' and some 'target' lookups.\n            name: GameObject name - used for both 'create' (initial name) and 'modify' (rename).\n            tag: Tag name - used for both 'create' (initial tag) and 'modify' (change tag).\n            parent: Parent GameObject reference - used for both 'create' (initial parent) and 'modify' (change parent).\n            layer: Layer name - used for both 'create' (initial layer) and 'modify' (change layer).\n            component_properties: Dict mapping Component names to their properties to set.\n                                  Example: {\"Rigidbody\": {\"mass\": 10.0, \"useGravity\": True}},\n                                  To set references:\n                                  - Use asset path string for Prefabs/Materials, e.g., {\"MeshRenderer\": {\"material\": \"Assets/Materials/MyMat.mat\"}}\n                                  - Use a dict for scene objects/components, e.g.:\n                                    {\"MyScript\": {\"otherObject\": {\"find\": \"Player\", \"method\": \"by_name\"}}} (assigns GameObject)\n                                    {\"MyScript\": {\"playerHealth\": {\"find\": \"Player\", \"component\": \"HealthComponent\"}}} (assigns Component)\n                                  Example set nested property:\n                                  - Access shared material: {\"MeshRenderer\": {\"sharedMaterial.color\": [1, 0, 0, 1]}}\n            components_to_add: List of component names to add.\n            Action-specific arguments (e.g., position, rotation, scale for create/modify;\n                     component_name for component actions;\n                     search_term, find_all for 'find').\n\n        Returns:\n            Dictionary with operation results ('success', 'message', 'data').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "target": {
+                "default": null,
+                "title": "Target",
+                "type": "string"
+              },
+              "search_method": {
+                "default": null,
+                "title": "Search Method",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "tag": {
+                "default": null,
+                "title": "Tag",
+                "type": "string"
+              },
+              "parent": {
+                "default": null,
+                "title": "Parent",
+                "type": "string"
+              },
+              "position": {
+                "default": null,
+                "items": {
+                  "type": "number"
+                },
+                "title": "Position",
+                "type": "array"
+              },
+              "rotation": {
+                "default": null,
+                "items": {
+                  "type": "number"
+                },
+                "title": "Rotation",
+                "type": "array"
+              },
+              "scale": {
+                "default": null,
+                "items": {
+                  "type": "number"
+                },
+                "title": "Scale",
+                "type": "array"
+              },
+              "components_to_add": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Components To Add",
+                "type": "array"
+              },
+              "primitive_type": {
+                "default": null,
+                "title": "Primitive Type",
+                "type": "string"
+              },
+              "save_as_prefab": {
+                "default": false,
+                "title": "Save As Prefab",
+                "type": "boolean"
+              },
+              "prefab_path": {
+                "default": null,
+                "title": "Prefab Path",
+                "type": "string"
+              },
+              "prefab_folder": {
+                "default": "Assets/Prefabs",
+                "title": "Prefab Folder",
+                "type": "string"
+              },
+              "set_active": {
+                "default": null,
+                "title": "Set Active",
+                "type": "boolean"
+              },
+              "layer": {
+                "default": null,
+                "title": "Layer",
+                "type": "string"
+              },
+              "components_to_remove": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Components To Remove",
+                "type": "array"
+              },
+              "component_properties": {
+                "additionalProperties": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "default": null,
+                "title": "Component Properties",
+                "type": "object"
+              },
+              "search_term": {
+                "default": null,
+                "title": "Search Term",
+                "type": "string"
+              },
+              "find_all": {
+                "default": false,
+                "title": "Find All",
+                "type": "boolean"
+              },
+              "search_in_children": {
+                "default": false,
+                "title": "Search In Children",
+                "type": "boolean"
+              },
+              "search_inactive": {
+                "default": false,
+                "title": "Search Inactive",
+                "type": "boolean"
+              },
+              "component_name": {
+                "default": null,
+                "title": "Component Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "title": "manage_gameobjectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_asset",
+          "description": "Performs asset operations (import, create, modify, delete, etc.) in Unity.\n\n        Args:\n            ctx: The MCP context.\n            action: Operation to perform (e.g., 'import', 'create', 'modify', 'delete', 'duplicate', 'move', 'rename', 'search', 'get_info', 'create_folder', 'get_components').\n            path: Asset path (e.g., \"Materials/MyMaterial.mat\") or search scope.\n            asset_type: Asset type (e.g., 'Material', 'Folder') - required for 'create'.\n            properties: Dictionary of properties for 'create'/'modify'.\n            destination: Target path for 'duplicate'/'move'.\n            search_pattern: Search pattern (e.g., '*.prefab').\n            filter_*: Filters for search (type, date).\n            page_*: Pagination for search.\n\n        Returns:\n            A dictionary with operation results ('success', 'data', 'error').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "asset_type": {
+                "default": null,
+                "title": "Asset Type",
+                "type": "string"
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": true,
+                "default": null,
+                "title": "Properties"
+              },
+              "destination": {
+                "default": null,
+                "title": "Destination",
+                "type": "string"
+              },
+              "generate_preview": {
+                "default": false,
+                "title": "Generate Preview",
+                "type": "boolean"
+              },
+              "search_pattern": {
+                "default": null,
+                "title": "Search Pattern",
+                "type": "string"
+              },
+              "filter_type": {
+                "default": null,
+                "title": "Filter Type",
+                "type": "string"
+              },
+              "filter_date_after": {
+                "default": null,
+                "title": "Filter Date After",
+                "type": "string"
+              },
+              "page_size": {
+                "default": null,
+                "title": "Page Size",
+                "type": "integer"
+              },
+              "page_number": {
+                "default": null,
+                "title": "Page Number",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "action",
+              "path"
+            ],
+            "title": "manage_assetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_console",
+          "description": "Gets messages from or clears the Unity Editor console.\n\n        Args:\n            ctx: The MCP context.\n            action: Operation ('get' or 'clear').\n            types: Message types to get ('error', 'warning', 'log', 'all').\n            count: Max messages to return.\n            filter_text: Text filter for messages.\n            since_timestamp: Get messages after this timestamp (ISO 8601).\n            format: Output format ('plain', 'detailed', 'json').\n            include_stacktrace: Include stack traces in output.\n\n        Returns:\n            Dictionary with results. For 'get', includes 'data' (messages).\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "default": null,
+                "title": "Action",
+                "type": "string"
+              },
+              "types": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Types",
+                "type": "array"
+              },
+              "count": {
+                "default": null,
+                "title": "Count",
+                "type": "integer"
+              },
+              "filter_text": {
+                "default": null,
+                "title": "Filter Text",
+                "type": "string"
+              },
+              "since_timestamp": {
+                "default": null,
+                "title": "Since Timestamp",
+                "type": "string"
+              },
+              "format": {
+                "default": null,
+                "title": "Format",
+                "type": "string"
+              },
+              "include_stacktrace": {
+                "default": null,
+                "title": "Include Stacktrace",
+                "type": "boolean"
+              }
+            },
+            "title": "read_consoleArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_menu_item",
+          "description": "Executes a Unity Editor menu item via its path (e.g., \"File/Save Project\").\n\n        Args:\n            ctx: The MCP context.\n            menu_path: The full path of the menu item to execute.\n            action: The operation to perform (default: 'execute').\n            parameters: Optional parameters for the menu item (rarely used).\n\n        Returns:\n            A dictionary indicating success or failure, with optional message/error.\n        ",
+          "input_schema": {
+            "properties": {
+              "menu_path": {
+                "title": "Menu Path",
+                "type": "string"
+              },
+              "action": {
+                "default": "execute",
+                "title": "Action",
+                "type": "string"
+              },
+              "parameters": {
+                "additionalProperties": true,
+                "default": null,
+                "title": "Parameters",
+                "type": "object"
+              }
+            },
+            "required": [
+              "menu_path"
+            ],
+            "title": "execute_menu_itemArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "manage_script",
+        "manage_scene",
+        "manage_editor",
+        "manage_gameobject",
+        "manage_asset",
+        "read_console",
+        "execute_menu_item"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 314,
+      "name": "Unity MCP",
+      "author": "@justinpbarnett/unity-mcp",
+      "overview": "Enable seamless communication between Unity and Large Language Models to automate workflows and manipulate assets. Enhance your Unity projects by leveraging LLMs for asset management, scene control, and editor automation.",
+      "repository_url": "https://github.com/justinpbarnett/unity-mcp",
+      "homepage": "https://smithery.ai/server/@justinpbarnett/unity-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "103",
+      "success_rate": "99.60%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@justinpbarnett_unity-mcp.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "manage_script",
+          "description": "Manages C# scripts in Unity (create, read, update, delete).\n        Make reference variables public for easier access in the Unity Editor.\n\n        Args:\n            action: Operation ('create', 'read', 'update', 'delete').\n            name: Script name (no .cs extension).\n            path: Asset path (default: \"Assets/\").\n            contents: C# code for 'create'/'update'.\n            script_type: Type hint (e.g., 'MonoBehaviour').\n            namespace: Script namespace.\n\n        Returns:\n            Dictionary with results ('success', 'message', 'data').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "contents": {
+                "title": "Contents",
+                "type": "string"
+              },
+              "script_type": {
+                "title": "Script Type",
+                "type": "string"
+              },
+              "namespace": {
+                "title": "Namespace",
+                "type": "string"
+              }
+            },
+            "required": [
+              "action",
+              "name",
+              "path",
+              "contents",
+              "script_type",
+              "namespace"
+            ],
+            "title": "manage_scriptArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_scene",
+          "description": "Manages Unity scenes (load, save, create, get hierarchy, etc.).\n\n        Args:\n            action: Operation (e.g., 'load', 'save', 'create', 'get_hierarchy').\n            name: Scene name (no extension) for create/load/save.\n            path: Asset path for scene operations (default: \"Assets/\").\n            build_index: Build index for load/build settings actions.\n            # Add other action-specific args as needed (e.g., for hierarchy depth)\n\n        Returns:\n            Dictionary with results ('success', 'message', 'data').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "type": "string"
+              },
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "build_index": {
+                "title": "Build Index",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "action",
+              "name",
+              "path",
+              "build_index"
+            ],
+            "title": "manage_sceneArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_editor",
+          "description": "Controls and queries the Unity editor's state and settings.\n\n        Args:\n            action: Operation (e.g., 'play', 'pause', 'get_state', 'set_active_tool', 'add_tag').\n            wait_for_completion: Optional. If True, waits for certain actions.\n            Action-specific arguments (e.g., tool_name, tag_name, layer_name).\n\n        Returns:\n            Dictionary with operation results ('success', 'message', 'data').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "wait_for_completion": {
+                "default": null,
+                "title": "Wait For Completion",
+                "type": "boolean"
+              },
+              "tool_name": {
+                "default": null,
+                "title": "Tool Name",
+                "type": "string"
+              },
+              "tag_name": {
+                "default": null,
+                "title": "Tag Name",
+                "type": "string"
+              },
+              "layer_name": {
+                "default": null,
+                "title": "Layer Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "title": "manage_editorArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_gameobject",
+          "description": "Manages GameObjects: create, modify, delete, find, and component operations.\n\n        Args:\n            action: Operation (e.g., 'create', 'modify', 'find', 'add_component', 'remove_component', 'set_component_property').\n            target: GameObject identifier (name or path string) for modify/delete/component actions.\n            search_method: How to find objects ('by_name', 'by_id', 'by_path', etc.). Used with 'find' and some 'target' lookups.\n            name: GameObject name - used for both 'create' (initial name) and 'modify' (rename).\n            tag: Tag name - used for both 'create' (initial tag) and 'modify' (change tag).\n            parent: Parent GameObject reference - used for both 'create' (initial parent) and 'modify' (change parent).\n            layer: Layer name - used for both 'create' (initial layer) and 'modify' (change layer).\n            component_properties: Dict mapping Component names to their properties to set.\n                                  Example: {\"Rigidbody\": {\"mass\": 10.0, \"useGravity\": True}},\n                                  To set references:\n                                  - Use asset path string for Prefabs/Materials, e.g., {\"MeshRenderer\": {\"material\": \"Assets/Materials/MyMat.mat\"}}\n                                  - Use a dict for scene objects/components, e.g.:\n                                    {\"MyScript\": {\"otherObject\": {\"find\": \"Player\", \"method\": \"by_name\"}}} (assigns GameObject)\n                                    {\"MyScript\": {\"playerHealth\": {\"find\": \"Player\", \"component\": \"HealthComponent\"}}} (assigns Component)\n                                  Example set nested property:\n                                  - Access shared material: {\"MeshRenderer\": {\"sharedMaterial.color\": [1, 0, 0, 1]}}\n            components_to_add: List of component names to add.\n            Action-specific arguments (e.g., position, rotation, scale for create/modify;\n                     component_name for component actions;\n                     search_term, find_all for 'find').\n\n        Returns:\n            Dictionary with operation results ('success', 'message', 'data').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "target": {
+                "default": null,
+                "title": "Target",
+                "type": "string"
+              },
+              "search_method": {
+                "default": null,
+                "title": "Search Method",
+                "type": "string"
+              },
+              "name": {
+                "default": null,
+                "title": "Name",
+                "type": "string"
+              },
+              "tag": {
+                "default": null,
+                "title": "Tag",
+                "type": "string"
+              },
+              "parent": {
+                "default": null,
+                "title": "Parent",
+                "type": "string"
+              },
+              "position": {
+                "default": null,
+                "items": {
+                  "type": "number"
+                },
+                "title": "Position",
+                "type": "array"
+              },
+              "rotation": {
+                "default": null,
+                "items": {
+                  "type": "number"
+                },
+                "title": "Rotation",
+                "type": "array"
+              },
+              "scale": {
+                "default": null,
+                "items": {
+                  "type": "number"
+                },
+                "title": "Scale",
+                "type": "array"
+              },
+              "components_to_add": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Components To Add",
+                "type": "array"
+              },
+              "primitive_type": {
+                "default": null,
+                "title": "Primitive Type",
+                "type": "string"
+              },
+              "save_as_prefab": {
+                "default": false,
+                "title": "Save As Prefab",
+                "type": "boolean"
+              },
+              "prefab_path": {
+                "default": null,
+                "title": "Prefab Path",
+                "type": "string"
+              },
+              "prefab_folder": {
+                "default": "Assets/Prefabs",
+                "title": "Prefab Folder",
+                "type": "string"
+              },
+              "set_active": {
+                "default": null,
+                "title": "Set Active",
+                "type": "boolean"
+              },
+              "layer": {
+                "default": null,
+                "title": "Layer",
+                "type": "string"
+              },
+              "components_to_remove": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Components To Remove",
+                "type": "array"
+              },
+              "component_properties": {
+                "additionalProperties": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "default": null,
+                "title": "Component Properties",
+                "type": "object"
+              },
+              "search_term": {
+                "default": null,
+                "title": "Search Term",
+                "type": "string"
+              },
+              "find_all": {
+                "default": false,
+                "title": "Find All",
+                "type": "boolean"
+              },
+              "search_in_children": {
+                "default": false,
+                "title": "Search In Children",
+                "type": "boolean"
+              },
+              "search_inactive": {
+                "default": false,
+                "title": "Search Inactive",
+                "type": "boolean"
+              },
+              "component_name": {
+                "default": null,
+                "title": "Component Name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "action"
+            ],
+            "title": "manage_gameobjectArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "manage_asset",
+          "description": "Performs asset operations (import, create, modify, delete, etc.) in Unity.\n\n        Args:\n            ctx: The MCP context.\n            action: Operation to perform (e.g., 'import', 'create', 'modify', 'delete', 'duplicate', 'move', 'rename', 'search', 'get_info', 'create_folder', 'get_components').\n            path: Asset path (e.g., \"Materials/MyMaterial.mat\") or search scope.\n            asset_type: Asset type (e.g., 'Material', 'Folder') - required for 'create'.\n            properties: Dictionary of properties for 'create'/'modify'.\n            destination: Target path for 'duplicate'/'move'.\n            search_pattern: Search pattern (e.g., '*.prefab').\n            filter_*: Filters for search (type, date).\n            page_*: Pagination for search.\n\n        Returns:\n            A dictionary with operation results ('success', 'data', 'error').\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "title": "Action",
+                "type": "string"
+              },
+              "path": {
+                "title": "Path",
+                "type": "string"
+              },
+              "asset_type": {
+                "default": null,
+                "title": "Asset Type",
+                "type": "string"
+              },
+              "properties": {
+                "type": "object",
+                "additionalProperties": true,
+                "default": null,
+                "title": "Properties"
+              },
+              "destination": {
+                "default": null,
+                "title": "Destination",
+                "type": "string"
+              },
+              "generate_preview": {
+                "default": false,
+                "title": "Generate Preview",
+                "type": "boolean"
+              },
+              "search_pattern": {
+                "default": null,
+                "title": "Search Pattern",
+                "type": "string"
+              },
+              "filter_type": {
+                "default": null,
+                "title": "Filter Type",
+                "type": "string"
+              },
+              "filter_date_after": {
+                "default": null,
+                "title": "Filter Date After",
+                "type": "string"
+              },
+              "page_size": {
+                "default": null,
+                "title": "Page Size",
+                "type": "integer"
+              },
+              "page_number": {
+                "default": null,
+                "title": "Page Number",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "action",
+              "path"
+            ],
+            "title": "manage_assetArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_console",
+          "description": "Gets messages from or clears the Unity Editor console.\n\n        Args:\n            ctx: The MCP context.\n            action: Operation ('get' or 'clear').\n            types: Message types to get ('error', 'warning', 'log', 'all').\n            count: Max messages to return.\n            filter_text: Text filter for messages.\n            since_timestamp: Get messages after this timestamp (ISO 8601).\n            format: Output format ('plain', 'detailed', 'json').\n            include_stacktrace: Include stack traces in output.\n\n        Returns:\n            Dictionary with results. For 'get', includes 'data' (messages).\n        ",
+          "input_schema": {
+            "properties": {
+              "action": {
+                "default": null,
+                "title": "Action",
+                "type": "string"
+              },
+              "types": {
+                "default": null,
+                "items": {
+                  "type": "string"
+                },
+                "title": "Types",
+                "type": "array"
+              },
+              "count": {
+                "default": null,
+                "title": "Count",
+                "type": "integer"
+              },
+              "filter_text": {
+                "default": null,
+                "title": "Filter Text",
+                "type": "string"
+              },
+              "since_timestamp": {
+                "default": null,
+                "title": "Since Timestamp",
+                "type": "string"
+              },
+              "format": {
+                "default": null,
+                "title": "Format",
+                "type": "string"
+              },
+              "include_stacktrace": {
+                "default": null,
+                "title": "Include Stacktrace",
+                "type": "boolean"
+              }
+            },
+            "title": "read_consoleArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "execute_menu_item",
+          "description": "Executes a Unity Editor menu item via its path (e.g., \"File/Save Project\").\n\n        Args:\n            ctx: The MCP context.\n            menu_path: The full path of the menu item to execute.\n            action: The operation to perform (default: 'execute').\n            parameters: Optional parameters for the menu item (rarely used).\n\n        Returns:\n            A dictionary indicating success or failure, with optional message/error.\n        ",
+          "input_schema": {
+            "properties": {
+              "menu_path": {
+                "title": "Menu Path",
+                "type": "string"
+              },
+              "action": {
+                "default": "execute",
+                "title": "Action",
+                "type": "string"
+              },
+              "parameters": {
+                "additionalProperties": true,
+                "default": null,
+                "title": "Parameters",
+                "type": "object"
+              }
+            },
+            "required": [
+              "menu_path"
+            ],
+            "title": "execute_menu_itemArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@justinpbarnett/unity-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@justinpbarnett/unity-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0315.@justinpbarnett_unity-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 311
+  }
+}

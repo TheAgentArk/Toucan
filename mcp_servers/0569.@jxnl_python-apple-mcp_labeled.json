@@ -1,0 +1,1108 @@
+{
+  "labels": {
+    "analysis": "The MCP Server described, Python Apple MCP, is designed to interact with macOS applications through AppleScript, enabling users to automate tasks across various built-in apps like Contacts, Notes, Mail, Messages, Reminders, Calendar, and Maps. It provides a type-safe and modular design for programmatic access to these applications. The available tools cover a range of functionalities such as creating and searching for notes, sending and reading messages, managing emails, setting reminders and calendar events, and handling location-based data via Apple Maps. This server primarily enhances productivity by automating common tasks that would otherwise require manual interaction with macOS applications.",
+    "reasoning": "The primary label, \"Operating System,\" is chosen because the server's core functionality revolves around automating tasks within macOS applications, which are part of the operating system's native ecosystem. Secondary labels \"Daily Productivity\" and \"File Management\" are selected because the tools provided significantly enhance personal organization and task management, and some interactions could involve file or data handling within the apps. No custom label is needed as the predefined categories adequately cover the server's functionalities.",
+    "primary_label": "Operating System",
+    "secondary_labels": [
+      "Daily Productivity",
+      "API Integration"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 568,
+    "server_name": "Python Apple MCP",
+    "rank_by_usage": 569,
+    "usage_count": "20",
+    "original_file": "../crawler/smithery/@jxnl_python-apple-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@jxnl/python-apple-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "find_contact",
+          "description": "Search for contacts by name. If no name is provided, returns all contacts.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              }
+            },
+            "title": "find_contactArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_note",
+          "description": "Create a new note in Apple Notes",
+          "input_schema": {
+            "$defs": {
+              "Note": {
+                "properties": {
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "content": {
+                    "title": "Content",
+                    "type": "string"
+                  },
+                  "folder": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": "Claude",
+                    "title": "Folder"
+                  }
+                },
+                "required": [
+                  "title",
+                  "content"
+                ],
+                "title": "Note",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "note": {
+                "$ref": "#/$defs/Note"
+              }
+            },
+            "required": [
+              "note"
+            ],
+            "title": "create_noteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_notes",
+          "description": "Search for notes containing the given text",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_notesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message",
+          "description": "Send an iMessage",
+          "input_schema": {
+            "$defs": {
+              "Message": {
+                "properties": {
+                  "to": {
+                    "title": "To",
+                    "type": "string"
+                  },
+                  "content": {
+                    "title": "Content",
+                    "type": "string"
+                  },
+                  "scheduled_time": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Scheduled Time"
+                  }
+                },
+                "required": [
+                  "to",
+                  "content"
+                ],
+                "title": "Message",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "message": {
+                "$ref": "#/$defs/Message"
+              }
+            },
+            "required": [
+              "message"
+            ],
+            "title": "send_messageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_messages",
+          "description": "Read recent messages from a specific contact",
+          "input_schema": {
+            "properties": {
+              "phone_number": {
+                "title": "Phone Number",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "phone_number"
+            ],
+            "title": "read_messagesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_email",
+          "description": "Send an email using Apple Mail",
+          "input_schema": {
+            "$defs": {
+              "Email": {
+                "properties": {
+                  "to": {
+                    "title": "To",
+                    "type": "string"
+                  },
+                  "subject": {
+                    "title": "Subject",
+                    "type": "string"
+                  },
+                  "body": {
+                    "title": "Body",
+                    "type": "string"
+                  },
+                  "cc": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cc"
+                  },
+                  "bcc": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Bcc"
+                  }
+                },
+                "required": [
+                  "to",
+                  "subject",
+                  "body"
+                ],
+                "title": "Email",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "email": {
+                "$ref": "#/$defs/Email"
+              }
+            },
+            "required": [
+              "email"
+            ],
+            "title": "send_emailArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_emails",
+          "description": "Search emails containing the given text",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_emailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_reminder",
+          "description": "Create a new reminder",
+          "input_schema": {
+            "$defs": {
+              "Reminder": {
+                "properties": {
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "notes": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Notes"
+                  },
+                  "due_date": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Due Date"
+                  },
+                  "list_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "List Name"
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "title": "Reminder",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "reminder": {
+                "$ref": "#/$defs/Reminder"
+              }
+            },
+            "required": [
+              "reminder"
+            ],
+            "title": "create_reminderArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_reminders",
+          "description": "Search for reminders containing the given text",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_remindersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_event",
+          "description": "Create a new calendar event",
+          "input_schema": {
+            "$defs": {
+              "CalendarEvent": {
+                "properties": {
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "start_date": {
+                    "title": "Start Date",
+                    "type": "string"
+                  },
+                  "end_date": {
+                    "title": "End Date",
+                    "type": "string"
+                  },
+                  "location": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Location"
+                  },
+                  "notes": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Notes"
+                  },
+                  "is_all_day": {
+                    "default": false,
+                    "title": "Is All Day",
+                    "type": "boolean"
+                  },
+                  "calendar_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Calendar Name"
+                  }
+                },
+                "required": [
+                  "title",
+                  "start_date",
+                  "end_date"
+                ],
+                "title": "CalendarEvent",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "event": {
+                "$ref": "#/$defs/CalendarEvent"
+              }
+            },
+            "required": [
+              "event"
+            ],
+            "title": "create_eventArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_events",
+          "description": "Search for calendar events",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "from_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "From Date"
+              },
+              "to_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "To Date"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_eventsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_locations",
+          "description": "Search for locations in Apple Maps",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_locationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_directions",
+          "description": "Get directions between two locations",
+          "input_schema": {
+            "properties": {
+              "from_address": {
+                "title": "From Address",
+                "type": "string"
+              },
+              "to_address": {
+                "title": "To Address",
+                "type": "string"
+              },
+              "transport_type": {
+                "default": "driving",
+                "title": "Transport Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "from_address",
+              "to_address"
+            ],
+            "title": "get_directionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 13,
+      "tool_names": [
+        "find_contact",
+        "create_note",
+        "search_notes",
+        "send_message",
+        "read_messages",
+        "send_email",
+        "search_emails",
+        "create_reminder",
+        "search_reminders",
+        "create_event",
+        "search_events",
+        "search_locations",
+        "get_directions"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 568,
+      "name": "Python Apple MCP",
+      "author": "@jxnl/python-apple-mcp",
+      "overview": "Interact with macOS applications seamlessly using AppleScript. Enhance your productivity by automating tasks across Contacts, Notes, Mail, Messages, Reminders, Calendar, and Maps with a type-safe and modular design.",
+      "repository_url": "https://github.com/jxnl/python-apple-mcp",
+      "homepage": "https://smithery.ai/server/@jxnl/python-apple-mcp",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "20",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@jxnl_python-apple-mcp.json",
+      "tools_count": 13,
+      "tools": [
+        {
+          "name": "find_contact",
+          "description": "Search for contacts by name. If no name is provided, returns all contacts.",
+          "input_schema": {
+            "properties": {
+              "name": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Name"
+              }
+            },
+            "title": "find_contactArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_note",
+          "description": "Create a new note in Apple Notes",
+          "input_schema": {
+            "$defs": {
+              "Note": {
+                "properties": {
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "content": {
+                    "title": "Content",
+                    "type": "string"
+                  },
+                  "folder": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": "Claude",
+                    "title": "Folder"
+                  }
+                },
+                "required": [
+                  "title",
+                  "content"
+                ],
+                "title": "Note",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "note": {
+                "$ref": "#/$defs/Note"
+              }
+            },
+            "required": [
+              "note"
+            ],
+            "title": "create_noteArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_notes",
+          "description": "Search for notes containing the given text",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_notesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message",
+          "description": "Send an iMessage",
+          "input_schema": {
+            "$defs": {
+              "Message": {
+                "properties": {
+                  "to": {
+                    "title": "To",
+                    "type": "string"
+                  },
+                  "content": {
+                    "title": "Content",
+                    "type": "string"
+                  },
+                  "scheduled_time": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Scheduled Time"
+                  }
+                },
+                "required": [
+                  "to",
+                  "content"
+                ],
+                "title": "Message",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "message": {
+                "$ref": "#/$defs/Message"
+              }
+            },
+            "required": [
+              "message"
+            ],
+            "title": "send_messageArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "read_messages",
+          "description": "Read recent messages from a specific contact",
+          "input_schema": {
+            "properties": {
+              "phone_number": {
+                "title": "Phone Number",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "phone_number"
+            ],
+            "title": "read_messagesArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_email",
+          "description": "Send an email using Apple Mail",
+          "input_schema": {
+            "$defs": {
+              "Email": {
+                "properties": {
+                  "to": {
+                    "title": "To",
+                    "type": "string"
+                  },
+                  "subject": {
+                    "title": "Subject",
+                    "type": "string"
+                  },
+                  "body": {
+                    "title": "Body",
+                    "type": "string"
+                  },
+                  "cc": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cc"
+                  },
+                  "bcc": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Bcc"
+                  }
+                },
+                "required": [
+                  "to",
+                  "subject",
+                  "body"
+                ],
+                "title": "Email",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "email": {
+                "$ref": "#/$defs/Email"
+              }
+            },
+            "required": [
+              "email"
+            ],
+            "title": "send_emailArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_emails",
+          "description": "Search emails containing the given text",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 10,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_emailsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_reminder",
+          "description": "Create a new reminder",
+          "input_schema": {
+            "$defs": {
+              "Reminder": {
+                "properties": {
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "notes": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Notes"
+                  },
+                  "due_date": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Due Date"
+                  },
+                  "list_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "List Name"
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "title": "Reminder",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "reminder": {
+                "$ref": "#/$defs/Reminder"
+              }
+            },
+            "required": [
+              "reminder"
+            ],
+            "title": "create_reminderArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_reminders",
+          "description": "Search for reminders containing the given text",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_remindersArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "create_event",
+          "description": "Create a new calendar event",
+          "input_schema": {
+            "$defs": {
+              "CalendarEvent": {
+                "properties": {
+                  "title": {
+                    "title": "Title",
+                    "type": "string"
+                  },
+                  "start_date": {
+                    "title": "Start Date",
+                    "type": "string"
+                  },
+                  "end_date": {
+                    "title": "End Date",
+                    "type": "string"
+                  },
+                  "location": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Location"
+                  },
+                  "notes": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Notes"
+                  },
+                  "is_all_day": {
+                    "default": false,
+                    "title": "Is All Day",
+                    "type": "boolean"
+                  },
+                  "calendar_name": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Calendar Name"
+                  }
+                },
+                "required": [
+                  "title",
+                  "start_date",
+                  "end_date"
+                ],
+                "title": "CalendarEvent",
+                "type": "object"
+              }
+            },
+            "properties": {
+              "event": {
+                "$ref": "#/$defs/CalendarEvent"
+              }
+            },
+            "required": [
+              "event"
+            ],
+            "title": "create_eventArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_events",
+          "description": "Search for calendar events",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "from_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "From Date"
+              },
+              "to_date": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "To Date"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_eventsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "search_locations",
+          "description": "Search for locations in Apple Maps",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 5,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_locationsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_directions",
+          "description": "Get directions between two locations",
+          "input_schema": {
+            "properties": {
+              "from_address": {
+                "title": "From Address",
+                "type": "string"
+              },
+              "to_address": {
+                "title": "To Address",
+                "type": "string"
+              },
+              "transport_type": {
+                "default": "driving",
+                "title": "Transport Type",
+                "type": "string"
+              }
+            },
+            "required": [
+              "from_address",
+              "to_address"
+            ],
+            "title": "get_directionsArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@jxnl/python-apple-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@jxnl/python-apple-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0569.@jxnl_python-apple-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 557
+  }
+}

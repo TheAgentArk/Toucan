@@ -1,0 +1,137 @@
+{
+  "labels": {
+    "analysis": "The MCP Fetch server is designed to retrieve and process web content for agents, particularly focusing on handling URLs and images. Its core functionality includes fetching web pages, extracting content in markdown format, and processing images by merging them (up to 6 per group) with specific size limitations. The processed content (including images) is then copied to the user's clipboard for easy insertion. This enhances the Claude Desktop experience by enabling seamless integration of online content.",
+    "reasoning": "The primary label \"Web Search & Research\" is chosen because the server's main function is to fetch and process web content, which aligns with gathering information from the internet. The secondary label \"Browser Automation\" is added because the tool automates the process of retrieving and handling web content, similar to web scraping or automated browsing. There is no need for a custom label as the functionality is well-covered by the predefined categories.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Browser Automation"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 913,
+    "server_name": "MCP Fetch",
+    "rank_by_usage": 914,
+    "usage_count": "4",
+    "original_file": "../crawler/smithery/@JeremyNixon_mcp-fetch-me.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@JeremyNixon/mcp-fetch-me/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "Retrieves URLs from the Internet and extracts their content as markdown. If images are found, they are merged vertically (max 6 images per group, max height 8000px, max size 30MB per group) and copied to the clipboard of the user's host machine. You will need to paste (Cmd+V) to insert the images.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "maxLength": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1000000,
+                "default": 20000
+              },
+              "startIndex": {
+                "type": "number",
+                "minimum": 0,
+                "default": 0
+              },
+              "raw": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "fetch"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 913,
+      "name": "MCP Fetch",
+      "author": "@JeremyNixon/mcp-fetch-me",
+      "overview": "Fetch web content and process images seamlessly for your agents. Enhance your Claude Desktop experience by retrieving and handling online content efficiently.",
+      "repository_url": "https://github.com/JeremyNixon/mcp-fetch",
+      "homepage": "https://smithery.ai/server/@JeremyNixon/mcp-fetch-me",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "4",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@JeremyNixon_mcp-fetch-me.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "fetch",
+          "description": "Retrieves URLs from the Internet and extracts their content as markdown. If images are found, they are merged vertically (max 6 images per group, max height 8000px, max size 30MB per group) and copied to the clipboard of the user's host machine. You will need to paste (Cmd+V) to insert the images.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "maxLength": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "maximum": 1000000,
+                "default": 20000
+              },
+              "startIndex": {
+                "type": "number",
+                "minimum": 0,
+                "default": 0
+              },
+              "raw": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@JeremyNixon/mcp-fetch-me/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@JeremyNixon/mcp-fetch-me/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0914.@JeremyNixon_mcp-fetch-me_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 894
+  }
+}

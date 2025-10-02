@@ -1,0 +1,195 @@
+{
+  "labels": {
+    "analysis": "The MCP Server focuses on advanced computer vision capabilities, particularly face detection and tracking in images and videos. Its primary tools, cut_face_videos and collage_face_video, enable users to process videos to isolate and display facial regions for various applications such as security, user interaction enhancement, or media production. The server leverages interpolation, dynamic cropping, and intelligent sizing to create high-quality outputs, with integration capabilities for Google Cloud Storage (GCS). The functionality aligns closely with AI/ML tools, specifically those involving computer vision.",
+    "reasoning": "The primary label \"AI/ML Tools\" is chosen because the server relies on machine learning models for face detection and tracking, which are core components of AI/ML systems. Secondary labels like \"Video Processing\" and \"Computer Vision\" are selected because they directly describe the server's specialized functionality within the broader AI/ML category. These labels capture the server's unique focus on dynamic cropping and face-based video processing.",
+    "primary_label": "AI/ML Tools",
+    "secondary_labels": [
+      "Operating System",
+      "AI/ML Tools"
+    ],
+    "custom_label": "Face Tracking Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1457,
+    "server_name": "Face Detection and Tracking",
+    "rank_by_usage": 1458,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@Kiwisher_face_detection.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Kiwisher/face_detection/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "cut_face_videos",
+          "description": "\n    Function 1: Given a video_path, a save_dir (GCS path), an aspect_ratio tuple, and a scale factor,\n    generate an individual cropped video for each detected face in the video. Upload the final videos to save_dir.\n    \n    Crop region calculation:\n      - For each face track, determine maximum width and height among non-null bounding boxes and multiply by scale\n        to get proposed_w and proposed_h.\n      - Compute final crop dimensions such that crop width/height equals a/b, where (a,b) is the reduced aspect_ratio.\n            k = max(proposed_h, (proposed_w * b) / a)\n            crop_h = ceil(k)\n            crop_w = ceil(a * crop_h / b)\n    \n    For every frame in the video, interpolate to get the current bounding box, adjust the crop region within image bounds,\n    write the cropped frame to the video's writer, then add original audio, and finally upload to the specified save_dir.\n    ",
+          "input_schema": {
+            "properties": {
+              "video_path": {
+                "title": "Video Path",
+                "type": "string"
+              },
+              "save_dir": {
+                "title": "Save Dir",
+                "type": "string"
+              },
+              "aspect_ratio": {
+                "items": {},
+                "title": "Aspect Ratio",
+                "type": "array"
+              },
+              "scale": {
+                "default": 1.3,
+                "title": "Scale",
+                "type": "number"
+              }
+            },
+            "required": [
+              "video_path",
+              "save_dir",
+              "aspect_ratio"
+            ],
+            "title": "cut_face_videosArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "collage_face_video",
+          "description": "\n    Function 2: Based on the number of detected faces in the input video, generate a collage video (supports only 1, 2, or 4 faces).\n    \n    Parameters:\n      video_path: The input video path (can be local or a GCS URI).\n      save_dir: The destination folder in GCS where the final collage video will be stored (must start with \"gs://\").\n      scale: The magnification factor (default 1.3).\n    \n    For the detected number:\n      - 1 face: fixed crop ratio of (16,8);\n      - 2 faces: fixed crop ratio of (8,9) (vertical concatenation);\n      - 4 faces: fixed crop ratio of (16,9) (2x2 grid; the collage also has a 16:9 ratio).\n    \n    For each face track:\n      1. Traverse non-null bounding boxes. For each bbox, compute:\n             bw = (x2 - x1) * scale, bh = (y2 - y1) * scale  \n         Calculate candidate sizes that strictly conform to the aspect ratio:\n             candidate_h = ceil( max(bh, (bw * b) / a) )\n             candidate_w = round(a * candidate_h / b)\n         (Here, the aspect_ratio is reduced to coprime form (a, b); then a and b are swapped for calculation convenience.)\n      2. Take the median of candidate sizes to obtain (med_w, med_h). Let t = med_h / b, then target_size = (round(a*t), round(b*t)).\n      3. Use the median target_size among all face tracks as the global target_per_person_size.\n    \n    Then process the full video frame by frame:\n      - For each face, use interpolate_bbox to get the current bbox.\n      - Based on the bbox center, compute a \"dynamic crop size\" (using the same candidate formula).\n      - Crop the frame with dynamic crop area (adjust boundaries if needed), then resize the result to the global target_per_person_size.\n      - Concatenate the face images per the layout (1: single; 2: vertical; 4: 2x2) and write the collage frame.\n    \n    After processing, add audio to the collage video and upload the final video to the provided GCS save_dir.\n    If the number of detected faces is not 1, 2, or 4, return an empty string.\n    ",
+          "input_schema": {
+            "properties": {
+              "video_path": {
+                "title": "Video Path",
+                "type": "string"
+              },
+              "save_dir": {
+                "title": "Save Dir",
+                "type": "string"
+              },
+              "scale": {
+                "default": 1.3,
+                "title": "Scale",
+                "type": "number"
+              }
+            },
+            "required": [
+              "video_path",
+              "save_dir"
+            ],
+            "title": "collage_face_videoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "cut_face_videos",
+        "collage_face_video"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1457,
+      "name": "Face Detection and Tracking",
+      "author": "@Kiwisher/face_detection",
+      "overview": "Enable your applications to detect and track faces in images and videos. Leverage advanced computer vision techniques to enhance user interaction and security features. Integrate seamlessly with existing workflows using our powerful MCP server.",
+      "repository_url": "https://github.com/Kiwisher/face_detection",
+      "homepage": "https://smithery.ai/server/@Kiwisher/face_detection",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Kiwisher_face_detection.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "cut_face_videos",
+          "description": "\n    Function 1: Given a video_path, a save_dir (GCS path), an aspect_ratio tuple, and a scale factor,\n    generate an individual cropped video for each detected face in the video. Upload the final videos to save_dir.\n    \n    Crop region calculation:\n      - For each face track, determine maximum width and height among non-null bounding boxes and multiply by scale\n        to get proposed_w and proposed_h.\n      - Compute final crop dimensions such that crop width/height equals a/b, where (a,b) is the reduced aspect_ratio.\n            k = max(proposed_h, (proposed_w * b) / a)\n            crop_h = ceil(k)\n            crop_w = ceil(a * crop_h / b)\n    \n    For every frame in the video, interpolate to get the current bounding box, adjust the crop region within image bounds,\n    write the cropped frame to the video's writer, then add original audio, and finally upload to the specified save_dir.\n    ",
+          "input_schema": {
+            "properties": {
+              "video_path": {
+                "title": "Video Path",
+                "type": "string"
+              },
+              "save_dir": {
+                "title": "Save Dir",
+                "type": "string"
+              },
+              "aspect_ratio": {
+                "items": {},
+                "title": "Aspect Ratio",
+                "type": "array"
+              },
+              "scale": {
+                "default": 1.3,
+                "title": "Scale",
+                "type": "number"
+              }
+            },
+            "required": [
+              "video_path",
+              "save_dir",
+              "aspect_ratio"
+            ],
+            "title": "cut_face_videosArguments",
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "collage_face_video",
+          "description": "\n    Function 2: Based on the number of detected faces in the input video, generate a collage video (supports only 1, 2, or 4 faces).\n    \n    Parameters:\n      video_path: The input video path (can be local or a GCS URI).\n      save_dir: The destination folder in GCS where the final collage video will be stored (must start with \"gs://\").\n      scale: The magnification factor (default 1.3).\n    \n    For the detected number:\n      - 1 face: fixed crop ratio of (16,8);\n      - 2 faces: fixed crop ratio of (8,9) (vertical concatenation);\n      - 4 faces: fixed crop ratio of (16,9) (2x2 grid; the collage also has a 16:9 ratio).\n    \n    For each face track:\n      1. Traverse non-null bounding boxes. For each bbox, compute:\n             bw = (x2 - x1) * scale, bh = (y2 - y1) * scale  \n         Calculate candidate sizes that strictly conform to the aspect ratio:\n             candidate_h = ceil( max(bh, (bw * b) / a) )\n             candidate_w = round(a * candidate_h / b)\n         (Here, the aspect_ratio is reduced to coprime form (a, b); then a and b are swapped for calculation convenience.)\n      2. Take the median of candidate sizes to obtain (med_w, med_h). Let t = med_h / b, then target_size = (round(a*t), round(b*t)).\n      3. Use the median target_size among all face tracks as the global target_per_person_size.\n    \n    Then process the full video frame by frame:\n      - For each face, use interpolate_bbox to get the current bbox.\n      - Based on the bbox center, compute a \"dynamic crop size\" (using the same candidate formula).\n      - Crop the frame with dynamic crop area (adjust boundaries if needed), then resize the result to the global target_per_person_size.\n      - Concatenate the face images per the layout (1: single; 2: vertical; 4: 2x2) and write the collage frame.\n    \n    After processing, add audio to the collage video and upload the final video to the provided GCS save_dir.\n    If the number of detected faces is not 1, 2, or 4, return an empty string.\n    ",
+          "input_schema": {
+            "properties": {
+              "video_path": {
+                "title": "Video Path",
+                "type": "string"
+              },
+              "save_dir": {
+                "title": "Save Dir",
+                "type": "string"
+              },
+              "scale": {
+                "default": 1.3,
+                "title": "Scale",
+                "type": "number"
+              }
+            },
+            "required": [
+              "video_path",
+              "save_dir"
+            ],
+            "title": "collage_face_videoArguments",
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Kiwisher/face_detection/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Kiwisher/face_detection/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1458.@Kiwisher_face_detection_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1351
+  }
+}

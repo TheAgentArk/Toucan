@@ -1,0 +1,194 @@
+{
+  "labels": {
+    "analysis": "The MCP Server in question is a Confluence API Server designed to facilitate interaction with Confluence spaces and pages. It allows users to create, read, update, and search content within Confluence using a Personal Access Token, enabling seamless integration with other applications. The tools provided focus on managing Confluence content programmatically, including retrieving pages, searching content, and updating page information. This server streamlines workflows by automating Confluence-related tasks, making it particularly useful for teams and individuals who rely on Confluence for documentation and collaboration.",
+    "reasoning": "The primary label is \"Database Operations\" because the tools primarily interact with Confluence's data structures (spaces, pages) via API calls, which aligns with data querying and management. Secondary labels include \"API Integration\" (since the server acts as a bridge between Confluence and other applications) and \"Content Creation\" (since it enables the creation and update of Confluence content). A custom label is not necessary, as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Database Operations",
+    "secondary_labels": [
+      "API Integration",
+      "Content Creation"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1408,
+    "server_name": "Confluence API Server",
+    "rank_by_usage": 1409,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@minhoyooDEV_confluence-mcp-server.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@minhoyooDEV/confluence-mcp-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1408,
+      "name": "Confluence API Server",
+      "author": "@minhoyooDEV/confluence-mcp-server",
+      "overview": "Access Confluence spaces and pages effortlessly. Create, update, and manage your Confluence content using a secure Personal Access Token. Streamline your workflow by integrating Confluence with your applications seamlessly.",
+      "repository_url": "https://github.com/minhoyooDEV/confluence-mcp-server",
+      "homepage": "https://smithery.ai/server/@minhoyooDEV/confluence-mcp-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@minhoyooDEV_confluence-mcp-server.json",
+      "tools_count": 6,
+      "tools": [
+        {
+          "name": "allSpaces",
+          "description": "Deploy Server Confluence API Server Claim Server @minhoyooDEV/confluence-mcp-server Try in Playground",
+          "parameters": [
+            {
+              "name": "allSpaces",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Confluence",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "type",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getPagesInSpace",
+          "description": "특정 스페이스 내의 모든 페이지를 가져옵니다. 검색어가 제공되면 페이지 제목과 내용으로 필터링합니다.",
+          "parameters": [
+            {
+              "name": "getPagesInSpace",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "getPageById",
+          "description": "ID로 특정 페이지 정보를 가져옵니다.",
+          "parameters": [
+            {
+              "name": "getPageById",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "pageId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "createPage",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "title",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "content",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "spaceKey",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "updatePage",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "title",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "pageId",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "content",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "version",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "searchContent",
+          "description": "Confluence 콘텐츠를 전역적으로 검색합니다. 제목, 내용 등을 검색할 수 있습니다.",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "query",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "start",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "spaceKey",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@minhoyooDEV/confluence-mcp-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "personalAccessToken",
+          "required": true,
+          "description": "Personal Access Token for Confluence API"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@minhoyooDEV/confluence-mcp-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1409.@minhoyooDEV_confluence-mcp-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1316
+  }
+}

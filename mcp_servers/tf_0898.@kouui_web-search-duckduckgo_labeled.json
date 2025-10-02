@@ -1,0 +1,152 @@
+{
+  "labels": {
+    "analysis": "The MCP Server primarily enables web searches and content fetching using DuckDuckGo. It provides functionality to perform searches, retrieve structured results (titles, URLs, and snippets), and convert web content from HTML to Markdown format. This makes it particularly useful for information retrieval, web scraping, and content transformation for easier reading.",
+    "reasoning": "The primary function of \"Web Search & Research\" is chosen because the server's core feature is searching the web and retrieving information. The \"Browser Automation\" label is added as a secondary category since it performs some level of web scraping and content fetching, though it's not fully automated browsing. No custom label is needed as the predefined categories adequately capture the server's functionality.",
+    "primary_label": "Web Search & Research",
+    "secondary_labels": [
+      "Browser Automation"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 897,
+    "server_name": "DuckDuckGo Web Search",
+    "rank_by_usage": 898,
+    "usage_count": "4",
+    "original_file": "../crawler/smithery/@kouui_web-search-duckduckgo.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@kouui/web-search-duckduckgo/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_and_fetch",
+          "description": "\n    Search the web using DuckDuckGo and return results.\n\n    Args:\n        query: The search query string\n        limit: Maximum number of results to return (default: 3, maximum 10)\n\n    Returns:\n        List of dictionaries containing \n        - title\n        - url\n        - snippet \n        - summary markdown (empty if not available)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 3,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_and_fetchArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "fetch",
+          "description": "\n    scrape the html content and return the markdown format using jina api.\n\n    Args:\n        url: The search query string\n\n    Returns:\n        text : html in markdown format \n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "fetchArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        }
+      ],
+      "tool_count": 2,
+      "tool_names": [
+        "search_and_fetch",
+        "fetch"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 897,
+      "name": "DuckDuckGo Web Search",
+      "author": "@kouui/web-search-duckduckgo",
+      "overview": "Search the web using DuckDuckGo and fetch content from the results. Get titles, URLs, and snippets, and convert HTML to markdown for easy reading.",
+      "repository_url": "https://github.com/kouui/web-search-duckduckgo",
+      "homepage": "https://smithery.ai/server/@kouui/web-search-duckduckgo",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "4",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@kouui_web-search-duckduckgo.json",
+      "tools_count": 2,
+      "tools": [
+        {
+          "name": "search_and_fetch",
+          "description": "\n    Search the web using DuckDuckGo and return results.\n\n    Args:\n        query: The search query string\n        limit: Maximum number of results to return (default: 3, maximum 10)\n\n    Returns:\n        List of dictionaries containing \n        - title\n        - url\n        - snippet \n        - summary markdown (empty if not available)\n    ",
+          "input_schema": {
+            "properties": {
+              "query": {
+                "title": "Query",
+                "type": "string"
+              },
+              "limit": {
+                "default": 3,
+                "title": "Limit",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "title": "search_and_fetchArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        },
+        {
+          "name": "fetch",
+          "description": "\n    scrape the html content and return the markdown format using jina api.\n\n    Args:\n        url: The search query string\n\n    Returns:\n        text : html in markdown format \n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "title": "fetchArguments",
+            "type": "object"
+          },
+          "annotations": {}
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@kouui/web-search-duckduckgo/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@kouui/web-search-duckduckgo/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0898.@kouui_web-search-duckduckgo_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 879
+  }
+}

@@ -1,0 +1,354 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed to assist with code analysis and development workflows by enabling LLMs to read, search, and analyze code files efficiently. It provides advanced caching, real-time file watching, and specific functionalities like reading code context, generating file outlines, and managing profiles for different repository contexts. The server focuses on automating and streamlining code-related tasks, particularly for large codebases, by intelligently ignoring common artifact directories and files.",
+    "reasoning": "The primary functionality of the server revolves around code analysis and file operations, making \"Development Tools\" the most fitting primary label. Secondary labels such as \"Memory Management\" (due to caching and context generation) and \"File Management\" (file operations and filtering) further describe related capabilities. Custom label \"Code Analysis Automation\" is added to highlight the specific focus on automating code comprehension tasks.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Memory Management",
+      "File Management"
+    ],
+    "custom_label": "Code Analysis Automation",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 206,
+    "server_name": "File Context Server",
+    "rank_by_usage": 207,
+    "usage_count": "218",
+    "original_file": "../crawler/smithery/@bsmi021_mcp-file-context-server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@bsmi021/mcp-file-context-server/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "read_context",
+          "description": "Read and analyze code files with advanced filtering and chunking. The server automatically ignores common artifact directories and files:\n- Version Control: .git/\n- Python: .venv/, __pycache__/, *.pyc, etc.\n- JavaScript/Node.js: node_modules/, bower_components/, .next/, dist/, etc.\n- IDE/Editor: .idea/, .vscode/, .env, etc.\n\nFor large files or directories, use get_chunk_count first to determine total chunks, then request specific chunks using chunkNumber parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path to file or directory to read"
+              },
+              "maxSize": {
+                "type": "number",
+                "description": "Maximum file size in bytes. Files larger than this will be chunked.",
+                "default": 1048576
+              },
+              "encoding": {
+                "type": "string",
+                "description": "File encoding (e.g., utf8, ascii, latin1)",
+                "default": "utf8"
+              },
+              "recursive": {
+                "type": "boolean",
+                "description": "Whether to read directories recursively (includes subdirectories)",
+                "default": true
+              },
+              "fileTypes": {
+                "type": [
+                  "array",
+                  "string"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "File extension(s) to include WITHOUT dots (e.g. [\"ts\", \"js\", \"py\"] or just \"ts\"). Empty/undefined means all files.",
+                "default": []
+              },
+              "chunkNumber": {
+                "type": "number",
+                "description": "Which chunk to return (0-based). Use with get_chunk_count to handle large files/directories.",
+                "default": 0
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_chunk_count",
+          "description": "Get the total number of chunks that will be returned for a read_context request.\nUse this tool FIRST before reading content to determine how many chunks you need to request.\nThe parameters should match what you'll use in read_context.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path to file or directory"
+              },
+              "encoding": {
+                "type": "string",
+                "description": "File encoding (e.g., utf8, ascii, latin1)",
+                "default": "utf8"
+              },
+              "maxSize": {
+                "type": "number",
+                "description": "Maximum file size in bytes. Files larger than this will be chunked.",
+                "default": 1048576
+              },
+              "recursive": {
+                "type": "boolean",
+                "description": "Whether to read directories recursively (includes subdirectories)",
+                "default": true
+              },
+              "fileTypes": {
+                "type": [
+                  "array",
+                  "string"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "File extension(s) to include WITHOUT dots (e.g. [\"ts\", \"js\", \"py\"] or just \"ts\"). Empty/undefined means all files.",
+                "default": []
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_profile",
+          "description": "Set the active profile for context generation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "profile_name": {
+                "type": "string",
+                "description": "Name of the profile to activate"
+              }
+            },
+            "required": [
+              "profile_name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_profile_context",
+          "description": "Get repository context based on current profile settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "refresh": {
+                "type": "boolean",
+                "description": "Whether to refresh file selection before generating context",
+                "default": false
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_outline",
+          "description": "Generate a code outline for a file, showing its structure (classes, functions, imports, etc). Supports TypeScript/JavaScript and Python files.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path to the file to analyze"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 5,
+      "tool_names": [
+        "read_context",
+        "get_chunk_count",
+        "set_profile",
+        "get_profile_context",
+        "generate_outline"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 206,
+      "name": "File Context Server",
+      "author": "@bsmi021/mcp-file-context-server",
+      "overview": "Enable your LLMs to read, search, and analyze code files with advanced caching and real-time file watching capabilities. Streamline your code analysis and improve quality metrics effortlessly. Enhance your development workflow with powerful file operations and smart caching features.",
+      "repository_url": "https://github.com/bsmi021/mcp-file-context-server",
+      "homepage": "https://smithery.ai/server/@bsmi021/mcp-file-context-server",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "218",
+      "success_rate": "88.98%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@bsmi021_mcp-file-context-server.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "read_context",
+          "description": "Read and analyze code files with advanced filtering and chunking. The server automatically ignores common artifact directories and files:\n- Version Control: .git/\n- Python: .venv/, __pycache__/, *.pyc, etc.\n- JavaScript/Node.js: node_modules/, bower_components/, .next/, dist/, etc.\n- IDE/Editor: .idea/, .vscode/, .env, etc.\n\nFor large files or directories, use get_chunk_count first to determine total chunks, then request specific chunks using chunkNumber parameter.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path to file or directory to read"
+              },
+              "maxSize": {
+                "type": "number",
+                "description": "Maximum file size in bytes. Files larger than this will be chunked.",
+                "default": 1048576
+              },
+              "encoding": {
+                "type": "string",
+                "description": "File encoding (e.g., utf8, ascii, latin1)",
+                "default": "utf8"
+              },
+              "recursive": {
+                "type": "boolean",
+                "description": "Whether to read directories recursively (includes subdirectories)",
+                "default": true
+              },
+              "fileTypes": {
+                "type": [
+                  "array",
+                  "string"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "File extension(s) to include WITHOUT dots (e.g. [\"ts\", \"js\", \"py\"] or just \"ts\"). Empty/undefined means all files.",
+                "default": []
+              },
+              "chunkNumber": {
+                "type": "number",
+                "description": "Which chunk to return (0-based). Use with get_chunk_count to handle large files/directories.",
+                "default": 0
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_chunk_count",
+          "description": "Get the total number of chunks that will be returned for a read_context request.\nUse this tool FIRST before reading content to determine how many chunks you need to request.\nThe parameters should match what you'll use in read_context.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path to file or directory"
+              },
+              "encoding": {
+                "type": "string",
+                "description": "File encoding (e.g., utf8, ascii, latin1)",
+                "default": "utf8"
+              },
+              "maxSize": {
+                "type": "number",
+                "description": "Maximum file size in bytes. Files larger than this will be chunked.",
+                "default": 1048576
+              },
+              "recursive": {
+                "type": "boolean",
+                "description": "Whether to read directories recursively (includes subdirectories)",
+                "default": true
+              },
+              "fileTypes": {
+                "type": [
+                  "array",
+                  "string"
+                ],
+                "items": {
+                  "type": "string"
+                },
+                "description": "File extension(s) to include WITHOUT dots (e.g. [\"ts\", \"js\", \"py\"] or just \"ts\"). Empty/undefined means all files.",
+                "default": []
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "set_profile",
+          "description": "Set the active profile for context generation",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "profile_name": {
+                "type": "string",
+                "description": "Name of the profile to activate"
+              }
+            },
+            "required": [
+              "profile_name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_profile_context",
+          "description": "Get repository context based on current profile settings",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "refresh": {
+                "type": "boolean",
+                "description": "Whether to refresh file selection before generating context",
+                "default": false
+              }
+            }
+          },
+          "annotations": null
+        },
+        {
+          "name": "generate_outline",
+          "description": "Generate a code outline for a file, showing its structure (classes, functions, imports, etc). Supports TypeScript/JavaScript and Python files.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "description": "Path to the file to analyze"
+              }
+            },
+            "required": [
+              "path"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@bsmi021/mcp-file-context-server/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@bsmi021/mcp-file-context-server/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0207.@bsmi021_mcp-file-context-server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 203
+  }
+}

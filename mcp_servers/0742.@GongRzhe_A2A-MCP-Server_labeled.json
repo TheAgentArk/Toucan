@@ -1,0 +1,389 @@
+{
+  "labels": {
+    "analysis": "The MCP Server functions as a bridge for AI agents, enabling seamless communication and task management between different AI systems using the Model Context Protocol (MCP). Its core functionality revolves around registering, managing, and facilitating interactions between AI agents (A2A agents) through a unified interface. The tools provided support agent registration, message exchange, task delegation, result retrieval, and streamed responses, with integration capabilities for popular MCP clients like Claude, Cursor IDE, and Windsurf.",
+    "reasoning": "The primary label **Communication Tools** is chosen because the server's main purpose is to enable communications between AI agents. The secondary label **Development Tools** is appropriate due to its role in system integration and agent management, which are often utilized in development contexts. The custom label **AI Agent Interoperability** is created because the server specifically specializes in facilitating interactions between different AI agents across protocols, a unique feature not fully covered by predefined labels.",
+    "primary_label": "Communication Tools",
+    "secondary_labels": [
+      "Development Tools"
+    ],
+    "custom_label": "AI Agent Interoperability",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 741,
+    "server_name": "A2A Bridge Server",
+    "rank_by_usage": 742,
+    "usage_count": "9",
+    "original_file": "../crawler/smithery/@GongRzhe_A2A-MCP-Server.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@GongRzhe/A2A-MCP-Server/mcp?config=eyJtY3BIb3N0IjogIjAuMC4wLjAiLCAibWNwUG9ydCI6IDgwMDAsICJtY3BUcmFuc3BvcnQiOiAic3RkaW8ifQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "register_agent",
+          "description": "\n    Register an A2A agent with the bridge server.\n    \n    Args:\n        url: URL of the A2A agent\n        \n    Returns:\n        Dictionary with registration status\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_agents",
+          "description": "\n    List all registered A2A agents.\n    \n    Returns:\n        List of registered agents\n    ",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "unregister_agent",
+          "description": "\n    Unregister an A2A agent from the bridge server.\n    \n    Args:\n        url: URL of the A2A agent to unregister\n        \n    Returns:\n        Dictionary with unregistration status\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message",
+          "description": "\n    Send a message to an A2A agent.\n    \n    Args:\n        agent_url: URL of the A2A agent\n        message: Message to send\n        session_id: Optional session ID for multi-turn conversations\n        \n    Returns:\n        Agent's response with task_id for future reference\n    ",
+          "input_schema": {
+            "properties": {
+              "agent_url": {
+                "title": "Agent Url",
+                "type": "string"
+              },
+              "message": {
+                "title": "Message",
+                "type": "string"
+              },
+              "session_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Session Id"
+              }
+            },
+            "required": [
+              "agent_url",
+              "message"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_task_result",
+          "description": "\n    Retrieve the result of a task from an A2A agent.\n    \n    Args:\n        task_id: ID of the task to retrieve\n        history_length: Optional number of history items to include (null for all)\n        \n    Returns:\n        Task result including status, message, and artifacts if available\n    ",
+          "input_schema": {
+            "properties": {
+              "task_id": {
+                "title": "Task Id",
+                "type": "string"
+              },
+              "history_length": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "History Length"
+              }
+            },
+            "required": [
+              "task_id"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cancel_task",
+          "description": "\n    Cancel a running task on an A2A agent.\n    \n    Args:\n        task_id: ID of the task to cancel\n        \n    Returns:\n        Cancellation result\n    ",
+          "input_schema": {
+            "properties": {
+              "task_id": {
+                "title": "Task Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "task_id"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message_stream",
+          "description": "\n    Send a message to an A2A agent and stream the response.\n    \n    Args:\n        agent_url: URL of the A2A agent\n        message: Message to send\n        session_id: Optional session ID for multi-turn conversations\n        \n    Returns:\n        Stream of agent's responses\n    ",
+          "input_schema": {
+            "properties": {
+              "agent_url": {
+                "title": "Agent Url",
+                "type": "string"
+              },
+              "message": {
+                "title": "Message",
+                "type": "string"
+              },
+              "session_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Session Id"
+              }
+            },
+            "required": [
+              "agent_url",
+              "message"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 7,
+      "tool_names": [
+        "register_agent",
+        "list_agents",
+        "unregister_agent",
+        "send_message",
+        "get_task_result",
+        "cancel_task",
+        "send_message_stream"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 741,
+      "name": "A2A Bridge Server",
+      "author": "@GongRzhe/A2A-MCP-Server",
+      "overview": "Bridge AI assistants using the Model Context Protocol (MCP) with Agent-to-Agent (A2A) agents to enable seamless discovery, communication, and task management across AI agent protocols. Manage agents, send messages, and retrieve task results through a unified interface supporting multiple transport types. Integrate easily with MCP clients like Claude, Cursor IDE, and Windsurf browser for enhanced AI interoperability.",
+      "repository_url": "https://github.com/GongRzhe/A2A-MCP-Server",
+      "homepage": "https://smithery.ai/server/@GongRzhe/A2A-MCP-Server",
+      "remote_or_local": "Remote",
+      "license": "Apache-2.0",
+      "usage_count": "9",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@GongRzhe_A2A-MCP-Server.json",
+      "tools_count": 7,
+      "tools": [
+        {
+          "name": "register_agent",
+          "description": "\n    Register an A2A agent with the bridge server.\n    \n    Args:\n        url: URL of the A2A agent\n        \n    Returns:\n        Dictionary with registration status\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_agents",
+          "description": "\n    List all registered A2A agents.\n    \n    Returns:\n        List of registered agents\n    ",
+          "input_schema": {
+            "properties": {},
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "unregister_agent",
+          "description": "\n    Unregister an A2A agent from the bridge server.\n    \n    Args:\n        url: URL of the A2A agent to unregister\n        \n    Returns:\n        Dictionary with unregistration status\n    ",
+          "input_schema": {
+            "properties": {
+              "url": {
+                "title": "Url",
+                "type": "string"
+              }
+            },
+            "required": [
+              "url"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message",
+          "description": "\n    Send a message to an A2A agent.\n    \n    Args:\n        agent_url: URL of the A2A agent\n        message: Message to send\n        session_id: Optional session ID for multi-turn conversations\n        \n    Returns:\n        Agent's response with task_id for future reference\n    ",
+          "input_schema": {
+            "properties": {
+              "agent_url": {
+                "title": "Agent Url",
+                "type": "string"
+              },
+              "message": {
+                "title": "Message",
+                "type": "string"
+              },
+              "session_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Session Id"
+              }
+            },
+            "required": [
+              "agent_url",
+              "message"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_task_result",
+          "description": "\n    Retrieve the result of a task from an A2A agent.\n    \n    Args:\n        task_id: ID of the task to retrieve\n        history_length: Optional number of history items to include (null for all)\n        \n    Returns:\n        Task result including status, message, and artifacts if available\n    ",
+          "input_schema": {
+            "properties": {
+              "task_id": {
+                "title": "Task Id",
+                "type": "string"
+              },
+              "history_length": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "History Length"
+              }
+            },
+            "required": [
+              "task_id"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "cancel_task",
+          "description": "\n    Cancel a running task on an A2A agent.\n    \n    Args:\n        task_id: ID of the task to cancel\n        \n    Returns:\n        Cancellation result\n    ",
+          "input_schema": {
+            "properties": {
+              "task_id": {
+                "title": "Task Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "task_id"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "send_message_stream",
+          "description": "\n    Send a message to an A2A agent and stream the response.\n    \n    Args:\n        agent_url: URL of the A2A agent\n        message: Message to send\n        session_id: Optional session ID for multi-turn conversations\n        \n    Returns:\n        Stream of agent's responses\n    ",
+          "input_schema": {
+            "properties": {
+              "agent_url": {
+                "title": "Agent Url",
+                "type": "string"
+              },
+              "message": {
+                "title": "Message",
+                "type": "string"
+              },
+              "session_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Session Id"
+              }
+            },
+            "required": [
+              "agent_url",
+              "message"
+            ],
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"mcpHost\": \"0.0.0.0\",\n  \"mcpPort\": 8000,\n  \"mcpTransport\": \"stdio\"\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@GongRzhe/A2A-MCP-Server/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"mcpHost\": \"0.0.0.0\",\n  \"mcpPort\": 8000,\n  \"mcpTransport\": \"stdio\"\n}",
+      "python_sdk_url": "https://server.smithery.ai/@GongRzhe/A2A-MCP-Server/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0742.@GongRzhe_A2A-MCP-Server_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 724
+  }
+}

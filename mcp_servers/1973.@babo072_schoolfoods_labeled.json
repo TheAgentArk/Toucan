@@ -1,0 +1,119 @@
+{
+  "labels": {
+    "analysis": "The MCP Server \"SchoolFoods\" is designed to retrieve meal information for schools based on user input. It primarily solves the problem of accessing school meal data efficiently by parsing school names and dates (including relative terms like \"today\" or \"tomorrow\"). The server offers additional features like handling duplicate school names and suggesting similar school names, which enhances usability.",
+    "reasoning": "Education is the most fitting primary label since the primary function is related to school information, specifically meal data, which falls under educational services. While daily productivity could be a secondary consideration for students or parents managing meal planning, the core functionality is tied to education.",
+    "primary_label": "Education",
+    "secondary_labels": [
+      "Daily Productivity"
+    ],
+    "custom_label": "School Meal Information",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1972,
+    "server_name": "SchoolFoods",
+    "rank_by_usage": 1973,
+    "usage_count": "Not available",
+    "original_file": "../crawler/smithery/@babo072_schoolfoods.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@babo072/schoolfoods/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "get_school_meal",
+          "description": "학교명과 날짜를 입력받아 급식 정보를 제공합니다. 날짜는 YYYYMMDD 형식이나 '오늘', '내일', '모레'와 같은 상대적인 표현도 사용 가능합니다. 날짜를 생략하면 오늘 급식 정보를 조회합니다.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "school_name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "학교 이름 (예: 의정부고등학교)"
+              },
+              "date": {
+                "type": "string",
+                "default": "오늘",
+                "description": "급식 조회 날짜 (YYYYMMDD 형식, '오늘', '내일' 등)"
+              }
+            },
+            "required": [
+              "school_name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 1,
+      "tool_names": [
+        "get_school_meal"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1972,
+      "name": "SchoolFoods",
+      "author": "@babo072/schoolfoods",
+      "overview": "Retrieve school meal information effortlessly. Access detailed meal data by school name and date, with support for various date formats. Enjoy features like duplicate school name handling and similar school name suggestions to enhance your experience.",
+      "repository_url": "https://github.com/babo072/schoolfoods",
+      "homepage": "https://smithery.ai/server/@babo072/schoolfoods",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "Not available",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@babo072_schoolfoods.json",
+      "tools_count": 1,
+      "tools": [
+        {
+          "name": "get_school_meal",
+          "description": "학교명과 날짜를 입력받아 급식 정보를 제공합니다. 날짜는 YYYYMMDD 형식이나 '오늘', '내일', '모레'와 같은 상대적인 표현도 사용 가능합니다. 날짜를 생략하면 오늘 급식 정보를 조회합니다.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "school_name": {
+                "type": "string",
+                "minLength": 1,
+                "description": "학교 이름 (예: 의정부고등학교)"
+              },
+              "date": {
+                "type": "string",
+                "default": "오늘",
+                "description": "급식 조회 날짜 (YYYYMMDD 형식, '오늘', '내일' 등)"
+              }
+            },
+            "required": [
+              "school_name"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@babo072/schoolfoods/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@babo072/schoolfoods/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1973.@babo072_schoolfoods_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1727
+  }
+}

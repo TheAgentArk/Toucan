@@ -1,0 +1,124 @@
+{
+  "labels": {
+    "analysis": "The MCP Server provides a comprehensive set of tools for discovering and interacting with tourism-related information in South Korea. It offers functionalities such as searching for attractions, restaurants, accommodations, and festivals based on keywords, locations, dates, and areas. The server leverages API calls to retrieve detailed tourism data, making it a valuable resource for travel planning, exploration of tourist destinations, and access to cultural and local experiences.",
+    "reasoning": "The primary label of \"Travel & Maps\" is chosen because the server's core functionality revolves around tourism, location-based searches, and travel planning, which aligns closely with this category. Secondary labels such as \"Web Search & Research\" and \"Content Creation\" are added because the server facilitates research about tourism-related content and can support the creation of travel itineraries or guides. No custom label is needed as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Travel & Maps",
+    "secondary_labels": [
+      "Web Search & Research",
+      "Content Creation"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 808,
+    "server_name": "Korea Tourism API",
+    "rank_by_usage": 809,
+    "usage_count": "7",
+    "original_file": "../crawler/smithery/@harimkang_mcp-korea-tourism-api.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@harimkang/mcp-korea-tourism-api/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 808,
+      "name": "Korea Tourism API",
+      "author": "@harimkang/mcp-korea-tourism-api",
+      "overview": "Unlock the wonders of South Korean tourism directly within your AI assistant! Discover vibrant festivals, serene temples, delicious restaurants, and comfortable accommodations across Korea with ease.",
+      "repository_url": "https://github.com/harimkang/mcp-korea-tourism-api",
+      "homepage": "https://smithery.ai/server/@harimkang/mcp-korea-tourism-api",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "7",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@harimkang_mcp-korea-tourism-api.json",
+      "tools_count": 8,
+      "tools": [
+        {
+          "name": "search_tourism_by_keyword",
+          "description": "Deploy Server Korea Tourism API @harimkang/mcp-korea-tourism-api Try in Playground search_tourism_by_keyword",
+          "parameters": [
+            {
+              "name": "Search",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "keyword",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_tourism_by_area",
+          "description": "Browse tourism information by geographic areas in Korea. Args: area_code: Area code (e.g., \"1\" for Seoul) sigungu_code: Sigungu (district) code within the area content_type: Type of content to filter (e.g., \"Tourist Attraction\", \"Restaurant\") language: Language for results (e.g., \"en\", \"jp\", \"zh-cn\") Returns: A dictionary containing tourism information in the specified area.",
+          "parameters": []
+        },
+        {
+          "name": "find_nearby_attractions",
+          "description": "Find tourism attractions near a specific location in Korea. Args: longitude: Longitude coordinate (e.g., 126.9780) latitude: Latitude coordinate (e.g., 37.5665) radius: Search radius in meters (default: 1000) content_type: Type of content to filter (e.g., \"Tourist Attraction\", \"Restaurant\") language: Language for results (e.g., \"en\", \"jp\", \"zh-cn\") Returns: A dictionary containing tourism attractions near the specified coordinates.",
+          "parameters": []
+        },
+        {
+          "name": "search_festivals_by_date",
+          "description": "Find festivals in Korea by date range. Args: start_date: Start date in YYYYMMDD format (e.g., \"20250501\") end_date: Optional end date in YYYYMMDD format (e.g., \"20250531\") area_code: Area code to filter results (e.g., \"1\" for Seoul) language: Language for results (e.g., \"en\", \"jp\", \"zh-cn\") Returns: A dictionary containing festivals occurring within the specified date range.",
+          "parameters": []
+        },
+        {
+          "name": "find_accommodations",
+          "description": "Find accommodations in Korea by area. Args: area_code: Area code (e.g., \"1\" for Seoul) sigungu_code: Sigungu (district) code within the area language: Language for results (e.g., \"en\", \"jp\", \"zh-cn\") Returns: A dictionary containing accommodation options in the specified area.",
+          "parameters": []
+        },
+        {
+          "name": "get_detailed_information",
+          "description": "Get detailed information about a specific tourism item in Korea. Args: content_id: Content ID of the tourism item content_type: Type of content (e.g., \"Tourist Attraction\", \"Restaurant\") language: Language for results (e.g., \"en\", \"jp\", \"zh-cn\") Returns: A dictionary containing detailed information about the specified tourism item.",
+          "parameters": []
+        },
+        {
+          "name": "get_tourism_images",
+          "description": "Get images for a specific tourism item in Korea. Args: content_id: Content ID of the tourism item language: Language for results (e.g., \"en\", \"jp\", \"zh-cn\") Returns: A dictionary containing images for the specified tourism item.",
+          "parameters": []
+        },
+        {
+          "name": "get_area_codes",
+          "description": "Get area codes for regions in Korea. Args: parent_area_code: Parent area code to get sub-areas (None for top-level areas) language: Language for results (e.g., \"en\", \"jp\", \"zh-cn\") Returns: A dictionary containing area codes and names.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@harimkang/mcp-korea-tourism-api/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "koreaTourismApiKey",
+          "required": true,
+          "description": "The API key provided by the Korea Tourism Organization."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@harimkang/mcp-korea-tourism-api/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0809.@harimkang_mcp-korea-tourism-api_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 790
+  }
+}

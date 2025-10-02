@@ -1,0 +1,193 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is designed for comprehensive travel planning, specifically focused on flight and accommodation searches. It utilizes the Duffel API to provide detailed search capabilities for one-way, round-trip, and multi-city flights, as well as travel stays. Users can specify preferences like cabin class, passenger count, and connection options, and access detailed offers and guest reviews. The available tools indicate functionality for flight and stay searches, offer details, multi-city searches, stay reviews, and more.",
+    "reasoning": "The primary label \"Travel & Maps\" was chosen because the server's core functionality revolves around travel planning, including flight and accommodation searches, which aligns well with this category. The secondary label \"Data Analysis & Processing\" is relevant due to the ability to process and present detailed offers and guest reviews. The third label \"Daily Productivity\" is appropriate as the server aids in organizing and planning travel, enhancing personal productivity. No custom label is needed as the predefined categories cover the server's functionality adequately.",
+    "primary_label": "Travel & Maps",
+    "secondary_labels": [
+      "Data Analysis & Processing",
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1054,
+    "server_name": "Flight and Stay Search Server",
+    "rank_by_usage": 1055,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@Octember_flights-mcp-ts.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@Octember/flights-mcp-ts/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 1054,
+      "name": "Flight and Stay Search Server",
+      "author": "@Octember/flights-mcp-ts",
+      "overview": "Provide comprehensive flight and accommodation search capabilities using the Duffel API. Search for one-way, round-trip, and multi-city flights, as well as travel stays with detailed offers and guest reviews. Enable users to specify preferences such as cabin class, passenger count, and connection options for tailored travel planning.",
+      "repository_url": "https://github.com/Octember/flights-mcp-ts",
+      "homepage": "https://smithery.ai/server/@Octember/flights-mcp-ts",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@Octember_flights-mcp-ts.json",
+      "tools_count": 5,
+      "tools": [
+        {
+          "name": "search_flights",
+          "description": "Deploy Server Flight and Stay Search Server @Octember/flights-mcp-ts Try in Playground search_flights",
+          "parameters": [
+            {
+              "name": "search_flights",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_offer_details",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "get_offer_details",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "offerId",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "search_multi_city",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "adults",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "segments",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "Add",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "Item",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "cabinClass",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "maxConnections",
+              "required": false,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "search_stays",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "guests",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "radius_km",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "check_in_date",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "check_out_date",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_stay_reviews",
+          "description": "Description not available",
+          "parameters": [
+            {
+              "name": "after",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "before",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "stay_id",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@Octember/flights-mcp-ts/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "duffelApiKey",
+          "required": true,
+          "description": "The API key for accessing the Duffel flight search service."
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@Octember/flights-mcp-ts/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_1055.@Octember_flights-mcp-ts_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1033
+  }
+}

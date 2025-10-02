@@ -1,0 +1,226 @@
+{
+  "labels": {
+    "analysis": "The MCP Server, \"Sourcebot Code Search Server,\" is designed to enable precise code search across multiple code hosting platforms like GitHub, GitLab, and BitBucket using regex patterns. It provides tools to fetch code snippets, list repositories, and retrieve full source code files. This server enhances LLM agents by providing rich code context directly from remote repositories without requiring local checkouts, thereby improving reasoning and response quality.",
+    "reasoning": "The primary label \"Development Tools\" is chosen because the server is primarily used for code search, retrieval, and intelligence, which are critical functions in software development. The secondary label \"API Integration\" is selected because the server interacts with third-party code hosting APIs to fetch data. The custom label \"Code Intelligence\" is added to highlight the server's unique capability of enabling advanced code-related reasoning for LLM agents.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "API Integration",
+      "Browser Automation"
+    ],
+    "custom_label": "Code Intelligence",
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 1049,
+    "server_name": "Sourcebot Code Search Server",
+    "rank_by_usage": 1050,
+    "usage_count": "1",
+    "original_file": "../crawler/smithery/@sourcebot-dev_sourcebot.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@sourcebot-dev/sourcebot/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "search_code",
+          "description": "Fetches code that matches the provided regex pattern in `query`. This is NOT a semantic search.\n    Results are returned as an array of matching files, with the file's URL, repository, and language.\n    If you receive an error that indicates that you're not authenticated, please inform the user to set the SOURCEBOT_API_KEY environment variable.\n    If the `includeCodeSnippets` property is true, code snippets containing the matches will be included in the response. Only set this to true if the request requires code snippets (e.g., show me examples where library X is used).\n    When referencing a file in your response, **ALWAYS** include the file's external URL as a link. This makes it easier for the user to view the file, even if they don't have it locally checked out.\n    **ONLY USE** the `filterByRepoIds` property if the request requires searching a specific repo(s). Otherwise, leave it empty.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The regex pattern to search for. RULES:\n        1. When a regex special character needs to be escaped, ALWAYS use a single backslash () (e.g., 'console.log')\n        2. **ALWAYS** escape spaces with a single backslash () (e.g., 'console log')\n        "
+              },
+              "filterByRepoIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Scope the search to the provided repositories to the Sourcebot compatible repository IDs. **DO NOT** use this property if you want to search all repositories. **YOU MUST** call 'list_repos' first to obtain the exact repository ID."
+              },
+              "filterByLanguages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Scope the search to the provided languages. The language MUST be formatted as a GitHub linguist language. Examples: Python, JavaScript, TypeScript, Java, C#, C++, PHP, Go, Rust, Ruby, Swift, Kotlin, Shell, C, Dart, HTML, CSS, PowerShell, SQL, R"
+              },
+              "caseSensitive": {
+                "type": "boolean",
+                "description": "Whether the search should be case sensitive (default: false)."
+              },
+              "includeCodeSnippets": {
+                "type": "boolean",
+                "description": "Whether to include the code snippets in the response (default: false). If false, only the file's URL, repository, and language will be returned. Set to false to get a more concise response."
+              },
+              "maxTokens": {
+                "type": "number",
+                "description": "The maximum number of tokens to return (default: 10000). Higher values provide more context but consume more tokens. Values less than 10000 will be ignored."
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_repos",
+          "description": "Lists all repositories in the organization. If you receive an error that indicates that you're not authenticated, please inform the user to set the SOURCEBOT_API_KEY environment variable.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_source",
+          "description": "Fetches the source code for a given file. If you receive an error that indicates that you're not authenticated, please inform the user to set the SOURCEBOT_API_KEY environment variable.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileName": {
+                "type": "string",
+                "description": "The file to fetch the source code for."
+              },
+              "repoId": {
+                "type": "string",
+                "description": "The repository to fetch the source code for. This is the Sourcebot compatible repository ID."
+              }
+            },
+            "required": [
+              "fileName",
+              "repoId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 3,
+      "tool_names": [
+        "search_code",
+        "list_repos",
+        "get_file_source"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 1049,
+      "name": "Sourcebot Code Search Server",
+      "author": "@sourcebot-dev/sourcebot",
+      "overview": "Enable precise regex-based code search across multiple code hosts like GitHub, GitLab, and BitBucket to empower LLM agents with rich code context from remote repositories. Enhance your agents' reasoning and response quality by fetching relevant code snippets and repository information without local checkouts. Seamlessly integrate with popular MCP clients to unlock advanced code intelligence capabilities.",
+      "repository_url": "https://github.com/sourcebot-dev/sourcebot",
+      "homepage": "https://smithery.ai/server/@sourcebot-dev/sourcebot",
+      "remote_or_local": "Remote",
+      "license": "Smithery",
+      "usage_count": "1",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@sourcebot-dev_sourcebot.json",
+      "tools_count": 3,
+      "tools": [
+        {
+          "name": "search_code",
+          "description": "Fetches code that matches the provided regex pattern in `query`. This is NOT a semantic search.\n    Results are returned as an array of matching files, with the file's URL, repository, and language.\n    If you receive an error that indicates that you're not authenticated, please inform the user to set the SOURCEBOT_API_KEY environment variable.\n    If the `includeCodeSnippets` property is true, code snippets containing the matches will be included in the response. Only set this to true if the request requires code snippets (e.g., show me examples where library X is used).\n    When referencing a file in your response, **ALWAYS** include the file's external URL as a link. This makes it easier for the user to view the file, even if they don't have it locally checked out.\n    **ONLY USE** the `filterByRepoIds` property if the request requires searching a specific repo(s). Otherwise, leave it empty.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "The regex pattern to search for. RULES:\n        1. When a regex special character needs to be escaped, ALWAYS use a single backslash () (e.g., 'console.log')\n        2. **ALWAYS** escape spaces with a single backslash () (e.g., 'console log')\n        "
+              },
+              "filterByRepoIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Scope the search to the provided repositories to the Sourcebot compatible repository IDs. **DO NOT** use this property if you want to search all repositories. **YOU MUST** call 'list_repos' first to obtain the exact repository ID."
+              },
+              "filterByLanguages": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Scope the search to the provided languages. The language MUST be formatted as a GitHub linguist language. Examples: Python, JavaScript, TypeScript, Java, C#, C++, PHP, Go, Rust, Ruby, Swift, Kotlin, Shell, C, Dart, HTML, CSS, PowerShell, SQL, R"
+              },
+              "caseSensitive": {
+                "type": "boolean",
+                "description": "Whether the search should be case sensitive (default: false)."
+              },
+              "includeCodeSnippets": {
+                "type": "boolean",
+                "description": "Whether to include the code snippets in the response (default: false). If false, only the file's URL, repository, and language will be returned. Set to false to get a more concise response."
+              },
+              "maxTokens": {
+                "type": "number",
+                "description": "The maximum number of tokens to return (default: 10000). Higher values provide more context but consume more tokens. Values less than 10000 will be ignored."
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "list_repos",
+          "description": "Lists all repositories in the organization. If you receive an error that indicates that you're not authenticated, please inform the user to set the SOURCEBOT_API_KEY environment variable.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_file_source",
+          "description": "Fetches the source code for a given file. If you receive an error that indicates that you're not authenticated, please inform the user to set the SOURCEBOT_API_KEY environment variable.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "fileName": {
+                "type": "string",
+                "description": "The file to fetch the source code for."
+              },
+              "repoId": {
+                "type": "string",
+                "description": "The repository to fetch the source code for. This is the Sourcebot compatible repository ID."
+              }
+            },
+            "required": [
+              "fileName",
+              "repoId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@sourcebot-dev/sourcebot/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@sourcebot-dev/sourcebot/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "1050.@sourcebot-dev_sourcebot_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 1028
+  }
+}

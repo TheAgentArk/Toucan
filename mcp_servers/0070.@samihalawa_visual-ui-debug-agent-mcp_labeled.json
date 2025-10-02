@@ -1,0 +1,1985 @@
+{
+  "labels": {
+    "analysis": "The MCP Server is primarily focused on automated UI testing, debugging, and analysis of web interfaces. It leverages AI-powered tools to inspect web pages visually, detect UI bugs, validate workflows, and monitor performance. The available tools encompass a wide range of functionalities including page analysis, API testing, DOM inspection, screenshot capture, browser automation through Playwright integration, and sitemap crawling. The server enables autonomous interaction with web pages to simulate user workflows and generate detailed reports, reducing the need for manual intervention.",
+    "reasoning": "The primary label \"Web Testing & Debugging\" was chosen because the core functionality revolves around automated UI testing and debugging using AI and Playwright. Secondary labels include \"Browser Automation\" due to the extensive Playwright integration for automating browser interactions, and \"Data Analysis & Processing\" because of its capabilities in analyzing performance metrics, comparing visual elements, and validating workflows. No custom label is needed as the predefined categories adequately cover the server's functionality.",
+    "primary_label": "Development Tools",
+    "secondary_labels": [
+      "Browser Automation",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 69,
+    "server_name": "Automated UI Debuger and Tester",
+    "rank_by_usage": 70,
+    "usage_count": "1,221",
+    "original_file": "../crawler/smithery/@samihalawa_visual-ui-debug-agent-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751937975,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@samihalawa/visual-ui-debug-agent-mcp/mcp?config=eyJkZWJ1ZyI6IGZhbHNlLCAidGltZW91dCI6IDQwMDAsICJoZWFkbGVzcyI6IHRydWUsICJzY3JlZW5zaG90RGlyIjogIi4vdGVtcCIsICJtYXhDb25jdXJyZW50U2Vzc2lvbnMiOiA1fQ==&api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "enhanced_page_analyzer",
+          "description": "Analyze a page with screenshots, console logs, interactive element mapping, and performance metrics",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to analyze (e.g., http://localhost:4999, https://example.com)"
+              },
+              "includeConsole": {
+                "type": "boolean",
+                "description": "Whether to include console logs. Default: true"
+              },
+              "mapElements": {
+                "type": "boolean",
+                "description": "Whether to map interactive elements. Default: true"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "waitForSelector": {
+                "type": "string",
+                "description": "Optional CSS selector to wait for before analysis"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "api_endpoint_tester",
+          "description": "Test multiple API endpoints and verify responses",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "Base URL of the API (e.g., http://localhost:5000/api)"
+              },
+              "endpoints": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "description": "Endpoint path (e.g., /users)"
+                    },
+                    "method": {
+                      "type": "string",
+                      "enum": [
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE",
+                        "PATCH"
+                      ],
+                      "description": "HTTP method"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "Request body data for POST/PUT/PATCH"
+                    },
+                    "headers": {
+                      "type": "object",
+                      "description": "Request headers"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "method"
+                  ]
+                },
+                "description": "List of endpoints to test"
+              },
+              "authToken": {
+                "type": "string",
+                "description": "Optional auth token to include in all requests"
+              }
+            },
+            "required": [
+              "url",
+              "endpoints"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "navigation_flow_validator",
+          "description": "Test a sequence of user actions across multiple pages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "startUrl": {
+                "type": "string",
+                "description": "URL to start the navigation flow from"
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "click",
+                        "fill",
+                        "select",
+                        "hover",
+                        "wait",
+                        "navigate",
+                        "evaluate"
+                      ],
+                      "description": "Action to perform"
+                    },
+                    "selector": {
+                      "type": "string",
+                      "description": "CSS selector for the element to interact with"
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Value to input (for fill or select action)"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL to navigate to (for navigate action)"
+                    },
+                    "script": {
+                      "type": "string",
+                      "description": "JavaScript to evaluate (for evaluate action)"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                },
+                "description": "Sequence of steps to perform"
+              },
+              "captureScreenshots": {
+                "type": "boolean",
+                "description": "Whether to capture screenshots after each step. Default: true"
+              },
+              "includeConsole": {
+                "type": "boolean",
+                "description": "Whether to include console logs. Default: true"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "startUrl",
+              "steps"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "screenshot_url",
+          "description": "Take a screenshot of a URL",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to capture a screenshot of"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "selector": {
+                "type": "string",
+                "description": "Optional CSS selector to screenshot only that element"
+              },
+              "waitForSelector": {
+                "type": "string",
+                "description": "Optional CSS selector to wait for before taking screenshot"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "dom_inspector",
+          "description": "Inspect DOM elements and their properties",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to inspect"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector to inspect"
+              },
+              "includeChildren": {
+                "type": "boolean",
+                "description": "Whether to include children elements. Default: false"
+              },
+              "includeStyles": {
+                "type": "boolean",
+                "description": "Whether to include computed styles. Default: true"
+              }
+            },
+            "required": [
+              "url",
+              "selector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "batch_screenshot_urls",
+          "description": "Capture screenshots of multiple URLs in a grid layout for easy comparison",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "urls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of URLs to capture screenshots of"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "gridSize": {
+                "type": "number",
+                "description": "Number of screenshots per row in the grid layout. Default: 2"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "urls"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "console_monitor",
+          "description": "Monitor console logs on a page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to monitor console logs from"
+              },
+              "filterTypes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "log",
+                    "info",
+                    "warning",
+                    "error"
+                  ]
+                },
+                "description": "Types of console messages to capture"
+              },
+              "duration": {
+                "type": "number",
+                "description": "How long to monitor in milliseconds. Default: 5000 (configurable via VUDA_STABILITY_WAIT)"
+              },
+              "interactionSelector": {
+                "type": "string",
+                "description": "Optional element to click before monitoring"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "performance_analysis",
+          "description": "Analyze page performance metrics",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to analyze performance for"
+              },
+              "iterations": {
+                "type": "number",
+                "description": "Number of test iterations to run. Default: 1"
+              },
+              "waitForNetworkIdle": {
+                "type": "boolean",
+                "description": "Whether to wait for network to be idle. Default: true"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "visual_comparison",
+          "description": "Compare two URLs visually and highlight differences",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url1": {
+                "type": "string",
+                "description": "First URL to compare"
+              },
+              "url2": {
+                "type": "string",
+                "description": "Second URL to compare"
+              },
+              "threshold": {
+                "type": "number",
+                "description": "Difference threshold (0.0-1.0). Default: 0.1"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page. Default: false"
+              },
+              "selector": {
+                "type": "string",
+                "description": "Optional CSS selector to limit comparison"
+              }
+            },
+            "required": [
+              "url1",
+              "url2"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "batch_screenshot_urls",
+          "description": "Take screenshots of multiple URLs and display them in a grid",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "urls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of URLs to capture screenshots of"
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional array of paths to label the screenshots with"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "waitTime": {
+                "type": "number",
+                "description": "Time to wait in milliseconds before taking each screenshot. Default: 5000 (configurable via VUDA_STABILITY_WAIT)"
+              },
+              "gridSize": {
+                "type": "number",
+                "description": "Size of grid (2 for 2x2, 4 for 4x4). Default: 2"
+              }
+            },
+            "required": [
+              "urls"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "screenshot_local_files",
+          "description": "Take screenshots of local HTML files in a directory",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "directory": {
+                "type": "string",
+                "description": "Directory containing HTML files to screenshot (defaults to current directory)"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Glob pattern to match HTML files (default: \"*.html\")"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "gridSize": {
+                "type": "number",
+                "description": "Size of grid (2 for 2x2, 4 for 4x4). Default: 2"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_navigate",
+          "description": "Navigate to a URL",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to navigate to"
+              },
+              "waitUntil": {
+                "type": "string",
+                "enum": [
+                  "load",
+                  "domcontentloaded",
+                  "networkidle",
+                  "commit"
+                ],
+                "description": "Navigation wait condition",
+                "optional": true
+              },
+              "timeout": {
+                "type": "number",
+                "description": "Navigation timeout in milliseconds",
+                "optional": true
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_click",
+          "description": "Click an element on the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for the element to click"
+              }
+            },
+            "required": [
+              "selector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_iframe_click",
+          "description": "Click an element in an iframe on the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "iframeSelector": {
+                "type": "string",
+                "description": "CSS selector for the iframe containing the element to click"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for the element to click within the iframe"
+              }
+            },
+            "required": [
+              "iframeSelector",
+              "selector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_fill",
+          "description": "Fill out an input field",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for input field"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value to fill"
+              }
+            },
+            "required": [
+              "selector",
+              "value"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_select",
+          "description": "Select an option in a dropdown",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for the select element"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value or label of the option to select"
+              }
+            },
+            "required": [
+              "selector",
+              "value"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_hover",
+          "description": "Hover over an element on the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for element to hover"
+              }
+            },
+            "required": [
+              "selector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_evaluate",
+          "description": "Execute JavaScript in the browser console context",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "JavaScript code to execute"
+              }
+            },
+            "required": [
+              "script"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_console_logs",
+          "description": "Retrieve console logs captured so far",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "clear": {
+                "type": "boolean",
+                "description": "Whether to clear logs after retrieval",
+                "optional": true
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of logs to return",
+                "optional": true
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "error",
+                  "warning",
+                  "log",
+                  "info",
+                  "debug"
+                ],
+                "description": "Type of logs to retrieve",
+                "optional": true
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_get_visible_text",
+          "description": "Get the visible text content of the current page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_get_visible_html",
+          "description": "Get the HTML content of the current page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_go_back",
+          "description": "Navigate back in browser history",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_go_forward",
+          "description": "Navigate forward in browser history",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_press_key",
+          "description": "Press a keyboard key (optionally focusing an element first)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "Key to press (e.g. 'Enter', 'ArrowDown', 'a')"
+              },
+              "selector": {
+                "type": "string",
+                "description": "Optional CSS selector to focus before pressing key",
+                "optional": true
+              }
+            },
+            "required": [
+              "key"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_drag",
+          "description": "Drag an element to a target location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sourceSelector": {
+                "type": "string",
+                "description": "CSS selector for the element to drag"
+              },
+              "targetSelector": {
+                "type": "string",
+                "description": "CSS selector for the target location"
+              }
+            },
+            "required": [
+              "sourceSelector",
+              "targetSelector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_screenshot",
+          "description": "Take a screenshot of the current page or a specific element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name for the screenshot resource (will be used in the URI)"
+              },
+              "selector": {
+                "type": "string",
+                "description": "Optional CSS selector for element to screenshot",
+                "optional": true
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Store screenshot of the entire page (default: false)",
+                "optional": true
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "ui_workflow_validator",
+          "description": "Execute and validate a sequence of UI interactions simulating a user workflow.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "startUrl": {
+                "type": "string",
+                "description": "Initial URL for the workflow"
+              },
+              "taskDescription": {
+                "type": "string",
+                "description": "High-level description of the user task being simulated"
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the user action for this step"
+                    },
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "navigate",
+                        "click",
+                        "fill",
+                        "select",
+                        "hover",
+                        "wait",
+                        "evaluate",
+                        "screenshot",
+                        "verifyText",
+                        "verifyElementVisible",
+                        "verifyElementNotVisible",
+                        "verifyUrl"
+                      ],
+                      "description": "Playwright action or verification to perform"
+                    },
+                    "selector": {
+                      "type": "string",
+                      "description": "CSS selector for interaction or verification",
+                      "optional": true
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Value for fill/select or text/URL to verify",
+                      "optional": true
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL for navigate action or verification",
+                      "optional": true
+                    },
+                    "script": {
+                      "type": "string",
+                      "description": "JavaScript for evaluate action",
+                      "optional": true
+                    },
+                    "isOptional": {
+                      "type": "boolean",
+                      "description": "If true, failure of this step won't stop the workflow",
+                      "optional": true,
+                      "default": false
+                    }
+                  },
+                  "required": [
+                    "description",
+                    "action"
+                  ]
+                },
+                "minItems": 1,
+                "description": "Sequence of steps representing the user workflow (minimum 1 step)"
+              },
+              "captureScreenshots": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "failure",
+                  "none"
+                ],
+                "description": "When to capture screenshots (default: failure)",
+                "optional": true
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., 'iPhone 13', 'Pixel 5')",
+                "optional": true
+              }
+            },
+            "required": [
+              "startUrl",
+              "taskDescription",
+              "steps"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tunnel_helper",
+          "description": "Guide user to expose local ports via Cloudflare tunnel or manage tunnel URLs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "localPort": {
+                "type": "number",
+                "description": "Local port number to expose (e.g., 3000, 8080)"
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "guide",
+                  "store",
+                  "retrieve"
+                ],
+                "description": "Action: guide (show instructions), store (save tunnel URL), retrieve (get saved URL)"
+              },
+              "tunnelUrl": {
+                "type": "string",
+                "description": "Tunnel URL to store (only for store action)",
+                "optional": true
+              }
+            },
+            "required": [
+              "localPort",
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "debug_memory",
+          "description": "Save and retrieve debugging context including .env variables, selectors, and issues",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "save",
+                  "retrieve",
+                  "list",
+                  "clear"
+                ],
+                "description": "Memory action to perform"
+              },
+              "key": {
+                "type": "string",
+                "description": "Memory key for save/retrieve operations",
+                "optional": true
+              },
+              "value": {
+                "type": "object",
+                "description": "Value to save (for save action)",
+                "optional": true
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "env",
+                  "urls",
+                  "selectors",
+                  "issues",
+                  "fixes",
+                  "general"
+                ],
+                "description": "Category of memory item",
+                "optional": true
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "sitemap_crawler",
+          "description": "Crawl a website recursively to generate a comprehensive sitemap with all endpoints, links, and visible text content. Perfect for detecting inconsistent content, broken links, and navigation issues.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "Starting URL to crawl (e.g., http://localhost:3000, https://example.com)"
+              },
+              "maxDepth": {
+                "type": "number",
+                "description": "Maximum depth to crawl (default: 3)",
+                "optional": true
+              },
+              "includeText": {
+                "type": "boolean",
+                "description": "Include visible text content from each page (default: true)",
+                "optional": true
+              },
+              "sameDomainOnly": {
+                "type": "boolean",
+                "description": "Only crawl links from the same domain (default: true)",
+                "optional": true
+              },
+              "outputFormat": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "markdown",
+                  "text"
+                ],
+                "description": "Output format for the sitemap (default: markdown)",
+                "optional": true
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 30,
+      "tool_names": [
+        "enhanced_page_analyzer",
+        "api_endpoint_tester",
+        "navigation_flow_validator",
+        "screenshot_url",
+        "dom_inspector",
+        "batch_screenshot_urls",
+        "console_monitor",
+        "performance_analysis",
+        "visual_comparison",
+        "batch_screenshot_urls",
+        "screenshot_local_files",
+        "playwright_navigate",
+        "playwright_click",
+        "playwright_iframe_click",
+        "playwright_fill",
+        "playwright_select",
+        "playwright_hover",
+        "playwright_evaluate",
+        "playwright_console_logs",
+        "playwright_get_visible_text",
+        "playwright_get_visible_html",
+        "playwright_go_back",
+        "playwright_go_forward",
+        "playwright_press_key",
+        "playwright_drag",
+        "playwright_screenshot",
+        "ui_workflow_validator",
+        "tunnel_helper",
+        "debug_memory",
+        "sitemap_crawler"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 69,
+      "name": "Automated UI Debuger and Tester",
+      "author": "@samihalawa/visual-ui-debug-agent-mcp",
+      "overview": "Enable autonomous visual analysis, testing, and debugging of web interfaces using AI-powered tools. Detect UI bugs, validate user workflows, monitor performance, and generate detailed reports without manual intervention. Empower any AI model to inspect and interact with web pages visually through Playwright integration.",
+      "repository_url": "https://github.com/samihalawa/visual-ui-debug-agent-mcp",
+      "homepage": "https://smithery.ai/server/@samihalawa/visual-ui-debug-agent-mcp",
+      "remote_or_local": "Remote",
+      "license": "ISC",
+      "usage_count": "1,221",
+      "success_rate": "67.30%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@samihalawa_visual-ui-debug-agent-mcp.json",
+      "tools_count": 30,
+      "tools": [
+        {
+          "name": "enhanced_page_analyzer",
+          "description": "Analyze a page with screenshots, console logs, interactive element mapping, and performance metrics",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to analyze (e.g., http://localhost:4999, https://example.com)"
+              },
+              "includeConsole": {
+                "type": "boolean",
+                "description": "Whether to include console logs. Default: true"
+              },
+              "mapElements": {
+                "type": "boolean",
+                "description": "Whether to map interactive elements. Default: true"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "waitForSelector": {
+                "type": "string",
+                "description": "Optional CSS selector to wait for before analysis"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "api_endpoint_tester",
+          "description": "Test multiple API endpoints and verify responses",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "Base URL of the API (e.g., http://localhost:5000/api)"
+              },
+              "endpoints": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "description": "Endpoint path (e.g., /users)"
+                    },
+                    "method": {
+                      "type": "string",
+                      "enum": [
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE",
+                        "PATCH"
+                      ],
+                      "description": "HTTP method"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "Request body data for POST/PUT/PATCH"
+                    },
+                    "headers": {
+                      "type": "object",
+                      "description": "Request headers"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "method"
+                  ]
+                },
+                "description": "List of endpoints to test"
+              },
+              "authToken": {
+                "type": "string",
+                "description": "Optional auth token to include in all requests"
+              }
+            },
+            "required": [
+              "url",
+              "endpoints"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "navigation_flow_validator",
+          "description": "Test a sequence of user actions across multiple pages",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "startUrl": {
+                "type": "string",
+                "description": "URL to start the navigation flow from"
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "click",
+                        "fill",
+                        "select",
+                        "hover",
+                        "wait",
+                        "navigate",
+                        "evaluate"
+                      ],
+                      "description": "Action to perform"
+                    },
+                    "selector": {
+                      "type": "string",
+                      "description": "CSS selector for the element to interact with"
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Value to input (for fill or select action)"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL to navigate to (for navigate action)"
+                    },
+                    "script": {
+                      "type": "string",
+                      "description": "JavaScript to evaluate (for evaluate action)"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                },
+                "description": "Sequence of steps to perform"
+              },
+              "captureScreenshots": {
+                "type": "boolean",
+                "description": "Whether to capture screenshots after each step. Default: true"
+              },
+              "includeConsole": {
+                "type": "boolean",
+                "description": "Whether to include console logs. Default: true"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "startUrl",
+              "steps"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "screenshot_url",
+          "description": "Take a screenshot of a URL",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to capture a screenshot of"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "selector": {
+                "type": "string",
+                "description": "Optional CSS selector to screenshot only that element"
+              },
+              "waitForSelector": {
+                "type": "string",
+                "description": "Optional CSS selector to wait for before taking screenshot"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "dom_inspector",
+          "description": "Inspect DOM elements and their properties",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to inspect"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector to inspect"
+              },
+              "includeChildren": {
+                "type": "boolean",
+                "description": "Whether to include children elements. Default: false"
+              },
+              "includeStyles": {
+                "type": "boolean",
+                "description": "Whether to include computed styles. Default: true"
+              }
+            },
+            "required": [
+              "url",
+              "selector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "batch_screenshot_urls",
+          "description": "Capture screenshots of multiple URLs in a grid layout for easy comparison",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "urls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of URLs to capture screenshots of"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "gridSize": {
+                "type": "number",
+                "description": "Number of screenshots per row in the grid layout. Default: 2"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "urls"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "console_monitor",
+          "description": "Monitor console logs on a page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to monitor console logs from"
+              },
+              "filterTypes": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "log",
+                    "info",
+                    "warning",
+                    "error"
+                  ]
+                },
+                "description": "Types of console messages to capture"
+              },
+              "duration": {
+                "type": "number",
+                "description": "How long to monitor in milliseconds. Default: 5000 (configurable via VUDA_STABILITY_WAIT)"
+              },
+              "interactionSelector": {
+                "type": "string",
+                "description": "Optional element to click before monitoring"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "performance_analysis",
+          "description": "Analyze page performance metrics",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to analyze performance for"
+              },
+              "iterations": {
+                "type": "number",
+                "description": "Number of test iterations to run. Default: 1"
+              },
+              "waitForNetworkIdle": {
+                "type": "boolean",
+                "description": "Whether to wait for network to be idle. Default: true"
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., \"iPhone 13\", \"Pixel 5\")"
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "visual_comparison",
+          "description": "Compare two URLs visually and highlight differences",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url1": {
+                "type": "string",
+                "description": "First URL to compare"
+              },
+              "url2": {
+                "type": "string",
+                "description": "Second URL to compare"
+              },
+              "threshold": {
+                "type": "number",
+                "description": "Difference threshold (0.0-1.0). Default: 0.1"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page. Default: false"
+              },
+              "selector": {
+                "type": "string",
+                "description": "Optional CSS selector to limit comparison"
+              }
+            },
+            "required": [
+              "url1",
+              "url2"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "batch_screenshot_urls",
+          "description": "Take screenshots of multiple URLs and display them in a grid",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "urls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of URLs to capture screenshots of"
+              },
+              "paths": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Optional array of paths to label the screenshots with"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "waitTime": {
+                "type": "number",
+                "description": "Time to wait in milliseconds before taking each screenshot. Default: 5000 (configurable via VUDA_STABILITY_WAIT)"
+              },
+              "gridSize": {
+                "type": "number",
+                "description": "Size of grid (2 for 2x2, 4 for 4x4). Default: 2"
+              }
+            },
+            "required": [
+              "urls"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "screenshot_local_files",
+          "description": "Take screenshots of local HTML files in a directory",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "directory": {
+                "type": "string",
+                "description": "Directory containing HTML files to screenshot (defaults to current directory)"
+              },
+              "pattern": {
+                "type": "string",
+                "description": "Glob pattern to match HTML files (default: \"*.html\")"
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Whether to capture full page or just viewport. Default: false"
+              },
+              "gridSize": {
+                "type": "number",
+                "description": "Size of grid (2 for 2x2, 4 for 4x4). Default: 2"
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_navigate",
+          "description": "Navigate to a URL",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to navigate to"
+              },
+              "waitUntil": {
+                "type": "string",
+                "enum": [
+                  "load",
+                  "domcontentloaded",
+                  "networkidle",
+                  "commit"
+                ],
+                "description": "Navigation wait condition",
+                "optional": true
+              },
+              "timeout": {
+                "type": "number",
+                "description": "Navigation timeout in milliseconds",
+                "optional": true
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_click",
+          "description": "Click an element on the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for the element to click"
+              }
+            },
+            "required": [
+              "selector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_iframe_click",
+          "description": "Click an element in an iframe on the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "iframeSelector": {
+                "type": "string",
+                "description": "CSS selector for the iframe containing the element to click"
+              },
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for the element to click within the iframe"
+              }
+            },
+            "required": [
+              "iframeSelector",
+              "selector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_fill",
+          "description": "Fill out an input field",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for input field"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value to fill"
+              }
+            },
+            "required": [
+              "selector",
+              "value"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_select",
+          "description": "Select an option in a dropdown",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for the select element"
+              },
+              "value": {
+                "type": "string",
+                "description": "Value or label of the option to select"
+              }
+            },
+            "required": [
+              "selector",
+              "value"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_hover",
+          "description": "Hover over an element on the page",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "selector": {
+                "type": "string",
+                "description": "CSS selector for element to hover"
+              }
+            },
+            "required": [
+              "selector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_evaluate",
+          "description": "Execute JavaScript in the browser console context",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "JavaScript code to execute"
+              }
+            },
+            "required": [
+              "script"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_console_logs",
+          "description": "Retrieve console logs captured so far",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "clear": {
+                "type": "boolean",
+                "description": "Whether to clear logs after retrieval",
+                "optional": true
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum number of logs to return",
+                "optional": true
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "error",
+                  "warning",
+                  "log",
+                  "info",
+                  "debug"
+                ],
+                "description": "Type of logs to retrieve",
+                "optional": true
+              }
+            },
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_get_visible_text",
+          "description": "Get the visible text content of the current page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_get_visible_html",
+          "description": "Get the HTML content of the current page",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_go_back",
+          "description": "Navigate back in browser history",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_go_forward",
+          "description": "Navigate forward in browser history",
+          "input_schema": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_press_key",
+          "description": "Press a keyboard key (optionally focusing an element first)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "Key to press (e.g. 'Enter', 'ArrowDown', 'a')"
+              },
+              "selector": {
+                "type": "string",
+                "description": "Optional CSS selector to focus before pressing key",
+                "optional": true
+              }
+            },
+            "required": [
+              "key"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_drag",
+          "description": "Drag an element to a target location",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "sourceSelector": {
+                "type": "string",
+                "description": "CSS selector for the element to drag"
+              },
+              "targetSelector": {
+                "type": "string",
+                "description": "CSS selector for the target location"
+              }
+            },
+            "required": [
+              "sourceSelector",
+              "targetSelector"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "playwright_screenshot",
+          "description": "Take a screenshot of the current page or a specific element",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name for the screenshot resource (will be used in the URI)"
+              },
+              "selector": {
+                "type": "string",
+                "description": "Optional CSS selector for element to screenshot",
+                "optional": true
+              },
+              "fullPage": {
+                "type": "boolean",
+                "description": "Store screenshot of the entire page (default: false)",
+                "optional": true
+              }
+            },
+            "required": [
+              "name"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "ui_workflow_validator",
+          "description": "Execute and validate a sequence of UI interactions simulating a user workflow.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "startUrl": {
+                "type": "string",
+                "description": "Initial URL for the workflow"
+              },
+              "taskDescription": {
+                "type": "string",
+                "description": "High-level description of the user task being simulated"
+              },
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the user action for this step"
+                    },
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "navigate",
+                        "click",
+                        "fill",
+                        "select",
+                        "hover",
+                        "wait",
+                        "evaluate",
+                        "screenshot",
+                        "verifyText",
+                        "verifyElementVisible",
+                        "verifyElementNotVisible",
+                        "verifyUrl"
+                      ],
+                      "description": "Playwright action or verification to perform"
+                    },
+                    "selector": {
+                      "type": "string",
+                      "description": "CSS selector for interaction or verification",
+                      "optional": true
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Value for fill/select or text/URL to verify",
+                      "optional": true
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL for navigate action or verification",
+                      "optional": true
+                    },
+                    "script": {
+                      "type": "string",
+                      "description": "JavaScript for evaluate action",
+                      "optional": true
+                    },
+                    "isOptional": {
+                      "type": "boolean",
+                      "description": "If true, failure of this step won't stop the workflow",
+                      "optional": true,
+                      "default": false
+                    }
+                  },
+                  "required": [
+                    "description",
+                    "action"
+                  ]
+                },
+                "minItems": 1,
+                "description": "Sequence of steps representing the user workflow (minimum 1 step)"
+              },
+              "captureScreenshots": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "failure",
+                  "none"
+                ],
+                "description": "When to capture screenshots (default: failure)",
+                "optional": true
+              },
+              "device": {
+                "type": "string",
+                "description": "Optional device to emulate (e.g., 'iPhone 13', 'Pixel 5')",
+                "optional": true
+              }
+            },
+            "required": [
+              "startUrl",
+              "taskDescription",
+              "steps"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "tunnel_helper",
+          "description": "Guide user to expose local ports via Cloudflare tunnel or manage tunnel URLs",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "localPort": {
+                "type": "number",
+                "description": "Local port number to expose (e.g., 3000, 8080)"
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "guide",
+                  "store",
+                  "retrieve"
+                ],
+                "description": "Action: guide (show instructions), store (save tunnel URL), retrieve (get saved URL)"
+              },
+              "tunnelUrl": {
+                "type": "string",
+                "description": "Tunnel URL to store (only for store action)",
+                "optional": true
+              }
+            },
+            "required": [
+              "localPort",
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "debug_memory",
+          "description": "Save and retrieve debugging context including .env variables, selectors, and issues",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "save",
+                  "retrieve",
+                  "list",
+                  "clear"
+                ],
+                "description": "Memory action to perform"
+              },
+              "key": {
+                "type": "string",
+                "description": "Memory key for save/retrieve operations",
+                "optional": true
+              },
+              "value": {
+                "type": "object",
+                "description": "Value to save (for save action)",
+                "optional": true
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "env",
+                  "urls",
+                  "selectors",
+                  "issues",
+                  "fixes",
+                  "general"
+                ],
+                "description": "Category of memory item",
+                "optional": true
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "annotations": null
+        },
+        {
+          "name": "sitemap_crawler",
+          "description": "Crawl a website recursively to generate a comprehensive sitemap with all endpoints, links, and visible text content. Perfect for detecting inconsistent content, broken links, and navigation issues.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "Starting URL to crawl (e.g., http://localhost:3000, https://example.com)"
+              },
+              "maxDepth": {
+                "type": "number",
+                "description": "Maximum depth to crawl (default: 3)",
+                "optional": true
+              },
+              "includeText": {
+                "type": "boolean",
+                "description": "Include visible text content from each page (default: true)",
+                "optional": true
+              },
+              "sameDomainOnly": {
+                "type": "boolean",
+                "description": "Only crawl links from the same domain (default: true)",
+                "optional": true
+              },
+              "outputFormat": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "markdown",
+                  "text"
+                ],
+                "description": "Output format for the sitemap (default: markdown)",
+                "optional": true
+              }
+            },
+            "required": [
+              "url"
+            ]
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nconfig = {\n  \"debug\": false,\n  \"timeout\": 4000,\n  \"headless\": true,\n  \"screenshotDir\": \"./temp\",\n  \"maxConcurrentSessions\": 5\n}\n# Encode config in base64\nconfig_b64 = base64.b64encode(json.dumps(config).encode()).decode()\nsmithery_api_key = \"\"\n\n# Create server URL\nurl = f\"https://server.smithery.ai/@samihalawa/visual-ui-debug-agent-mcp/mcp?config={config_b64}&api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "{\n  \"debug\": false,\n  \"timeout\": 4000,\n  \"headless\": true,\n  \"screenshotDir\": \"./temp\",\n  \"maxConcurrentSessions\": 5\n}",
+      "python_sdk_url": "https://server.smithery.ai/@samihalawa/visual-ui-debug-agent-mcp/mcp?config={config_b64}&api_key={smithery_api_key}"
+    },
+    "source_filename": "0070.@samihalawa_visual-ui-debug-agent-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 69
+  }
+}

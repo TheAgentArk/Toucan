@@ -1,0 +1,763 @@
+{
+  "labels": {
+    "analysis": "The MCP Server for Singapore Government Open Data provides access to datasets and collections from data.gov.sg and SingStat. Its core functionality revolves around searching, retrieving metadata, and initiating filtered downloads of government open data. The server enables users to explore, filter, and download datasets for analysis, making it a valuable tool for data researchers, policymakers, and analysts.",
+    "reasoning": "The primary label \"Data Analysis & Processing\" was chosen because the server's main purpose is to facilitate access to datasets for analysis. Secondary labels \"Database Operations\" and \"Web Search & Research\" were selected because the tools support querying datasets and searching for datasets within collections. No custom label is needed as the functionality is well covered by predefined categories.",
+    "primary_label": "Data Analysis & Processing",
+    "secondary_labels": [
+      "Database Operations",
+      "Web Search & Research"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": true,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 597,
+    "server_name": "MCP Server for Singapore Government Open Data",
+    "rank_by_usage": 598,
+    "usage_count": "18",
+    "original_file": "../crawler/smithery/@aniruddha-adhikary_gahmen-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@aniruddha-adhikary/gahmen-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "datagovsg_list_collections",
+          "description": "List all collections on data.gov.sg",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "minimum": 1,
+                "description": "Page number (optional)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_get_collection",
+          "description": "Get metadata for a specific data.gov.sg collection",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The unique identifier of the collection"
+              },
+              "withDatasetMetadata": {
+                "type": "boolean",
+                "description": "Include dataset metadata (default: false)"
+              }
+            },
+            "required": [
+              "collectionId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_list_datasets",
+          "description": "List all datasets on data.gov.sg",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "minimum": 1,
+                "description": "Page number (optional)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_get_dataset_metadata",
+          "description": "Get metadata for a specific data.gov.sg dataset",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "datasetId": {
+                "type": "string",
+                "description": "The unique identifier of the dataset"
+              }
+            },
+            "required": [
+              "datasetId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_search_dataset",
+          "description": "Search for data within a data.gov.sg dataset",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "resource_id": {
+                "type": "string",
+                "description": "Dataset ID (starts with d_)"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum rows to return (default: 100)"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Number of rows to skip"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma-separated fields to return"
+              },
+              "filters": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Dictionary of matching conditions"
+              },
+              "q": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                ],
+                "description": "Full text query"
+              },
+              "sort": {
+                "type": "string",
+                "description": "Comma-separated fields with ordering"
+              }
+            },
+            "required": [
+              "resource_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_initiate_download",
+          "description": "Initiate download of a data.gov.sg dataset with optional filtering",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "datasetId": {
+                "type": "string",
+                "description": "ID of the dataset"
+              },
+              "columnNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of columns to include"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "columnName": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "EQ",
+                        "LIKE",
+                        "ILIKE"
+                      ]
+                    },
+                    "value": {}
+                  },
+                  "required": [
+                    "columnName",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Filters to apply to the dataset"
+              }
+            },
+            "required": [
+              "datasetId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_poll_download",
+          "description": "Check data.gov.sg download status and get download URL",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "datasetId": {
+                "type": "string",
+                "description": "ID of the dataset"
+              },
+              "columnNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of columns (must match initiate_download)"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "columnName": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "EQ",
+                        "LIKE",
+                        "ILIKE"
+                      ]
+                    },
+                    "value": {}
+                  },
+                  "required": [
+                    "columnName",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Filters (must match initiate_download)"
+              }
+            },
+            "required": [
+              "datasetId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "singstat_search_resources",
+          "description": "Search for SingStat tables by keyword (works best with single words)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Single keyword to search for (e.g., \"population\", \"retail\", \"GDP\")"
+              },
+              "searchOption": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "title",
+                  "variable"
+                ],
+                "description": "Search within \"all\", \"title\", or \"variable\""
+              }
+            },
+            "required": [
+              "keyword",
+              "searchOption"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "singstat_get_metadata",
+          "description": "Get metadata for a specific SingStat table",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "description": "Resource ID of the table (e.g., M015171)"
+              }
+            },
+            "required": [
+              "resourceId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "singstat_get_table_data",
+          "description": "Get data from a specific SingStat table with optional filtering",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "description": "Resource ID of the table"
+              },
+              "seriesNoORrowNo": {
+                "type": "string",
+                "description": "Series number for time series or row number for cross-sectional tables"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Number of records to skip"
+              },
+              "limit": {
+                "type": "number",
+                "maximum": 5000,
+                "description": "Maximum number of records to return (max 5000)"
+              },
+              "sortBy": {
+                "type": "string",
+                "enum": [
+                  "key asc",
+                  "key desc",
+                  "value asc",
+                  "value desc",
+                  "seriesno asc",
+                  "seriesno desc",
+                  "rowno asc",
+                  "rowno desc",
+                  "rowtext asc",
+                  "rowtext desc"
+                ],
+                "description": "Sort order (not applicable for cross-sectional tables)"
+              },
+              "timeFilter": {
+                "type": "string",
+                "description": "Filter by time periods (e.g., \"2017,2018\" for annual, \"2018 Mar\" for monthly)"
+              },
+              "between": {
+                "type": "string",
+                "description": "Range filter for data values (e.g., \"100,200\")"
+              },
+              "search": {
+                "type": "string",
+                "description": "Search within the data"
+              }
+            },
+            "required": [
+              "resourceId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 10,
+      "tool_names": [
+        "datagovsg_list_collections",
+        "datagovsg_get_collection",
+        "datagovsg_list_datasets",
+        "datagovsg_get_dataset_metadata",
+        "datagovsg_search_dataset",
+        "datagovsg_initiate_download",
+        "datagovsg_poll_download",
+        "singstat_search_resources",
+        "singstat_get_metadata",
+        "singstat_get_table_data"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 597,
+      "name": "MCP Server for Singapore Government Open Data",
+      "author": "@aniruddha-adhikary/gahmen-mcp",
+      "overview": "Provide seamless access to open datasets and collections from data.gov.sg. Enable searching, metadata retrieval, and filtered dataset downloads for analysis.",
+      "repository_url": "https://github.com/aniruddha-adhikary/gahmen-mcp",
+      "homepage": "https://smithery.ai/server/@aniruddha-adhikary/gahmen-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "18",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@aniruddha-adhikary_gahmen-mcp.json",
+      "tools_count": 10,
+      "tools": [
+        {
+          "name": "datagovsg_list_collections",
+          "description": "List all collections on data.gov.sg",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "minimum": 1,
+                "description": "Page number (optional)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_get_collection",
+          "description": "Get metadata for a specific data.gov.sg collection",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string",
+                "description": "The unique identifier of the collection"
+              },
+              "withDatasetMetadata": {
+                "type": "boolean",
+                "description": "Include dataset metadata (default: false)"
+              }
+            },
+            "required": [
+              "collectionId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_list_datasets",
+          "description": "List all datasets on data.gov.sg",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "number",
+                "minimum": 1,
+                "description": "Page number (optional)"
+              }
+            },
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_get_dataset_metadata",
+          "description": "Get metadata for a specific data.gov.sg dataset",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "datasetId": {
+                "type": "string",
+                "description": "The unique identifier of the dataset"
+              }
+            },
+            "required": [
+              "datasetId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_search_dataset",
+          "description": "Search for data within a data.gov.sg dataset",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "resource_id": {
+                "type": "string",
+                "description": "Dataset ID (starts with d_)"
+              },
+              "limit": {
+                "type": "number",
+                "description": "Maximum rows to return (default: 100)"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Number of rows to skip"
+              },
+              "fields": {
+                "type": "string",
+                "description": "Comma-separated fields to return"
+              },
+              "filters": {
+                "type": "object",
+                "additionalProperties": {},
+                "description": "Dictionary of matching conditions"
+              },
+              "q": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                ],
+                "description": "Full text query"
+              },
+              "sort": {
+                "type": "string",
+                "description": "Comma-separated fields with ordering"
+              }
+            },
+            "required": [
+              "resource_id"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_initiate_download",
+          "description": "Initiate download of a data.gov.sg dataset with optional filtering",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "datasetId": {
+                "type": "string",
+                "description": "ID of the dataset"
+              },
+              "columnNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of columns to include"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "columnName": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "EQ",
+                        "LIKE",
+                        "ILIKE"
+                      ]
+                    },
+                    "value": {}
+                  },
+                  "required": [
+                    "columnName",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Filters to apply to the dataset"
+              }
+            },
+            "required": [
+              "datasetId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "datagovsg_poll_download",
+          "description": "Check data.gov.sg download status and get download URL",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "datasetId": {
+                "type": "string",
+                "description": "ID of the dataset"
+              },
+              "columnNames": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "List of columns (must match initiate_download)"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "columnName": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "EQ",
+                        "LIKE",
+                        "ILIKE"
+                      ]
+                    },
+                    "value": {}
+                  },
+                  "required": [
+                    "columnName",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                "description": "Filters (must match initiate_download)"
+              }
+            },
+            "required": [
+              "datasetId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "singstat_search_resources",
+          "description": "Search for SingStat tables by keyword (works best with single words)",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "string",
+                "description": "Single keyword to search for (e.g., \"population\", \"retail\", \"GDP\")"
+              },
+              "searchOption": {
+                "type": "string",
+                "enum": [
+                  "all",
+                  "title",
+                  "variable"
+                ],
+                "description": "Search within \"all\", \"title\", or \"variable\""
+              }
+            },
+            "required": [
+              "keyword",
+              "searchOption"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "singstat_get_metadata",
+          "description": "Get metadata for a specific SingStat table",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "description": "Resource ID of the table (e.g., M015171)"
+              }
+            },
+            "required": [
+              "resourceId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "singstat_get_table_data",
+          "description": "Get data from a specific SingStat table with optional filtering",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "description": "Resource ID of the table"
+              },
+              "seriesNoORrowNo": {
+                "type": "string",
+                "description": "Series number for time series or row number for cross-sectional tables"
+              },
+              "offset": {
+                "type": "number",
+                "description": "Number of records to skip"
+              },
+              "limit": {
+                "type": "number",
+                "maximum": 5000,
+                "description": "Maximum number of records to return (max 5000)"
+              },
+              "sortBy": {
+                "type": "string",
+                "enum": [
+                  "key asc",
+                  "key desc",
+                  "value asc",
+                  "value desc",
+                  "seriesno asc",
+                  "seriesno desc",
+                  "rowno asc",
+                  "rowno desc",
+                  "rowtext asc",
+                  "rowtext desc"
+                ],
+                "description": "Sort order (not applicable for cross-sectional tables)"
+              },
+              "timeFilter": {
+                "type": "string",
+                "description": "Filter by time periods (e.g., \"2017,2018\" for annual, \"2018 Mar\" for monthly)"
+              },
+              "between": {
+                "type": "string",
+                "description": "Range filter for data values (e.g., \"100,200\")"
+              },
+              "search": {
+                "type": "string",
+                "description": "Search within the data"
+              }
+            },
+            "required": [
+              "resourceId"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@aniruddha-adhikary/gahmen-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@aniruddha-adhikary/gahmen-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0598.@aniruddha-adhikary_gahmen-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 584
+  }
+}

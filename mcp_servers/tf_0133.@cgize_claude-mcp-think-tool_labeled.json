@@ -1,0 +1,158 @@
+{
+  "labels": {
+    "analysis": "The MCP Server, \"Think Tool Server,\" is designed to enhance the reasoning capabilities of Claude, an AI assistant. Its core functionality revolves around structured thinking, where users can log, review, and analyze thoughts during complex problem-solving tasks. The server doesn't fetch new information but instead helps organize and optimize the reasoning process within a session. This is particularly useful for multi-step analyses, policy adherence scenarios, and sequential decision-making, ensuring better outcomes by maintaining a clear log of thoughts.",
+    "reasoning": "The primary label \"Memory Management\" is chosen because the server's primary function is to store, retrieve, and analyze thoughts, acting as a session-based \"memory\" or logging system. \"Daily Productivity\" is a secondary label as it aids in organized thinking and decision-making, improving personal efficiency. No custom label is needed as the predefined categories sufficiently cover the server's functionality.",
+    "primary_label": "Memory Management",
+    "secondary_labels": [
+      "Daily Productivity"
+    ],
+    "custom_label": null,
+    "is_connected": true,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 132,
+    "server_name": "Think Tool Server",
+    "rank_by_usage": 133,
+    "usage_count": "433",
+    "original_file": "../crawler/smithery/@cgize_claude-mcp-think-tool.json",
+    "mode": "smithery",
+    "timestamp": 1751938055,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@cgize/claude-mcp-think-tool/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": true,
+      "error": null,
+      "tools": [
+        {
+          "name": "think",
+          "description": "Use this tool to think about something. It will not obtain new information or change anything, but just append the thought to the log. Use it when complex reasoning or cache memory is needed, especially during long chains of tool calls, policy adherence scenarios, or sequential decision making.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "thought": {
+                "type": "string",
+                "description": "A thought to think about. This can be structured reasoning, step-by-step analysis, policy verification, or any other mental process that helps with problem-solving."
+              }
+            },
+            "required": [
+              "thought"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_thoughts",
+          "description": "Retrieve all thoughts recorded in the current session to review your reasoning process.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clear_thoughts",
+          "description": "Clear all thoughts recorded in the current session. Use this to start fresh if the thinking process needs to be reset.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_thought_stats",
+          "description": "Get statistics about the thoughts recorded in the current session to analyze your thinking process.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "tool_count": 4,
+      "tool_names": [
+        "think",
+        "get_thoughts",
+        "clear_thoughts",
+        "get_thought_stats"
+      ]
+    },
+    "server_info_crawled": {
+      "id": 132,
+      "name": "Think Tool Server",
+      "author": "@cgize/claude-mcp-think-tool",
+      "overview": "Enhance Claude's reasoning capabilities with a dedicated tool for structured thinking. Use this tool to navigate complex problem-solving tasks effectively, ensuring adherence to policies and improving decision-making processes. Optimize your interactions with Claude by leveraging the think tool for better outcomes in multi-step analyses.",
+      "repository_url": "https://github.com/cgize/claude-mcp-think-tool",
+      "homepage": "https://smithery.ai/server/@cgize/claude-mcp-think-tool",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "433",
+      "success_rate": "99.85%",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@cgize_claude-mcp-think-tool.json",
+      "tools_count": 4,
+      "tools": [
+        {
+          "name": "think",
+          "description": "Use this tool to think about something. It will not obtain new information or change anything, but just append the thought to the log. Use it when complex reasoning or cache memory is needed, especially during long chains of tool calls, policy adherence scenarios, or sequential decision making.",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "thought": {
+                "type": "string",
+                "description": "A thought to think about. This can be structured reasoning, step-by-step analysis, policy verification, or any other mental process that helps with problem-solving."
+              }
+            },
+            "required": [
+              "thought"
+            ],
+            "additionalProperties": false,
+            "$schema": "http://json-schema.org/draft-07/schema#"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_thoughts",
+          "description": "Retrieve all thoughts recorded in the current session to review your reasoning process.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "clear_thoughts",
+          "description": "Clear all thoughts recorded in the current session. Use this to start fresh if the thinking process needs to be reset.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        },
+        {
+          "name": "get_thought_stats",
+          "description": "Get statistics about the thoughts recorded in the current session to analyze your thinking process.",
+          "input_schema": {
+            "type": "object"
+          },
+          "annotations": null
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@cgize/claude-mcp-think-tool/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@cgize/claude-mcp-think-tool/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "0133.@cgize_claude-mcp-think-tool_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 130
+  }
+}

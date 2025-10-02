@@ -1,0 +1,129 @@
+{
+  "labels": {
+    "analysis": "The MCP Server specializes in providing access to meteorological and environmental data from Spain's State Meteorological Agency (AEMET). Its core functionality revolves around weather data retrieval, including current forecasts, historical records, and specialized beach condition reports. The server enables natural language queries and offers advanced filtering options by location, date, and specific parameters like UV index. It serves as a bridge between natural language queries and structured weather data from AEMET.",
+    "reasoning": "The primary label \"Weather\" was chosen because the server's core functionality is centered around meteorological data. The secondary label \"API Integration\" is included because the server enables seamless integration with MCP-compatible clients. \"Data Analysis & Processing\" is also relevant due to the server's ability to filter and summarize weather data. No custom label is needed as the predefined labels adequately cover the functionality.",
+    "primary_label": "Weather",
+    "secondary_labels": [
+      "API Integration",
+      "Data Analysis & Processing"
+    ],
+    "custom_label": null,
+    "is_connected": false,
+    "is_remote_tool_valid": false,
+    "featured_server": false
+  },
+  "metadata": {
+    "server_id": 780,
+    "server_name": "AEMET Weather Data Server",
+    "rank_by_usage": 781,
+    "usage_count": "8",
+    "original_file": "../crawler/smithery/@AnCode666_aemet-mcp.json",
+    "mode": "smithery",
+    "timestamp": 1751941824,
+    "remote_server_response": {
+      "url": "https://server.smithery.ai/@AnCode666/aemet-mcp/mcp?api_key=8675feae-43b6-4170-beb5-d8fa5a938222&profile=monetary-anteater-CCaAaT",
+      "is_success": false,
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools": [],
+      "tool_count": 0,
+      "tool_names": []
+    },
+    "server_info_crawled": {
+      "id": 780,
+      "name": "AEMET Weather Data Server",
+      "author": "@AnCode666/aemet-mcp",
+      "overview": "Provide direct access to historical and current meteorological data from Spain's State Meteorological Agency through natural language queries. Retrieve detailed climate summaries, daily weather values, and beach condition reports with filtering options by date and location. Enable seamless integration with MCP-compatible clients to enrich conversations with accurate weather information.",
+      "repository_url": "https://github.com/AnCode666/aemet-mcp",
+      "homepage": "https://smithery.ai/server/@AnCode666/aemet-mcp",
+      "remote_or_local": "Remote",
+      "license": "MIT",
+      "usage_count": "8",
+      "success_rate": "Not available",
+      "tags": [
+        "search",
+        "web",
+        "api",
+        "mcp"
+      ],
+      "categories": [
+        "search",
+        "api"
+      ],
+      "file_path": "../crawler/smithery/@AnCode666_aemet-mcp.json",
+      "tools_count": 9,
+      "tools": [
+        {
+          "name": "search_municipality_code",
+          "description": "Deploy Server AEMET Weather Data Server @AnCode666/aemet-mcp Try in Playground search_municipality_code",
+          "parameters": []
+        },
+        {
+          "name": "get_daily_forecast",
+          "description": "Get the daily weather forecast for a Spanish municipality. Args: municipality_code: AEMET municipality code (e.g., \"28079\" for Madrid)",
+          "parameters": []
+        },
+        {
+          "name": "get_station_data",
+          "description": "Obtain specific weather data for a weather station. Args: station_id: Station identifier (e.g., \"8416Y\" for Valencia))",
+          "parameters": []
+        },
+        {
+          "name": "get_station_list",
+          "description": "Get a list of all available weather stations or filter by one or more search terms, including approximate matches. Args: search_terms: Optional terms (space or comma separated) to filter stations by name or province.",
+          "parameters": []
+        },
+        {
+          "name": "find_nearby_stations",
+          "description": "Find weather stations within a given radius (in km) from a given geographic coordinate. Args: lat: Latitude in decimal degrees (e.g., 43.36) lon: Longitude in decimal degrees (e.g., -8.41) radio_km: Search radius in kilometers",
+          "parameters": []
+        },
+        {
+          "name": "get_historical_data",
+          "description": "Obtain historical meteorological data for a specific station. Args: station_id: Identifier of the station (e.g. \"3195\" for Madrid Retiro) start_date: Start date in format YYYYY-MM-DD end_date: End date in format YYYYY-MM-DD",
+          "parameters": []
+        },
+        {
+          "name": "monthly_climate_data",
+          "description": "Retrieve monthly climatological data for a specific weather station. Args: station_id: Weather station identifier (e.g., \"3195\" for Madrid Retiro). year: Year (YYYY). month: Month (1-12). Returns: A JSON with the monthly climate summary.",
+          "parameters": []
+        },
+        {
+          "name": "solve_beach_code",
+          "description": "Search beaches by name, province, or municipality. Args: nombre: Search string (accent-insensitive) tipo: One of 'playa', 'provincia', or 'municipio'",
+          "parameters": [
+            {
+              "name": "tipo",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "nombre",
+              "required": true,
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "get_beach_data_uv",
+          "description": "Query information on beaches or UV index from AEMET. Args: name_or_code: Partial or full name of the beach, or its BEACH_ID. Also accepts 'list' or 'list:<province>'. dias_frc: Number of forecast days, starting form 0, which means 0 days from today, to 4, which means 4 days from today. query_type: 'beach' for forecast, 'UV_index' for UV index, must be in english. Returns: Requested information or list of matches.",
+          "parameters": []
+        }
+      ],
+      "python_sdk": "import mcp\nfrom mcp.client.streamable_http import streamablehttp_client\nimport json\nimport base64\n\nsmithery_api_key = \"\"\nurl = f\"https://server.smithery.ai/@AnCode666/aemet-mcp/mcp?api_key={smithery_api_key}\"\n\nasync def main():\n    # Connect to the server using HTTP client\n    async with streamablehttp_client(url) as (read_stream, write_stream, _):\n        async with mcp.ClientSession(read_stream, write_stream) as session:\n            # Initialize the connection\n            await session.initialize()\n            # List available tools\n            tools_result = await session.list_tools()\n            print(f\"Available tools: {', '.join([t.name for t in tools_result.tools])}\")\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())",
+      "configuration_schema": "",
+      "smithery_configuration_requirements": [
+        {
+          "name": "apiKey",
+          "required": true,
+          "description": "Your AEMET API key"
+        }
+      ],
+      "python_sdk_config": "",
+      "python_sdk_url": "https://server.smithery.ai/@AnCode666/aemet-mcp/mcp?api_key={smithery_api_key}"
+    },
+    "source_filename": "cf_0781.@AnCode666_aemet-mcp_prepared.json",
+    "processed_timestamp": 1753731940,
+    "processing_mode": "smithery",
+    "rank": 763
+  }
+}
