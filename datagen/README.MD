@@ -2,7 +2,7 @@
 
 ### Step 0: Obtain Smithery API Credentials and Configuration
 
-To enable MCP server connections, you will need access to the Smithery API.
+We have already conducted server tests and stored all MCP server metadata in the [`../mcp_servers`](../mcp_servers) directory for your convenience. To enable connections to MCP servers during trajectory generation, you will need access to the Smithery API.
 
 - Log in to your Smithery account and obtain both your (a) Smithery API key(s) and (b) configuration details.
 - Save this information in the [`smithery_api_pool.json`](./smithery_api_pool.json) file.
@@ -78,8 +78,10 @@ python step1.3_process_completion.py --input_file {Response File Generated From 
 
 This step generates quality assessment prompts for each question, which will later be used to evaluate the quality, clarity, and realism of the generated tool-use questions. The script takes as input the processed questions from Step 1.3 and outputs a new file containing prompts formatted for LLM-based quality annotation. You can specify which quality criteria to assess (difficulty, quality, realism, or all), and optionally enable debug mode to process only a subset of entries.
 
+Note that there are multiple files generated from Step 1.3. Please use the file ends with `_3sanitized.jsonl` for question quality check.
+
 ```
-python step2.1_question_quality_check.py --input_file {File Generated From Step 1.3}
+python step2.1_question_quality_check.py --input_file {File Generated From Step 1.3 and ends with _3sanitized.jsonl}
 ```
 
 **2.2 Generate Question Quality Check Responses**
@@ -94,7 +96,6 @@ step2.2_completion_quality_check.sh {File Generated From Step 2.1}
 
 This step processes the raw quality check responses generated in Step 2.2. It extracts the LLM's ratings and reasoning for each question across multiple quality dimensions (such as tool selection difficulty, uniqueness, question quality, scenario realism, verifiability, and stability). The script aggregates these results, allowing for further filtering or analysis, and can optionally save the top-rated questions for downstream use.
 
-
 ```
 python step2.3_process_completion.py --input_file {Response File Generated From Step 2.2}
 ```
@@ -104,6 +105,8 @@ python step2.3_process_completion.py --input_file {Response File Generated From 
 **3.1 Generate Agent Trajectories via Qwen/OpenAI Agents**
 
 This step generates agentic trajectories for each question using advanced agent frameworks such as Qwen or OpenAI Agents. The script takes as input the processed and quality-checked questions from Step 2.3 and outputs detailed agent trajectories, which may include tool calls, intermediate reasoning, and final answers. You can specify the agent framework and model to use by modifying the script arguments.
+
+Note that there are multiple files generated from Step 2.3. Please use the file ends with `_2prepared.jsonl` for generating trajectories.
 
 ```
 bash step3.1_completion_agent.sh {File Generated From Step 2.3}
