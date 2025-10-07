@@ -6,12 +6,18 @@ input_file=${1}
 model_path=${2:-"openai/gpt-oss-120b"}
 engine=${3:-"vllm_api"}
 step=${4:-"4.2"}
-start_vllm_service=${5:-"false"}
+start_vllm_service=${5:-"true"}
 
 input_file_basename=$(basename ${input_file})
 input_file_with_timestamp=$(date +%Y%m%d_%H%M%S)_${input_file_basename}
 
-export VLLM_ATTENTION_BACKEND=V1
+log_file="../logs/vllm/${input_file_with_timestamp}.log"
+# Create logs directory if it doesn't exist
+mkdir -p ../logs/vllm
+# Create empty log file
+log_file="../logs/vllm/${input_file_with_timestamp}.log"
+
+export VLLM_ATTENTION_BACKEND=FLASH_ATTN_VLLM_V1
 if [ "$engine" == "vllm_api" ]; then
     if [ "$start_vllm_service" != "true" ]; then
         echo "[VLLM API] Skipping VLLM server startup as start_vllm_service is set to false."
@@ -50,7 +56,7 @@ if [ "$engine" == "vllm_api" ]; then
                 --port 8000 \
                 --host 0.0.0.0 \
                 --max-model-len 40960 \
-                --gpu-memory-utilization 0.9 > ../logs/vllm/${input_file_with_timestamp}.log 2>&1 &
+                --gpu-memory-utilization 0.9 > "$log_file" 2>&1 &
         elif [[ "$model_path" == *"Devstral-Small"* ]]; then
             echo "Applying XFORMERS attention backend for Devstral-Small"
             export VLLM_ATTENTION_BACKEND=XFORMERS
@@ -64,14 +70,14 @@ if [ "$engine" == "vllm_api" ]; then
                 --port 8000 \
                 --host 0.0.0.0 \
                 --max-model-len 40960 \
-                --gpu-memory-utilization 0.9 > ../logs/vllm/${input_file_with_timestamp}.log 2>&1 &
+                --gpu-memory-utilization 0.9 > "$log_file" 2>&1 &
         else
             vllm serve $model_path \
                 --tensor-parallel-size 4 \
                 --port 8000 \
                 --host 0.0.0.0 \
                 --max-model-len 40960 \
-                --gpu-memory-utilization 0.9 > ../logs/vllm/${input_file_with_timestamp}.log 2>&1 &
+                --gpu-memory-utilization 0.9 > "$log_file" 2>&1 &
         fi
         VLLM_PID=$!
         echo -e "${BLUE}[VLLM API] VLLM server initialized with PID: $VLLM_PID ${NC}"

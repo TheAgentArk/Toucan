@@ -120,7 +120,7 @@ def get_args():
     
     # Input Parameters
     parser.add_argument("--input_file", type=str, required=True, help="Path to the input JSONL file with response quality assessment.")
-    parser.add_argument("--output_folder", type=str, default="../data/3.completed", help="Path to the output folder where processed files will be saved.")
+    parser.add_argument("--output_folder", type=str, default="../data/completed", help="Path to the output folder where processed files will be saved.")
     parser.add_argument("--timestamp", type=int, default=int(time.time()), help="Timestamp for the job.")
     parser.add_argument("--save_top_rated", action="store_true", help="Save the top rated responses.")
     parser.add_argument("--top_rated_count", type=int, default=100, help="Number of top rated responses to save.")

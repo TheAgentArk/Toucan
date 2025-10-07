@@ -33,7 +33,7 @@ else
 fi
 
 
-export VLLM_ATTENTION_BACKEND=V1
+export VLLM_ATTENTION_BACKEND=FLASH_ATTN_VLLM_V1
 if [ "$engine" == "vllm_api" ]; then
     if [ "$start_vllm_service" != "true" ]; then
         echo "[VLLM API] Skipping VLLM server startup as start_vllm_service is set to false."
